@@ -58,9 +58,6 @@ theorem fixedRecovery_le_recovery : fixedRecovery ≤ recovery := by
   unfold fixedRecovery recovery
   nlinarith only [hprod]
 
-theorem gap_nonnegative : 0 ≤ gap := by
-  exact sub_nonneg.mpr (log_upper (by
-    norm_num [s,SeventhEighth.sigma,SeventhEighth.alpha]))
 
 theorem ninth_integral_recovery : J9+gap*mass ≤
     ninthA*log (s/b)+ninthB*log ((1-b)/(1-s))+
@@ -156,8 +153,6 @@ theorem strengthened_coefficient_lower :
   rw [AnalyticTotalThreshold.signed_loss_identity] at he
   linarith only [h,hn.1,hn.2.1,hn.2.2.2,hm.2.1,hm.2.2.1,hm.2.2.2,he]
 
-theorem fixed_actual_jLoss_lower : fixedRecovery ≤ AnalyticTotalThreshold.jLoss :=
-  fixedRecovery_le_recovery.trans actual_jLoss_lower
 
 theorem fixed_coefficient_lower :
     AnalyticTotalThreshold.coefficient+fixedRecovery/4 ≤ JointHMotherPayment.unroundedCoefficient := by
@@ -165,8 +160,6 @@ theorem fixed_coefficient_lower :
   have hf := fixedRecovery_le_recovery
   linarith only [h,hf]
 
-theorem fixedRecovery_positive : 0 < fixedRecovery := by
-  norm_num [fixedRecovery,massPayment,upperLog,lowerLog,s,b,SeventhEighth.sigma,SeventhEighth.alpha,ninthProfileK2]
 
 end
 end Wu2008DoubleSieve.JointJLossStrength

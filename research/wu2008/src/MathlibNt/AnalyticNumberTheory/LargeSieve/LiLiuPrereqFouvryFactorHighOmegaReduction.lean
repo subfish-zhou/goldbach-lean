@@ -206,13 +206,5 @@ theorem wellFactorable_signedError_sq_le_five_small_factored_c2
   exact hentry z M _ _ _ hM hL hscale hlow hhigh hlevel
     S Q hS hQ α c γ ζ hα hγ hζ hγs hζs hc a ha hax
 
-/-- Throughout the near-endpoint branch, the low-omega operation deletes
-nothing from the second factor, not merely an asymptotically small error. -/
-theorem factorLowOmega_eq_self_c2_near_endpoint {x ν ε ξ : ℝ}
-    {ζ : ℕ → ℝ} (h : (1 - 10 * ν) / 9 ≤ ε / 2)
-    (hζ : factorSupported (x ^ c2SExponent ν ε) ζ) (hξ : 0 ≤ ξ) :
-    betaLowOmega ζ ξ = ζ := by
-  apply factorLowOmega_eq_self_at_one _ hξ
-  simpa only [c2SExponent_eq_zero_near_endpoint h, Real.rpow_zero] using hζ
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

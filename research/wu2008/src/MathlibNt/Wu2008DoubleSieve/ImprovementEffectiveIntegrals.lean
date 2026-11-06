@@ -39,28 +39,5 @@ theorem wuEffectiveCoefficient_integral_eventually (upper : Bool) (k : ℕ) (hk 
       (wuUpperCoefficient_div_intervalIntegrable (by linarith) hst') hi,
       ← wuLowerCoefficient_sub_eq_integral hs hst]
 
-theorem wuEffectiveCoefficient_integral_threshold_limit
-    (upper : Bool) (k : ℕ) (hk : 1 ≤ k)
-    {δ s t : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2)
-    (hs : 2 ≤ s) (hst : s ≤ t) (ht : t ≤ 10) :
-    Tendsto (fun N0 : ℕ =>
-      ∫ u in (s - 1)..(t - 1), wuEffectiveCoefficient upper k δ N0 u / u)
-      atTop (𝓝 (if upper then
-        wuLowerCoefficient t - wuLowerCoefficient s -
-          ∫ u in (s - 1)..(t - 1), wuImprovementAtInfinity true k δ u / u
-      else
-        wuUpperCoefficient t - wuUpperCoefficient s +
-          ∫ u in (s - 1)..(t - 1), wuImprovementAtInfinity false k δ u / u)) := by
-  have hi := wuImprovement_integral_threshold_limit upper k hk hδ hδhi
-    (show 1 ≤ s - 1 by linarith) (show s - 1 ≤ t - 1 by linarith)
-    (show t - 1 ≤ 10 by linarith)
-  have he := wuEffectiveCoefficient_integral_eventually upper k hk hδ hδhi hs hst ht
-  cases upper
-  · apply (tendsto_const_nhds.add hi).congr'
-    filter_upwards [he] with N0 hN0
-    exact hN0.symm
-  · apply (tendsto_const_nhds.sub hi).congr'
-    filter_upwards [he] with N0 hN0
-    exact hN0.symm
 
 end Wu2008DoubleSieve

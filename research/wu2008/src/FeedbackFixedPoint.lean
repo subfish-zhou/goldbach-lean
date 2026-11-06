@@ -37,12 +37,5 @@ theorem Ainf_supersolution (i : Fin 9) :
   rw [Ainf_fixed i]
   exact le_max_right _ _
 
-/-- Least in the specified nonnegative supersolution set, not an optimality
-claim over all sieve functions or actual counting gains. -/
-theorem Ainf_isLeast : IsLeast
-    {z : Fin 9 → ℝ | (∀ i, 0 ≤ z i) ∧
-      ∀ i, base i + matrixApply feedbackMatrix z i ≤ z i} Ainf :=
-  ⟨⟨Ainf_nonneg, Ainf_supersolution⟩,
-    fun _ hz i => Ainf_le_supersolution hz.1 hz.2 i⟩
 end
 end FeedbackLimit

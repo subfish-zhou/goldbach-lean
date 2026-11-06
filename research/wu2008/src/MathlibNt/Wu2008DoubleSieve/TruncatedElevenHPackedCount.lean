@@ -134,21 +134,5 @@ theorem coarseGrid_bounds {δ : ℝ} (hδhi : δ ≤ 1/100) (n : ℕ) :
   unfold coarsePoint
   constructor <;> linarith only [hm0,hm1]
 
-/-- All coarse geometry, the arithmetic Delta, and the source admissibility are
-internally produced. The remaining expression is deliberately finite. -/
-theorem actual_canonical_count_lower {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
-    (hε : 0 < ε) (n : ℕ) :
-    ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      (otherCoefficient-ε)*truncatedSixthMassScale N -
-        packed34 (coarseGrid δ n) N δ ε (1+log (N : ℝ)^(-4 : ℝ)) ≤
-        4*((MathlibNt.Wu2008DoubleSieve.wuPrimeComplements N).card : ℝ) := by
-  obtain ⟨T,hT,h⟩ := actual_packed_count_lower hδ hδhi hε hε
-    (coarseGrid δ n) (coarseGrid_anchor δ n) (coarseGrid_bounds hδhi n)
-  refine ⟨T,hT,?_⟩
-  intro N hN he
-  have hN4 : 4 ≤ N := by have := hT.trans hN; omega
-  have hlog : 0 < log (N : ℝ) := log_pos (by exact_mod_cast (show 1 < N by omega))
-  have hpower : 0 < log (N : ℝ)^(-4 : ℝ) := rpow_pos_of_pos hlog _
-  exact h N hN he _ le_rfl (by linarith)
 
 end Wu2008DoubleSieve.TruncatedElevenHPackedCount

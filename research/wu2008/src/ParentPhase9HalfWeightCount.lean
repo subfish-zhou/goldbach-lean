@@ -86,11 +86,6 @@ theorem curvature_with_H_actual_count :
     exact (div_le_iff₀ (by norm_num : (0 : ℝ) < 4)).2 (by linarith only [hn])
   rwa [GCurvatureChord.quarter_eq_exact] at hq
 
-/-- Strictly stronger than the phase6 rational coefficient. -/
-theorem rational_coefficient_strict :
-    GCurvatureChord.exactQuarter+(3629895479136046171/11308652260919376406875 : ℝ) <
-      GCurvatureChord.exactQuarter+(3629895479136046171/11308652260919376406875 : ℝ)+gainConstant := by
-  linarith only [gainConstant_pos]
 
 /-- The literal ordinary P2 carrier: complement one is retained and zero excluded.
 The threshold is shared by source notation and the fully expanded filter. -/

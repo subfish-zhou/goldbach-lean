@@ -83,17 +83,5 @@ theorem gamma16_fourth_row_raw_upper (k : ℕ) {δ ε : ℝ}
   intro N hN he i Δ V hb
   exact (gamma16_directed_sums N δ _).1.trans (hT N hN he i Δ V hb)
 
-theorem gamma16_fourth_row_raw_card_upper (k : ℕ) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-        (Nat.card {a // a ∈ gamma16RawLabels N δ (convolutionWuWindows N Δ V)} : ℝ) ≤
-          (2 / (1 - 2 * δ) * gamma16FourthIntegralEnvelope + ε) *
-            boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
-  obtain ⟨T, hT4, hT⟩ := gamma16_fourth_row_raw_upper k hδ hδhi hε
-  refine ⟨T, hT4, ?_⟩
-  intro N hN he i Δ V hb
-  rw [gamma16_raw_natural_card]
-  exact hT N hN he i Δ V hb
 
 end Wu2008DoubleSieve

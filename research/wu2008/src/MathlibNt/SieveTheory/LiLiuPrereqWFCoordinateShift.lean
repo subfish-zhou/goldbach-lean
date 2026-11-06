@@ -138,10 +138,5 @@ theorem upper_edge_exact {c sQ : ℝ} (_hsQ : 2 ≤ sQ)
     jr1965F_eq_of_le_three (by linarith)]
   ring
 
-theorem upper_edge_exact_epsilon {ε sQ : ℝ} (hε : 0 < ε) (hε8 : ε < 1 / 8)
-    (hsQ : 2 ≤ sQ) (hsQc : sQ ≤ 2 * (1 + ε + ε ^ 9)) :
-    jr1965F 2 * (2 * (1 + ε + ε ^ 9) / sQ) =
-      jr1965F sQ * (1 + ε + ε ^ 9) :=
-  upper_edge_exact hsQ hsQc (scale_bounds hε hε8).2.2
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF.CoordinateShift

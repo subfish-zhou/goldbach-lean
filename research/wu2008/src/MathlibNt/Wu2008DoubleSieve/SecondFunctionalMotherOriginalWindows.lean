@@ -57,17 +57,5 @@ theorem secondFunctionalMother_original_windows (N d : ℕ) {a b c e f : ℝ}
   (secondFunctionalMother_masked N d hab hbc hce hef).trans
     (secondFunctionalMother_restore_windows N d a b c e f)
 
-/-- Only the raw-to-prefix direction is asserted; the masks are not identified. -/
-theorem secondFunctionalMother_raw_subset_prefix (N d : ℕ) (l : List ℕ) :
-    sourceSieveCarrier N (d*l.prod) (d*N) (l.getD (l.length-2) 0) ⊆
-      secondFunctionalMotherPrefixCarrier N d l := by
-  intro ell hell
-  obtain ⟨hrange, hprime, hdiv, hs⟩ := mem_filter.mp hell
-  apply mem_filter.mpr
-  refine ⟨hrange, hprime, hdiv, ?_⟩
-  intro q hq hqM hqlt
-  exact hs q hq (hqM.of_dvd_right
-    (show d*N ∣ d*(l.take (l.length-2)).prod*N from
-      ⟨(l.take (l.length-2)).prod, by ring⟩)) hqlt
 
 end Wu2008DoubleSieve

@@ -56,10 +56,6 @@ theorem rational_upper_eq : rationalUpper = exactUpper := by
     FixedCoefficientJLowerEnclosure.eighthRational,FixedCoefficientJLowerEnclosure.ninthRational,
     SharpJBalance.a,SharpJBalance.b,SharpJBalance.s,SeventhEighth.alpha,SeventhEighth.sigma,ninthProfileK2]
 
-/-- This locates the upper envelope only; it does not locate K above the benchmark. -/
-theorem upper_above_benchmark : (899/250 : ℝ) < rationalUpper := by
-  rw [rational_upper_eq]
-  norm_num [exactUpper]
 
 #print axioms complete_rational_upper
 #print axioms actual_interval

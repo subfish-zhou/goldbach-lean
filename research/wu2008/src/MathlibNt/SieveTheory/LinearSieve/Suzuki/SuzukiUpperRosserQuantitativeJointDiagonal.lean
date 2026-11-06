@@ -71,41 +71,7 @@ def UpperRosserScaledRelativeTailProducer : Prop :=
       upperRosserRelativeTail S Δ T' * upperRosserEulerScale S ≤
         ε * upperRosserEulerScale S
 
-/-- The two scale-faithful producers close the frozen final interface.  The tail
-chooses the depth first; the fixed-depth prefix theorem is then invoked at that
-same depth, and the two endpoint thresholds are joined by a maximum. -/
-theorem UpperRosserScaledPrefixTailComparison.of_scaleFaithfulProducers
-    (H : SuzukiLemma144KappaOne.Section13HatLayers)
-    (hH : SuzukiLemma144KappaOne.Section13HatSourceContract H)
-    (hprefix : UpperRosserScaledFixedDepthPrefixProducer H hH)
-    (htail : UpperRosserScaledRelativeTailProducer) :
-    UpperRosserScaledPrefixTailComparison H hH := by
-  intro K ρ hK hρ
-  have hρ2 : 0 < ρ / 2 := half_pos hρ
-  obtain ⟨T, zTail, hTail⟩ := htail K (ρ / 2) hK hρ2
-  obtain ⟨zPrefix, hPrefix⟩ := hprefix K (ρ / 2) hK hρ2 T
-  refine ⟨T, max zTail zPrefix, ?_⟩
-  intro S z Δ s hz₀ hz hΔ hlocal hcut hs hslo hshi
-  let T' := min T (S.prodPrimes.primeFactors.card + 1)
-  have hp := hPrefix S z Δ s ((le_max_right _ _).trans hz₀)
-    hz hΔ hlocal hcut hs hslo hshi
-  have ht := hTail S z Δ s ((le_max_left _ _).trans hz₀)
-    hz hΔ hlocal hcut hs hslo hshi
-  simp only [upperRosserRelativePrefix, upperRosserRelativeTail,
-    upperRosserEulerScale] at hp ht ⊢
-  rw [add_mul]
-  have hsum := add_le_add hp ht
-  nlinarith
 
-/-- An arbitrarily small absolute error does not pay the same relative error at
-an independently shrinking positive scale.  Taking `V = τ/2` and `E = τ`
-models exactly why `E ≤ τ` cannot be promoted to `E ≤ V` uniformly. -/
-theorem absoluteTailBound_does_not_imply_relativeScale :
-    ∀ τ : ℝ, 0 < τ →
-      ∃ V E : ℝ, 0 < V ∧ 0 ≤ E ∧ E ≤ τ ∧ ¬ E ≤ V := by
-  intro τ hτ
-  refine ⟨τ / 2, τ, half_pos hτ, hτ.le, le_rfl, ?_⟩
-  linarith
 
 
 end

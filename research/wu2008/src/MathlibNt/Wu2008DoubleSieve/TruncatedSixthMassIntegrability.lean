@@ -185,38 +185,5 @@ theorem truncatedSixthMass_kernels_integrable {δ : ℝ}
     simpa only [Real.norm_eq_abs, abs_of_nonneg (truncatedSixthMass_kernels_bounds hδ hδhi v).2.1]
       using (truncatedSixthMass_kernels_bounds hδ hδhi v).2.2
 
-theorem truncatedSixthMass_slices_integrable {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 100) (x : ℝ) :
-    Integrable (fun y => truncatedSixthMassAKernel δ (x, y)) ∧
-      Integrable (fun y => truncatedSixthMassHKernel δ (x, y)) := by
-  have hm := truncatedSixthMass_kernels_measurable hδ hδhi
-  have hcomp : Measurable (fun y : ℝ => (x, y)) := measurable_const.prodMk measurable_id
-  have hfin : volume (Icc truncatedSixthLowerBeta truncatedSixthLowerSigma) ≠ ⊤ :=
-    measure_Icc_lt_top.ne
-  have hsuppA : Function.support (fun y => truncatedSixthMassAKernel δ (x, y)) ⊆
-      Icc truncatedSixthLowerBeta truncatedSixthLowerSigma := by
-    intro y hy
-    by_cases h : truncatedSixthLowerRegion δ x y
-    · exact ⟨h.2.2.1, h.2.2.2.1⟩
-    · exact False.elim (hy (by simp [truncatedSixthMassAKernel, h]))
-  have hsuppH : Function.support (fun y => truncatedSixthMassHKernel δ (x, y)) ⊆
-      Icc truncatedSixthLowerBeta truncatedSixthLowerSigma := by
-    intro y hy
-    by_cases h : truncatedSixthLowerAdmissibleRegion δ x y
-    · exact ⟨h.1.2.2.1, h.1.2.2.2.1⟩
-    · exact False.elim (hy (by simp [truncatedSixthMassHKernel, h]))
-  constructor
-  · apply (integrableOn_iff_integrable_of_support_subset hsuppA).mp
-    apply Measure.integrableOn_of_bounded (M := truncatedSixthMassKernelBound)
-      hfin (hm.1.comp hcomp).aestronglyMeasurable
-    filter_upwards [] with y
-    simpa only [Function.comp_def, Real.norm_eq_abs, abs_of_nonneg (truncatedSixthMass_kernels_bounds hδ hδhi (x, y)).1.1]
-      using (truncatedSixthMass_kernels_bounds hδ hδhi (x, y)).1.2
-  · apply (integrableOn_iff_integrable_of_support_subset hsuppH).mp
-    apply Measure.integrableOn_of_bounded (M := truncatedSixthMassKernelBound)
-      hfin (hm.2.comp hcomp).aestronglyMeasurable
-    filter_upwards [] with y
-    simpa only [Function.comp_def, Real.norm_eq_abs, abs_of_nonneg (truncatedSixthMass_kernels_bounds hδ hδhi (x, y)).2.1]
-      using (truncatedSixthMass_kernels_bounds hδ hδhi (x, y)).2.2
 
 end Wu2008DoubleSieve

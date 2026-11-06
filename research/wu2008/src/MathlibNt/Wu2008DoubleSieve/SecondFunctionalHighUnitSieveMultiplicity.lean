@@ -103,14 +103,6 @@ theorem coefficient_pos {i n N : ℕ} {R b : ℕ → ℝ}
     {j : Fin n} {c : Profile n R} (hc : c ∈ family N W P j b) :
     0 < convolutionCoeff W c.1 := mem_boxConvolutionSupport.mp (mem_family.mp hc).1
 
-theorem card_fibre_le_weight {i n N e : ℕ} {R b : ℕ → ℝ}
-    (W : Fin i → Finset ℕ) (P : ∀ d, Finset (Fin n → primeSlabPrimes (R d))) (j : Fin n) :
-    (((family N W P j b).filter (fun c => cofactor c = e)).card : ℝ) ≤
-      ∑ c ∈ (family N W P j b).filter (fun c => cofactor c = e),
-        (convolutionCoeff W c.1 : ℝ) := by
-  calc
-    _ = ∑ _c ∈ (family N W P j b).filter (fun c => cofactor c = e), (1 : ℝ) := by simp
-    _ ≤ _ := sum_le_sum fun c hc => by exact_mod_cast coefficient_pos (mem_filter.mp hc).1
 
 /-- A transparent package of proved geometry, roughness and fixed-cofactor sigma mass. -/
 def FamilyFacts {i n : ℕ} {R : ℕ → ℝ} (k N : ℕ) (η : ℝ)
@@ -119,29 +111,6 @@ def FamilyFacts {i n : ℕ} {R : ℕ → ℝ} (k N : ℕ) (η : ℝ)
   (∀ e, (∑ c ∈ L.filter (fun c => cofactor c = e), (convolutionCoeff W c.1 : ℝ)) ≤
     (max 1 (1/η)) ^ (k+n))
 
-/-- Actual mother word20 and word21 endpoints; no geometry or coprimality gate is supplied. -/
-theorem source_mother_pair (k : ℕ) {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1/2) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s →
-      let W := convolutionWuWindows N Δ V
-      let R := fun d : ℕ => (N : ℝ) ^ (1/2-δ)/d
-      let a2 := fun _ : ℕ => 1/p.kappa2
-      let a3 := fun _ : ℕ => 1/p.kappa3
-      let b := fun _ : ℕ => 1/p.s
-      (∀ j q, q ∈ W j → q.Prime ∧ (N : ℝ) ^ (wuLocalExponent k δ / 10) ≤ (q : ℝ)) ∧
-      FamilyFacts k N (wuLocalExponent k δ / 10) W (family20 N W R a2 a3 b) (Fin.last 3) b ∧
-      FamilyFacts k N (wuLocalExponent k δ / 10) W (family21 N W R a3 b) (Fin.last 4) b ∧
-      HighUnit.boxedSigma20 N δ W a2 a3 b = intervalMass N W (family20 N W R a2 a3 b) (Fin.last 3) b ∧
-      HighUnit.boxedSigma21 N δ W a3 b = intervalMass N W (family21 N W R a3 b) (Fin.last 4) b ∧
-      envelope20 N W R a2 a3 b = outputMass N W (family20 N W R a2 a3 b) (Fin.last 3) b ∧
-      envelope21 N W R a3 b = outputMass N W (family21 N W R a3 b) (Fin.last 4) b := by
-  obtain ⟨T, hT, hw⟩ := source_fibres k hδ hδhi
-  refine ⟨T, hT, ?_⟩
-  intro N hN i Δ V hb p _ _
-  obtain ⟨hW, hF⟩ := hw N hN i Δ V hb
-  refine ⟨hW, hF 4 _ (Fin.last 3) _, hF 5 _ (Fin.last 4) _, ?_⟩
-  exact source_dictionary (by omega) hδ hδhi hb _ _ _
 
 /-- Input primes inherit size and the nontruncated physical product bound. -/
 theorem input_geometry {n N : ℕ} {η : ℝ} {R b : ℕ → ℝ} {j : Fin n} {c : Profile n R}
@@ -243,19 +212,6 @@ theorem small_output_le {i k n N Z : ℕ} {η : ℝ} {R b : ℕ → ℝ}
       (pow_le_pow_right₀ (le_max_left 1 (1/η)) (by omega))
   exact hcard.trans (mul_le_mul hpow hE (Nat.cast_nonneg _) (by positivity))
 
-/-- Exact small-output disintegration of the old physical sums. -/
-theorem small_output_dictionary {i n N Z : ℕ} {R b : ℕ → ℝ}
-    (W : Fin i → Finset ℕ) (P : ∀ d, Finset (Fin n → primeSlabPrimes (R d)))
-    (j : Fin n) (hd : ∀ d ∈ boxConvolutionSupport W, 0 < d)
-    (hR : ∀ d ∈ boxConvolutionSupport W, 1 < R d) :
-    (∑ d ∈ boxConvolutionSupport W, (convolutionCoeff W d : ℝ) * ∑ g ∈ P d,
-      (((physical (prefixProduct g) ((N : ℝ)/d) (g j).val (R d ^ b d)).filter
-        (fun q => (N-d*freeProduct g*q).Prime ∧ N-d*freeProduct g*q ≤ Z)).card : ℝ)) =
-      smallOutputMass N Z W (family N W P j b) j b := by
-  have h := sum_interval (N := N) (b := b) W P j (fun c q =>
-    if (N-cofactor c*q).Prime ∧ N-cofactor c*q ≤ Z then (convolutionCoeff W c.1 : ℝ) else 0) hd hR
-  simpa only [smallOutputMass, smallInputs, cofactor, ← sum_filter,
-    sum_const, nsmul_eq_mul, mul_comm, mul_sum, sum_mul] using h
 
 /-- Real thresholds preserve the exact prime-output predicate, including the closed boundary. -/
 noncomputable def smallOutputMassReal {i n : ℕ} {R : ℕ → ℝ} (N : ℕ) (Z : ℝ)

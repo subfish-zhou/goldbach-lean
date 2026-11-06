@@ -183,21 +183,5 @@ theorem J9_lt_one : J9 < (1 : ℝ) := by
   norm_num [ninthProfileSigma, ninthProfileK1, ninthProfileK2] at h hc hl
   linarith
 
-/-- All original negative weights are consumed; this is not a positivity claim. -/
-theorem complete_coefficient_gt_negative_twenty_three :
-    (-23 : ℝ) < TruncatedElevenClassicalCountLower.classicalCoefficient := by
-  have hb := base_gt_fifty_two
-  have hg := ClassicalSingleBounds.G_pair_lt_fifty_two
-  have h4 := ClassicalFourBounds.four_weighted_lt_six
-  have h7 := J7_lt_tenth
-  have h8 := J8_lt_seven_eighths
-  have h9 := J9_lt_one
-  have hp := fifth_nonneg
-  have hq := sixth_nonneg
-  unfold TruncatedElevenClassicalCountLower.classicalCoefficient
-  change _ < _
-  change SingleUpperClassicalLimit.Glin (1/3) +
-    SingleUpperClassicalLimit.Glin truncatedSixthLowerSigma < 52 at hg
-  linarith
 
 end Wu2008DoubleSieve.ClassicalRemainingBounds

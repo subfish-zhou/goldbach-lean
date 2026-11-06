@@ -144,26 +144,6 @@ theorem suzukiExponentialTail_le_claim145_logExponent
         (L + (s - 2) * (1 + Real.log L - Real.log (s - 2))) :=
   floorTail_le_claim145_logExponent hL hlarge htail
 
-/-- Suzuki Lemma 14.3 with the exponential tail converted all the way to the
-logarithmic exponent consumed in subsequent Claim-14.5 comparisons.  Every
-constant and threshold condition is explicit. -/
-theorem suzukiLemma14_3_uniform_logExponent
-    (S : BoundingSieve) {N D z : ℕ} {s L : ℝ}
-    (hz : 0 < z) (hL : 0 < L)
-    (hpow : z ^ (⌊s - 2⌋₊ + 2) ≤ D)
-    (h141 : SuzukiLemma141Majorant S D z L)
-    (hlarge : Real.exp 1 * L ≤ s - 2)
-    (htail : suzukiExponentialTail L (⌊s - 2⌋₊ + 1) ≤
-      L ^ (⌊s - 2⌋₊ + 1) /
-          (((⌊s - 2⌋₊ + 1).factorial : ℕ) : ℝ) * Real.exp L) :
-    suzukiActualT S N D z ≤
-      Real.exp
-        (L + (s - 2) * (1 + Real.log L - Real.log (s - 2))) := by
-  have hs : 2 ≤ s := by
-    have hpos : 0 < Real.exp 1 * L := mul_pos (Real.exp_pos _) hL
-    linarith
-  exact (suzukiLemma14_3_uniform_exponentialTail S hz hs hL.le hpow h141).trans
-    (suzukiExponentialTail_le_claim145_logExponent hL hlarge htail)
 
 
 end MathlibNt.SieveTheory

@@ -42,36 +42,6 @@ theorem wuCommonRosserLevel_le_combined {i N d : ℕ} {Δ δ : ℝ} {V : Fin i �
   exact div_le_div_of_nonneg_left (Real.rpow_nonneg (Nat.cast_nonneg N) _)
     hd0' hdV
 
-/-- The source common-level restriction now follows solely from the actual
-box support. All real cutoffs and the choice of upper/lower sign are free. -/
-theorem wu_common_level_family_remainder_le_AP {i N L : ℕ} (Δ δ : ℝ)
-    (V : Fin i → ℝ) (upper : Fin L → Bool) (z : Fin L → ℕ → ℝ) :
-    |∑ l, convolutionRosserRemainder N (convolutionWuWindows N Δ V)
-      (upper l) (fun _ => wuCommonRosserLevel N δ V) (z l)| ≤
-        (L : ℝ) * convolutionAPError N (convolutionModulusCutoff N δ)
-          (convolutionWuWindows N Δ V) := by
-  apply finite_rosser_family_remainder_le_AP
-  intro _l d hd
-  exact wuCommonRosserLevel_le_combined hd
 
-/-- A genuine uniform signed-remainder producer at the source common
-level, with no assumed weight bound, support condition, or AP estimate. -/
-theorem wu_common_level_signed_bv (k L : ℕ) {δ A : ℝ}
-    (hδ : 0 < δ) (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧ ∃ N0 : ℕ, ∀ N : ℕ, N0 ≤ N →
-      ∀ i : ℕ, i ≤ k → ∀ Δ : ℝ,
-        1 + Real.log (N : ℝ) ^ (-4 : ℝ) ≤ Δ →
-        Δ < 1 + 2 * Real.log (N : ℝ) ^ (-4 : ℝ) →
-        ∀ V : Fin i → ℝ, (∀ j, (N : ℝ) ^ (δ ^ (k + 1)) ≤ V j) →
-        ∀ upper : Fin L → Bool, ∀ z : Fin L → ℕ → ℝ,
-        |∑ l, convolutionRosserRemainder N (convolutionWuWindows N Δ V)
-          (upper l) (fun _ => wuCommonRosserLevel N δ V) (z l)| ≤
-            (L : ℝ) * (C * (N : ℝ) / Real.log N ^ A) := by
-  obtain ⟨C, hC, N0, hBV⟩ := wu_signed_rosser_bombieri_vinogradov k L hδ hA
-  refine ⟨C, hC, N0, ?_⟩
-  intro N hN i hik Δ hlo hhi V hV upper z
-  apply hBV N hN i hik Δ hlo hhi V hV upper
-  intro _l d hd
-  exact wuCommonRosserLevel_le_combined hd
 
 end Wu2008DoubleSieve

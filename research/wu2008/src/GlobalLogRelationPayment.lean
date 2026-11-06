@@ -131,11 +131,7 @@ theorem upper_remainder_exact : upperRemainder = 9037002490979975252190520529195
   rw [remainder_substitution,GlobalSignedActualComparison.upperRemainder_exact,total_gain_exact]
   norm_num
 
-theorem log_gain_size : (5504/1000000:ℝ) < logGain ∧ logGain < 5505/1000000 := by
-  rw [log_gain_exact]; norm_num
 
-theorem total_gain_size : (9146/1000000:ℝ) < totalGain ∧ totalGain < 9147/1000000 := by
-  rw [total_gain_exact]; norm_num
 
 theorem upper_rational_size : (907976/1000000:ℝ) < upperRational ∧ upperRational < 907977/1000000 := by
   rw [upper_rational_exact]; norm_num
@@ -260,8 +256,6 @@ theorem lower_rational_exact : lowerRational = 737178457312247006277429827665464
   norm_num [V,upperLog,lowerLog] at h
   linarith only [h]
 
-theorem lower_gain_size : (1006/1000000:ℝ) < lowerGain ∧
-    lowerGain < 1007/1000000 := by rw [lower_gain_exact]; norm_num
 
 theorem improved_actual_Q_bounds : (823047/1000000:ℝ) < JointHMotherPayment.unroundedCoefficient ∧
     JointHMotherPayment.unroundedCoefficient < 907977/1000000 := by

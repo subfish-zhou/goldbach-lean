@@ -72,28 +72,6 @@ private theorem highConductor_subset_full {R Q : ℕ} :
   simp only [Finset.mem_Ioc, Finset.mem_Icc] at hd ⊢
   omega
 
-/-- The physical cutoff and shell lower endpoint force support in the common
-short interval. -/
-theorem vaughanTypeIICollectedRowCoefficient_eq_zero_of_length_lt
-    {N k r t : ℕ} {c : ℕ → ℕ → ℂ}
-    (hr : r ∈ vaughanTypeIIFixedShell k)
-    (ht : vaughanTypeIIFixedShellLength N k < t) :
-    vaughanTypeIICollectedRowCoefficient N r c (t : ℤ) = 0 := by
-  unfold vaughanTypeIICollectedRowCoefficient
-  by_cases ht0 : t = 0
-  · subst t
-    simp
-  · rw [dif_pos (by exact_mod_cast Nat.pos_of_ne_zero ht0)]
-    simp only [Int.toNat_natCast]
-    rw [if_neg]
-    intro hprod
-    have hrlo : 2 ^ k ≤ r := (Finset.mem_Ico.mp hr).1
-    have hp : 0 < 2 ^ k := pow_pos (by norm_num : 0 < (2 : ℕ)) k
-    have hpowprod : 2 ^ k * t ≤ N :=
-      (Nat.mul_le_mul_right t hrlo).trans hprod
-    have htle : t ≤ N / 2 ^ k :=
-      (Nat.le_div_iff_mul_le hp).2 (by simpa [mul_comm] using hpowprod)
-    exact (not_le_of_gt ht) htle
 
 private theorem norm_sum_mul_sq_le
     {ι : Type*} [DecidableEq ι] (s : Finset ι)
@@ -227,22 +205,6 @@ theorem highConductorVaughanTypeIIFixedShell_squareLedger_le
       simp only [Finset.mul_sum]
       ring
 
-/-- The AP-normalized `1/φ(d)` mean is converted by the genuine conductor
-Cauchy connector to the proved actual fixed-shell square ledger. -/
-theorem highConductorVaughanTypeIIFixedShell_mean_sq_le
-    (R Q N k : ℕ) (hQ : 0 < Q)
-    (a : ℕ → ℂ) (c : ℕ → ℕ → ℂ) :
-    (highConductorPrimitiveMean R Q
-      (fun d => highConductorVaughanTypeIIFixedShellAmplitude N k d a c)) ^ 2 ≤
-      highConductorHarmonicTail R Q *
-        (((Nat.log2 (vaughanTypeIIFixedShellLength N k) + 1 : ℕ) : ℝ) ^ 2 *
-          primitiveLargeSieveConstant (vaughanTypeIIFixedShellLength N k) Q *
-          (vaughanTypeIIFixedShellOuterEnergy k a *
-            vaughanTypeIIFixedShellTensorEnergy N k c)) := by
-  exact (highConductorPrimitiveMean_sq_le_harmonic_mul_squareLedger R Q _).trans
-    (mul_le_mul_of_nonneg_left
-      (highConductorVaughanTypeIIFixedShell_squareLedger_le R Q N k hQ a c)
-      (Finset.sum_nonneg fun d hd => by positivity))
 
 /-- The shortened large-sieve diagonal pays the shell cardinality scale without
 losing `2^k`: `2^k * (N / 2^k) ≤ N`. -/
@@ -250,22 +212,6 @@ theorem vaughanTypeIIFixedShell_diagonal_scale (N k : ℕ) :
     2 ^ k * vaughanTypeIIFixedShellLength N k ≤ N := by
   simpa [vaughanTypeIIFixedShellLength] using Nat.mul_div_le N (2 ^ k)
 
-/-- Exact diagonal/modulus audit after paying a shell energy bounded by `2^k`.
-The shortened diagonal is at most `N`; the modulus term remains `2^k Q²`.
-No power of the conductor cutoff `R` appears in this rowwise large-sieve step. -/
-theorem vaughanTypeIIFixedShell_largeSieve_scale (N Q k : ℕ) :
-    (2 ^ k : ℝ) *
-        primitiveLargeSieveConstant (vaughanTypeIIFixedShellLength N k) Q ≤
-      (N : ℝ) + (2 ^ k : ℝ) *
-        (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
-          (Q : ℝ) ^ 2 := by
-  have hdiag :
-      (2 ^ k : ℝ) * (vaughanTypeIIFixedShellLength N k : ℝ) ≤ (N : ℝ) := by
-    exact_mod_cast vaughanTypeIIFixedShell_diagonal_scale N k
-  -- Distribute the shell scale; the modulus term is identical on both sides.
-  unfold primitiveLargeSieveConstant
-  rw [mul_add, ← mul_assoc]
-  exact add_le_add_left hdiag _
 
 end
 end AnalyticNumberTheory.LargeSieve

@@ -247,8 +247,6 @@ theorem gain_exact : BaseUpperSplitCoefficient.newUpper-newUpper =
   norm_num [newUpper,sharedBaseCap,BaseUpperSplitRecurrence.newBase,a,b,
     truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
 
-theorem improvement_more_than_half : newUpper+1/2 < BaseUpperSplitCoefficient.newUpper := by
-  linarith only [gain_exact]
 
 theorem new_upper_lt_nine_halves : newUpper < (9/2 : ℝ) := by
   unfold newUpper
@@ -257,8 +255,6 @@ theorem new_upper_lt_nine_halves : newUpper < (9/2 : ℝ) := by
     NaturalSplitActual.exactGain,BaseUpperSplitRecurrence.newBase,sharedBaseCap,
     a,b,truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
 
-theorem actual_lt_nine_halves : TruncatedElevenClassicalCountLower.classicalCoefficient < (9/2 : ℝ) :=
-  complete_upper.trans_lt new_upper_lt_nine_halves
 
 end
 end Wu2008DoubleSieve.Phase22

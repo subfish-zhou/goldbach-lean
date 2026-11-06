@@ -38,15 +38,6 @@ theorem actualOpenErrorSum_eq (S : Finset ℕ) (f lo hi : ℕ → ℝ) (d b : �
     ring
   · simp only [if_neg hc, sub_self]
 
-theorem abs_actualEndpointSum_le (S : Finset ℕ) (f hi : ℕ → ℝ)
-    (d b : ℕ) (F : ℝ) (hF : 0 ≤ F)
-    (hS : ∀ m ∈ S, 0 < m) (hf : ∀ m ∈ S, |f m| ≤ F) :
-    |actualEndpointSum S f hi d b| ≤ F * S.card := by
-  refine (abs_sum_upperEndpoint_le (S.filter (fun m => m.Coprime d)) hi f d b F hF
-    (fun m hm => hS m (mem_filter.mp hm).1)
-    (fun m hm => hf m (mem_filter.mp hm).1)).trans ?_
-  apply mul_le_mul_of_nonneg_left _ hF
-  exact_mod_cast card_filter_le S (fun m => m.Coprime d)
 
 theorem weighted_actualOpenErrorSum_le (S : Finset ℕ) (f lo hi : ℕ → ℝ)
     (Q : ℕ) (b : ℕ → ℕ) (hS : ∀ m ∈ S, 0 < m)

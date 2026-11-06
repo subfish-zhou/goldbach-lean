@@ -224,11 +224,6 @@ theorem sixth_log_loss_lt : sixthLogIntegral-AnalyticTotalThreshold.sixthEndpoin
   rw [payment_rational] at h
   linarith only [h]
 
-/-- The original full sixth term; the recurrence surplus is included once. -/
-theorem actual_sixth_loss_lt : AnalyticTotalThreshold.sixthLoss < 7001/100000 := by
-  have h := sixth_loss_localization.2
-  have h6 := sixth_log_loss_lt
-  linarith only [h,h6]
 
 end
 end Wu2008DoubleSieve.SixthFullRationalEnclosure

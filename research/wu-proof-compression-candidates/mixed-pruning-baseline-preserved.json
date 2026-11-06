@@ -1,0 +1,15 @@
+{
+  "status": "ACCEPTED_BASELINE_PRESERVED_CANDIDATE_NOT_INSTALLED",
+  "baseline": "/home/azureuser/goldbach-lean/research/wu2008",
+  "snapshot": "/tmp/wu-mixed-pruning-baseline-snapshot-v1",
+  "manifest_sha256": "c7950a5796a848c7c0fc0f58f68c41746a570d137f54ab298c64a31d14f71e39",
+  "verified_modules": 4151,
+  "shared_candidate_context_digest": "62d8408dd7e4a6911ffd9e3d627a419a612289739c4d41c8f0036eac3fc49377",
+  "source_receipts_logs_are_independent_copies": true,
+  "artifact_links_require_atomic_replacement_on_future_installation": true,
+  "canonical_unchanged": true,
+  "preparer_sha256": "f6e5df83f138d3bb1e2e40fd2ed82881562f6ee3b78e691f7396af2517d8a88d",
+  "evidence": "mixed-pruning-baseline-snapshot-review.json.gz",
+  "evidence_sha256": "282ac179b82f8c153aaf2d8ef084b6bee56de1c8315a29ae3f6cad84215820de",
+  "inventory_entries": 16615
+}

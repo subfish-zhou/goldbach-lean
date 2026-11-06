@@ -114,21 +114,5 @@ theorem R2_euler :
     positivity
   exact hs.trans ((mul_le_mul_of_nonneg_right hm hn).trans_eq (by ring))
 
-/-- Composed finite prime endpoint: F occurs in the additive error, never in X. -/
-theorem prime_upper_euler :
-    ∃ C : ℝ, 0 < C ∧ ∀ (N : ℕ), 3 ≤ N → Even N →
-      ∀ (α : Type u) (L : Family α N) (D : ℕ) (Z Y F : ℝ),
-      1 < D → Z ≤ (D : ℝ) → Z ≤ N → 0 < Y → 0 ≤ F →
-      (∀ q ∈ omega3SieveModuli N D Z, q ≤ N) →
-      (∀ c ∈ L.labels, ∀ p, p.Prime → p ∣ L.cofactor c → Y ≤ (p : ℝ)) →
-      (∀ e, (∑ c ∈ L.labels.filter (fun c => L.cofactor c = e), L.weight c) ≤ F) →
-      L.primeMass ≤ L.mass * ordinaryRosserMainSum true N 1 D Z + L.R1 D Z +
-        C * F * N * ((1 + log N) * log N ^ 4 / (Y * log 2)) + L.small Z := by
-  obtain ⟨C, hC, hR2⟩ := R2_euler.{u}
-  refine ⟨C, hC, ?_⟩
-  intro N hN he α L D Z Y F hD hZD hZN hY hF hqN hrough hfibre
-  have h := L.prime_upper_finite he D Z hD hZD
-  have h2 := hR2 N hN α L D Z Y F hZN hY hF hqN hrough hfibre
-  linarith
 
 end Wu2008DoubleSieve.LabelledPhysical.Family

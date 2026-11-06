@@ -16,10 +16,6 @@ noncomputable def continuousDensity {n : ℕ} (t : Fin n → ℝ) : ℝ :=
 theorem continuousCube_measurable (n : ℕ) : MeasurableSet (continuousCube n) :=
   MeasurableSet.pi Set.countable_univ (fun _ _ => measurableSet_Icc)
 
-theorem continuousDensity_measurable (n : ℕ) :
-    Measurable (continuousDensity (n := n)) := by
-  unfold continuousDensity
-  fun_prop
 
 theorem continuousDensity_nonneg {n : ℕ} {t : Fin n → ℝ}
     (ht : t ∈ continuousCube n) : 0 ≤ continuousDensity t := by
@@ -53,8 +49,6 @@ theorem continuousDensity_mul_integrable {n : ℕ} {g : (Fin n → ℝ) → ℝ}
   apply (continuousDensity_integrable n).bdd_mul hg.aestronglyMeasurable
   exact (ae_restrict_mem (continuousCube_measurable n)).mono (fun t ht => hK t ht)
 
-theorem continuousDensity_zero (t : Fin 0 → ℝ) : continuousDensity t = 1 := by
-  simp [continuousDensity]
 
 theorem continuousCube_zero : continuousCube 0 = Set.univ := by
   ext t

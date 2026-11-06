@@ -437,28 +437,5 @@ private theorem eq20_beta_sphere_domain {x : ℕ} (hx : 3 ≤ x) (v : ℝ)
     rw [heq] at hre
     linarith
 
-/-- Corrected actual equation-(20) budget, with the Cauchy radius and both
-beta-domain obligations proved internally. The right-hand side is the explicit
-fixed-power budget, not an `x / log(x)^20` estimate. Only the literal source
-packet and epsilon are supplied by the caller. -/
-theorem chen1973Lemma6_equation20_corrected_actual_budget
-    {x L B lastD level k m : ℕ}
-    (P : Chen1973Lemma6Eq20ComplementarySourceParameters x L B lastD level k)
-    (ε : ℝ) :
-    let H := chen1973Lemma6Equation20H x level k ε
-    let D := chen1973Lemma6Eq20SourceD L level
-    let Q := chen1973Lemma6Eq20SourceQ L level
-    chen1973Lemma6NmBlockActual x L level B k m ≤
-      12 * (x : ℝ) * Real.log x ^ 2 *
-          chen1973Lemma6Eq20UnconditionalFirstBound x L level B k m H D Q +
-        2 * (x : ℝ) ^ ((1 : ℝ) / 2) *
-          (chen1973Lemma6Eq20UnconditionalSecondBound x L level B k m H D Q (1 / (2 * Real.log x)) *
-            (x : ℝ) ^ ((1 : ℝ) / 2)) := by
-  have hx := P.hx
-  have hl : 0 < Real.log (x : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < x by omega))
-  have hr : 0 < (1 / (2 * Real.log x) : ℝ) := by positivity
-  exact chen1973Lemma6_equation20_unconditional_final (ε := ε) P hr
-    (eq20_beta_domain P.hx) (fun t z hz => eq20_beta_sphere_domain P.hx t hz)
 
 end AnalyticNumberTheory.LargeSieve

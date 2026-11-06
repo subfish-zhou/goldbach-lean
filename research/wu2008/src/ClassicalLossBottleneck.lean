@@ -340,11 +340,6 @@ theorem recoveredCoefficient_le_actual : recoveredCoefficient ≤ JointHMotherPa
   unfold recoveredCoefficient AnalyticTotalThreshold.sixthLoss at *
   linarith only [hgap,hs.1,hs.2.1,hs.2.2.2,hl.2.1,hl.2.2.2,hj,h6]
 
-/-- The new certificate includes the whole log-kernel recovery and is genuinely no weaker. -/
-theorem recoveredCoefficient_ge_parent :
-    AnalyticTotalThreshold.coefficient+JointJLossStrength.recovery/4 ≤ recoveredCoefficient := by
-  unfold recoveredCoefficient
-  linarith only [sixth_endpoint_le_logIntegral]
 
 /-- A rigorous upper bound on the unpaid sixth portion after the whole log recovery. -/
 theorem unpaid_sixth_quarter_cap :

@@ -31,26 +31,7 @@ theorem large_eq_physical_pairs (N : ℕ) : large N = physical N (largePairs N) 
   simp only [large, physicalT8, physical, largePairs, mem_filter, mem_sigma, mem_range]
   tauto
 
-/-- The cutoff belongs to the large piece; the original r=b diagonal stays. -/
-theorem mem_large {N a b r : ℕ} :
-    (⟨(a,b),r⟩ : NinthLabel) ∈ large N ↔
-      (a,b) ∈ lowerPairs N N (z N) (v N) ∧ (a : ℝ) < v N ∧
-      r < N+1 ∧ r.Prime ∧ b ≤ r ∧ a*b*r < N ∧
-      (N-a*b*r).Prime ∧ (N : ℝ)^(1/10 : ℝ) ≤ (a : ℝ) := by
-  rw [large, mem_filter, mem_physicalT8]
-  tauto
 
-/-- A finite-source witness shared with the modern lane; no analytic import is moved. -/
-theorem small_closed_formula (N : ℕ) : small N =
-    ((((((Finset.range ⌈(N : ℝ)+1⌉₊).filter
-      (fun q : ℕ => q.Prime ∧ q.Coprime N ∧ (N : ℝ)^(100/1327 : ℝ) ≤ (q : ℝ))) ×ˢ
-      ((Finset.range ⌈(N : ℝ)+1⌉₊).filter
-      (fun q : ℕ => q.Prime ∧ q.Coprime N ∧ (N : ℝ)^(1/3 : ℝ) ≤ (q : ℝ)))).filter
-      (fun t => t.1 < t.2 ∧ t.1*t.2^2 < N)).filter
-      (fun t => (t.1 : ℝ) < (N : ℝ)^(1/3 : ℝ))).sigma
-      (fun t => (Finset.range (N+1)).filter
-      (fun r => r.Prime ∧ t.2 ≤ r ∧ t.1*t.2*r < N ∧ (N-t.1*t.2*r).Prime))).filter
-      (fun x => (x.1.1 : ℝ) < (N : ℝ)^(1/10 : ℝ)) := rfl
 
 theorem original_normalization {N : ℕ} (hN : 0 < N) :
     wuSingularSeries N * N / log N^(2 : ℕ) =
@@ -93,15 +74,7 @@ theorem mother_with_literal_split {δ ε : ℝ}
   unfold FullAdmissibleMother.psiCoefficient
   ring
 
-/-- Algebra only: replacing the small coefficient keeps the large coefficient once.
-There is intentionally no count-upper premise and no claimed gain endpoint. -/
-theorem signed_coefficient_replacement (B L H W : ℝ) :
-    B - 8*(L+H) + (8*L-(36/5)*W) = B - ((36/5)*W+8*H) := by ring
 
-theorem ordinary_coefficient_replacement (B L H W : ℝ) :
-    (B - ((36/5)*W+8*H))/4 = (B-8*(L+H))/4 + (8*L-(36/5)*W)/4 := by ring
 
-theorem old_to_new_small_weight (x : ℝ) :
-    (36/5 : ℝ)/(1-x) = 8*((9/10 : ℝ)/(1-x)) := by ring
 
 end U8MotherInsertion

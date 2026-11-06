@@ -30,16 +30,6 @@ def wExtractedBlockExponential (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ)
     (fun t => (wExtractedOriginal t.1).2.1)
     (fun t => (wExtractedOriginal t.1).2.2) Prod.snd u
 
-theorem wExtractedFrequencyBlock_eq_integral {M : ℝ} (hM : 0 < M)
-    (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ)
-    (β c₁ γ ζ : ℕ → ℝ) (a : ℤ) (P : WOriginalTuple → Prop)
-    (R S ξ : ℝ) (b : ℕ) :
-    (∑ t ∈ frequencyBlock (wExtractedFrequencies H N Q a P R S ξ) Prod.snd b,
-      wExtractedFrequencyTerm M β c₁ γ ζ a t) =
-      ∫ u : ℝ, (scaledDyadicCutoff M u : ℂ) *
-        wExtractedBlockExponential H N Q β c₁ γ ζ a P R S ξ b u := by
-  exact sum_wPoissonFrequency_eq_integral hM _ _ _ _ _ _ _ _
-    (fun _ ht => (Finset.mem_filter.mp ht).2.1)
 
 theorem wExtractedFrequencyBlock_le_max {M : ℝ} (hM : 0 < M)
     (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ)

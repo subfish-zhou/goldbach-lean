@@ -50,23 +50,11 @@ def fullCellFinite (a b : ℝ) : ℝ :=
   (coeffBMinus fullQBOne fullQBZero*splitUpper (minusB b/minusB a)+
     coeffBPlus fullQBOne fullQBZero*splitLower (plusB b/plusB a))
 
-theorem fullCellPaid_eq_finite (a b : ℝ) : fullCellPaid a b=fullCellFinite a b := by
-  obtain ⟨hAm,hAp,hBm,hBp⟩ := quadratic_coefficient_signs
-  simp only [fullCellPaid,fullCellFinite,quadraticAPaid,quadraticBPaid,signed,
-    if_pos hAm.le,if_neg (not_le.mpr hAp),if_neg (not_le.mpr hBm),if_pos hBp.le]
 
 /-- Original numerator plus retained complete FTC correction; nothing is silently paid twice. -/
 def fullUnpaid (a b : ℝ) : ℝ := fullPrimitive b-fullPrimitive a-fullCellPaid a b
 
-theorem fullUnpaid_nonneg {a b : ℝ} (ha : 1≤a) (hab : a≤b) : 0≤fullUnpaid a b :=
-  sub_nonneg.mpr (fullCellPaid_le ha hab)
 
-theorem exact_full_payment_remainder {a b : ℝ} (ha : 1≤a) (hab : a≤b) :
-    SigmaPrimitiveCells.cellMass a b+SigmaSignedCells.correctionMass a b=
-      fullCellPaid a b+fullUnpaid a b := by
-  rw [← fullCell_identity ha hab]
-  unfold fullUnpaid
-  ring
 
 end
 end SigmaCorrectionFTC

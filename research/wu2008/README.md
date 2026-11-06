@@ -2,9 +2,11 @@
 
 本目录沿 Wu04／Wu08 双筛路线推出 **1+1.8938**。最终证明位于 `src/WR2ClassicalCertificate.lean`，公开无条件定理 `WuPaper.ClassicalSlots.one8938`：充分大的偶数满足 `N = p + r*q`，`p`、`q` 为素数，`r = 1` 或为素数，且 **`r^5000 ≤ q^4469`**。原 `one894` 接口仍保留。
 
-**4151 模块完整范围、新旧字面命题与公理检查、独立内核复核均通过。** 本轮采用 3500 个实际编译的源码证明收据（196 个真实前缀证明和 3304 个 V7 新编译），另核对 651 个未变依赖；生产树再次通过全部 4151 模块的缓存与递归收据核对。当前最终定理导入闭包为 3764 个模块、525,529 行有效代码、621,451 行物理行。累计净减少 601,107 行有效代码；最新[结构压缩](../../docs/WU_STRUCTURAL_COMPRESSION.md)净减少 7,612 行有效代码、9,092 行物理行。原数学网格、精度和预算保持。统计包含导入模块的完整源码，不包含外部 Lake 依赖，不表示最小声明级证明长度。
+**4151 模块完整范围、新旧字面命题与公理检查、独立内核复核均通过。** 最新一轮删除 2,119 个未使用证明声明（2,097 个公开声明、22 个私有引理），修改 1,082 个模块；3,957 个受影响模块实际重编译通过，194 个未变上下文复用缓存。随后通过 30 项独立验收（含 21 个根模块内核重放）和安装后 5 项生产检查，生产检查未新增源码编译。最终定理导入闭包为 3764 个模块、469,022 行有效代码、548,778 行物理行。全树为 4151 模块、509,776 行有效代码。本轮实际净减少 31,209 行有效代码、34,117 行物理行；相对原始闭包累计减少 657,614 行有效代码。原数学网格、精度和误差预算保持。统计包含完整本地导入模块，不包含外部 Lake 依赖、历史副本和生成器模板，不表示最小声明级证明长度。
 
-当前[统计与验收](../wu-structural-compression-audit/validation.json)、[详细报告](../../docs/WU_STRUCTURAL_COMPRESSION.md)和[统一统计说明](../../docs/SOURCE_SIZE.md)记录本轮范围。上一轮 [383 个 LiuPan 引理剪枝](../../docs/WU_LIUPAN_PRUNING.md)的验收记录保留为历史证据。Hf4 构造式证明、统一语义和公开声明剪枝候选尚未计入当前节省。
+当前[统计与验收](../wu-unused-proof-audit/validation.json)、[详细报告](../../docs/WU_UNUSED_PROOF_PRUNING.md)和[统一统计说明](../../docs/SOURCE_SIZE.md)记录本轮范围。此前 [Hf4 构造式压缩](../../docs/WU_HF4_CONSTRUCTIVE.md)、[结构压缩](../../docs/WU_STRUCTURAL_COMPRESSION.md)和 [383 个 LiuPan 引理剪枝](../../docs/WU_LIUPAN_PRUNING.md)的证据保留。
+
+当前生成器复现命令：`python3 diagnostics/hf4_constructive/produce.py --route constructive --output-dir src --check`。旧 `hf4_compact_certificates.py` 命令默认转发到当前构造式生成器；`--panel` 保留历史单格探测模式。旧精确算术参考只保留在新生成器的冻结输入 `lib/legacy_hf4.py` 中。
 
 ## 布局
 
@@ -72,7 +74,7 @@ python3 build.py --all --jobs 1 --lean-threads 2
 | 第五项 | 下界 `1.65533` | 最终证书及完整依赖闭包 3521 个模块通过 |
 | 第六项 | 下界 `3.81909` | 最终证书及全部 1029 个生成模块已通过暂存完整依赖审计 |
 
-集成前，最终经典证书的 8443 模块依赖闭包已通过完整审计；另已独立核对所有源码、对象、导入清单和依赖哈希，以及全部 9205 个锁定输入。首次集成后的独立验收核对了当时全部 8826 个模块。第一轮保留精度压缩后，当时全部 5441 个模块的源码、对象和依赖收据重新通过核对，并通过字面命题与标准公理检查。无条件定理 `ClassicalSlots.one894` 和经典总量下界均仅依赖 `propext`、`Classical.choice`、`Quot.sound`。最终模块在重建的导入环境上通过独立内核复核。第一轮历史验收记录见[validation.json](../wu-precision-audit/validation.json)，第二轮历史记录见[1.8938 升级验收](../wu18938-audit/validation.json)，当前记录见[最新验收](../wu-structural-compression-audit/validation.json)；初次集成记录保留于 `pre_precision_compression_acceptance`。当前机器上的回执保存在 `build/classical-acceptance.json`、`build/classical-literal-axioms.log` 和[最新内核复核日志](../wu-structural-compression-audit/fresh_production_final_kernel.log)；源码指纹和阶段记录见 `mathematical-status.json`。
+集成前，最终经典证书的 8443 模块依赖闭包已通过完整审计；另已独立核对所有源码、对象、导入清单和依赖哈希，以及全部 9205 个锁定输入。首次集成后的独立验收核对了当时全部 8826 个模块。第一轮保留精度压缩后，当时全部 5441 个模块的源码、对象和依赖收据重新通过核对，并通过字面命题与标准公理检查。无条件定理 `ClassicalSlots.one894` 和经典总量下界均仅依赖 `propext`、`Classical.choice`、`Quot.sound`。最终模块在重建的导入环境上通过独立内核复核。第一轮历史验收记录见[validation.json](../wu-precision-audit/validation.json)，第二轮历史记录见[1.8938 升级验收](../wu18938-audit/validation.json)，当前记录见[最新验收](../wu-unused-proof-audit/validation.json)；初次集成记录保留于 `pre_precision_compression_acceptance`。当前机器上的回执保存在 `build/classical-acceptance.json`、`build/classical-literal-axioms.log` 和[最新内核复核日志](../wu-unused-proof-audit/production-final-kernel.log)；源码指纹和阶段记录见 `mathematical-status.json`。
 
 公开已验收定理的标准逻辑公理检查仅允许 `propext`、`Classical.choice`、`Quot.sound`；这与定理类型中明确写出的数学条件是不同层次。历史变体、导入目录或源文件数量都不代表全局数学完成。
 
@@ -202,7 +204,7 @@ PY
 
 ## 1+1.8938 的当前验收与压缩复现
 
-本页中的 8826、5441 模块数字及各项暂存闭包规模记录较早阶段。当前完整范围是 **4151** 模块，以 `mathematical-status.json` 的 `final_acceptance` 和[当前验收记录](../wu-structural-compression-audit/validation.json)为准。
+本页中的 8826、5441 模块数字及各项暂存闭包规模记录较早阶段。当前完整范围是 **4151** 模块，以 `mathematical-status.json` 的 `final_acceptance` 和[当前验收记录](../wu-unused-proof-audit/validation.json)为准。
 
 `python3 check_classical.py` 现在同时验收 `one8938` 的 `r^5000 ≤ q^4469` 和兼容 `one894` 的 `r^500 ≤ q^447`，并检查标准公理依赖。精度提升发生在公开呈现层：原计数桥已认证 1.8938，没有放宽任何数值预算。
 
@@ -210,6 +212,6 @@ PY
 
 上一阶段第五项整数公式压缩的复现命令、完整证据和编译开销记录见[本轮审计](../wu-fifth-integer-audit/README.md)。上述 C／第八原积分生成器对应较早阶段，仍保留其原数值精度。
 
-## 暂停中的下一轮工作
+## Hf4 暂停／恢复历史与后续工作
 
-用户要求暂停时，下一轮 Hf4 构造式压缩已完成 53／389 个受影响模块的重编，另核对 3762 个未变依赖；尚未完成整体验收或安装。完整候选源码、可搬移生成器、实际验证记录和恢复说明见[暂停工作快照](../wu-hf4-constructive-wip/README.md)。其中预计减少的 25,298 行不计入上方当前已验收统计。
+这轮工作曾按用户要求暂停于 53／389 个重编任务通过；随后复核并复用原 53 个证明，完成剩余 336 个重编及 25 项独立验收，现已安装并通过生产验证。[历史工作快照](../wu-hf4-constructive-wip/README.md)及[恢复记录](../wu-hf4-constructive-wip/RESUMPTION.md)保留实际过程；Hf4 阶段结果见[历史验收](../wu-hf4-constructive-audit/validation.json)。公开声明零引用普查和 22 个私有引理清理已针对新环境重新审查，并作为[独立剪枝阶段](../wu-unused-proof-audit/validation.json)正式采用。

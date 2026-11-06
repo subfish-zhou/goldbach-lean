@@ -52,26 +52,6 @@ theorem four_abs_budget {a b : Fin 4 → ℝ} {epsilon : ℝ}
       sum_lt_sum_of_nonempty (by simp) (fun j _ => h j)
     _ = epsilon := by simp; ring
 
-/-- The same actual phi and threshold serve every word and their total error. -/
-theorem sourceClosedK_four_uniform (k : ℕ) {δ epsilon : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (he : 0 < epsilon) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s →
-      ∀ d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V),
-        (∀ j : Fin 4, |sourceClosedK N d δ p j - sourceLegalK N d δ p j| < epsilon) ∧
-        (∑ j : Fin 4, |sourceClosedK N d δ p j - sourceLegalK N d δ p j|) < epsilon ∧
-        |(∑ j : Fin 4, sourceClosedK N d δ p j) -
-          (∑ j : Fin 4, sourceLegalK N d δ p j)| < epsilon := by
-  obtain ⟨T, hT4, hT⟩ := sourceClosedK_uniform k hδ hδhi
-    (show 0 < epsilon/4 by positivity)
-  refine ⟨T, hT4, ?_⟩
-  intro N hN i Δ V hb p hp hs d hd
-  have h := hT N hN i Δ V hb p hp hs d hd
-  have hsum := four_abs_budget h
-  refine ⟨fun j => (h j).trans_le (by linarith), hsum, ?_⟩
-  rw [← sum_sub_distrib]
-  exact (abs_sum_le_sum_abs _ _).trans_lt hsum
 
 end Wu2008DoubleSieve.FourPrimeNonunit
 

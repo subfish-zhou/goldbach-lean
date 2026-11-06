@@ -181,33 +181,5 @@ theorem wuEffectiveCoefficient_global_trueLi_quadrature (upper : Bool)
   exact hglobal (wuEffectiveCoefficient upper k δ N0) 11 q (hT N0 hN0).1
     (by norm_num) (hT N0 hN0).2 a b hXa ha hab hq hlq hqb haq
 
-/-- Uniform epsilon control of the global quadrature error. The lower
-prime cutoff and improvement threshold are frozen before the coefficient.
-This is not yet a quadrature-to-integral or prime-divisor-deletion theorem. -/
-theorem wuEffectiveCoefficient_global_quadrature_error_small (upper : Bool)
-    (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :
-    ∃ T Y0 : ℕ, ∀ N0 : ℕ, T ≤ N0 →
-      ∀ q : ℝ, ∀ a b : ℕ, Y0 ≤ a → a ≤ b →
-        1 < q → 2 ≤ log q →
-        ((b + 1 : ℕ) : ℝ) ≤ q ^ (1 / 2 : ℝ) →
-        log q / log (a + 1 : ℕ) - 1 ≤ 10 →
-        |primeCoefficientQuadratureError (wuEffectiveCoefficient upper k δ N0) q a b| ≤
-          ε := by
-  obtain ⟨C, _, X0, T, hglobal⟩ :=
-    wuEffectiveCoefficient_global_trueLi_quadrature upper k hk hδ hδhi
-  have hevent : ∀ᶠ a : ℕ in atTop, C / ε ≤ log (a : ℝ) :=
-    (tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually (eventually_ge_atTop _)
-  obtain ⟨M, hM⟩ := eventually_atTop.mp hevent
-  refine ⟨T, max 3 (max X0 M), ?_⟩
-  intro N0 hN0 q a b ha hab hq hlq hqb haq
-  have ha3 : 3 ≤ a := (le_max_left _ _).trans ha
-  have hXa : X0 ≤ a := (le_max_left _ _).trans ((le_max_right _ _).trans ha)
-  have hMa : M ≤ a := (le_max_right _ _).trans ((le_max_right _ _).trans ha)
-  have hla : 0 < log (a : ℝ) := log_pos (by exact_mod_cast (show 1 < a by omega))
-  apply (hglobal N0 hN0 q a b hXa ha3 hab hq hlq hqb haq).trans
-  exact (div_le_iff₀ hla).2 (by
-    have := (div_le_iff₀ hε).1 (hM a hMa)
-    nlinarith)
 
 end Wu2008DoubleSieve

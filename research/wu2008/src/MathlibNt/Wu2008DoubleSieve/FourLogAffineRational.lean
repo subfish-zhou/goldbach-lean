@@ -48,8 +48,6 @@ theorem eleven_bracket_upper :
     (div_le_div_of_nonneg_right (pow_le_pow_left₀ (hl0.le.trans hl) hu 3) (by positivity))
     (div_le_div_of_nonneg_right (pow_le_pow_left₀ hl0.le hl 4) (by positivity))
 
-theorem rational_eleven_bracket_nonneg : 0 ≤ u^3/(6*alpha)-l^4/(12*beta) :=
-  eleven_bracket_nonneg.trans eleven_bracket_upper
 
 /-- Nonnegative actual and rational brackets justify payment of the upper cross logarithm. -/
 theorem I11_le_elevenUpper : I11 ≤ elevenUpper := by

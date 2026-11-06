@@ -21,14 +21,6 @@ theorem mem_reducedModuli_fullLevel_iff (L : ℝ) (a : ℤ) (q : ℕ) :
   simp only [Int.gcd_def, Int.natAbs_natCast,
     Nat.coprime_iff_gcd_eq_one]
 
-theorem mem_reducedModuli_fullLevel_mul_iff (L : ℝ) (a : ℤ)
-    {d k : ℕ} (hd : 0 < d) :
-    d * k ∈ reducedModuli (Ioc 0 ⌊L⌋₊) a ↔
-      k ∈ Ioc 0 (⌊L⌋₊ / d) ∧ a.natAbs.Coprime d ∧ a.natAbs.Coprime k := by
-  rw [mem_reducedModuli_fullLevel_iff]
-  have hpos : 0 < d * k ↔ 0 < k := by constructor <;> intro h <;> nlinarith
-  simp only [mem_Ioc, hpos, Nat.coprime_mul_iff_right,
-    Nat.le_div_iff_mul_le hd, mul_comm k d]
 
 theorem supported_product_mem_fullLevel {R S : ℝ} (hR : 0 ≤ R) (hS : 0 ≤ S)
     {r s : ℕ} (hr : r ∈ Ioc 0 ⌊R⌋₊) (hs : s ∈ Ioc 0 ⌊S⌋₊) :
@@ -71,52 +63,6 @@ def wRPrimeResidual (a : ℤ) (P : WOriginalTuple → Prop)
     P ((q₁, q₂), (n₁, n₂)) ∧
     wSecondExtractionDivisor ((q₁, q₂), (n₁, n₂)) = Δ * Δ'
 
-/-- Exact inner-variable conditions in the actual extracted W.
-The only range of `r'` is `0 < r' <= floor(R)/Delta`; all remaining
-variable-dependent restrictions are displayed in `wRPrimeResidual`.
-No assertion of interval cancellation is made for this filtered set. -/
-theorem mem_wFactorExtractionTuples_fullLevel_rPrime_iff
-    {R S : ℝ} (hR : 0 ≤ R) (hS : 0 ≤ S) (N : Finset ℕ)
-    (a : ℤ) (P : WOriginalTuple → Prop) (ξ : ℝ)
-    {Δ Δ' r' s' : ℕ} (hΔ : 0 < Δ) (hΔ' : 0 < Δ')
-    (hr' : 0 < r') (hs' : 0 < s') (q₁ n₁ n₂ : ℕ) :
-    (((Δ, Δ'), (r', s')), (q₁, (n₁, n₂))) ∈
-        wFactorExtractionTuples N (Ioc 0 ⌊R * S⌋₊) a P R S ξ ↔
-      r' ∈ Ioc 0 (⌊R⌋₊ / Δ) ∧ s' ∈ Ioc 0 (⌊S⌋₊ / Δ') ∧
-      q₁ ∈ Ioc 0 ⌊R * S⌋₊ ∧ a.natAbs.Coprime q₁ ∧
-      n₁ ∈ N ∧ n₂ ∈ N ∧
-      a.natAbs.Coprime Δ ∧ a.natAbs.Coprime Δ' ∧ a.natAbs.Coprime s' ∧
-      n₁.Coprime q₁ ∧ n₂.Coprime Δ ∧ n₂.Coprime Δ' ∧ n₂.Coprime s' ∧
-      ((Δ' * s').primeFactors.card : ℝ) ≤ ξ ∧ s'.Coprime Δ ∧
-      wRPrimeResidual a P Δ Δ' s' q₁ n₁ n₂ r' := by
-  rw [mem_wFactorExtractionTuples_iff]
-  dsimp only
-  have hrbox := positive_factor_box_iff (F := ⌊R⌋₊) hΔ hr'
-  have hsbox := positive_factor_box_iff (F := ⌊S⌋₊) hΔ' hs'
-  have hprod (hr : Δ * r' ≤ ⌊R⌋₊) (hs : Δ' * s' ≤ ⌊S⌋₊) :
-      (Δ * r') * (Δ' * s') ∈ reducedModuli (Ioc 0 ⌊R * S⌋₊) a ↔
-        a.natAbs.Coprime Δ ∧ a.natAbs.Coprime r' ∧
-        a.natAbs.Coprime Δ' ∧ a.natAbs.Coprime s' := by
-    rw [supported_product_reduced_fullLevel_iff hR hS
-      (mem_Ioc.mpr ⟨Nat.mul_pos hΔ hr', hr⟩)
-      (mem_Ioc.mpr ⟨Nat.mul_pos hΔ' hs', hs⟩)]
-    simp only [Nat.coprime_mul_iff_right]
-    tauto
-  simp only [mem_reducedModuli_fullLevel_iff, WCompatible, wRPrimeResidual,
-    Nat.coprime_mul_iff_right]
-  constructor
-  · intro h
-    have hr := hrbox.mp (show Δ ∈ Ioc 0 ⌊R⌋₊ ∧
-      r' ∈ Ioc 0 ⌊R⌋₊ ∧ Δ * r' ≤ ⌊R⌋₊ from by tauto)
-    have hs := hsbox.mp (show Δ' ∈ Ioc 0 ⌊S⌋₊ ∧
-      s' ∈ Ioc 0 ⌊S⌋₊ ∧ Δ' * s' ≤ ⌊S⌋₊ from by tauto)
-    tauto
-  · intro h
-    have hr := hrbox.mpr h.1
-    have hs := hsbox.mpr h.2.1
-    have hp := (hprod hr.2.2 hs.2.2).mpr (by tauto)
-    simp only [mem_reducedModuli_fullLevel_iff, Nat.coprime_mul_iff_right] at hp
-    tauto
 
 /-- A nonzero retained frequency gives a strict lower endpoint. This
 uses the ceiling convention in the actual `wUniformCutoff`, including
@@ -156,14 +102,6 @@ theorem wUniformCutoff_factor_interval_iff {M Z : ℝ} (hM : 0 < M) (hZ : 0 < Z)
   rw [div_mul_eq_mul_div, lt_div_iff₀ hM, div_mul_eq_mul_div, lt_div_iff₀ hδr]
   constructor <;> intro he <;> nlinarith
 
-/-- The exact retained inner interval after fixing the gcd. The upper
-endpoint comes from the factor support, not an arbitrary modulus mask. -/
-theorem wUniformCutoff_factor_mem_Ioc_iff {M Z : ℝ} (hM : 0 < M) (hZ : 0 < Z)
-    {q d k δ F : ℕ} (hq : 0 < q) (hd : 0 < d) (hk : 0 < k)
-    (hg : q.gcd (d * k) = δ) {h : ℤ} (hh : h ≠ 0) :
-    k ≤ F ∧ h.natAbs ≤ wUniformCutoff M Z q (d * k) ↔
-      k ∈ Ioc ⌊((h.natAbs - 1 : ℕ) : ℝ) * M * δ / ((q : ℝ) * d * Z)⌋₊ F := by
-  rw [wUniformCutoff_factor_interval_iff hM hZ hq hd hk hg hh, mem_Ioc, and_comm]
 
 theorem wExtractedOriginal_reducedModuli {N Q : Finset ℕ} {a : ℤ}
     {P : WOriginalTuple → Prop} {R S ξ : ℝ} {z : WExtractedTuple}

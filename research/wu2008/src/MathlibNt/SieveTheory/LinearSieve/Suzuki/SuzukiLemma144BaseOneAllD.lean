@@ -180,24 +180,6 @@ theorem lemma14_4_base_one_odd_low_allD
   exact baseOne_lowStrip_le_uniformEnvelope hH hΔ1 hC hK hlocal D s hD hs
     (by linarith [le_of_not_ge hs2]) hz2
 
-/-- `K`-uniform version of the odd low-strip base. -/
-theorem lemma14_4_base_one_odd_low_allD_global
-    {S : BoundingSieve} {H : Section13HatLayers}
-    (hH : Section13HatContract H 2)
-    {d Δ C K : ℝ} (hΔ1 : Δ < 1)
-    (hC : lemma144BaseOneGlobalConstant Δ ≤ C)
-    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K) :
-    ∀ (D : ℕ) (s : ℝ),
-      2 ≤ D → s ∈ KappaOneModel.parityDomain 2 1 →
-      2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ → ¬ 2 ≤ s →
-      suzukiActualT S 1 D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
-        suzukiVProduct S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) *
-          (finiteSourceLayer 1 2 1 s +
-            C * Real.exp (Real.sqrt K) * errorEnvelope H 1 (D : ℝ) d s *
-              (Real.log (D : ℝ)) ^ (-Δ)) := by
-  exact lemma14_4_base_one_odd_low_allD hH hΔ1
-    ((lemma144BaseOneUniformConstant_le_global (by linarith : 0 ≤ K)).trans hC)
-    hK hlocal
 
 /-- The complete depth-one estimate on the source low strip `1 < s ≤ 3`,
 for all `D ≥ 2`, with a constant independent of `K`. -/

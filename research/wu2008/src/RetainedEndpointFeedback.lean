@@ -31,10 +31,6 @@ theorem rhoEndpoint_bounds : 0 < rhoEndpoint ∧ rhoEndpoint < 1 := by
   exact ⟨Phase10.rhoLog_bounds.1.trans rhoEndpoint_strict,
     lt_of_le_of_lt rhoEndpoint_upper (by norm_num)⟩
 
-theorem rhoEndpoint_fixed : rhoEndpoint = Phase10.rhoLog+(4768/847665)+
-    κh*(log (1677/1432)+log (179/130))/2 := by
-  unfold rhoEndpoint L0
-  linarith only [endpoint_extra_exact]
 
 /-- Rewrite the single new pointwise numerator, before integration. -/
 theorem endpoint_affine_identity (A u : ℝ) :

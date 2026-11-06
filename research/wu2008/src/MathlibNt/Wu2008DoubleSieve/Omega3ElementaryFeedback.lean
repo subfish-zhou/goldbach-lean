@@ -49,11 +49,6 @@ theorem original_cost_le (i : Fin 4) {δ : ℝ} (hδhi : δ ≤ 1/10) :
     rw [analyticCap_eq_elementary _ (original_mother i) (original_s_ge_two i)]
   exact (h.trans_eq he).trans (elementary_cost_le i hδhi)
 
-theorem source_le_elementary (i : Fin 4) {δ : ℝ} (hδhi : δ ≤ 1/10) :
-    source (parameters i) δ ≤ elementaryAnalyticSource (parameters i) δ := by
-  have hc := elementary_cost_le i hδhi
-  unfold source elementaryAnalyticSource
-  linarith only [hc]
 
 theorem source_le_original (i : Fin 4) {δ : ℝ} (hδhi : δ ≤ 1/10) :
     source (parameters i) δ ≤ SecondFunctionalPositive.source (parameters i) δ := by

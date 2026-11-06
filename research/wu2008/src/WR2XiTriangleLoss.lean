@@ -55,14 +55,6 @@ theorem gamma5_triangle_loss_identity (r : Fin 4) (H : ℝ → ℝ)
   rw [weighted_section_loss_identity hp.1 hp.2.1 hp.2.2.1 hp.2.2.2.2.1]
   ring
 
-/-- The exact missing triangle is one scalar times the first node. -/
-theorem gamma5_triangle_profile_loss (r : Fin 4) (z : Fin 9 → ℝ)
-    (hz : ∀ k, |z k| ≤ 1) :
-    (triangleGain (rowParameters r).1 (rowParameters r).2 false (nineProfile z) -
-      triangleGain (rowParameters r).1 (rowParameters r).2 true (nineProfile z))/5 =
-      z 0 * gamma5CellLoss r := by
-  rw [gamma5_triangle_loss_identity r _ (nineProfile_measurable z)
-    (nineProfile_abs_le_one z hz), gamma5_profile_loss]
 
 /-- The same identity for the actual final-depth improvement, without a uniform debit. -/
 theorem gamma5_triangle_actual_loss (r : Fin 4) {δ : ℝ}

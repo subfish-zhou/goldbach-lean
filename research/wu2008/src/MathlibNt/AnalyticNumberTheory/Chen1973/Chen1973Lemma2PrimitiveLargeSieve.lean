@@ -1296,13 +1296,6 @@ theorem chen1973Lemma2_equationThree_of_equationTwo
     simp
     exact mul_nonneg (mul_nonneg (by positivity) (by positivity)) (by positivity)
 
-/-- Chen's complete Lemma 2 reduction: the sharp Farey equation (4) gives the
-literal primitive equation (2), and its dyadic summation gives (3). -/
-theorem chen1973Lemma2_of_fareyEquationFour
-    (h4 : Chen1973FareyEquationFour) :
-    Chen1973Lemma2EquationTwo ∧ Chen1973Lemma2EquationThree := by
-  have h2 := chen1973Lemma2_equationTwo_of_fareyEquationFour h4
-  exact ⟨h2, chen1973Lemma2_equationThree_of_equationTwo h2⟩
 
 end
 

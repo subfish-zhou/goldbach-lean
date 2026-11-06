@@ -29,17 +29,7 @@ theorem retained_square_lower {x y : ℝ} (hx : x ∈ Icc a b) (hy : y ∈ Icc b
 noncomputable def logCubicKernel (x y : ℝ) : ℝ :=
   (2/3)*(lam-x-y)^3*SixthReciprocalCorrection.cubic (1/2-x-y)^2/(x*y)
 
-theorem logCubicKernel_nonneg {x y : ℝ} (hx : x ∈ Icc a b)
-    (hy : y ∈ Icc b (lam-x)) : 0 ≤ logCubicKernel x y := by
-  unfold logCubicKernel
-  exact div_nonneg (mul_nonneg (mul_nonneg (by norm_num)
-    (pow_nonneg (by linarith [hy.2]) _)) (sq_nonneg _))
-    (mul_pos (geometry.1.trans_le hx.1) (geometry.2.2.1.trans_le hy.1)).le
 
-theorem logCubicKernel_terminal (x : ℝ) : logCubicKernel x (lam-x) = 0 := by
-  unfold logCubicKernel
-  have h : lam-x-(lam-x) = 0 := by ring
-  rw [h]; simp
 
 /-- Both lower-log terms are consumed together before comparison with the actual kernel. -/
 theorem retained_joint_lower {x y : ℝ} (hx : x ∈ Icc a b)
@@ -210,14 +200,6 @@ theorem actual_sixth_ge_joint :
   change (4*∫ x in a..b, ∫ y in b..s, truncatedSixthZeroDeltaRegular 0 (x,y)) = truncatedSixthLowerF6lin at he
   linarith
 
-theorem movingLogCubic_zero_width {x : ℝ} (h : lam-x = b) : movingLogCubic x = 0 := by
-  unfold movingLogCubic
-  rw [h]
-  exact sub_self _
 
-theorem inner_integral_zero_width {x : ℝ} (h : lam-x = b) :
-    (∫ y in b..lam-x, logCubicKernel x y) = 0 := by
-  rw [h]
-  exact intervalIntegral.integral_same
 
 end Wu2008DoubleSieve.SixthLogCubicCorrection

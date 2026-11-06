@@ -12,28 +12,6 @@ namespace Wu2008DoubleSieve
 open Finset Set Real Filter MeasureTheory
 open scoped Classical Topology
 
-theorem gamma5Gain_approx_le_kernel {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (n : ℕ) (v : ℝ × ℝ) :
-    gamma5GainApprox δ n v ≤ gamma5GainKernel δ v := by
-  by_cases hex : ∃ j ∈ gamma5GainInner n, v ∈ truncatedSixthClosureCell n j
-  · obtain ⟨j, hj, hv⟩ := hex
-    have hr := gamma5Gain_inner_subset hj hv
-    have hb := gamma5Gain_triangle_bounds hr.1
-    have hsample : gamma5GainV v.1 v.2 ≤ gamma5GainSample n j := by
-      have hp : (0 : ℝ) < 1 / ((n + 1 : ℕ) : ℝ) := by positivity
-      have hS : 0 < gamma5ClassicalS := by norm_num [gamma5ClassicalS]
-      dsimp only [gamma5GainSample, gamma5GainV]
-      nlinarith [hv.1.1, hv.2.1]
-    rw [gamma5Gain_approx_at_cell hj hv, gamma5GainKernel, if_pos hr]
-    have heq : gamma5GainH δ (gamma5GainV v.1 v.2) /
-        (v.1 * v.2 * (1 - v.1 - v.2)) =
-        gamma5GainH δ (gamma5GainV v.1 v.2) * gamma5GainSmooth v := by
-      rw [gamma5Gain_smooth_eq hb.1 hb.2.1, gamma5MassKernel, mul_one_div]
-    rw [heq]
-    exact mul_le_mul_of_nonneg_right (gamma5Gain_H_antitone hδ hδhi hsample)
-      (gamma5Gain_smooth_bounds v).1
-  · rw [gamma5Gain_approx_zero (by simpa only [not_exists, not_and] using hex)]
-    exact (gamma5Gain_kernel_bounds hδ hδhi v).1
 
 theorem gamma5Gain_partition_sum {α : Type*} [Fintype α]
     (L : Finset Gamma5ClassicalLabel) (P : α → Finset Gamma5ClassicalLabel)

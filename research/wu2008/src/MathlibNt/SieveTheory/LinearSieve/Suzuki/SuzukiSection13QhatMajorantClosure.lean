@@ -250,17 +250,6 @@ def MovingClaim146iiiConclusion
         (1 - 1 / sourceSigma D d) ^ (1 - Δ) *
           lambda H sign D d 0 s
 
-/-- Section 13 `Qhat` single-majorant closure through the moving Claim 14.6(iii).
-The only residual premise is the quantified candidate-level stationary exclusion
-above; no majorant, ratio, certificate, or Claim conclusion is assumed. -/
-theorem moving_claim14_6_iii_of_uniformQhatStationaryExclusion
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    {d Δ : ℝ} (hd : 0 < d) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hexcl : UniformQhatStationaryExclusion H) :
-    MovingClaim146iiiConclusion H d Δ := by
-  let Q := section13Qhat_cutoffMajorant hH hexcl
-  exact moving_claim14_6_iii_of_source_contract_and_cutoffMajorants
-    hH hd hΔ0 hΔ1 (duplicateQhatMajorant hH Q)
 
 
 end Section13QhatMajorantClosure

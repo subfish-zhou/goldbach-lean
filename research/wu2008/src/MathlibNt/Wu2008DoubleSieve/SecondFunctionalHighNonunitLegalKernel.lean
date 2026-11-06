@@ -170,11 +170,6 @@ theorem legal_eq_affine (j : Fin n) (phi : ℝ) :
   ext t
   simp only [legal, mem_ofPred_eq, coefficients_sum]
 
-theorem legal_band_eq (j : Fin n) (phi rho : ℝ) :
-    continuousBand (coefficients j) phi rho =
-      {t | |(∑ i, t i) + t j - phi| ≤ rho} := by
-  ext t
-  simp only [continuousBand, mem_ofPred_eq, coefficients_sum]
 
 theorem legal_face_null (j : Fin n) (phi : ℝ) :
     volume (continuousCube n ∩ {t | (∑ i, t i) + t j = phi}) = 0 := by

@@ -1,0 +1,94 @@
+{
+  "status": "PRODUCTION_4151_TWO_PRODUCERS_RECEIPTS_LITERAL_AXIOMS_FINAL_KERNEL_PASS",
+  "steps": [
+    {
+      "label": "production-hf4-producer-check",
+      "command": [
+        "/usr/bin/python3",
+        "/home/azureuser/goldbach-lean/research/wu2008/diagnostics/hf4_constructive/produce.py",
+        "--route",
+        "constructive",
+        "--output-dir",
+        "/home/azureuser/goldbach-lean/research/wu2008/src",
+        "--check"
+      ],
+      "environment": {
+        "LEAN_PATH": null,
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 8.545795414596796,
+      "log_sha256": "4517786421b6e14c364f2988f3f577400011bc37c8c2d1a7cff7ce1ad5527b9b"
+    },
+    {
+      "label": "production-c-eighth-producer-check",
+      "command": [
+        "/usr/bin/python3",
+        "/home/azureuser/goldbach-lean/research/wu2008/diagnostics/classical_c_eighth_certificates.py",
+        "--check",
+        "/home/azureuser/goldbach-lean/research/wu2008/src"
+      ],
+      "environment": {
+        "LEAN_PATH": null,
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 0.22436843439936638,
+      "log_sha256": "36cbaf11175cd00e5f8057b1fed3b04510054c28e1057ce1e052317331c0e4a9"
+    },
+    {
+      "label": "production-build",
+      "command": [
+        "/usr/bin/python3",
+        "/home/azureuser/goldbach-lean/research/wu2008/build.py",
+        "--all",
+        "--jobs",
+        "1",
+        "--lean-threads",
+        "1",
+        "--limit",
+        "0"
+      ],
+      "environment": {
+        "LEAN_PATH": null,
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 19.17042851820588,
+      "log_sha256": "ae7b0b71948af6991abe018516fb8814882d833655d1d0a392c91145c9f1bcd6"
+    },
+    {
+      "label": "production-literal-axioms",
+      "command": [
+        "/usr/bin/python3",
+        "/home/azureuser/goldbach-lean/research/wu2008/check_classical.py"
+      ],
+      "environment": {
+        "LEAN_PATH": null,
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 15.257365852594376,
+      "log_sha256": "151774ed40213a83ef329b574cfceb06619c8426ceadfb891f2c50ce527f77bf"
+    },
+    {
+      "label": "production-final-kernel",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "WR2ClassicalCertificate"
+      ],
+      "environment": {
+        "LEAN_PATH": "/home/azureuser/goldbach-lean/research/wu2008/build/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 9.996828351169825,
+      "log_sha256": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    }
+  ],
+  "manifest_sha256": "c7950a5796a848c7c0fc0f58f68c41746a570d137f54ab298c64a31d14f71e39",
+  "source_proofs": 3957,
+  "verified_unchanged": 194,
+  "retired_proofs": 2119
+}

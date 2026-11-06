@@ -257,20 +257,5 @@ theorem wExtractedFloorKey_phase_budget
   have hmods := wExtractedKeyFiber_moduli ht
   simpa only [hk, Nat.cast_mul, mul_assoc, hmods.1, hmods.2] using hp
 
-/-- Empty or cancelling selected fibers are handled before taking positive
-source parameters. This applies to the actual floor endpoint above. -/
-theorem wExtractedFloorKey_zero_or_positive
-    {N Q : Finset ℕ} (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)
-    (M Z : ℝ) (β c₁ γ ζ : ℕ → ℝ) (a : ℤ)
-    (P : WOriginalTuple → Prop) (R S ξ : ℝ) (b : ℕ) (K : WExtractedKey) (u : ℝ) :
-    wExtractedKeyExponential (wFloorCutoff M Z) N Q β c₁ γ ζ a P R S ξ b K u = 0 ∨
-      0 < K.D ∧ 0 < K.D' ∧
-        ∃ t ∈ wExtractedKeyFiber (wFloorCutoff M Z) N Q a P R S ξ b K,
-          wExtractedCoefficient β c₁ γ ζ t.1 ≠ 0 := by
-  rcases wExtractedKeyExponential_zero_or_witness
-    (wFloorCutoff M Z) N Q β c₁ γ ζ a P R S ξ b K u with he | ⟨t, ht, hc⟩
-  · exact Or.inl he
-  · have hp := wExtractedKeyFiber_positive hN hQ ht
-    exact Or.inr ⟨hp.1, hp.2.1, t, ht, hc⟩
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

@@ -124,11 +124,6 @@ structure ClassicalGeometry (S U : ℝ) (k N : ℕ) (δ : ℝ) (x : Gamma5Classi
   original_ratio_upper : log (gamma5ClassicalLevel N δ x) /
     log (wuLocalCutoff N δ x.1 S) ≤ S - 2
 
-theorem classical_ratio_mul_log {S U : ℝ} {k N : ℕ} {δ : ℝ}
-    {x : Gamma5ClassicalLabel} (hg : ClassicalGeometry S U k N δ x) :
-    (log (gamma5ClassicalLevel N δ x) / log (classicalCutoff S N δ x)) *
-      log (classicalCutoff S N δ x) = log (gamma5ClassicalLevel N δ x) :=
-  div_mul_cancel₀ _ (log_pos hg.cutoff_gt_one).ne'
 
 theorem classical_label_geometry {S U : ℝ} (hcap : CapAdmissible S U) {i k N : ℕ} {δ Δ : ℝ}
     {V : Fin i → ℝ} (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1 / 2)

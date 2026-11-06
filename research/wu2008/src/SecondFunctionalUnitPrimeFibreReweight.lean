@@ -66,37 +66,6 @@ theorem reweight_sum {m : ℕ} {R : ℝ} (hR : 1 < R)
   rw [mul_sum]
   exact sum_congr rfl (fun f _ => reweight_term hR f j phi b)
 
-theorem reweight_fin4 {R : ℝ} (hR : 1 < R)
-    (S : Finset (Fin 4 → primeSlabPrimes R)) (phi b : ℝ) :
-    log R / R ^ phi *
-      (∑ f ∈ S, ((physical (prefixProduct f) (R ^ phi) (f (Fin.last 3)).val (R ^ b)).card : ℝ)) =
-      ∑ f ∈ S, primeSlabWeight R f *
-        weight R (phi - ∑ i, coordinate f i) (coordinate f (Fin.last 3)) b :=
-  reweight_sum hR S (Fin.last 3) phi b
 
-theorem reweight_fin5 {R : ℝ} (hR : 1 < R)
-    (S : Finset (Fin 5 → primeSlabPrimes R)) (phi b : ℝ) :
-    log R / R ^ phi *
-      (∑ f ∈ S, ((physical (prefixProduct f) (R ^ phi) (f (Fin.last 4)).val (R ^ b)).card : ℝ)) =
-      ∑ f ∈ S, primeSlabWeight R f *
-        weight R (phi - ∑ i, coordinate f i) (coordinate f (Fin.last 4)) b :=
-  reweight_sum hR S (Fin.last 4) phi b
 
-/-- The same threshold can be applied after choosing any finite labelled subdomain. -/
-theorem reweighted_bound_threshold (a tau : ℝ) (ha : 0 < a) (ht : 0 < tau) :
-    ∃ T : ℝ, 1 < T ∧ ∀ R : ℝ, T ≤ R → ∀ (m : ℕ)
-      (S : Finset (Fin m → primeSlabPrimes R)) (j : Fin m) (phi b : ℝ),
-      (∀ f ∈ S, a ≤ coordinate f j ∧ coordinate f j ≤ b) →
-      log R / R ^ phi *
-        (∑ f ∈ S, ((physical (prefixProduct f) (R ^ phi) (f j).val (R ^ b)).card : ℝ)) ≤
-          ((1+tau)/a) * (∑ f ∈ S, primeSlabWeight R f) := by
-  obtain ⟨T,hT,h⟩ := scalar_threshold a tau ha ht
-  refine ⟨T,hT,?_⟩
-  intro R hRT m S j phi b hS
-  rw [reweight_sum (hT.trans_le hRT) S j phi b, mul_sum]
-  apply sum_le_sum
-  intro f hf
-  have hh := (h R hRT (phi - ∑ i, coordinate f i) (coordinate f j) b (hS f hf).1 (hS f hf).2).1.2
-  simpa only [mul_comm] using mul_le_mul_of_nonneg_left hh
-    (show 0 ≤ primeSlabWeight R f by unfold primeSlabWeight; positivity)
 end SecondFunctionalUnitPrimeFibre

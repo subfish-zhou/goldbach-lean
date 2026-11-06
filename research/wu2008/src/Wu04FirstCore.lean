@@ -14,9 +14,6 @@ theorem psi_identity (s S : ℝ) : firstFunctionalGainPsiOne s S =
 def publication : Fin 5 → ℝ := ![9405211/1000000000,6558950/1000000000,
   3536751/1000000000,1056651/1000000000,0]
 
-theorem terminal_kernel (φ : ℝ) : omega3XIntegral (firstNode 4) (firstS 4) φ=0 := by
-  rw [show firstS (4:Fin 5)=3 from rfl,show firstNode (4:Fin 5)=3 by norm_num [firstNode]]
-  exact omega3XIntegral_self _ _
 
 theorem terminal_cost : omega3XIntegralEnvelope (firstNode 4) (firstS 4)=0 := by
   rw [show firstS (4:Fin 5)=3 from rfl,show firstNode (4:Fin 5)=3 by norm_num [firstNode]]
@@ -44,14 +41,5 @@ theorem cost_geometry (i : Fin 5) :
     Matrix.cons_val_zero,Matrix.cons_val_succ]
   norm_num [Wu04MainTail.cap]
 
-/-- A fully paid whole-domain preliminary cap for every original first row. -/
-theorem whole_cost (i : Fin 5) : omega3XIntegralEnvelope (firstNode i) (firstS i)≤
-    Wu04MainTail.cap*SecondFunctionalGeometricMass.Elementary.elementaryMomentOne
-      1 (1/firstS i) (1/firstNode i) := by
-  have g := cost_geometry i
-  apply csSup_le
-  · exact ⟨omega3XIntegral (firstNode i) (firstS i) 2,mem_image_of_mem _ (show (2:ℝ)∈Ici 2 by simp)⟩
-  · rintro y ⟨φ,hφ,rfl⟩
-    exact Wu04RemainingGamma.integral_paid g.1 g.2.1 g.2.2 hφ
 end
 end Wu04FirstCore

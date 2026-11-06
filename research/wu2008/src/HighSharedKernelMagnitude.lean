@@ -450,29 +450,7 @@ theorem high_magnitude : (1/40:ℝ) < highKernel ∧ highKernel < 1/10 := by
   rw [high_recovery_exact] at h
   exact ⟨by linarith only [h],high_bounds.2⟩
 
-/-- Full high-window difference with its actual iterated-log continuation retained. -/
-theorem high_delay_exact {v : ℝ} (hv : 5 ≤ v) (hvc : v ≤ 1127/200) :
-    (42823/151875)*v-explicitUpper v =
-      (42823/30375-wuUpperCoefficient 5)+(42823/151875)*(v-5)-
-        ∫ x in (4:ℝ)..(v-1), (log (x-1)+lowerLogKernel x)/x := by
-  have hr := wuUpperCoefficient_sub_eq_integral (by norm_num : (2:ℝ)≤5) hv
-  have ho : (4:ℝ)≤v-1 := by linarith
-  have he : (∫ x in (4:ℝ)..(v-1), wuLowerCoefficient x/x) =
-      ∫ x in (4:ℝ)..(v-1), (log (x-1)+lowerLogKernel x)/x := by
-    apply intervalIntegral.integral_congr
-    intro x hx
-    rw [uIcc_of_le ho] at hx
-    dsimp only
-    rw [lower_log_kernel_exact hx.1 (by linarith [hx.2])]
-  norm_num only [show (5:ℝ)-1=4 by norm_num] at hr
-  rw [he,upper_explicit_exact (by linarith) hvc] at hr
-  linarith only [hr]
 
-theorem explicit_high_comparison {v : ℝ} (hv : 5 ≤ v) (hvc : v ≤ 1127/200) :
-    (1845671/520931250:ℝ) ≤ (42823/151875)*v-explicitUpper v ∧
-    (42823/151875)*v-explicitUpper v ≤ 65413/10418625+(1183/151875)*(v-5) := by
-  rw [← upper_explicit_exact (by linarith) hvc]
-  exact high_pointwise hv hvc
 
 /-- Literal complete B/G/shared quantity, with a genuine upper bound as well as a lower bound. -/
 theorem triple_bounds :
@@ -509,23 +487,7 @@ theorem coefficient_le_actual : coefficient ≤ JointHMotherPayment.unroundedCoe
 def fullTripleCoefficient : ℝ := JointSixthFourDiagnostic.coefficient+
   (AnalyticTotalThreshold.baseLoss+AnalyticTotalThreshold.gLoss+AnalyticTotalThreshold.sharedLoss)/4
 
-theorem full_triple_gain_bounds :
-    (3/400:ℝ) < fullTripleCoefficient-JointSixthFourDiagnostic.coefficient ∧
-    fullTripleCoefficient-JointSixthFourDiagnostic.coefficient < 1/8 := by
-  have h := triple_bounds
-  unfold fullTripleCoefficient
-  constructor <;> linarith only [h.1,h.2]
 
-theorem full_triple_coefficient_le_actual : fullTripleCoefficient ≤ JointHMotherPayment.unroundedCoefficient := by
-  have hgap := AnalyticTotalThreshold.actual_gap_identity
-  rw [AnalyticTotalThreshold.signed_loss_identity] at hgap
-  have hl := AnalyticTotalThreshold.losses_nonnegative
-  have hj := JointJLossStrength.actual_jLoss_lower
-  have h6 := ClassicalLossBottleneck.sixth_recurrence_integral_cap.1
-  have h4 := FourActualCapRecovery.actual_fourLoss_lower
-  unfold fullTripleCoefficient JointSixthFourDiagnostic.coefficient ClassicalLossBottleneck.recoveredCoefficient
-  unfold AnalyticTotalThreshold.sixthLoss at hgap h6
-  linarith only [hgap,hl.2.1,hj,h6,h4]
 
 end
 end Wu2008DoubleSieve.HighSharedKernelMagnitude

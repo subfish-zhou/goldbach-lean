@@ -21,25 +21,6 @@ theorem primeSlab_eventually_uniform :
     (pow_le_pow_left₀ (by linarith [primeOrderedDiscrepancy_nonneg hR]) (by linarith) _)
     (add_nonneg (mul_nonneg (by norm_num) hη) (primeOrderedDiscrepancy_nonneg hR))
 
-/-- Ordered or windowed subsets retain the very same reciprocal weights. -/
-theorem primeSlab_subdomain_le {n : ℕ} (R : ℝ) (c : Fin n → ℝ) (γ η : ℝ)
-    (S : Finset (Fin n → primeSlabPrimes R))
-    (hS : ∀ p ∈ S, |(∑ i, c i * (log (p i).val / log R)) - γ| ≤ η) :
-    (∑ p ∈ S, primeSlabWeight R p) ≤ primeSlabMass R c γ η := by
-  classical
-  have hpos (p : Fin n → primeSlabPrimes R) : 0 ≤ primeSlabWeight R p :=
-    prod_nonneg (fun i _ => by positivity)
-  calc
-    _ = ∑ p ∈ S, if |(∑ i, c i * (log (p i).val / log R)) - γ| ≤ η
-        then primeSlabWeight R p else 0 := by
-      apply sum_congr rfl
-      intro p hp
-      rw [if_pos (hS p hp)]
-    _ ≤ _ := sum_le_sum_of_subset_of_nonneg (subset_univ S) (by
-      intro p _ _
-      split_ifs
-      · exact hpos p
-      · exact le_rfl)
 
 /-- Unit lower plane has last coefficient two, not an extra reciprocal weight. -/
 noncomputable def primeSlabUnitLowerCoeff (m : ℕ) (i : Fin (m + 1)) : ℝ :=
@@ -105,25 +86,7 @@ theorem primeSlab_unit_faces {R : ℝ}
   · simpa only [Nat.add_sub_cancel] using primeSlab_uniform_bound hR hs
       (fun _ : Fin (m + 1) => 1) (φ - b) η hη (Fin.last m) (by norm_num)
 
-/-- Four-dimensional unit prefix: both actual gates, arbitrary moving intercept. -/
-theorem primeSlab_unit_four {R : ℝ}
-    (hR : 1 < R) (hs : primeOrderedMertensStart ≤ R ^ (1 / 10 : ℝ))
-    (φ b η : ℝ) (hη : 0 ≤ η) :
-    primeSlabUnitLowerMass 3 R φ η ≤
-      (4 + primeOrderedDiscrepancy R) ^ 3 * (20 * η + primeOrderedDiscrepancy R) ∧
-    primeSlabUnitCapMass 3 R φ b η ≤
-      (4 + primeOrderedDiscrepancy R) ^ 3 * (20 * η + primeOrderedDiscrepancy R) :=
-  primeSlab_unit_faces hR hs 3 φ b η hη
 
-/-- Five-dimensional unit prefix: both actual gates, arbitrary moving intercept. -/
-theorem primeSlab_unit_five {R : ℝ}
-    (hR : 1 < R) (hs : primeOrderedMertensStart ≤ R ^ (1 / 10 : ℝ))
-    (φ b η : ℝ) (hη : 0 ≤ η) :
-    primeSlabUnitLowerMass 4 R φ η ≤
-      (4 + primeOrderedDiscrepancy R) ^ 4 * (20 * η + primeOrderedDiscrepancy R) ∧
-    primeSlabUnitCapMass 4 R φ b η ≤
-      (4 + primeOrderedDiscrepancy R) ^ 4 * (20 * η + primeOrderedDiscrepancy R) :=
-  primeSlab_unit_faces hR hs 4 φ b η hη
 
 /-- Joint eventual uniformity for both faces and every positive dimension. -/
 theorem primeSlab_unit_eventually_uniform :

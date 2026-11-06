@@ -179,39 +179,6 @@ theorem eventually_liuSelbergOptimalSwitchedCount_le_even_of_sourceInputs
   rw [liuSelbergSwitchedCount_eq_logarithmicIntegralMainTerm_add_remainder]
   exact add_le_add hmainN (le_trans (le_abs_self _) hRN)
 
-/-- Liu's original squared-divisor Selberg count has the same bound along the
-even filter. -/
-theorem eventually_liuSelbergOptimalSquareCount_le_even_of_sourceInputs
-    (kappa epsilon A B C1 C2 C3 : ℝ) (u v : ℕ)
-    (hκ : 0 ≤ kappa) (hepsilon : 0 < epsilon)
-    (hepsilon_le : epsilon ≤ liuEvenAssemblyEpsilon0) (hB : 0 ≤ B)
-    (hI : ∀ᶠ N : ℕ in atTop,
-      LiuMainPanTypeIPieceBoundAt N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C1 u)
-    (hII : ∀ᶠ N : ℕ in atTop,
-      LiuMainPanTypeIIPieceBoundAt N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C2 u v)
-    (hresidual : ∀ᶠ N : ℕ in atTop,
-      LiuMainPanSignedResidualBoundAt (liuLogarithmicIntegral kappa) N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C3 u v) :
-    ∀ᶠ N : ℕ in atTop ⊓ 𝓟 {N : ℕ | Even N},
-      liuSelbergSquareCount N epsilon
-          (liuSelbergOptimalLambda N epsilon) ≤
-        3.94033 *
-            MathlibNt.SieveTheory.SingularSeries.liuSingularSeries N *
-            (N : ℝ) / Real.log N ^ 2 +
-          ((C1 + C2 + C3) * N / Real.log N ^ A +
-            15 * liuLogarithmicIntegralUpperConstant kappa *
-              liuSourceR1P₂ReciprocalBound *
-              paperQStyleDivisorWeightLogConstant *
-              (N : ℝ) ^ (9 / 10 : ℝ) * Real.log N ^ 2) := by
-  have hM :=
-    eventually_liuSelbergOptimalSwitchedCount_le_even_of_sourceInputs
-      kappa epsilon A B C1 C2 C3 u v hκ hepsilon hepsilon_le hB
-        hI hII hresidual
-  filter_upwards [hM] with N hMN
-  rw [liuSelbergSquareCount_eq_switchedCount]
-  exact hMN
 
 /-- The canonical coprime consumer interface gives arbitrary logarithmic
 saving for the actual optimal Selberg remainder along the even filter. -/

@@ -172,16 +172,6 @@ theorem squarefulSiftedGoldbach_card_le (N : ℕ) {z : ℝ} (hz : 2 ≤ z) :
       exact_mod_cast squarefulSiftedGoldbach_card_le_largePrimeSquareExceptions N z
     _ ≤ 2 * (N : ℝ) / z := largePrimeSquareExceptions_card_le N hz
 
-theorem squarefulSiftedGoldbach_card_le_rpow {N : ℕ} {κ : ℝ}
-    (hN : 0 < N) (hz : 2 ≤ (N : ℝ) ^ κ) :
-    ((squarefulSiftedGoldbach N ((N : ℝ) ^ κ)).card : ℝ) ≤
-      2 * (N : ℝ) ^ (1 - κ) := by
-  calc
-    ((squarefulSiftedGoldbach N ((N : ℝ) ^ κ)).card : ℝ) ≤
-        ((largePrimeSquareExceptions N ((N : ℝ) ^ κ)).card : ℝ) := by
-      exact_mod_cast
-        squarefulSiftedGoldbach_card_le_largePrimeSquareExceptions N ((N : ℝ) ^ κ)
-    _ ≤ 2 * (N : ℝ) ^ (1 - κ) := largePrimeSquareExceptions_card_le_rpow hN hz
 
 /-- The cutoff condition is proved eventually, not assumed as an analytic input. -/
 theorem largePrimeSquareExceptions_eventually_le_rpow {κ : ℝ} (hκ : 0 < κ) :
@@ -194,30 +184,7 @@ theorem largePrimeSquareExceptions_eventually_le_rpow {κ : ℝ} (hκ : 0 < κ) 
   filter_upwards [hz, Filter.eventually_ge_atTop (1 : ℕ)] with N hzN hN
   exact largePrimeSquareExceptions_card_le_rpow (by omega) hzN
 
-theorem largePrimeSquareExceptions_isBigO {κ : ℝ} (hκ : 0 < κ) :
-    Asymptotics.IsBigO Filter.atTop
-      (fun N : ℕ => ((largePrimeSquareExceptions N ((N : ℝ) ^ κ)).card : ℝ))
-      (fun N : ℕ => (N : ℝ) ^ (1 - κ)) := by
-  refine Asymptotics.isBigO_iff.mpr ⟨2, ?_⟩
-  filter_upwards [largePrimeSquareExceptions_eventually_le_rpow hκ] with N hN
-  simpa only [Real.norm_of_nonneg (Nat.cast_nonneg _),
-    Real.norm_of_nonneg (Real.rpow_nonneg (Nat.cast_nonneg _) _)] using hN
 
-/-- The actual coprime sifted Goldbach exceptions have the required power saving. -/
-theorem squarefulSiftedGoldbach_isBigO {κ : ℝ} (hκ : 0 < κ) :
-    Asymptotics.IsBigO Filter.atTop
-      (fun N : ℕ => ((squarefulSiftedGoldbach N ((N : ℝ) ^ κ)).card : ℝ))
-      (fun N : ℕ => (N : ℝ) ^ (1 - κ)) := by
-  refine Asymptotics.isBigO_iff.mpr ⟨2, ?_⟩
-  filter_upwards [largePrimeSquareExceptions_eventually_le_rpow hκ] with N hN
-  simp only [Real.norm_of_nonneg (Nat.cast_nonneg _),
-    Real.norm_of_nonneg (Real.rpow_nonneg (Nat.cast_nonneg _) _)]
-  calc
-    ((squarefulSiftedGoldbach N ((N : ℝ) ^ κ)).card : ℝ) ≤
-        ((largePrimeSquareExceptions N ((N : ℝ) ^ κ)).card : ℝ) := by
-      exact_mod_cast
-        squarefulSiftedGoldbach_card_le_largePrimeSquareExceptions N ((N : ℝ) ^ κ)
-    _ ≤ 2 * (N : ℝ) ^ (1 - κ) := hN
 
 /-- Only a one-sided bound for the weight is needed; its absolute value
 may be arbitrarily large. -/
@@ -233,14 +200,6 @@ theorem squarefulSiftedGoldbach_weight_sum_le (N : ℕ) {z : ℝ} (hz : 2 ≤ z)
       mul_le_mul_of_nonneg_left (squarefulSiftedGoldbach_card_le N hz) (by norm_num)
     _ = 4 * (N : ℝ) / z := by ring
 
-theorem squarefulSiftedGoldbach_weight_sum_le_rpow {N : ℕ} {κ : ℝ}
-    (hN : 0 < N) (hz : 2 ≤ (N : ℝ) ^ κ) (w : ℕ → ℝ)
-    (hw : ∀ p ∈ squarefulSiftedGoldbach N ((N : ℝ) ^ κ), w p ≤ 2) :
-    ∑ p ∈ squarefulSiftedGoldbach N ((N : ℝ) ^ κ), w p ≤
-      4 * (N : ℝ) ^ (1 - κ) := by
-  have hN' : (0 : ℝ) < N := by exact_mod_cast hN
-  simpa only [Real.rpow_sub hN', Real.rpow_one, mul_div_assoc] using
-    squarefulSiftedGoldbach_weight_sum_le N hz w hw
 
 /-- Removing nonsquarefree terms from the actual positive coprime sifted
 Goldbach sum costs at most `4*N/z` for any weight bounded above by two

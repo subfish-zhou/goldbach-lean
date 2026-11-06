@@ -25,12 +25,6 @@ theorem geometry (i : Fin 3) : 0<a i ∧ a i<b i ∧ b i<r i ∧ r i<v i ∧ v i
 
 theorem clip_le (i : Fin 3) : v i≤rc i := min_le_left _ _
 
-theorem last_clip : rc 2>c 2 ∧ v 2=c 2 := by
-  change (2-1/SecondFunctionalParameters.row4.kappa1-1/SecondFunctionalParameters.row4.kappa2)/4 >
-    1/SecondFunctionalParameters.row4.kappa2 ∧
-    min ((2-1/SecondFunctionalParameters.row4.kappa1-1/SecondFunctionalParameters.row4.kappa2)/4)
-      (1/SecondFunctionalParameters.row4.kappa2) = 1/SecondFunctionalParameters.row4.kappa2
-  norm_num [SecondFunctionalParameters.row4]
 
 theorem R_literal (i : Fin 3) {t : Fin 3 → ℝ} : t∈R i ↔
     a i≤t 0 ∧ t 0≤b i ∧ b i≤t 1 ∧ t 1≤r i ∧ c i≤t 2 ∧ t 2≤f i := by

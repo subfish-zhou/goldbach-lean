@@ -102,22 +102,5 @@ theorem gamma5Gain_packing_sum {i N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
     exact sum_comm
   · exact sum_comm
 
-theorem gamma5Gain_grid_disjoint {R Δ : ℝ} (hR : 1 < R) (hΔ : 1 < Δ)
-    (N : ℕ) (A : ℝ) :
-    Pairwise (fun j l : ℕ => Disjoint
-      (primeWindow N (gamma5GainEnd R Δ A j / Δ) (gamma5GainEnd R Δ A j))
-      (primeWindow N (gamma5GainEnd R Δ A l / Δ) (gamma5GainEnd R Δ A l))) := by
-  intro j l hjl
-  simp_rw [gamma5Gain_end_lower hR hΔ, gamma5GainEnd]
-  have hm := (gamma5Gain_point_strictMono hR hΔ A).monotone
-  apply Finset.disjoint_left.mpr
-  intro p hp hq
-  have hp' := mem_primeWindow.mp hp
-  have hq' := mem_primeWindow.mp hq
-  rcases lt_or_gt_of_ne hjl with h | h
-  · have hh := rpow_le_rpow_of_exponent_le hR.le (hm (show j + 1 ≤ l by omega))
-    exact (not_lt_of_ge hq'.2.2.1) (hp'.2.2.2.trans_le hh)
-  · have hh := rpow_le_rpow_of_exponent_le hR.le (hm (show l + 1 ≤ j by omega))
-    exact (not_lt_of_ge hp'.2.2.1) (hq'.2.2.2.trans_le hh)
 
 end Wu2008DoubleSieve

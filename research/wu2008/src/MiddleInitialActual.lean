@@ -90,11 +90,6 @@ theorem matching_upper_identity : upperCoefficient =
   unfold upperCoefficient upperRational CorrectedCoefficientUpper.upperCoefficient
   ring
 
-theorem total_descent : (5874/1000000:ℝ) <
-    CorrectedCoefficientUpper.upperCoefficient-upperCoefficient ∧
-    CorrectedCoefficientUpper.upperCoefficient-upperCoefficient < 5875/1000000 := by
-  rw [matching_upper_identity]
-  constructor <;> linarith only [MiddleInitialPayment.gain_bounds.1,MiddleInitialPayment.gain_bounds.2]
 
 theorem upper_coefficient_bounds : (905735/1000000:ℝ) < upperCoefficient ∧
     upperCoefficient < 905738/1000000 := by
@@ -122,9 +117,5 @@ theorem target_inside_corridor : JJointPayment.coefficient < 8*log (5000/4469) �
     8*log (5000/4469) < upperCoefficient :=
   ⟨JJointPayment.certificate_below_target,certificate_above_target⟩
 
-/-- The exact unresolved deficit for the same literal corrected coefficient. -/
-theorem target_iff_deficit : 8*log (5000/4469) < U8CanonicalMother.improvedCoefficient ↔
-    upperCoefficient-U8CanonicalMother.improvedCoefficient < upperCoefficient-8*log (5000/4469) := by
-  constructor <;> intro h <;> linarith only [h]
 
 end MiddleInitialActual

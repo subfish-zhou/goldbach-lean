@@ -156,15 +156,5 @@ theorem fifthPair_normalized_masked_relative {δ η ε : ℝ}
   rw [show (3 : ℝ) = (3 : ℕ) by norm_num, rpow_natCast] at h
   exact (sub_le_sub_left (hT1 N ((le_max_right _ _).trans hN)) _).trans h
 
-theorem fifthPair_normalized_actual_relative {δ η ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 1000) (hη : 0 < η) (hηhi : η ≤ 1) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      truncatedSixthLowerNormalizedMain N δ η (fifthPairLabels N) -
-        ε * wuSingularSeries N * N / log N ^ (2 : ℕ) ≤ (fifthPairCount N : ℝ) := by
-  obtain ⟨T, hT, h⟩ := fifthPair_normalized_masked_relative hδ hδhi hη hηhi hε
-  refine ⟨T, hT, ?_⟩
-  intro N hN he
-  rw [fifthPair_count_eq]
-  exact h N hN he _ subset_rfl
 
 end Wu2008DoubleSieve

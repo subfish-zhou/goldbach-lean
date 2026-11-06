@@ -1,0 +1,37 @@
+{
+  "status": "EXACT_MIXED_PRUNING_OVERLAY_INCREMENTAL_BUILD_STARTED_NOT_INSTALLED",
+  "source_declarations": 3715,
+  "source_kinds": {
+    "definition": 745,
+    "theorem": 2970
+  },
+  "changed_modules": 842,
+  "source_and_compiled_reference_closed": true,
+  "exact_roundtrip": true,
+  "pruning_predicted_removed": {
+    "code_lines": 76682,
+    "physical_lines": 81400,
+    "utf8_bytes": 4170123
+  },
+  "selberg_single_module_compile_and_exact_type_axioms_pass": true,
+  "selberg_extra_predicted_removed": {
+    "code_lines": 78,
+    "physical_lines": 89,
+    "utf8_bytes": 4905
+  },
+  "combined_predicted_removed": {
+    "code_lines": 76760,
+    "physical_lines": 81489,
+    "utf8_bytes": 4175028
+  },
+  "actual_compiler_range_roots": 3807,
+  "conservatively_retained_declarations": 92,
+  "affected_modules": 3911,
+  "cached_modules": 240,
+  "baseline_context_digest": "62d8408dd7e4a6911ffd9e3d627a419a612289739c4d41c8f0036eac3fc49377",
+  "candidate_manifest_sha256": "d1f2ecbef110c39d5523c23e1f5840060a15f92845def4e371732747238002e7",
+  "run": "/tmp/wu-mixed-pruning-batch-v1",
+  "evidence_index": "mixed-pruning-review-evidence-index.json",
+  "installed_effective_final_closure": 469022,
+  "installed_measurements_unchanged": true
+}

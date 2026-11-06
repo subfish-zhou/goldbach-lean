@@ -67,15 +67,5 @@ theorem fibre_card_le {N : ℕ} (hN : 1 < N) (e : Bool) (m : ℕ) :
   · rw [not_nonempty_iff_eq_empty.mp hh, card_empty]
     exact Nat.zero_le _
 
-/-- Exact signed regrouping keeps all labels, endpoints, and the prime-count
-center; layer choices depend on N and the family only, never on q. -/
-theorem signed_eq_layers {N : ℕ} (hN : 1 < N) (e : Bool) (q : ℕ) :
-    (∑ t ∈ (labels N e).filter (fun t => (cofactor t).Coprime q),
-      omega3ProfileError N q (cofactor t) (lower N e t) (upper N e t)) =
-      ∑ j ∈ range layerBound, (family N e).layerReduced (0,0,0,0) j q := by
-  have h := (family N e).reduced_eq_layers (0,0,0,0) layerBound (fibre_card_le hN e) q
-  change (∑ t ∈ (labels N e).filter (fun t => (cofactor t).Coprime q),
-    1 * omega3ProfileError N q (cofactor t) (lower N e t) (upper N e t)) = _ at h
-  simpa only [one_mul] using h
 
 end Wu2008DoubleSieve.LastPrimeFour

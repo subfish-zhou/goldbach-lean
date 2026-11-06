@@ -22,13 +22,6 @@ theorem buchstab_history_identity {u : ℝ} (hu : 1 ≤ u) (hu' : u ≤ 2) :
   rw [buchstab_eq_one_div hu hu']
   field_simp
 
-/-- A single formula on the entire Laplace integration domain. -/
-theorem buchstab_integral_identity_full {u : ℝ} (hu : 1 ≤ u) :
-    u * buchstab u =
-      1 + if 2 ≤ u then ∫ v : ℝ in 1..u - 1, buchstab v else 0 := by
-  split_ifs with h
-  · exact buchstab_integral_identity h
-  · simpa using buchstab_history_identity hu (le_of_lt (not_le.mp h))
 
 theorem buchstabLaplace_integrable {z : ℝ} (hz : 0 < z) :
     IntegrableOn (fun u : ℝ => buchstab u * exp (-z * u)) (Ioi 1) := by

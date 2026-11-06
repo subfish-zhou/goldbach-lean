@@ -189,44 +189,5 @@ theorem wPoissonFrequency_eq_threeFactor
       hk₂r hD hD' hk hn₂ hc]
     simp only [mul_assoc]
 
-/-- Exact finite W piece after the arithmetic partition. The two natural-index
-sets need not be intervals, and the full signed original coefficients remain.
-This does not assert that every tuple in raw W satisfies these coprimalities. -/
-theorem wPoissonFrequency_threeFactor_piece
-    {q r d d₁ D k₁ k₂ : ℕ}
-    (hd : 0 < d) (hd₁ : 0 < d₁) (hDpos : 0 < D)
-    (hk₁ : 0 < k₁) (hk₂ : 0 < k₂)
-    (hL : q.lcm r = D * k₁ * k₂) (hk₁q : k₁ ∣ q) (hk₂r : k₂ ∣ r)
-    (hD : (k₁ * k₂).Coprime D)
-    (N₁ N₂ : Finset ℕ)
-    (hN₁ : ∀ n₁ ∈ N₁, 0 < n₁ ∧
-      (n₁ * k₁ * k₂).Coprime (d * d₁ * D) ∧ k₁.Coprime (n₁ * k₂))
-    (hN₂ : ∀ n₁ ∈ N₁, ∀ n₂ ∈ N₂, n₂.Coprime (n₁ * k₂))
-    (M : ℝ) (a : ℤ) (H : ℕ) (β c : ℕ → ℝ) :
-    (∑ n₁ ∈ N₁, ∑ n₂ ∈ N₂,
-      if WCompatible q r (d * d₁ * n₁) (d * n₂) then
-        (c q * c r * β (d * d₁ * n₁) * β (d * n₂)) *
-          (∑ h ∈ Finset.Icc (-(H : ℤ)) H,
-            wPoissonFrequency M a q r (d * d₁ * n₁) (d * n₂) h).re
-      else 0) =
-    ∑ n₁ ∈ N₁, ∑ n₂ ∈ N₂,
-      if WCompatible q r (d * d₁ * n₁) (d * n₂) then
-        (c q * c r * β (d * d₁ * n₁) * β (d * n₂)) *
-          (∑ h ∈ Finset.Icc (-(H : ℤ)) H,
-            wThreeFactorPoissonFrequency M a q r d d₁ D k₁ k₂ n₁ n₂ h).re
-      else 0 := by
-  classical
-  apply Finset.sum_congr rfl
-  intro n₁ hn₁
-  obtain ⟨hpos, hD', hk⟩ := hN₁ n₁ hn₁
-  apply Finset.sum_congr rfl
-  intro n₂ hn₂
-  split_ifs with hc
-  · congr 2
-    apply Finset.sum_congr rfl
-    intro h _
-    exact wPoissonFrequency_eq_threeFactor hd hd₁ hDpos hk₁ hk₂ hpos hL hk₁q
-      hk₂r hD hD' hk (hN₂ n₁ hn₁ n₂ hn₂) hc M a h
-  · rfl
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

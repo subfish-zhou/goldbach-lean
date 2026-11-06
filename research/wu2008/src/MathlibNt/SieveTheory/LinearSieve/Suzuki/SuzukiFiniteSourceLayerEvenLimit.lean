@@ -69,15 +69,6 @@ theorem finiteSourceLayer_adaptive_card_le_suzukiEvenSourceLowerLayerSup
       suzukiEvenSourceLowerLayerSup s :=
   finiteSourceLayer_even_le_suzukiEvenSourceLowerLayerSup (carrier.card + 1)
 
-/-- The exact adaptive depth used by the production lower-Rosser theorem is
-controlled by the same limit, uniformly in the sieve and cutoff. -/
-theorem finiteSourceLayer_supportedBelow_adaptive_le_suzukiEvenSourceLowerLayerSup
-    (S : BoundingSieve) (z : ℕ) (s : ℝ) :
-    ENNReal.ofReal
-        (finiteSourceLayer 1 2 (2 * ((suzukiSupportedBelow S z).card + 1)) s) ≤
-      suzukiEvenSourceLowerLayerSup s :=
-  finiteSourceLayer_adaptive_card_le_suzukiEvenSourceLowerLayerSup
-    (suzukiSupportedBelow S z)
 
 /-- Genuine monotone convergence of the even partial sums to their extended-real
 supremum.  This theorem remains valid when the supremum is infinite. -/

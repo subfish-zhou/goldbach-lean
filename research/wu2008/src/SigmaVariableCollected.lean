@@ -53,8 +53,5 @@ theorem collectedMass_identity (t : ℝ) : collectedMass t=endpointMass t := by
   norm_num
   ring
 
-theorem collected_density_integral {t : ℝ} (ht : t ∈ Set.Icc 1 3) :
-    (∫ v in (3:ℝ)..t+2,density t v)=collectedMass t := by
-  rw [density_integral ht,collectedMass_identity,endpointMass_eq ht]
 
 end SigmaVariableFull

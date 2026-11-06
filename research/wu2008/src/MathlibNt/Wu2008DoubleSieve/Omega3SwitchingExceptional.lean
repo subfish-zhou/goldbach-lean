@@ -69,17 +69,5 @@ theorem wuOmega3Sum_le_switched_add_badD_add_exceptional {i N : ℕ} {δ s t : �
     (mem_primeWindow.mp h1).1 (mem_primeWindow.mp h1).2.1 (mem_primeWindow.mp h2).2.1
   exact_mod_cast h
 
-theorem omega3_exceptional_eq_indexed_count {i : ℕ} (N : ℕ) (δ s t : ℝ)
-    (W : Fin i → Finset ℕ) :
-    omega3ExceptionalOutputCount N δ s t W =
-      ∑ a ∈ (omega3OriginalLabels N δ s t W).filter
-        (fun a => a.2.2.2.2 ∈ omega3ExceptionalOutputs N δ), (convolutionCoeff W a.1 : ℝ) := by
-  unfold omega3ExceptionalOutputCount omega3ExceptionalOutputFibre
-  rw [sum_filter]
-  have h := omega3_original_labels_sum N δ s t W
-    (fun a => if a.2.2.2.2 ∈ omega3ExceptionalOutputs N δ then 1 else 0)
-  simp only [mul_ite, mul_one, mul_zero] at h
-  rw [h]
-  simp only [card_filter, Nat.cast_sum, Nat.cast_ite, Nat.cast_one, Nat.cast_zero]
 
 end Wu2008DoubleSieve

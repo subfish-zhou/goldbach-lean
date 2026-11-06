@@ -87,31 +87,8 @@ noncomputable def rationalCost (S k c s : ℝ) : ℝ :=
   norm_num [rationalCost, SecondFunctionalParameters.row4] at h ⊢
   exact h
 
-theorem row3_cost_lt : omegaCost SecondFunctionalParameters.row3 +
-    elementaryCap SecondFunctionalParameters.row3 < 7/100 :=
-  row3_cost_upper.trans_lt (by norm_num)
 
-theorem row4_cost_lt : omegaCost SecondFunctionalParameters.row4 +
-    elementaryCap SecondFunctionalParameters.row4 < 1/20 :=
-  row4_cost_upper.trans_lt (by norm_num)
 
-/-- The unchanged actual envelope and joint supremum consume the certified cap. -/
-theorem row3_original_cost_upper :
-    omega3XIntegralEnvelope
-        SecondFunctionalParameters.row3.kappa3 SecondFunctionalParameters.row3.kappa1 +
-      SecondFunctionalCoupled.jointSup SecondFunctionalParameters.row3 ≤
-      4577792210969/66653798400000 := by
-  have ho := Omega3ElementaryFeedback.original_envelope_le (2 : Fin 4)
-  have hj := original_jointSup_elementary (2 : Fin 4)
-  exact (add_le_add ho hj).trans row3_cost_upper
 
-theorem row4_original_cost_upper :
-    omega3XIntegralEnvelope
-        SecondFunctionalParameters.row4.kappa3 SecondFunctionalParameters.row4.kappa1 +
-      SecondFunctionalCoupled.jointSup SecondFunctionalParameters.row4 ≤
-      31667784024997/755387500000000 := by
-  have ho := Omega3ElementaryFeedback.original_envelope_le (3 : Fin 4)
-  have hj := original_jointSup_elementary (3 : Fin 4)
-  exact (add_le_add ho hj).trans row4_cost_upper
 
 end Wu2008DoubleSieve.SecondFunctionalRationalCost

@@ -51,14 +51,6 @@ noncomputable def literalTail (δ : ℝ) : Fin 4 → ℝ := fun i => tail (param
   exact div_nonneg (actual_tail_nonnegative (parameters i) (parameters_analytic i)
     hδ (by linarith)) (by norm_num)
 
-/-- No point gain, J term, classical term, or same-phi joint supremum has been removed. -/
-theorem source_literal (p : SecondFunctionalParameters) (δ : ℝ) :
-    source p δ = wuUpperCoefficient p.s +
-      (4 * wuImprovementLimit true δ p.S + wuImprovementLimit true δ p.kappa1 +
-        J δ p.s p.S + J δ p.kappa2 p.S + J δ p.kappa3 p.S -
-        (4 * wuUpperCoefficient p.S + wuUpperCoefficient p.kappa1 + classical p +
-          (2/(1-2*δ)) *
-            (omega3XIntegralEnvelope p.kappa3 p.kappa1 + SecondFunctionalCoupled.jointSup p)))/5 := rfl
 
 /-- The stronger actual vector inequality retains the full nonnegative tail. -/
 theorem matrix_rows_with_tail {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/10) :
@@ -68,13 +60,6 @@ theorem matrix_rows_with_tail {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/10) :
   simpa only [Matrix.mulVec, dotProduct, Pi.add_apply, matrix, literalSource, literalTail,
     actualVector, parameters_sample, sample] using h
 
-/-- The advertised matrix inequality is proved from actual_limit, not assumed as hRows. -/
-theorem matrix_rows {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/10) :
-    matrix.mulVec (actualVector δ) + literalSource δ ≤ actualVector δ := by
-  intro i
-  have h := row (parameters i) (parameters_analytic i) hδ hδhi
-  simpa only [Matrix.mulVec, dotProduct, Pi.add_apply, matrix, literalSource,
-    actualVector, parameters_sample, sample] using h
 
  theorem row1_regression {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/10) :
     (∑ j : Fin 4, matrix 0 j * actualVector δ j) + literalSource δ 0 + literalTail δ 0 ≤

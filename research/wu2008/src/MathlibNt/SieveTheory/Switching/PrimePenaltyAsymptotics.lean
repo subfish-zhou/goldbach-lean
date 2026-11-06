@@ -1068,53 +1068,6 @@ theorem correctedChenPrimePowerSum_le_q1Count_add_negligible (N : ℕ)
           rw [Nat.cast_sum]
           exact add_le_add le_rfl (correctedChenProperPowerSum_le_negligible N hNbig hEven)
 
-/-- **Deriving hPrimePower from its inputs**: suppose the q¹ count satisfies the uniform upper bound
-`q¹Count(N) ≤ Cq·𝔖_trunc·N/log²N`, from a weighted Pan/distribution input,
-and the proper-power part is negligible. Then `hPrimePower` holds, namely
-`Σ_p primePowerSum(N−p) ≤ (Cq + 1/2)·𝔖_trunc·N/log²N`. -/
-theorem hPrimePower_of_q1Count_bound
-    (hq1 : ∃ Cq : ℝ, 0 < Cq ∧ ∃ Nq : ℕ, ∀ N : ℕ, Nq ≤ N → Even N →
-      correctedChenQ1Count N ≤ Cq * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-        (correctedChenZ N - 1) * (N : ℝ) / (log (N : ℝ)) ^ 2)
-    (hneg : ∃ Nn : ℕ, ∀ N : ℕ, Nn ≤ N → Even N →
-      60 * (N : ℝ) ^ (9 / 10 : ℝ) ≤
-        (1 / 2 : ℝ) * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-          (correctedChenZ N - 1) * (N : ℝ) / (log (N : ℝ)) ^ 2) :
-    ∃ Cₚ : ℝ, 0 < Cₚ ∧ ∃ N₀ₚ : ℕ, ∀ N : ℕ, N₀ₚ ≤ N → Even N →
-      (correctedChenCandidates N).sum
-          (fun p => primePowerSum (N - p) (correctedChenZ N) (correctedChenY N)) ≤
-        Cₚ * AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1) *
-          (N : ℝ) / (log (N : ℝ)) ^ 2 := by
-  rcases hq1 with ⟨Cq, hCq, Nq, hq1'⟩
-  rcases hneg with ⟨Nn, hneg'⟩
-  refine ⟨Cq + 1 / 2, by positivity, max (max Nq Nn) (2 ^ 110 + 1), ?_⟩
-  intro N hN hEven
-  have hNq : Nq ≤ N := by
-    dsimp at hN
-    omega
-  have hNn : Nn ≤ N := by
-    dsimp at hN
-    omega
-  have hNbig : 2 ^ 110 < N := by
-    dsimp at hN
-    omega
-  let 𝔖 : ℝ := AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1)
-  let X : ℝ := (N : ℝ) / (log (N : ℝ)) ^ 2
-  have hred := correctedChenPrimePowerSum_le_q1Count_add_negligible N hNbig hEven
-  have hq1'' : correctedChenQ1Count N ≤ Cq * 𝔖 * X := by
-    simpa only [𝔖, X, mul_div_assoc] using hq1' N hNq hEven
-  have hneg'' : 60 * (N : ℝ) ^ (9 / 10 : ℝ) ≤ (1 / 2 : ℝ) * 𝔖 * X := by
-    simpa only [𝔖, X, mul_div_assoc] using hneg' N hNn hEven
-  calc
-    (correctedChenCandidates N).sum
-        (fun p => primePowerSum (N - p) (correctedChenZ N) (correctedChenY N)) ≤
-      correctedChenQ1Count N + 60 * (N : ℝ) ^ (9 / 10 : ℝ) := hred
-    _ ≤ Cq * 𝔖 * X + (1 / 2 : ℝ) * 𝔖 * X := by
-          exact add_le_add hq1'' hneg''
-    _ = (Cq + 1 / 2) * 𝔖 * X := by ring
-    _ = (Cq + 1 / 2) * AnalyticNumberTheory.Sieve.singularSeriesTruncated N
-          (correctedChenZ N - 1) * (N : ℝ) / (log (N : ℝ)) ^ 2 := by
-          simp only [𝔖, X, mul_div_assoc]
 
 /-- **Negligibility threshold for proper powers**: for sufficiently large even `N`,
 `60·N^{9/10} ≤ (1/2)·𝔖_trunc·N/log²N`. This follows directly from `𝔖 ≥ 1/2` and the elementary growth bound

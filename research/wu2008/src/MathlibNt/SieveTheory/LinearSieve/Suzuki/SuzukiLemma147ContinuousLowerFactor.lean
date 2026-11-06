@@ -51,57 +51,6 @@ theorem suzukiLowerSieveFactorFirstInterval_le_adaptive_finiteLowerFactor
     hH hs2 hs4]
   linarith
 
-/-- Lemma 14.7 on its first lower interval, in the production lower-Rosser
-quantifier order.  Relative to the finite theorem, only the factor is replaced:
-`suzukiFiniteLowerFactor N s` becomes the genuine explicit continuous factor
-`suzukiLowerSieveFactorFirstInterval s`; the error term and adaptive depth `N`
-are unchanged. -/
-theorem exists_lowerRosserDensity_continuousLowerFactorFirstInterval_of_suzuki_literal_allDepth
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hsrc : SuzukiClaim145SourceParameters d Δ Θ) :
-    ∃ C1min : ℝ, 0 < C1min ∧
-      ∀ C1 : ℝ, C1min ≤ C1 →
-        ∃ C145 Clow C : ℝ,
-          0 < C145 ∧ 0 ≤ Clow ∧ 3 ≤ C ∧
-          ∀ K : ℝ, 2 ≤ K → HasDimensionOneLocalProductBound S K →
-            ∀ D : ℕ, 2 ≤ D →
-              ∀ s : ℝ, 2 ≤ s → s ≤ 4 →
-                s ≤ sourceSigma (D : ℝ) d →
-                2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ →
-                let z := ⌈(D : ℝ) ^ (1 / s)⌉₊
-                let N := 2 * ((suzukiSupportedBelow S z).card + 1)
-                suzukiVProduct S (z : ℝ) *
-                    (suzukiLowerSieveFactorFirstInterval s -
-                      C * Real.exp (Real.sqrt K) *
-                        errorEnvelope H N (D : ℝ) d s *
-                          (Real.log (D : ℝ)) ^ (-Δ)) ≤
-                  lowerRosserSetDensitySum S.nu D (suzukiSupportedBelow S z) := by
-  obtain ⟨C1min, hC1min, hbound⟩ :=
-    exists_lowerRosserDensity_finiteLowerFactor_of_suzuki_literal_allDepth
-      S H hH hsrc
-  refine ⟨C1min, hC1min, ?_⟩
-  intro C1 hC1
-  obtain ⟨C145, Clow, C, hC145, hClow, hC, hall⟩ := hbound C1 hC1
-  refine ⟨C145, Clow, C, hC145, hClow, hC, ?_⟩
-  intro K hK hlocal D hD s hs2 hs4 hsSigma hz2
-  let z : ℕ := ⌈(D : ℝ) ^ (1 / s)⌉₊
-  let N : ℕ := 2 * ((suzukiSupportedBelow S z).card + 1)
-  have hfinite := hall K hK hlocal D hD s hs2 hsSigma hz2
-  have hfactor :
-      suzukiLowerSieveFactorFirstInterval s ≤ suzukiFiniteLowerFactor N s := by
-    dsimp only [N]
-    exact suzukiLowerSieveFactorFirstInterval_le_adaptive_finiteLowerFactor
-      hH (suzukiSupportedBelow S z) hs2 hs4
-  have hV : 0 ≤ suzukiVProduct S (z : ℝ) :=
-    (suzukiVProduct_pos S (z : ℝ)).le
-  dsimp only [z, N] at hfinite ⊢
-  have hbracket := sub_le_sub_right hfactor
-    (C * Real.exp (Real.sqrt K) *
-      errorEnvelope H (2 * ((suzukiSupportedBelow S z).card + 1))
-        (D : ℝ) d s * (Real.log (D : ℝ)) ^ (-Δ))
-  exact (mul_le_mul_of_nonneg_left hbracket hV).trans hfinite
 
 
 end MathlibNt.SieveTheory

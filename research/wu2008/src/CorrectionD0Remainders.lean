@@ -13,13 +13,6 @@ def dUnpaid : ℝ := D0-D0FullDensity.finiteD
 
 theorem dUnpaid_nonneg : 0≤dUnpaid := sub_nonneg.mpr D0FullDensity.finiteD_le_D0
 
-/-- The max branch costs real denominator mass; neither remainder is paid twice. -/
-theorem dUnpaid_balance : dUnpaid=
-    D0FullDensity.endpointUnpaid+D0FullDensity.densityUnpaid-
-      (D0FullDensity.finiteD-D0FullDensity.fullPaid) := by
-  unfold dUnpaid
-  rw [D0FullDensity.original_D0_balance]
-  ring
 
 theorem dUnpaid_eq_min : dUnpaid=min (D0-SigmaRemaining.d0Paid)
     (D0FullDensity.endpointUnpaid+D0FullDensity.densityUnpaid) := by
@@ -83,10 +76,5 @@ theorem retainedTerminal_balance : retainedTerminal=terminal+terminalUnpaid := b
   unfold terminal terminalUnpaid logUnpaid TerminalESigned.eUnpaid
   ring
 
-/-- This is an unconditional stronger bound, not a new finite approximation. -/
-theorem terminal_with_unpaid_le_actual : terminal+terminalUnpaid≤
-    firstFeedback NineFeedbackStrength.originalH 3 3 := by
-  rw [← retainedTerminal_balance]
-  exact retainedTerminal_le_actual
 
 end CorrectionD0Joint

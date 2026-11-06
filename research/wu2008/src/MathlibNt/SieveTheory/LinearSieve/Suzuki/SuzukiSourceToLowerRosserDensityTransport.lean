@@ -148,47 +148,7 @@ theorem lowerRosserDepthTwoSourceMass_nonneg
     (S.nu_lt_one_of_prime r hrprime
       (Nat.dvd_of_mem_primeFactors hrP)).le
 
-/-- The explicit deep tail has a quantitative one-sided enclosure: it is at
-most the total boundary loss and at least minus the depth-two source mass. -/
-theorem lowerRosserDeepBoundaryTail_bounds
-    (S : BoundingSieve) {D z : ℕ} (qs : List ℕ)
-    (hfold : qs.foldr insert (∅ : Finset ℕ) = suzukiSupportedBelow S z) :
-    -lowerRosserDepthTwoSourceMass S D z ≤
-        lowerRosserDeepBoundaryTail S D z qs ∧
-      lowerRosserDeepBoundaryTail S D z qs ≤
-        lowerRosserBoundaryAccum S.nu D (∅ : Finset ℕ) qs := by
-  have hnu : ∀ p ∈ qs.foldr insert (∅ : Finset ℕ), 0 ≤ S.nu p := by
-    intro p hp
-    rw [hfold] at hp
-    have hpP : p ∈ S.prodPrimes.primeFactors :=
-      (Finset.mem_filter.mp hp).1
-    exact (S.nu_pos_of_prime p (Nat.prime_of_mem_primeFactors hpP)
-      (Nat.dvd_of_mem_primeFactors hpP)).le
-  have hnuOne : ∀ p ∈ qs.foldr insert (∅ : Finset ℕ), S.nu p ≤ 1 := by
-    intro p hp
-    rw [hfold] at hp
-    have hpP : p ∈ S.prodPrimes.primeFactors :=
-      (Finset.mem_filter.mp hp).1
-    exact (S.nu_lt_one_of_prime p (Nat.prime_of_mem_primeFactors hpP)
-      (Nat.dvd_of_mem_primeFactors hpP)).le
-  have hacc := lowerRosserBoundaryAccum_nonneg S.nu D (∅ : Finset ℕ) qs hnu hnuOne
-  have htwo := lowerRosserDepthTwoSourceMass_nonneg S D z
-  unfold lowerRosserDeepBoundaryTail
-  constructor <;> linarith
 
-/-- A JR-ready lower estimate with no absolute value: any explicit upper bound
-for the recursive boundary accumulator immediately gives a lower density bound. -/
-theorem lowerRosserSetDensitySum_lower_of_boundaryAccum_le
-    (S : BoundingSieve) {D z : ℕ} (qs : List ℕ)
-    (hcarrier : qs.toFinset = suzukiSupportedBelow S z)
-    (hprime : ∀ q ∈ qs, q.Prime) (hD : ∀ q ∈ qs, q < D)
-    (hordered : qs.Pairwise (· < ·)) (hD1 : 1 < D)
-    {B : ℝ} (hB : lowerRosserBoundaryAccum S.nu D (∅ : Finset ℕ) qs ≤ B) :
-    sourceDiscreteEuler S z - B ≤
-      lowerRosserSetDensitySum S.nu D (suzukiSupportedBelow S z) := by
-  rw [lowerRosserSetDensitySum_eq_euler_sub_boundaryAccum S qs hcarrier
-    hprime hD hordered hD1]
-  linarith
 
 /-- The concrete discrepancy left after transporting the genuine depth-two
 source layer into the full lower-Rosser density.  It includes every deeper
@@ -200,23 +160,6 @@ noncomputable def lowerRosserDensityDiscrepancy
     lowerRosserSetDensitySum S.nu D (suzukiSupportedBelow S z) -
     suzukiActualT S 2 D z
 
-/-- On any ordered enumeration of the supported primes, the source-to-density
- discrepancy is exactly the explicit deeper boundary tail. -/
-theorem lowerRosserDensityDiscrepancy_eq_deepBoundaryTail
-    (S : BoundingSieve) {D z : ℕ} (qs : List ℕ)
-    (hcarrier : qs.toFinset = suzukiSupportedBelow S z)
-    (hprime : ∀ q ∈ qs, q.Prime) (hD : ∀ q ∈ qs, q < D)
-    (hordered : qs.Pairwise (· < ·)) (hD1 : 1 < D)
-    (hzD : z ^ 2 ≤ D) :
-    lowerRosserDensityDiscrepancy S D z =
-      lowerRosserDeepBoundaryTail S D z qs := by
-  rw [lowerRosserDensityDiscrepancy, lowerRosserDeepBoundaryTail,
-    lowerRosserSetDensitySum_eq_euler_sub_boundaryAccum S qs hcarrier
-      hprime hD hordered hD1,
-    show suzukiActualT S 2 D z = lowerRosserDepthTwoSourceMass S D z by
-      simpa [suzukiActualT] using
-        suzukiSourceV_two_eq_lowerRosserDepthTwoSourceMass S hzD]
-  ring
 
 /-- Exact source-to-density decomposition.  In particular, replacing the
 boundary carrier by `suzukiActualT` without this discrepancy is unjustified. -/
@@ -238,16 +181,6 @@ theorem lowerRosserSetDensitySum_lower_transport_two
   rw [lowerRosserSetDensitySum_eq_euler_sub_suzukiActualT_two_sub_discrepancy]
   linarith [le_abs_self (lowerRosserDensityDiscrepancy S D z)]
 
-/-- In the legal even depth-two range, the preceding inequality visibly uses
-the real lower-boundary carrier, not a falsely identified predicate. -/
-theorem lowerRosserSetDensitySum_lower_transport_depthTwoCarrier
-    (S : BoundingSieve) {D z : ℕ} (hzD : z ^ 2 ≤ D) :
-    sourceDiscreteEuler S z - lowerRosserDepthTwoSourceMass S D z -
-        |lowerRosserDensityDiscrepancy S D z| ≤
-      lowerRosserSetDensitySum S.nu D (suzukiSupportedBelow S z) := by
-  have hV := suzukiSourceV_two_eq_lowerRosserDepthTwoSourceMass S hzD
-  simpa [suzukiActualT, hV] using
-    lowerRosserSetDensitySum_lower_transport_two S D z
 
 
 end MathlibNt.SieveTheory

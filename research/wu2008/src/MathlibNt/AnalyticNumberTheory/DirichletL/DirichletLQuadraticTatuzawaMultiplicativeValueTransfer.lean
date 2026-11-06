@@ -151,13 +151,6 @@ theorem pairValue_pos_of_datum_ne
         x.square_eq_one y.square_eq_one)
       (pairCharacter_ne_one_of_datum_ne x y hxy))
 
-/-- All three non-zeta values in the four-factor product are positive at one
-for distinct primitive quadratic data. -/
-theorem fourFactor_nonZetaValueProductAtOne_pos
-    (x y : PrimitiveQuadraticDatum) (hxy : x ≠ y) :
-    0 < x.value * y.value * pairValue x y :=
-  mul_pos (mul_pos x.value_pos y.value_pos)
-    (pairValue_pos_of_datum_ne x y hxy)
 
 /-- The local Euler coefficient for
 `ζ(s)L(s,χ₁)L(s,χ₂)L(s,χ₁χ₂)` is nonnegative.  At every natural number each
@@ -249,27 +242,6 @@ theorem fourFactor_negLogDerivative_nonneg {q₁ q₂ : ℕ}
     ← ((hs0.add hs1).add hs2).tsum_add hsp]
   exact tsum_nonneg (fourFactor_logDerivativeTerm_nonneg χ₁ χ₂ h₁ h₂ σ)
 
-/-- Integrated monotonicity of the four-factor negative logarithmic derivative
-on every compact real interval to the right of one.  This is the exact
-calculus consequence of Euler-coefficient positivity: no zero-repulsion or
-value-product hypothesis is inserted. -/
-theorem integral_fourFactor_negLogDerivative_nonneg {q₁ q₂ : ℕ}
-    [NeZero q₁] [NeZero q₂] [NeZero (q₁ * q₂)]
-    (χ₁ : DirichletCharacter ℂ q₁) (χ₂ : DirichletCharacter ℂ q₂)
-    (h₁ : χ₁ ^ 2 = 1) (h₂ : χ₂ ^ 2 = 1)
-    {a b : ℝ} (ha : 1 < a) (hab : a ≤ b) :
-    0 ≤ ∫ σ in a..b,
-      ((-deriv (L fun _ : ℕ ↦ (1 : ℂ)) (σ : ℂ) /
-            L (fun _ : ℕ ↦ (1 : ℂ)) (σ : ℂ)).re +
-        (-deriv (L fun n : ℕ ↦ χ₁ n) (σ : ℂ) /
-            L (fun n : ℕ ↦ χ₁ n) (σ : ℂ)).re +
-        (-deriv (L fun n : ℕ ↦ χ₂ n) (σ : ℂ) /
-            L (fun n : ℕ ↦ χ₂ n) (σ : ℂ)).re +
-        (-deriv (L fun n : ℕ ↦ pairCharacter χ₁ χ₂ n) (σ : ℂ) /
-            L (fun n : ℕ ↦ pairCharacter χ₁ χ₂ n) (σ : ℂ)).re) := by
-  apply intervalIntegral.integral_nonneg hab
-  intro σ hσ
-  exact fourFactor_negLogDerivative_nonneg χ₁ χ₂ h₁ h₂ σ (ha.trans_le hσ.1)
 
 end TatuzawaMultiplicativeTransfer
 end

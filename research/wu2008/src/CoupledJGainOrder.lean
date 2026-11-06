@@ -54,11 +54,6 @@ theorem original_jRecoveries_nonneg (i : Fin 4) :
     jRecovery_nonneg originalH_nonneg hp.2.2.2.1 (hend hg.2.2.1 hg.2.2.2.1),
     jRecovery_nonneg originalH_nonneg hp.2.2.2.2 (hend hg.2.2.2.2.1 hg.2.2.2.2.2.1)⟩
 
-theorem parent_le_cubicLower (i : Fin 4) : CoupledCorrectedE.lower (coupledRow i) ≤
-    cubicLower (coupledRow i) := by
-  rw [exact_replacement]
-  obtain ⟨h0,h2,h3⟩ := original_jRecoveries_nonneg i
-  linarith only [h0,h2,h3]
 
 end
 end CoupledJLogRecovery

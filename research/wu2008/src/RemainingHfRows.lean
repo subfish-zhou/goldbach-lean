@@ -53,11 +53,5 @@ theorem lower_original_rows (i : Fin 5) : lower (firstNode i) (firstS i) ≤
   rcases h with rfl | rfl | rfl | rfl | rfl
   all_goals apply lower_le <;> norm_num [firstNode,firstS,upperNode]
 
-theorem terminal_exact : lower 3 3=
-    log 2*SigmaExistingLogError.finiteLower NineFeedbackStrength.originalH+
-      paidCells NineFeedbackStrength.originalH 3 := by
-  unfold lower SigmaJJoint.firstCoefficient
-  rw [SigmaJJoint.terminal_J_zero]
-  norm_num
 end
 end RemainingHf

@@ -137,74 +137,7 @@ lemma chen1973Lemma6_eq21_primeSum_nonneg (x : ℕ) :
   unfold chen1973Lemma6Eq21PrimeSum
   positivity
 
-lemma chen1973Lemma6_eq21_contourMajorant_nonneg
-    (x L B k m : ℕ) :
-    0 ≤ chen1973Lemma6Eq21ContourMajorant x L B k m := by
-  unfold chen1973Lemma6Eq21ContourMajorant
-  positivity
 
-/-- Strongest honest assembly of the three analytic arrows printed in (21).
 
-* `hshift` is the zero-free contour deformation from the actual `N` block;
-* `hcontour` is the displayed `(log x)^200` contour estimate;
-* `hprime` is the final decay estimate for the explicit prime-pair sum.
-
-They are deliberately separate, source-shaped inequalities, rather than a
-premise restating the desired terminal bound. -/
-theorem chen1973Lemma6_equation21_of_source_estimates
-    (Cshift Ccontour : ℝ) (hCshift : 0 ≤ Cshift)
-    {x L B k m l₂ : ℕ}
-    (_P : Chen1973Lemma6Eq21SourceParameters x L B k m l₂)
-    {c : ℝ} (hzeroFree : Chen1973Lemma6Eq21ZeroFreeInput x L c)
-    (hshift :
-      Chen1973Lemma6Eq21ZeroFreeInput x L c →
-        chen1973Lemma6NmBlockActual x L 0 B k m ≤
-          Cshift * chen1973Lemma6Eq21ContourMajorant x L B k m)
-    (hcontour :
-      chen1973Lemma6Eq21ContourMajorant x L B k m ≤
-        Ccontour * Real.log x ^ (200 : ℕ) * chen1973Lemma6Eq21PrimeSum x)
-    (hprime :
-      Cshift * (Ccontour * Real.log x ^ (200 : ℕ) *
-        chen1973Lemma6Eq21PrimeSum x) ≤
-          (x : ℝ) / Real.log x ^ (20 : ℕ)) :
-    chen1973Lemma6NmBlockActual x L 0 B k m ≤
-      (x : ℝ) / Real.log x ^ (20 : ℕ) := by
-  calc
-    chen1973Lemma6NmBlockActual x L 0 B k m ≤
-        Cshift * chen1973Lemma6Eq21ContourMajorant x L B k m := hshift hzeroFree
-    _ ≤ Cshift * (Ccontour * Real.log x ^ (200 : ℕ) *
-        chen1973Lemma6Eq21PrimeSum x) := mul_le_mul_of_nonneg_left hcontour hCshift
-    _ ≤ (x : ℝ) / Real.log x ^ (20 : ℕ) := hprime
-
-/-- The exact `(19),(20),(21)` cell join for actual source objects.  Positive
-levels are dispatched by the already-proved source partition; level zero is
-precisely the new equation-(21) lane. -/
-theorem chen1973Lemma6_equations19_20_21_actual_join
-    {x L B D I₁ I₂ m level k : ℕ}
-    (hlevel : level ∈ Finset.range (I₁ + 1))
-    (hk : k ∈ Finset.range (I₂ + 1))
-    (hLast : ∀ j ∈ Finset.Icc 1 I₁, L * 2 ^ j ≤ 2 * D)
-    (h19 : ∀ j ∈ Finset.Icc 1 I₁, ∀ i ∈ Finset.range (I₂ + 1),
-      chen1973Lemma6Eq19Cell x L B D j i →
-        chen1973Lemma6NmBlockActual x L j B i m ≤
-          (x : ℝ) / Real.log x ^ (20 : ℕ))
-    (h20 : ∀ j ∈ Finset.Icc 1 I₁, ∀ i ∈ Finset.range (I₂ + 1),
-      chen1973Lemma6Eq20Cell x L B D j i →
-        chen1973Lemma6NmBlockActual x L j B i m ≤
-          (x : ℝ) / Real.log x ^ (20 : ℕ))
-    (h21 : ∀ i ∈ Finset.range (I₂ + 1),
-      chen1973Lemma6NmBlockActual x L 0 B i m ≤
-        (x : ℝ) / Real.log x ^ (20 : ℕ)) :
-    chen1973Lemma6NmBlockActual x L level B k m ≤
-      (x : ℝ) / Real.log x ^ (20 : ℕ) := by
-  by_cases hzero : level = 0
-  · subst level
-    exact h21 k hk
-  · have hlevelPos : 1 ≤ level := Nat.one_le_iff_ne_zero.mpr hzero
-    have hlevelIcc : level ∈ Finset.Icc 1 I₁ :=
-      Finset.mem_Icc.mpr ⟨hlevelPos, Nat.le_of_lt_succ (Finset.mem_range.mp hlevel)⟩
-    rcases chen1973Lemma6_eq19_or_eq20 hlevelPos (hLast level hlevelIcc) with h | h
-    · exact h19 level hlevelIcc k hk h
-    · exact h20 level hlevelIcc k hk h
 
 end AnalyticNumberTheory.LargeSieve

@@ -163,41 +163,7 @@ theorem imprimitive_conductor_window_prefix_le
             primitiveCharacterPrefixMaxSquare_nonneg b M N d ψ)
     · positivity
 
-/-- Fully discharged dyadic-window estimate.  The factor `(Q/D)²` multiplies
-the primitive LS constant at cutoff `2D`; in particular its quadratic modulus
-term is `(Q/D)² (2D)² ≤ 4Q²`, uniformly in the dyadic conductor range. -/
-theorem imprimitive_conductor_window_prefix_large_sieve
-    (b : ℤ → ℂ) (M : ℤ) (N Q D : ℕ) (hD : 0 < D) :
-    (∑ d ∈ Finset.Icc D (2 * D),
-      imprimitiveConductorWeight Q d *
-        ∑ ψ : PrimitiveCharacter d,
-          primitiveCharacterPrefixMaxSquare b M N d ψ) ≤
-      (((Q / D : ℕ) : ℝ) ^ 2) *
-        ((((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-          primitiveLargeSieveConstant N (2 * D) *
-            ∑ n ∈ Finset.Icc (M + 1) (M + N), ‖b n‖ ^ 2) := by
-  refine (imprimitive_conductor_window_prefix_le b M N Q D hD).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · exact weighted_primitive_prefix_maximal b M N (2 * D) (Nat.mul_pos (by decide) hD)
-  · positivity
 
-/-- The key dyadic payment identity behind the preceding theorem.  Although
-the elementary conductor-fibre estimate loses `(Q/D)²`, this loss cancels the
-quadratic modulus scale `(2D)²` of the primitive large sieve, leaving at most
-`4Q²`.  Thus the coarse bound is a genuine BV bound on the high-conductor
-ranges where the `N` term is no larger than the modulus-square term. -/
-theorem dyadic_multiplicity_mul_modulus_sq_le (Q D : ℕ) :
-    (((Q / D : ℕ) : ℝ) ^ 2) * (((2 * D : ℕ) : ℝ) ^ 2) ≤
-      4 * ((Q : ℝ) ^ 2) := by
-  have hnat : (Q / D) * D ≤ Q := by
-    simpa [mul_comm] using Nat.mul_div_le Q D
-  have hreal : ((Q / D : ℕ) : ℝ) * (D : ℝ) ≤ Q := by
-    exact_mod_cast hnat
-  calc
-    (((Q / D : ℕ) : ℝ) ^ 2) * (((2 * D : ℕ) : ℝ) ^ 2) =
-        4 * (((Q / D : ℕ) : ℝ) * (D : ℝ)) ^ 2 := by push_cast; ring
-    _ ≤ 4 * ((Q : ℝ) ^ 2) := by
-      gcongr
 
 end
 

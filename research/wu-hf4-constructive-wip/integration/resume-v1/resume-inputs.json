@@ -1,0 +1,11 @@
+{
+  "prior": "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745",
+  "prefix_count": 53,
+  "inputs": {
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/STATUS.json": "c7c4d8de31ff29fffe09f434bc6450675bf2dc37fdae847ecb5871c84ef64a47",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/results.json": "60489483d6f351c8a18225615c9cfb54dfc9557b468ac7013c4cf4bdc5e62688",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run-1793180644915780745/plan.json": "a3c6a7d76c2ddab52de70e75e6f09769ceb4b213e43f3f249190f8d13a57a04e",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/run.py": "d25aaf3ae4ffb49c7d7b9d63510efa503de7c0316e6f06df4f3e71cc099f70a1",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/validate.py": "34e8bbd98611bb3a4fac4becff8b30320942f19585b5910cabffd61517f3ae11"
+  }
+}

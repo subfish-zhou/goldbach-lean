@@ -488,52 +488,6 @@ theorem claim145_caseA_highS_final_of_equation14_6_lower
           (sourceSigma (D : ℝ) d) K s :=
       mul_le_mul_of_nonneg_left hlower hC145
 
-/-- Source-contract form of the preceding assembly.  It chooses the uniform
-Proposition-13.1(ii) constants supplied by (14.6); once the displayed source
-large-`K` thresholds hold for those constants, the conclusion is the final
-Claim-14.5 bound, not an intermediate scalar comparison. -/
-theorem claim145_caseA_highS_final
-    (S : BoundingSieve) (H : Section13HatLayers)
-    (hH : Section13HatSourceContract H)
-    {N D z : ℕ} {d Δ K s C1 Θ A C145 : ℝ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hD : 2 ≤ D) (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊)
-    (hs : 2 ≤ s) (hK : 1 < K) (hC1 : 0 < C1) (hΘ : 0 ≤ Θ)
-    (hhigh : Real.sqrt K / Real.log K ≤ s)
-    (hlogrel : Real.log K ≤ 4 * Real.log s)
-    (hsmall : Real.log (D : ℝ) ≤ C1 * K ^ Θ)
-    (hsourceLarge :
-      Real.exp 1 * suzukiSourceL (z : ℝ) K ≤ s - 2)
-    (hexponent :
-      suzukiSourceL (z : ℝ) K + (s - 2) *
-          (1 + Real.log (suzukiSourceL (z : ℝ) K) - Real.log (s - 2)) ≤
-        -s * Real.log s + s * Real.log (Real.log (3 * K)) +
-          A * (Real.log K + s))
-    (hgrowth :
-      (C1 * (16 : ℝ) ^ Θ) * (Real.log s) ^ (2 * Θ) *
-          (Real.log (3 * K) * (Real.log (3 * s)) ^ 2) ≤
-        s ^ (d - 2 * Θ))
-    (hC145 : 0 ≤ C145) :
-    ∃ C M : ℝ, 0 ≤ C ∧ 3 ≤ M ∧
-      (M ≤ s →
-        Real.exp (A * (Real.log K + s) + C * s -
-            s * Real.log (Real.log (3 * s))) ≤
-          C145 * (claim14_5VProduct S (D : ℝ) *
-            (Real.exp (Real.sqrt K) /
-              (Real.log (D : ℝ) * sourceSigma (D : ℝ) d))) *
-            s * (Real.log (D : ℝ)) ^ (-Δ) →
-        Claim14_5Bound
-          (fun m D' z' => suzukiActualT S m ⌈D'⌉₊ ⌈z'⌉₊)
-          S H N (D : ℝ) (z : ℝ) d Δ
-            (sourceSigma (D : ℝ) d) K s C145) := by
-  obtain ⟨C, M, hC, hM3, hlower⟩ :=
-    claim145_caseA_lowS_equation14_6_lower S H hH
-  refine ⟨C, M, hC, hM3, ?_⟩
-  intro hMs habsorb
-  exact claim145_caseA_highS_final_of_equation14_6_lower
-    S H hlocal hD hz hs hK hC1 hΘ hhigh hlogrel hsmall
-      hsourceLarge hexponent hgrowth hC145 habsorb
-      (hlower N D d Δ K s hD hMs)
 
 /-- Suzuki's second displayed comparison in Case A, uniformly throughout
 `2 ≤ s ≤ √K / log K`.  Above one source threshold the multiplicative constant

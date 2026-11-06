@@ -67,51 +67,6 @@ theorem fourthRowTripleNoGate_integral_eq (eleven : Bool) (φ : ℝ) :
   unfold primeOrderedBuchstabWeight
   ring
 
-theorem fourthRowTripleNoGate_integrable (eleven : Bool) {φ : ℝ} (hφ : 2 ≤ φ) :
-    (∀ t ∈ Icc (1 / 10 : ℝ) (1 / 2), ∀ u ∈ Icc (100 / 291 : ℝ) (2 / 5),
-      IntervalIntegrable (fun v => buchstab ((φ - t - u - v) / u) / (t * u ^ 2 * v))
-        volume u (2 / 5)) ∧
-    (∀ t ∈ Icc (1 / 10 : ℝ) (1 / 2),
-      IntervalIntegrable (fun u => ∫ v in u..(2 / 5),
-        buchstab ((φ - t - u - v) / u) / (t * u ^ 2 * v))
-        volume (100 / 291) (2 / 5)) ∧
-    IntervalIntegrable (fun t => ∫ u in (100 / 291 : ℝ)..(2 / 5),
-      ∫ v in u..(2 / 5), buchstab ((φ - t - u - v) / u) / (t * u ^ 2 * v))
-        volume (fourthRowTripleNoGateLower eleven) (fourthRowTripleNoGateUpper eleven) := by
-  have hP : 0 ≤ 1000 * φ + 200 := by linarith
-  have hw := primeOrdered_buchstab_weight hφ (le_refl φ)
-  have hi := primeOrdered_inner_regular hw (by norm_num) hP
-    (by norm_num : (2 / 5 : ℝ) ∈ Icc (1 / 10) (1 / 2))
-  have hm := fourthRowTripleNoGate_middle_regular hw (by norm_num) hP
-  have heq (t u : ℝ) :
-      (∫ v in u..(2 / 5), buchstab ((φ - t - u - v) / u) / (t * u ^ 2 * v)) =
-        primeOrderedInnerIntegral (2 / 5) (primeOrderedBuchstabWeight φ) t u / u / t := by
-    unfold primeOrderedInnerIntegral primeOrderedBuchstabWeight
-    rw [← intervalIntegral.integral_div, ← intervalIntegral.integral_div]
-    congr 1
-    funext v
-    ring
-  refine ⟨?_, ?_, ?_⟩
-  · intro t ht u hu
-    have hu' : u ∈ Icc (1 / 10 : ℝ) (1 / 2) := by
-      constructor <;> linarith [hu.1, hu.2]
-    have hh := (primeOrdered_integrable
-      (primeOrdered_continuous_of_lipschitz (hw.third t ht u hu')) hu'
-      (by norm_num : (2 / 5 : ℝ) ∈ Icc (1 / 10) (1 / 2))).div_const u
-    have hh' := hh.div_const t
-    convert hh' using 1
-    funext v
-    unfold primeOrderedBuchstabWeight
-    ring
-  · intro t ht
-    simp_rw [heq]
-    exact (primeOrdered_integrable
-      (primeOrdered_continuous_of_lipschitz (hi.2.2 t ht))
-      (by norm_num) (by norm_num)).div_const t
-  · have he := fourthRowTripleNoGate_endpoints eleven
-    simp_rw [heq, intervalIntegral.integral_div]
-    exact primeOrdered_integrable (primeOrdered_continuous_of_lipschitz hm.2)
-      ⟨he.1, he.2.1.trans he.2.2⟩ ⟨he.1.trans he.2.1, he.2.2⟩
 
 theorem fourthRowTripleNoGate_integral_bounds (eleven : Bool) {φ : ℝ} (hφ : 2 ≤ φ) :
     0 ≤ fourthRowTripleNoGateIntegral eleven φ ∧

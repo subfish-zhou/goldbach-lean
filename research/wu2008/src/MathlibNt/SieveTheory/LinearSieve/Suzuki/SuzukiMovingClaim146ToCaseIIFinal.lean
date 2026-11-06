@@ -131,40 +131,6 @@ theorem claim14_5_caseII_natEventual_of_movingClaim146
   unfold Claim14_5Bound
   exact hclosed.trans hnorm
 
-/-- Exact Case-I/Case-II split with a natural rounded cutoff.  The branch is the
-same tagged split exported by `SuzukiClaim145CaseSplitFinal`; Case II is supplied
-by the moving Claim-14.6 closure above, while Case I remains its independent
-producer. -/
-theorem claim14_5_natEventual_exact_case_split_with_movingClaim146_caseII
-    {Tdisc : ℕ → ℝ → ℝ → ℝ} {S : BoundingSieve}
-    {H : Section13HatLayers} {B₀ : ℕ → ℕ → ℝ}
-    {N : ℕ} {d Δ σ K C C145 D C1 ΘK s : ℝ}
-    (hdom : s ∈ SuzukiFiniteContinuousLayers.suzukiParityDomainOne 2 N)
-    (hsσ : s ≤ σ) (hlarge : C1 * K ^ ΘK < Real.log D)
-    (hH : Section13HatContract H 2)
-    (hd1 : 1 < d) (hd : 7 / (1 - Δ) < d)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hC : 0 ≤ C) (hK : 0 ≤ K)
-    (hF0 : 0 ≤ finiteSourceLayer 1 2 N 3)
-    (hF1 : 0 ≤ finiteSourceLayer 1 2 (N - 1) 2)
-    (hscaleNonneg : ∀ D : ℕ,
-      0 ≤ (C * Real.exp (Real.sqrt K)) * errorEnvelope H N (D : ℝ) d s *
-        (Real.log (D : ℝ)) ^ (-Δ))
-    (hcert : MovingClaim14_6TailCertificate H 2 d Δ)
-    (hmovingIII : MovingClaim14_6iiiAtSource H d Δ)
-    (hassemble : MovingCaseIIRelativeAssembler Tdisc S H B₀ d Δ C K)
-    (hnormalize : MovingCaseIINormalization S H B₀ d Δ σ K C C145)
-    (hI : 2 + (N % 2 : ℕ) ≤ s → s ≤ σ →
-      Claim14_5NatEventualAt Tdisc S H N d Δ σ K s C145) :
-    Claim14_5NatEventualAt Tdisc S H N d Δ σ K s C145 := by
-  have hbranch : Claim14_5ExactBranch 2 N s σ :=
-    claim14_5ExactBranch_iff.mpr
-      (claim14_5_exact_case_split hdom hsσ hlarge)
-  exact hbranch.elim hI (fun hN hlo hup => by
-    have hs1 : 1 < s := by norm_num at hlo ⊢; exact hlo
-    have hs3 : s ≤ 3 := by norm_num at hup ⊢; exact hup
-    exact claim14_5_caseII_natEventual_of_movingClaim146 hH hN hd1 hd hΔ0 hΔ1
-      hs1 hs3 hC hK hF0 hF1 hscaleNonneg hcert hmovingIII hassemble hnormalize)
 
 
 end MathlibNt.SieveTheory

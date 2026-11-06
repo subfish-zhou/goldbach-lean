@@ -17,19 +17,6 @@ theorem fouvryG9RelaxedIntegral_denominators {u v w δ : ℝ}
   · linarith
   constructor <;> linarith
 
-/-- The moving first denominator is safely replaced by the smaller static one. -/
-theorem fouvryG9RelaxedIntegral_static_majorant {r s u v w δ : ℝ}
-    (hr : 0 < r) (hs : 0 < s) (hu : u ≤ 1/10)
-    (hv : u + 2*v ≤ 1 + 1/20) (hw : 1 ≤ w) (hδ : δ ≤ 1/4) :
-    1 / (r*s*(w-u-v)*((5/9 : ℝ)*(1-u)-δ)) ≤
-      1 / (r*s*(1-u-v)*((5/9 : ℝ)*(1-u)-δ)) := by
-  obtain ⟨hgap, _, hweight⟩ := fouvryG9RelaxedIntegral_denominators hu hv hw hδ
-  have hg : 0 < 1-u-v := by linarith
-  have ht : 0 < (5/9 : ℝ)*(1-u)-δ := by linarith
-  apply one_div_le_one_div_of_le (by positivity)
-  exact mul_le_mul_of_nonneg_right
-    (mul_le_mul_of_nonneg_left (by linarith : 1-u-v ≤ w-u-v)
-      (mul_pos hr hs).le) ht.le
 
 open MathlibNt.SieveTheory.LiuWeight
 open PrimeReciprocalLogRectangle PrimeReciprocalLogScale

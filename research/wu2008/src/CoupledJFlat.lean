@@ -83,16 +83,6 @@ theorem profileJ_eq_flat (z : Fin 9 → ℝ) {s S : ℝ}
     _ = _ := odds_full_tail (by linarith : 0<jStart s S) hend (by linarith)
       (shifted_profile_integrable z hstart hend (by linarith)) _
 
-/-- Each of the three literal J terms for every one of the original four coupled rows. -/
-theorem coupled_J_flat (z : Fin 9 → ℝ) (i : Fin 4) :
-    profileJ z (coupledRow i).s (coupledRow i).S = jFlat z (coupledRow i).s (coupledRow i).S ∧
-    profileJ z (coupledRow i).kappa2 (coupledRow i).S = jFlat z (coupledRow i).kappa2 (coupledRow i).S ∧
-    profileJ z (coupledRow i).kappa3 (coupledRow i).S = jFlat z (coupledRow i).kappa3 (coupledRow i).S := by
-  have hp := coupledRow_geometry i
-  have hg := coupled_geometry_bounds hp
-  exact ⟨profileJ_eq_flat z hg.1 hp.1.three_le_S hp.1.S_le_five hg.2.1 hp.2.2.1,
-    profileJ_eq_flat z hg.2.2.1 hp.1.three_le_S hp.1.S_le_five hg.2.2.2.1 hp.2.2.2.1,
-    profileJ_eq_flat z hg.2.2.2.2.1 hp.1.three_le_S hp.1.S_le_five hg.2.2.2.2.2.1 hp.2.2.2.2⟩
 
 end
 end CoupledIntegralRecovery

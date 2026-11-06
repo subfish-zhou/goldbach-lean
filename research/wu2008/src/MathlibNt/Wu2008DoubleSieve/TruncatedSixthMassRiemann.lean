@@ -122,13 +122,5 @@ theorem truncatedSixthMass_disjoint_coarse_tendsto {δ : ℝ}
       (truncatedSixthMass_kernels_ae_continuous hδ hδhi).2
       (fun v hv => truncatedSixthMass_disjoint_support δ v (Or.inr hv))
 
-theorem truncatedSixthMass_literal_coarse_tendsto {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 100) :
-    Tendsto (fun n => 4 * truncatedSixthMassCoarseSum (truncatedSixthMassWedgeKernel δ) n +
-      4 * truncatedSixthMassCoarseSum (truncatedSixthMassAdmissibleKernel δ) n)
-      atTop (𝓝 (truncatedSixthLowerFdelta δ + truncatedSixthLowerHadmdelta δ)) := by
-  rw [truncatedSixthMass_literal_disjoint_integral hδ hδhi]
-  exact ((truncatedSixthMass_disjoint_coarse_tendsto hδ hδhi).1.const_mul 4).add
-    ((truncatedSixthMass_disjoint_coarse_tendsto hδ hδhi).2.const_mul 4)
 
 end Wu2008DoubleSieve

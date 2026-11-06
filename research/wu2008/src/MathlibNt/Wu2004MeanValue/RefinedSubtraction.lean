@@ -55,19 +55,7 @@ theorem mem_refinedBad {N p : ℕ} {a : ℝ} (ha : 3 / 2 < a) (ha2 : a < 2) :
       exact mul_prime_semiprime hr hq
     exact mem_filter.mpr ⟨mem_range.mpr (by have := hs.1; omega), hpp, hs⟩
 
-theorem prime_square_mem_refinedBad {N p q : ℕ} {a : ℝ}
-    (ha : 3 / 2 < a) (ha2 : a < 2) (hp : p.Prime) (hq : q.Prime)
-    (hN : N = p + q * q) : p ∈ refinedBad N a :=
-  (mem_refinedBad ha ha2).mpr
-    ⟨hp, q, q, hq, hq, hN, le_rfl, prime_square_is_bad hq ha2⟩
 
-theorem refinedGood_bad_partition (N : ℕ) (a : ℝ) :
-    refinedGood N a ∪ refinedBad N a = chenGoodRepresentations N ∧
-      Disjoint (refinedGood N a) (refinedBad N a) := by
-  constructor
-  · rw [union_comm]
-    exact sdiff_union_of_subset (refinedGood_subset_chenGood N a)
-  · exact disjoint_sdiff
 
 theorem chenGood_card_eq_refined_add_bad (N : ℕ) (a : ℝ) :
     (chenGoodRepresentations N).card =
@@ -157,14 +145,6 @@ theorem chenGood_card_le_refined_add_bad (N : ℕ) (a η : ℝ)
       (refinedGood N a).card + originalTripleCount N a η + originalLargeTripleCount N a η :=
   (chenGood_card_eq_refined_add_original_counts N a η ha ha2).le
 
-/-- The separately owned Wu count has an explicit unit correction. The unit
-is not a refined representation and is paid here by at most one. -/
-theorem chenGood_add_unit_card_le_refined_add_bad (N : ℕ) (a η : ℝ)
-    (ha : 3 / 2 < a) (ha2 : a < 2) :
-    (chenGoodRepresentations N).card + (if (N - 1).Prime then 1 else 0) ≤
-      (refinedGood N a).card + originalTripleCount N a η + originalLargeTripleCount N a η + 1 := by
-  have h := chenGood_card_le_refined_add_bad N a η ha ha2
-  split_ifs <;> omega
 
 end
 end Wu2004MeanValue

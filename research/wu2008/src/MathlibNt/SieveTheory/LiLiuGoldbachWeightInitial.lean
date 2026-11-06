@@ -365,30 +365,8 @@ private theorem goldbachS3Closed_eq_weightCross
           goldbachWeightCStrict A N z b c + goldbachWeightA15 A N z b c := by
           rfl
 
-theorem goldbachWeightD6_nonneg (A : Finset ℕ) (N : ℕ) (z b : ℝ) :
-    0 ≤ goldbachWeightD6 A N z b := by
-  unfold goldbachWeightD6
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  exact literalH_nonneg A N (r ^ 2) z
 
-theorem goldbachWeightB6pair_nonneg (A : Finset ℕ) (N : ℕ) (z b : ℝ) :
-    0 ≤ goldbachWeightB6pair A N z b := by
-  unfold goldbachWeightB6pair
-  refine Finset.sum_nonneg ?_
-  intro s hs
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  exact literalH_nonneg A N (r * s) z
 
-theorem goldbachWeightB7_nonneg (A : Finset ℕ) (N : ℕ) (z b c : ℝ) :
-    0 ≤ goldbachWeightB7 A N z b c := by
-  unfold goldbachWeightB7
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  refine Finset.sum_nonneg ?_
-  intro r hr
-  exact literalH_nonneg A N (r * t) z
 
 private theorem goldbachWeightG6_eq_goldbachWeightPStrict_add_goldbachWeightD6_add_goldbachWeightB6pair
     (A : Finset ℕ) (N : ℕ) (z b : ℝ) :

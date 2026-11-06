@@ -113,7 +113,6 @@ theorem extra_exact : extra = 1801966742673539714200045699/174282031522338101638
   rw [extra,MiddleInitialPayment.gain_exact]
   norm_num [correlatedPayment,deltaLower,massLower,lowerLog,V,upperLog]
 
-theorem extra_pos : 0 < extra := by rw [extra_exact]; norm_num
 
 theorem total_gain_lower : MiddleInitialPayment.gain+4*extra ≤ gainReal+(8/3)*delta*mass := by
   have hp := mul_le_mul delta_lower mass_lower massLower_pos.le (deltaLower_pos.le.trans delta_lower)

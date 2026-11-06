@@ -35,15 +35,6 @@ def paidCell (S A a b : ℝ) : ℝ :=
   pd (-(2*S-A-1)) (-2*(S-A))/2*
     (1/(b-(2*S-A-1))^2-1/(a-(2*S-A-1))^2)
 
-theorem paidCell_le {S A a b : ℝ} (h0 : 0<b/a)
-    (h1 : 0<(b+(1+A))/(a+(1+A)))
-    (h2 : 0<(b-(2*S-A-1))/(a-(2*S-A-1))) :
-    paidCell S A a b≤cell S A a b := by
-  have h := signed_bound (pa (1+A) (2*A)-pa (-(2*S-A-1)) (-2*(S-A))) h0
-  have h' := signed_bound (pb (1+A) (2*A)) h1
-  have h'' := signed_bound (-pb (-(2*S-A-1)) (-2*(S-A))) h2
-  unfold paidCell cell
-  linarith only [h,h',h'']
 
 end
 end CoupledCMCollectedJ

@@ -14,14 +14,6 @@ open ArithmeticFunction SmallRosser
 noncomputable def densityNumerator (g : ArithmeticFunction ℝ) : ArithmeticFunction ℝ :=
   ⟨fun n => (n : ℝ) * g n, by simp⟩
 
-theorem densityNumerator_isMultiplicative {g : ArithmeticFunction ℝ}
-    (hg : g.IsMultiplicative) : (densityNumerator g).IsMultiplicative := by
-  refine ⟨?_, ?_⟩
-  · simp [densityNumerator, hg.map_one]
-  · intro m n hmn
-    change ((m * n : ℕ) : ℝ) * g (m * n) = ((m : ℝ) * g m) * ((n : ℝ) * g n)
-    rw [hg.map_mul_of_coprime hmn, Nat.cast_mul]
-    ring
 
 @[simp]
 theorem primeDensity_densityNumerator (g : ArithmeticFunction ℝ) :
@@ -42,21 +34,6 @@ theorem progressionDensity_isMultiplicative (a : ℕ) :
       Nat.coprime_mul_iff_left, Nat.totient_mul hmn, Nat.cast_mul]
     split_ifs <;> simp_all [mul_comm]
 
-theorem progressionDensity_prime_bounds (a : ℕ) {p : ℕ}
-    (hp : p.Prime) (hp2 : 2 < p) :
-    0 ≤ progressionDensity a p ∧ progressionDensity a p < 1 := by
-  change 0 ≤ (if p.Coprime a then (p.totient : ℝ)⁻¹ else 0) ∧
-    (if p.Coprime a then (p.totient : ℝ)⁻¹ else 0) < 1
-  by_cases hpa : p.Coprime a
-  · simp only [if_pos hpa, Nat.totient_prime hp]
-    have hp' : (2 : ℝ) < p := by exact_mod_cast hp2
-    have hcast : ((p - 1 : ℕ) : ℝ) = (p : ℝ) - 1 :=
-      by simpa only [Nat.cast_one] using (Nat.cast_sub (R := ℝ) hp.one_le)
-    rw [hcast]
-    constructor
-    · exact inv_nonneg.mpr (by linarith)
-    · exact (inv_lt_one₀ (by linarith)).mpr (by linarith)
-  · simp [hpa]
 
 #check progressionDensity_isMultiplicative
 #print axioms progressionDensity_isMultiplicative

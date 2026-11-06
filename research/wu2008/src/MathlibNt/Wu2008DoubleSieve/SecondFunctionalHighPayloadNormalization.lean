@@ -188,26 +188,6 @@ theorem mass_theta_near_one (k : ℕ) {δ τ : ℝ}
   intro N hN i Δ V hb f hf
   exact mass_theta_comparison (hT4.trans hN) hδ hδhi hb hf hτ.le (hT N hN)
 
-/-- True-li quarter normalization for arbitrary support-bounded, N/box-dependent payloads. -/
-theorem mass_theta_quarter (k : ℕ) {δ B epsilon : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (hB : 0 ≤ B) (he : 0 < epsilon) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ f : ℕ → ℝ,
-        (∀ d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V),
-          0 ≤ f d ∧ f d ≤ B) →
-      wuSingularSeries N/log N * mass N δ Δ V f ≤ theta N δ Δ V f/4 +
-        epsilon * boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  obtain ⟨T, hT4, hT⟩ := mass_theta_near_one k hδ hδhi
-    (show 0 < 4*epsilon/(B+1) by positivity)
-  refine ⟨T, hT4, ?_⟩
-  intro N hN i Δ V hb f hf
-  have hm := hT N hN i Δ V hb f (fun d hd => (hf d hd).1)
-  have hpay := theta_cap_payment (hT4.trans hN) hδ hδhi hB he.le hb hf
-  have hexpand : (1+4*epsilon/(B+1))/4 * theta N δ Δ V f =
-      theta N δ Δ V f/4 + epsilon/(B+1) * theta N δ Δ V f := by ring
-  rw [hexpand] at hm
-  linarith only [hm, hpay]
 
 /-- Positive rho precedes T, N, all original boxes and the arbitrary payload.
 The original varying C(N) and the fixed delta loss are retained literally. -/

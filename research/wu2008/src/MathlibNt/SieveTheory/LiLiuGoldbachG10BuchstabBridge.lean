@@ -19,14 +19,6 @@ noncomputable def goldbachWeightT16 (A : Finset ℕ) (N : ℕ) (b c : ℝ) : ℤ
     ∑ t ∈ goldbachClosedPrimes N (rs.2 : ℝ) (goldbachC10Cutoff N rs),
       literalH A (N * rs.1) (rs.1 * rs.2 * t) (rs.2 : ℝ)
 
-theorem goldbachWeightT16_nonneg (A : Finset ℕ) (N : ℕ) (b c : ℝ) :
-    0 ≤ goldbachWeightT16 A N b c := by
-  unfold goldbachWeightT16
-  refine Finset.sum_nonneg ?_
-  intro rs hrs
-  refine Finset.sum_nonneg ?_
-  intro t ht
-  exact literalH_nonneg A (N * rs.1) (rs.1 * rs.2 * t) (rs.2 : ℝ)
 
 private theorem goldbachG10Bridge_literalH_le_of_pointwise
     {A : Finset ℕ} {M₁ d₁ M₂ d₂ : ℕ} {x₁ x₂ : ℝ}

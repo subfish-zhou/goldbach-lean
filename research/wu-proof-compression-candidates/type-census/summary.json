@@ -1,0 +1,25 @@
+{
+  "status": "SEARCH_EVIDENCE_ONLY_NOT_REPLACEMENT_ACCEPTANCE",
+  "source_manifest_sha256": "c7950a5796a848c7c0fc0f58f68c41746a570d137f54ab298c64a31d14f71e39",
+  "modules": 3764,
+  "theorems_scanned": 57365,
+  "groups": 3125,
+  "members_in_groups": 22624,
+  "scope": "Raw imported module theorem records in the final local closure; includes private/generated names and possible duplicate names from different module records.",
+  "comparison": "Lean Std.HashMap Expr equality; candidate grouping only; no definitional equality search.",
+  "limitations": [
+    "A wrapper and its original proof may have identical types but cannot replace each other without checking the import graph.",
+    "Repeated fully qualified names in raw module records are not independent replacement targets.",
+    "Generated proof auxiliaries are not independently editable source declarations.",
+    "Each selected rewrite still requires compiler checking, raw retained-interface comparisons, and downstream validation."
+  ],
+  "groups_uncompressed_sha256": "fef90d77616afc407e42895b332e10823c2ffd1dd4909016c68b2463349287f4",
+  "bindings": {
+    "groups.json.gz": "67f37b4caf021d0b94f2a3e7aa1391ddda07b7b9d92d7c3f16113363bdc4c98f",
+    "result-v2.json": "96e6ba00a5fc06f305fc8732f3f0ab810346b36cbf0d1b58810aa60b26a1d431",
+    "Probe.lean": "38f08ea0dd63467d12c3d94a030e240a5b47811c4cfab239b5fbebacc9af0bef",
+    "compile-v2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "modules.txt": "e78dfaa792b7dab65064e212406119917751de4a382c6e1cc0a800217d8d9494",
+    "invocation.json": "16c0ece08d40b21cd97f17e86d8c1816bf8e4685c06bac6db44ea5e8587d5877"
+  }
+}

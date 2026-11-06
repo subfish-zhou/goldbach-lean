@@ -176,59 +176,6 @@ theorem vaughanMoebiusCoeffEnergy_le_card (DS : Finset ℕ) :
       rcases ArithmeticFunction.moebius_eq_or d with h | h | h <;> simp [h]
     _ = (DS.card : ℝ) := by simp
 
-/-- Actual canonical-block primitive bound after inserting the fibre and
-external-coefficient energies. -/
-theorem weighted_primitive_vaughanCanonicalBilinear_actual
-    (b : ℕ → ℂ) (y N u v k l Q : ℕ) (Δ LΛ B : ℝ) (hQ : 0 < Q)
-    (hΔ : ∀ d ∈ vaughanCanonicalDyadicBlock N u k,
-      ∀ t ∈ Finset.Icc (1 : ℤ) y,
-      (vaughanTensorFiberMultiplicity y d
-        (vaughanCanonicalDyadicBlock N v l) t : ℝ) ≤ Δ)
-    (hΛ : ∀ d ∈ vaughanCanonicalDyadicBlock N u k,
-      ∀ t ∈ Finset.Icc (1 : ℤ) y,
-      vaughanTensorFiberMangoldtEnergy y d
-        (vaughanCanonicalDyadicBlock N v l) t ≤ LΛ)
-    (hB : (∑ d ∈ vaughanCanonicalDyadicBlock N u k,
-      ∑ t ∈ Finset.Icc (1 : ℤ) y, ‖b (d * t.toNat)‖ ^ 2) ≤ B)
-    (hΔ0 : 0 ≤ Δ) (hΛ0 : 0 ≤ LΛ) :
-    (∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
-      ∑ χ : PrimitiveCharacter q,
-        ‖vaughanTypeIICanonicalBilinearBlock b y N u v k l q χ‖ ^ 2) ≤
-      (vaughanCanonicalDyadicBlock N u k).card *
-        vaughanBilinearLargeSieveConstant y Q * (Δ * LΛ * B) := by
-  refine (weighted_primitive_vaughanCanonicalBilinear b y N u v k l Q hQ).trans ?_
-  have hμ := vaughanMoebiusCoeffEnergy_le_card
-    (vaughanCanonicalDyadicBlock N u k)
-  have hT := vaughanBilinearTensorEnergy_le_of_fiber_caps b y
-    (vaughanCanonicalDyadicBlock N u k) (vaughanCanonicalDyadicBlock N v l)
-    Δ LΛ B (fun e he => (mem_vaughanCanonicalDyadicBlock.mp he).1)
-    hΔ hΛ hB hΔ0 hΛ0
-  have hC0 : 0 ≤ vaughanBilinearLargeSieveConstant y Q := by
-    unfold vaughanBilinearLargeSieveConstant largeSieveBound
-    positivity
-  have hT0 : 0 ≤ vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y
-      (vaughanCanonicalDyadicBlock N u k)
-      (vaughanCanonicalDyadicBlock N v l) := by
-    unfold vaughanBilinearTensorEnergy
-    positivity
-  calc
-    vaughanBilinearCoeffEnergy vaughanMoebiusCoeff
-        (vaughanCanonicalDyadicBlock N u k) *
-        vaughanBilinearLargeSieveConstant y Q *
-        vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y
-          (vaughanCanonicalDyadicBlock N u k)
-          (vaughanCanonicalDyadicBlock N v l) ≤
-      (vaughanCanonicalDyadicBlock N u k).card *
-        vaughanBilinearLargeSieveConstant y Q *
-        vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y
-          (vaughanCanonicalDyadicBlock N u k)
-          (vaughanCanonicalDyadicBlock N v l) := by
-      exact mul_le_mul_of_nonneg_right
-        (mul_le_mul_of_nonneg_right hμ hC0) hT0
-    _ ≤ (vaughanCanonicalDyadicBlock N u k).card *
-        vaughanBilinearLargeSieveConstant y Q * (Δ * LΛ * B) := by
-      exact mul_le_mul_of_nonneg_left hT
-        (mul_nonneg (by positivity) hC0)
 
 /-- Rectangle-count Cauchy, in the exact form used to reconstruct the full
 Type-II prefix. -/
@@ -262,54 +209,6 @@ theorem vaughanTypeIIFullPrefix_norm_sq_le_rectangles
           · exact_mod_cast card_vaughanCanonicalDyadicRectangles_le N u v
           · positivity
 
-/-- Full weighted primitive maximal ledger.  Rectangle Cauchy costs exactly
-`(log₂ N+1)²`; the right side is the sum of the already proved canonical-block
-primitive energies, so no second pointwise coefficient loss is introduced. -/
-theorem weighted_primitive_vaughanTypeIIFullPrefix
-    (b : ℕ → ℂ) (y N u v Q : ℕ) (hQ : 0 < Q) (hyN : y ≤ N) :
-    (∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
-      ∑ χ : PrimitiveCharacter q,
-        ‖vaughanTypeIIFullPrefix b y u v q χ‖ ^ 2) ≤
-      (((Nat.log 2 N + 1 : ℕ) : ℝ) ^ 2) *
-        ∑ kl ∈ vaughanCanonicalDyadicRectangles N u v,
-          (vaughanBilinearCoeffEnergy vaughanMoebiusCoeff
-              (vaughanCanonicalDyadicBlock N u kl.1) *
-            vaughanBilinearLargeSieveConstant y Q *
-            vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y
-              (vaughanCanonicalDyadicBlock N u kl.1)
-              (vaughanCanonicalDyadicBlock N v kl.2)) := by
-  calc
-    _ ≤ ∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          ((((Nat.log 2 N + 1 : ℕ) : ℝ) ^ 2) *
-            ∑ kl ∈ vaughanCanonicalDyadicRectangles N u v,
-              ‖vaughanTypeIICanonicalBilinearBlock b y N u v
-                kl.1 kl.2 q χ‖ ^ 2) := by
-      gcongr with q hq χ hχ
-      exact vaughanTypeIIFullPrefix_norm_sq_le_rectangles b y N u v q χ hyN
-    _ = (((Nat.log 2 N + 1 : ℕ) : ℝ) ^ 2) *
-        ∑ kl ∈ vaughanCanonicalDyadicRectangles N u v,
-          (∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
-            ∑ χ : PrimitiveCharacter q,
-              ‖vaughanTypeIICanonicalBilinearBlock b y N u v
-                kl.1 kl.2 q χ‖ ^ 2) := by
-      simp_rw [Finset.mul_sum]
-      rw [Finset.sum_comm]
-      apply Finset.sum_congr rfl
-      intro kl hkl
-      rw [Finset.sum_comm]
-      ring
-    _ ≤ (((Nat.log 2 N + 1 : ℕ) : ℝ) ^ 2) *
-        ∑ kl ∈ vaughanCanonicalDyadicRectangles N u v,
-          (vaughanBilinearCoeffEnergy vaughanMoebiusCoeff
-              (vaughanCanonicalDyadicBlock N u kl.1) *
-            vaughanBilinearLargeSieveConstant y Q *
-            vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y
-              (vaughanCanonicalDyadicBlock N u kl.1)
-              (vaughanCanonicalDyadicBlock N v kl.2)) := by
-      gcongr with kl hkl
-      exact weighted_primitive_vaughanCanonicalBilinear b y N u v
-        kl.1 kl.2 Q hQ
 
 end
 

@@ -48,10 +48,6 @@ theorem gamma5Classical_ratio_coordinates {R p q : ℝ}
   field_simp
   ring
 
-theorem gamma5Classical_ratio_constants :
-    1 < gamma5ClassicalS * (1 - 2 * gamma5ClassicalB) ∧
-      2 ≤ gamma5ClassicalS - 2 ∧ gamma5ClassicalS - 2 < 3 := by
-  norm_num [gamma5ClassicalS, gamma5ClassicalB]
 
 theorem gamma5Classical_pair_geometry {R p q : ℝ}
     (hR : 1 < R) (hp0 : 0 < p) (hq0 : 0 < q)
@@ -150,11 +146,6 @@ structure Gamma5ClassicalGeometry (k N : ℕ) (δ : ℝ) (x : Gamma5ClassicalLab
   original_ratio_upper : log (gamma5ClassicalLevel N δ x) /
     log (wuLocalCutoff N δ x.1 gamma5ClassicalS) ≤ gamma5ClassicalS - 2
 
-theorem gamma5Classical_ratio_mul_log {k N : ℕ} {δ : ℝ}
-    {x : Gamma5ClassicalLabel} (hg : Gamma5ClassicalGeometry k N δ x) :
-    (log (gamma5ClassicalLevel N δ x) / log (gamma5ClassicalCutoff N δ x)) *
-      log (gamma5ClassicalCutoff N δ x) = log (gamma5ClassicalLevel N δ x) :=
-  div_mul_cancel₀ _ (log_pos hg.cutoff_gt_one).ne'
 
 theorem gamma5Classical_label_geometry {i k N : ℕ} {δ Δ : ℝ}
     {V : Fin i → ℝ} (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1 / 2)

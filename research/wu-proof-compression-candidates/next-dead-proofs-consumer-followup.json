@@ -1,0 +1,20 @@
+{
+  "status": "FOLLOWUP_CURRENT_CONSUMER_TOKEN_REVIEW_ONLY_NOT_COMPILED_REFERENCES",
+  "changed_or_added_consumers": [
+    {
+      "path": "research/wu-proof-compression-candidates/audit_completed_batch.py",
+      "sha256": "bb16adb549902e1be9355de0cff8d55b4c2ac64759a383d71d04182e0404d040"
+    },
+    {
+      "path": "research/wu-proof-compression-candidates/dead_family_census.py",
+      "sha256": "9b78f4a9d4126634c1e64a20fc859e0b7c649a4c3ad65f2cedcb1b8b984d9c27"
+    },
+    {
+      "path": "research/wu-proof-compression-candidates/README.md",
+      "sha256": "9da0305e74759b1a766b21b35898d5586fe8d5962afe7c8641f5b7d3a42e3701"
+    }
+  ],
+  "candidate_mentions_in_these_consumers": [],
+  "no_new_lexical_consumer_mentions": true,
+  "historical_model_sha256": "3ca43c41c4e0369a1d69c09ea54a1066f1b4c76112dc611ee9235c22087f67ef"
+}

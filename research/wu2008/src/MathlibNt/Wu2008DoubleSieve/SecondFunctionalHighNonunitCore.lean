@@ -182,10 +182,6 @@ theorem inclusion {i N : ℕ} {W : Fin i → Finset ℕ}
       (mem_primeWindow.mp hq).1,hpq,HighUnitSource.colour_three hqcol,
       (mem_primeWindow.mp hq).2.2.2.le,hcap,hout⟩
 
-/-- The strict source-window cap is enlarged only by inclusion. -/
-theorem strict_fibre_subset (N : ℕ) (e f : ℕ → ℝ) (x : Profile) :
-    (fibre N e f x).filter (fun q : ℕ => (q : ℝ) < f x.1) ⊆ fibre N e f x :=
-  filter_subset _ _
 
 /-- The closed cap is its strict part plus the retained endpoint atom. -/
 theorem fibre_atom_partition (N : ℕ) (e f : ℕ → ℝ) (x : Profile) :

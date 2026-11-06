@@ -149,13 +149,6 @@ theorem sum_totientRatio_le_linear_harmonic (R : ℕ) :
     _ = (R : ℝ) * conductorHarmonicFactor R := by
         rw [conductorHarmonicFactor, Finset.mul_sum]
 
-/-- Explicit linear-logarithmic average totient-ratio estimate. -/
-theorem sum_totientRatio_le_linear_log (R : ℕ) :
-    (∑ r ∈ Finset.Icc 1 R, (r : ℝ) / (r.totient : ℝ)) ≤
-      (R : ℝ) * (1 + Real.log (R : ℝ)) := by
-  refine (sum_totientRatio_le_linear_harmonic R).trans ?_
-  apply mul_le_mul_of_nonneg_left (conductorHarmonicFactor_le R)
-  positivity
 
 /-- Multiplication by a conductor separates at the cost of `r / φ(r)`. -/
 theorem multiple_totient_ratio_le_product
@@ -252,15 +245,6 @@ theorem imprimitive_conductor_window_le_weighted_primitive_linear
       intro d hd
       ring
 
-/-- Logarithmic presentation of the strong imprimitive conductor bound. -/
-theorem imprimitiveConductorWeight_le_linear_log
-    (Q d : ℕ) (hd : 0 < d) :
-    imprimitiveConductorWeight Q d ≤
-      ((d : ℝ) / (d.totient : ℝ)) * ((Q / d : ℕ) : ℝ) *
-        (1 + Real.log ((Q / d : ℕ) : ℝ)) := by
-  refine (imprimitiveConductorWeight_le_linear_harmonic Q d hd).trans ?_
-  gcongr
-  exact conductorHarmonicFactor_le (Q / d)
 
 /-- Dyadic-window transport with only the linear-harmonic conductor loss. -/
 theorem imprimitive_conductor_window_prefix_le_linear
@@ -278,50 +262,7 @@ theorem imprimitive_conductor_window_prefix_le_linear
     (fun d ψ => primitiveCharacterPrefixMaxSquare b M N d ψ)
     (fun d ψ => primitiveCharacterPrefixMaxSquare_nonneg b M N d ψ) Q D hD
 
-/-- The strong conductor transport connected to the existing primitive maximal LS. -/
-theorem imprimitive_conductor_window_prefix_large_sieve_linear
-    (b : ℤ → ℂ) (M : ℤ) (N Q D : ℕ) (hD : 0 < D) :
-    (∑ d ∈ Finset.Icc D (2 * D),
-      imprimitiveConductorWeight Q d *
-        ∑ ψ : PrimitiveCharacter d,
-          primitiveCharacterPrefixMaxSquare b M N d ψ) ≤
-      ((Q / D : ℕ) : ℝ) * conductorHarmonicFactor (Q / D) *
-        ((((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-          primitiveLargeSieveConstant N (2 * D) *
-            ∑ n ∈ Finset.Icc (M + 1) (M + N), ‖b n‖ ^ 2) := by
-  refine (imprimitive_conductor_window_prefix_le_linear b M N Q D hD).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · exact weighted_primitive_prefix_maximal b M N (2 * D) (Nat.mul_pos (by decide) hD)
-  · exact mul_nonneg (by positivity) (conductorHarmonicFactor_nonneg _)
 
-/-- Scale audit for the quadratic modulus term on every dyadic window `D ≤ Q`.
-The linear conductor loss leaves `Q D`, hence at most `Q²`, times one harmonic
-factor.  Summing all dyadic windows costs only the number of windows. -/
-theorem dyadic_linear_multiplicity_mul_modulus_sq_le
-    (Q D : ℕ) (hD : 0 < D) (hDQ : D ≤ Q) :
-    ((Q / D : ℕ) : ℝ) * conductorHarmonicFactor (Q / D) *
-        (((2 * D : ℕ) : ℝ) ^ 2) ≤
-      4 * (Q : ℝ) ^ 2 * conductorHarmonicFactor Q := by
-  have hnat : (Q / D) * D ≤ Q := by simpa [mul_comm] using Nat.mul_div_le Q D
-  have hreal : ((Q / D : ℕ) : ℝ) * (D : ℝ) ≤ Q := by exact_mod_cast hnat
-  have hharm : conductorHarmonicFactor (Q / D) ≤ conductorHarmonicFactor Q :=
-    conductorHarmonicFactor_mono (Nat.div_le_self Q D)
-  have hQD : (D : ℝ) ≤ Q := by exact_mod_cast hDQ
-  calc
-    ((Q / D : ℕ) : ℝ) * conductorHarmonicFactor (Q / D) * (((2 * D : ℕ) : ℝ) ^ 2)
-      = 4 * (((Q / D : ℕ) : ℝ) * D) * D * conductorHarmonicFactor (Q / D) := by
-        push_cast
-        ring
-    _ ≤ 4 * (Q : ℝ) * D * conductorHarmonicFactor (Q / D) := by
-      apply mul_le_mul_of_nonneg_right _ (conductorHarmonicFactor_nonneg _)
-      exact mul_le_mul_of_nonneg_right
-        (mul_le_mul_of_nonneg_left hreal (by positivity)) (by positivity)
-    _ ≤ 4 * (Q : ℝ) * Q * conductorHarmonicFactor (Q / D) := by
-      apply mul_le_mul_of_nonneg_right _ (conductorHarmonicFactor_nonneg _)
-      exact mul_le_mul_of_nonneg_left hQD (by positivity)
-    _ ≤ 4 * (Q : ℝ) * Q * conductorHarmonicFactor Q :=
-      mul_le_mul_of_nonneg_left hharm (by positivity)
-    _ = 4 * (Q : ℝ) ^ 2 * conductorHarmonicFactor Q := by ring
 
 end
 

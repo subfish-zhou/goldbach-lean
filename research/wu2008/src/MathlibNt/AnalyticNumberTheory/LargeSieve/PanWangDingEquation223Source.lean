@@ -146,35 +146,6 @@ theorem pan223_source_inverse_square {q x : ℕ} (f : ℕ → ℂ)
       apply div_le_div_of_nonneg_left (by positivity) (by positivity) hT4
     _ = _ := by field_simp
 
-/-- Literal `y^(3/2) sqrt(H)/T` rendering of the second bound. -/
-theorem pan223_source_three_halves_bound {q x : ℕ} (f : ℕ → ℂ)
-    (hf : ∀ n, ‖f n‖ ≤ 1) (m H y A₁ A₂ k : ℕ) (χ : PrimitiveCharacter q)
-    (hx : 1 ≤ Real.log x) (hy : 1 ≤ y) (hyx : y ≤ x) (hAy : A₂ ≤ y) :
-    ‖I * (∫ t in -(panSourceHeight x)..panSourceHeight x, chen1973VerticalSection
-        (pan223Kernel f m H y A₁ A₂ k χ) (panSourceSigma x) t) -
-      I * (∫ t in -(panSourceHeight x)..panSourceHeight x, chen1973VerticalSection
-        (pan223Kernel f m H y A₁ A₂ k χ) (1 / 2) t)‖ ≤
-      (16 * Real.exp 1) * (y : ℝ) ^ (3 / 2 : ℝ) * Real.sqrt H / panSourceHeight x := by
-  simpa only [pan_y_mul_sqrt y hy] using
-    pan223_source_sqrt_bound f hf m H y A₁ A₂ k χ hx hy hyx hAy
 
-/-- Equation (2.23), uniform eventual form. The absolute constant and threshold
-precede `q`, the character, `m`, every cell, and the bounded coefficients.
-The bound in fact does not need the source's extra restriction `1 ≤ A₁`. -/
-theorem pan223_source_uniform_eventual :
-    ∃ C : ℝ, 0 < C ∧ ∃ X₀ : ℕ, ∀ x : ℕ, X₀ ≤ x →
-      ∀ (q : ℕ) (χ : PrimitiveCharacter q) (m H y A₁ A₂ k : ℕ) (f : ℕ → ℂ),
-      (∀ n, ‖f n‖ ≤ 1) → 1 ≤ y → y ≤ x → A₂ ≤ y → H ≤ x →
-      ‖I * (∫ t in -(panSourceHeight x)..panSourceHeight x, chen1973VerticalSection
-          (pan223Kernel f m H y A₁ A₂ k χ) (panSourceSigma x) t) -
-        I * (∫ t in -(panSourceHeight x)..panSourceHeight x, chen1973VerticalSection
-          (pan223Kernel f m H y A₁ A₂ k χ) (1 / 2) t)‖ ≤ C * ((x : ℝ) ^ 2)⁻¹ := by
-  have he : ∀ᶠ x : ℕ in atTop, 2 ≤ Real.log (x : ℝ) :=
-    (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-      (eventually_ge_atTop (2 : ℝ))
-  obtain ⟨X₀, hX⟩ := Filter.eventually_atTop.mp he
-  refine ⟨16 * Real.exp 1, by positivity, X₀, ?_⟩
-  intro x hx q χ m H y A₁ A₂ k f hf hy hyx hAy hHx
-  exact pan223_source_inverse_square f hf m H y A₁ A₂ k χ (hX x hx) hy hyx hAy hHx
 
 end AnalyticNumberTheory.LargeSieve

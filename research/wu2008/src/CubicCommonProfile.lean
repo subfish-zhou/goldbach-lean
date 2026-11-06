@@ -21,7 +21,6 @@ theorem fullD0_le : fullD0≤D0 := by
   norm_num only [show (3:ℝ)+2=5 by norm_num,show (3:ℝ)+1=4 by norm_num] at h
   exact h
 
-theorem fullD0_lt_one : fullD0<1 := fullD0_le.trans_lt D0_lt_one
 
 theorem cubicNumerator_integral (z : Fin 9 → ℝ) :
     cubicNumerator z = ∫ t in (1:ℝ)..3, nineProfile z t*cubicWeight t := by

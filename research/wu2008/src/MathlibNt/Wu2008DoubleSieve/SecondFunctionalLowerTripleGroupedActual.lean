@@ -75,16 +75,6 @@ theorem source_mask {i N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
   obtain ⟨_,_,_,_,_,_,hn,hs,_⟩ := (mem_labels x).mp hx
   exact ⟨hn,hs⟩
 
-theorem source_fixedE {i N E : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (P : SecondFunctionalParameters) (j : Fin 6) {x : Label}
-    (hx : x ∈ (sourceFamily N δ Δ V P j).labels) (hE : cofactor x = E) :
-    0 < E ∧ x.1 ∣ E ∧ x.2.1 ∣ E ∧ x.2.2.1 ∣ E ∧
-      E/(x.1*x.2.1*x.2.2.1) = x.2.2.2 := by
-  have hp : 0 < cofactor x := ((sourceFamily N δ Δ V P j).geometry x hx).1
-  have hd := cofactor_divisors x
-  have hn := recover_n hp
-  rw [hE] at hp hd hn
-  exact ⟨hp,hd.1,hd.2.1,hd.2.2,hn⟩
 
 theorem gamma10_dictionary {k i N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
     (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)

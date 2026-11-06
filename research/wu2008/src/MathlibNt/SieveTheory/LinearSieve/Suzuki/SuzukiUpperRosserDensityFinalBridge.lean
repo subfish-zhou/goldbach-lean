@@ -131,38 +131,6 @@ theorem mainSum_upperRosserWeight_eq_relativeBoundaryPrefix_add_paddedTail
   apply (div_eq_iff hV).mp
   simpa [P, D, V, AnalyticNumberTheory.Sieve.sieveProductPrimeFactors] using hdecomp
 
-/-- The same exact bridge in the coordinates of the weighted aggregate-tail
-producer.  The prefix threshold is literally `L+N`, while the remainder is
-indexed literally by `L+j+N`; the common block length is
-`P.card+1-(L+N)`. -/
-theorem mainSum_upperRosserWeight_eq_relativeBoundaryPrefix_add_weightedTail
-    {S : BoundingSieve} {z Δ s : ℝ} (L N : ℕ)
-    (hz : 2 ≤ z) (hΔ : 0 < Δ)
-    (hcut : ∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z)
-    (hs : s = Real.log Δ / Real.log z) (hslo : 3 / 2 ≤ s)
-    (hLN : L + N ≤ S.prodPrimes.primeFactors.card + 1) :
-    S.mainSum
-        (LinearSieve.upperRosserWeight S.prodPrimes (Nat.floor Δ + 1)) =
-      (1 +
-          (∑ q ∈ S.prodPrimes.primeFactors,
-            (S.nu q / (1 - S.nu q)) *
-              ∑ k ∈ Finset.range (L + N),
-                LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity
-                  S.nu (Nat.floor Δ + 1) q
-                  (S.prodPrimes.primeFactors.filter (fun p => q < p)) k) +
-          ∑ q ∈ S.prodPrimes.primeFactors,
-            (S.nu q / (1 - S.nu q)) *
-              ∑ j ∈ Finset.range
-                  (S.prodPrimes.primeFactors.card + 1 - (L + N)),
-                LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity
-                  S.nu (Nat.floor Δ + 1) q
-                  (S.prodPrimes.primeFactors.filter (fun p => q < p))
-                  (L + j + N)) *
-        AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S := by
-  simpa only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
-    mainSum_upperRosserWeight_eq_relativeBoundaryPrefix_add_paddedTail
-      (S := S) (z := z) (Δ := Δ) (s := s) (L + N)
-      hz hΔ hcut hs hslo hLN
 
 /-- The exact remaining analytic interface after the finite decomposition.
 It deliberately keeps the Euler product on both sides.  An absolute estimate
@@ -196,23 +164,6 @@ def UpperRosserScaledPrefixTailComparison
       (jurkatRichertUpperLinearSieveFactor s + ρ) *
         AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S
 
-/-- Once the scale-faithful prefix-plus-tail comparison is supplied, the target
-fundamental lemma follows with exactly the required `∃ z₀, ∀ S,z` order. -/
-theorem dimensionOneUpperRosserDensityFundamentalLemma_of_scaledPrefixTail
-    (H : SuzukiLemma144KappaOne.Section13HatLayers)
-    (hH : SuzukiLemma144KappaOne.Section13HatSourceContract H)
-    (hfinal : UpperRosserScaledPrefixTailComparison H hH) :
-    DimensionOneUpperRosserDensityFundamentalLemma := by
-  intro K ρ hK hρ
-  obtain ⟨T, z₀, hbound⟩ := hfinal K ρ hK hρ
-  refine ⟨z₀, ?_⟩
-  intro S z Δ s hz₀ hz hΔ hlocal hcut hs hslo hshi
-  let T' := min T (S.prodPrimes.primeFactors.card + 1)
-  have hT' : T' ≤ S.prodPrimes.primeFactors.card + 1 := by
-    exact min_le_right _ _
-  rw [mainSum_upperRosserWeight_eq_relativeBoundaryPrefix_add_paddedTail
-    T' hz hΔ hcut hs hslo hT']
-  exact hbound S z Δ s hz₀ hz hΔ hlocal hcut hs hslo hshi
 
 
 end

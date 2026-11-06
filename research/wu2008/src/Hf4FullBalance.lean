@@ -31,13 +31,7 @@ theorem terminal_endpoint_balance : terminal = endpointTerminal +
 /-- Exact certificate improvement; integral-defined, not a computed endpoint gain. -/
 def recoveredNumerator : ℝ := numerator-Hf4Den.numerator
 
-theorem recoveredNumerator_nonneg : 0 ≤ recoveredNumerator := sub_nonneg.mpr old_numerator_le
 
-theorem recoveredNumerator_eq : recoveredNumerator =
-    SigmaVariableFull.numerator NineFeedbackStrength.originalH -
-      (CorrectionD0Joint.numerator + Hf4Refine.finiteVariation NineFeedbackStrength.originalH) := by
-  unfold recoveredNumerator numerator Hf4Den.numerator
-  ring
 
 /-- Still owed after full-variable plus independent log residual. -/
 def numeratorUnpaid : ℝ :=
@@ -45,9 +39,6 @@ def numeratorUnpaid : ℝ :=
 
 theorem numeratorUnpaid_nonneg : 0 ≤ numeratorUnpaid := sub_nonneg.mpr numerator_le_actual
 
-theorem old_numeratorUnpaid_balance : Hf4Den.numeratorUnpaid = recoveredNumerator+numeratorUnpaid := by
-  unfold Hf4Den.numeratorUnpaid recoveredNumerator numeratorUnpaid
-  ring
 
 /-- The true D0-minus-dPaid account is reused without changing D0 or its original max. -/
 def profileUnpaid : ℝ := numeratorUnpaid/(1-D0)+
@@ -81,10 +72,6 @@ theorem actual_terminal_balance : firstFeedback NineFeedbackStrength.originalH 3
   rw [actual_profile_balance]
   ring
 
-theorem old_remaining_balance : Hf4Den.remaining = (terminal-Hf4Den.terminal)+remaining := by
-  have ho := Hf4Den.actual_terminal_balance
-  have hn := actual_terminal_balance
-  linarith only [ho,hn]
 
 theorem original_unpaid_balance : CorrectionD0Joint.allUnpaid =
     (terminal-CorrectionD0Joint.terminal)+remaining := by
@@ -95,9 +82,6 @@ theorem original_unpaid_balance : CorrectionD0Joint.allUnpaid =
 /-- Endpoint account must additionally owe the uncomputed outer envelope loss. -/
 def endpointRemaining : ℝ := log 2*outerUnpaid/(1-D0FullDensity.dPaid)+remaining
 
-theorem endpointRemaining_nonneg : 0 ≤ endpointRemaining :=
-  add_nonneg (div_nonneg (mul_nonneg (log_nonneg (by norm_num : (1:ℝ)≤2)) outerUnpaid_nonneg)
-    (sub_pos.mpr D0FullDensity.dPaid_lt_one).le) remaining_nonneg
 
 theorem actual_endpoint_terminal_balance : firstFeedback NineFeedbackStrength.originalH 3 3 =
     endpointTerminal+endpointRemaining := by
@@ -105,11 +89,6 @@ theorem actual_endpoint_terminal_balance : firstFeedback NineFeedbackStrength.or
   unfold endpointRemaining
   ring
 
-theorem original_endpoint_unpaid_balance : CorrectionD0Joint.allUnpaid =
-    (endpointTerminal-CorrectionD0Joint.terminal)+endpointRemaining := by
-  have ho := CorrectionD0Joint.actual_terminal_balance
-  have hn := actual_endpoint_terminal_balance
-  linarith only [ho,hn]
 
 /-- Exact original obligation, not the stronger sufficient lower-terminal test. -/
 theorem original_hf4_iff_remaining :
@@ -118,10 +97,5 @@ theorem original_hf4_iff_remaining :
   rw [actual_terminal_balance]
   exact (sub_le_iff_le_add').symm
 
-theorem original_hf4_iff_endpointRemaining :
-    (NineFeedbackStrength.originalH 8 ≤ firstFeedback NineFeedbackStrength.originalH 3 3) ↔
-      NineFeedbackStrength.originalH 8-endpointTerminal ≤ endpointRemaining := by
-  rw [actual_endpoint_terminal_balance]
-  exact (sub_le_iff_le_add').symm
 
 end Hf4Full

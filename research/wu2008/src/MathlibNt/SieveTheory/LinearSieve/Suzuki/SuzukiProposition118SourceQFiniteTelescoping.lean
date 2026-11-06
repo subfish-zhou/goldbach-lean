@@ -22,19 +22,6 @@ open SuzukiFiniteContinuousLayers
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
-/-- The exceptional `f₁` derivative on the first source strip.  This is the
-base term used in the `2 < s < 3` finite-`Q` equation. -/
-theorem hasDerivAt_weighted_suzukiLayer_one_one_two_of_lt_three
-    {s : ℝ} (hs0 : 0 < s) (hs3 : s < 3) :
-    HasDerivAt (fun u => u * suzukiLayer 1 2 1 u) (-1) s := by
-  have hlin : HasDerivAt (fun u : ℝ => 3 - u) (-1) s := by
-    exact (hasDerivAt_id s).const_sub 3
-  apply hlin.congr_of_eventuallyEq
-  filter_upwards [Ioi_mem_nhds hs0, Iio_mem_nhds hs3] with u hu0 hu3
-  change 0 < u at hu0
-  change u < 3 at hu3
-  rw [SuzukiFiniteContinuousLayers.suzukiLayer_one_one_two hu0 hu3.le]
-  field_simp [ne_of_gt hu0]
 
 /-- Above the support endpoint of `f₁`, its weighted derivative is zero. -/
 theorem hasDerivAt_weighted_suzukiLayer_one_one_two_of_three_lt
@@ -202,18 +189,6 @@ theorem hasDerivAt_weighted_suzukiProposition118SourceQPrefix_high
   rw [hcoef] at hmain
   exact hmain
 
-/-- Unified finite telescoping equation away from the genuine source kink
-`s = 3`.  The residual is exactly `suzukiProposition118SourceQTerminal`. -/
-theorem hasDerivAt_weighted_suzukiProposition118SourceQPrefix
-    {m : ℕ} (hm : 1 ≤ m) {s : ℝ} (hs2 : 2 < s) (hs3 : s ≠ 3) :
-    HasDerivAt (fun u => u * suzukiProposition118SourceQPrefix m u)
-      (-suzukiProposition118SourceQPrefix m (s - 1) +
-        suzukiProposition118SourceQTerminal m s) s := by
-  rcases lt_or_gt_of_ne hs3 with hslt | hsgt
-  · rw [suzukiProposition118SourceQTerminal, if_neg (not_lt.mpr hslt.le), add_zero]
-    exact hasDerivAt_weighted_suzukiProposition118SourceQPrefix_low hm hs2 hslt
-  · rw [suzukiProposition118SourceQTerminal, if_pos hsgt]
-    exact hasDerivAt_weighted_suzukiProposition118SourceQPrefix_high m hsgt
 
 
 end MathlibNt.SieveTheory

@@ -234,22 +234,6 @@ theorem exists_eventually_sieveDensityProduct_upperFactor (ε : ℝ) (hε : 0 < 
     _ ≤ (8 + ε) * SingularSeries.liuSingularSeries N / Real.log x :=
       div_le_div_of_nonneg_right (mul_le_mul_of_nonneg_right hfinal hS) hlog.le
 
-/-- Literal-cutoff version with an explicit real threshold, uniform in all even
-`N ≥ 2` without any relation between `N` and the real scale `x`. -/
-theorem exists_sieveDensityProduct_upperFactor (B ε : ℝ) (hε : 0 < ε) :
-    ∃ ρ : ℝ, 0 < ρ ∧ ∃ x₀ : ℝ, 1 < x₀ ∧ ∀ x : ℝ, x₀ ≤ x →
-      ∀ N : ℕ, Even N → 2 ≤ N →
-        (∏ p ∈ siftingPrimes N (Real.sqrt (Real.sqrt x / Real.log x ^ B)),
-          (1 - 1 / ((p : ℝ) - 1))) *
-          (jurkatRichertUpperLinearSieveFactor
-            (Real.log ((Real.sqrt x / Real.log x ^ B) / 2) /
-              Real.log (Real.sqrt (Real.sqrt x / Real.log x ^ B))) + ρ) ≤
-            (8 + ε) * SingularSeries.liuSingularSeries N / Real.log x := by
-  obtain ⟨ρ, hρ, hbound⟩ := exists_eventually_sieveDensityProduct_upperFactor ε hε
-  obtain ⟨T, hT⟩ := eventually_atTop.mp (hbound B)
-  refine ⟨ρ, hρ, max 2 T, lt_of_lt_of_le (by norm_num) (le_max_left _ _), ?_⟩
-  intro x hx N hN hN2
-  exact hT x ((le_max_right _ _).trans hx) N hN hN2
 
 end
 end Wu2004MeanValue

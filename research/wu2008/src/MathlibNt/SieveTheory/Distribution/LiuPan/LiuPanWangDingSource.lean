@@ -174,23 +174,6 @@ theorem eventually_liuPanSourceIntervalLower_lt_liuSourceZ10 (B : ℝ) :
   unfold liuPanSourceIntervalLower liuSourceZ10
   omega
 
-/-- All source-side interval and coefficient hypotheses needed for the Liu
-specialization of Corollary `(2.30)` hold eventually (with paper ε = 1/4). -/
-theorem eventually_liuPanSourceInterval_hypotheses (B : ℝ) :
-    ∀ᶠ N : ℕ in atTop,
-      Real.log N ^ (2 * B) < (liuPanSourceIntervalLower N B : ℝ) ∧
-      liuPanSourceIntervalLower N B ≤ liuPanSourceIntervalUpper N ∧
-      (liuPanSourceIntervalUpper N : ℝ) < (N : ℝ) ^ (3 / 4 : ℝ) ∧
-      ∀ a : ℕ,
-        |liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a| ≤ 1 := by
-  filter_upwards [eventually_liuPanSourceIntervalLower_lt_liuSourceZ10 B,
-    eventually_ge_atTop (2 : ℕ)] with N hlow hN
-  refine ⟨log_rpow_lt_liuPanSourceIntervalLower N B, ?_,
-    liuPanSourceIntervalUpper_lt_rpow_three_fourths (by omega), ?_⟩
-  · exact (Nat.le_of_lt hlow).trans
-      (liuSourceZ10_le_liuPanSourceIntervalUpper (by omega))
-  · intro a
-    exact abs_liuWeight_le_one N (liuSourceZ10 N) (liuSourceY3 N) a
 
 /-- Conditional finite support bridge.  Once the logarithmic lower endpoint is
 below Liu's `N^(1/10)` cutoff, every nonzero source coefficient lies in the

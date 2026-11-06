@@ -15,19 +15,6 @@ open Real Set MeasureTheory
 open scoped Classical
 open MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne
 
-theorem truncatedSixthLower_classical_kernel {δ x y : ℝ}
-    (hδ : 0 ≤ δ) (h : truncatedSixthLowerRegion δ x y) :
-    4 * (wuLowerCoefficient (truncatedSixthLowerS δ x y) /
-      (x * y * (truncatedSixthLowerC δ - x - y))) =
-      (2 * exp (-eulerMascheroniConstant) / truncatedSixthLowerAlpha) *
-        (jr1965f (truncatedSixthLowerS δ x y) / (x * y)) := by
-  have hb := truncatedSixthLower_region_bounds hδ h
-  have hd : 0 < truncatedSixthLowerC δ - x - y :=
-    (mul_pos (by norm_num : (0 : ℝ) < 2) truncatedSixthLower_parameters.1).trans_le hb.2.2.1
-  unfold wuLowerCoefficient truncatedSixthLowerS
-  rw [exp_neg]
-  field_simp
-  ring
 
 theorem truncatedSixthLower_effective_monotone {δ : ℝ}
     (hδ : 0 < δ) (hδhi : δ < 1 / 100) :
@@ -54,12 +41,5 @@ theorem truncatedSixthLower_effective_bounds {δ s : ℝ}
     nlinarith [exp_pos eulerMascheroniConstant]
   exact ⟨add_nonneg ha hb.2.2.1, (by linarith [hb.2.2.2])⟩
 
-theorem truncatedSixthLower_effective_intervalIntegrable {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 100) :
-    IntervalIntegrable (fun s => wuLowerCoefficient s + wuImprovementLimit false δ s)
-      volume 2 5 := by
-  have hm := truncatedSixthLower_effective_monotone hδ hδhi
-  rw [← uIcc_of_le (by norm_num : (2 : ℝ) ≤ 5)] at hm
-  exact hm.intervalIntegrable
 
 end Wu2008DoubleSieve

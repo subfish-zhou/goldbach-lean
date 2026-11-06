@@ -65,35 +65,7 @@ theorem sourceKTheta_sum (N : ℕ) (δ Δ : ℝ) {i : ℕ} (V : Fin i → ℝ)
   simp only [HighSourcePayload.theta, mul_sum]
   exact sum_comm
 
-/-- Original mass and Theta signs; the compact cap never replaces the main term. -/
-theorem sourceIntegralK_mass_theta_bounds {i k N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (hN : 4 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V) (p : SecondFunctionalParameters)
-    (hp : p.MotherAdmissible) (hs : 2 ≤ p.s) (j : Fin 6) :
-    0 ≤ integralKMass N δ Δ V p j ∧
-      0 ≤ sourceKTheta N δ Δ V p j ∧
-      sourceKTheta N δ Δ V p j ≤ 10*(4:ℝ)^3 *
-        boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  rw [integralKMass_eq_mass]
-  exact ⟨HighSourcePayload.mass_nonneg hN hδ hδhi hb
-      (fun d _ => (sourceIntegralK_bounds N d δ p hp hs j).1),
-    HighSourcePayload.theta_bounds hN hδ hδhi hb
-      (fun d _ => sourceIntegralK_bounds N d δ p hp hs j)⟩
 
-/-- The sixfold mass and Theta retain their original signs and a zero-safe cap. -/
-theorem sourceIntegralK_six_mass_theta_bounds {i k N : ℕ} {δ Δ : ℝ}
-    {V : Fin i → ℝ} (hN : 4 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V) (p : SecondFunctionalParameters)
-    (hp : p.MotherAdmissible) (hs : 2 ≤ p.s) :
-    0 ≤ (∑ j, integralKMass N δ Δ V p j) ∧
-      0 ≤ (∑ j, sourceKTheta N δ Δ V p j) ∧
-      (∑ j, sourceKTheta N δ Δ V p j) ≤ 6*10*(4:ℝ)^3 *
-        boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  rw [← integralKMass_sum, ← sourceKTheta_sum]
-  exact ⟨HighSourcePayload.mass_nonneg hN hδ hδhi hb
-      (fun d _ => (sourceIntegralK_sum_bounds N d δ p hp hs).1),
-    HighSourcePayload.theta_bounds hN hδ hδhi hb
-      (fun d _ => sourceIntegralK_sum_bounds N d δ p hp hs)⟩
 
 /-- One rho precedes T, N, boxes, all mother parameters and all six labels.
 The all-six estimate consumes the summed payload once, spending epsilon once. -/

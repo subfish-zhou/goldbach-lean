@@ -70,35 +70,9 @@ theorem J21_identification {a3 b : ℝ} (ha : 1/10 ≤ a3) (hb : b ≤ 1/2) (phi
   unfold J21
   rw [integral_congr_ae (section21_ae ha hb phi), integral_indicator (continuousCube_measurable 5)]
 
-/-- Zero-width consumers preserve every real phi, and do not assert the closed D set is empty. -/
-theorem J20_zero_left {a b : ℝ} (ha : 1/10 ≤ a) (hb : b ≤ 1/2) (phi : ℝ) :
-    J20 a a b phi = 0 := by
-  rw [J20_identification ha hb phi]
-  simp [G, dictionary20, Q20_empty_left]
 
-theorem J20_zero_right {a b : ℝ} (ha : 1/10 ≤ a) (hb : b ≤ 1/2) (phi : ℝ) :
-    J20 a b b phi = 0 := by
-  rw [J20_identification ha hb phi]
-  simp [G, dictionary20, Q20_empty_right]
 
-theorem J21_zero {a : ℝ} (ha : 1/10 ≤ a) (hb : a ≤ 1/2) (phi : ℝ) :
-    J21 a a phi = 0 := by
-  rw [J21_identification ha hb phi]
-  simp [G, dictionary21, Q21_empty]
 
-/-- Bundled consumer: the integrability and the identity have actual producers. -/
-theorem J20_spec {a2 a3 b : ℝ} (ha : 1/10 ≤ a2) (hb : b ≤ 1/2) (phi : ℝ) :
-    Measurable (section20 a2 a3 b phi) ∧ Integrable (section20 a2 a3 b phi) ∧
-    J20 a2 a3 b phi = ∫ t in continuousCube 4,
-      G phi b C20 (gamma20 a2 a3 b) flags20 t * continuousDensity t :=
-  ⟨section20_measurable a2 a3 b phi, section20_integrable ha hb phi,
-    J20_identification ha hb phi⟩
 
-theorem J21_spec {a3 b : ℝ} (ha : 1/10 ≤ a3) (hb : b ≤ 1/2) (phi : ℝ) :
-    Measurable (section21 a3 b phi) ∧ Integrable (section21 a3 b phi) ∧
-    J21 a3 b phi = ∫ t in continuousCube 5,
-      G phi b C21 (gamma21 a3 b) flags21 t * continuousDensity t :=
-  ⟨section21_measurable a3 b phi, section21_integrable ha hb phi,
-    J21_identification ha hb phi⟩
 
 end Wu2008DoubleSieve.HighUnit

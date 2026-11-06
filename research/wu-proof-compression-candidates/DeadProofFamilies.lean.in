@@ -1,0 +1,127 @@
+-- UNCOMPILED census template. This never retires or accepts a proof.
+import Lean
+import Lean.Util.FoldConsts
+@@IMPORTS@@
+
+open Lean
+namespace DeadProofFamilyAudit
+
+private def lastString : Name → String
+  | .str _ s => s
+  | _ => ""
+
+private partial def familyOf (targets : Std.HashMap Name String) (n : Name) :
+    Option (Name × String) :=
+  match targets[n]? with
+  | some owner => some (n, owner)
+  | none => match n with
+    | .anonymous => none
+    | .str p _ | .num p _ => familyOf targets p
+
+private def kind : ConstantInfo → String
+  | .axiomInfo _ => "axiom" | .defnInfo _ => "definition"
+  | .thmInfo _ => "theorem" | .opaqueInfo _ => "opaque"
+  | .quotInfo _ => "quotient" | .inductInfo _ => "inductive"
+  | .ctorInfo _ => "constructor" | .recInfo _ => "recursor"
+
+set_option maxHeartbeats 40000000 in
+run_cmd do
+  let env ← Lean.getEnv
+  unless !env.header.isModule do
+    throwError "Census requires a non-module environment"
+  let moduleText ← Lean.Elab.Command.liftIO <| IO.FS.readFile @@MODULE_FILE@@
+  let moduleList := (moduleText.splitOn "\n").filter (· != "")
+  let localSet : Std.HashSet String := moduleList.foldl (fun s n => s.insert n) {}
+  unless localSet.size == moduleList.length do
+    throwError "Duplicate module input"
+  let requestedText ← Lean.Elab.Command.liftIO <| IO.FS.readFile @@REQUEST_FILE@@
+  let mut wanted : Std.HashMap String String := {}
+  for line in (requestedText.splitOn "\n").filter (· != "") do
+    match line.splitOn "\t" with
+    | [base, owner] =>
+      if wanted.contains base || !localSet.contains owner then
+        throwError "Duplicate basename or unknown owner: {base} / {owner}"
+      wanted := wanted.insert base owner
+    | _ => throwError "Malformed requested declaration row"
+  let mut decls : Array (Name × ConstantInfo × String) := #[]
+  let mut observed : Std.HashSet String := {}
+  for idx in [:env.header.moduleNames.size] do
+    let owner := env.header.moduleNames[idx]!.toString
+    if localSet.contains owner then
+      observed := observed.insert owner
+      let imported := env.header.modules[idx]!
+      unless imported.importAll && imported.hasData do
+        throwError "Missing private-inclusive module data: {owner}"
+      let data := env.header.moduleData[idx]!
+      unless data.constNames.size == data.constants.size do
+        throwError "Constant name/data length mismatch: {owner}"
+      let mut seen : Std.HashSet Name := {}
+      for cidx in [:data.constants.size] do
+        let n := data.constNames[cidx]!
+        let ci := data.constants[cidx]!
+        if ci.name != n || seen.contains n then
+          throwError "Mismatched or repeated declaration in {owner}: {n}"
+        seen := seen.insert n
+        decls := decls.push (n, ci, owner)
+  unless observed == localSet do
+    throwError "Incomplete research-module coverage"
+  let mut resolved : Std.HashMap String (Array Name) := {}
+  for (n, ci, owner) in decls do
+    if let some expected := wanted[lastString n]? then
+      if owner == expected then
+        unless kind ci == "theorem" do
+          throwError "Source proof resolves to a non-theorem: {n}"
+        resolved := resolved.insert (lastString n) ((resolved[lastString n]?.getD #[]).push n)
+  let mut targets : Std.HashMap Name String := {}
+  let mut targetRows : Array Json := #[]
+  for (base, owner) in wanted do
+    let names := resolved[base]?.getD #[]
+    unless names.size == 1 do
+      throwError "Expected one runtime declaration for {base} in {owner}, got {names.size}"
+    let n := names[0]!
+    targets := targets.insert n owner
+    targetRows := targetRows.push <| Json.mkObj [
+      ("basename", toJson base), ("module", toJson owner), ("name", toJson n.toString)]
+  let mut memberOwners : Std.HashMap Name Name := {}
+  let mut members : Array Json := #[]
+  let mut ownershipIssues : Array Json := #[]
+  for (n, ci, owner) in decls do
+    if let some (root, expected) := familyOf targets n then
+      if owner == expected then
+        memberOwners := memberOwners.insert n root
+        members := members.push <| Json.mkObj [
+          ("name", toJson n.toString), ("family", toJson root.toString),
+          ("module", toJson owner), ("kind", toJson (kind ci))]
+      else
+        ownershipIssues := ownershipIssues.push <| Json.mkObj [
+          ("name", toJson n.toString), ("family", toJson root.toString),
+          ("module", toJson owner), ("expectedModule", toJson expected)]
+  let mut edges : Array Json := #[]
+  let mut internal : Nat := 0
+  let mut values : Nat := 0
+  for (n, ci, owner) in decls do
+    if ci.hasValue (allowOpaque := true) then
+      values := values + 1
+    let userFamily := match familyOf targets n with
+      | some (root, expected) => if owner == expected then some root else none
+      | none => none
+    for dependency in ci.getUsedConstantsAsSet.toList do
+      if let some target := memberOwners[dependency]? then
+        if userFamily == some target then
+          internal := internal + 1
+        else
+          edges := edges.push <| Json.mkObj [
+            ("target", toJson target.toString), ("dependency", toJson dependency.toString),
+            ("directNamedTarget", toJson (dependency == target)),
+            ("user", toJson n.toString), ("userModule", toJson owner),
+            ("userFamily", match userFamily with | some f => toJson f.toString | none => Json.null)]
+  let payload := Json.mkObj [
+    ("schema", toJson "wu-dead-proof-family-census-v1"),
+    ("status", toJson "ELABORATED_FAMILY_EDGES_NOT_RETIREMENT_OR_PROOF_ACCEPTANCE"),
+    ("modules", toJson observed.size), ("constants", toJson decls.size),
+    ("valuesIncludingProofsAndOpaque", toJson values),
+    ("candidateCount", toJson targets.size), ("candidates", Json.arr targetRows),
+    ("members", Json.arr members), ("ownershipIssues", Json.arr ownershipIssues),
+    ("internalFamilyReferences", toJson internal), ("edges", Json.arr edges)]
+  Lean.Elab.Command.liftIO <| IO.FS.writeFile @@OUTPUT_FILE@@ payload.compress
+end DeadProofFamilyAudit

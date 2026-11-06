@@ -19,14 +19,6 @@ theorem selectedOrderedMass_fibre {n : ℕ} (j : Fin n) {a b : ℝ}
   have hd : m+(k+1)-1-m = k := by omega
   simpa only [Fin.val_mk, hd, hj] using selectedOrderedMass_fibre_add m k ha hab
 
-theorem selectedOrderedMass_same {n : ℕ} (j : Fin n) {a : ℝ} (ha : 0 < a) :
-    selectedOrderedMass j a a = 0 := by
-  rw [selectedOrderedMass_fibre j ha le_rfl]
-  simp
 
-theorem selectedOrderedMass_one {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
-    selectedOrderedMass (0 : Fin 1) a b = ∫ t in a..b, 1 / t^2 := by
-  rw [selectedOrderedMass_fibre _ ha hab]
-  simp only [Fin.val_zero, Nat.sub_self, pure_zero, mul_one]
 
 end Wu2008DoubleSieve.SecondFunctionalGeometricMass.SelectedFibres

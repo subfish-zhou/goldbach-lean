@@ -209,16 +209,6 @@ theorem section14ExtendedT_recurrence
   · rw [section14ExtendedT_eq_one_add_recurrence_of_odd S hN (by omega), hboundary hN,
       zero_add]
 
-/-- The concrete Case-I boundary `z^3 ≤ D` kills `V₁`, hence yields the exact
-recurrence for both parities. -/
-theorem section14ExtendedT_recurrence_of_cube_le
-    (S : BoundingSieve) {N D z : ℕ} (hN2 : 2 ≤ N) (hzD : z ^ 3 ≤ D) :
-    section14ExtendedT S N D z =
-      ∑ p ∈ suzukiSupportedBelow S z,
-        S.nu p * section14ExtendedT S (N - 1) (D ⌈/⌉ p) p := by
-  apply section14ExtendedT_recurrence S hN2
-  intro _
-  exact section14ExtendedV_one_eq_zero_of_cube_le S hzD
 
 /-- The normalized lower `V_n(D,z)/V(z)` written directly on the production
 lower-boundary chain carrier.  The terminal prime `q` is external to `l`, so
@@ -231,108 +221,12 @@ noncomputable def sourceDiscreteLowerBoundaryV
           ((suzukiSupportedBelow S z).filter (fun p => q < p)) n,
         (l.map S.nu).prod
 
-/-- The recursive source layer at index two, fully expanded.  This is the
-strongest unconditional comparison datum with the lower boundary carrier: its
-inner terminal shell is tested at the divided level `D ⌈/⌉ p`. -/
-theorem section14ExtendedV_two_eq_recursiveCarrier
-    (S : BoundingSieve) (D z : ℕ) :
-    section14ExtendedV S 2 D z =
-      ∑ p ∈ suzukiSupportedBelow S z,
-        S.nu p *
-          ∑ q ∈ (suzukiSupportedBelow S p).filter
-              (fun q => q < D ⌈/⌉ p ∧ D ⌈/⌉ p ≤ q ^ 3),
-            S.nu q * sourceDiscreteEuler S q := by
-  rfl
 
-/-- The chain-based lower slice at index two, fully expanded.  In contrast to
-`section14ExtendedV_two_eq_recursiveCarrier`, the stored prime is tested by
-`p < D`, while the terminal prime `q` occurs only in the cubic crossing test
-`D ≤ p*q^3`.  Thus the two definitions do not have the same base carrier. -/
-theorem sourceDiscreteLowerBoundaryV_two_eq_chainCarrier
-    (S : BoundingSieve) (D z : ℕ) :
-    sourceDiscreteLowerBoundaryV S 2 D z =
-      ∑ q ∈ suzukiSupportedBelow S z,
-        S.nu q * suzukiSuffixRatio S z q *
-          ∑ p ∈ ((suzukiSupportedBelow S z).filter (fun p => q < p)).filter
-              (fun p => p < D ∧ D ≤ p * q ^ 3),
-            S.nu p := by
-  classical
-  unfold sourceDiscreteLowerBoundaryV
-  apply sum_congr rfl
-  intro q hq
-  let P := (suzukiSupportedBelow S z).filter (fun p => q < p)
-  have hqS : q ∈ S.prodPrimes.primeFactors := (mem_filter.mp hq).1
-  have hqprime : q.Prime := Nat.prime_of_mem_primeFactors hqS
-  have hqnot : q ∉ P := by simp [P]
-  have hqmin : ∀ p ∈ P, q ≤ p := by
-    intro p hp
-    exact (mem_filter.mp hp).2.le
-  have hinner :
-      (∑ l ∈ lowerRosserBoundaryChainsAtSourceIndex D q P 2,
-          (l.map S.nu).prod) =
-        ∑ p ∈ P.filter (fun p => p < D ∧ D ≤ p * q ^ 3), S.nu p := by
-    rw [← lowerRosserBoundaryChainsFixedPairDepth0Density_zero_eq_sourceIndex_two]
-    exact lowerRosserBoundaryChainsFixedPairDepth0Density_zero
-      S.nu hqnot hqprime hqmin
-  simp [P, hinner]
 
-/-- The base carriers are genuinely different, already on prime-shaped data:
-with stored prime `p = 5`, terminal prime `q = 2`, and level `D = 9`, the
-chain predicate holds but the recursive divided-level predicate does not. -/
-theorem sourceDiscrete_two_base_predicates_not_equivalent :
-    ¬ ((2 < 9 ⌈/⌉ 5 ∧ 9 ⌈/⌉ 5 ≤ 2 ^ 3) ↔
-      (5 < 9 ∧ 9 ≤ 5 * 2 ^ 3)) := by
-  norm_num
 
-/-- A lower-boundary source slice is supported only at even complete-chain
-indices. -/
-theorem sourceDiscreteLowerBoundaryV_eq_zero_of_odd
-    (S : BoundingSieve) {n D z : ℕ} (hn : Odd n) :
-    sourceDiscreteLowerBoundaryV S n D z = 0 := by
-  classical
-  unfold sourceDiscreteLowerBoundaryV
-  apply sum_eq_zero
-  intro q hq
-  have hinner :
-      (∑ l ∈ lowerRosserBoundaryChainsAtSourceIndex D q
-          ((suzukiSupportedBelow S z).filter (fun p => q < p)) n,
-        (l.map S.nu).prod) = 0 := by
-    apply sum_eq_zero
-    intro l hl
-    exact False.elim ((Nat.not_even_iff_odd.mpr hn)
-      (even_sourceIndex_of_mem_lowerRosserBoundaryChainsAtSourceIndex hl))
-  rw [hinner, mul_zero]
 
-/-- Exact identification of the direct source-index slice with the existing
-production lower layer at source index `2*k+2`. -/
-theorem sourceDiscreteLowerBoundaryV_even_eq_normalizedLayer
-    (S : BoundingSieve) (D z k : ℕ) :
-    sourceDiscreteLowerBoundaryV S (2 * k + 2) D z =
-      lowerSuzukiNormalizedLayer S D 0 z k := by
-  classical
-  unfold sourceDiscreteLowerBoundaryV
-  rw [lowerSuzukiNormalizedLayer_eq_primeSum]
-  simp only [Nat.zero_le, filter_true]
-  apply sum_congr rfl
-  intro q hq
-  rw [lowerSuzukiDiscreteKernel_sourceIndex]
 
-/-- Existing lower Rosser preterminal chains carry the exact complete-chain
-source index: odd stored length `2k+1`, plus the external terminal prime, is
-`2k+2`.  This is the non-proxy bridge used by the lower discrete layer. -/
-theorem sourceDiscrete_lower_boundary_index
-    (S : BoundingSieve) (D z k q : ℕ) :
-    lowerSuzukiDiscreteKernel S D z k q =
-      ∑ l ∈ lowerRosserBoundaryChainsAtSourceIndex D q
-          ((suzukiSupportedBelow S z).filter (fun p => q < p)) (2 * k + 2),
-        (l.map S.nu).prod :=
-  lowerSuzukiDiscreteKernel_sourceIndex S D z k q
 
-/-- Every chain in the lower slice has even complete source index. -/
-theorem sourceDiscrete_lower_boundary_even
-    {D q n : ℕ} {P : Finset ℕ} {l : List ℕ}
-    (hl : l ∈ lowerRosserBoundaryChainsAtSourceIndex D q P n) : Even n :=
-  even_sourceIndex_of_mem_lowerRosserBoundaryChainsAtSourceIndex hl
 
 
 end MathlibNt.SieveTheory

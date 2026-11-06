@@ -96,10 +96,6 @@ def wCoprimeFiber (x : ℝ) (N : Finset ℕ) (S : ℝ)
     Finset (WExtractedTuple × ℤ) :=
   U.filter (fun t => wCoprimeLabel x N S t = c)
 
-theorem wCoprimeLabel_eq_of_pair_eq (x : ℝ) (N : Finset ℕ) (S : ℝ)
-    {t u : WExtractedTuple × ℤ} (h : wCoprimePair t.1 = wCoprimePair u.1) :
-    wCoprimeLabel x N S t = wCoprimeLabel x N S u := by
-  simp only [wCoprimeLabel, h]
 
 theorem wCoprimeLabel_mem_partition {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
     (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)
@@ -134,15 +130,6 @@ theorem wCoprimeFiber_cross_coprime {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
   rw [huc] at hup
   exact ⟨partition_cross_coprime hp htp hup, partition_cross_coprime hp hup htp⟩
 
-/-- This identity keeps all tuple multiplicities and all signed weights.
-There is no absolute value inside a cell. -/
-theorem sum_wCoprimeFibers {A : Type*} [AddCommMonoid A]
-    (x : ℝ) (N : Finset ℕ) (S : ℝ) (U : Finset (WExtractedTuple × ℤ))
-    (F : WExtractedTuple × ℤ → A) :
-    ∑ t ∈ U, F t =
-      ∑ c ∈ U.image (wCoprimeLabel x N S), ∑ t ∈ wCoprimeFiber x N S U c, F t := by
-  exact (sum_fiberwise_of_maps_to
-    (fun t ht => mem_image.mpr ⟨t, ht, rfl⟩) F).symm
 
 theorem wCoprimeLabel_image_card_le {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
     (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)

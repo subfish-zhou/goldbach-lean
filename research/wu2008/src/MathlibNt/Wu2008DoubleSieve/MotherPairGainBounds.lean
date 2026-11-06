@@ -69,20 +69,6 @@ theorem gain_literal_bounds {p : SecondFunctionalParameters} (h : AnalyticParame
   · simp only [gainLiteral,hl,if_false]
     exact ⟨le_rfl,by positivity⟩
 
-theorem gainIntegral_bounds {p : SecondFunctionalParameters} (h : AnalyticParameters p)
-    (j : Term) {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1/2) :
-    0 ≤ gainIntegral p j δ ∧ gainIntegral p j δ ≤ classicalIntegral p j := by
-  constructor
-  · rw [gain_integral_eq h j hδ hδhi]
-    exact integral_nonneg (fun v => (gain_kernel_bounds h j hδ hδhi v).1)
-  · rw [classicalIntegral_literal]
-    apply intervalIntegral.integral_mono_on (gain_endpoint_order h j).2.1
-      (gain_outer_integrable h j hδ hδhi) (classical_outer_integrable h j)
-    intro t ht
-    apply intervalIntegral.integral_mono_on (gain_start_bounds h j ht).2.2
-      (gain_inner_integrable h j hδ hδhi ht) (classical_inner_integrable h j ht)
-    intro u hu
-    exact (gain_literal_bounds h j hδ hδhi ((pairRegion_iff_slice h j ht u).mpr hu)).2
 
 theorem fullH_pair_legal {p : SecondFunctionalParameters} (h : FullHParameters p)
     (j : Term) (hj : j ≠ .gammaFive) {t u : ℝ} (hv : PairRegion p j t u) :
@@ -91,11 +77,6 @@ theorem fullH_pair_legal {p : SecondFunctionalParameters} (h : FullHParameters p
   have hd := fullH_domain h ht htb htu hue
   exact ⟨hd.2.2.1.le,hd.2.2.2.1.le⟩
 
-theorem fullH_gainRegion_eq {p : SecondFunctionalParameters} (h : FullHParameters p)
-    (j : Term) (hj : j ≠ .gammaFive) :
-    gainRegion p j = {v : ℝ × ℝ | PairRegion p j v.1 v.2} := by
-  ext v
-  exact ⟨fun hv => hv.1,fun hv => ⟨hv,fullH_pair_legal h j hj hv⟩⟩
 
 theorem fullH_gain_literal_eq {p : SecondFunctionalParameters} (h : FullHParameters p)
     (j : Term) (hj : j ≠ .gammaFive) {δ t u : ℝ} (hv : PairRegion p j t u) :
@@ -129,34 +110,7 @@ theorem fullH_gammaSix_integral {p : SecondFunctionalParameters} (h : FullHParam
   obtain ⟨_,_,hbc,hce,_,_⟩ := parameter_order h.toAnalyticParameters
   simp only [upperQ,lowerQ,Hratio,max_eq_left (ht'.2.trans hbc.le),min_eq_right hce.le]
 
-theorem fullH_gammaSeven_integral {p : SecondFunctionalParameters} (h : FullHParameters p) (δ : ℝ) :
-    gainIntegral p .gammaSeven δ = ∫ t in (1/p.S)..(1/p.kappa1), ∫ u in t..(1/p.kappa1),
-      wuImprovementLimit true δ ((1-t-u)/t)/(t*u*(1-t-u)) := by
-  rw [fullH_gainIntegral_uncut h .gammaSeven (by intro he; cases he)]
-  apply intervalIntegral.integral_congr
-  intro t ht
-  have ht' : t ∈ Icc (1/p.S) (1/p.kappa1) := by
-    simpa only [upperP,uIcc_of_le (parameter_order h.toAnalyticParameters).2.1] using ht
-  simp only [upperQ,lowerQ,Hratio,max_eq_right ht'.1,min_eq_right ht'.2]
 
-theorem fullH_gammaEight_integral {p : SecondFunctionalParameters} (h : FullHParameters p) (δ : ℝ) :
-    gainIntegral p .gammaEight δ = ∫ t in (1/p.S)..(1/p.kappa1), ∫ u in (1/p.kappa1)..(1/p.kappa2),
-      wuImprovementLimit true δ ((1-t-u)/t)/(t*u*(1-t-u)) := by
-  rw [fullH_gainIntegral_uncut h .gammaEight (by intro he; cases he)]
-  apply intervalIntegral.integral_congr
-  intro t ht
-  have ht' : t ∈ Icc (1/p.S) (1/p.kappa1) := by
-    simpa only [upperP,uIcc_of_le (parameter_order h.toAnalyticParameters).2.1] using ht
-  simp only [upperQ,lowerQ,Hratio,max_eq_left ht'.2,
-    min_eq_right (parameter_order h.toAnalyticParameters).2.2.1.le]
 
-/-- This is an interval-integral statement only, not a finite prime-atom assertion. -/
-theorem gainIntegral_collapsed {p : SecondFunctionalParameters} (he : p.S = p.kappa1)
-    (j : Term) (hj : j ≠ .gammaFive) (δ : ℝ) : gainIntegral p j δ = 0 := by
-  cases j with
-  | gammaFive => exact False.elim (hj rfl)
-  | gammaSix => simp only [gainIntegral,upperP,he,intervalIntegral.integral_same]
-  | gammaSeven => simp only [gainIntegral,upperP,he,intervalIntegral.integral_same]
-  | gammaEight => simp only [gainIntegral,upperP,he,intervalIntegral.integral_same]
 
 end Wu2008DoubleSieve.MotherPair

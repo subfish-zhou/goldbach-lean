@@ -84,17 +84,6 @@ theorem semiprime_iff :
       · nlinarith [hp₁.two_le, hp₂.two_le]
       · exact hp₁.mul_isAlmostPrime_two hp₂ |>.isAtMost (by decide : (2 : ℕ) ≤ 2)
 
-/-- The internal predicate excludes zero and one. -/
-theorem semiprime_ge_two {n : ℕ} (h : Semiprime n) : n ≥ 2 := h.1
 
-/-- Mathlib's exactly-two-factor predicate implies the at-most-two-factor predicate. -/
-theorem isSemiprime_implies_semiprime {n : ℕ} (h : n.IsSemiprime) : Semiprime n := by
-  have hΩ : Ω n = 2 := h.2
-  have hn2 : 2 ≤ n := by
-    have hΩpos : 0 < Ω n := hΩ ▸ (by decide : (0 : ℕ) < 2)
-    have h1lt : 1 < n := ArithmeticFunction.cardFactors_pos_iff_one_lt.mp hΩpos
-    omega
-  refine ⟨hn2, ?_⟩
-  exact h.isAtMost (by decide : (2 : ℕ) ≤ 2)
 
 end MathlibNt.ChensTheorem

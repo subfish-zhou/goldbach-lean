@@ -72,19 +72,6 @@ theorem weightedHat_antitoneOn_Icc
       (le_of_lt (hH.positive sign.opposite (x - 1) (by
         linarith [hH.beta_gt_one, ha.trans_le hx'.1])))
 
-/-- A finite-interval product criterion isolating exactly the local estimate
-needed in Claim 14.6(i).  This is the rigorous content of the step from
-(14.16)+(T3) to a decreasing `Λ`: once the displayed derivative is nonpositive,
-ordinary one-variable calculus supplies antitonicity. -/
-theorem lambda_antitoneOn_Icc_of_deriv_nonpos
-    (H : Section13HatLayers) (sign : ErrorSign) (D d ε a b : ℝ)
-    (hcont : ContinuousOn (lambda H sign D d ε) (Icc a b))
-    (hdiff : ∀ t ∈ Ioo a b, DifferentiableAt ℝ (fun x => lambda H sign D d ε x) t)
-    (hderiv : ∀ t ∈ Ioo a b, deriv (lambda H sign D d ε) t ≤ 0) :
-    AntitoneOn (lambda H sign D d ε) (Icc a b) := by
-  exact antitoneOn_of_deriv_nonpos (convex_Icc a b) hcont
-    (fun t ht => (hdiff t (by simpa only [interior_Icc] using ht)).differentiableWithinAt)
-    (fun t ht => hderiv t (by simpa only [interior_Icc] using ht))
 
 /-- Multiplying two nonnegative antitone functions preserves antitonicity on a
 fixed set.  This is the algebraic engine in the high-range part of Claim
@@ -164,13 +151,6 @@ structure Claim14_6FiniteApproximation
   pointwise : ∀ x ∈ Icc a b,
     Tendsto (fun n => approx n x) atTop (𝓝 (lambda H sign D d ε x))
 
-/-- Once a source construction supplies finite antitone approximants and their
-pointwise limit, Claim 14.6(i) on that compact interval is automatic. -/
-theorem claim14_6_i_of_finiteApproximation
-    {H : Section13HatLayers} {sign : ErrorSign} {D d ε a b : ℝ}
-    (h : Claim14_6FiniteApproximation H sign D d ε a b) :
-    AntitoneOn (lambda H sign D d ε) (Icc a b) :=
-  antitoneOn_of_pointwise_limit h.antitone h.pointwise
 
 /-- The delayed positive integrand in the κ=1 Section 13 DDE. -/
 def hatTailIntegrand (H : Section13HatLayers) (sign : ErrorSign) (t : ℝ) : ℝ :=

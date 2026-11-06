@@ -183,56 +183,8 @@ theorem chen1973Lemma6Eq17PairPolynomial_conj
     (((pp.1 * pp.2 : ℂ) ^ s) *
       Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2)))).symm
 
-/-- The totalized primitive `L` value commutes with character and parameter
-conjugation. -/
-theorem chen1973Lemma6PrimitiveLValue_conj
-    {q : ℕ} (s : ℂ) (χ : PrimitiveCharacter q) (hs : 0 < s.re) :
-    chen1973Lemma6PrimitiveLValue q (conj s)
-        (if hq : 1 < q then
-          letI : NeZero q := ⟨Nat.ne_zero_of_lt hq⟩
-          primitiveCharacterConjEquiv q χ
-        else χ) =
-      conj (chen1973Lemma6PrimitiveLValue q s χ) := by
-  unfold chen1973Lemma6PrimitiveLValue
-  split_ifs with hq
-  · let : NeZero q := ⟨Nat.ne_zero_of_lt hq⟩
-    have hχ : χ.1 ≠ 1 := by
-      intro h
-      have hc := χ.2
-      rw [DirichletCharacter.IsPrimitive, h, DirichletCharacter.conductor_one] at hc
-      omega
-    exact primitiveLFunction_conj χ hχ s hs
-  · simp
 
-/-- Exact conjugation identity for `1-LS` on the positive half-plane. -/
-theorem chen1973Lemma6OneSubLS_conj
-    {q : ℕ} [NeZero q] (H : ℕ) (s : ℂ) (χ : PrimitiveCharacter q)
-    (hχ : χ.1 ≠ 1) (hs : 0 < s.re) :
-    chen1973Lemma6OneSubLS H (conj s) (primitiveCharacterConjEquiv q χ) =
-      conj (chen1973Lemma6OneSubLS H s χ) := by
-  unfold chen1973Lemma6OneSubLS chen1973PrimitiveLValue
-  change 1 - (if hq : 1 < q then
-      (primitiveCharacterConjEquiv q χ).1.LFunction (conj s) else 0) *
-        chen1973Lemma6MobiusPartialSum H (conj s) (primitiveCharacterConjEquiv q χ) =
-    conj (1 - (if hq : 1 < q then χ.1.LFunction s else 0) *
-      chen1973Lemma6MobiusPartialSum H s χ)
-  split_ifs with hq
-  · rw [primitiveLFunction_conj χ hχ s hs,
-      chen1973Lemma6MobiusPartialSum_conj]
-    simp
-  · simp
 
-/-- Exact conjugation identity for `L' S`. -/
-theorem chen1973Lemma6LDerivMulS_conj
-    {q : ℕ} [NeZero q] (H : ℕ) (s : ℂ) (χ : PrimitiveCharacter q)
-    (hχ : χ.1 ≠ 1) (hs : 0 < s.re) :
-    deriv (primitiveCharacterConjEquiv q χ).1.LFunction (conj s) *
-        chen1973Lemma6MobiusPartialSum H (conj s)
-          (primitiveCharacterConjEquiv q χ) =
-      conj (deriv χ.1.LFunction s *
-        chen1973Lemma6MobiusPartialSum H s χ) := by
-  rw [primitiveLDeriv_conj χ hχ s hs,
-    chen1973Lemma6MobiusPartialSum_conj, map_mul]
 
 /-- The exact totalized `L` object used in equation (17) has the expected
 conjugation identity on the actual conductor range. -/
@@ -244,15 +196,6 @@ theorem chen1973Lemma6PrimitiveLValue_conj_of_one_lt
   simp only [chen1973Lemma6PrimitiveLValue, dif_pos hq]
   exact primitiveLFunction_conj χ hχ s hs
 
-/-- The exact totalized `L'` object used in equation (17) has the expected
-conjugation identity on the actual conductor range. -/
-theorem chen1973PrimitiveLDeriv_conj_of_one_lt
-    {q : ℕ} [NeZero q] (hq : 1 < q) (s : ℂ) (χ : PrimitiveCharacter q)
-    (hχ : χ.1 ≠ 1) (hs : 0 < s.re) :
-    chen1973PrimitiveLDeriv q (conj s) (primitiveCharacterConjEquiv q χ) =
-      conj (chen1973PrimitiveLDeriv q s χ) := by
-  simp only [chen1973PrimitiveLDeriv, dif_pos hq]
-  exact primitiveLDeriv_conj χ hχ s hs
 
 private theorem norm_one_sub_conj_mul_conj (z w : ℂ) :
     ‖1 - conj z * conj w‖ = ‖1 - z * w‖ := by
@@ -431,34 +374,6 @@ theorem integral_eq_two_mul_Ioi_of_even (f : ℝ → ℝ)
     (∫ v : ℝ, f v) = ∫ v : ℝ, f |v| := by rw [habs]
     _ = 2 * ∫ v in Ioi (0 : ℝ), f v := integral_comp_abs
 
-set_option maxHeartbeats 800000 in
-/-- The full alpha-line norm integral is exactly twice Chen's half-line
-integral. -/
-theorem chen1973Lemma6Eq17FirstFullIntegral_eq_two_mul_half
-    {x L level B k m H : ℕ} (hlevel : 1 ≤ level) (hx : 1 < x) :
-    chen1973Lemma6Eq17FirstFullIntegral x L level B k m H =
-      2 * chen1973Lemma6Eq17FirstIntegral x L level B k m H := by
-  unfold chen1973Lemma6Eq17FirstFullIntegral chen1973Lemma6Eq17FirstIntegral
-  apply integral_eq_two_mul_Ioi_of_even
-  intro v
-  rw [ofReal_neg]
-  exact chen1973Lemma6Eq17FirstIntegrand_even
-    (x := x) (L := L) (level := level) (B := B) (k := k) (m := m) (H := H)
-    hlevel hx v
 
-set_option maxHeartbeats 800000 in
-/-- The full beta-line norm integral is exactly twice Chen's half-line
-integral. -/
-theorem chen1973Lemma6Eq17SecondFullIntegral_eq_two_mul_half
-    {x L level B k m H : ℕ} (hlevel : 1 ≤ level) (hx : 1 < x) :
-    chen1973Lemma6Eq17SecondFullIntegral x L level B k m H =
-      2 * chen1973Lemma6Eq17SecondIntegral x L level B k m H := by
-  unfold chen1973Lemma6Eq17SecondFullIntegral chen1973Lemma6Eq17SecondIntegral
-  apply integral_eq_two_mul_Ioi_of_even
-  intro v
-  rw [ofReal_neg]
-  exact chen1973Lemma6Eq17SecondIntegrand_even
-    (x := x) (L := L) (level := level) (B := B) (k := k) (m := m) (H := H)
-    hlevel hx v
 
 end AnalyticNumberTheory.LargeSieve

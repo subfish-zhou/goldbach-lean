@@ -125,49 +125,6 @@ lemma canonical_value_tail_le_fixed_log
         _ = 50 * Real.exp A * L := rfl
     _ = Real.exp A * (50 * q) * L := by ring
 
-/-- Fully explicit weak-strip value bound for a nonprincipal character. -/
-theorem norm_LFunction_le_fixed_log
-    (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
-    {A σ t : ℝ} (hA : A ∈ Set.Ioc 0 (1 / 2))
-    (hσ : 1 - A / Real.log |t| ≤ σ) (hσ2 : σ ≤ 2)
-    (ht : 3 < |t|) :
-    ‖χ.LFunction (σ + t * I)‖ ≤
-      Real.exp A * (100 * q) * Real.log |t| := by
-  let m : ℕ := ⌊|t|⌋₊ + 1
-  have hσpos : 0 < σ := lt_trans (by norm_num) (one_half_lt_sigma hA ht hσ)
-  have hsre : 0 < (σ + t * I : ℂ).re := by simpa using hσpos
-  have hm : 1 ≤ m := by simp [m]
-  have hseries := orderedValueSeries_eq_LFunction_of_re_pos
-    χ hχ (σ + t * I) hsre
-  have htail := norm_orderedValueSeries_sub_sum_range_le
-    χ hχ (σ + t * I) hsre hm
-  have hfinite := norm_value_truncation_le χ hA hσ ht
-  have htail' := canonical_value_tail_le_fixed_log (q := q) hA hσ hσ2 ht
-  dsimp only at hfinite htail'
-  have htailBound :
-      ‖orderedValueSeries χ hχ (σ + t * I) hsre -
-        ∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n‖ ≤
-          Real.exp A * (50 * q) * Real.log |t| := by
-    refine htail.trans ?_
-    simpa only [m, add_re, ofReal_re, mul_re, I_re, I_im, ofReal_im,
-      mul_zero, mul_one, sub_self, add_zero] using htail'
-  rw [← hseries]
-  calc
-    ‖orderedValueSeries χ hχ (σ + t * I) hsre‖ ≤
-        ‖∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n‖ +
-          ‖orderedValueSeries χ hχ (σ + t * I) hsre -
-            ∑ n ∈ range m, cpowWeight (σ + t * I) n * χ n‖ :=
-      norm_le_norm_add_norm_sub' _ _
-    _ ≤ Real.exp A * 2 * Real.log |t| +
-          Real.exp A * (50 * q) * Real.log |t| :=
-      add_le_add hfinite htailBound
-    _ = Real.exp A * (2 + 50 * q) * Real.log |t| := by ring
-    _ ≤ Real.exp A * (100 * q) * Real.log |t| := by
-      have hq : (1 : ℝ) ≤ q := by exact_mod_cast NeZero.pos q
-      have hlog : 0 ≤ Real.log |t| := by linarith [logt_gt_one ht.le]
-      apply mul_le_mul_of_nonneg_right _ hlog
-      apply mul_le_mul_of_nonneg_left _ (Real.exp_pos A).le
-      nlinarith
 
 /-! ## The principal-character lane -/
 
@@ -204,43 +161,6 @@ lemma principalEulerCorrectionNorm_le_modulus_of_nonneg_re
     _ ≤ q := by
       exact_mod_cast Nat.le_of_dvd (NeZero.pos q) (Nat.prod_primeFactors_dvd q)
 
-/-- Requested `re s ≥ 1` specialization of the Euler-correction bound. -/
-lemma principalEulerCorrectionNorm_le_modulus
-    (q : ℕ) [NeZero q] {s : ℂ} (hs : 1 ≤ s.re) :
-    ‖∏ p ∈ q.primeFactors, (1 - (p : ℂ) ^ (-s))‖ ≤ q :=
-  principalEulerCorrectionNorm_le_modulus_of_nonneg_re q (by linarith)
 
-/-- Uniform weak-strip logarithmic bound for the principal Dirichlet
-`L`-function.  The zeta constants are selected before the modulus. -/
-theorem exists_principal_norm_LFunctionTrivChar_le_log :
-    ∃ (A : ℝ) (_ : A ∈ Set.Ioc 0 (1 / 2)) (C : ℝ) (_ : 0 < C),
-      ∀ (q : ℕ) [NeZero q] (σ t : ℝ), 3 < |t| →
-        σ ∈ Set.Icc (1 - A / Real.log |t|) 2 →
-        ‖DirichletCharacter.LFunctionTrivChar q (σ + t * I)‖ ≤
-          C * q * Real.log |t| := by
-  rcases ZetaUpperBnd with ⟨A, hA, C, hC, hzeta⟩
-  refine ⟨A, hA, C, hC, ?_⟩
-  intro q _ σ t ht hσ
-  have hσpos : 0 < σ :=
-    lt_trans (by norm_num) (one_half_lt_sigma hA ht hσ.1)
-  have hsne : (σ + t * I : ℂ) ≠ 1 := by
-    intro hs
-    have him := congrArg Complex.im hs
-    have ht0 : t ≠ 0 := by
-      intro h
-      subst t
-      norm_num at ht
-    norm_num at him
-    exact ht0 him
-  rw [DirichletCharacter.LFunctionTrivChar_eq_mul_riemannZeta hsne, norm_mul]
-  calc
-    ‖∏ p ∈ q.primeFactors, (1 - (p : ℂ) ^ (-(σ + t * I)))‖ *
-        ‖riemannZeta (σ + t * I)‖ ≤ (q : ℝ) * (C * Real.log |t|) := by
-      gcongr
-      · apply principalEulerCorrectionNorm_le_modulus_of_nonneg_re q
-        norm_num
-        exact hσpos.le
-      · exact hzeta σ t ht hσ
-    _ = C * q * Real.log |t| := by ring
 
 end DirichletLWeakStripValueBound

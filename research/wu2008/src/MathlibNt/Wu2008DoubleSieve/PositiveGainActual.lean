@@ -39,33 +39,5 @@ theorem positiveGain_actual_upper_range {δ s : ℝ} (hδ : 0 < δ) (hδhi : δ 
     (wuImprovementLimit_upper_antitone hδ hδhi
       ⟨hs, by linarith⟩ ⟨by norm_num, by norm_num⟩ hst)
 
-/-- The accepted cross inequality transports the upper seed to the actual lower gain. -/
-theorem positiveGain_actual_lower_range {δ s : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/10)
-    (hs : 2 ≤ s) (hst : s ≤ 39/10) :
-    (39/10-s)/14500 ≤ wuImprovementLimit false δ s := by
-  have hhalf : δ < 1/2 := by linarith
-  have hc := (wu08_38 hδ hδhi hs hst (by norm_num : (39/10 : ℝ) ≤ 10)).1
-  have hn := wuImprovementLimit_nonneg false hδ hhalf
-    (by norm_num : (1 : ℝ) ≤ 39/10) (by norm_num : (39/10 : ℝ) ≤ 10)
-  have hab : s-1 ≤ (29/10 : ℝ) := by linarith
-  have hm : (∫ u in (s-1)..(29/10), (1/14500 : ℝ)) ≤
-      ∫ u in (s-1)..(29/10), wuImprovementLimit true δ u/u := by
-    apply intervalIntegral.integral_mono_on hab intervalIntegrable_const
-      (wuImprovementLimit_div_intervalIntegrable true hδ hhalf
-        (by linarith) hab (by norm_num))
-    intro u hu
-    have hu0 : 0 < u := by linarith [hu.1]
-    apply (le_div_iff₀ hu0).mpr
-    calc
-      (1/14500 : ℝ)*u ≤ (1/14500 : ℝ)*(29/10) :=
-        mul_le_mul_of_nonneg_left hu.2 (by norm_num)
-      _ = 1/5000 := by norm_num
-      _ ≤ _ := positiveGain_actual_upper_range hδ hδhi (by linarith [hu.1]) hu.2
-  norm_num at hc
-  have he : (∫ u in (s-1)..(29/10), (1/14500 : ℝ)) = (39/10-s)/14500 := by
-    simp
-    ring
-  rw [he] at hm
-  linarith
 
 end Wu2008DoubleSieve

@@ -57,21 +57,6 @@ def Lemma144CaseIIOddClaim145ScalingBridge
               (1 - caseIIConcreteRoundedRelativeBracket N (D : ℝ) d Δ
                 (sourceSigma (D : ℝ) d) C K))
 
-/-- A strict bracket inequality alone is quantitatively insufficient for endpoint
-absorption: even with positive endpoint and budget scales there are brackets
-strictly below one whose gap is too small. -/
-theorem strict_bracket_lt_one_does_not_force_endpoint_absorption
-    {endpoint budget : ℝ} (he : 0 < endpoint) (hb : 0 < budget) :
-    ∃ bracket : ℝ, bracket < 1 ∧
-      ¬ endpoint ≤ budget * (1 - bracket) := by
-  refine ⟨1 - endpoint / (2 * budget), ?_, ?_⟩
-  · have : 0 < endpoint / (2 * budget) := by positivity
-    linarith
-  · have hne : budget ≠ 0 := ne_of_gt hb
-    rw [show budget * (1 - (1 - endpoint / (2 * budget))) = endpoint / 2 by
-      field_simp [hne]
-      ring]
-    linarith
 
 /-- Claim 14.5 closes the recursive endpoint-gap normalization exactly when the
 remaining scale bridge is supplied.  No enlargement of the target constant

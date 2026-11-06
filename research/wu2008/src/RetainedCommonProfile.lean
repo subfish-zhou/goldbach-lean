@@ -73,10 +73,6 @@ theorem finiteLower_le_profile {z : Fin 9 → ℝ} (hz : ∀ k,0≤z k)
   apply div_le_div_of_nonneg_left hn (sub_pos.mpr D0_lt_one)
   linarith only [retainedD0_le]
 
-/-- An unconditional payment for the actual original H with its actual normalization. -/
-theorem original_paidActual : paidActual NineFeedbackStrength.originalH ≤
-    aProfile (nineProfile NineFeedbackStrength.originalH) :=
-  paidActual_le_profile CoupledIntegralRecovery.originalH_nonneg
 
 end
 end RetainedCommonProfile

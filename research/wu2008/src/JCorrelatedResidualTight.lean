@@ -98,10 +98,6 @@ theorem actual_remaining_magnitude :
     AnalyticTotalThreshold.jLoss-JointJLossStrength.recovery < 3037/100000 :=
   ⟨actual_remaining_interval.1,actual_remaining_interval.2.trans_lt cap_size⟩
 
-/-- The actual J lower endpoint is retained, not replaced by a positivity claim. -/
-theorem actual_J_lower :
-    lowerRest+(16*C (1/3)+8*C (1-2*s))*log 2 ≤ actualJ :=
-  collected_lower.trans complete_j_lower
 
 /-- Direct quarter-weight consumer for the parent's original seven-error ledger. -/
 theorem mother_J_error_interval :

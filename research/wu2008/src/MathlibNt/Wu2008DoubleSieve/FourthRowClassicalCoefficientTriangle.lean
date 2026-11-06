@@ -41,15 +41,6 @@ theorem fourthRowClassical_triangle_fubini {a b : ℝ}
     ring
   simpa only [add_zero, sub_zero, one_mul, hs] using h
 
-theorem fourthRowClassical_inner_integrable {a b t l h : ℝ}
-    (ha : 0 < a) (hb : b < 1 / 2) (ht : t ∈ Icc a b)
-    (hl : l ∈ Icc a b) (hh : h ∈ Icc a b) :
-    IntervalIntegrable (gamma5MassKernel t) volume l h := by
-  apply ContinuousOn.intervalIntegrable
-  apply (fourthRowClassical_kernel_continuous ha hb).comp
-    (continuous_const.prodMk continuous_id).continuousOn
-  intro u hu
-  exact ⟨ht, (uIcc_subset_Icc hl hh) hu⟩
 
 theorem fourthRowClassical_inner_log {a u : ℝ}
     (ha : 0 < a) (hau : a ≤ u) (hu : u < 1 / 2) :

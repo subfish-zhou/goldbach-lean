@@ -20,7 +20,6 @@ theorem paidD0_le : paidD0 ≤ D0 := by
   norm_num only [show (3:ℝ)+2=5 by norm_num,show (3:ℝ)+1=4 by norm_num] at h
   exact h
 
-theorem paidD0_lt_one : paidD0<1 := paidD0_le.trans_lt D0_lt_one
 
 theorem numerator_integral (z : Fin 9 → ℝ) :
     numerator z = ∫ t in (1:ℝ)..3,nineProfile z t*weight t := by

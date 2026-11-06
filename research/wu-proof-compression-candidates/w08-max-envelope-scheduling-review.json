@@ -1,0 +1,20 @@
+{
+  "status": "READ_ONLY_W08_INTEGRATION_SCHEDULING_REVIEW_NOT_COMPILED",
+  "changed_modules": [
+    "W08Audit",
+    "W08Entries0",
+    "W08EntriesRest",
+    "W08Envelope",
+    "W08FrozenConsumer",
+    "W08KernelMatrix",
+    "W08Root",
+    "W17JointSplit",
+    "W17ParentFullTypes"
+  ],
+  "reverse_dependency_modules": 309,
+  "completed_affected_modules": [],
+  "source_templates_match_already_validated_shared_batch": true,
+  "validated_library_base": "/tmp/wu-shared-proof-batch-v1/run-20261028-01",
+  "earliest_changed_module_topological_index": 3235,
+  "observed_unix": 1793351353.7532678
+}

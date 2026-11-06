@@ -13,10 +13,6 @@ open scoped Interval BigOperators
 def Xi2Coefficient (p : SecondFunctionalParameters) (k : Fin 9) : ℝ :=
   ∫ t in (1:ℝ)..3, nineProfile (nodeBasis k) t * Xi2 p t
 
-theorem Xi2Coefficient_nonneg {p : SecondFunctionalParameters}
-    (hp : PropositionFourGeometry p) (k : Fin 9) : 0 ≤ Xi2Coefficient p k :=
-  Xi2_integral_nonneg (nineProfile_integrable _) (fun t _ =>
-    nineProfile_nonneg (nodeBasis_nonneg k) t) hp
 
 theorem Xi2_profile_expansion {p : SecondFunctionalParameters}
     (hp : PropositionFourGeometry p) (z : Fin 9 → ℝ) :
@@ -44,15 +40,5 @@ theorem Xi2_matrix_le_actual {p : SecondFunctionalParameters}
       (a := 1) (b := 3) (by norm_num) (by norm_num) (by norm_num))
     (fun _ ht => nineProfile_le_actual hd hh ht) hp
 
-/-- The four original matrix rows with the proved Gamma5 and positive-delta losses. -/
-theorem Xi2_four_rows_matrix_paid (r : Fin 4) {δ : ℝ} (hd : 0 < δ) (hh : δ ≤ 1/10) :
-    coupledBase (gamma5OriginalRow r) - deltaLoss δ * coupledLoss (gamma5OriginalRow r) -
-        rowDebit r/2 + (∑ k : Fin 9, Xi2Coefficient (gamma5OriginalRow r) k * actualNine δ k) ≤
-      wuImprovementLimit true δ (gamma5OriginalRow r).s := by
-  have h := Xi2_four_rows_paid_base r hd hh
-  have hm := Xi2_matrix_le_actual (original_four_rows_qualified r) hd hh
-  change (∑ k : Fin 9, Xi2Coefficient (gamma5OriginalRow r) k * actualNine δ k) ≤
-    (∫ t in (1:ℝ)..3, wuImprovementLimit true δ t * Xi2 (gamma5OriginalRow r) t) at hm
-  linarith only [h, hm]
 
 end WuPaper.R2Xi

@@ -123,13 +123,7 @@ theorem lowerSmallWeight_primeSupported (P : Finset ℕ) (D ε : ℝ) :
     PrimeSupported (geometricSmallPrimes P D ε) (lowerSmallWeight P D ε) :=
   lowerWeight_primeSupported _ _ (smallPrimes_prime P D ε)
 
-theorem lowerSmallWeight_lt_level {P : Finset ℕ} {D ε : ℝ} {n : ℕ}
-    (hn : lowerSmallWeight P D ε n ≠ 0) : (n : ℝ) < D ^ ε :=
-  lowerWeight_lt_level hn
 
-theorem lowerSmallWeight_eq_zero_of_level_le {P : Finset ℕ} {D ε : ℝ} {n : ℕ}
-    (hn : D ^ ε ≤ (n : ℝ)) : lowerSmallWeight P D ε n = 0 :=
-  lowerWeight_eq_zero_of_level_le hn
 
 theorem lowerSmallWeight_supportedAt (P : Finset ℕ) (D ε : ℝ) :
     SupportedAt (lowerSmallWeight P D ε) (D ^ ε) :=
@@ -154,16 +148,6 @@ theorem smallPrime_lt_level (P : Finset ℕ) {D ε : ℝ}
   apply lt_of_lt_of_le (Finset.mem_filter.mp hp).2.2
   exact Real.rpow_le_rpow_of_exponent_le hD (by nlinarith)
 
-/-- Every small prime has coefficient `-1`; this is not a delta weight. -/
-theorem lowerSmallWeight_prime (P : Finset ℕ) {D ε : ℝ}
-    (hD : 1 ≤ D) (hε : 0 ≤ ε) (hε1 : ε ≤ 1) {p : ℕ}
-    (hp : p ∈ geometricSmallPrimes P D ε) : lowerSmallWeight P D ε p = -1 := by
-  apply lowerWeight_prime
-  · exact Finset.prod_ne_zero_iff.mpr
-      (fun q hq => (smallPrimes_prime P D ε q hq).ne_zero)
-  · exact smallPrimes_prime P D ε p hp
-  · exact Finset.dvd_prod_of_mem id hp
-  · exact smallPrime_lt_level P hD hε hε1 hp
 
 /-- One concrete lower-small-weight geometric box term. -/
 noncomputable def lowerBoxTerm (P : Finset ℕ) (D ε : ℝ)
@@ -335,19 +319,6 @@ theorem lowerWeight_divisor_sum_le_coprime {M n : ℕ} {L : ℝ}
   rw [heq]
   exact lowerWeight_divisor_sum hM hL (Nat.gcd_dvd_right n M)
 
-/-- The concrete small-prime weight is a lower bound for the indicator of
-integers coprime to its sieve prime product. This is finite, not a density
-estimate. -/
-theorem lowerSmallWeight_divisor_sum_le_coprime (P : Finset ℕ) {D ε : ℝ}
-    (hD : 1 ≤ D) (hε : 0 ≤ ε) (hε1 : ε ≤ 1) (n : ℕ) :
-    ∑ d ∈ n.divisors, lowerSmallWeight P D ε d ≤
-      if n.Coprime ((geometricSmallPrimes P D ε).prod id) then 1 else 0 := by
-  apply lowerWeight_divisor_sum_le_coprime
-    (primeProduct_squarefree _ (smallPrimes_prime P D ε))
-  intro p hp
-  have hmem : p ∈ geometricSmallPrimes P D ε := by
-    simpa only [id_eq, Nat.primeFactors_prod (smallPrimes_prime P D ε)] using hp
-  exact smallPrime_lt_level P hD hε hε1 hmem
 
 /-! ## Concrete upper small weight -/
 
@@ -444,13 +415,7 @@ theorem upperSmallWeight_primeSupported (P : Finset ℕ) (D ε : ℝ) :
     PrimeSupported (geometricSmallPrimes P D ε) (upperSmallWeight P D ε) :=
   upperWeight_primeSupported _ _ (smallPrimes_prime P D ε)
 
-theorem upperSmallWeight_lt_level {P : Finset ℕ} {D ε : ℝ} {n : ℕ}
-    (hn : upperSmallWeight P D ε n ≠ 0) : (n : ℝ) < D ^ ε :=
-  upperWeight_lt_level hn
 
-theorem upperSmallWeight_eq_zero_of_level_le {P : Finset ℕ} {D ε : ℝ} {n : ℕ}
-    (hn : D ^ ε ≤ (n : ℝ)) : upperSmallWeight P D ε n = 0 :=
-  upperWeight_eq_zero_of_level_le hn
 
 theorem upperSmallWeight_supportedAt (P : Finset ℕ) (D ε : ℝ) :
     SupportedAt (upperSmallWeight P D ε) (D ^ ε) :=
@@ -469,23 +434,6 @@ theorem upperSmallWeight_one (P : Finset ℕ) {D ε : ℝ}
       (fun p hp => (smallPrimes_prime P D ε p hp).ne_zero)
   · exact Real.one_lt_rpow (by linarith) hε
 
-/-- Under the small-parameter hypothesis every small prime passes the upper
-cubic test, so the concrete upper weight is not a delta weight. -/
-theorem upperSmallWeight_prime (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (hεsmall : ε < 1 / 8) {p : ℕ}
-    (hp : p ∈ geometricSmallPrimes P D ε) : upperSmallWeight P D ε p = -1 := by
-  apply upperWeight_prime
-  · exact Finset.prod_ne_zero_iff.mpr
-      (fun q hq => (smallPrimes_prime P D ε q hq).ne_zero)
-  · exact smallPrimes_prime P D ε p hp
-  · exact Finset.dvd_prod_of_mem id hp
-  · have hexp : ε ^ 2 * 3 < ε := by
-      nlinarith [mul_pos hε (sub_pos.mpr hεsmall)]
-    calc
-      (p : ℝ) ^ 3 ≤ (D ^ (ε ^ 2)) ^ 3 :=
-        pow_le_pow_left₀ (Nat.cast_nonneg p) (Finset.mem_filter.mp hp).2.2.le 3
-      _ = D ^ (ε ^ 2 * 3) := (Real.rpow_mul_natCast (by linarith) (ε ^ 2) 3).symm
-      _ < D ^ ε := Real.rpow_lt_rpow_of_exponent_lt (by linarith) hexp
 
 /-- One concrete upper-small-weight geometric box term. -/
 noncomputable def upperBoxTerm (P : Finset ℕ) (D ε : ℝ)
@@ -698,13 +646,6 @@ by
     (LinearSieve.upperRosserWeight_certificate hB hB.ne_zero
       (Nat.lt_ceil.mpr (by simpa using hL)) hcut) hn
 
-/-- The wider legacy API is retained: ε need not be at most one. -/
-theorem upperSmallWeight_divisor_sum (P : Finset ℕ) {D ε : ℝ} {n : ℕ}
-    (hD : 2 ≤ D) (hε : 0 < ε)
-    (hn : n ∣ (geometricSmallPrimes P D ε).prod id) :
-    (if n = 1 then 1 else 0) ≤ ∑ d ∈ n.divisors, upperSmallWeight P D ε d :=
-  upperWeight_divisor_sum (primeProduct_squarefree _ (smallPrimes_prime P D ε))
-    (Real.one_lt_rpow (by linarith) hε) hn
 
 /-- The finite upper-sieve direction on positive integers, including prime
 powers, by restriction to `gcd(n,M)`. The exclusion of zero is essential for
@@ -728,32 +669,7 @@ theorem upperWeight_divisor_sum_ge_coprime {M n : ℕ} {L : ℝ}
   rw [heq]
   exact upperWeight_divisor_sum hM hL (Nat.gcd_dvd_right n M)
 
-/-- The concrete small-prime upper coefficient bounds the coprimality
-indicator on every positive integer; no density estimate is asserted. -/
-theorem upperSmallWeight_divisor_sum_ge_coprime (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) {n : ℕ} (hn : n ≠ 0) :
-    (if n.Coprime ((geometricSmallPrimes P D ε).prod id) then 1 else 0) ≤
-      ∑ d ∈ n.divisors, upperSmallWeight P D ε d :=
-  upperWeight_divisor_sum_ge_coprime
-    (primeProduct_squarefree _ (smallPrimes_prime P D ε))
-    (Real.one_lt_rpow (by linarith) hε) hn
 
-/-- The short lower weight itself is common WF at the external level. -/
-theorem lowerSmallWeight_wellFactorable (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (hεsmall : ε < 1 / 8) :
-    WellFactorable (lowerSmallWeight P D ε) (D ^ (1 + ε + ε ^ 9)) := by
-  simpa only [lowerBoxTerm, geometricBoxTerm, List.toFinset_nil, boxProduct,
-    Finset.prod_empty, mul_one] using
-    iwaniec_lowerBoxTerm_wellFactorable P [] hD hε hεsmall
-      (admissible_nil false _ _)
 
-/-- The short upper weight itself is common WF at the external level. -/
-theorem upperSmallWeight_wellFactorable (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (hεsmall : ε < 1 / 8) :
-    WellFactorable (upperSmallWeight P D ε) (D ^ (1 + ε + ε ^ 9)) := by
-  simpa only [upperBoxTerm, geometricBoxTerm, List.toFinset_nil, boxProduct,
-    Finset.prod_empty, mul_one] using
-    iwaniec_upperBoxTerm_wellFactorable P [] hD hε hεsmall
-      (admissible_nil true _ _)
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser

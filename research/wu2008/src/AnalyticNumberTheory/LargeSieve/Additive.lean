@@ -97,11 +97,6 @@ def MontgomeryLargeSieveDual (M : ℤ) (N : ℕ) : Prop :=
 
 /-! ## 3. Duality lemma (the algebraic foundation of the large sieve) -/
 
-/-- **Real Cauchy--Schwarz** (Finset): `(Σ aᵢbᵢ)² ≤ (Σ aᵢ²)(Σ bᵢ²)`.
-This is Mathlib's finite-sum Cauchy--Schwarz inequality. -/
-theorem realCauchySchwarz {ι : Type*} (s : Finset ι) (a b : ι → ℝ) :
-    (∑ i ∈ s, a i * b i) ^ 2 ≤ (∑ i ∈ s, a i ^ 2) * (∑ i ∈ s, b i ^ 2) :=
-  Finset.sum_mul_sq_le_sq_mul_sq s a b
 
 /-- **Complex Cauchy--Schwarz** (Finset):
 `|Σᵢ xᵢ·conj(yᵢ)| ≤ √(Σ‖xᵢ‖²)·√(Σ‖yᵢ‖²)`, proved using the triangle
@@ -223,27 +218,6 @@ theorem largeSieveDuality {ι κ : Type*}
       (A := fun j i => star (A i j)) hC hDual
     simpa [star_star] using hPrim a
 
-/-- **Additive large sieve: primal ⟺ dual**. Apply the general duality lemma
-to the character matrix `A x n = e(nx)` with `C = N + 1/δ`. Thus the two
-target statements are equivalent: proving either one gives the other. -/
-theorem montgomeryDuality (M : ℤ) (N : ℕ) :
-    MontgomeryLargeSievePrimal M N ↔ MontgomeryLargeSieveDual M N := by
-  have hC : ∀ δ : ℝ, 0 < δ → 0 ≤ (N : ℝ) + 1 / δ := by
-    intro δ hδ
-    positivity
-  constructor
-  · intro hprimal δ hδ X hws b
-    have hpr : ∀ a : ℤ → ℂ, ∑ x ∈ X,
-        ‖∑ n ∈ Finset.Icc (M + 1) (M + N), (charPow n x : ℂ) * a n‖ ^ 2 ≤
-          ((N : ℝ) + 1 / δ) * ∑ n ∈ Finset.Icc (M + 1) (M + N), ‖a n‖ ^ 2 := by
-      simpa [circleCharSum, mul_comm] using hprimal δ hδ X hws
-    have hdual := (largeSieveDuality (s := X) (t := Finset.Icc (M + 1) (M + N))
-      (A := fun x n => (charPow n x : ℂ)) (hC δ hδ)).1 hpr
-    exact hdual b
-  · intro hdual δ hδ X hws a
-    have hpr := (largeSieveDuality (s := X) (t := Finset.Icc (M + 1) (M + N))
-      (A := fun x n => (charPow n x : ℂ)) (hC δ hδ)).2 (hdual δ hδ X hws)
-    simpa [circleCharSum, mul_comm] using hpr a
 
 end
 

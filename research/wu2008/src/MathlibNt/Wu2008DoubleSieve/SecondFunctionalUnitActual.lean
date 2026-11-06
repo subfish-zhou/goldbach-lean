@@ -10,14 +10,6 @@ noncomputable def secondFunctionalUnitGamma16 {i : ℕ} (N : ℕ) (δ : ℝ)
   ∑ c ∈ (gamma16Profiles N δ W).filter (fun c => c.2.2.2.2 = 1),
     (convolutionCoeff W c.1 : ℝ) * (gamma16PrimeFibre N δ c).card
 
-/-- Exact decomposition of the actual X, not a source-count substitution. -/
-theorem secondFunctionalUnitGamma16_add_nonunit {i : ℕ} (N : ℕ) (δ : ℝ)
-    (W : Fin i → Finset ℕ) :
-    secondFunctionalUnitGamma16 N δ W +
-      (∑ c ∈ (gamma16Profiles N δ W).filter (fun c => c.2.2.2.2 ≠ 1),
-        (convolutionCoeff W c.1 : ℝ) * (gamma16PrimeFibre N δ c).card) =
-      gamma16X N δ W :=
-  sum_filter_add_sum_filter_not _ _ _
 
 theorem secondFunctionalUnitGamma16_geometry {i N : ℕ} {δ : ℝ}
     {W : Fin i → Finset ℕ} {c : Gamma16Profile} (hc : c ∈ gamma16Profiles N δ W) :
@@ -60,13 +52,5 @@ theorem secondFunctionalUnitGamma16_nonneg {i : ℕ} (N : ℕ) (δ : ℝ)
     (W : Fin i → Finset ℕ) : 0 ≤ secondFunctionalUnitGamma16 N δ W :=
   sum_nonneg fun _ _ => mul_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)
 
-/-- The zero-mass case is included without cancellation by the mass. -/
-theorem secondFunctionalUnitGamma16_eq_zero_of_mass_zero {i k N : ℕ}
-    {δ Δ : ℝ} {V : Fin i → ℝ} (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1 / 2)
-    (hb : wuSourceBox k δ N i Δ V)
-    (hmass : boxConvolutionReciprocalMass (convolutionWuWindows N Δ V) = 0) :
-    secondFunctionalUnitGamma16 N δ (convolutionWuWindows N Δ V) = 0 := by
-  apply le_antisymm _ (secondFunctionalUnitGamma16_nonneg N δ _)
-  simpa only [hmass, mul_zero] using secondFunctionalUnitGamma16_le hN hδ hδhi hb
 
 end Wu2008DoubleSieve

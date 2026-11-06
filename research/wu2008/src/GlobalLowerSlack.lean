@@ -87,54 +87,6 @@ theorem payment_nonnegative : 0 ≤ analyticPaymentSlack ∧ 0 < retainedPayment
   ⟨sub_nonneg.mpr GlobalLogRelationPayment.lower_repaid_payment,
     sub_pos.mpr PsiG18Strength.two_recoveries_bounds.1⟩
 
-/-- The old lower proof dropped this exact reciprocal-chord term. -/
-theorem scalar_chord_retained {z : ℝ} (hz : SharpMassBalance.s0 ≤ z)
-    (hq : z ≤ FifthClassicalShape.q) :
-    FifthLogTotalMagnitude.f0+FifthLogTotalMagnitude.slope*(z-SharpMassBalance.s0)+
-      (FifthLogTotalMagnitude.slope/FifthClassicalShape.q)*(z-SharpMassBalance.s0)*
-        (FifthClassicalShape.q-z) ≤ log (z-1)/z := by
-  have hp := FifthClassicalShape.parameters
-  have hs : 0 < SharpMassBalance.s0 := by linarith [hp.1]
-  have hz0 := hs.trans_le hz
-  have hq0 := hs.trans hp.2.1
-  have hd := sub_pos.mpr hp.2.1
-  have hL := (FifthLogTotalMagnitude.endpoint_logs hp.1.le).1
-  have hQ := (FifthLogTotalMagnitude.endpoint_logs
-    (show 3 ≤ FifthClassicalShape.q by linarith [hp.1,hp.2.1])).1
-  have hc := FifthLogTotalMagnitude.log_chord
-    (show 0 < SharpMassBalance.s0-1 by linarith [hp.1])
-    (show SharpMassBalance.s0-1 ≤ z-1 by linarith)
-    (show z-1 ≤ FifthClassicalShape.q-1 by linarith)
-    (show SharpMassBalance.s0-1 < FifthClassicalShape.q-1 by linarith [hp.2.1])
-  have h1 := mul_le_mul_of_nonneg_left hL (sub_nonneg.mpr hq)
-  have h2 := mul_le_mul_of_nonneg_left hQ (sub_nonneg.mpr hz)
-  have hch : ((FifthClassicalShape.q-z)*FifthLogTotalMagnitude.lo SharpMassBalance.s0+
-      (z-SharpMassBalance.s0)*FifthLogTotalMagnitude.lo FifthClassicalShape.q)/
-      (FifthClassicalShape.q-SharpMassBalance.s0) ≤ log (z-1) := by
-    apply (div_le_iff₀ hd).2
-    have hc' := (div_le_iff₀
-      (show 0 < (FifthClassicalShape.q-1)-(SharpMassBalance.s0-1) by linarith)).1 hc
-    nlinarith only [h1,h2,hc']
-  have hid : (((FifthClassicalShape.q-z)*FifthLogTotalMagnitude.lo SharpMassBalance.s0+
-      (z-SharpMassBalance.s0)*FifthLogTotalMagnitude.lo FifthClassicalShape.q)/
-      (FifthClassicalShape.q-SharpMassBalance.s0))/z =
-      FifthLogTotalMagnitude.f0+FifthLogTotalMagnitude.slope*(z-SharpMassBalance.s0)+
-      FifthLogTotalMagnitude.slope*(z-SharpMassBalance.s0)*(FifthClassicalShape.q-z)/z := by
-    unfold FifthLogTotalMagnitude.slope FifthLogTotalMagnitude.f0
-    field_simp
-    ring
-  have hl := div_le_div_of_nonneg_right hch hz0.le
-  rw [hid] at hl
-  have hslope : 0 ≤ FifthLogTotalMagnitude.slope := by
-    norm_num [FifthLogTotalMagnitude.slope,FifthLogTotalMagnitude.f0,FifthLogTotalMagnitude.lo,
-      FifthClassicalShape.q,SharpMassBalance.s0,lowerLog,a,b,truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
-  have hn := mul_nonneg (mul_nonneg hslope (sub_nonneg.mpr hz)) (sub_nonneg.mpr hq)
-  have hm := div_le_div_of_nonneg_left hn hz0 hq
-  have he : FifthLogTotalMagnitude.slope/FifthClassicalShape.q*(z-SharpMassBalance.s0)*
-      (FifthClassicalShape.q-z) = FifthLogTotalMagnitude.slope*(z-SharpMassBalance.s0)*
-        (FifthClassicalShape.q-z)/FifthClassicalShape.q := by ring
-  rw [he]
-  linarith only [hl,hm]
 
 /-- Uniform curvature on the original interval, not a Taylor truncation. -/
 theorem log_strong_chord {l t r : ℝ} (hl : 0 < l) (hlt : l ≤ t)
@@ -414,10 +366,6 @@ theorem actual_remaining_identity : U8CanonicalMother.improvedCoefficient-lowerC
   unfold unpaid lowerCoefficient U8ActualThreshold.lowerCoefficient
   linarith only [he]
 
-theorem exact_target_comparison : 8*log (5000/4469) < U8CanonicalMother.improvedCoefficient ↔
-    8*log (5000/4469)-lowerCoefficient < unpaid := by
-  rw [← actual_remaining_identity]
-  constructor <;> intro h <;> linarith only [h]
 
 /-- Opposite evidence is about Qold only, not the corrected coefficient. -/
 theorem old_actual_below_target : JointHMotherPayment.unroundedCoefficient < 8*log (5000/4469) :=
@@ -446,8 +394,6 @@ theorem fifthGain_exact : fifthGain =
     FifthLogTotalMagnitude.lo,FifthClassicalShape.q,SharpMassBalance.s0,lowerLog,a,b,
     truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
 
-theorem quarter_gain_bounds : (3469/1000000:ℝ) < fifthGain/4 ∧ fifthGain/4 < 3470/1000000 := by
-  rw [fifthGain_exact]; norm_num
 
 theorem lowerOld_bounds : (826517/1000000:ℝ) < lowerOld ∧ lowerOld < 826518/1000000 := by
   unfold lowerOld

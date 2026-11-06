@@ -59,11 +59,6 @@ theorem continuous_truncatedPerronIntegrand_right (x : ℝ) :
   simp_rw [truncatedPerronIntegrand_eq_mul_sinc]
   fun_prop
 
-/-- Continuity in the Perron spatial variable. -/
-theorem continuous_truncatedPerronIntegrand_left (t : ℝ) :
-    Continuous (fun x ↦ truncatedPerronIntegrand x t) := by
-  simp_rw [truncatedPerronIntegrand_eq_mul_sinc]
-  fun_prop
 
 /-- Joint continuity of the removable sine kernel. -/
 theorem continuous_truncatedPerronIntegrand_uncurry :
@@ -86,30 +81,8 @@ theorem truncatedPerronKernel_zero (T : ℝ) :
     truncatedPerronKernel T 0 = 1 / 2 := by
   simp [truncatedPerronKernel]
 
-/-- Reflection in the spatial variable exchanges the two sides of the kernel. -/
-theorem truncatedPerronKernel_neg (T x : ℝ) :
-    truncatedPerronKernel T (-x) = 1 - truncatedPerronKernel T x := by
-  simp_rw [truncatedPerronKernel, truncatedPerronIntegrand_neg_left,
-    intervalIntegral.integral_neg]
-  ring
 
-/-- For fixed truncation height, the kernel is continuous in `x`. -/
-theorem continuous_truncatedPerronKernel_left (T : ℝ) :
-    Continuous (fun x ↦ truncatedPerronKernel T x) := by
-  unfold truncatedPerronKernel
-  apply Continuous.add continuous_const
-  apply Continuous.const_mul
-  exact intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
-    continuous_truncatedPerronIntegrand_uncurry 0 T
 
-/-- For fixed `x`, the kernel is continuous in its truncation height. -/
-theorem continuous_truncatedPerronKernel_right (x : ℝ) :
-    Continuous (fun T ↦ truncatedPerronKernel T x) := by
-  unfold truncatedPerronKernel
-  apply Continuous.add continuous_const
-  apply Continuous.const_mul
-  exact intervalIntegral.continuous_primitive
-    (intervalIntegrable_truncatedPerronIntegrand x) 0
 
 /-- Triangle inequality for the defining integral. -/
 theorem abs_truncatedPerronKernel_sub_half_le_integral_abs {T x : ℝ} (hT : 0 ≤ T) :
@@ -142,16 +115,5 @@ theorem integral_abs_truncatedPerronIntegrand_le {T x : ℝ} (hT : 0 ≤ T) :
         exact abs_truncatedPerronIntegrand_le x t
     _ = T * |x| := by simp
 
-/-- Combined triangle and uniform sinc bound. -/
-theorem abs_truncatedPerronKernel_sub_half_le {T x : ℝ} (hT : 0 ≤ T) :
-    |truncatedPerronKernel T x - 1 / 2| ≤ (T * |x|) / Real.pi := by
-  calc
-    |truncatedPerronKernel T x - 1 / 2| ≤
-        (1 / Real.pi) * ∫ t in 0..T, |truncatedPerronIntegrand x t| :=
-      abs_truncatedPerronKernel_sub_half_le_integral_abs hT
-    _ ≤ (1 / Real.pi) * (T * |x|) := by
-      gcongr
-      exact integral_abs_truncatedPerronIntegrand_le hT
-    _ = (T * |x|) / Real.pi := by ring
 
 end AnalyticNumberTheory.LargeSieve

@@ -208,31 +208,6 @@ lemma vaughanCanonicalBilinearTensor_coeffEnergy_le
         y N u v k l := by
   exact vaughanCanonicalBilinearTensor_energy_le b y N u v k l
 
-/-- Canonical Vaughan-block producer with no frozen fourth-moment hypothesis.
-This is the nonmaximal rectangle bound at the product scale, with the explicit
-current `Q`-logarithm. -/
-theorem weighted_primitive_vaughanCanonicalBilinear_unconditional
-    (b : ℕ → ℂ) (y N u v k l Q : ℕ) (hQ : 0 < Q) :
-    (∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
-      ∑ χ : PrimitiveCharacter q,
-        ‖vaughanTypeIICanonicalBilinearBlock b y N u v k l q χ‖ ^ 2) ≤
-      primitiveBilinearQFactor Q *
-        bilinearMultiplicativeScale (2 ^ k) (vaughanCanonicalTensorLength y k) Q *
-        vaughanCanonicalShortTensorEnergy vaughanMangoldtCoeff b
-          y N u v k l := by
-  simp_rw [vaughanCanonicalBilinearBlock_eq_bilinearTensorCharacterForm]
-  refine (qDependentBilinearTensorFourthMomentBound_producer
-    (vaughanCanonicalBilinearTensor b y N v l)
-    (vaughanCanonicalDyadicBlock N u k) (2 ^ k)
-    (vaughanCanonicalTensorLength y k) Q hQ
-    (card_vaughanCanonicalDyadicBlock_le_pow N u k) ?_).trans ?_
-  · intro d hd
-    simpa [Nat.pow_succ, Nat.mul_comm] using
-      (vaughanCanonicalDyadicBlock_pow_bounds hd).2
-  · apply mul_le_mul_of_nonneg_left
-    exact vaughanCanonicalBilinearTensor_coeffEnergy_le b y N u v k l
-    exact mul_nonneg (primitiveBilinearQFactor_nonneg Q)
-      (bilinearMultiplicativeScale_nonneg _ _ _)
 
 end
 

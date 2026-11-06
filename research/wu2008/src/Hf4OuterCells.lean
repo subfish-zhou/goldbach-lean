@@ -116,15 +116,6 @@ theorem payment_pos : 0 < payment := by
       (cellPayment_pos (SigmaEndpointPayment.original_cell_bounds k).1
         (Hf4Next.original_cell_strict k))⟩
 
-theorem payment_le_outerUnpaid : payment ≤ Hf4Full.outerUnpaid := by
-  unfold Hf4Full.outerUnpaid
-  rw [SigmaActualBlockSeparable.endpointNumerator_eq_rational]
-  simp only [SigmaVariableFull.numerator,rationalNumerator,← Finset.sum_sub_distrib,← mul_sub]
-  apply Finset.sum_le_sum
-  intro k _
-  obtain ⟨ha,hab,hb⟩ := SigmaEndpointPayment.original_cell_bounds k
-  exact mul_le_mul_of_nonneg_left (cellPayment_le_loss ha hab hb)
-    (CoupledIntegralRecovery.originalH_nonneg k)
 
 theorem payment_lt_outerUnpaid : payment < Hf4Full.outerUnpaid := by
   unfold Hf4Full.outerUnpaid

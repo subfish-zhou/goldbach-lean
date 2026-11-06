@@ -80,22 +80,5 @@ theorem prime_quadratic_root_card_le_two (p : ℕ) [Fact p.Prime]
     rw [hz]
     simp
 
-/-- A genuine square-root estimate, uniform in both frequencies, for primitive
-prime-square pairs. This includes the prime two. -/
-theorem completeKloosterman_prime_square_norm_le (p : ℕ) [Fact p.Prime]
-    (a d : ℤ) (hprimitive : ¬ (p : ℤ) ∣ a ∨ ¬ (p : ℤ) ∣ d) :
-    ‖completeKloosterman (p * p) (a : ZMod (p * p)) d‖ ≤ 2 * (p : ℝ) := by
-  have bound (b c : ℤ) (hb : ¬ (p : ℤ) ∣ b) :
-      ‖completeKloosterman (p * p) (b : ZMod (p * p)) c‖ ≤ 2 * (p : ℝ) := by
-    have hroot := prime_quadratic_root_card_le_two p (b : ZMod p) (c : ZMod p)
-      (fun hz ↦ hb ((ZMod.intCast_zmod_eq_zero_iff_dvd b p).mp hz))
-    have hR : ((univ.filter fun v : ZMod p ↦ (b : ZMod p) * v ^ 2 =
-        (c : ZMod p)).card : ℝ) ≤ 2 := by exact_mod_cast hroot
-    exact (completeKloosterman_square_modulus_norm_le_roots p b c).trans
-      ((mul_le_mul_of_nonneg_left hR (Nat.cast_nonneg p)).trans_eq (mul_comm _ _))
-  rcases hprimitive with ha | hd
-  · exact bound a d ha
-  · rw [completeKloosterman_symm]
-    exact bound d a hd
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

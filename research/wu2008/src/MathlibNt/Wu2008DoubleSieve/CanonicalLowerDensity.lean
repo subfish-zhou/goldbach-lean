@@ -73,11 +73,6 @@ theorem jr1965f_eq_log_firstInterval {s : ℝ} (hs2 : 2 ≤ s) (hs4 : s ≤ 4) :
     suzukiLowerSieveAmplitude_eq_two_mul_exp_eulerMascheroni_of_sourceContract
       jr1965Section13HatSourceContract]
 
-theorem jr1965f_pos_firstInterval {s : ℝ} (hs2 : 2 < s) (hs4 : s ≤ 4) :
-    0 < jr1965f s := by
-  rw [jr1965f_eq_log_firstInterval hs2.le hs4]
-  exact div_pos (mul_pos (mul_pos (by norm_num) (Real.exp_pos _))
-    (Real.log_pos (by linarith))) (by linarith)
 
 /-- The actual coefficient `a(s)` in Wu08 (3.3), on this proved branch. -/
 theorem jr1965f_normalized_firstInterval {s : ℝ} (hs2 : 2 ≤ s) (hs4 : s ≤ 4) :
@@ -329,27 +324,5 @@ theorem ordinarySieve_lower_canonical_with_signed_error {ρ : ℝ} (hρ : 0 < ρ
   have hmain := mul_le_mul_of_nonneg_left hden hX
   linarith
 
-/-- Canonical lower sieve for the strict (`p < z`) count, with the already
-proved ordinary-AP budget. The closed-cutoff endpoint difference is not included. -/
-theorem ordinarySieve_lower_canonical_with_AP_error {ρ : ℝ} (hρ : 0 < ρ) :
-    ∃ z0 : ℝ, ∀ N d Q : ℕ, ∀ _he : Even N, 2 ≤ N → ∀ z level s : ℝ,
-      z0 ≤ z → 2 ≤ z → 0 < level →
-      s = Real.log level / Real.log z → 2 ≤ s → s ≤ 4 →
-      ⌊level⌋₊ + 1 ≤ Q / d + 1 →
-      (AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418.logarithmicIntegral N /
-        (Nat.totient d : ℝ)) *
-          ((jr1965f s - ρ) *
-            ∏ p ∈ primeWindow (d * N) 0 z, (1 - 1 / ((p : ℝ) - 1))) -
-          ∑ q ∈ (Finset.Icc 1 (Q / d)).filter (fun q => q.Coprime (d * N)),
-            |primeAPError N (d * q) N| ≤
-        (sourceSieveCount N d (d * N) z : ℝ) := by
-  obtain ⟨z0, hbound⟩ := ordinarySieve_lower_canonical_with_signed_error hρ
-  refine ⟨z0, ?_⟩
-  intro N d Q he hN z level s hz0 hz hlevel hs hs2 hs4 hD
-  have h := hbound N d he hN z level s hz0 hz hlevel hs hs2 hs4
-  have herr := ordinaryRosserRemainder_le_AP (upper := false) (N := N) (d := d)
-    (Q := Q) z hD
-  have hneg := neg_abs_le (ordinaryRosserRemainder false N d (⌊level⌋₊ + 1) z)
-  linarith
 
 end Wu2008DoubleSieve

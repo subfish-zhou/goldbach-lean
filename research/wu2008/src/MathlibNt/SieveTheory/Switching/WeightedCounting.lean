@@ -64,28 +64,6 @@ theorem chenWNonUnitCandidates_subset_correctedChenCandidates (N : ℕ) :
   exact chenWCandidate_mem_corrected_of_two_le
     (Finset.mem_filter.mp hp).1 (Finset.mem_filter.mp hp).2
 
-/-- The historical W-count differs from a corrected-candidate lower bound by
-at most its explicitly isolated unit fibre. -/
-theorem chenWCandidates_card_le_correctedChenCandidates_card_add_one (N : ℕ) :
-    (chenWCandidates N).card ≤ (correctedChenCandidates N).card + 1 := by
-  have hcover : chenWCandidates N ⊆ chenWNonUnitCandidates N ∪ chenUnitCandidates N := by
-    intro p hp
-    have hp_range : p < N := by
-      simpa only [chenWCandidates, Finset.mem_filter, Finset.mem_range] using
-        (Finset.mem_filter.mp hp).1
-    have hcomp_pos : 0 < N - p := by omega
-    by_cases hunit : N - p = 1
-    · exact Finset.mem_union_right _ (Finset.mem_filter.mpr ⟨hp, hunit⟩)
-    · exact Finset.mem_union_left _ (Finset.mem_filter.mpr ⟨hp, by omega⟩)
-  calc
-    (chenWCandidates N).card ≤ (chenWNonUnitCandidates N ∪ chenUnitCandidates N).card :=
-      Finset.card_le_card hcover
-    _ ≤ (chenWNonUnitCandidates N).card + (chenUnitCandidates N).card :=
-      Finset.card_union_le _ _
-    _ ≤ (correctedChenCandidates N).card + 1 :=
-      Nat.add_le_add
-        (Finset.card_le_card (chenWNonUnitCandidates_subset_correctedChenCandidates N))
-        (chenUnitCandidates_card_le_one N)
 
 /-- Corrected candidates that already give a prime-plus-at-most-two-almost-
 prime representation. -/
@@ -228,15 +206,6 @@ theorem corrected_counting_bridge (N : ℕ)
   rw [hweight_sum] at hsum
   simpa only [hgood_sum] using hsum
 
-/-- Every corrected candidate lies in exactly one of the good and bad fibres.
-This is the finite partition on which the replacement counting bridge will be
-built. -/
-theorem mem_correctedChenGood_or_bad {N p : ℕ}
-    (hp : p ∈ correctedChenCandidates N) :
-    p ∈ correctedChenGoodCandidates N ∨ p ∈ correctedChenBadCandidates N := by
-  by_cases hgood : Nat.IsAtMostAlmostPrime 2 (N - p)
-  · exact Or.inl <| Finset.mem_filter.mpr ⟨hp, hgood⟩
-  · exact Or.inr <| Finset.mem_filter.mpr ⟨hp, hgood⟩
 
 /-- Corrected good candidates are genuine good representations in the public
 Chen statement. -/
@@ -723,17 +692,6 @@ theorem omega_upper_bound_compatible_with_39404 :
     (10 / 3 : ℝ) > 3.9404 / 2 := by
   norm_num
 
-/-- An Ω upper bound with the classical constant `3.9404`, satisfying the main-term coefficient condition, can be used directly.
-This theorem makes the instantiation condition for `CorrectedChenOmegaUpperBound` explicit: it suffices to prove
-`∃ N₀, ∀ N ≥ N₀ Even, correctedChenOmega N ≤ 3.9404·𝔖_trunc·N/log²N`. -/
-theorem CorrectedChenOmegaUpperBound_of_39404
-    (hbound : ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → Even N →
-      correctedChenOmega N ≤
-        3.9404 * AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1) *
-          (N : ℝ) / (log (N : ℝ)) ^ 2) :
-    CorrectedChenOmegaUpperBound := by
-  rcases hbound with ⟨N₀, hN₀⟩
-  exact ⟨3.9404, omega_upper_bound_compatible_with_39404, N₀, hN₀⟩
 
 
 /-- **Final assembly**: the proved uniform main-term lower bound, an Ω upper-bound input, and
@@ -956,46 +914,6 @@ theorem factorization_le_card_pow_dvd {n q : ℕ} (hq : q.Prime) (hn : n ≠ 0) 
   have hle := Finset.card_le_card hsubset
   rwa [hcard] at hle
 
-/-- Uniform finite upper bound for the prime-power part: `primePowerSum n z y ≤ Σ_{q ∈ [z,y)} Σ_k [q^(k+1) | n]`. -/
-theorem primePowerSum_le_powerCount (n z y : ℕ) :
-    primePowerSum n z y ≤
-      ∑ q ∈ (Finset.range y).filter (fun q => q.Prime ∧ z ≤ q),
-        ∑ k ∈ Finset.range (n + 1), if q ^ (k + 1) ∣ n then (1 : ℝ) else 0 := by
-  by_cases hn : n = 0
-  · subst n
-    unfold primePowerSum
-    simp [exactDiv]
-  · have hident := primePowerSum_eq_sum_factorization_of_dvd (n := n) (z := z) (y := y) hn
-    rw [hident]
-    have hper : ∀ q ∈ (Finset.range y).filter (fun q => q.Prime ∧ z ≤ q),
-        (n.factorization q : ℝ) ≤
-          ∑ k ∈ Finset.range (n + 1), if q ^ (k + 1) ∣ n then (1 : ℝ) else 0 := by
-      intro q hq
-      rcases Finset.mem_filter.mp hq with ⟨hqr, hqp⟩
-      have hcard := factorization_le_card_pow_dvd hqp.1 hn
-      have hsum_eq : (∑ k ∈ Finset.range (n + 1), if q ^ (k + 1) ∣ n then (1 : ℝ) else 0) =
-          ((Finset.range (n + 1)).filter (fun k => q ^ (k + 1) ∣ n)).card := by
-        rw [Finset.sum_boole]
-      have hle1 : (n.factorization q : ℝ) ≤
-          ((Finset.range (n + 1)).filter (fun k => q ^ (k + 1) ∣ n)).card := by
-        exact_mod_cast hcard
-      exact le_trans hle1 (by rw [hsum_eq])
-    calc
-      (∑ q ∈ (Finset.range y).filter (fun q => q.Prime ∧ z ≤ q ∧ q ∣ n),
-          (n.factorization q : ℝ))
-          ≤ ∑ q ∈ (Finset.range y).filter (fun q => q.Prime ∧ z ≤ q),
-              ∑ k ∈ Finset.range (n + 1), if q ^ (k + 1) ∣ n then (1 : ℝ) else 0 := by
-            have hsub : (Finset.range y).filter (fun q => q.Prime ∧ z ≤ q ∧ q ∣ n) ⊆
-                (Finset.range y).filter (fun q => q.Prime ∧ z ≤ q) := by
-              intro q hq
-              rcases Finset.mem_filter.mp hq with ⟨hq1, hq2⟩
-              exact Finset.mem_filter.mpr ⟨hq1, hq2.1, hq2.2.1⟩
-            have hle0 : (∑ q ∈ (Finset.range y).filter (fun q => q.Prime ∧ z ≤ q ∧ q ∣ n),
-                  (n.factorization q : ℝ)) ≤
-                ∑ q ∈ (Finset.range y).filter (fun q => q.Prime ∧ z ≤ q),
-                  (n.factorization q : ℝ) := by
-              exact Finset.sum_le_sum_of_subset_of_nonneg hsub (fun q hq hnot => by positivity)
-            exact le_trans hle0 (Finset.sum_le_sum hper)
 
 /-- The prime-power part of the corrected Chen penalty. -/
 noncomputable def correctedChenPrimePowerPenalty (N : ℕ) : ℝ :=
@@ -1043,14 +961,6 @@ noncomputable def jurkatRichertK : ℝ :=
   ∫ u in (3 : ℝ)..4,
     10 / (u * (5 - u)) * jurkatRichertInnerIntegral u
 
-/-- Chen's varying-level Buchstab integral is nonnegative. -/
-theorem jurkatRichertK_nonneg : 0 ≤ jurkatRichertK := by
-  unfold jurkatRichertK
-  apply intervalIntegral.integral_nonneg (by norm_num)
-  intro u hu
-  exact mul_nonneg
-    (div_nonneg (by norm_num) (mul_nonneg (by linarith [hu.1]) (by linarith [hu.2])))
-    (jurkatRichertInnerIntegral_nonneg hu.1)
 
 /-- A strengthened version of the elementary logarithm majorant used in Chen's
 estimate of the inner Buchstab integral. -/

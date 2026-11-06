@@ -57,17 +57,5 @@ theorem degenerate {s : ℝ} (hs : 0 < s) :
       (4/7) * Elementary.elementaryMomentOne 1 (1/s) (1/s) := by
   rw [omega3XIntegralEnvelope_self, Elementary.elementaryMomentOne_self 1 (by positivity), mul_zero]
 
-/-- Every actual source phi is supplied by the original fixed-delta source theorem. -/
-theorem actual_source_integral_le {i k N d : ℕ} {δ Δ s t : ℝ}
-    {V : Fin i → ℝ} (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V)
-    (hd : d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V))
-    (hs : 19/8 ≤ s) (hst : s ≤ t) (ht : t ≤ 10) :
-    0 ≤ omega3XIntegral s t (omega3XPhi N d δ) ∧
-    omega3XIntegral s t (omega3XPhi N d δ) ≤
-      (4/7) * Elementary.elementaryMomentOne 1 (1/t) (1/s) := by
-  have h := omega3XIntegral_source_le_envelope hN hδ hδhi hb hd
-    (show 2 ≤ s by linarith) hst ht
-  exact ⟨h.1,h.2.trans (envelope_le hs hst ht)⟩
 
 end Wu2008DoubleSieve.Omega3ElementaryEnvelope

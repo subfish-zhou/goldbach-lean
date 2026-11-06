@@ -1,0 +1,23 @@
+{
+  "status": "UNCOMPILED_SHARED_PROOF_CANDIDATE_NOT_INSTALLED",
+  "base_manifest_sha256": "2f4b834f8e1c357b502218784e3e926d142e439a443817a143f821a53406ffc6",
+  "module": "MathlibNt.SieveTheory.Selberg.SelbergUpperBound",
+  "reused_theorem": "AnalyticNumberTheory.Sieve.mainSum_cauchy_schwarz_lower_bound",
+  "before_sha256": "d2d8da9544bbab9e1524477ba0fa4a6dd877743bb06416ff631e0e8bee709ce9",
+  "after_sha256": "09bfcce706bbe43505c57c85c2aae50a3eec598e7e77b0840872c41ec3720469",
+  "existing_source_headers_identical": true,
+  "existing_proof_bodies_identical": true,
+  "reused_module_already_transitively_imported": true,
+  "imports_unchanged": true,
+  "projected_savings": {
+    "effective_lines": 78,
+    "physical_lines": 89,
+    "bytes": 4905
+  },
+  "required_checks": [
+    "Strict isolated module compilation",
+    "Retained public raw types and axiom comparison",
+    "Incremental downstream compilation",
+    "Kernel validation before installation"
+  ]
+}

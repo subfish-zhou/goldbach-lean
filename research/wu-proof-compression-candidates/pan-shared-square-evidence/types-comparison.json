@@ -1,0 +1,7 @@
+{
+  "types_exact": true,
+  "public_declarations": 10,
+  "before_sha256": "d4a4cc457ad9eba224a6c065c6ff8977560f0fd1909aca902b8e54999fa25142",
+  "after_sha256": "d4a4cc457ad9eba224a6c065c6ff8977560f0fd1909aca902b8e54999fa25142",
+  "status": "LOCAL_MODULE_ONLY_NOT_INSTALLED"
+}

@@ -69,12 +69,6 @@ theorem loss_integral_eq_log (a : ℝ) (ha : 3 / 2 < a) (ha2 : a < 2) :
   field_simp
   ring
 
-theorem loss_log_pos (a : ℝ) (ha : 3 / 2 < a) (ha2 : a < 2) :
-    0 < Real.log (1 / (a - 1)) := by
-  have ha1 : 0 < a - 1 := by linarith
-  apply Real.log_pos
-  apply (lt_div_iff₀ ha1).mpr
-  linarith
 
 end
 end Wu2004MeanValue

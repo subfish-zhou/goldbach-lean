@@ -537,19 +537,6 @@ theorem chen1973Lemma6_eq21_eventually_exp_log220_le_one (Cpair : ℝ) :
       rw [div_le_one (by positivity : 0 < |Cpair| + 1)]
       linarith [abs_nonneg Cpair]
 
-/-- Eventual equation-(21) prime-sum payment, with the scalar `hlarge`
-completely discharged and the cutoff quantified before `x`. -/
-theorem chen1973Lemma6_eq21_primeSum_log220_decay_eventually
-    (Cpair : ℝ)
-    (hmertens : ∀ x : ℕ, 3 ≤ x →
-      chen1973Lemma6Eq21PrimeReciprocalMass x ≤ Cpair) :
-    ∃ x₀ : ℕ, ∀ x ≥ x₀,
-      chen1973Lemma6Eq21PrimeSum x ≤
-        (x : ℝ) / Real.log x ^ (220 : ℕ) := by
-  rw [← Filter.eventually_atTop]
-  filter_upwards [chen1973Lemma6_eq21_eventually_exp_log220_le_one Cpair,
-    Filter.eventually_ge_atTop (3 : ℕ)] with x hlarge hx
-  exact chen1973Lemma6_eq21_primeSum_log220_decay Cpair hmertens hx hlarge
 
 /-- Production analytic payment for equation (21).  For a fixed constant in the
 primitive vertical estimate, one cutoff works for every later source cell; the

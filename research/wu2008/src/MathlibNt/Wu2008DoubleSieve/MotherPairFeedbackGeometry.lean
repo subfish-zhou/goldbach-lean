@@ -48,21 +48,7 @@ theorem feedback_inverse_ratio {p : SecondFunctionalParameters} (h : AnalyticPar
     linarith [ht.1])
   cases j <;> dsimp [Hratio, feedbackU, feedbackJac] <;> field_simp <;> ring
 
-theorem feedback_inverse_source {p : SecondFunctionalParameters} (h : AnalyticParameters p)
-    (j : Term) {t : ℝ} (ht : t ∈ Icc (1/p.S) (upperP p j)) (u : ℝ) :
-    feedbackU p j (Hratio p j t u) t = u := by
-  have hS : p.S ≠ 0 := ne_of_gt (by linarith [h.three_le_S])
-  have ht0 : t ≠ 0 := ne_of_gt (by
-    have := (gain_endpoint_order h j).1
-    linarith [ht.1])
-  cases j <;> dsimp [Hratio, feedbackU, feedbackJac] <;> field_simp <;> ring
 
-/-- The inverse map has derivative minus its positive absolute Jacobian. -/
-theorem feedback_inverse_derivative (p : SecondFunctionalParameters) (j : Term) (t v : ℝ) :
-    HasDerivAt (fun w => feedbackU p j w t) (-feedbackJac p j t) v := by
-  convert! (hasDerivAt_const v (1-t)).sub
-    ((hasDerivAt_id v).const_mul (feedbackJac p j t)) using 1
-  simp
 
 theorem feedback_fixed_section (A B C D q r t : ℝ) (hqr : q+r=1) :
     (A ≤ t ∧ t ≤ B ∧ C ≤ q-t ∧ q-t ≤ D ∧ t ≤ q-t ∧

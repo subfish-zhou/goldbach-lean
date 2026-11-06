@@ -150,15 +150,5 @@ theorem integral_bounds (j : Fin (m+1)) (phi : ℝ)
       _ = 10*(∫ t in continuousCube (m+1), continuousDensity t) := integral_const_mul _ _
       _ ≤ _ := mul_le_mul_of_nonneg_left (continuousCube_integral_bounds _).2 (by norm_num)
 
-theorem primeSum_bounds (j : Fin (m+1)) (R phi : ℝ)
-    (C : Fin r → Fin (m+1) → ℝ) (gamma : Fin r → ℝ) (hR : 1 < R) :
-    0 ≤ primeSum j R phi C gamma ∧ primeSum j R phi C gamma ≤
-      10*(∑ f : Fin (m+1) → primeSlabPrimes R, primeSlabWeight R f) := by
-  constructor
-  · exact Finset.sum_nonneg (fun f _ => mul_nonneg (gridWeight_nonneg R f)
-      (F_bounds j phi C gamma (gridCoordinates_mem hR f)).1)
-  · rw [Finset.mul_sum]
-    exact Finset.sum_le_sum (fun f _ => (mul_le_mul_of_nonneg_left
-      (F_bounds j phi C gamma (gridCoordinates_mem hR f)).2 (gridWeight_nonneg R f)).trans_eq (mul_comm _ _))
 
 end Wu2008DoubleSieve.HighNonunitMasked

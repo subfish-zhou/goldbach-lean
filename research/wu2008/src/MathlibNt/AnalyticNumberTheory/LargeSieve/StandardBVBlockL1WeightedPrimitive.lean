@@ -183,10 +183,6 @@ def standardBVBlockL1ModulusExponent (A loss : ℕ) : ℕ :=
 lemma standardBVBlockL1_margin_B (A loss : ℕ) :
     A + 3 ≤ standardBVBlockL1ModulusExponent A loss := le_max_left _ _
 
-lemma standardBVBlockL1_loss_le_C (A loss : ℕ) :
-    A + loss ≤ standardBVBlockL1ConductorExponent A loss := by
-  unfold standardBVBlockL1ConductorExponent
-  omega
 
 lemma standardBVBlockL1_loss_le_B (A loss : ℕ) :
     A + loss ≤ standardBVBlockL1ModulusExponent A loss := le_max_right _ _
@@ -387,66 +383,6 @@ private lemma blockL1_envelope_nonneg (N Q : ℕ) :
   exact mul_nonneg
     (mul_nonneg (by norm_num) (discreteAbelAmplifierPrefixMax_nonneg N)) (sq_nonneg _)
 
-/-- Compatibility assembler for the former degenerate `v = min N 1` source.
-New production code must use
-`standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted`. -/
-theorem standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted_legacy
-    {loss : ℕ} (hblock : StandardBVProductionBlockL1WeightedLegacySource loss) :
-    StandardBVHighTypeITypeIIHybridChosenSource := by
-  intro A
-  let B := standardBVBlockL1ModulusExponent A loss
-  let C := standardBVBlockL1ConductorExponent A loss
-  obtain ⟨u, K₁, K₂, hK₁, hK₂, hsource⟩ := hblock A
-  let v : ℕ → ℕ := standardBVChosenSmallCutoff
-  refine ⟨B, C, by simpa [B] using standardBVBlockL1_margin_B A loss,
-    u, v, 10 * (K₁ + K₂), by positivity, ?_⟩
-  filter_upwards [hsource, standardBVBlockL1_scales_payable A loss,
-    eventually_ge_atTop (9 : ℕ)] with N hN hpay hN9
-  dsimp only at hN hpay ⊢
-  let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-  let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
-  have hR : 0 < logConductorThreshold N C := by
-    unfold logConductorThreshold
-    exact Nat.floor_pos.mpr (one_le_pow₀
-      (le_trans (by norm_num) (blockL1_two_le_log hN9)))
-  let G := productionConductorBlockGeometry N Q C hR
-  rcases hN hR with ⟨hIblock, hIIblock⟩
-  have hP : 0 ≤ P := blockL1_envelope_nonneg N Q
-  have hI := productionTypeI_blockWeighted_to_highMean
-    N Q C (u N) (v N) loss P K₁ G hP hK₁.le hIblock
-  have hII := productionTypeII_blockWeighted_to_highMean
-    N Q C (u N) (v N) loss P K₂ G hP hK₂.le hIIblock
-  have hsmall : highConductorVaughanSmallMean N Q C (v N) = 0 := by
-    dsimp [v]
-    unfold highConductorVaughanSmallMean
-    rw [standardBVChosenSmallCoeff_eq_zero]
-    unfold apNormalizedPrimitiveMeanOn
-    have hpref (d : ℕ) (ψ : PrimitiveCharacter d) :
-        primitivePrefixAmplitude 0 N d ψ = 0 := by
-      unfold primitivePrefixAmplitude
-      have hz : primitiveCharacterPrefixMaxSquare 0 0 N d ψ = 0 := by
-        apply le_antisymm
-        · unfold primitiveCharacterPrefixMaxSquare
-          apply Finset.max'_le
-          intro z hz
-          rcases Finset.mem_image.mp hz with ⟨y, hy, rfl⟩
-          simp [primitiveCharacterPrefixSquare]
-        · exact primitiveCharacterPrefixMaxSquare_nonneg 0 0 N d ψ
-      rw [hz]
-      simp
-    simp_rw [hpref]
-    simp
-  rw [hsmall, add_zero]
-  calc
-    P * (highConductorVaughanTypeIMean N Q C (u N) (v N) +
-        highConductorVaughanTypeIIMean N Q C (u N) (v N)) ≤
-        (K₁ + K₂) * (Real.log (N : ℝ) ^ loss *
-          (2 * (N : ℝ) / (logConductorThreshold N C : ℝ) +
-            8 * (Q : ℝ) * Real.sqrt N)) := by
-      nlinarith only [hI, hII]
-    _ ≤ (K₁ + K₂) * (10 * (N : ℝ) / Real.log (N : ℝ) ^ A) :=
-      mul_le_mul_of_nonneg_left hpay (add_nonneg hK₁.le hK₂.le)
-    _ = 10 * (K₁ + K₂) * (N : ℝ) / Real.log (N : ℝ) ^ A := by ring
 
 /-- Consume the actual high-conductor square payment for any coefficient.
 The factor three is the existing ledger reserve, not a new triangle bound.
@@ -472,11 +408,6 @@ theorem apNormalizedPrimitiveMeanOn_high_le_of_square_payment
   nlinarith only [hw, hpay,
     sq_nonneg (P * apNormalizedPrimitiveMeanOn a N (highConductorSet N Q C))]
 
-private lemma highConductorSet_eq_interval_blockL1 (N Q C : ℕ)
-    (hR : 1 ≤ logConductorThreshold N C) :
-    highConductorSet N Q C =
-      Finset.Icc (logConductorThreshold N C + 1) Q := by
-  exact highConductorSet_eq_interval N Q C hR
 
 /-- Production block-L¹ chosen assembler.  Type-I and Type-II use one shared
 pair `u,v`, with `v = standardBVBalancedSmallCutoff`; their block first moments
@@ -687,13 +618,6 @@ theorem standardBVProductionBlockL1WeightedSource_of_bare
       (4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2)
       K₂ G hP' hII⟩
 
-/-- The canonical envelope-free block source is connected to the chosen high
-Standard-BV node; all envelope loss is paid in the consumer above. -/
-theorem standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Bare
-    {loss : ℕ} (hbare : StandardBVProductionBlockL1BareSource loss) :
-    StandardBVHighTypeITypeIIHybridChosenSource :=
-  standardBVHighTypeITypeIIHybridChosenSource_of_blockL1Weighted
-    (standardBVProductionBlockL1WeightedSource_of_bare hbare)
 
 end
 end AnalyticNumberTheory.LargeSieve

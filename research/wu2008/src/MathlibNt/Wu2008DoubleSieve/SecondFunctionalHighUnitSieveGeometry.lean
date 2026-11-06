@@ -54,12 +54,6 @@ theorem upper_nonneg {n N : ℕ} {R b : ℕ → ℝ} (c : Profile n R)
   · exact Real.rpow_nonneg (by linarith) _
   · positivity
 
-/-- Discarding a profile uses no primality test on the output. -/
-theorem discarded_empty {n N : ℕ} {R b : ℕ → ℝ} (j : Fin n) (c : Profile n R)
-    (hd : 0 < c.1) (hR : 1 < R c.1) (h : ¬ lower j c ≤ upper N b c) :
-    physical (prefixProduct c.2) ((N : ℝ) / c.1) (c.2 j).val (R c.1 ^ b c.1) = ∅ := by
-  rw [physical_interval j c hd hR]
-  exact fibre_empty (upper_nonneg c hR) (le_of_lt (lt_of_not_ge h))
 
 /-- Exact disintegration for arbitrary profile-dependent real tests. -/
 theorem sum_interval {i n N : ℕ} {R b : ℕ → ℝ}

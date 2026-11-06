@@ -1,0 +1,12 @@
+--- a/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean
++++ b/MathlibNt/SieveTheory/Arithmetic/MertensTheorem.lean
+@@ -13,7 +13,8 @@
+ import Mathlib.Tactic.Ring
+ import Mathlib.Tactic.FieldSimp
+ import Mathlib.Tactic.IntervalCases
+-import AnalyticNumberTheory
++import AnalyticNumberTheory.Mertens.Theorems
++import AnalyticNumberTheory.PrimeDistribution.PrimeNumberTheorem
+ import MathlibNt.SieveTheory.Arithmetic.SingularSeries
+ 
+ /-!

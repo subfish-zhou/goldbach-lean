@@ -52,49 +52,7 @@ theorem weighted_partition20 {i : ℕ} (N : ℕ) (W : Fin i → Finset ℕ)
   intro d _
   rw [← mul_add, partition20]
 
-/-- Zero width empties the selected strict prefix, not an unrelated closed last-prime atom. -/
-theorem source_zero20_left {i N : ℕ} {W : Fin i → Finset ℕ}
-    {R a0 a1 a2 a3 b : ℕ → ℝ}
-    (hdpos : ∀ d ∈ boxConvolutionSupport W, 0 < d)
-    (hR : ∀ d ∈ boxConvolutionSupport W, 1 < R d)
-    (hlow : ∀ d ∈ boxConvolutionSupport W, 1/10 ≤ a2 d)
-    (hb : ∀ d ∈ boxConvolutionSupport W, b d ≤ 1/2)
-    (heq : ∀ d ∈ boxConvolutionSupport W, a2 d = a3 d) :
-    FourPrimeUnit.source N W (fun d => R d^a0 d) (fun d => R d^a1 d)
-      (fun d => R d^a2 d) (fun d => R d^a3 d) (fun d => R d^b d) word20 = 0 := by
-  have h := source_le20 (N := N) (a0 := a0) (a1 := a1) (a2 := a2) (a3 := a3)
-    hdpos hR hlow hb
-  have hz : (∑ d ∈ boxConvolutionSupport W, (convolutionCoeff W d : ℝ) *
-        ∑ g ∈ HighUnit.primePrefix20 (R d) (a2 d) (a3 d) (b d),
-          ((physical (prefixProduct g) ((N : ℝ)/d) (g (Fin.last 3)).val (R d^b d)).card : ℝ)) = 0 := by
-    apply sum_eq_zero
-    intro d hd
-    rw [heq d hd, HighUnit.primePrefix20_empty_left (hR d hd)]
-    simp
-  rw [hz] at h
-  exact le_antisymm h (FourPrimeUnit.source_nonneg _ _ _ _ _ _ _ _)
 
-/-- Zero width empties the selected strict prefix, not an unrelated closed last-prime atom. -/
-theorem source_zero20_right {i N : ℕ} {W : Fin i → Finset ℕ}
-    {R a0 a1 a2 a3 b : ℕ → ℝ}
-    (hdpos : ∀ d ∈ boxConvolutionSupport W, 0 < d)
-    (hR : ∀ d ∈ boxConvolutionSupport W, 1 < R d)
-    (hlow : ∀ d ∈ boxConvolutionSupport W, 1/10 ≤ a2 d)
-    (hb : ∀ d ∈ boxConvolutionSupport W, b d ≤ 1/2)
-    (heq : ∀ d ∈ boxConvolutionSupport W, a3 d = b d) :
-    FourPrimeUnit.source N W (fun d => R d^a0 d) (fun d => R d^a1 d)
-      (fun d => R d^a2 d) (fun d => R d^a3 d) (fun d => R d^b d) word20 = 0 := by
-  have h := source_le20 (N := N) (a0 := a0) (a1 := a1) (a2 := a2) (a3 := a3)
-    hdpos hR hlow hb
-  have hz : (∑ d ∈ boxConvolutionSupport W, (convolutionCoeff W d : ℝ) *
-        ∑ g ∈ HighUnit.primePrefix20 (R d) (a2 d) (a3 d) (b d),
-          ((physical (prefixProduct g) ((N : ℝ)/d) (g (Fin.last 3)).val (R d^b d)).card : ℝ)) = 0 := by
-    apply sum_eq_zero
-    intro d hd
-    rw [heq d hd, HighUnit.primePrefix20_empty_right (hR d hd)]
-    simp
-  rw [hz] at h
-  exact le_antisymm h (FourPrimeUnit.source_nonneg _ _ _ _ _ _ _ _)
 
 /-- Original sigma coefficients, once each, and the literal N/d physical envelope. -/
 theorem source_le21 {i N : ℕ} {W : Fin i → Finset ℕ}
@@ -144,26 +102,5 @@ theorem weighted_partition21 {i : ℕ} (N : ℕ) (W : Fin i → Finset ℕ)
   intro d _
   rw [← mul_add, partition21]
 
-/-- Zero width empties the selected strict prefix, not an unrelated closed last-prime atom. -/
-theorem source_zero21_right {i N : ℕ} {W : Fin i → Finset ℕ}
-    {R a0 a1 a2 a3 b : ℕ → ℝ}
-    (hdpos : ∀ d ∈ boxConvolutionSupport W, 0 < d)
-    (hR : ∀ d ∈ boxConvolutionSupport W, 1 < R d)
-    (hlow : ∀ d ∈ boxConvolutionSupport W, 1/10 ≤ a3 d)
-    (hb : ∀ d ∈ boxConvolutionSupport W, b d ≤ 1/2)
-    (heq : ∀ d ∈ boxConvolutionSupport W, a3 d = b d) :
-    FourPrimeUnit.source N W (fun d => R d^a0 d) (fun d => R d^a1 d)
-      (fun d => R d^a2 d) (fun d => R d^a3 d) (fun d => R d^b d) word21 = 0 := by
-  have h := source_le21 (N := N) (a0 := a0) (a1 := a1) (a2 := a2) (a3 := a3)
-    hdpos hR hlow hb
-  have hz : (∑ d ∈ boxConvolutionSupport W, (convolutionCoeff W d : ℝ) *
-        ∑ g ∈ HighUnit.primePrefix21 (R d) (a3 d) (b d),
-          ((physical (prefixProduct g) ((N : ℝ)/d) (g (Fin.last 4)).val (R d^b d)).card : ℝ)) = 0 := by
-    apply sum_eq_zero
-    intro d hd
-    rw [heq d hd, HighUnit.primePrefix21_empty (hR d hd)]
-    simp
-  rw [hz] at h
-  exact le_antisymm h (FourPrimeUnit.source_nonneg _ _ _ _ _ _ _ _)
 
 end Wu2008DoubleSieve.HighUnitSource

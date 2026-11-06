@@ -1,0 +1,1 @@
+{"exit_code": 0, "command": ["/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean", "-j1", "-DwarningAsError=true", "-DautoImplicit=false", "/tmp/wu-shared-singular-series-v1/HelperIncoming.lean"]}

@@ -1,0 +1,414 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_eq_one_sub_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_one_eq_mertensPrimeProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.exists_sieveProduct_one_mertens_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.exists_sieveProduct_one_inv_le_log_div_add' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.exists_sieveProduct_one_inv_le_exp_mul_log_add' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftingPrimes_union_excluded' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.excludedSiftingFactor_primeFactors' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.prod_one_sub_localDensity_eq_totient_div_prod' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sum_reciprocal_of_radical_eq_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftingPrimes_excludedSiftingFactor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_one_eq_mul_excludedFactor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftedCount_eq_card_sub_conditioned_sum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftedCount_eq_siftedCount_sub_interval' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftedCount_theoremOne_depthOne' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.conditionedCarrier_eq_filter_prod_of_interiorChain' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.chainSiftedCount_eq_at_z₁_sub_extensions' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.chainSiftedCount_eq_recursiveExpansion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftedCount_eq_theoremOneRecursiveExpansion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.theoremOneRecursiveExpansion_eq_alternatingDepthSums' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftedCount_eq_theoremOneFourSums' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.mem_literalQuotientCarrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.literalQuotientCarrier_bijOn' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.card_literalQuotientCarrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.literalQuotient' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftedCount_literalQuotientCarrier_eq_divisibilityFiber' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.boundingSieve_nu_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.boundingSieve_siftedSum_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.boundingSieve_sieveProduct_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.boundingSieve_selbergTerm_prime' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.boundingSieve_selbergTerm_of_dvd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.coprime_of_dvd_siftingPrimes_prod' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftingPrimes_mul_eq_sdiff_primeFactors' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftingPrimes_mul_prod_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.abs_boundingSieve_rem_le_one_of_dvd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.boundingSieve_errSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.exists_siftedCount_le_selberg' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergReciprocalTotientCarrier_map_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sum_selbergReciprocalTotientCarrier_if_dvd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.moebius_mul_moebius_div_totient_of_dvd' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.reciprocalTotientSum_coprime_mul_decomposition' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sum_reciprocalTotient_divisors_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergReciprocalTotientSum_eq_divisorPackets' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.mul_selbergReciprocalTotientSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergReciprocalTotientSum_one_le_excludedFactor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_one_mul_selbergReciprocalTotientSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.hasSum_selbergSmoothReciprocal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.mem_selbergPsiCarrier_iff_factoredNumbers' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.siftingPrimes_one_eq_primesBelow' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergPsiCarrier_eq_smoothNumbersUpTo' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergPsiCarrier_mono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergPsi_mono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergPsiCarrier_card_le_pow_primeCounting_mul_sqrt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.hasSum_selbergSmoothRpow' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergSmoothRpowSum_eq_sum_range_indicator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergSmoothRpowSum_le_eulerProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergPsi_le_rpow_mul_smoothRpowSum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergPsi_le_rpow_mul_eulerProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergSmoothReciprocalSum_eq_sum_range_indicator' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergSmoothReciprocalSum_sub_eq_psi_div_add_integral' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.tendsto_selbergSmoothReciprocalSum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.exists_selbergSmoothReciprocalSum_tail_lt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergSmoothReciprocalSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_one_mul_selbergSmoothReciprocalSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergMoebiusPacket_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.levelSelbergDenominator_eq_reciprocalTotientSum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.levelSelbergWeight_eq_printed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.levelSelbergDenominator_pos' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.levelSelbergWeight_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.levelSelbergWeight_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.levelSelbergWeight_eq_zero_of_not_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.abs_levelSelbergWeight_le_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergReciprocalTotientCarrier_subset_psiCarrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.sum_abs_levelSelbergWeight_le_psi' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.levelSelbergLambdaSquared_mass_le_psi_sq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.levelSelbergLambdaSquared_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.siftedCount_le_levelSelberg' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.siftedCount_le_levelSelberg_psi' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.siftedCount_le_moebius_divisorError' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_exp_two_le_of_log_le_two' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.exists_siftedCount_le_moebius_boundedZ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealReciprocalTotientCarrier_eq_floor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealReciprocalTotientSum_eq_floor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealReciprocalTotientSum_eq_divisorPackets' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.mul_selbergRealReciprocalTotientSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_one_mul_selbergRealReciprocalTotientSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealSmoothReciprocalSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_one_mul_selbergRealSmoothReciprocalSum_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.mem_selbergRealPsiCarrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealPsi_le_rpow_mul_eulerProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergEulerProduct_le_exp_four_mul' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sum_inv_siftingPrimes_le_one_add_log' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sum_siftingPrimes_rpow_one_sub_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.vinogradovRankinEulerProduct_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealPsi_le_vinogradovRankin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealPsi_le_self' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealPsi_le_rankin_logSq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealPsi_div_sq_le_rankin_logSq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.integral_selbergRealPsi_div_sq_le_rankin_logSq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergSmoothReciprocalSum_sub_le_rankin_logSq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_inv_sub_selbergSmoothReciprocalSum_le_rankin_logSq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_inv_sub_selbergSmoothReciprocalSum_le_rankin' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealPsiCarrier_eq_Icc' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealPsi_eq_floor_of_lt' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealPsi_sq_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealSmoothReciprocalSum_eq_harmonic' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.log_le_selbergRealSmoothReciprocalSum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.selbergRealSmoothReciprocalSum_mono' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.fourOneCutoff_sq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.log_fourOneCutoff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.rpow_quarter_le_fourOneCutoff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.quarter_log_le_fourOneSmoothReciprocalSum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.realLevelSelbergDenominator_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.realLevelSelbergWeight_eq_printed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.realLevelSelbergDenominator_pos' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.realLevelSelbergWeight_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.realLevelSelbergLambdaSquared_mass_le_psi_sq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.siftedCount_le_realLevelSelberg_psi' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.siftedCount_le_theoremTwo' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.siftedCount_le_theoremTwo_log' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.exists_siftedCount_le_theoremTwo_mertens' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.sieveProduct_one_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.exists_siftedCount_le_rankin_logSq_of_ratio_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.exists_siftedCount_le_rankin_logSq_of_ratio_ge' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.exists_siftedCount_le_rankin_logSq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.siftedCount_le_y_add_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.threeNineCutoff_sq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.exists_siftedCount_le_threeNine_of_log_ge' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.RegularSource.exists_siftedCount_le_threeNine' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.densitySum_insert' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.fixedDepthRelativeDensity_succ' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.densityRatio_eq_finiteBoundaryDepths' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.finiteExpansion_comparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.signed_finiteExpansion_comparison' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.terminalTheta_pow_fifty_mul_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.terminalTheta_pow_le_block' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne.terminal_le_strict_block' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

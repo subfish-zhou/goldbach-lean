@@ -91,8 +91,6 @@ theorem actual_low_H_reciprocal_lower {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 
 def g16 : ℝ := C16*sourceP/(1-rhoEndpoint)
 def B16 : ℝ := M*sourceP/(1-rhoEndpoint)+(100/49)*C16*envelopeE/(1-rhoEndpoint)
 
-theorem g16_pos : 0 < g16 :=
-  div_pos (mul_pos C16_pos (by norm_num [sourceP])) (sub_pos.mpr rhoEndpoint_bounds.2)
 
 theorem B16_pos : 0 < B16 := by
   unfold B16

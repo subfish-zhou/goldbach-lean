@@ -106,36 +106,6 @@ theorem apNormalizedVaughanActualCollectedShellMeanOn_cell_le_aspectGate
       N (2 * i) u v k l H hN h2i (G.cell i) hS hactive hH hAspect)
     (by positivity)
 
-/-- The concrete production dyadic cell satisfies the `Ioc i (2*i)` interface,
-so no geometric premise remains at this call site. -/
-theorem apNormalizedVaughanActualCollectedShellMeanOn_productionCell_le_aspectGate
-    (N Q C u v k l i : ℕ) (H : ℝ)
-    (hR : 0 < logConductorThreshold N C)
-    (hi : i ∈ (productionConductorBlockGeometry N Q C hR).index)
-    (hN : 3 ≤ N)
-    (hactive : (k, l) ∈ vaughanTypeIIActiveCanonicalRectangles N u v)
-    (hH : 0 ≤ H)
-    (hAspect :
-      (vaughanTypeIIRectangularD k : ℝ) +
-          (vaughanTypeIIRectangularX N k : ℝ) ≤
-        H * (((N : ℝ) / ((2 * i : ℕ) : ℝ) ^ 2) +
-          (((2 * i : ℕ) : ℝ) ^ 2))) :
-    apNormalizedVaughanActualCollectedShellMeanOn N u v k l
-        ((productionConductorBlockGeometry N Q C hR).cell i) ≤
-      (1 / (i : ℝ)) *
-        ((1 / 2 + (14 * Real.log ((2 * N : ℕ) : ℝ) + 4) / Real.pi) *
-          (primitiveBilinearQFactor (2 * i) *
-            Real.sqrt (27 * (H + 1) *
-              Real.log (vaughanTypeIIRectangularX N k + 1 : ℕ) ^ 5) *
-            ((N : ℝ) + (((2 * i : ℕ) : ℝ) ^ 2) * Real.sqrt N)) +
-        (8 / (Real.pi * ((2 * N : ℕ) : ℝ))) *
-          vaughanTypeIIRectangularL1exp N k l *
-            weightedPrimitiveFamilyMass
-              ((productionConductorBlockGeometry N Q C hR).cell i)) := by
-  exact apNormalizedVaughanActualCollectedShellMeanOn_cell_le_aspectGate
-    N Q C u v k l i H (productionConductorBlockGeometry N Q C hR) hi
-      (productionConductorBlockGeometry_cell_subset_Ioc N Q C hR i)
-      hN hactive hH hAspect
 
 /-- Finite conductor-cell/canonical-shell pairs on which the literal local
 aspect hypothesis holds. -/
@@ -195,12 +165,6 @@ theorem vaughanAspectSafe_union_residualCellShells
   simp only [vaughanAspectSafeCellShells, vaughanAspectResidualCellShells,
     Finset.filter_union_right, or_not, Finset.filter_true]
 
-/-- The two finite compiler filters are disjoint. -/
-theorem disjoint_vaughanAspectSafe_residualCellShells
-    (N Q C u v : ℕ) (H : ℝ) (G : ProductionConductorBlockGeometry N Q C) :
-    Disjoint (vaughanAspectSafeCellShells N Q C u v H G)
-      (vaughanAspectResidualCellShells N Q C u v H G) := by
-  exact Finset.disjoint_filter_filter_not _ _ _
 
 end
 end AnalyticNumberTheory.LargeSieve

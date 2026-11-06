@@ -46,8 +46,5 @@ theorem exact_upper_lt_five : newUpper < (5 : ℝ) := by
   norm_num [NaturalSplitCoefficient.exactUpper,FourPositiveExactEnvelope.exactUpper,
     NaturalSplitActual.exactGain]
 
-theorem complete_lt_five :
-    TruncatedElevenClassicalCountLower.classicalCoefficient < (5 : ℝ) :=
-  complete_upper.trans_lt exact_upper_lt_five
 
 end Wu2008DoubleSieve.BaseUpperSplitCoefficient

@@ -26,20 +26,6 @@ theorem coefficient_eq {s S B c e : ℝ}
     fourthRowClassical_triangle_eq_log heB he]
   linarith
 
-/-- Regression consumes the actual four Gamma-mass/triangle identities. -/
-theorem fourth_row :
-    (5 * wuUpperCoefficient (5 / 2) - 4 * wuUpperCoefficient (103 / 25) -
-      wuUpperCoefficient (89 / 25) + 2 * fourthRowClassicalJ (5 / 2) (103 / 25) +
-      fourthRowClassicalJ (291 / 100) (103 / 25) - gamma5MassC5 - gamma6BaseC6 -
-      gamma78GainC true - gamma78GainC false) / 5 =
-      -(2 / 5) * fourthRowClassicalL (103 / 25) - (2 / 5) * fourthRowClassicalL (89 / 25) -
-      (1 / 5) * fourthRowClassicalL (291 / 100) +
-      (1 / 5) * fourthRowClassicalJ (5 / 2) (103 / 25) +
-      (1 / 5) * fourthRowClassicalJ (5 / 2) (89 / 25) := by
-  have h := coefficient_eq (s := 5 / 2) (S := 103 / 25) (B := 89 / 25)
-    (c := 291 / 100) (e := 5 / 2) (by norm_num) (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  linarith [fourthRowClassical_C5_triangle, fourthRowClassical_C678_triangle]
 
 end SecondFunctionalClassicalAlgebra
 end Wu2008DoubleSieve

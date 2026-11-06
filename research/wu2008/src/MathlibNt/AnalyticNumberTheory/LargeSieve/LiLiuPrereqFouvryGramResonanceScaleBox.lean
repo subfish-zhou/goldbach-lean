@@ -128,17 +128,5 @@ theorem wGramResonanceBases_subset_scaleBox
       mem_product.mpr ⟨prefix_frequency_mem hN ht,
         mem_product.mpr ⟨hn, prefix_coordinate_mem hN hu 4⟩⟩⟩
 
-theorem wGramResonanceBases_card_le_scaleBox
-    {N : Finset ℕ} (hN : ∀ n ∈ N, 0 < n)
-    {F : ℕ} (hNF : ∀ n ∈ N, n ≤ F)
-    {a : ℤ} {x η R S M Z : ℝ} (hR : 0 ≤ R) (hS : 0 ≤ S)
-    (hM : 0 < M) (hZ : 0 < Z) (K : WExtractedKey) (b : ℕ)
-    (j cap : Fin 5 → ℕ) (positive : Bool) (c : Finset (ℕ × ℕ)) :
-    (wGramResonanceBases (wGramZeroLabels K a (wCoprimeFiber x N S
-      (wGramPrefix N a x η R S M Z K b j cap positive) c))).card ≤
-        wGramResonanceScaleBoxCard K F j :=
-  (card_le_card (wGramResonanceBases_subset_scaleBox
-    hN hNF hR hS hM hZ K b j cap positive c)).trans
-      (wGramResonanceScaleBox_card_le K F j positive)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

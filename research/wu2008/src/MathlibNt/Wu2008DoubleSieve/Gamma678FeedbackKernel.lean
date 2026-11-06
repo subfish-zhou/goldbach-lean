@@ -28,11 +28,6 @@ theorem positive_endpoints (j : Kind) {v : ℝ} (hv : v ∈ Icc (1 : ℝ) 3)
   exact ⟨constants.1.trans_le hL.2.1.1, constants.1.trans_le hU.2.1.1,
     constants.1.trans_le hL.2.2.1, constants.1.trans_le hU.2.2.1⟩
 
-theorem log_argument_pos (j : Kind) {v : ℝ} (hv : v ∈ Icc (1 : ℝ) 3)
-    (h : L j v ≤ U j v) :
-    0 < U j v * invU j v (L j v) / (L j v * invU j v (U j v)) := by
-  obtain ⟨hL, hU, huL, huU⟩ := positive_endpoints j hv h
-  exact div_pos (mul_pos hU huL) (mul_pos hL huU)
 
 /-- The ratio primitive has coefficient 1/v, with no additional v+1 factor. -/
 theorem ratio_primitive {v A B : ℝ} (hv : 0 < v + 1)

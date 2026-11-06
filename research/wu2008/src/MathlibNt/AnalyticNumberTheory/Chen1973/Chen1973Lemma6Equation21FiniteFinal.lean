@@ -351,23 +351,5 @@ theorem chen1973Lemma6_equation21_levelZero_eventually_of_fixedSiegel
   exact hf x ((le_max_left _ _).trans hx) L B k m l₂ P
     (hs x ((le_max_right _ _).trans hx) L B k m l₂ P hSiegel)
 
-/-- Literal Dirichlet L-function formulation of the fixed-c terminal. The
-local NeZero instance is derived from actual block membership, not assumed. -/
-theorem chen1973Lemma6_equation21_levelZero_eventually_of_rawQuadraticL1
-    (c : ℝ) (hc : 0 < c) :
-    ∃ X₀ : ℕ, ∀ x ≥ X₀, ∀ L B k m l₂ : ℕ,
-      Chen1973Lemma6Eq21SourceParameters x L B k m l₂ →
-      (∀ (d : ℕ) (hd : d ∈ chen1973Lemma6ConductorBlock x L 0),
-        let : NeZero d := ⟨Nat.ne_zero_of_lt (chen1973Lemma6_eq21_one_lt_conductor hd)⟩
-        ∀ χ : PrimitiveCharacter d, χ.1^2 = 1 →
-          c*(d:ℝ)^(-(1/10000:ℝ)) ≤ (χ.1.LFunction 1).re) →
-      chen1973Lemma6NmBlockActual x L 0 B k m ≤ (x:ℝ)/Real.log (x:ℝ)^20 := by
-  obtain ⟨X₀, hX⟩ := chen1973Lemma6_equation21_levelZero_eventually_of_fixedSiegel c hc
-  refine ⟨X₀, ?_⟩
-  intro x hx L B k m l₂ P hs
-  apply hX x hx L B k m l₂ P
-  intro d hd χ hquad
-  have hd1 := chen1973Lemma6_eq21_one_lt_conductor hd
-  simpa only [chen1973Lemma6PrimitiveLValue, dif_pos hd1] using hs d hd χ hquad
 
 end AnalyticNumberTheory.LargeSieve

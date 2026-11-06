@@ -17,14 +17,6 @@ theorem publication_budget (i : Fin 3) :
     5*publication i≤classicalNumerator (row i)-2*coupledCostMass (row i) := by
   linarith only [publication_budget_with_slack i,slack_pos i]
 
-theorem original_budgets :
-    5*((15247971:ℝ)/1000000000)≤classicalNumerator SecondFunctionalParameters.row2-
-      2*coupledCostMass SecondFunctionalParameters.row2 ∧
-    5*((13898757:ℝ)/1000000000)≤classicalNumerator SecondFunctionalParameters.row3-
-      2*coupledCostMass SecondFunctionalParameters.row3 ∧
-    5*((11776059:ℝ)/1000000000)≤classicalNumerator SecondFunctionalParameters.row4-
-      2*coupledCostMass SecondFunctionalParameters.row4 :=
-  ⟨publication_budget 0,publication_budget 1,publication_budget 2⟩
 
 /-- The exact positive-delta denominator is retained, not replaced by its zero-delta value. -/
 def deltaDebit (i : Fin 3) (δ : ℝ) : ℝ := 4*δ*costCap i/(5*(1-2*δ))
@@ -72,9 +64,5 @@ theorem actual_small_delta (i : Fin 3) {δ : ℝ} (hd : 0<δ) (hr : δ≤deltaRa
   have hh : δ≤1/10 := hr.trans (min_le_left _ _)
   linarith only [actual_with_slack i hd hh,deltaDebit_le_slack i hd hr]
 
-theorem positive_delta_consumer (i : Fin 3) : ∃ η : ℝ,0<η ∧ η≤1/10 ∧
-    ∀ δ : ℝ,0<δ → δ≤η →
-      publication i+coupledFeedback (row i) (actualNine δ)≤wuImprovementLimit true δ (row i).s :=
-  ⟨deltaRadius i,deltaRadius_pos i,min_le_left _ _,fun _ hd hr => actual_small_delta i hd hr⟩
 end
 end Wu04RemainingStrongPaid

@@ -138,29 +138,6 @@ lemma vaughanCanonicalBilinearTensor_energy_le
     (sq_nonneg ‖vaughanBilinearTensorCoeff vaughanMangoldtCoeff b y d
       (vaughanCanonicalDyadicBlock N v l) t‖)
 
-/-- The frozen generic fourth moment is sufficient for the actual canonical
-Vaughan rectangle.  This is only a per-shell second-moment consumer, not a BV
-conclusion. -/
-theorem weighted_primitive_vaughanCanonicalBilinear_of_fourthMoment
-    (K : ℝ) (hK : 0 ≤ K) (hFourth : BilinearTensorFourthMomentBound K)
-    (b : ℕ → ℂ) (y N u v k l Q : ℕ) :
-    (∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
-      ∑ χ : PrimitiveCharacter q,
-        ‖vaughanTypeIICanonicalBilinearBlock b y N u v k l q χ‖ ^ 2) ≤
-      K * bilinearMultiplicativeScale (2 ^ k) (vaughanCanonicalTensorLength y k) Q *
-        vaughanCanonicalShortTensorEnergy vaughanMangoldtCoeff b
-          y N u v k l := by
-  simp_rw [vaughanCanonicalBilinearBlock_eq_shortTensorForm]
-  refine (hFourth (vaughanCanonicalBilinearTensor b y N v l)
-    (vaughanCanonicalDyadicBlock N u k) (2 ^ k)
-    (vaughanCanonicalTensorLength y k) Q
-    (card_vaughanCanonicalDyadicBlock_le_pow N u k) ?_).trans ?_
-  · intro d hd
-    simpa [Nat.pow_succ, Nat.mul_comm] using
-      (vaughanCanonicalDyadicBlock_pow_bounds hd).2
-  exact mul_le_mul_of_nonneg_left
-    (vaughanCanonicalBilinearTensor_energy_le b y N u v k l)
-    (mul_nonneg hK (bilinearMultiplicativeScale_nonneg _ _ _))
 
 private lemma mem_vaughanTensorFiber_iff_local
     (y d e : ℕ) (ES : Finset ℕ) (t : ℤ) :
@@ -193,21 +170,6 @@ lemma vaughanBilinearTensorCoeff_eq_zero_of_eShell_above_length
     helower.trans ((Nat.le_mul_of_pos_right e hmpos).trans hproduct)
   exact (not_le_of_gt hEM hshell).elim
 
-/-- Precise `e`-shell dichotomy: above `M` the short tensor energy is zero;
-on active shells the polynomial bound below is independent of `E=2^l`. -/
-theorem vaughanCanonicalShortTensorEnergy_eq_zero_of_eShell_above_length
-    (b : ℕ → ℂ) (y N u v k l : ℕ)
-    (hEM : vaughanCanonicalTensorLength y k < 2 ^ l) :
-    vaughanCanonicalShortTensorEnergy vaughanMangoldtCoeff b
-      y N u v k l = 0 := by
-  unfold vaughanCanonicalShortTensorEnergy
-  apply Finset.sum_eq_zero
-  intro d hd
-  apply Finset.sum_eq_zero
-  intro t ht
-  rw [vaughanBilinearTensorCoeff_eq_zero_of_eShell_above_length
-    b y N v k l d t ht hEM]
-  norm_num
 
 /-- Exact `d`-shell quotient-mass bound before using `D*M ≤ y`. -/
 theorem vaughanQuotientMass_canonical_le_pow_mul_length
@@ -263,41 +225,8 @@ theorem vaughanCanonicalShortTensorEnergy_le_shellScale
 def rowwiseShortTypeIIScale (D M Q energy : ℝ) : ℝ :=
   D * (M + Q ^ 2) * energy
 
-/-- Substituting the true shell energy `C*D*M*L` into the rowwise route leaves
-one complete row-mass factor `D*M`. -/
-theorem rowwiseShortTypeIIScale_after_shellEnergy
-    {D M Q energy C L : ℝ}
-    (hD : 0 ≤ D) (hM : 0 ≤ M)
-    (henergy : energy ≤ C * (D * M) * L) :
-    rowwiseShortTypeIIScale D M Q energy ≤
-      C * (D * M) * (D * (M + Q ^ 2)) * L := by
-  unfold rowwiseShortTypeIIScale
-  calc
-    D * (M + Q ^ 2) * energy ≤
-        D * (M + Q ^ 2) * (C * (D * M) * L) := by
-      exact mul_le_mul_of_nonneg_left henergy
-        (mul_nonneg hD (add_nonneg hM (sq_nonneg Q)))
-    _ = C * (D * M) * (D * (M + Q ^ 2)) * L := by ring
 
-/-- With `N=D*M`, the preceding scale is `C*N*(N+D*Q^2)*L`; it is not
-`(N+Q^2(D+M)+Q^4)*polylog` by itself. -/
-theorem rowwiseShortTypeIIScale_as_N
-    {N D M Q C L : ℝ} (hN : N = D * M) :
-    C * (D * M) * (D * (M + Q ^ 2)) * L =
-      C * N * (N + D * Q ^ 2) * L := by
-  rw [hN]
-  ring
 
-/-- The desired bilinear coefficient is exactly
-`N + Q^2(D+M) + Q^4` when `N=D*M`. -/
-theorem bilinearMultiplicativeScale_as_N
-    (N D M Q : ℕ) (hN : N = D * M) :
-    bilinearMultiplicativeScale D M Q =
-      (N : ℝ) + (Q : ℝ) ^ 2 * ((D : ℝ) + M) + (Q : ℝ) ^ 4 := by
-  unfold bilinearMultiplicativeScale
-  subst N
-  push_cast
-  rfl
 
 end
 

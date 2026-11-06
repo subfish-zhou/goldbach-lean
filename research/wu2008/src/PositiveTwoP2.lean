@@ -62,9 +62,6 @@ theorem Qtwo_eq_Qof : Qtwo = Qof secondGain fifthGain := by
   unfold Qtwo Qof Qpositive increment fifthIncrement
   ring
 
-theorem Qtwo_strict : Qpositive < Qtwo := by
-  unfold Qtwo
-  linarith only [secondGain_strict]
 
 /-- The concrete endpoint: both actual producers are constructed, not assumed. -/
 theorem ordinary_P2 (η : ℝ) (hη : 0 < η) :
@@ -79,24 +76,7 @@ theorem ordinary_P2 (η : ℝ) (hη : 0 < η) :
 /-- A fixed endpoint strictly above the previous full-F5 endpoint. -/
 def paidEndpoint : ℝ := Qpositive+(secondGain-BaseHGain.originalGain)
 
-theorem paidEndpoint_strict : Qpositive < paidEndpoint := by
-  unfold paidEndpoint
-  linarith only [secondGain_strict]
 
-/-- Half the newly available F2 increment is paid while all of the F5 gain is retained. -/
-theorem paid_above_Qpositive :
-    ∃ δ : ℝ, 0 < δ ∧ δ ≤ 1/100 ∧
-      ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-        paidEndpoint*U8CanonicalMother.M N ≤
-          ((Finset.filter (fun p => Nat.Prime p ∧ 0 < N-p ∧
-            ArithmeticFunction.cardFactors (N-p) ≤ 2) (Finset.range (N+1))).card : ℝ) := by
-  have he : 0 < secondGain-BaseHGain.originalGain := sub_pos.mpr secondGain_strict
-  obtain ⟨δ,hδ,hd,T,hT,hcount⟩ := ordinary_P2 _ he
-  refine ⟨δ,hδ,hd,T,hT,fun N hN hEven => ?_⟩
-  have h := hcount N hN hEven
-  convert h using 1
-  unfold Qtwo paidEndpoint
-  ring
 
 end
 end PositiveTwoPayment

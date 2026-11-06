@@ -508,12 +508,6 @@ theorem liuSquarefreeDivisorKernel_nonneg (N d : ℕ) :
   · positivity
   · exact le_rfl
 
-theorem liuPrimeDivisorLogSum_nonneg (N : ℕ) :
-    0 ≤ liuPrimeDivisorLogSum N := by
-  unfold liuPrimeDivisorLogSum
-  apply Finset.sum_nonneg
-  intro p hp
-  exact div_nonneg (Real.log_natCast_nonneg p) (by positivity)
 
 theorem tsum_liuSquarefreeDivisorKernel_mul_log_le
     {N : ℕ} (hN : 0 < N) :

@@ -1,0 +1,15 @@
+{
+  "status": "LOCAL_STRICT_PROOF_TRIALS_NOT_FULL_PROJECT_ACCEPTANCE",
+  "proofs": {
+    "Hf4DirectDagSemantics": {
+      "prior_sha256": "4ac943a79ea10617673c162bfb479713db0620374f209224005eb8753c765d5d",
+      "uniform_sha256": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995"
+    },
+    "Hf4DirectDagSeedSoundness": {
+      "prior_sha256": "9fb1b01e902ccacfb2e4d3e739811f7b368930b5bac149953982e4f55cb69505",
+      "uniform_sha256": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f"
+    }
+  },
+  "previous_producer_sha256": "34af18a316841014c09559e347b8848633d13923d1c3640536a69a2134d1eb8f",
+  "previous_manifest_sha256": "98b4c6b7e57164bb18b343b7d978c183ac57c20e37b807991ff21eac1ac74060"
+}

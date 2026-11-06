@@ -369,25 +369,6 @@ theorem chen1973Lemma6_equation15_fourth_moment
     ring]
   simpa only [Int.zero_add] using hbound
 
-/-- The corrected unrestricted-height Lemma 3 input used after (15). -/
-theorem chen1973Lemma6_L_fourth_moment_corrected
-    {Q : ℕ} (s : ℂ) (hQ : 2 ≤ Q)
-    (hs : Chen1973Lemma3Domain s s.re s.im) :
-    chen1973Lemma3FourthMoment Q s ≤
-      21000000 * (Q : ℝ) ^ 2 * ‖s‖ ^ 2 *
-        Real.log ((Q : ℝ) * (1 + ‖s‖)) ^ 4 :=
-  chen1973Lemma3_corrected_endpoint_unconditional s hQ hs
 
-/-- The bounded-height Lemma 3 specialization used uniformly on Chen's small
-Cauchy circle.  The concrete height inequality is retained, not hidden in an
-Eq. (15)-shaped premise. -/
-theorem chen1973Lemma6_L_fourth_moment_bounded_height
-    {Q A : ℕ} (s : ℂ) (hQ : 2 ≤ Q)
-    (hs : Chen1973Lemma3Domain s s.re s.im)
-    (hheight : ‖s‖ ≤ (Q : ℝ) ^ A) :
-    chen1973Lemma3FourthMoment Q s ≤
-      21000000 * (A + 2 : ℕ) ^ 4 * (Q : ℝ) ^ 2 * ‖s‖ ^ 2 *
-        Real.log Q ^ 4 :=
-  chen1973Lemma3_bounded_height_specialization_unconditional s hQ hs hheight
 
 end AnalyticNumberTheory.LargeSieve

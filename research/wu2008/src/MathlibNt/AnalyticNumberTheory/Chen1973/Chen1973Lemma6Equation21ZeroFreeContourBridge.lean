@@ -171,62 +171,7 @@ theorem differentiableOn_chen1973Lemma6Eq21ShiftIntegrand_strip
     hLglobal.deriv.differentiableAt.div (hLglobal s) hL0
   exact ((hpower.mul hkernel).mul hlogDerivative).differentiableWithinAt
 
-/-- The finite equation-(21) contour shift on the actual rectangle.  This is a
-Cauchy--Goursat equality, not an assumed contour-majorization inequality. -/
-theorem chen1973Lemma6_eq21_finite_contour_shift
-    {x L B k m l₂ d : ℕ} {c y T : ℝ}
-    (P : Chen1973Lemma6Eq21SourceParameters x L B k m l₂)
-    (hzero : Chen1973Lemma6Eq21ZeroFreeInput x L c)
-    (hbridge : Chen1973Lemma6Eq21ZeroFreeContourBridge x L c)
-    (hd : d ∈ chen1973Lemma6ConductorBlock x L 0)
-    (χ : PrimitiveCharacter d) (hy : 0 < y) :
-    (∫ t in -T..T, chen1973VerticalSection
-        (chen1973Lemma6Eq21ShiftIntegrand x d χ y) (chen1973Lemma6Alpha x) t) -
-      (∫ t in -T..T, chen1973VerticalSection
-        (chen1973Lemma6Eq21ShiftIntegrand x d χ y)
-          (chen1973Lemma6Eq21Sigma x) t) =
-      I * chen1973HorizontalSection
-        (chen1973Lemma6Eq21ShiftIntegrand x d χ y)
-          (chen1973Lemma6Eq21Sigma x) (chen1973Lemma6Alpha x) T := by
-  apply chen1973_finite_rectangle_vertical_identity
-    (f := chen1973Lemma6Eq21ShiftIntegrand x d χ y)
-    (β := chen1973Lemma6Eq21Sigma x) (α := chen1973Lemma6Alpha x) (T := T)
-  · exact chen1973Lemma6_eq21_sigma_le_alpha P.hx
-  · exact differentiableOn_chen1973Lemma6Eq21ShiftIntegrand_strip
-      P hzero hbridge hd χ hy
 
-/-- Passing to infinite vertical lines using the existing contour
-infrastructure.  Integrability of the two vertical sections and the explicit
-horizontal-edge decay are the precise remaining analytic limit inputs. -/
-theorem chen1973Lemma6_eq21_full_contour_shift
-    {x L B k m l₂ d : ℕ} {c y C : ℝ}
-    (P : Chen1973Lemma6Eq21SourceParameters x L B k m l₂)
-    (hzero : Chen1973Lemma6Eq21ZeroFreeInput x L c)
-    (hbridge : Chen1973Lemma6Eq21ZeroFreeContourBridge x L c)
-    (hd : d ∈ chen1973Lemma6ConductorBlock x L 0)
-    (χ : PrimitiveCharacter d) (hy : 0 < y) (hC : 0 ≤ C)
-    (hleft : Integrable (chen1973VerticalSection
-      (chen1973Lemma6Eq21ShiftIntegrand x d χ y) (chen1973Lemma6Eq21Sigma x)))
-    (hright : Integrable (chen1973VerticalSection
-      (chen1973Lemma6Eq21ShiftIntegrand x d χ y) (chen1973Lemma6Alpha x)))
-    (hhoriz : ∀ T : ℝ, 0 ≤ T →
-      ‖chen1973HorizontalSection (chen1973Lemma6Eq21ShiftIntegrand x d χ y)
-        (chen1973Lemma6Eq21Sigma x) (chen1973Lemma6Alpha x) T‖ ≤ C / (1 + T ^ 2)) :
-    (∫ t : ℝ, chen1973VerticalSection
-      (chen1973Lemma6Eq21ShiftIntegrand x d χ y) (chen1973Lemma6Alpha x) t) =
-      ∫ t : ℝ, chen1973VerticalSection
-        (chen1973Lemma6Eq21ShiftIntegrand x d χ y)
-          (chen1973Lemma6Eq21Sigma x) t := by
-  apply chen1973_full_vertical_integral_shift
-    (f := chen1973Lemma6Eq21ShiftIntegrand x d χ y)
-    (β := chen1973Lemma6Eq21Sigma x) (α := chen1973Lemma6Alpha x) (C := C)
-  · exact chen1973Lemma6_eq21_sigma_le_alpha P.hx
-  · exact hC
-  · exact differentiableOn_chen1973Lemma6Eq21ShiftIntegrand_strip
-      P hzero hbridge hd χ hy
-  · exact hleft
-  · exact hright
-  · exact hhoriz
 
 /-- The literal term integrand inside `chen1973Lemma6Eq21VerticalIntegral`.
 The finite character value is retained, rather than factored out before the
@@ -276,29 +221,6 @@ theorem differentiableOn_chen1973Lemma6Eq21TermShiftIntegrand_strip
       (differentiableOn_chen1973Lemma6Eq21ShiftIntegrand_strip
         P hzero hbridge hd χ hy)
 
-/-- Actual finite contour-shift equality for one literal equation-(21) term. -/
-theorem chen1973Lemma6_eq21_term_finite_contour_shift
-    {x L B k m l₂ d : ℕ} {c T : ℝ}
-    (P : Chen1973Lemma6Eq21SourceParameters x L B k m l₂)
-    (hzero : Chen1973Lemma6Eq21ZeroFreeInput x L c)
-    (hbridge : Chen1973Lemma6Eq21ZeroFreeContourBridge x L c)
-    (hd : d ∈ chen1973Lemma6ConductorBlock x L 0)
-    (χ : PrimitiveCharacter d) {pp : ℕ × ℕ}
-    (hp₁ : 0 < pp.1) (hp₂ : 0 < pp.2) :
-    (∫ t in -T..T, chen1973VerticalSection
-        (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp) (chen1973Lemma6Alpha x) t) -
-      (∫ t in -T..T, chen1973VerticalSection
-        (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp)
-          (chen1973Lemma6Eq21Sigma x) t) =
-      I * chen1973HorizontalSection
-        (chen1973Lemma6Eq21TermShiftIntegrand x d χ pp)
-          (chen1973Lemma6Eq21Sigma x) (chen1973Lemma6Alpha x) T := by
-  apply chen1973_finite_rectangle_vertical_identity
-    (f := chen1973Lemma6Eq21TermShiftIntegrand x d χ pp)
-    (β := chen1973Lemma6Eq21Sigma x) (α := chen1973Lemma6Alpha x) (T := T)
-  · exact chen1973Lemma6_eq21_sigma_le_alpha P.hx
-  · exact differentiableOn_chen1973Lemma6Eq21TermShiftIntegrand_strip
-      P hzero hbridge hd χ hp₁ hp₂
 
 /-- Full-line contour shift for the literal term.  The horizontal limit is
 paid through the existing `C/(1+T²)` infrastructure. -/

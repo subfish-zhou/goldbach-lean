@@ -37,10 +37,6 @@ def ConductorLocalPrimitiveLargeSieve (K : ℝ) : Prop :=
         (((L : ℝ) * conductorLocalRowEnergy b M L) / R +
           (Q : ℝ) ^ 2 * conductorLocalRowEnergy b M L)
 
-private lemma localRowAmplitude_nonneg
-    (b : ℤ → ℂ) (M : ℤ) (L d : ℕ) (χ : PrimitiveCharacter d) :
-    0 ≤ Real.sqrt (primitiveCharacterPrefixMaxSquare b M L d χ) :=
-  Real.sqrt_nonneg _
 
 /-- Square-ledger extraction.  Once the actual row geometry supplies
 `L * energy ≤ N²` and `energy ≤ N`, the local primitive large sieve gives the

@@ -70,21 +70,6 @@ theorem excess_iff (x y : ℝ) :
   · rintro ⟨hT, hy⟩
     exact ⟨((closed_excess_iff x y).2 hT).1, hy⟩
 
-theorem good_excess_partition : goodP ∪ excessP = originalP ∧ Disjoint goodP excessP := by
-  constructor
-  · ext v
-    simp only [goodP, excessP, mem_union, mem_inter_iff, mem_ofPred_eq]
-    constructor
-    · rintro (⟨h, _⟩ | ⟨h, _⟩) <;> exact h
-    · intro h
-      by_cases hy : v.2 ≤ 1 / 4
-      · exact Or.inl ⟨h, hy⟩
-      · exact Or.inr ⟨h, lt_of_not_ge hy⟩
-  · rw [Set.disjoint_left]
-    intro v hv hw
-    have hle : v.2 ≤ (1 / 4 : ℝ) := hv.2
-    have hlt : (1 / 4 : ℝ) < v.2 := hw.2
-    exact (not_lt_of_ge hle) hlt
 
 theorem excess_fibre {x : ℝ} (hx : x ∈ Icc alpha (alpha + d)) :
     {y : ℝ | (x, y) ∈ excessP} = Ioc (1 / 4) (top x) := by
@@ -97,19 +82,6 @@ theorem excess_fibre {x : ℝ} (hx : x ∈ Icc alpha (alpha + d)) :
   · rintro ⟨hy, hyt⟩
     exact ⟨⟨hx, ⟨le_of_lt hy, hyt⟩⟩, hy⟩
 
-/-- The inner integral is over the actual strict excess fibre, not an assumed area.
-The outer `Ioc` only omits the endpoint x = alpha. -/
-theorem loss_as_excess_fibres (p : ℝ → ℝ) :
-    loss p = 4 * ∫ x in Ioc alpha (alpha + d),
-      ∫ y in {y : ℝ | (x, y) ∈ excessP}, kernel p x y := by
-  unfold loss
-  congr 1
-  rw [intervalIntegral.integral_of_le (by linarith [d_pos] : alpha ≤ alpha + d)]
-  apply setIntegral_congr_fun measurableSet_Ioc
-  intro x hx
-  have hxc : x ∈ Icc alpha (alpha + d) := ⟨le_of_lt hx.1, hx.2⟩
-  dsimp only
-  rw [excess_fibre hxc, intervalIntegral.integral_of_le (top_ge hxc)]
 
 noncomputable def coefficientLoss : ℝ := q * (d / alpha) ^ 2
 noncomputable def printedSum : ℝ := 90713 / 100000
@@ -125,9 +97,6 @@ theorem exact_margin :
   rw [exact_coefficient_loss]
   norm_num [printedSum]
 
-theorem rectangle_margin : (899 / 1000 : ℝ) < printedSum - 2 * coefficientLoss := by
-  rw [exact_coefficient_loss]
-  norm_num [printedSum]
 
 /-- Pure algebra, conditional on the printed-sum lower certificate and a debit budget. -/
 theorem conditional_coefficient (base debit : ℝ)

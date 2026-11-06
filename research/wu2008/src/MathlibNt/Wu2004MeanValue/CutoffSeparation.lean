@@ -70,16 +70,6 @@ theorem tail_sieve_cutoff_separation (c τ : ℝ) (hc : 0 < c)
   obtain ⟨hpower, hlogx⟩ := hT x ((le_max_right _ _).trans hx)
   exact (sqrt_modulus_le_quarter_power (by linarith) hlogx hB hQ).trans hpower
 
-/-- Every source prime satisfying the tail's strict lower bound lies above
-the sieve cutoff, with the threshold chosen before the source. -/
-theorem tail_sieve_cutoff_lt_source (c τ : ℝ) (hc : 0 < c)
-    (hτ : 1 / 4 < τ) :
-    ∃ x₀ : ℝ, 1 ≤ x₀ ∧ ∀ x : ℝ, x₀ ≤ x →
-      ∀ B : ℝ, 0 ≤ B → ∀ Q : ℕ,
-      (Q : ℝ) ≤ Real.sqrt x / Real.log x ^ B →
-      ∀ r : ℕ, c * x ^ τ < (r : ℝ) → Real.sqrt (Q : ℝ) < (r : ℝ) := by
-  obtain ⟨x₀, hx₀, hbound⟩ := tail_sieve_cutoff_separation c τ hc hτ
-  exact ⟨x₀, hx₀, fun x hx B hB Q hQ r hr => (hbound x hx B hB Q hQ).trans_lt hr⟩
 
 /-- Dyadic cutoff separation at scale `2H`, with source power `H^τ`.
 In particular, the threshold does not depend on the logarithmic exponent. -/
@@ -119,15 +109,6 @@ theorem block_source_exponent_range {a : ℝ} (ha : 3 / 2 < a) (ha2 : a < 2) :
   · apply (div_lt_iff₀ ha0).mpr
     linarith
 
-/-- Cutoff separation directly in the manuscript's block parameter `a`. -/
-theorem block_sieve_cutoff_lt_source_of_a (a : ℝ) (ha : 3 / 2 < a) (ha2 : a < 2) :
-    ∃ H₀ : ℝ, 1 ≤ H₀ ∧ ∀ H : ℝ, H₀ ≤ H →
-      ∀ B : ℝ, 0 ≤ B → ∀ Q : ℕ,
-      (Q : ℝ) ≤ Real.sqrt (2 * H) / Real.log (2 * H) ^ B →
-      ∀ r : ℕ, H ^ ((a - 1) / a) < (r : ℝ) →
-      Real.sqrt (Q : ℝ) < (r : ℝ) := by
-  have hτ := (block_source_exponent_range ha ha2).1
-  exact block_sieve_cutoff_lt_source ((a - 1) / a) (by linarith)
 
 /-- The real sieve level is not rounded before taking its square root. -/
 theorem tail_real_sieve_cutoff_separation (c τ : ℝ) (hc : 0 < c)

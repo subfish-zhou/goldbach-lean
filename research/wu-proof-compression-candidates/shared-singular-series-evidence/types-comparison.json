@@ -1,0 +1,7 @@
+{
+  "types_exact": true,
+  "retained_public_theorems": 20,
+  "before_sha256": "d4986915a3b506a41a66099c1cb607dfc048fd8564a99ca0f33966e5f93527b0",
+  "after_sha256": "d4986915a3b506a41a66099c1cb607dfc048fd8564a99ca0f33966e5f93527b0",
+  "status": "LOCAL_MODULE_ONLY_NOT_INSTALLED"
+}

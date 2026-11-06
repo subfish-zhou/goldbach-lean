@@ -33,12 +33,6 @@ theorem endpointLower_le_original (i : Fin 4) : endpointLower (coupledRow i) ≤
     coupledFeedback CoupledFiniteAssembly.aCoefficient at *
   linarith only [he0,he1,hj0,hj2,hj3,hd,ha]
 
-theorem endpoint_hc_of_scalar (i : Fin 4)
-    (h : NineFeedbackStrength.originalH (i.castAdd 5) ≤
-      NineFeedbackStrength.publication (i.castAdd 5)+endpointLower (coupledRow i)) :
-    NineFeedbackStrength.originalH (i.castAdd 5) ≤
-      NineFeedbackStrength.publication (i.castAdd 5)+coupledFeedback (coupledRow i) NineFeedbackStrength.originalH :=
-  h.trans (add_le_add le_rfl (endpointLower_le_original i))
 
 end
 end SigmaJEndpoint

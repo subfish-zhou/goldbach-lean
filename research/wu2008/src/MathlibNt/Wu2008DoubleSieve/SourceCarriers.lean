@@ -163,10 +163,6 @@ theorem source_closed_pair_carrier (N a b : ℕ) (hb : b.Prime)
       if z < (b : ℝ) then sieveCarrierLE N (a * b) (N * a) z else ∅ := by
   rw [sourceSieveCarrierLE_eq_ite, siftedLE_selected_pair_iff hb hbNa]
 
-theorem source_closed_pair_at_selected_prime (N a b : ℕ) (hb : b.Prime)
-    (hbNa : b.Coprime (N * a)) :
-    sourceSieveCarrierLE N (a * b) (N * a) (b : ℝ) = ∅ := by
-  simp only [source_closed_pair_carrier N a b hb hbNa, lt_self_iff_false, if_false]
 
 /-- Exact correction, with no assertion that the second summand is small. -/
 theorem quotient_pair_count_eq_source_add_correction (N a b : ℕ) (hb : b.Prime)
@@ -264,15 +260,6 @@ theorem sourceLowerWeightRHS_eq (N : ℕ) (z w : ℝ) :
   rw [hbase, hsingle, hpairs, htriples]
   ring
 
-/-- A genuine strict/unscaled realization of the source lower weight.
-This deliberately does not identify Wu08's printed closed product with it. -/
-theorem wu_lemma21_strict_source {κ σ : ℝ}
-    (hκ : 0 < κ) (hκσ : κ < σ) (hσ : σ ≤ 1 / 3) :
-    ∃ N0 : ℕ, ∀ N : ℕ, N0 ≤ N →
-      (sourceLowerWeightRHS N ((N : ℝ) ^ κ) ((N : ℝ) ^ σ) : ℝ) -
-        8 * (N : ℝ) ^ (1 - κ) ≤
-          2 * ((MathlibNt.Wu2008DoubleSieve.wuPrimeComplements N).card : ℝ) := by
-  simpa only [sourceLowerWeightRHS_eq] using wu_lemma21_strict hκ hκσ hσ
 
 noncomputable def sourceVariableS3Main (N : ℕ) (z w : ℝ) : ℤ :=
   ∑ t ∈ (lowerPairs N N z w).filter (fun t => (t.1 : ℝ) < w),

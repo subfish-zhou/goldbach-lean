@@ -262,18 +262,6 @@ noncomputable def section13_plus_section10Bridge {H : Section13HatLayers}
     norm_num [ErrorSign.epsilon] at hs ⊢
     exact hs
 
-/-- Audit lemma exposing why the production record cannot be assembled for the
-negative sign from the stated source contract: it asks for the scalar `Q̂` DDE
-already on `s > 1`, whereas `section13Qhat_dde` is available only on `s > 3`.
-This is an interface-strength mismatch, not a missing comparison or pairing. -/
-theorem production_minus_bridge_requires_early_scalar_dde
-    {H : Section13HatLayers} (B : Section13HatSection10Bridge H ErrorSign.minus) :
-    ∀ s, 2 < s →
-      HasDerivAt B.Qhat (-(2 * B.Qhat s + B.Qhat (s - 1)) / s) s := by
-  intro s hs
-  apply B.dde.original_dde s
-  norm_num [ErrorSign.epsilon] at hs ⊢
-  exact hs
 
 end BridgeAssembly
 

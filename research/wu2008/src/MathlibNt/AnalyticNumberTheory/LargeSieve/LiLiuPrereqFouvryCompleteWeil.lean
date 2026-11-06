@@ -26,14 +26,6 @@ theorem completeKloosterman_prime_power_primitive_weil (p k : ℕ) [Fact p.Prime
       completeKloosterman_two_power_primitive_weil k a d hprimitive
   · exact completeKloosterman_odd_prime_power_primitive_weil p k hp a d hprimitive
 
-/-- The full complete-sum bound, including modulus one, nonprimitive frequency
-pairs, and zero or negative frequencies. -/
-theorem completeKloosterman_weil (q : ℕ) [NeZero q] (a d : ℤ) :
-    ‖completeKloosterman q (a : ZMod q) d‖ ≤
-      (q.divisors.card : ℝ) * Real.sqrt (q.gcd (a.natAbs.gcd d.natAbs)) *
-        Real.sqrt q := by
-  exact completeKloosterman_weil_of_primitive_prime_power
-    (fun p k _ a d ↦ completeKloosterman_prime_power_primitive_weil p k a d) q a d
 
 theorem completeKloosterman_weil_zmod (q : ℕ) [NeZero q] (m : ZMod q) (d : ℤ) :
     ‖completeKloosterman q m d‖ ≤

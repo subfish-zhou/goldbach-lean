@@ -297,56 +297,5 @@ theorem claim14_6_i_of_log_bound
   · exact lambda_antitoneOn_Icc_of_log_bound hH sign hd (by norm_num) (by norm_num)
       (hσ sign) hρ hlog hDlarge (hdelay sign)
 
-/-- Claim 14.6(i) with no external delay-margin premise: Section 13 positivity
-and continuity first produce a common margin for both signs, and every `D`
-beyond an explicit existential threshold makes both `ε = 0,1` lambda factors
-antitone on their compact intervals. -/
-theorem claim14_6_i_for_sufficiently_large_D
-    {H : Section13HatLayers} {β d σ : ℝ}
-    (hH : Section13HatContract H β) (hd : 0 ≤ d)
-    (hσ : ∀ sign : ErrorSign, β + sign.epsilon ≤ σ) :
-    ∃ D₀, 1 < D₀ ∧ ∀ D, D₀ ≤ D →
-      ∀ sign ε, ε = 0 ∨ ε = 1 →
-        AntitoneOn (lambda H sign D d ε) (Icc (β + sign.epsilon) σ) := by
-  obtain ⟨ρ, hρ, hdelay⟩ := exists_common_delayRatioMargin hH hσ
-  let C : ℝ := (1 + σ * d) * (σ + 1) ^ d
-  have hσpos : 0 < σ := by
-    have hm := hσ (.minus)
-    simp [ErrorSign.epsilon] at hm
-    linarith [hH.beta_gt_one]
-  have hC0 : 0 ≤ C := by
-    apply mul_nonneg
-    · nlinarith
-    · exact Real.rpow_nonneg (by linarith [hσpos]) _
-  let x : ℝ := C / ρ + 1
-  have hxpos : 0 < x := by
-    dsimp [x]
-    have : 0 ≤ C / ρ := div_nonneg hC0 hρ.le
-    linarith
-  let D₀ : ℝ := Real.exp x
-  have hD₀ : 1 < D₀ := by
-    dsimp [D₀]
-    rw [← Real.exp_zero, Real.exp_lt_exp]
-    exact hxpos
-  refine ⟨D₀, hD₀, ?_⟩
-  intro D hD
-  have hD1 : 1 < D := hD₀.trans_le hD
-  have hlog : 0 < Real.log D := Real.log_pos hD1
-  have hlogmono : Real.log D₀ ≤ Real.log D :=
-    Real.strictMonoOn_log.monotoneOn (Real.exp_pos x)
-      (zero_lt_one.trans hD1) hD
-  have hlogx : x ≤ Real.log D := by
-    simpa [D₀] using hlogmono
-  have hCx : C ≤ ρ * x := by
-    have hbase : C ≤ C + ρ := by linarith
-    calc
-      C ≤ C + ρ := hbase
-      _ = ρ * x := by
-        dsimp [x]
-        field_simp [ne_of_gt hρ]
-  have hDlarge : C ≤ ρ * Real.log D :=
-    hCx.trans (mul_le_mul_of_nonneg_left hlogx hρ.le)
-  exact claim14_6_i_of_log_bound hH hd hσ hρ hlog
-    (by simpa only [C] using hDlarge) hdelay
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

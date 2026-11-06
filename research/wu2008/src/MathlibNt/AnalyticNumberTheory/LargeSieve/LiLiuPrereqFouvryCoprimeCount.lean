@@ -93,30 +93,6 @@ def hardCutoffUMain (H : ℕ) (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ) 
   ∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
     uModulusCoefficient N β c q r * ((H : ℝ) * ((q * r).totient : ℝ) / (q * r : ℕ))
 
-theorem dispersionU_hardCutoff_error
-    (H : ℕ) (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ)
-    (hQ : ∀ q ∈ Q, q ≠ 0) :
-    |dispersionU (Ioc 0 H) N Q (fun _ => 1) β c a - hardCutoffUMain H N Q β c a| ≤
-      ∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-        |uModulusCoefficient N β c q r| * ((q * r).divisors.card : ℝ) := by
-  rw [dispersionU_eq_double_sum]
-  change |(∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-      uModulusCoefficient N β c q r * coprimePrefix H (q * r)) -
-    (∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-      uModulusCoefficient N β c q r *
-        ((H : ℝ) * ((q * r).totient : ℝ) / (q * r : ℕ)))| ≤ _
-  rw [← Finset.sum_sub_distrib]
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro q hq
-  rw [← Finset.sum_sub_distrib]
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro r hr
-  rw [← mul_sub, abs_mul]
-  apply mul_le_mul_of_nonneg_left _ (abs_nonneg _)
-  simpa only [mul_div_assoc] using coprimePrefix_error H
-    (mul_ne_zero (hQ q (Finset.mem_filter.mp hq).1) (hQ r (Finset.mem_filter.mp hr).1))
 
 end
 

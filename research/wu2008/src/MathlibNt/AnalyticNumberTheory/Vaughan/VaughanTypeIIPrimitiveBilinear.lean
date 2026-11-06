@@ -266,24 +266,6 @@ theorem weighted_primitive_vaughanBilinearDyadic
   · intro e he
     exact hE.trans_le (mem_vaughanDyadicBlock.mp he).1.le
 
-/-- Fully expanded dyadic form: all four physical parameters `D,E,y,Q` and
-both coefficient energies remain visible. -/
-theorem weighted_primitive_vaughanBilinearDyadic_explicit
-    (α β : ℕ → ℂ) (c : ℕ → ℂ) (y D E Q : ℕ)
-    (hQ : 0 < Q) (hD : 0 < D) (hE : 0 < E) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          ‖vaughanBilinearBlockOn α β c y
-            (vaughanDyadicBlock D) (vaughanDyadicBlock E) q χ‖ ^ 2) ≤
-      vaughanBilinearCoeffEnergy α (vaughanDyadicBlock D) *
-        ((y : ℝ) +
-          (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12) *
-            (Q : ℝ) ^ 2) *
-          vaughanBilinearTensorEnergy β c y
-            (vaughanDyadicBlock D) (vaughanDyadicBlock E) := by
-  rw [← vaughanBilinearLargeSieveConstant_eq_explicit y Q hQ]
-  exact weighted_primitive_vaughanBilinearDyadic α β c y D E Q hQ hD hE
 
 /-- Canonical-rectangle specialization used by the full Type-II ledger. -/
 theorem weighted_primitive_vaughanCanonicalBilinear

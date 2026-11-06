@@ -73,11 +73,6 @@ theorem B9_test (N : ℕ) (f : ℕ → ℝ) :
     simp [Ne.symm hne]
   · exact fun hn => (hn hb).elim
 
-theorem ninthBoundingSieve_mass (N : ℕ) (he : Even N) (Z : ℝ) :
-    (∑ b ∈ (ninthBoundingSieve N he Z).support,
-      (ninthBoundingSieve N he Z).weights b) = X9 N := by
-  simpa only [ninthBoundingSieve, X9, mul_one, sum_const, nsmul_eq_mul] using
-    B9_test N (fun _ => 1)
 
 theorem ninthBoundingSieve_multSum (N : ℕ) (he : Even N) (Z : ℝ) (q : ℕ) :
     (ninthBoundingSieve N he Z).multSum q = ninthSieveDivisibleCount N q := by

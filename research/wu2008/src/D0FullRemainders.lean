@@ -25,13 +25,9 @@ theorem densityUnpaid_eq : densityUnpaid=D0-fullMass := by
   intro v _
   ring
 
-theorem densityUnpaid_nonneg : 0≤densityUnpaid := by
-  rw [densityUnpaid_eq]
-  exact sub_nonneg.mpr fullMass_le_D0
 
 def endpointUnpaid : ℝ := fullMass-fullPaid
 
-theorem endpointUnpaid_nonneg : 0≤endpointUnpaid := sub_nonneg.mpr fullPaid_le
 
 theorem original_D0_balance : D0=fullPaid+endpointUnpaid+densityUnpaid := by
   rw [densityUnpaid_eq]
@@ -68,8 +64,5 @@ theorem retainedTerminal_balance : retainedTerminal=terminalLower+profileLogUnpa
   unfold retainedTerminal terminalLower terminalAt profileLogUnpaid TerminalESigned.eUnpaid profileLower
   ring
 
-theorem finiteTerminal_le_retained : finiteTerminal≤retainedTerminal := by
-  rw [retainedTerminal_balance]
-  linarith only [finiteTerminal_le_full,profileLogUnpaid_nonneg,TerminalESigned.eUnpaid_nonneg]
 
 end D0FullDensity

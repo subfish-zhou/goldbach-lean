@@ -108,32 +108,6 @@ theorem directLocalScale_frequency_change_variables
   field_simp
   ring
 
-/-- Below the first retained integer the actual floor block is empty. -/
-theorem directLocalScale_floor_block_empty
-    {M Z : ℝ} (hM : 0 < M) (hZ : 0 ≤ Z) {N Q : Finset ℕ}
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)
-    (a : ℤ) (P : WOriginalTuple → Prop) (R S ξ : ℝ) (b : ℕ)
-    (K : WExtractedKey) (j : Fin 5 → ℕ) (positive : Bool)
-    (hsmall : 8 * ((K.D : ℝ) * 2 ^ j 1 * 2 ^ j 3 * 2 ^ j 4) / M * Z < 1) :
-    wAnalyticDyadicBlock
-      (wExtractedKeyFiber (wFloorCutoff M Z) N Q a P R S ξ b K) j positive = ∅ := by
-  apply Finset.eq_empty_iff_forall_notMem.mpr
-  intro t ht
-  have hb := directLocalScale_floor_frequency_le hM hZ hN hQ ht
-  have hp : (1 : ℝ) ≤ 2 ^ j 0 := one_le_pow₀ (by norm_num)
-  linarith
 
-/-- Zero cutoff has no nonzero-frequency shell, including b=0. -/
-theorem directLocalScale_zero_cutoff_block (N Q : Finset ℕ) (a : ℤ)
-    (P : WOriginalTuple → Prop) (R S ξ : ℝ) (b : ℕ) (K : WExtractedKey)
-    (j : Fin 5 → ℕ) (positive : Bool) :
-    wAnalyticDyadicBlock
-      (wExtractedKeyFiber (fun _ _ => 0) N Q a P R S ξ b K) j positive = ∅ := by
-  apply Finset.eq_empty_iff_forall_notMem.mpr
-  intro t ht
-  have hb := mem_filter.mp (mem_wExtractedKeyFiber_iff.mp (mem_filter.mp ht).1).1
-  have hf := mem_wExtractedFrequencies_iff.mp hb.1
-  have hz : t.2 = 0 := le_antisymm (by simpa using hf.2.2) (by simpa using hf.2.1)
-  exact hb.2.1 hz
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

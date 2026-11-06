@@ -1,0 +1,18 @@
+{
+  "status": "READ_ONLY_PIN_REVIEW_AND_ACTUAL_RUNNING_BUILD_REJECTION_PASS_NOT_VALIDATION",
+  "packages": 10,
+  "producer_input_files": 38,
+  "actual_exit_code": 1,
+  "expected_exit_code": 1,
+  "command": [
+    "python3",
+    "/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/validate_completed_batch.py",
+    "--plan",
+    "/tmp/wu-shared-proof-batch-v1/validation-inputs-01/validation-plan.json"
+  ],
+  "validator_sha256": "bbbb9421450859695368a670009a19a75defff3ece18aad410a58862e3c22307",
+  "context_checker_sha256": "bb16adb549902e1be9355de0cff8d55b4c2ac64759a383d71d04182e0404d040",
+  "plan_sha256": "cd8a1dd4199a7ac83c0485020f576deb54f3783a2c1960f3f9c7baff62aac0a0",
+  "no_validation_report_created": true,
+  "stderr": "Traceback (most recent call last):\n  File \"/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/validate_completed_batch.py\", line 194, in <module>\n    main()\n  File \"/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/validate_completed_batch.py\", line 190, in main\n    execute(args.plan.resolve())\n  File \"/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/validate_completed_batch.py\", line 82, in execute\n    raise ValueError(\"Build is not terminal and fully passed; validation not started\")\nValueError: Build is not terminal and fully passed; validation not started\n"
+}

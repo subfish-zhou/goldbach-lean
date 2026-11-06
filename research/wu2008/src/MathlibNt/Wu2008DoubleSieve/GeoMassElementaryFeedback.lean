@@ -61,22 +61,6 @@ theorem logarithmicSource_eq_elementary (p : SecondFunctionalParameters)
   unfold FullReduction.logarithmicSource elementarySource
   rw [oneDimensionalMass_eq_elementary p hp hs]
 
-/-- Only the mass is evaluated; this is equality of the original sources. -/
-theorem compact_source_eq_elementary (p : SecondFunctionalParameters)
-    (hp : p.MotherAdmissible) (hs : 2 ≤ p.s) (δ : ℝ) (m : ℕ) (P : ℝ) :
-    SecondFunctionalCompactTail.source p δ m P = elementarySource p δ m P := by
-  rw [FullReduction.compact_source_eq_logarithmic p hp hs,
-    logarithmicSource_eq_elementary p hp hs]
 
-/-- The accepted actual Q and H consumer, with the same head, tail and fixed delta. -/
-theorem actual_elementary_lower (m : Fin 4 → ℕ) (hm : ∀ i, 3 ≤ m i)
-    (P : Fin 4 → ℝ) (hP : ∀ i, max 2 (((m i : ℝ) + 6) / 2) ≤ P i)
-    {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/10) :
-    ActualMatrixInverse.Q.mulVec (fun i => elementarySource (parameters i) δ (m i) (P i)) ≤
-      actualVector δ := by
-  have h := FullReduction.actual_logarithmic_lower m hm P hP hδ hδhi
-  have he (i : Fin 4) := logarithmicSource_eq_elementary (parameters i)
-    (parameters_analytic i).mother (parameters_analytic i).two_lt_s.le δ (m i) (P i)
-  simpa only [he] using h
 
 end Wu2008DoubleSieve.SecondFunctionalGeometricMass.Elementary

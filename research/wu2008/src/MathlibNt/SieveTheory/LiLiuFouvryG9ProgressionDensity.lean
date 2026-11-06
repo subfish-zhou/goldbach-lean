@@ -83,14 +83,5 @@ theorem progressionOmega_eulerProduct (v : ℕ) (P : Finset ℕ)
   rw [← primeDensity_apply, primeDensity_progressionOmega_apply,
     progressionDensity_prime v (hP p hp)]
 
-/-- Primes dividing the progression parameter contribute the exact unit factor. -/
-theorem progressionOmega_eulerProduct_filter (v : ℕ) (P : Finset ℕ)
-    (hP : ∀ p ∈ P, p.Prime) :
-    (∏ p ∈ P, (1 - progressionOmega v p / (p : ℝ))) =
-      ∏ p ∈ P.filter (fun p => p.Coprime v), (1 - 1 / ((p : ℝ) - 1)) := by
-  rw [progressionOmega_eulerProduct v P hP, prod_filter]
-  apply prod_congr rfl
-  intro p _
-  split_ifs <;> simp
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

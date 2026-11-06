@@ -59,3 +59,5 @@ python3 research/wu-hf4-audit/measure.py
 The generator is self-contained Python using exact `Fraction` arithmetic; its
 output is checked by Lean. Historical audit directories retain their original
 accepted snapshots and should not be mistaken for current source inventories.
+
+The later [constructive Hf4 acceptance](../wu-hf4-constructive-audit/README.md) records the current installed totals and generator. This directory remains evidence for its historical snapshot.

@@ -182,41 +182,7 @@ theorem claim145_sourceSigma_allS_internal
   exact claim145_sourceSigma_allS_internal_of_scalar S H hΔ0 hΔ1 hd hK hC145
     hlocal hM3 hprop hD₀gt (fun D s hD hs => (hD₀ (D : ℝ) hD).2 s hs)
 
-/-- Quantifier-closed full Case-B form, with the positive Claim-14.5 constant
-chosen before the common threshold and all three varying parameters. -/
-theorem exists_claim145_sourceSigma_allS_internal
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ K : ℝ}
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) (hK : 0 < K)
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hH : Section13HatSourceContract H) :
-    ∃ C145 : ℝ, 0 < C145 ∧ ∃ D₀ : ℝ, 1 < D₀ ∧
-      ∀ (D N : ℕ) (s : ℝ), D₀ ≤ (D : ℝ) →
-        sourceSigma (D : ℝ) d ≤ s →
-        suzukiActualT S N D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
-          C145 * claim14_5Scale S H N (D : ℝ) d Δ
-            (sourceSigma (D : ℝ) d) K s := by
-  refine ⟨1, zero_lt_one, ?_⟩
-  exact claim145_sourceSigma_allS_internal S H hΔ0 hΔ1 hd hK zero_lt_one hlocal hH
 
-/-- Quantifier-closed endpoint form: choose the positive Claim-14.5
-constant before the common threshold and before both natural parameters. -/
-theorem exists_claim145_sourceSigma_endpoint_internal
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ K : ℝ}
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) (hK : 0 < K)
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hH : Section13HatSourceContract H) :
-    ∃ C145 : ℝ, 0 < C145 ∧ ∃ D₀ : ℝ, 1 < D₀ ∧
-      ∀ (D N : ℕ), D₀ ≤ (D : ℝ) →
-        suzukiActualT S N D
-            ⌈(D : ℝ) ^ (1 / sourceSigma (D : ℝ) d)⌉₊ ≤
-          C145 * claim14_5Scale S H N (D : ℝ) d Δ
-            (sourceSigma (D : ℝ) d) K (sourceSigma (D : ℝ) d) := by
-  refine ⟨1, zero_lt_one, ?_⟩
-  exact claim145_sourceSigma_endpoint_internal S H hΔ0 hΔ1 hd hK zero_lt_one hlocal hH
 
 
 end MathlibNt.SieveTheory

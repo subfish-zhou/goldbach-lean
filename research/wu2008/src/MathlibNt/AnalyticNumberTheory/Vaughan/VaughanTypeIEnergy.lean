@@ -81,11 +81,6 @@ theorem vaughanTypeI_sq_le_structuredEnergy (n u v : ℕ) :
   have hmiddle := vaughanMiddle_sq_le_divisorEnergy n u v
   nlinarith [sq_nonneg (Sieve.vaughanFirst n u + Sieve.vaughanMiddle n u v)]
 
-lemma vaughanTypeIStructuredEnergy_nonneg (n u v : ℕ) :
-    0 ≤ vaughanTypeIStructuredEnergy n u v := by
-  unfold vaughanTypeIStructuredEnergy vaughanFirstDivisorEnergy
-    vaughanMiddleDivisorEnergy
-  positivity
 
 private lemma card_filter_le_succ (s : Finset ℕ) (k : ℕ) :
     (s.filter fun x => x ≤ k).card ≤ k + 1 := by
@@ -123,10 +118,6 @@ lemma vaughanTypeIStructuredEnergy_le_cutoffEnergy (n u v : ℕ) :
   have hEnat := card_filter_le_succ (n / d).divisors v
   exact_mod_cast hEnat
 
-lemma vaughanTypeICutoffEnergy_nonneg (n u v : ℕ) :
-    0 ≤ vaughanTypeICutoffEnergy n u v := by
-  unfold vaughanTypeICutoffEnergy
-  positivity
 
 /-- Pointwise coefficient-energy estimate with the scalar weight `b` left
 visible. -/
@@ -146,20 +137,7 @@ theorem vaughanTypeICoeff_norm_sq_le_cutoff (b : ℤ → ℂ) (u v : ℕ) (n : �
   exact mul_le_mul_of_nonneg_left
     (vaughanTypeIStructuredEnergy_le_cutoffEnergy n.toNat u v) (sq_nonneg _)
 
-/-- The finite `ℓ²` Type-I coefficient energy on `[1,N]`, with `N`, both
-cutoffs, all logarithms, and both divisor multiplicities explicit. -/
-theorem vaughanTypeICoeff_energy_le (b : ℤ → ℂ) (N u v : ℕ) :
-    (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeICoeff b u v n‖ ^ 2) ≤
-      ∑ n ∈ Finset.Icc (1 : ℤ) N,
-        ‖b n‖ ^ 2 * vaughanTypeIStructuredEnergy n.toNat u v := by
-  exact Finset.sum_le_sum fun n _ => vaughanTypeICoeff_norm_sq_le b u v n
 
-/-- Fully explicit cutoff-factor form of the finite Type-I energy bound. -/
-theorem vaughanTypeICoeff_energy_le_cutoff (b : ℤ → ℂ) (N u v : ℕ) :
-    (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeICoeff b u v n‖ ^ 2) ≤
-      ∑ n ∈ Finset.Icc (1 : ℤ) N,
-        ‖b n‖ ^ 2 * vaughanTypeICutoffEnergy n.toNat u v := by
-  exact Finset.sum_le_sum fun n _ => vaughanTypeICoeff_norm_sq_le_cutoff b u v n
 
 /-- The weighted prefix large-sieve ledger with the Type-I lane replaced by
 its genuine divisor/convolution energy.  The Type-II and small lanes remain

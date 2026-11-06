@@ -139,21 +139,5 @@ theorem gamma6Gain_approx_integral_tendsto {δ : ℝ} (hδ : 0 < δ) (hδhi : δ
   · filter_upwards [gamma6Gain_strict_ae, gamma5Gain_H_pullback_ae hδ hδhi] with v hv hc
     exact gamma6Gain_approx_tendsto hv hc
 
-theorem gamma6Gain_approx_le_kernel {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (n : ℕ) (v : ℝ × ℝ) :
-    gamma6GainApprox δ n v ≤ gamma6GainKernel δ v := by
-  by_cases hex : ∃ j ∈ gamma6GainInner n, v ∈ truncatedSixthClosureCell n j
-  · obtain ⟨j,hj,hv⟩ := hex
-    have hr := gamma6Gain_inner_subset hj hv
-    have hsample : gamma5GainV v.1 v.2 ≤ gamma5GainSample n j := by
-      have hp : (0 : ℝ) < 1 / ((n + 1 : ℕ) : ℝ) := by positivity
-      have hS : 0 < gamma5ClassicalS := by norm_num [gamma5ClassicalS]
-      dsimp only [gamma5GainSample, gamma5GainV]
-      nlinarith [hv.1.1, hv.2.1]
-    rw [gamma6Gain_approx_at_cell hj hv, gamma6GainKernel, Set.indicator_of_mem hr]
-    exact mul_le_mul_of_nonneg_right (gamma5Gain_H_antitone hδ hδhi hsample)
-      (gamma5Gain_smooth_bounds v).1
-  · rw [gamma6Gain_approx_zero (by simpa only [not_exists, not_and] using hex)]
-    exact (gamma6Gain_kernel_bounds hδ hδhi v).1
 
 end Wu2008DoubleSieve

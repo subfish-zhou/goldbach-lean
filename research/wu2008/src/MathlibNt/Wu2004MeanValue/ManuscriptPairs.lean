@@ -91,23 +91,9 @@ theorem block_pair_product_lt {H : ℝ} {N : ℕ} {a η : ℝ} {t : Σ _ : ℕ, 
   have hlt := h.2.2.2.trans_le (blockSource_upper_domain h.1 hη).2
   exact_mod_cast hlt
 
-theorem tail_pairValue_pos {N : ℕ} {c τ η : ℝ} {t : Σ _ : ℕ, ℕ}
-    (ht : t ∈ tailPairs N c τ η) : 0 < pairValue N t :=
-  Nat.sub_pos_of_lt (tail_pair_product_lt ht)
 
-theorem block_pairValue_pos {H : ℝ} {N : ℕ} {a η : ℝ} {t : Σ _ : ℕ, ℕ}
-    (ht : t ∈ blockPairs H N a η) (hη : η ≤ 1) : 0 < pairValue N t :=
-  Nat.sub_pos_of_lt (block_pair_product_lt ht hη)
 
-theorem tail_pairValue_dvd_iff {N d : ℕ} {c τ η : ℝ} {t : Σ _ : ℕ, ℕ}
-    (ht : t ∈ tailPairs N c τ η) :
-    d ∣ pairValue N t ↔ t.1 * t.2 ≡ N [MOD d] :=
-  pairValue_dvd_iff (tail_pair_product_lt ht).le
 
-theorem block_pairValue_dvd_iff {H : ℝ} {N d : ℕ} {a η : ℝ} {t : Σ _ : ℕ, ℕ}
-    (ht : t ∈ blockPairs H N a η) (hη : η ≤ 1) :
-    d ∣ pairValue N t ↔ t.1 * t.2 ≡ N [MOD d] :=
-  pairValue_dvd_iff (block_pair_product_lt ht hη).le
 
 def tailMass (N : ℕ) (c τ η : ℝ) : ℝ :=
   intervalMass (tailSource N c τ) (fun _ => η * N) (fun _ => N)
@@ -121,31 +107,7 @@ def tailRemainder (N : ℕ) (c τ η : ℝ) (d : ℕ) : ℝ :=
 def blockRemainder (H : ℝ) (N : ℕ) (a η : ℝ) (d : ℕ) : ℝ :=
   (indexedDivisibleCount N (blockPairs H N a η) d : ℝ) - blockMass H N a η / d.totient
 
-theorem tail_count_common_main (N d : ℕ) (c τ η : ℝ) (hN : N.Coprime d) :
-    (indexedDivisibleCount N (tailPairs N c τ η) d : ℝ) =
-      tailMass N c τ η / d.totient +
-        actualClosedErrorSum (tailSource N c τ) (fun _ => 1) (fun _ => η * N)
-          (fun _ => N) d N -
-        (∑ m ∈ tailSource N c τ with m ∣ d,
-          (wuLi ((N : ℝ) / m) - wuLi (η * N / m))) / d.totient := by
-  simpa only [tailPairs, tailMass, intervalErrorSum_closed] using
-    indexedDivisibleCount_common_main true (tailSource N c τ)
-      (fun _ => η * N) (fun _ => N) N d hN
-      (fun m hm => ⟨(mem_tailSource.mp hm).1, Nat.cast_nonneg N, le_rfl⟩)
 
-theorem block_count_common_main (H : ℝ) (N d : ℕ) (a η : ℝ)
-    (hN : N.Coprime d) (hη : η ≤ 1) :
-    (indexedDivisibleCount N (blockPairs H N a η) d : ℝ) =
-      blockMass H N a η / d.totient +
-        actualOpenErrorSum (blockSource H N a η) (fun _ => 1)
-          (blockLower H) (blockUpper H N a η) d N -
-        (∑ m ∈ blockSource H N a η with m ∣ d,
-          (wuLi (blockUpper H N a η m / m) - wuLi (blockLower H m / m))) /
-            d.totient := by
-  simpa only [blockPairs, blockMass, intervalErrorSum_open] using
-    indexedDivisibleCount_common_main false (blockSource H N a η)
-      (blockLower H) (blockUpper H N a η) N d hN
-      (fun m hm => ⟨(mem_blockSource.mp hm).1, blockSource_upper_domain hm hη⟩)
 
 end
 end Wu2004MeanValue

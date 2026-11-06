@@ -102,28 +102,5 @@ theorem closedLowerWeightRHS_le_strict_add_paid_error {N : ℕ}
   rw [hpow] at hs hp
   nlinarith
 
-/-- A closed-quotient variant of Wu08 (2.1), with a genuine explicit
-`O_κ(N^(1-κ))` payment. The endpoint `σ = 1/3` is retained, and there is no
-`3σ + κ > 1` hypothesis. Units remain in the actual `Ω ≤ 2` carrier. -/
-theorem wu_lemma21_closed {κ σ : ℝ}
-    (hκ : 0 < κ) (hκσ : κ < σ) (hσ : σ ≤ 1 / 3) :
-    ∃ N0 : ℕ, ∀ N : ℕ, N0 ≤ N → Even N →
-      (closedLowerWeightRHS N ((N : ℝ) ^ κ) ((N : ℝ) ^ σ) : ℝ) -
-        (8 + 1 / κ + 4 * (1 / κ) ^ 2) * (N : ℝ) ^ (1 - κ) ≤
-          2 * ((MathlibNt.Wu2008DoubleSieve.wuPrimeComplements N).card : ℝ) := by
-  obtain ⟨N1, hstrict⟩ := wu_lemma21_strict hκ hκσ hσ
-  have hz : ∀ᶠ N : ℕ in Filter.atTop, 2 ≤ (N : ℝ) ^ κ :=
-    ((tendsto_rpow_atTop hκ).comp tendsto_natCast_atTop_atTop).eventually
-      (Filter.eventually_ge_atTop 2)
-  apply Filter.eventually_atTop.mp
-  filter_upwards [hz, Filter.eventually_ge_atTop (max N1 4)] with N hzN hN
-  intro he
-  have hN4 : 4 ≤ N := (le_max_right N1 4).trans hN
-  have hNN1 : N1 ≤ N := (le_max_left N1 4).trans hN
-  have hs := hstrict N hNN1
-  have hzw : (N : ℝ) ^ κ ≤ (N : ℝ) ^ σ :=
-    Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast (show 1 ≤ N by omega)) hκσ.le
-  have hc := closedLowerWeightRHS_le_strict_add_paid_error hN4 he hκ hzN hzw
-  nlinarith
 
 end Wu2008DoubleSieve

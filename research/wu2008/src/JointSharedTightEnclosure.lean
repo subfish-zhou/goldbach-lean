@@ -355,15 +355,7 @@ theorem low_payment : lowKernel ≤ lowUpperPayment := by
   rw [he] at hm
   exact low_full_weight_enclosure.2.trans hm
 
-theorem middle_magnitude : (1/50:ℝ) < middleKernel ∧ middleKernel < 23/250 := by
-  have h : (1/50:ℝ) < middleLowerPayment ∧ middleUpperPayment < 23/250 := by
-    norm_num [middleLowerPayment,middleUpperPayment,netPrimitive,u,c,a,truncatedSixthLowerAlpha,GConvexChord.r4,GConvexChord.r5]
-  exact ⟨h.1.trans_le middle_payments.1,middle_payments.2.trans_lt h.2⟩
 
-theorem low_magnitude : 0 ≤ lowKernel ∧ lowKernel < (1/100:ℝ) := by
-  have h : lowUpperPayment < (1/100:ℝ) := by
-    norm_num [lowUpperPayment,netPrimitive,u,c,a,s,truncatedSixthLowerAlpha,truncatedSixthLowerSigma]
-  exact ⟨low_nonnegative,low_payment.trans_lt h⟩
 
 def gEnvelope (f : ℝ → ℝ) : ℝ :=
   (8/a)*(42823/151875)*(upperLog (c 5/a)-f (c 5/a))+
@@ -505,12 +497,6 @@ theorem total_target_localization : -(2/25:ℝ) < AnalyticTotalThreshold.target-
   rw [coefficient_relation,BaseGSharedActualRecovery.recovery_exact]
   constructor <;> linarith only [h.1,h.2,ht.1,ht.2]
 
-theorem combined_payment_magnitude : (113/5000:ℝ) < coefficient-JointSixthFourDiagnostic.coefficient ∧
-    coefficient-JointSixthFourDiagnostic.coefficient < 79/1000 := by
-  have ht := triple_magnitude
-  have h5 := FifthLogTotalMagnitude.recovery_decimal_rational_bounds
-  unfold coefficient
-  constructor <;> linarith only [ht.1,ht.2,h5.1,h5.2]
 
 end
 end Wu2008DoubleSieve.JointSharedTightEnclosure

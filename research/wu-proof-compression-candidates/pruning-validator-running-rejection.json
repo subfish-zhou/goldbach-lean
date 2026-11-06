@@ -1,0 +1,6 @@
+{
+  "status": "RUNNING_BUILD_VALIDATION_REJECTED_WITHOUT_STARTING_LEAN_OR_REPORT",
+  "actual_exception": "Pruning build is not terminal and fully passed; validation not started",
+  "report_absent": true,
+  "prepared_gates": 10
+}

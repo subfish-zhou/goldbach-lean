@@ -2204,14 +2204,6 @@ private theorem chen1973Lemma6_equation17_corrected_radial_main
           chen1973Lemma6Eq17CorrectedRadialSecondFullIntegral x L level B k m H := by
       rw [hfirstSum, hsecondSum]
 
-theorem chen1973Lemma6_eq17_corrected_radial_contourMajorization
-    {x L level B k m H : ℕ} (hx : 3 ≤ x) (hlevel : 1 ≤ level)
-    (hAlpha : Chen1973Equation17AlphaLogDerivativePayment x L level) :
-    Chen1973Equation17CorrectedRadialContourMajorization x L level B k m H := by
-  simpa [Chen1973Equation17CorrectedRadialContourMajorization,
-    chen1973Lemma6Equation17CorrectedRadialRHS] using
-    (chen1973Lemma6_equation17_corrected_radial_main (x := x) (L := L) (level := level)
-      (B := B) (k := k) (m := m) (H := H) hx hlevel hAlpha)
 
 theorem chen1973Lemma6_equation17_corrected_radial
     {x L level B k m H : ℕ} (hx : 3 ≤ x) (hlevel : 1 ≤ level)

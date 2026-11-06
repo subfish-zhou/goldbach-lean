@@ -62,9 +62,6 @@ theorem c2_factor_levels {x ν ε : ℝ} (hx : 1 ≤ x) (hε : 0 ≤ ε)
     apply Real.rpow_le_rpow_of_exponent_le hx
     nlinarith
 
-theorem c2_S_level_endpoint (x : ℝ) {ε : ℝ} (hε : 0 ≤ ε) :
-    x ^ c2SExponent (1 / 10) ε = 1 := by
-  rw [c2SExponent_endpoint hε, Real.rpow_zero]
 
 end
 

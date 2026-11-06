@@ -55,15 +55,6 @@ theorem actual_limit_block (p : SecondFunctionalParameters) (hp : p.MotherAdmiss
   have hzN := hZ N (hZT.trans hN) he i Δ V hb
   nlinarith only [hpN, hqN, hrN, huN, hzN]
 
-/-- The four original records satisfy the additional analytic domain bounds. -/
-theorem four_rows_analytic (p : SecondFunctionalParameters)
-    (hp : p = row1 ∨ p = row2 ∨ p = row3 ∨ p = row4) :
-    p.MotherAdmissible ∧ 2 ≤ p.s ∧ 3 ≤ p.S ∧ p.S ≤ 5 := by
-  rcases hp with rfl | rfl | rfl | rfl
-  · exact ⟨row1_motherAdmissible, by norm_num [row1], by norm_num [row1], by norm_num [row1]⟩
-  · exact ⟨row2_motherAdmissible, by norm_num [row2], by norm_num [row2], by norm_num [row2]⟩
-  · exact ⟨row3_motherAdmissible, by norm_num [row3], by norm_num [row3], by norm_num [row3]⟩
-  · exact ⟨row4_motherAdmissible, by norm_num [row4], by norm_num [row4], by norm_num [row4]⟩
 
 end SecondFunctionalPhiOmega2
 end Wu2008DoubleSieve

@@ -31,18 +31,8 @@ theorem restrictLabels_sum_partition (f : α → ℝ) :
   intro c _
   by_cases h : P c <;> simp [h]
 
-theorem restrictLabels_mass_le : (L.restrictLabels P).mass ≤ L.mass := by
-  exact L.restrictLabels_sum_le P _ (fun c hc =>
-    mul_nonneg (L.weight_nonneg c hc) (Nat.cast_nonneg _))
 
-theorem restrictLabels_primeMass_le : (L.restrictLabels P).primeMass ≤ L.primeMass := by
-  exact L.restrictLabels_sum_le P _ (fun c hc =>
-    mul_nonneg (L.weight_nonneg c hc) (Nat.cast_nonneg _))
 
-theorem restrictLabels_primeMass_partition :
-    L.primeMass = (L.restrictLabels P).primeMass +
-      (L.restrictLabels (fun c => ¬P c)).primeMass := by
-  exact L.restrictLabels_sum_partition P _
 
 theorem restrictLabels_small_le (Z : ℝ) : (L.restrictLabels P).small Z ≤ L.small Z := by
   exact L.restrictLabels_sum_le P _ (fun c hc =>

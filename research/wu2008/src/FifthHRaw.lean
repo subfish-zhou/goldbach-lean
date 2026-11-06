@@ -79,22 +79,5 @@ theorem fifthH_pair_raw {δ s ε : ℝ}
   exact_mod_cast fifthH_source_to_ordinary hselected
     (fifthH_pair_cutoff (by linarith) (rpow_nonneg (Nat.cast_nonneg N) _) hbudget ht)
 
-/-- Strict positive improvement is actually paid at every fixed s in the seed domain.
-No numerical table and no delta-continuity assertion enter this statement. -/
-theorem fifthH_pair_raw_positive {δ s : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 1000) (hs : 2 ≤ s) (hsHi : s < 7 / 2) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (Δ : ℝ) (V : Fin 2 → ℝ), wuSourceBox 2 δ N 2 Δ V →
-      (∀ j, (N : ℝ) ^ truncatedSixthLowerAlpha ≤ V j / Δ) →
-      ((N : ℝ) ^ truncatedSixthLowerAlpha) ^ s * (V 0 * V 1) ≤
-        (N : ℝ) ^ (1 / 2 - δ) →
-      (wuLowerCoefficient s + (7 / 2 - s) / 750) *
-        boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) ≤
-      ∑ t ∈ Fintype.piFinset (convolutionWuWindows N Δ V),
-        (sieveCount N (∏ j, t j) N ((N : ℝ) ^ truncatedSixthLowerAlpha) : ℝ) := by
-  have hgap := SecondFunctionalSmallDelta.h_strict hδ hδhi hs hsHi
-  have h := fifthH_pair_raw hδ (by linarith) (by linarith : 1 ≤ s)
-    (by linarith : s ≤ 10) (sub_pos.mpr hgap)
-  simpa only [sub_sub_cancel] using h
 
 end Wu2008DoubleSieve

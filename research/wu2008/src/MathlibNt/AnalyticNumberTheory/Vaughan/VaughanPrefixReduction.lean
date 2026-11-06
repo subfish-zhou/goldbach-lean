@@ -96,21 +96,6 @@ theorem vaughanLambdaCoeff_eq (b : ℤ → ℂ) (u v : ℕ) (n : ℤ) :
   push_cast
   ring
 
-/-- Exact consumption by one primitive character and one finite prefix.  This is
-the algebraic interface used before taking character/modulus sums or prefix
-maxima; no estimate has yet been applied. -/
-theorem primitiveCharacterPrefix_vaughan_eq
-    (b : ℤ → ℂ) (y q u v : ℕ) (χ : PrimitiveCharacter q) :
-    (∑ n ∈ Finset.Icc (1 : ℤ) y,
-        vaughanLambdaCoeff b n * χ.1 (n : ZMod q)) =
-      (∑ n ∈ Finset.Icc (1 : ℤ) y,
-        vaughanTypeICoeff b u v n * χ.1 (n : ZMod q)) +
-      (∑ n ∈ Finset.Icc (1 : ℤ) y,
-        vaughanTypeIICoeff b u v n * χ.1 (n : ZMod q)) +
-      (∑ n ∈ Finset.Icc (1 : ℤ) y,
-        vaughanSmallCoeff b v n * χ.1 (n : ZMod q)) := by
-  simp_rw [vaughanLambdaCoeff_eq b u v, add_mul,
-    Finset.sum_add_distrib]
 
 /-- Three-term square-norm inequality with its explicit finite loss. -/
 private theorem norm_add_add_sq_le_three (x y z : ℂ) :

@@ -1,0 +1,18 @@
+{
+  "status": "ACTUAL_INCREMENTAL_BUILD_SCOPE_AND_PARTIAL_OUTPUT_OBSERVATION_NOT_ACCEPTANCE",
+  "unix": 1793195937.5477245,
+  "plan_sha256": "71bacea034124cff9b5323af7e65b58eb45ae93c396327d6c65db7d9c741b16b",
+  "modules": 4151,
+  "direct_source_changes": 1082,
+  "dependency_only_rebuilds": 2875,
+  "verified_unchanged_cache_contexts": 194,
+  "planned_recompilations": 3957,
+  "completed_recompilations": 446,
+  "completed_stats": {
+    "source_edited": 274,
+    "object_changed": 388,
+    "source_unchanged_dependency_rebuild": 172,
+    "object_identical": 58
+  },
+  "policy": "Frozen source plan rebuilds the reverse import closure; unaffected recursive receipt contexts are verified and reused. No build-policy change or restart during this run."
+}

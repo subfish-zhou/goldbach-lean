@@ -208,17 +208,5 @@ theorem graphWeight20_perm (a2 a b phi : ℝ) (p : Equiv.Perm (Fin 4)) (t : Fin 
   · intro i
     refine Fin.cases ?_ (fun j => ?_) i <;> simp
 
-/-- Weighted change of variables for any test function, with the whole density retained. -/
-theorem integral_graphWeight_perm {n : ℕ} (A B : Fin (n+1) → ℝ) (phi : ℝ)
-    (p : Equiv.Perm (Fin (n+1))) (hA : ∀ i, A (p i) = A i) (hB : ∀ i, B (p i) = B i)
-    (f : (Fin n → ℝ) → ℝ) :
-    (∫ t, graphWeight A B phi t * f (graphPerm phi p t)) =
-      ∫ t, graphWeight A B phi t * f t := by
-  calc
-    _ = ∫ t, graphWeight A B phi (graphPerm phi p t) * f (graphPerm phi p t) := by
-      apply integral_congr_ae
-      exact Filter.Eventually.of_forall (fun t =>
-        congrArg (fun w => w * f (graphPerm phi p t)) (graphWeight_perm A B phi p hA hB t).symm)
-    _ = _ := integral_graphPerm phi p (fun t => graphWeight A B phi t * f t)
 
 end Wu2008DoubleSieve.HighUnit

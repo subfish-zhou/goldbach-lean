@@ -71,28 +71,6 @@ theorem norm_deriv_holomorphicLog_le
   rw [hderiv] at hcauchy
   convert hcauchy using 1; field_simp; ring
 
-/-- If `h` is a holomorphic logarithm of `g`, the preceding additive estimate
-is exactly an `O(A/R)` estimate for the nonzero local explicit-formula
-remainder `g'/g`. -/
-theorem norm_logDeriv_le_of_holomorphicLog_oscillation
-    (g h : ℂ → ℂ) (c : ℂ) {R A : ℝ} (hR : 0 < R) (hA : 0 < A)
-    (_hg : DifferentiableOn ℂ g (ball c R))
-    (hh : DifferentiableOn ℂ h (ball c R))
-    (hexp : EqOn (fun z ↦ exp (h z)) g (ball c R))
-    (hosc : ∀ z ∈ ball c R, (h z).re - (h c).re ≤ A) :
-    ‖logDeriv g c‖ ≤ 4 * A / R := by
-  have hc : c ∈ ball c R := mem_ball_self hR
-  have hgc : g c ≠ 0 := by
-    rw [← hexp hc]
-    exact exp_ne_zero _
-  have hderiv : deriv g c = g c * deriv h c := by
-    have hevent : (fun z ↦ exp (h z)) =ᶠ[𝓝 c] g :=
-      by filter_upwards [isOpen_ball.mem_nhds hc] with z hz; exact hexp hz
-    rw [← hevent.deriv_eq]
-    simpa [← hexp hc] using
-      ((hh c hc).differentiableAt (isOpen_ball.mem_nhds hc)).hasDerivAt.cexp.deriv
-  rw [logDeriv_apply, hderiv, mul_div_cancel_left₀ _ hgc]
-  exact norm_deriv_holomorphicLog_le h c hR hA hh hosc
 
 end
 end TatuzawaZeroContribution

@@ -111,13 +111,6 @@ theorem directNormalization_floor_monomial
   convert hf using 1
   ring
 
-/-- An explicit expansion of the only frequency loss; no exponent is silently absorbed. -/
-theorem directNormalization_frequency_power {Z T x : ℝ}
-    (hZ : 0 ≤ Z) (hT : 0 ≤ T) (hx : 0 ≤ x) (p : ℝ) :
-    (32 * Z * T / x) ^ p = (32 : ℝ) ^ p * Z ^ p * T ^ p / x ^ p := by
-  rw [Real.div_rpow (by positivity) hx,
-    Real.mul_rpow (by positivity : 0 ≤ 32 * Z) hT,
-    Real.mul_rpow (by norm_num : (0 : ℝ) ≤ 32) hZ]
 
 /-- Only nonnegative exponents after reciprocal payment may be globally enlarged. -/
 theorem directNormalization_global_monomial

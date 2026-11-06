@@ -88,33 +88,6 @@ theorem claim14_6_i_of_explicit_derivative_domination
     exact mul_nonpos_of_nonneg_of_nonpos hp0 (sub_nonpos.mpr
       (hdom sign ε t hε htstrict htupper))
 
-/-- Uniform moving-source closure of Claim 14.6(i) from its explicit derivative
-condition.  `sourceSigma` growth is used to put both signs' left endpoints below
-the moving endpoint. -/
-theorem eventually_claim14_6_i_at_sourceSigma_of_derivative_domination
-    {H : Section13HatLayers} {β d : ℝ}
-    (hH : Section13HatContract H β) (hd1 : 1 < d)
-    (hdom : ∃ Da : ℝ, 1 < Da ∧ ∀ D : ℝ, Da ≤ D →
-      ∀ (sign : ErrorSign) (ε t : ℝ),
-        (ε = 0 ∨ ε = 1) → β + sign.epsilon < t →
-        t < sourceSigma D d →
-        weightedHat H sign t * perturbationSlope D d ε t ≤
-          t * H.T sign.opposite (t - 1)) :
-    ∃ D0 : ℝ, 1 < D0 ∧ ∀ D : ℝ, D0 ≤ D →
-      3 ≤ sourceSigma D d ∧
-      Claim14_6_MonotoneLambdaPremise H D d (sourceSigma D d) := by
-  obtain ⟨Da, hDa, hdom⟩ := hdom
-  obtain ⟨D3, hD3, hthree⟩ :=
-    exists_sourceSigma_three_threshold d (zero_lt_one.trans hd1)
-  let D0 := max Da D3
-  refine ⟨D0, hDa.trans_le (le_max_left _ _), ?_⟩
-  intro D hD
-  have hDaD : Da ≤ D := (le_max_left _ _).trans hD
-  have hD3D : D3 ≤ D := (le_max_right _ _).trans hD
-  have hD1 : 1 < D := hDa.trans_le hDaD
-  have hσ3 : 3 ≤ sourceSigma D d := hthree D hD3D
-  exact ⟨hσ3, claim14_6_i_of_explicit_derivative_domination hH
-    (Real.log_pos hD1) (hdom D hDaD)⟩
 
 /-- WITHDRAWN / source-incompatible for moving `sourceSigma`.
 The second and fourth fields force asymptotically incompatible lower and upper

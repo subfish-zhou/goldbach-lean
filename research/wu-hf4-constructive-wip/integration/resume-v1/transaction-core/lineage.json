@@ -1,0 +1,9 @@
+{
+  "origin": "/tmp/wu-structural-adoption-v9/adopt.py",
+  "origin_sha256": "e4f277eb7f15e39f4b351157817bd3dcc22cb9df8b1933a21751e49447c6c3ff",
+  "exact_functions": {
+    "restore": "f518ff77eadbad21d54045fa384dcd07e75a9a204963f150918514528568c722",
+    "commit_items": "f065bbaf0fd4127413c392c84f03803925e5189f7a9656a9448e0797b41ff612"
+  },
+  "status": "TRANSACTION_ENGINE_ONLY_NOT_ADOPTION_AUTHORIZATION"
+}

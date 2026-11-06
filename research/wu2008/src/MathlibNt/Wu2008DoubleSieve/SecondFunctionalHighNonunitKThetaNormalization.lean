@@ -133,35 +133,6 @@ theorem sourceLegalKMass_theta_comparison {i k N : ℕ} {δ Δ τ : ℝ} {V : Fi
       mul_le_mul_of_nonneg_left hsum (mul_nonneg (by linarith) hli0)
     _ = _ := by unfold sourceKTheta; dsimp only [W, Q, K]; ring
 
-/-- True-li quarter normalization; its threshold is uniform in all original boxes and p. -/
-theorem sourceLegalKMass_theta_quarter (k : ℕ) {δ epsilon : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (he : 0 < epsilon) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s →
-      wuSingularSeries N / log N *
-        (sourceLegalKMass N δ Δ V p false + sourceLegalKMass N δ Δ V p true) ≤
-        sourceKTheta N δ Δ V p / 4 +
-          epsilon * boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  have hB := sourceKCap_pos
-  obtain ⟨T, hT4, hT⟩ := HighUnitSource.trueLi_near_one
-    (show 0 < 4*epsilon/sourceKCap by positivity)
-  refine ⟨T, hT4, ?_⟩
-  intro N hN i Δ V hb p hp hs
-  have hc := sourceKTheta_bounds (hT4.trans hN) hδ hδhi hb hp hs
-  have hm := sourceLegalKMass_theta_comparison (hT4.trans hN) hδ hδhi hb hp hs
-    (show 0 ≤ 4*epsilon/sourceKCap by positivity) (hT N hN)
-  have hpay := mul_le_mul_of_nonneg_left hc.2
-    (show 0 ≤ epsilon/sourceKCap by positivity)
-  have hcancel : epsilon/sourceKCap * (sourceKCap *
-      boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V)) =
-      epsilon * boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-    field_simp
-  rw [hcancel] at hpay
-  have hexpand : (1+4*epsilon/sourceKCap)/4 * sourceKTheta N δ Δ V p =
-      sourceKTheta N δ Δ V p / 4 + epsilon/sourceKCap * sourceKTheta N δ Δ V p := by ring
-  rw [hexpand] at hm
-  linarith only [hm, hpay]
 
 /-- Small positive rho pays both density factors and the true-li slack together. -/
 theorem sourceK_positive_slack {D epsilon E : ℝ}

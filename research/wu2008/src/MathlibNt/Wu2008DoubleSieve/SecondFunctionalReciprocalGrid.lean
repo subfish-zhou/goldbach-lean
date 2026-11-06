@@ -143,17 +143,7 @@ theorem gridCell_zero_dim (k : ℕ) (a : GridIndex 0 k) : gridCell a = Set.univ 
   ext t
   simp [gridCell, Set.mem_pi]
 
-theorem gridCell_zero_mesh {n : ℕ} (a : GridIndex n 0) : gridCell a = continuousCube n := by
-  apply Set.Subset.antisymm (fun _ ht => gridClosed_subset_cube a (gridCell_subset_closed a ht))
-  intro t ht i hi
-  have ha : (a i).val = 0 := by have := (a i).isLt; omega
-  have hh := ht i hi
-  change _ ≤ _ ∧ _ ≤ _ ∧ _
-  norm_num [gridNode, gridWidth, ha] at *
-  exact hh
 
-theorem gridIndex_card (n k : ℕ) : Fintype.card (GridIndex n k) = (k + 1) ^ n := by
-  simp [GridIndex]
 
 theorem gridWidth_arbitrarily_small {ε : ℝ} (hε : 0 < ε) :
     ∃ k : ℕ, gridWidth k < ε := by
@@ -164,19 +154,6 @@ theorem gridWidth_arbitrarily_small {ε : ℝ} (hε : 0 < ε) :
   have hh := (div_lt_iff₀ hε).mp hk
   nlinarith
 
-theorem gridCell_left_endpoint (n k : ℕ) :
-    (fun _ : Fin n => (1 / 10 : ℝ)) ∈ gridCell (fun _ => (0 : Fin (k + 1))) := by
-  intro i _
-  change gridNode k 0 ≤ 1 / 10 ∧ 1 / 10 ≤ gridNode k 1 ∧ (0 = 0 ∨ _)
-  rw [gridNode_zero]
-  exact ⟨le_refl _, (by simpa [gridNode_zero] using (gridNode_strictMono k).monotone (Nat.zero_le 1)), Or.inl rfl⟩
 
-theorem gridCell_right_endpoint (n k : ℕ) :
-    (fun _ : Fin n => (1 / 2 : ℝ)) ∈ gridCell (fun _ => Fin.last k) := by
-  intro i _
-  change gridNode k k ≤ 1 / 2 ∧ 1 / 2 ≤ gridNode k (k + 1) ∧ (k = 0 ∨ gridNode k k < 1 / 2)
-  have hh : gridNode k k < 1 / 2 := by
-    simpa [gridNode_last] using gridNode_strictMono k (Nat.lt_succ_self k)
-  exact ⟨hh.le, by rw [gridNode_last], Or.inr hh⟩
 
 end Wu2008DoubleSieve

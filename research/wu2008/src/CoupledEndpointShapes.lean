@@ -10,14 +10,6 @@ def κX : ℝ := 20096/1136369
 def κY : ℝ := 3136/2360151
 def D : ℝ := (1-16/207)*(1-8/161)-(8/23)*(32/4347)
 
-theorem determinant : D = (87413/99981 : ℝ) ∧ 0 < D ∧
-    (0 : ℝ) < 1-16/207 ∧ (0 : ℝ) < 1-8/161 := by norm_num [D]
-theorem kappa_identities :
-    κX = ((128/8073)*(1-8/161)+(8/23)*(64/56511))/D ∧
-    κY = ((64/56511)*(1-16/207)+(32/4347)*(128/8073))/D := by
-  norm_num [κX,κY,D]
-theorem kappa_strict : (128/8073 : ℝ) < κX ∧ (64/56511 : ℝ) < κY := by
-  norm_num [κX,κY]
 theorem κX_pos : 0 < κX := by norm_num [κX]
 theorem κY_pos : 0 < κY := by norm_num [κY]
 theorem X_nonneg {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) : 0 ≤ X δ :=

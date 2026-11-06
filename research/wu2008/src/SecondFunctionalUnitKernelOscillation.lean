@@ -129,55 +129,9 @@ theorem U_oscillation {m : ℕ} (phi b : ℝ) (x y : Fin (m+1) → ℝ) {d : ℝ
     G_oscillation phi b (Fin.elim0 : Fin 0 → Fin (m+1) → ℝ)
       (Fin.elim0 : Fin 0 → ℝ) (Fin.elim0 : Fin 0 → Bool) x y hd hx hy hxy
 
-/-- Zero diameter is admitted without any off-face premise. -/
-theorem G_diameter_zero {m r : ℕ} (phi b : ℝ) (C : Fin r → Fin (m+1) → ℝ)
-    (gamma : Fin r → ℝ) (strict : Fin r → Bool) (x y : Fin (m+1) → ℝ)
-    (hxy : ∀ i, |x i-y i| ≤ 0) : G phi b C gamma strict x = G phi b C gamma strict y := by
-  have he : x = y := funext (fun i => sub_eq_zero.mp (abs_eq_zero.mp (le_antisymm (hxy i) (abs_nonneg _))))
-  rw [he]
 
-theorem G_oscillation_fin4 {r : ℕ} (phi b : ℝ) (C : Fin r → Fin 4 → ℝ)
-    (gamma : Fin r → ℝ) (strict : Fin r → Bool) (x y : Fin 4 → ℝ) {d : ℝ}
-    (hd : 0 ≤ d) (hx : x ∈ continuousCube 4) (hy : y ∈ continuousCube 4)
-    (hxy : ∀ i, |x i-y i| ≤ d) :
-    |G phi b C gamma strict x - G phi b C gamma strict y| ≤ 400*d +
-      (if |phi - ∑ i, x i - x (Fin.last 3)| ≤ 5*d then 10 else 0) +
-      (if |phi - ∑ i, x i - b| ≤ 4*d then 10 else 0) +
-      ∑ q, (if |dot (C q) x - gamma q| ≤ (∑ i, |C q i|)*d then 10 else 0) := by
-  have h := G_oscillation phi b C gamma strict x y hd hx hy hxy
-  norm_num at h
-  exact h
 
-theorem U_oscillation_fin4 (phi b : ℝ) (x y : Fin 4 → ℝ) {d : ℝ}
-    (hd : 0 ≤ d) (hx : x ∈ continuousCube 4) (hy : y ∈ continuousCube 4)
-    (hxy : ∀ i, |x i-y i| ≤ d) :
-    |U phi b x - U phi b y| ≤ 400*d +
-      (if |phi - ∑ i, x i - x (Fin.last 3)| ≤ 5*d then 10 else 0) +
-      (if |phi - ∑ i, x i - b| ≤ 4*d then 10 else 0) := by
-  have h := U_oscillation phi b x y hd hx hy hxy
-  norm_num at h
-  exact h
 
-theorem G_oscillation_fin5 {r : ℕ} (phi b : ℝ) (C : Fin r → Fin 5 → ℝ)
-    (gamma : Fin r → ℝ) (strict : Fin r → Bool) (x y : Fin 5 → ℝ) {d : ℝ}
-    (hd : 0 ≤ d) (hx : x ∈ continuousCube 5) (hy : y ∈ continuousCube 5)
-    (hxy : ∀ i, |x i-y i| ≤ d) :
-    |G phi b C gamma strict x - G phi b C gamma strict y| ≤ 500*d +
-      (if |phi - ∑ i, x i - x (Fin.last 4)| ≤ 6*d then 10 else 0) +
-      (if |phi - ∑ i, x i - b| ≤ 5*d then 10 else 0) +
-      ∑ q, (if |dot (C q) x - gamma q| ≤ (∑ i, |C q i|)*d then 10 else 0) := by
-  have h := G_oscillation phi b C gamma strict x y hd hx hy hxy
-  norm_num at h
-  exact h
 
-theorem U_oscillation_fin5 (phi b : ℝ) (x y : Fin 5 → ℝ) {d : ℝ}
-    (hd : 0 ≤ d) (hx : x ∈ continuousCube 5) (hy : y ∈ continuousCube 5)
-    (hxy : ∀ i, |x i-y i| ≤ d) :
-    |U phi b x - U phi b y| ≤ 500*d +
-      (if |phi - ∑ i, x i - x (Fin.last 4)| ≤ 6*d then 10 else 0) +
-      (if |phi - ∑ i, x i - b| ≤ 5*d then 10 else 0) := by
-  have h := U_oscillation phi b x y hd hx hy hxy
-  norm_num at h
-  exact h
 
 end SecondFunctionalUnitKernel

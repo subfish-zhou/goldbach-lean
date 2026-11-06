@@ -24,10 +24,6 @@ theorem compactValues_bddAbove (p : SecondFunctionalParameters) (hp : p.MotherAd
     (hs : 2 ≤ p.s) (P : ℝ) : BddAbove (compactValues p P) :=
   (values_bddAbove p hp hs).mono (compactValues_subset_values p P)
 
-/-- The value set is genuinely compact by the internally proved continuity. -/
-theorem compactValues_isCompact (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
-    (hs : 2 ≤ p.s) (P : ℝ) : IsCompact (compactValues p P) :=
-  isCompact_Icc.image (kernel_continuous p hp hs)
 
 theorem kernel_le_compactSup (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
     (hs : 2 ≤ p.s) {P phi : ℝ} (hphi : phi ∈ Icc 2 P) :
@@ -50,11 +46,6 @@ noncomputable def compactArgmax (p : SecondFunctionalParameters) (hp : p.MotherA
     (hs : 2 ≤ p.s) (P : ℝ) (hP : 2 ≤ P) : ℝ :=
   (compact_exists_argmax p hp hs hP).choose
 
-theorem compactArgmax_spec (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
-    (hs : 2 ≤ p.s) (P : ℝ) (hP : 2 ≤ P) :
-    compactArgmax p hp hs P hP ∈ Icc 2 P ∧
-      kernel p (compactArgmax p hp hs P hP) = compactSup p P :=
-  (compact_exists_argmax p hp hs hP).choose_spec
 
 theorem compactSup_le_jointSup (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
     (hs : 2 ≤ p.s) {P : ℝ} (hP : 2 ≤ P) : compactSup p P ≤ jointSup p := by
@@ -69,19 +60,7 @@ theorem compactSup_mono (p : SecondFunctionalParameters) (hp : p.MotherAdmissibl
   rintro _ ⟨phi, hphi, rfl⟩
   exact kernel_le_compactSup p hp hs ⟨hphi.1, hphi.2.trans hPQ⟩
 
-theorem compactSup_monotoneOn (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
-    (hs : 2 ≤ p.s) : MonotoneOn (compactSup p) (Ici 2) := by
-  intro P hP Q _ hPQ
-  exact compactSup_mono p hp hs hP hPQ
 
-theorem compactSup_bounds (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
-    (hs : 2 ≤ p.s) {P : ℝ} (hP : 2 ≤ P) :
-    0 ≤ compactSup p P ∧ compactSup p P ≤ existenceCap :=
-  ⟨(kernel_bounds p hp hs 2).1.trans (kernel_le_compactSup p hp hs ⟨le_rfl, hP⟩),
-    (compactSup_le_jointSup p hp hs hP).trans (jointSup_bounds p hp hs).2⟩
 
-/-- Degenerate intervals retain the original endpoint value. -/
-theorem compactSup_two (p : SecondFunctionalParameters) : compactSup p 2 = kernel p 2 := by
-  simp [compactSup, compactValues]
 
 end Wu2008DoubleSieve.SecondFunctionalJointTail

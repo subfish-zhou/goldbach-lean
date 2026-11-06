@@ -311,23 +311,6 @@ theorem hasDerivAt_chenGammaCDF (n : ℕ) (t : ℝ) :
       rw [hpow]
       ring
 
-/-- Chen's finite formula equals the normalized interval Gamma integral exactly. -/
-theorem chenGammaCDF_eq_intervalIntegral (n : ℕ) (t : ℝ) :
-    chenGammaCDF n t =
-      (1 / (n.factorial : ℝ)) *
-        ∫ u in (0 : ℝ)..t, Real.exp (-u) * u ^ n := by
-  have hint : IntervalIntegrable
-      (fun u : ℝ => Real.exp (-u) * u ^ n / (n.factorial : ℝ)) volume 0 t :=
-    (((Real.continuous_exp.comp continuous_neg).mul (continuous_pow n)).div_const _).intervalIntegrable 0 t
-  have hFTC := intervalIntegral.integral_eq_sub_of_hasDerivAt
-    (a := (0 : ℝ)) (b := t) (f := chenGammaCDF n)
-    (f' := fun u => Real.exp (-u) * u ^ n / (n.factorial : ℝ))
-    (fun u _ => hasDerivAt_chenGammaCDF n u) hint
-  rw [chenGammaCDF_zero, sub_zero] at hFTC
-  rw [← hFTC, ← intervalIntegral.integral_const_mul]
-  apply intervalIntegral.integral_congr
-  intro u _
-  ring
 
 /-- The finite Gamma CDF is monotone on its source range. -/
 theorem chenGammaCDF_monotoneOn (n : ℕ) :
@@ -406,13 +389,6 @@ theorem chenGammaCDF_mem_Icc (n : ℕ) {t : ℝ} (ht : 0 ≤ t) :
   · rw [chenGammaCDF, sub_le_self_iff]
     exact mul_nonneg (Real.exp_pos _).le (chenExpPartial_nonneg n ht)
 
-/-- Exact two-sided tail enclosure furnished by the finite source formula. -/
-theorem chenGammaCDF_tail_mem_Icc (n : ℕ) {t : ℝ} (ht : 0 ≤ t) :
-    1 - chenGammaCDF n t ∈ Set.Icc (0 : ℝ) 1 := by
-  constructor
-  · rw [one_sub_chenGammaCDF]
-    exact mul_nonneg (Real.exp_pos _).le (chenExpPartial_nonneg n ht)
-  · linarith [(chenGammaCDF_mem_Icc n ht).1]
 
 /-- Source-range positivity of the transformed coordinate. -/
 theorem chen1973PerronArgument_nonneg {x y : ℝ} (hx : 1 < x) (hy : 1 ≤ y) :
@@ -429,90 +405,6 @@ theorem chen1973PerronKernelFinite_mem_Icc {x y : ℝ} (hx : 1 < x) (_hy : 0 ≤
     exact chenGammaCDF_mem_Icc _
       (chen1973PerronArgument_nonneg hx (le_of_lt (lt_of_not_ge h)))
 
-/-- For fixed `x > 1`, Chen's finite kernel is monotone on nonnegative inputs. -/
-theorem chen1973PerronKernelFinite_monotoneOn {x : ℝ} (hx : 1 < x) :
-    MonotoneOn (chen1973PerronKernelFinite x) (Set.Ici 0) := by
-  intro y hy z hz hyz
-  by_cases hy1 : y ≤ 1
-  · rw [chen1973PerronKernelFinite_of_le_one hy1]
-    exact (chen1973PerronKernelFinite_mem_Icc hx hz).1
-  · have hz1 : 1 < z := lt_of_lt_of_le (lt_of_not_ge hy1) hyz
-    rw [chen1973PerronKernelFinite_of_one_lt (lt_of_not_ge hy1),
-      chen1973PerronKernelFinite_of_one_lt hz1]
-    apply chenGammaCDF_monotoneOn (chen1973PerronOrder x)
-      (chen1973PerronArgument_nonneg hx (le_of_lt (lt_of_not_ge hy1)))
-      (chen1973PerronArgument_nonneg hx hz1.le)
-    exact mul_le_mul_of_nonneg_left
-      (Real.strictMonoOn_log.monotoneOn
-        (lt_trans zero_lt_one (lt_of_not_ge hy1)) (lt_trans zero_lt_one hz1) hyz)
-      (Real.rpow_nonneg (Real.log_pos hx).le _)
 
-/--
-Chen's explicit lower bound in the original numerical range.  The proof is
-purely analytic: the finite tail is bounded by `2^n exp (-t/2)`, then
-`n = ⌊log x⌋ ≤ log x`, `log 2 < 9/10`, and `t ≥ 2 log x` give the result.
--/
-theorem chen1973PerronKernelFinite_lower_bound {x y : ℝ}
-    (hx1 : 1 < x) (hx : (10 : ℝ) ^ 7 ≤ Real.log x)
-    (hy : Real.exp (2 * (Real.log x) ^ (-(1 : ℝ) / 10)) ≤ y) :
-    1 - x ^ (-(1 : ℝ) / 10) ≤ chen1973PerronKernelFinite x y := by
-  let L : ℝ := Real.log x
-  have hLpos : 0 < L := by dsimp [L]; norm_num at hx ⊢; linarith
-  have hxpos : 0 < x := zero_lt_one.trans hx1
-  have hypos : 0 < y := (Real.exp_pos _).trans_le hy
-  have hlogy : 2 * L ^ (-(1 : ℝ) / 10) ≤ Real.log y := by
-    calc
-      2 * L ^ (-(1 : ℝ) / 10) =
-          Real.log (Real.exp (2 * L ^ (-(1 : ℝ) / 10))) := by rw [Real.log_exp]
-      _ ≤ Real.log y := Real.strictMonoOn_log.monotoneOn (Real.exp_pos _) hypos hy
-  have hscale : chen1973PerronScale x = L ^ ((11 : ℝ) / 10) := rfl
-  have hpowcancel : L ^ ((11 : ℝ) / 10) * L ^ (-(1 : ℝ) / 10) = L := by
-    rw [← Real.rpow_add hLpos]
-    norm_num
-  have ht : 2 * L ≤ chen1973PerronScale x * Real.log y := by
-    rw [hscale]
-    calc
-      2 * L = L ^ ((11 : ℝ) / 10) * (2 * L ^ (-(1 : ℝ) / 10)) := by
-        calc
-          _ = 2 * (L ^ ((11 : ℝ) / 10) * L ^ (-(1 : ℝ) / 10)) :=
-            congrArg (fun z : ℝ => 2 * z) hpowcancel.symm
-          _ = _ := by ring
-      _ ≤ L ^ ((11 : ℝ) / 10) * Real.log y := by gcongr
-  have ht0 : 0 ≤ chen1973PerronScale x * Real.log y := by linarith
-  have hy1 : 1 < y := (Real.one_lt_exp_iff.mpr
-    (mul_pos (by norm_num) (Real.rpow_pos_of_pos hLpos _))).trans_le hy
-  rw [chen1973PerronKernelFinite, if_neg (not_le_of_gt hy1)]
-  have htail := one_sub_chenGammaCDF_le_two_pow_mul_exp_neg_half
-    (chen1973PerronOrder x) ht0
-  suffices (2 : ℝ) ^ chen1973PerronOrder x *
-      Real.exp (-(chen1973PerronScale x * Real.log y) / 2) ≤
-        x ^ (-(1 : ℝ) / 10) by linarith
-  have hnL : ((chen1973PerronOrder x : ℕ) : ℝ) ≤ L := Nat.floor_le hLpos.le
-  have hlog2 : Real.log 2 ≤ (9 : ℝ) / 10 :=
-    Real.log_two_lt_d9.le.trans (by norm_num)
-  have hnnonneg : (0 : ℝ) ≤ chen1973PerronOrder x := by positivity
-  have hpowexp : (2 : ℝ) ^ chen1973PerronOrder x *
-        Real.exp (-(chen1973PerronScale x * Real.log y) / 2) =
-      Real.exp (((chen1973PerronOrder x : ℕ) : ℝ) * Real.log 2 -
-        (chen1973PerronScale x * Real.log y) / 2) := by
-    calc
-      _ = Real.exp (Real.log 2) ^ chen1973PerronOrder x *
-          Real.exp (-(chen1973PerronScale x * Real.log y) / 2) := by
-            rw [Real.exp_log (by norm_num : (0 : ℝ) < 2)]
-      _ = Real.exp (((chen1973PerronOrder x : ℕ) : ℝ) * Real.log 2) *
-          Real.exp (-(chen1973PerronScale x * Real.log y) / 2) := by
-            rw [Real.exp_nat_mul]
-      _ = _ := by
-        rw [← Real.exp_add]
-        congr 1
-        ring
-  rw [hpowexp, Real.rpow_def_of_pos hxpos]
-  apply Real.exp_le_exp.mpr
-  have hnlog : ((chen1973PerronOrder x : ℕ) : ℝ) * Real.log 2 ≤
-      L * ((9 : ℝ) / 10) := by
-    calc
-      _ ≤ ((chen1973PerronOrder x : ℕ) : ℝ) * ((9 : ℝ) / 10) := by gcongr
-      _ ≤ L * ((9 : ℝ) / 10) := by gcongr
-  linarith
 
 end AnalyticNumberTheory.LargeSieve

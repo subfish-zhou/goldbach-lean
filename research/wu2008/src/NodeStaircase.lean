@@ -94,27 +94,5 @@ theorem actual_nine_extension {δ : ℝ} (hd : 0 < δ) (hdhi : δ ≤ 1 / 10) :
   exact ⟨nineProfile_nonneg (actualNine_nonneg hd hdhi),
     profile_extension hd hdhi (nineProfile_integrable _) (fun _ ht => nineProfile_le_actual hd hdhi ht)⟩
 
-theorem cells_cover {t : ℝ} (ht : t ∈ Ioc (1 : ℝ) 3) :
-    ∃ i : Fin 9, t ∈ Ioc (upperLeft i) (upperNode i) := by
-  have hex : ∃ n : ℕ, n < 9 ∧ t ≤ (22 + (n : ℝ)) / 10 := by
-    refine ⟨8, by omega, ?_⟩
-    norm_num
-    exact ht.2
-  let n := Nat.find hex
-  have hn : n < 9 ∧ t ≤ (22 + (n : ℝ)) / 10 := Nat.find_spec hex
-  refine ⟨⟨n, hn.1⟩, ?_, hn.2⟩
-  dsimp [upperLeft]
-  split_ifs with hzero
-  · exact ht.1
-  · have hpos : 0 < n := Nat.pos_of_ne_zero hzero
-    have hmin : ¬ ((n - 1) < 9 ∧ t ≤ (22 + ((n - 1 : ℕ) : ℝ)) / 10) :=
-      Nat.find_min hex (show n - 1 < Nat.find hex from Nat.sub_lt hpos (by omega))
-    have hpred : ((n - 1 : ℕ) : ℝ) = (n : ℝ) - 1 := by
-      rw [Nat.cast_sub (by omega : 1 ≤ n), Nat.cast_one]
-    by_contra h
-    apply hmin
-    refine ⟨by omega, ?_⟩
-    rw [hpred]
-    linarith
 
 end NodeExtension

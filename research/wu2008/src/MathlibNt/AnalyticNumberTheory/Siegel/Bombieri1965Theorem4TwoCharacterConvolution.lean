@@ -62,13 +62,6 @@ theorem character_mul_product_apply
   rw [← hxprod, Nat.cast_mul, map_mul]
   ring
 
-/-- An exact divisor-antidiagonal formula obtained by twisting one pair of factors. -/
-theorem twoCharacterConvolution_apply
-    (χ ψ : DirichletCharacter ℂ q) (n : ℕ) :
-    twoCharacterConvolution χ ψ n =
-      ∑ x ∈ n.divisorsAntidiagonal, χ.zetaMul x.1 * (ψ x.2 * χ.zetaMul x.2) := by
-  rw [twoCharacterConvolution, mul_assoc, ArithmeticFunction.mul_apply]
-  simp_rw [character_mul_product_apply]
 
 private lemma twist_zetaMul_prime_pow_nonneg
     {χ ψ : DirichletCharacter ℂ q} (hχ : χ ^ 2 = 1)
@@ -145,14 +138,6 @@ theorem twoCharacterConvolution_nonneg
         twoCharacterConvolution_prime_pow_nonneg hχ hψ
           (Nat.prime_of_mem_primeFactors hp) _
 
-/-- The imaginary part vanishes; positivity is not merely a bound on the real part. -/
-theorem twoCharacterConvolution_im_eq_zero
-    {χ ψ : DirichletCharacter ℂ q} (hχ : χ ^ 2 = 1) (hψ : ψ ^ 2 = 1)
-    (n : ℕ) :
-    (twoCharacterConvolution χ ψ n).im = 0 := by
-  have h := twoCharacterConvolution_nonneg hχ hψ n
-  rw [RCLike.le_iff_re_im] at h
-  exact h.2.symm
 
 /-- The real part of every coefficient is nonnegative. -/
 theorem twoCharacterConvolution_re_nonneg
@@ -222,12 +207,5 @@ theorem LSeries_twoCharacterConvolution_eq_LFunction_product
   rw [LSeries_twoCharacterConvolution χ ψ hs, χ.LFunction_eq_LSeries hs,
     ψ.LFunction_eq_LSeries hs, (χ * ψ).LFunction_eq_LSeries hs]
 
-/-- Absolute convergence and the actual analytic value, in one `HasSum` statement. -/
-theorem LSeriesHasSum_twoCharacterConvolution
-    [NeZero q] (χ ψ : DirichletCharacter ℂ q) {s : ℂ} (hs : 1 < s.re) :
-    LSeriesHasSum (twoCharacterConvolution χ ψ) s
-      (riemannZeta s * χ.LFunction s * ψ.LFunction s * (χ * ψ).LFunction s) :=
-  LSeriesHasSum_iff.mpr ⟨LSeriesSummable_twoCharacterConvolution χ ψ hs,
-    LSeries_twoCharacterConvolution_eq_LFunction_product χ ψ hs⟩
 
 end DirichletCharacter

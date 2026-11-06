@@ -197,29 +197,6 @@ theorem stepanovPointCount_taylor (f : F[X]) (r : F) :
   · intro xy _
     simp
 
-/-- Harcos Theorem 7 (`pages/harcos-stepanov-08.png`), without an
-`f(0) ≠ 0` hypothesis. A nonroot exists since `deg f < q`, and translation
-preserves the degree, geometric nonsquareness, and affine point count. -/
-theorem stepanov_pointCount_bound (f : F[X])
-    (hq : Odd (Fintype.card F))
-    (hf : ¬ IsSquare (f.map (algebraMap F (AlgebraicClosure F))))
-    (hm : 3 ≤ f.natDegree) (hmq : 6 * f.natDegree < Fintype.card F) :
-    |(stepanovPointCount f : ℝ) - Fintype.card F| <
-      4 * f.natDegree * ⌈Real.sqrt (Fintype.card F : ℝ)⌉₊ := by
-  have hnz : f ≠ 0 := by
-    intro hz
-    simp only [hz, natDegree_zero] at hm
-    omega
-  obtain ⟨r, hr⟩ : ∃ r : F, f.eval r ≠ 0 := by
-    by_contra! h
-    exact hnz (eq_zero_of_natDegree_lt_card_of_eval_eq_zero f
-      Function.injective_id h (by omega))
-  have h := stepanov_pointCount_bound_of_eval_zero_ne (taylor r f) hq
-    (by simpa only [taylor_eval, zero_add] using hr)
-    ((stepanov_geometrically_not_isSquare_taylor_iff f r).mpr hf)
-    (by simpa only [natDegree_taylor] using hm)
-    (by simpa only [natDegree_taylor] using hmq)
-  simpa only [stepanovPointCount_taylor, natDegree_taylor] using h
 
 end FiniteField
 

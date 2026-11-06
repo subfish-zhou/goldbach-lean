@@ -39,19 +39,6 @@ lemma primitiveCharacter_ne_one_of_two_le
   rw [primitive_conductor ψ] at hc
   omega
 
-/-- The explicitly nonprincipal formulation is equivalent to the older
-all-primitive pointwise formulation, since conductors in the low set start at
-`2`. -/
-theorem primitivePrefixSiegelWalfiszSource_of_nonprincipal
-    (h : NonprincipalPrimitivePsiSiegelWalfiszSource) :
-    PrimitivePrefixSiegelWalfiszSource := by
-  intro C D
-  obtain ⟨K, hK, hN⟩ := h C D
-  refine ⟨K, hK, ?_⟩
-  filter_upwards [hN] with N hSN
-  intro hN2 d hd ψ
-  exact hSN hN2 d hd ψ
-    (primitiveCharacter_ne_one_of_two_le (Finset.mem_Icc.mp hd).1 ψ)
 
 /-- The complete finite arithmetic mass in the low conductor lane is at most
 `R H(Q)^2`, where `R = floor(log(N)^C)`. -/

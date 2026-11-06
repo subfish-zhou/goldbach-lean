@@ -65,25 +65,6 @@ theorem support_bounds {N d : ℕ} {δ η s t : ℝ} (hN : 2 ≤ N) (hd : 0 < d)
     cutoff_lower hN hd hη (by linarith) ht hsize,
     rpow_le_rpow_of_exponent_le hg.2.1.le (one_div_le_one_div_of_le (by norm_num) hs)⟩
 
-/-- Closed real exponent support, not merely a statement on the prime atoms. -/
-theorem continuous_domain {N d : ℕ} {δ η s t : ℝ} (hN : 2 ≤ N) (hd : 0 < d)
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (hη : 0 < η)
-    (hsize : (d : ℝ) ≤ (N : ℝ)^(1/2-δ-10*η))
-    (hs : 2 ≤ s) (hst : s ≤ t) (ht : t ≤ 10)
-    {p : ℝ × ℝ × ℝ} (hp : p ∈ omega3XExponentRegion s t) :
-    2 < omega3XPhi N d δ ∧ omega3XPhi N d δ ≤ 1/(10*η) ∧
-    1+2*δ/(1/2-δ) < (omega3XPhi N d δ-p.1-p.2.1-p.2.2)/p.2.1 ∧
-    (omega3XPhi N d δ-p.1-p.2.1-p.2.2)/p.2.1 ≤ 1/η := by
-  have hg := phi_bounds hN hd hδ hδhi hη hsize
-  have hgap : 0 < 2*δ/(1/2-δ) := by positivity
-  have hφ : 2 < omega3XPhi N d δ := by linarith [hg.2.2.1]
-  obtain ⟨ha,hb,hc⟩ := omega3XExponentRegion_bounds hs hst ht hp
-  have hu := omega3X_argument_bounds hφ.le ha hb hc
-  refine ⟨hφ,hg.2.2.2,by linarith [hu.1,hg.2.2.1],?_⟩
-  calc
-    _ ≤ 10*omega3XPhi N d δ := hu.2.1
-    _ ≤ 10*(1/(10*η)) := mul_le_mul_of_nonneg_left hg.2.2.2 (by norm_num)
-    _ = _ := by ring
 
 end
 end HighO3

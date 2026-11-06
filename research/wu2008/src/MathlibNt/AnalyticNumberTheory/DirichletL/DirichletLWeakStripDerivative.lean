@@ -91,19 +91,5 @@ lemma dirichlet_cpow_abel_Ico (χ : DirichletCharacter ℂ q) (s : ℂ) {m n : �
             (∑ j ∈ range (k + 1), χ j) := by
   exact abel_Ico χ (fun k : ℕ => (k : ℂ) ^ (-s)) hmn
 
-omit [NeZero q] in
-/-- Exact finite Abel summation for the derivative weight
-`-log(k) k⁻ˢ`. -/
-lemma dirichlet_derivative_weight_abel_Ico (χ : DirichletCharacter ℂ q) (s : ℂ)
-    {m n : ℕ} (hmn : m < n) :
-    ∑ k ∈ Ico m n, (-(Complex.log k) * (k : ℂ) ^ (-s)) * χ k =
-      (-(Complex.log ((n - 1 : ℕ) : ℂ)) * ((n - 1 : ℕ) : ℂ) ^ (-s)) *
-          (∑ k ∈ range n, χ k) -
-        (-(Complex.log (m : ℂ)) * (m : ℂ) ^ (-s)) * (∑ k ∈ range m, χ k) -
-        ∑ k ∈ Ico m (n - 1),
-          ((-(Complex.log ((k + 1 : ℕ) : ℂ)) * ((k + 1 : ℕ) : ℂ) ^ (-s)) -
-            (-(Complex.log (k : ℂ)) * (k : ℂ) ^ (-s))) *
-              (∑ j ∈ range (k + 1), χ j) := by
-  exact abel_Ico χ (fun k : ℕ => -(Complex.log k) * (k : ℂ) ^ (-s)) hmn
 
 end DirichletLWeakStripDerivative

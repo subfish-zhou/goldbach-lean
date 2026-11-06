@@ -219,30 +219,6 @@ theorem weighted_primitive_vaughanCanonicalBilinear_prefixMax_unconditional
       (mul_nonneg (sq_nonneg _) (by positivity))
       (prefix_rowwise_scale_nonneg (vaughanCanonicalTensorLength y k) Q)
 
-/-- Linear-harmonic imprimitive conductor-window transport for the complete
-canonical bilinear prefix maximum. -/
-theorem imprimitive_conductor_window_vaughanCanonicalBilinear_prefixMax
-    (b : ℕ → ℂ) (y N Q C u v k l : ℕ) (hC : 0 < C) :
-    (∑ d ∈ Finset.Icc C (2 * C), imprimitiveConductorWeight Q d *
-      ∑ ψ : PrimitiveCharacter d,
-        vaughanCanonicalBilinearPrefixMaxSquare b y N u v k l d ψ) ≤
-      ((Q / C : ℕ) : ℝ) * conductorHarmonicFactor (Q / C) *
-      ((((Nat.log2 (vaughanCanonicalTensorLength y k) + 1 : ℕ) : ℝ) ^ 2) *
-      ((2 ^ k : ℕ) : ℝ) *
-      ((vaughanCanonicalTensorLength y k : ℕ) +
-        primitiveBilinearQFactor (2 * C) * ((2 * C : ℕ) : ℝ) ^ 2) *
-      vaughanCanonicalShortTensorEnergy vaughanMangoldtCoeff b
-        y N u v k l) := by
-  let F : (d : ℕ) → PrimitiveCharacter d → ℝ := fun d ψ =>
-    vaughanCanonicalBilinearPrefixMaxSquare b y N u v k l d ψ
-  have hF : ∀ d ψ, 0 ≤ F d ψ := by
-    intro d ψ
-    exact bilinearTensorCharacterPrefixMaxSquare_nonneg _ _ _ _ _
-  refine (imprimitive_conductor_window_family_le_linear_typeII F hF Q C hC).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · simpa [F] using weighted_primitive_vaughanCanonicalBilinear_prefixMax_unconditional
-      b y N u v k l (2 * C) (Nat.mul_pos (by decide) hC)
-  · exact mul_nonneg (by positivity) (conductorHarmonicFactor_nonneg _)
 
 /-- Substitution of the explicit divisor-square constant `27`.  This theorem
 makes the remaining full row-mass factor visible. -/
@@ -267,14 +243,6 @@ theorem weighted_primitive_vaughanCanonicalBilinear_prefixMax_energy27
       (mul_nonneg (sq_nonneg _) (by positivity))
       (prefix_rowwise_scale_nonneg (vaughanCanonicalTensorLength y k) Q)
 
-/-- Algebraic audit: after writing `X=D*M`, the prefix maximal route with the
-`27`-energy still contains `X * (X + D*Q^2)`.  Thus the dyadic maximal upgrade
-does not itself supply the missing `N/log` saving needed by a BV endpoint. -/
-theorem bilinear_prefix_energy27_scale_audit
-    (D M Q L : ℝ) :
-    D * (M + Q ^ 2) * (27 * (D * M) * L) =
-      27 * (D * M) * (D * M + D * Q ^ 2) * L := by
-  ring
 
 end
 

@@ -117,14 +117,5 @@ theorem Xi2_integral_mono {f g : ℝ → ℝ}
   rw [intervalIntegral.integral_sub (Xi2_integrable hg hp) (Xi2_integrable hf hp)] at h
   exact sub_nonneg.mp h
 
-theorem Xi2_actual_integral_nonneg {δ : ℝ} (hd : 0 < δ) (hh : δ ≤ 1/10)
-    {p : SecondFunctionalParameters} (hp : PropositionFourGeometry p) :
-    0 ≤ ∫ t in (1:ℝ)..3, wuImprovementLimit true δ t * Xi2 p t := by
-  have hhalf : δ < 1/2 := by linarith
-  apply Xi2_integral_nonneg
-    (wuImprovementLimit_intervalIntegrable true hd hhalf
-      (a := 1) (b := 3) (by norm_num) (by norm_num) (by norm_num)) _ hp
-  intro t ht
-  exact wuImprovementLimit_nonneg true hd hhalf ht.1 (ht.2.trans (by norm_num))
 
 end WuPaper.R2Xi

@@ -107,24 +107,6 @@ theorem fifthH_triangle_integral {f : ℝ × ℝ → ℝ} (hi : Integrable f)
   intro x hx
   exact ⟨(hsupp hx).1, (hsupp hx).2.1⟩
 
-/-- Literal iterated h integral, retaining all the original s-delta and denominator parameters. -/
-theorem fifthH_only_literal_integral {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1 / 1000) :
-    fifthHOnlyIntegral δ =
-      4 * ∫ y in truncatedSixthLowerAlpha..truncatedSixthLowerBeta,
-        ∫ x in truncatedSixthLowerAlpha..y,
-          wuImprovementLimit false δ (truncatedSixthLowerS δ x y) /
-            (x * y * (truncatedSixthLowerC δ - x - y)) := by
-  unfold fifthHOnlyIntegral
-  rw [fifthH_triangle_integral (fifthH_only_integrable hδ hδhi)
-    (by intro v hv; by_contra hn; exact hv (by simp [fifthHOnlyKernel, hn]))]
-  congr 1
-  apply intervalIntegral.integral_congr
-  intro y hy
-  rw [Set.uIcc_of_le truncatedSixthLower_parameters.2.1.le] at hy
-  apply intervalIntegral.integral_congr
-  intro x hx
-  rw [Set.uIcc_of_le hy.1] at hx
-  exact if_pos (show (x,y) ∈ fifthPairRegion from ⟨hx.1, hx.2, hy.2⟩)
 
 /-- Exact triangle area calculation; no numerical integration or new cutoff. -/
 theorem fifthH_triangle_constant (c : ℝ) :
@@ -183,8 +165,5 @@ theorem fifthH_Fdelta_uniform_gain {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1 /
   rw [fifthH_actual_integral_split hδ hδhi]
   exact add_le_add_right (fifthH_only_uniform_gain hδ hδhi) _
 
-theorem fifthH_Fdelta_strict {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1 / 1000) :
-    fifthPairFdelta δ < fifthHFdelta δ :=
-  (lt_add_of_pos_right _ fifthHGain_pos).trans_le (fifthH_Fdelta_uniform_gain hδ hδhi)
 
 end Wu2008DoubleSieve

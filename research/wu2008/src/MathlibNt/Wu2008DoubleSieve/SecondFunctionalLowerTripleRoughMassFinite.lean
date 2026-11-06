@@ -173,15 +173,6 @@ theorem rough_mass_triple_dictionary {i : ℕ} (N : ℕ) (δ Δ : ℝ) (V : Fin 
     LabelledPhysical.Family.restrictLabels, LowerTripleGrouped.sourceFamily,
     LowerTripleGrouped.family] using hsum
 
-/-- The complete six-band finite dictionary, with no union or product-image deduplication. -/
-theorem six_rough_mass_triple_dictionary {i : ℕ} (N : ℕ) (δ Δ : ℝ) (V : Fin i → ℝ)
-    (P : SecondFunctionalParameters) :
-    (∑ j : Fin 6, (LowerTripleGrouped.roughFamily N δ Δ V P j).mass) =
-      ∑ j : Fin 6, ∑ d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V),
-        (convolutionCoeff (convolutionWuWindows N Δ V) d : ℝ) *
-        ∑ t ∈ actualPrimeTriples N δ P j d,
-          ((roughNumbers ((N : ℝ)/tupleProduct d t) t.2.1).card : ℝ) := by
-  exact sum_congr rfl (fun j _ => rough_mass_triple_dictionary N δ Δ V P j)
 
 /-- The original residual fibre is inclusive, not erase-one. -/
 theorem original_residual_fibre_dictionary {i : ℕ} (N : ℕ) (δ Δ : ℝ) (V : Fin i → ℝ)

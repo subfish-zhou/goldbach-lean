@@ -50,22 +50,5 @@ theorem originalNodeCertificate_eventually (n : ℕ) (h : FiniteStrictOutput n) 
   obtain ⟨μ, _, _, hr, hc⟩ := originalNodeCertificate_with_radius n h
   exact ⟨marginRadius (totalDebit n) μ, hr, hc⟩
 
-/-- Actual F6 moving-window quantifiers, conditional only on the same finite output. -/
-theorem finite_output_actual_lower (n : ℕ) (h : FiniteStrictOutput n)
-    {ε t : ℝ} (hε : 0 < ε) (ht : 0 < t) (ht' : t ≤ 1 / 1000) :
-    ∃ δ0 : ℝ, 0 < δ0 ∧ δ0 ≤ t / 2 ∧
-      ∀ δ : ℝ, 0 < δ → δ < δ0 →
-        ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-          (truncatedSixthLowerF6lin + StaircaseShrink.gamma t - ε) *
-            wuSingularSeries N * N / Real.log N ^ (2 : ℕ) ≤
-          (truncatedSixthMass N ((N : ℝ) ^ truncatedSixthLowerAlpha)
-            ((N : ℝ) ^ truncatedSixthLowerBeta) ((N : ℝ) ^ truncatedSixthLowerSigma)
-            ((N : ℝ) ^ truncatedSixthLowerLambda) : ℝ) := by
-  obtain ⟨d, hd, hc⟩ := originalNodeCertificate_eventually n h
-  obtain ⟨a, ha, hat, hb⟩ := StaircaseActual.actual_lower hε ht ht'
-  refine ⟨min d a, lt_min hd ha, (min_le_right _ _).trans hat, ?_⟩
-  intro δ hδ hs
-  exact hb δ hδ (hs.trans_le (min_le_right _ _))
-    (hc δ hδ (hs.trans_le (min_le_left _ _)))
 
 end ActualNineFeedback

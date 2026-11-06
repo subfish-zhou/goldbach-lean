@@ -198,29 +198,7 @@ def LiuMainPanAPPrimePowerCorrectionBoundAt
       liuPanAPPrimePowerCorrectionMaxY N q N f ≤
     Cpp * N / Real.log N ^ A
 
-/-- The complete signed-main weighted average is nonnegative. -/
-theorem liuMainPanSignedMain_average_nonneg
-    (distMain : ℝ → ℝ) (N : ℕ) (f : ℕ → ℝ) (B : ℝ) (u v : ℕ) :
-    0 ≤ ∑ q ∈ range (panModulusCutoff N B + 1),
-      (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) *
-        (3 : ℝ) ^ q.primeFactors.card *
-        liuPanSignedMainMaxY distMain N q N f u v := by
-  apply Finset.sum_nonneg
-  intro q hq
-  exact mul_nonneg (panTypeI_weight_nonneg q)
-    (liuPanSignedMainMaxY_nonneg distMain N q N f u v)
 
-/-- The AP prime-power correction weighted average is nonnegative. -/
-theorem liuMainPanAPPrimePowerCorrection_average_nonneg
-    (N : ℕ) (f : ℕ → ℝ) (B : ℝ) :
-    0 ≤ ∑ q ∈ range (panModulusCutoff N B + 1),
-      (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) *
-        (3 : ℝ) ^ q.primeFactors.card *
-        liuPanAPPrimePowerCorrectionMaxY N q N f := by
-  apply Finset.sum_nonneg
-  intro q hq
-  exact mul_nonneg (panTypeI_weight_nonneg q)
-    (liuPanAPPrimePowerCorrectionMaxY_nonneg N q N f)
 
 /-- The two exact fixed-`N` component bounds imply the existing signed residual
 bound with the sum of constants and unchanged parameters and cutoff. -/
@@ -274,34 +252,6 @@ def LiuMainPanSignedResidualSplitSourceFamilyInputs
     LiuMainPanAPPrimePowerCorrectionBoundAt N
       (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B Cpp
 
-/-- Eventual component bounds, each quantified after all analytic parameters,
-give the eventual existing residual bound. -/
-theorem eventually_liuMainPanSignedResidualBoundAt_of_splitBoundsAt
-    {distMain : ℝ → ℝ} {A B Cmain Cpp : ℝ} {u v : ℕ}
-    (hmain : ∀ᶠ N : ℕ in atTop,
-      LiuMainPanSignedMainBoundAt distMain N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B Cmain u v)
-    (hpp : ∀ᶠ N : ℕ in atTop,
-      LiuMainPanAPPrimePowerCorrectionBoundAt N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B Cpp) :
-    ∀ᶠ N : ℕ in atTop,
-      LiuMainPanSignedResidualBoundAt distMain N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))
-        A B (Cmain + Cpp) u v := by
-  filter_upwards [hmain, hpp] with N hmainN hppN
-  exact LiuMainPanSignedResidualBoundAt.of_splitBoundsAt hmainN hppN
 
-/-- The packaged split source-family input implies the existing eventual
-residual input with constants added. -/
-theorem LiuMainPanSignedResidualSplitSourceFamilyInputs.signedResidual
-    {distMain : ℝ → ℝ} {A B Cmain Cpp : ℝ} {u v : ℕ}
-    (h : LiuMainPanSignedResidualSplitSourceFamilyInputs
-      distMain A B Cmain Cpp u v) :
-    ∀ᶠ N : ℕ in atTop,
-      LiuMainPanSignedResidualBoundAt distMain N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N))
-        A B (Cmain + Cpp) u v := by
-  filter_upwards [h] with N hN
-  exact LiuMainPanSignedResidualBoundAt.of_splitBoundsAt hN.1 hN.2
 
 end MathlibNt.SieveTheory.LiuWeight

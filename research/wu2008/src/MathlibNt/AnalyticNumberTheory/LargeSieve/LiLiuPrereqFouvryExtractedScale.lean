@@ -104,23 +104,6 @@ theorem wAnalytic_phase_budget
       mul_le_mul_of_nonneg_left hb' (abs_nonneg _)
     _ = _ := by ring
 
-/-- The actual ceiling cutoff only supplies `Z + M/lcm`. This explicitly
-records the boundary-frequency issue before any small-power variation claim. -/
-theorem wUniformCutoff_phase_scale_le {M Z : ℝ} (hM : 0 < M) (hZ : 0 ≤ Z)
-    {q r : ℕ} (hq : q ≠ 0) (hr : r ≠ 0) {h : ℤ}
-    (hh : h.natAbs ≤ wUniformCutoff M Z q r) :
-    M * |(h : ℝ)| / (q.lcm r : ℝ) ≤ Z + M / (q.lcm r : ℝ) := by
-  have hl : (0 : ℝ) < q.lcm r :=
-    Nat.cast_pos.mpr (Nat.pos_of_ne_zero (Nat.lcm_ne_zero hq hr))
-  have hh' : |(h : ℝ)| ≤ (wUniformCutoff M Z q r : ℝ) := by
-    simpa only [Nat.cast_natAbs, Int.cast_abs] using (Nat.cast_le (α := ℝ)).mpr hh
-  have hceil : (wUniformCutoff M Z q r : ℝ) ≤ (q.lcm r : ℝ) / M * Z + 1 :=
-    le_of_lt (Nat.ceil_lt_add_one (by positivity))
-  calc
-    _ ≤ M * ((q.lcm r : ℝ) / M * Z + 1) / (q.lcm r : ℝ) := by
-      gcongr
-      exact hh'.trans hceil
-    _ = _ := by field_simp
 
 /-- Positive dyadic reference scales enlarge the phase budget by at most
 sixteen. The estimate is for the complete rectangle, not just its masked

@@ -264,22 +264,6 @@ theorem claim145_caseA_lowS_actual_of_bigOScalarTarget
     simpa only [one_mul] using
       htail.trans (hfirst.trans (hsecond.trans (htarget.trans hlower)))
 
-/-- Closed production-facing low-`s` leaf, using the strengthened
-sourceSigma-inclusive prefactor theorem.  The first source big-O estimate is supplied by `claim145_caseA_lowS_bigOScalarTarget`. -/
-theorem claim145_caseA_lowS_actual
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ C1 Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hC1 : 0 ≤ C1) (hΘ : 0 < Θ) (hd : 0 < d)
-    (hsource : 2 / d < 1 / Θ) (hΔ0 : 0 ≤ Δ) (hΔ1 : Δ ≤ 1) :
-    ∃ K0 : ℝ, 2 ≤ K0 ∧
-      Claim145CaseALargeKLowSClosed S H d Δ C1 Θ K0 1 := by
-  apply claim145_caseA_lowS_actual_of_bigOScalarTarget S H hH
-    (claim145_caseA_lowS_bigOScalarTarget C1 Θ)
-  intro C hC
-  simpa only [Claim145CaseALowSSourceSigmaPrefactor, mul_assoc,
-      mul_left_comm, mul_comm] using
-    (claim145_caseA_lowS_146_prefactor_eventually hC1 hΘ hd hsource hΔ0 hΔ1 hC)
 
 /-- Uniform-in-sieve strengthening of the low-coordinate Case-A leaf.  All
 analytic witnesses and the `K` threshold are chosen before the varying sieve. -/

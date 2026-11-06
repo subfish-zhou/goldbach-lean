@@ -34,22 +34,6 @@ theorem scaledDyadicCutoff_poisson_rescaled {M D : ℝ} (hM : 0 < M) (hD : 0 < D
     exact congrArg (fun v : ℂ ↦ v * fourier h (b / D : UnitAddCircle))
       (scaledDyadicCutoff_fourier hMD h).symm
 
-/-- The affine-lattice Poisson formula with the Fourier transform at `h / D`.
-The positive Fourier phase is Mathlib's `fourier h (b / D)`. -/
-theorem scaledDyadicCutoff_poisson {M D : ℝ} (hM : 0 < M) (hD : 0 < D)
-    (b : ℝ) :
-    (∑' z : ℤ, (scaledDyadicCutoff M (b + D * z) : ℂ)) =
-      D⁻¹ • ∑' h : ℤ,
-        𝓕 (fun x ↦ (scaledDyadicCutoff M x : ℂ)) ((h : ℝ) / D) *
-          fourier h (b / D : UnitAddCircle) := by
-  rw [scaledDyadicCutoff_poisson_rescaled hM hD, ← tsum_const_smul'']
-  apply tsum_congr
-  intro h
-  have hfreq : M / D * (h : ℝ) = M * ((h : ℝ) / D) := by ring
-  rw [hfreq]
-  simp only [scaledDyadicCutoff_fourier hM, smul_mul_assoc, smul_smul]
-  congr 1
-  ring
 
 /-- A telescoping majorant that remains bounded when the mesh tends to zero. -/
 theorem poisson_decay_step {t : ℝ} (ht : 0 < t) (n : ℕ) :

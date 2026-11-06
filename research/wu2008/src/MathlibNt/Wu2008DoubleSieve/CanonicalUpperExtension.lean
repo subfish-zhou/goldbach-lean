@@ -103,14 +103,6 @@ theorem jr1965F_normalized_initial {s : ℝ} (hs : 0 < s) (hs3 : s ≤ 3) :
   have hsne : s ≠ 0 := hs.ne'
   field_simp
 
-/-- The next coefficient is the explicit inner integral, not the base
-constant one. Its formula is valid through five. -/
-theorem jr1965F_normalized_innerIntegral {s : ℝ} (hs3 : 3 ≤ s) (hs5 : s ≤ 5) :
-    s * jr1965F s / (2 * exp eulerMascheroniConstant) =
-      1 + jurkatRichertInnerIntegral s := by
-  rw [jr1965F_eq_innerIntegral hs3 hs5]
-  have hsne : s ≠ 0 := by linarith
-  field_simp
 
 /-- Uniform budget on `[1,4]`. The frozen global monotonicity bound
 `F(s)<=2*exp(gamma)` gives `A(s)<=4`; the actual coefficient is retained. -/
@@ -216,71 +208,5 @@ theorem wu_variable_upper_main_relative_extended (k : ℕ) (hk : 1 ≤ k) {δ η
       (div_nonneg hli (Nat.cast_nonneg (Nat.totient d))))
   convert h using 1 <;> ring
 
-/-- Actual source upper comparison on `[1,4]`, with both strict and printed
-closed conventions. Below `3/2` only the existing finite-monotonicity baseline
-is used. Above three the coefficient is not replaced by one. -/
-theorem wu_boxPhi_upper_source_extended (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :
-    ∃ N0 : ℕ, ∀ N : ℕ, N0 ≤ N → Even N →
-      ∀ i : ℕ, i ≤ k → ∀ Δ : ℝ,
-        1 + log (N : ℝ) ^ (-4 : ℝ) ≤ Δ →
-        Δ < 1 + 2 * log (N : ℝ) ^ (-4 : ℝ) →
-        ∀ V : Fin i → ℝ, Antitone V →
-          (∀ j, (N : ℝ) ^ (δ ^ (k + 1)) ≤ V j) →
-          boxSquaredPrefixes ((N : ℝ) ^ (1 / 2 - δ)) V →
-          ∀ s : ℝ, 1 ≤ s → s ≤ 4 →
-          wuBoxPhi N δ (convolutionWuWindows N Δ V) s ≤
-              (s * jr1965F s / (2 * exp eulerMascheroniConstant) + ε) *
-                boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) ∧
-          wuBoxPhiLE N δ (convolutionWuWindows N Δ V) s ≤
-              (s * jr1965F s / (2 * exp eulerMascheroniConstant) + ε) *
-                boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
-  let η : ℝ := min 1 (ε / 7)
-  have hη : 0 < η := lt_min (by norm_num) (by positivity)
-  have hη1 : η ≤ 1 := min_le_left _ _
-  have hηε : 7 * η ≤ ε := by have := min_le_right 1 (ε / 7); dsimp [η]; linarith
-  obtain ⟨N1, hmain⟩ := wu_variable_upper_main_relative_extended k hk hδ hδhi hη hη1
-  obtain ⟨N2, hrem⟩ := wu_variable_level_remainder_relative k hδ hδhi hη
-  obtain ⟨N3, hbase⟩ := wu_boxPhi_upper_source k hk hδ hδhi hε
-  refine ⟨max 2 (max N1 (max N2 N3)), ?_⟩
-  intro N hN he i hik Δ hlo hhi V horder hV hprefix s hs hs4
-  have hN2 : 2 ≤ N := (le_max_left _ _).trans hN
-  have hN1 : N1 ≤ N := (le_max_left _ _).trans ((le_max_right _ _).trans hN)
-  have hNr : N2 ≤ N :=
-    (le_max_left _ _).trans ((le_max_right _ _).trans ((le_max_right _ _).trans hN))
-  have hNb : N3 ≤ N :=
-    (le_max_right _ _).trans ((le_max_right _ _).trans ((le_max_right _ _).trans hN))
-  suffices hstrict :
-      wuBoxPhi N δ (convolutionWuWindows N Δ V) s ≤
-        (s * jr1965F s / (2 * exp eulerMascheroniConstant) + ε) *
-          boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) from
-    ⟨hstrict, (wuBoxPhiLE_le_strict N δ _ s).trans hstrict⟩
-  by_cases hslo : 3 / 2 ≤ s
-  · have hM := hmain N hN1 he i hik Δ hlo hhi V horder hV hprefix s hslo hs4
-    have hR := hrem N hNr i hik Δ hlo hhi V hV hprefix true
-      (fun d => wuLocalCutoff N δ d s)
-    have hT : 0 ≤ boxTheta N ((N : ℝ) ^ (1 / 2 - δ))
-        (convolutionWuWindows N Δ V) :=
-      nonneg_of_mul_nonneg_right ((abs_nonneg _).trans hR) hη
-    have hfinite :
-        wuBoxPhi N δ (convolutionWuWindows N Δ V) s ≤
-          convolutionRosserMain N (convolutionWuWindows N Δ V) true
-            (wuVariableRosserLevel N δ) (fun d => wuLocalCutoff N δ d s) +
-          convolutionRosserRemainder N (convolutionWuWindows N Δ V) true
-            (wuVariableRosserLevel N δ) (fun d => wuLocalCutoff N δ d s) := by
-      unfold wuBoxPhi convolutionSieveCount convolutionRosserMain convolutionRosserRemainder
-      rw [← sum_add_distrib]
-      apply sum_le_sum
-      intro d hd
-      have hg := wuVariableRosserLevel_geometry hN2 hδ hδhi hV hprefix hd hs
-      rw [← mul_add]
-      exact mul_le_mul_of_nonneg_left
-        (ordinaryRosser_upper_finite hg.2.2.1 hg.2.2.2.1) (Nat.cast_nonneg _)
-    have hr := (le_abs_self _).trans hR
-    have hpay := mul_le_mul_of_nonneg_right hηε hT
-    nlinarith
-  · have hs3 : s ≤ 3 := by linarith
-    rw [jr1965F_normalized_initial (by linarith) hs3]
-    exact (hbase N hNb he i hik Δ hlo hhi V horder hV hprefix s hs hs3).1
 
 end Wu2008DoubleSieve

@@ -27,32 +27,6 @@ theorem ninthSieveR1_error_paid {δ ε : ℝ} (hδ : 0 < δ) (hε : 0 < ε) :
   rw [show (3 : ℝ) = ((3 : ℕ) : ℝ) by norm_num, rpow_natCast] at h
   exact h.trans (hpay N ((le_max_right _ _).trans hN))
 
-/-- Every additive error from the physical sieve is paid. There is no
-evenness hypothesis in this error estimate. -/
-theorem ninth_all_sieve_errors_paid {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :
-    ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ninthSieveR1 N (⌊(N : ℝ) ^ (1 / 2 - δ)⌋₊ + 1)
-          (sqrt ((N : ℝ) ^ (1 / 2 - δ))) +
-        ninthSieveR2 N (⌊(N : ℝ) ^ (1 / 2 - δ)⌋₊ + 1)
-          (sqrt ((N : ℝ) ^ (1 / 2 - δ))) +
-        ninthSmallOutputBudget (sqrt ((N : ℝ) ^ (1 / 2 - δ))) ≤
-          ε * N / log N ^ (2 : ℕ) := by
-  obtain ⟨T1, hT1, hR1⟩ := ninthSieveR1_error_paid hδ (show 0 < ε / 2 by positivity)
-  obtain ⟨T2, _, herrors⟩ :=
-    ninthR2_smallOutput_error_paid hδ hδhi (show 0 < ε / 2 by positivity)
-  refine ⟨max T1 T2, hT1.trans (le_max_left _ _), ?_⟩
-  intro N hN
-  have h1 := hR1 N ((le_max_left _ _).trans hN) (sqrt ((N : ℝ) ^ (1 / 2 - δ)))
-  have h2 := herrors N ((le_max_right _ _).trans hN)
-  calc
-    _ = ninthSieveR1 N (⌊(N : ℝ) ^ (1 / 2 - δ)⌋₊ + 1)
-        (sqrt ((N : ℝ) ^ (1 / 2 - δ))) +
-        (ninthSieveR2 N (⌊(N : ℝ) ^ (1 / 2 - δ)⌋₊ + 1)
-          (sqrt ((N : ℝ) ^ (1 / 2 - δ))) +
-          ninthSmallOutputBudget (sqrt ((N : ℝ) ^ (1 / 2 - δ)))) := by ring
-    _ ≤ ε / 2 * N / log N ^ 2 + ε / 2 * N / log N ^ 2 := add_le_add h1 h2
-    _ = _ := by ring
 
 /-- The concrete error-paid T9 theorem. The source density factor is
 literal, and X9 remains the actual prime-profile mass. -/

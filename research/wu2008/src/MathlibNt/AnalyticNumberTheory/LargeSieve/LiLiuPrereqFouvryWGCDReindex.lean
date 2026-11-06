@@ -54,21 +54,6 @@ theorem wGCDTuple_injOn {N Q : Finset ℕ} {a : ℤ}
   simpa only [wGCDTuple_original (wOriginalTuples_pos hN hQ ht),
     wGCDTuple_original (wOriginalTuples_pos hN hQ hu)] using h
 
-/-- The image domain is characterized by genuine arithmetic validity and
-membership of the reconstructed original tuple, with no chosen witnesses. -/
-theorem mem_wGCDTuples_iff {N Q : Finset ℕ} {a : ℤ}
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q) (v : WGCDData) :
-    v ∈ wGCDTuples N Q a ↔
-      v.original ∈ wOriginalTuples N Q a ∧
-        v.Valid v.original.1.1 v.original.1.2 v.original.2.1 v.original.2.2 := by
-  constructor
-  · rintro hv
-    obtain ⟨t, ht, rfl⟩ := Finset.mem_image.mp hv
-    have hp := wOriginalTuples_pos hN hQ ht
-    rw [wGCDTuple_original hp]
-    exact ⟨ht, wGCDData_valid hp.1 hp.2.1 hp.2.2.1 hp.2.2.2⟩
-  · rintro ⟨ht, hv⟩
-    exact Finset.mem_image.mpr ⟨v.original, ht, hv.eq_canonical.symm⟩
 
 /-- An exact change of variables for arbitrary additive weights. -/
 theorem sum_wGCDTuples {A : Type*} [AddCommMonoid A]
@@ -130,18 +115,6 @@ theorem truncatedWNonzeroMode_eq_gcdTuples
 def WGCDData.key (v : WGCDData) : ℕ × ℕ × ℕ × ℕ × ℕ :=
   (v.d, v.d₁, v.δ, v.δ₁, v.δ₂)
 
-/-- Exact five-parameter outer grouping. The inner fibers still contain all
-four free coordinates and all original support conditions. -/
-theorem truncatedWNonzeroMode_eq_fiveGCD
-    (M : ℝ) (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ)
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q) :
-    truncatedWNonzeroMode M H N Q β c a =
-      ∑ z ∈ (wGCDTuples N Q a).image WGCDData.key,
-        ∑ v ∈ (wGCDTuples N Q a).filter (fun v ↦ v.key = z),
-          wGCDTerm M H β c a v := by
-  rw [truncatedWNonzeroMode_eq_gcdTuples M H N Q β c a hN hQ]
-  exact (Finset.sum_fiberwise_of_maps_to
-    (fun v hv ↦ Finset.mem_image.mpr ⟨v, hv, rfl⟩) _).symm
 
 def WGCDData.Small (v : WGCDData) (Y : ℝ) : Prop :=
   (v.d : ℝ) ≤ Y ∧ (v.d₁ : ℝ) ≤ Y ∧ (v.δ : ℝ) ≤ Y ∧
@@ -161,15 +134,5 @@ def wGCDLargeSum (M Y : ℝ) (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ)
   classical
   exact ∑ v ∈ (wGCDTuples N Q a).filter (fun v ↦ ¬v.Small Y), wGCDTerm M H β c a v
 
-/-- A signed equality with the discarded contribution still present. -/
-theorem truncatedWNonzeroMode_eq_small_add_large
-    (M Y : ℝ) (H : ℕ → ℕ → ℕ) (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ)
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q) :
-    truncatedWNonzeroMode M H N Q β c a =
-      wGCDSmallSum M Y H N Q β c a + wGCDLargeSum M Y H N Q β c a := by
-  classical
-  rw [truncatedWNonzeroMode_eq_gcdTuples M H N Q β c a hN hQ]
-  unfold wGCDSmallSum wGCDLargeSum
-  rw [Finset.sum_filter_add_sum_filter_not]
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

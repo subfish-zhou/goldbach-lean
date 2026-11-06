@@ -1,0 +1,20 @@
+{
+  "status": "SOURCE_PATCH_REPLAY_HEADERS_AND_IMPORT_GRAPH_PASS_NOT_COMPILED",
+  "modules": [
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.RealCharacterSquareSum",
+      "patch_replays_exactly": true
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanV1SquareMean",
+      "patch_replays_exactly": true
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanV3SquareMean",
+      "patch_replays_exactly": true
+    }
+  ],
+  "source_graph_modules": 4152,
+  "new_hypotheses": "Arbitrary real coefficient sequence; the only numerical hypothesis remains 0 < q.",
+  "compilation_blocked_by_existing_build_lock": true
+}

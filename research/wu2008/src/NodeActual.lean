@@ -142,16 +142,6 @@ theorem profile_extension {δ : ℝ} (hd : 0 < δ) (hdhi : δ ≤ 1 / 10)
     exact (add_le_add (mul_le_mul_of_nonneg_right ha hl) le_rfl).trans
       (profile_upper_log hd hdhi hf hfH hv.1 hv.2)
 
-/-- No integrability hypothesis: it is supplied by the profile's antitonicity. -/
-theorem antitone_extension {δ : ℝ} (hd : 0 < δ) (hdhi : δ ≤ 1 / 10)
-    {f : ℝ → ℝ} (hf : AntitoneOn f (Icc (1 : ℝ) 3))
-    (hfH : ∀ t ∈ Icc (1 : ℝ) 3, f t ≤ wuImprovementLimit true δ t) :
-    aProfile f ≤ wuImprovementLimit false δ 4 ∧
-    (∀ u ∈ Icc (2 : ℝ) 4, gProfile f u ≤ wuImprovementLimit false δ u) ∧
-    (∀ v ∈ Icc (3 : ℝ) 5, eProfile f v ≤ wuImprovementLimit true δ v) := by
-  apply profile_extension hd hdhi _ hfH
-  apply AntitoneOn.intervalIntegrable
-  simpa only [uIcc_of_le (by norm_num : (1 : ℝ) ≤ 3)] using hf
 
 /-- The continuous extension applied to the actual H itself. -/
 theorem actual_continuous_extension {δ : ℝ} (hd : 0 < δ) (hdhi : δ ≤ 1 / 10) :

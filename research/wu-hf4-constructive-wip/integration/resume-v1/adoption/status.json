@@ -1,0 +1,19 @@
+{
+  "status": "PREPARED_TESTED_NOT_DRY_RUN_NOT_ADOPTED",
+  "tests_passed": 18,
+  "gates": "25 actual validation steps, 4151 source contexts, 696 types,183 raw data values,19 kernels,literal axioms,portable producer",
+  "files": {
+    "test_gates.py": "f636fe2ee934f3d9ad8f1b6c12bdd5e48e64b4e7005e35a5ea7c17066438efcf",
+    "sourceaudit.py": "5a24bf59e258d4cd004912c8df62ba056da08a9dabf8c9dbeab822507761033c",
+    "toolchain-actual-review.json": "690ca74adcfaa6c82614dc0180181f593df4906d993a70c38a93517db39f877c",
+    "core.py": "5d8742f7b2cb68fb9469b0cd9726fe710ef1df2445b4fa7a3ea071a66440eddc",
+    "export_review.py": "73c09d218fb78c27059448a6476430d23e2b56c4db50744d78320f472b45d282",
+    "adopt.py": "aba7c7e3dfa19e10d03db45f70a6e6b4fc14c9375b3c4fb2354c38a245c3f7ea",
+    "test_core.py": "30b2a797789e7a718e355c0a90120c331b5f509520a7a4a288d4ce3657d3d098",
+    "toolchain_review.py": "3320a00f20c618cf7d4c43331b7219a3aba50e334cd77b8fc76521ea5e56510f",
+    "test-actual.log": "b1ae854c07c8cf7ac617d2faf3e89f999ec2815fdc8dcd78a10756d4d70ea413",
+    "test_exports.py": "cc40a83fe0fa2b9f1434e185c1573aa1bb571946709a4b358af3f02ee6a0724a"
+  },
+  "export_review": "Exact 696/183 names, full metadata, reconstructed fixed exporter source, strict pinned commands and sole local library; no actual full dry run yet",
+  "toolchain_review": "Actual compiler/checker/Init SHA-256 and all 10 package revisions match the accepted structural baseline; checked without launching Lean."
+}

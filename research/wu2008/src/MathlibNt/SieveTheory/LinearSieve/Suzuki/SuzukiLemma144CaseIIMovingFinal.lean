@@ -372,52 +372,6 @@ theorem eventually_lemma144_caseII_odd_sameC_final_moving
         (sourceSigma (D : ℝ) d) C K)
       hendpoint hrelative)
 
-/-- Exact moving-domain Case-II packet for the finite-depth assembler.  Its
-natural cutoff is chosen before the successor depth is inspected. -/
-theorem lemma14_4_caseII_moving_final_hcaseII
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {C K d Δ C145 : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hd1 : 1 < d) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d)
-    (hC3 : 3 ≤ C) (hK : 2 ≤ K) (hC145 : 0 < C145)
-    (hlocal : HasDimensionOneLocalProductBound S K) :
-    ∀ depth : ℕ, Lemma144MovingDomainCaseIIHCase S H C K d Δ depth := by
-  intro depth N Dmin hN _hNdepth hDmin hIH
-  have hevent := eventually_lemma144_caseII_odd_sameC_final_moving
-    S H hH hd1 hΔ0 hΔ1 hd hC3 hK hC145 hlocal hDmin
-  obtain ⟨D0, hD0⟩ := eventually_atTop.1 hevent
-  by_cases hodd : Odd (N + 1)
-  · have hN3 : 3 ≤ N + 1 := by
-      have hN2 : 2 ≤ N + 1 := by omega
-      have hmod : (N + 1) % 2 = 1 := Nat.odd_iff.mp hodd
-      omega
-    refine ⟨max Dmin D0, le_max_left _ _, ?_⟩
-    intro D hD hD2 s hs _hsSigma ⟨_hsOdd, hs3⟩ hz2
-    have hpred : Lemma144MovingDomainGlobalDepthAt
-        S H C K d Δ ((N + 1) - 1) Dmin := by
-      simpa [Nat.add_sub_cancel] using hIH
-    have hsame := hD0 D ((le_max_right Dmin D0).trans hD)
-      (N + 1) s hodd hN3
-      (by
-        have hmod : (N + 1) % 2 = 1 := Nat.odd_iff.mp hodd
-        have hs' : (2 : ℝ) - 1 < s := by
-          simpa [KappaOneModel.parityDomain, hmod] using hs
-        norm_num at hs' ⊢
-        exact hs')
-      hs3 hpred
-    dsimp [Lemma144CaseIISameCAt] at hsame
-    rw [suzukiActualT_eq_parity_sum]
-    have hcarrier : suzukiActualParityCarrier (N + 1) =
-        (Finset.Icc 1 (N + 1)).filter (fun n => n % 2 = (N + 1) % 2) := by
-      ext n
-      simp [suzukiActualParityCarrier]
-      omega
-    rw [hcarrier]
-    exact hsame
-  · refine ⟨Dmin, le_rfl, ?_⟩
-    intro D _hD _hD2 s _hs _hsSigma hsII _hz2
-    exact False.elim (hodd hsII.1)
 
 
 end MathlibNt.SieveTheory

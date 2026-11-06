@@ -7,15 +7,6 @@ open MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig
 open MathlibNt.SieveTheory.LiuWeight
 namespace OriginalU8.Weighted
 
-/-- Continuous endpoint conventions are identified only after the discrete cover
-has retained every closed atom. No prime sum is altered by this equality. -/
-theorem low_eq_closed_iterated {a : ℝ} (hab : a ≤ 1/10) :
-    low a = ∫ x in Icc a (1/10 : ℝ),
-      ∫ y in Icc (1/3 : ℝ) ((1-x)/2), fouvryG9WeightedIntegrand (x,y) := by
-  rw [low_eq_iteratedSetIntegral hab, integral_Icc_eq_integral_Ioc]
-  apply setIntegral_congr_fun measurableSet_Ioc
-  intro x _
-  exact integral_Icc_eq_integral_Ioc.symm
 
 theorem inner_integrable {u : ℝ} (hu : u ∈ Ioc (0 : ℝ) (1/3)) :
     IntervalIntegrable (fun v => 1/(u*v*(1-u-v)*(1-u))) volume (1/3) ((1-u)/2) := by
@@ -61,17 +52,5 @@ theorem original_kernel_nonneg {N : ℕ} {ρ δ : ℝ} (hN : 2 ≤ N)
     primeLogExponent N rs.1-primeLogExponent N rs.2)*((5/9 : ℝ)*(1-primeLogExponent N rs.1)-δ))
   exact one_div_nonneg.mpr (mul_nonneg (mul_nonneg (by positivity) hg) hd)
 
-/-- Literal limsup of the original kernel, with rho fixed before N. -/
-theorem original_kernel_limsup (ρ δ : ℝ) (hρ : 1 < ρ) (hδ0 : 0 ≤ δ) (hδ : δ ≤ 1/8) :
-    Filter.limsup (fun N : ℕ => relaxedPairKernel N ρ δ) atTop ≤
-      (1+6*δ)*((9/5 : ℝ)*low (100/1327)) := by
-  have hnn : ∀ᶠ N : ℕ in atTop, 0 ≤ relaxedPairKernel N ρ δ := by
-    filter_upwards [eventually_ge_atTop (2 : ℕ)] with N hN
-    exact original_kernel_nonneg hN hρ hδ
-  have hcb := isCoboundedUnder_le_of_eventually_le atTop hnn
-  apply le_of_forall_pos_le_add
-  intro ε hε
-  obtain ⟨N₀,hN₀⟩ := original_kernel_fixed ρ δ ε hρ hδ0 hδ hε
-  exact limsup_le_of_le hcb (eventually_atTop.mpr ⟨N₀,hN₀⟩)
 
 end OriginalU8.Weighted

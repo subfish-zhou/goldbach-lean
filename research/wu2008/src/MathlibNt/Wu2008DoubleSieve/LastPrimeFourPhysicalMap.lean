@@ -92,15 +92,7 @@ theorem original_card_le_profiles (N : ℕ) (e : Bool) :
       card_le_card_of_injOn switch original_maps switch_injective.injOn
     _ = _ := card_sigma _ _
 
-theorem physical10_card_le (N : ℕ) :
-    (TruncatedFourPhysical.Physical10 N).card ≤ ∑ t ∈ labels N false,
-      ((omega3ProfilePrimes N (lower N false t) (upper N false t)).filter
-        (fun d => (N-cofactor t*d).Prime)).card := original_card_le_profiles N false
 
-theorem physical11_card_le (N : ℕ) :
-    (TruncatedFourPhysical.Physical11 N).card ≤ ∑ t ∈ labels N true,
-      ((omega3ProfilePrimes N (lower N true t) (upper N true t)).filter
-        (fun d => (N-cofactor t*d).Prime)).card := original_card_le_profiles N true
 
 /-- Restoring just the original last-prime coprimality mask gives the reverse
 map. In particular the enlargement did not alter roughness or any strict face. -/
@@ -126,14 +118,5 @@ theorem profiles_restore_original {N : ℕ} {e : Bool} {a b c n d : ℕ}
     refine ⟨mem_s3Upsilon11Range.mpr ?_,hn,hr,hid.symm ▸ hs,hid.symm ▸ hout⟩
     exact ⟨ha,haN,hza,hb,hbN,hc,hcN,hdP,hdN,hab,hbc,hcw,hwd rfl,hcap⟩
 
-/-- A literal label-by-label equivalence, before discarding the d mask. -/
-theorem original_iff_profile {N : ℕ} {e : Bool} (a b c d n : ℕ) :
-    (⟨(a,b,c,d),n⟩ : TruncatedFourPhysical.Label) ∈ original N e ↔
-      (⟨(a,b,c,n),d⟩ : Σ _ : Index, ℕ) ∈ outputProfiles N e ∧ d.Coprime N := by
-  constructor
-  · intro hx
-    exact ⟨original_maps hx,(original_data hx).2.2.2.2.2.2.2.2.2.2.2.2.2.1⟩
-  · rintro ⟨hx,hcop⟩
-    exact profiles_restore_original hx hcop
 
 end Wu2008DoubleSieve.LastPrimeFour

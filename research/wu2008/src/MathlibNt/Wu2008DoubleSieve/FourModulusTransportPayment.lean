@@ -56,24 +56,5 @@ theorem fourModulus_eleven_relative {κ ε : ℝ} (hκ : 0 < κ) (hε : 0 < ε) 
     hN4 he hκ hz
   exact ⟨h.1, h.2.trans hpay⟩
 
-/-- The actual fixed Section 5 cutoffs, including the moving product
-cutoff V. The threshold depends on epsilon, not on N. -/
-theorem fourModulus_eleven_fixed_relative {ε : ℝ} (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      let κ₁ : ℝ := 100 / 1327
-      let κ₂ : ℝ := 25 / 206
-      let z := (N : ℝ) ^ κ₁
-      let w := (N : ℝ) ^ κ₂
-      let u := (N : ℝ) ^ (1 / 2 - 3 * κ₁)
-      let v := (N : ℝ) ^ (1 / 3 : ℝ)
-      let V := (N : ℝ) ^ (1 / 2 - 2 * κ₁)
-      0 ≤ (fourModulusQuotientEleven N z w u v V : ℝ) -
-        (finiteElevenMixed N z w u v V : ℝ) ∧
-      (fourModulusQuotientEleven N z w u v V : ℝ) -
-        (finiteElevenMixed N z w u v V : ℝ) ≤
-          ε * wuSingularSeries N * N / log N ^ (2 : ℕ) := by
-  obtain ⟨T, hT, h⟩ := fourModulus_eleven_relative
-    (by norm_num : (0 : ℝ) < 100 / 1327) hε
-  exact ⟨T, hT, fun N hN he => h N hN he _ _ _ _⟩
 
 end Wu2008DoubleSieve

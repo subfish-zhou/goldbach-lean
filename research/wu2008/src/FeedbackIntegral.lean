@@ -65,13 +65,6 @@ theorem C_le_Cinf (n : ℕ) : C n ≤ Cinf :=
 
 theorem Cinf_nonneg : 0 ≤ Cinf := Gamma_nonneg Winf_nonneg le_rfl
 
-/-- This minimizes only the output on the fixed system's nonnegative
-supersolutions. It is not an upper bound on the actual count or sieve gain. -/
-theorem Cinf_le_supersolution_output {z : Fin 9 → ℝ} (hz : ∀ i, 0 ≤ z i)
-    (hs : ∀ i, base i + matrixApply feedbackMatrix z i ≤ z i) :
-    Cinf ≤ Gamma (matrixApply transferMatrix z) 0 :=
-  Gamma_mono (fun j => matrixApply_mono transferMatrix_nonneg
-    (Ainf_le_supersolution hz hs) j) le_rfl
 
 end
 end FeedbackLimit

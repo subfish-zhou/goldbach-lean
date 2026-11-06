@@ -101,29 +101,5 @@ theorem perturbation_three_le_one_add_seven_ratio
   change (1 + x) ^ 3 ≤ 1 + 7 * x
   nlinarith [hx2, hx3]
 
-/-- Once the cubic perturbation is smaller than half the strict Claim-14.6(iii)
-margin, its product with the contraction coefficient still leaves half of that
-margin for all finite endpoint terms. -/
-theorem caseII_contraction_with_cubic_perturbation
-    {D d Δ σ : ℝ}
-    (hσ : 1 < σ) (_hΔ : Δ < 1)
-    (hpert : perturbation D d 0 3 ≤
-      1 + (1 - (1 - 1 / σ) ^ (1 - Δ)) /
-        (2 * (1 - 1 / σ) ^ (1 - Δ))) :
-    (1 - 1 / σ) ^ (1 - Δ) * perturbation D d 0 3 ≤
-      (1 + (1 - 1 / σ) ^ (1 - Δ)) / 2 := by
-  let c : ℝ := (1 - 1 / σ) ^ (1 - Δ)
-  have hbase : 0 < 1 - 1 / σ := by
-    exact sub_pos.mpr ((div_lt_one (zero_lt_one.trans hσ)).2 hσ)
-  have hc0 : 0 < c := Real.rpow_pos_of_pos hbase _
-  have hpert' : perturbation D d 0 3 ≤ 1 + (1 - c) / (2 * c) := by
-    simpa only [c] using hpert
-  have hm := mul_le_mul_of_nonneg_left hpert' hc0.le
-  have halg : c * (1 + (1 - c) / (2 * c)) = (1 + c) / 2 := by
-    field_simp [ne_of_gt hc0]
-    ring
-  have hfinal : c * perturbation D d 0 3 ≤ (1 + c) / 2 :=
-    hm.trans_eq halg
-  simpa only [c] using hfinal
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

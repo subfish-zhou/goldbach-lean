@@ -36,12 +36,6 @@ theorem buchstabAbelKernel_bound {z : ℝ} (hz : 0 < z) (v : ℝ) :
   · rw [buchstabAbelKernel, indicator_of_notMem hv, norm_zero]
     exact (exp_pos _).le
 
-theorem buchstabAbelKernel_integrable {z : ℝ} (hz : 0 < z) :
-    IntegrableOn (buchstabAbelKernel z) (Ioi 0) := by
-  have hi : IntegrableOn (fun v : ℝ => exp (-v)) (Ioi 0) := by
-    simpa using integrableOn_exp_mul_Ioi (by norm_num : (-1 : ℝ) < 0) 0
-  exact hi.mono' (buchstabAbelKernel_measurable z)
-    (Eventually.of_forall (buchstabAbelKernel_bound hz))
 
 /-- The moving domain is realized on one fixed positive ray. -/
 theorem buchstabLaplace_scaled_fixed {z : ℝ} (hz : 0 < z) :

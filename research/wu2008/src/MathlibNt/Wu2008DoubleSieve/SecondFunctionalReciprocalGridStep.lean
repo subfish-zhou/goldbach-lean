@@ -32,13 +32,6 @@ theorem gridStep_on_cell {n k : ℕ} (c : GridIndex n k → ℝ) (a : GridIndex 
     exact Set.disjoint_left.mp (gridCell_disjoint hba) hb ht
   · simp
 
-theorem gridStep_off_cube {n k : ℕ} (c : GridIndex n k → ℝ) {t : Fin n → ℝ}
-    (ht : t ∉ continuousCube n) : gridStep c t = 0 := by
-  apply Finset.sum_eq_zero
-  intro a _
-  apply Set.indicator_of_notMem
-  intro ha
-  exact ht (gridClosed_subset_cube a (gridCell_subset_closed a ha))
 
 theorem gridStep_bound {n k : ℕ} (c : GridIndex n k → ℝ) {K : ℝ}
     (hc : ∀ a, |c a| ≤ K) {t : Fin n → ℝ} (ht : t ∈ continuousCube n) : |gridStep c t| ≤ K := by
@@ -129,15 +122,7 @@ theorem gridStep_uniform_epsilon (n k : ℕ) (K ε : ℝ) (hK : 0 ≤ K) (hε : 
     exact mul_div_cancel₀ ε (ne_of_gt (mul_pos hC (by linarith)))
   exact hbound.trans_lt (hstrict.trans_eq heq)
 
-theorem gridStep_fin4 (k : ℕ) (K ε : ℝ) (hK : 0 ≤ K) (hε : 0 < ε) :
-    ∃ T : ℝ, 1 < T ∧ ∀ R : ℝ, T ≤ R → ∀ c : GridIndex 4 k → ℝ,
-      (∀ a, |c a| ≤ K) → |gridPrimeSum R c - gridIntegral c| < ε :=
-  gridStep_uniform_epsilon 4 k K ε hK hε
 
-theorem gridStep_fin5 (k : ℕ) (K ε : ℝ) (hK : 0 ≤ K) (hε : 0 < ε) :
-    ∃ T : ℝ, 1 < T ∧ ∀ R : ℝ, T ≤ R → ∀ c : GridIndex 5 k → ℝ,
-      (∀ a, |c a| ≤ K) → |gridPrimeSum R c - gridIntegral c| < ε :=
-  gridStep_uniform_epsilon 5 k K ε hK hε
 
 theorem gridDiscreteMass_zero_dim (R : ℝ) (k : ℕ) (a : GridIndex 0 k) : gridDiscreteMass R a = 1 := by
   simp [gridDiscreteMass, gridCell_zero_dim, primeSlabWeight]
@@ -146,9 +131,5 @@ theorem gridContinuousMass_zero_dim (k : ℕ) (a : GridIndex 0 k) : gridContinuo
   rw [gridContinuousMass, gridCell_zero_dim, ← continuousCube_zero]
   exact continuousCube_integral_zero
 
-theorem gridStep_zero_dim (R : ℝ) (k : ℕ) (c : GridIndex 0 k → ℝ) :
-    gridPrimeSum R c = gridIntegral c := by
-  rw [gridPrimeSum_disintegration, gridIntegral_disintegration]
-  simp only [gridDiscreteMass_zero_dim, gridContinuousMass_zero_dim]
 
 end Wu2008DoubleSieve

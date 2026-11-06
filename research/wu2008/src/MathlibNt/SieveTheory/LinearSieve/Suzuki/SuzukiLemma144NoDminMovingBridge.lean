@@ -22,28 +22,6 @@ reuses `ActualClaim145BoundAt` and `claim14_5Scale`; no second Claim-14.5 scale 
 introduced.
 -/
 
-/-- A literal all-`D ≥ 2` predecessor assertion is the moving-domain contract
-with `Dmin = 2`.  This is the bridge used when the source induction hypothesis
-has no cutoff binder. -/
-theorem lemma144MovingDomainGlobalDepthAt_two_iff_allD
-    (S : BoundingSieve) (H : Section13HatLayers)
-    (C K d Δ : ℝ) (N : ℕ) :
-    Lemma144MovingDomainGlobalDepthAt S H C K d Δ N 2 ↔
-      ∀ D z : ℕ, 2 ≤ D → 2 ≤ z →
-        ∀ x : ℝ, x ∈ KappaOneModel.parityDomain 2 N →
-          x ≤ sourceSigma (D : ℝ) d →
-          (D : ℝ) ^ (1 / x) = (z : ℝ) →
-          suzukiActualT S N D z ≤
-            suzukiVProduct S z *
-              (finiteSourceLayer 1 2 N x +
-                C * Real.exp (Real.sqrt K) *
-                  errorEnvelope H N (D : ℝ) d x *
-                    (Real.log (D : ℝ)) ^ (-Δ)) := by
-  constructor
-  · intro h D z hD hz x hx hxSigma hpower
-    exact h D z hD hD hz x hx hxSigma hpower
-  · intro h D z hcut hD hz x hx hxSigma hpower
-    exact h D z hD hz x hx hxSigma hpower
 
 /-- A source logarithmic lower bound pays any fixed natural cutoff.  The cutoff
 is selected before the depth, exactly as in the production moving Case-I and
@@ -194,34 +172,7 @@ theorem claim145_uniform_scalar_normalization
     mul_le_mul hlog_mono hsigma_mono hsigma2.le hlogD.le
   exact div_le_div_of_nonneg_left hC145 hden2 hden_mono
 
-/-- Existential form of the same uniform normalization, with the constant chosen
-before `D`. -/
-theorem exists_claim145_uniform_scalar_normalization
-    (C145 d : ℝ) (hC145 : 0 ≤ C145) (hd : 0 < d) :
-    ∃ Cnorm : ℝ, 0 ≤ Cnorm ∧ ∀ D : ℕ, 2 ≤ D →
-      C145 / (Real.log (D : ℝ) * sourceSigma (D : ℝ) d) ≤ Cnorm := by
-  exact ⟨claim145UniformNormalizationConstant C145 d,
-    claim145_uniform_scalar_normalization C145 d hC145 hd⟩
 
-/-- Claim 14.5 implies the Lemma-14.4 moving right-hand side with one explicit
-constant independent of `D`.  The natural ceiling and parity-domain hypotheses
-are unchanged from `to_lemma144_moving_of_scalar`. -/
-theorem ActualClaim145BoundAt.to_lemma144_moving
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {C145 K d Δ s : ℝ} {N D : ℕ}
-    (hC145 : 0 ≤ C145) (hd : 0 < d)
-    (hH : Section13HatSourceContract H)
-    (hD : 2 ≤ D) (hs : s ∈ KappaOneModel.parityDomain 2 N)
-    (hzD : (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) ≤ (D : ℝ))
-    (hclaim : ActualClaim145BoundAt S H N D d Δ K s C145) :
-    suzukiActualT S N D ⌈(D : ℝ) ^ (1 / s)⌉₊ ≤
-      suzukiVProduct S (⌈(D : ℝ) ^ (1 / s)⌉₊ : ℝ) *
-        (finiteSourceLayer 1 2 N s +
-          claim145UniformNormalizationConstant C145 d *
-            Real.exp (Real.sqrt K) * errorEnvelope H N (D : ℝ) d s *
-              (Real.log (D : ℝ)) ^ (-Δ)) := by
-  exact ActualClaim145BoundAt.to_lemma144_moving_of_scalar S H hC145 hH hD hs hzD
-    (claim145_uniform_scalar_normalization C145 d hC145 hd |>.2 D hD) hclaim
 
 
 end MathlibNt.SieveTheory

@@ -66,16 +66,6 @@ theorem lemma132_base_one_direct_two
     positivity
 
 
-/-- Uniform direct base case for (13.13), with the compact constant `C = 2`.
-The quantifier order is `∃ C, ∀ x`; the constant does not depend on `x` or on
-`H`. -/
-theorem lemma132_base_one_direct
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H) :
-    ∃ C : ℝ, 1 ≤ C ∧ ∀ x : ℝ,
-      x ∈ KappaOneModel.parityDomain 2 1 →
-      x * finiteSourceLayer 1 2 1 x ≤
-        C * x ^ 2 * H.T (ErrorSign.ofDepth 1) x := by
-  exact ⟨2, by norm_num, lemma132_base_one_direct_two hH⟩
 
 
 end MathlibNt.SieveTheory

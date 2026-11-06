@@ -26,15 +26,6 @@ its finite ambient carrier. -/
 def upperRosserBoundaryCarrierSupportDepth (P : Finset ℕ) : ℕ :=
   P.card / 2 + 1
 
-/-- Exact carrier-support cutoff.  This is a finite combinatorial statement; it
-contains no continuous-volume comparison. -/
-theorem upperRosserBoundaryChainsFixedDepthDensity_eq_zero_at_carrierSupportDepth
-    (w : ℕ → ℝ) (D q : ℕ) (P : Finset ℕ) :
-    LinearSieve.upperRosserBoundaryChainsFixedDepthDensity w D q P
-      (upperRosserBoundaryCarrierSupportDepth P) = 0 := by
-  apply LinearSieve.upperRosserBoundaryChainsFixedDepthDensity_eq_zero_of_card_lt
-  unfold upperRosserBoundaryCarrierSupportDepth
-  omega
 
 /-- Every depth after the adaptive support cutoff vanishes as well. -/
 theorem upperRosserBoundaryChainsFixedDepthDensity_eq_zero_of_carrierSupportDepth_le
@@ -45,76 +36,6 @@ theorem upperRosserBoundaryChainsFixedDepthDensity_eq_zero_of_carrierSupportDept
   unfold upperRosserBoundaryCarrierSupportDepth at hk
   omega
 
-/-- The first honest uniform-in-carrier completion bridge.
-
-The complete adaptive finite sum is bounded by a fixed prefix plus the existing
-**discrete** geometric block tail.  The carrier cardinality occurs only as the
-length of the finite remainder block; the cutoff `N + L` and the error `τ L`
-are selected before the sieve and carrier.  No continuous tail is substituted
-for the discrete remainder. -/
-theorem
-    exists_upperRosserBoundaryChains_completeAdaptiveDepth_le_prefix_add_uniformTail
-    (K : ℝ) (hK : 1 ≤ K) :
-    ∃ N : ℕ, ∃ τ : ℕ → ℝ,
-      Tendsto τ atTop (nhds 0) ∧
-      (∀ L, 0 ≤ τ L) ∧
-      ∀ (S : BoundingSieve) (L q : ℕ) (z Δ s : ℝ),
-        2 ≤ z → 0 < Δ → s = Real.log Δ / Real.log z →
-        HasDimensionOneLocalProductBound S K →
-        (∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z) →
-        q ∈ S.prodPrimes.primeFactors →
-        let P := S.prodPrimes.primeFactors.filter (fun p => q < p)
-        (∑ k ∈ Finset.range (P.card + 1),
-          LinearSieve.upperRosserBoundaryChainsFixedDepthDensity
-            (fun p => S.nu p / (1 - S.nu p)) (Nat.floor Δ + 1) q P k) ≤
-          (∑ k ∈ Finset.range (L + N),
-            LinearSieve.upperRosserBoundaryChainsFixedDepthDensity
-              (fun p => S.nu p / (1 - S.nu p))
-              (Nat.floor Δ + 1) q P k) + τ L := by
-  obtain ⟨N, τ₀, hτ₀, hblock⟩ :=
-    exists_upperRosserBoundaryChainsFixedDepthDensity_uniform_tail K hK
-  let τ : ℕ → ℝ := fun L => |τ₀ L|
-  have hτ : Tendsto τ atTop (nhds 0) := by
-    simpa [τ] using hτ₀.abs
-  have hτnonneg : ∀ L, 0 ≤ τ L := fun L => abs_nonneg _
-  refine ⟨N, τ, hτ, hτnonneg, ?_⟩
-  intro S L q z Δ s hz hΔ hs hlocal hcut hq
-  dsimp
-  let P := S.prodPrimes.primeFactors.filter (fun p => q < p)
-  let f : ℕ → ℝ := fun k =>
-    LinearSieve.upperRosserBoundaryChainsFixedDepthDensity
-      (fun p => S.nu p / (1 - S.nu p)) (Nat.floor Δ + 1) q P k
-  have hfnonneg : ∀ k, 0 ≤ f k := by
-    intro k
-    apply LinearSieve.upperRosserBoundaryChainsFixedDepthDensity_nonneg
-    intro p hp
-    exact nu_div_one_sub_nonneg_of_mem (Finset.mem_filter.mp hp).1
-  by_cases hlen : L + N ≤ P.card + 1
-  · have hsplit := Finset.sum_range_add f (L + N) (P.card + 1 - (L + N))
-    have hadd : L + N + (P.card + 1 - (L + N)) = P.card + 1 :=
-      Nat.add_sub_of_le hlen
-    rw [hadd] at hsplit
-    rw [hsplit]
-    change (∑ k ∈ Finset.range (L + N), f k) +
-        (∑ j ∈ Finset.range (P.card + 1 - (L + N)), f (L + N + j)) ≤
-      (∑ k ∈ Finset.range (L + N), f k) + τ L
-    have htail := hblock S L (P.card + 1 - (L + N)) q z Δ s
-      hz hΔ hs hlocal hcut hq
-    have htail' := htail.trans (le_abs_self (τ₀ L))
-    have htail'' :
-        (∑ j ∈ Finset.range (P.card + 1 - (L + N)), f (L + N + j)) ≤
-          τ L := by
-      simpa [f, P, τ, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using htail'
-    linarith
-  · have hcard : P.card + 1 ≤ L + N := Nat.le_of_not_ge hlen
-    have hprefix :
-        (∑ k ∈ Finset.range (P.card + 1), f k) ≤
-          ∑ k ∈ Finset.range (L + N), f k := by
-      apply Finset.sum_le_sum_of_subset_of_nonneg
-      · exact Finset.range_mono hcard
-      · intro k hk hnot
-        exact hfnonneg k
-    exact hprefix.trans (le_add_of_nonneg_right (hτnonneg L))
 
 /-- The absolute reverse-pair operator has spare room below `9/10`.
 This quantitative strengthening is what absorbs the two local-product error
@@ -407,17 +328,6 @@ theorem upperRosserBoundaryChainsFixedDepthRelativeDensity_eq_zero_of_carrierSup
     nu D q P hk]
   simp
 
-/-- Every finite block beginning at the adaptive support cutoff is identically
-zero on the relative Euler-product scale. -/
-theorem upperRosserBoundaryChains_finiteRelativeTail_eq_zero
-    (nu : ℕ → ℝ) (D q n : ℕ) (P : Finset ℕ) :
-    (∑ j ∈ Finset.range n,
-      LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity
-        nu D q P (upperRosserBoundaryCarrierSupportDepth P + j)) = 0 := by
-  apply Finset.sum_eq_zero
-  intro j hj
-  apply upperRosserBoundaryChainsFixedDepthRelativeDensity_eq_zero_of_carrierSupportDepth_le
-  omega
 
 end
 

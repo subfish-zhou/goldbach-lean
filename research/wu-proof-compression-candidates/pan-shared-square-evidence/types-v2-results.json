@@ -1,0 +1,28 @@
+[
+  {
+    "phase": "before",
+    "exit_code": 0,
+    "seconds": 3.146344430744648,
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-DautoImplicit=false",
+      "/tmp/wu-pan-shared-square-v1/before-types.lean"
+    ],
+    "LEAN_PATH": "/home/azureuser/goldbach-lean/research/wu2008/build/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean"
+  },
+  {
+    "phase": "after",
+    "exit_code": 0,
+    "seconds": 3.2012472562491894,
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-DautoImplicit=false",
+      "/tmp/wu-pan-shared-square-v1/after-types.lean"
+    ],
+    "LEAN_PATH": "/tmp/wu-pan-shared-square-v1/lib:/home/azureuser/goldbach-lean/research/wu2008/build/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean"
+  }
+]

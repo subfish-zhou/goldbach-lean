@@ -75,12 +75,6 @@ theorem unit_eq {N d p q : ℕ} (pre : List ℕ)
     have heq : ell = N - d * (pre ++ [p,q]).prod := by omega
     simpa only [← heq] using hell
 
-theorem unit_card {N d p q : ℕ} (pre : List ℕ)
-    (hp : p.Prime) (hq : q.Prime) (hpq : p ≤ q) :
-    (secondFunctionalFourPrimeUnitCarrier N d (pre ++ [p,q])).card =
-      if (N - d * (pre ++ [p,q]).prod).Prime then 1 else 0 := by
-  rw [unit_eq pre hp hq hpq]
-  split_ifs <;> simp
 
 /-- All free natural prime labels, not a four-coordinate truncation. -/
 def freeProduct {n : ℕ} {R : ℝ} (g : Fin n → primeSlabPrimes R) : ℕ :=

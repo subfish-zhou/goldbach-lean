@@ -25,11 +25,6 @@ theorem originalTailPrimes_source_iff {N p : ℕ} {η : ℝ} (hη : 0 ≤ η) :
       nlinarith [h.2, mul_nonneg hη (Nat.cast_nonneg (α := ℝ) N)]
     exact_mod_cast hh
 
-theorem originalTailA_source_iff {N a : ℕ} {η : ℝ} (hη : 0 ≤ η) :
-    a ∈ originalTailA N η ↔
-      ∃ p : ℕ, p.Prime ∧ (p : ℝ) ≤ (1 - η) * N ∧ N - p = a := by
-  simp only [originalTailA, mem_image, originalTailPrimes_source_iff hη]
-  aesop
 
 private theorem cube_third_rpow (x : ℝ) (hx : 0 ≤ x) :
     (x ^ (1 / 3 : ℝ)) ^ (3 : ℕ) = x := by

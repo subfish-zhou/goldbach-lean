@@ -42,11 +42,5 @@ theorem wFloorCutoff_factor_interval_iff {M Z : ℝ} (hM : 0 < M) (hZ : 0 < Z)
   rw [div_mul_eq_mul_div, le_div_iff₀ hM, div_mul_eq_mul_div, le_div_iff₀ hδr]
   constructor <;> intro he <;> nlinarith
 
-theorem wFloorCutoff_factor_mem_Icc_iff {M Z : ℝ} (hM : 0 < M) (hZ : 0 < Z)
-    {q d k δ F : ℕ} (hq : 0 < q) (hd : 0 < d)
-    (hg : q.gcd (d * k) = δ) (h : ℤ) :
-    k ≤ F ∧ h.natAbs ≤ wFloorCutoff M Z q (d * k) ↔
-      k ∈ Icc ⌈(h.natAbs : ℝ) * M * δ / ((q : ℝ) * d * Z)⌉₊ F := by
-  rw [wFloorCutoff_factor_interval_iff hM hZ hq hd hg, mem_Icc, and_comm]
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

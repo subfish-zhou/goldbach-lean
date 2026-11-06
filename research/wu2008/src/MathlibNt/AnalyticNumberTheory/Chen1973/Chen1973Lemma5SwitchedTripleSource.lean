@@ -40,18 +40,6 @@ def Chen1973FourthRootCutoff (x : ℕ) (z4 : ℕ) : Prop :=
   ∀ p : ℕ, p.Prime →
     (p < z4 ↔ (p : ℝ) < (x : ℝ) ^ ((1 : ℝ) / 4))
 
-/-- Under the explicit cutoff bridge, membership in the finite `Q` carrier is
-exactly the source condition `2 ≤ p < x^(1/4)`. -/
-theorem mem_chen1973Lemma5QCarrier_iff
-    {x z4 p : ℕ} (hz : Chen1973FourthRootCutoff x z4) (hp : p.Prime) :
-    p ∈ (Finset.range z4).filter (fun q => 2 ≤ q ∧ q.Prime) ↔
-      2 ≤ p ∧ (p : ℝ) < (x : ℝ) ^ ((1 : ℝ) / 4) := by
-  simp only [Finset.mem_filter, Finset.mem_range, hp, and_true]
-  constructor
-  · rintro ⟨hpz, hp2⟩
-    exact ⟨hp2, (hz p hp).mp hpz⟩
-  · rintro ⟨hp2, hroot⟩
-    exact ⟨(hz p hp).mpr hroot, hp2⟩
 
 /-- The finite pair carrier printed at the start of Lemma 5:
 `x^(1/10)<p₁≤x^(1/3)<p₂≤(x/p₁)^(1/2)`. -/
@@ -79,14 +67,6 @@ def chen1973Lemma5OmegaCarrier (x z4 : ℕ) : Finset ((ℕ × ℕ) × ℕ) :=
 def chen1973Lemma5Omega (x z4 : ℕ) : ℕ :=
   (chen1973Lemma5OmegaCarrier x z4).card
 
-/-- Literal membership conditions for the finite `Ω` carrier. -/
-theorem mem_chen1973Lemma5OmegaCarrier_iff {x z4 : ℕ} {t : (ℕ × ℕ) × ℕ} :
-    t ∈ chen1973Lemma5OmegaCarrier x z4 ↔
-      t.1 ∈ chen1973Lemma5PrimePairs x ∧ t.2 < x + 1 ∧ t.2.Prime ∧
-        t.2 ≤ x / (t.1.1 * t.1.2) ∧
-        Nat.Coprime (x - t.1.1 * t.1.2 * t.2) (chen1973Lemma5Q z4) := by
-  simp [chen1973Lemma5OmegaCarrier, chen1973Lemma5PrimeTriples]
-  tauto
 
 /-- Chen p. 115: `f(k)=φ(k)∏_{p∣k}(p-2)/(p-1)`. -/
 def chen1973Lemma5SelbergF (k : ℕ) : ℝ :=
@@ -168,18 +148,6 @@ def chen1973Lemma5OmegaSmoothed (x z4 : ℕ) : ℝ :=
   ∑ t ∈ chen1973Lemma5OmegaCarrier x z4,
     chen1973Lemma5SmoothedWeight x t.1 t.2
 
-/-- The source weight is nonnegative once its (printed) logarithmic denominator
-is known to be nonnegative.  The nonnegativity of `Λ` and of Chen's finite
-Perron kernel are discharged internally. -/
-theorem chen1973Lemma5SmoothedWeight_nonneg
-    {x : ℕ} (hx : 1 < x) {pp : ℕ × ℕ} {n : ℕ}
-    (hlog : 0 ≤ Real.log ((x : ℝ) / ((pp.1 : ℝ) * pp.2))) :
-    0 ≤ chen1973Lemma5SmoothedWeight x pp n := by
-  unfold chen1973Lemma5SmoothedWeight
-  apply div_nonneg
-  · apply mul_nonneg ArithmeticFunction.vonMangoldt_nonneg
-    exact (chen1973PerronKernelFinite_mem_Icc (by exact_mod_cast hx) (by positivity)).1
-  · exact hlog
 
 /-- The finite product defining `Q` is nonzero. -/
 theorem chen1973Lemma5Q_ne_zero (z4 : ℕ) : chen1973Lemma5Q z4 ≠ 0 := by
@@ -276,19 +244,6 @@ theorem chen1973Lemma5Omega_le_OmegaSmoothed
   simpa only [Finset.sum_const, nsmul_eq_mul, mul_one] using
     Finset.sum_le_sum hw1
 
-/-- Cardinal form of the `Ω`--Selberg-square bridge, with the genuinely stronger
-pointwise lower bound isolated from the internally proved sign condition. -/
-theorem chen1973Lemma5Omega_le_SelbergSquare
-    {x z4 : ℕ} {lambda : ℕ → ℝ} (hlambda : lambda 1 = 1)
-    (hw0 : ∀ pp ∈ chen1973Lemma5PrimePairs x,
-      ∀ n ∈ chen1973Lemma5NCarrier x pp,
-        0 ≤ chen1973Lemma5SmoothedWeight x pp n)
-    (hw1 : ∀ t ∈ chen1973Lemma5OmegaCarrier x z4,
-      (1 : ℝ) ≤ chen1973Lemma5SmoothedWeight x t.1 t.2) :
-    (chen1973Lemma5Omega x z4 : ℝ) ≤
-      chen1973Lemma5SelbergSquare x z4 lambda :=
-  (chen1973Lemma5Omega_le_OmegaSmoothed hw1).trans
-    (chen1973Lemma5OmegaSmoothed_le_SelbergSquare hlambda hw0)
 
 /-- The progression sum denoted `N_[d₁,d₂]` in (5). -/
 def chen1973Lemma5ProgressionTerm
@@ -435,23 +390,6 @@ def chen1973Lemma5PrimitiveTwist
         (chen1973Lemma5SmoothedWeight x pp n : ℂ) *
           χ.1 ((pp.1 * pp.2 * n : ℕ) : ZMod q)
 
-/-- The pointwise Dirichlet-character orthogonality relation needed to turn a
-progression condition into a character sum.  Unlike a black-box source
-premise, this finite step is proved directly from Mathlib's orthogonality API. -/
-theorem chen1973Lemma5_character_orthogonality
-    {q x a : ℕ} [NeZero q] (hxq : Nat.Coprime x q) :
-    (∑ χ : DirichletCharacter ℂ q,
-        star (χ (x : ZMod q)) * χ (a : ZMod q)) =
-      if (x : ZMod q) = (a : ZMod q) then (q.totient : ℂ) else 0 := by
-  have hxu : IsUnit (x : ZMod q) := (ZMod.isUnit_iff_coprime x q).2 hxq
-  rw [← DirichletCharacter.sum_char_inv_mul_char_eq (R := ℂ) hxu (a : ZMod q)]
-  apply Finset.sum_congr rfl
-  intro χ hχ
-  rw [← MulChar.star_apply, MulChar.star_eq_inv, MulChar.inv_apply_eq_inv']
-  congr 1
-  apply inv_eq_of_mul_eq_one_right
-  rw [mul_comm, ← map_mul]
-  rw [(ZMod.inv_mul_eq_one_of_isUnit hxu (x : ZMod q)).2 rfl, map_one]
 
 /-- The old one-conductor signed ledger.  It is useful as the inner
 character majorant, but it is not Chen's p. 117--119 source `M₂`: that source
@@ -527,16 +465,6 @@ def chen1973Lemma5M2SourceSigned (x D : ℕ) : ℝ :=
             if χ.1 = 1 then 0 else
               chen1973Lemma5PrimitiveTwistCoprime x l d χ).re
 
-/-- The old one-conductor real-part ledger is bounded by its norm ledger. -/
-theorem chen1973Lemma5M2Signed_le_M2 (x D : ℕ) :
-    chen1973Lemma5M2Signed x D ≤ chen1973Lemma5M2 x D := by
-  classical
-  unfold chen1973Lemma5M2Signed chen1973Lemma5M2
-    chen1973Lemma5M2InnerMajorant
-  apply Finset.sum_le_sum
-  intro l hl
-  apply mul_le_mul_of_nonneg_left (Complex.re_le_norm _)
-  positivity
 
 /-- Taking norms conductor-by-conductor bounds the signed two-layer source. -/
 theorem chen1973Lemma5M2SourceSigned_le_source (x D : ℕ) :
@@ -563,15 +491,6 @@ theorem chen1973Lemma5M4_le_M2_of_conductor_grouping
     chen1973Lemma5M4 x z4 lambda ≤ chen1973Lemma5M2Source x D :=
   hgroup.trans (chen1973Lemma5M2SourceSigned_le_source x D)
 
-/-- The preceding connector specialized to Chen's actual p. 115 Selberg
-coefficient, making the link to the concrete `M₄` remainder explicit. -/
-theorem chen1973Lemma5ActualM4_le_M2Source_of_character_expansion
-    {x z4 R D : ℕ}
-    (hexpand : chen1973Lemma5M4 x z4 (chen1973Lemma5SelbergLambda x R) ≤
-      chen1973Lemma5M2SourceSigned x D) :
-    chen1973Lemma5M4 x z4 (chen1973Lemma5SelbergLambda x R) ≤
-      chen1973Lemma5M2Source x D :=
-  chen1973Lemma5M4_le_M2_of_conductor_grouping hexpand
 
 /-- Exact finite `M₁-M₃+M₄` decomposition of the expanded Selberg square. -/
 theorem chen1973Lemma5_expanded_eq_M1_sub_M3_add_M4
@@ -600,14 +519,5 @@ theorem chen1973Lemma5SelbergSquare_eq_M1_sub_M3_add_M4
   rw [chen1973Lemma5SelbergSquare_eq_expanded,
     chen1973Lemma5_expanded_eq_M1_sub_M3_add_M4]
 
-/-- Equation (5) specialized to Chen's actual p. 115 Selberg coefficient. -/
-theorem chen1973Lemma5ActualSelbergSquare_eq_M1_sub_M3_add_M4
-    (x z4 R : ℕ) :
-    chen1973Lemma5SelbergSquare x z4 (chen1973Lemma5SelbergLambda x R) =
-      chen1973Lemma5M1 x z4 (chen1973Lemma5SelbergLambda x R) -
-        chen1973Lemma5M3 x z4 (chen1973Lemma5SelbergLambda x R) +
-          chen1973Lemma5M4 x z4 (chen1973Lemma5SelbergLambda x R) := by
-  exact chen1973Lemma5SelbergSquare_eq_M1_sub_M3_add_M4 x z4
-    (chen1973Lemma5SelbergLambda x R)
 
 end AnalyticNumberTheory.LargeSieve

@@ -27,25 +27,8 @@ theorem cutoff_one_lt {η : ℝ} (hη : 0 < η) {N q : ℕ}
   have hN1 : (1 : ℝ) < N := by exact_mod_cast (show 1 < N by omega)
   exact (Real.one_lt_rpow hN1 hη).trans_le hq
 
-theorem cutoff_log_pos {η : ℝ} (hη : 0 < η) {N q : ℕ}
-    (hN : 4 ≤ N) (hq : (N : ℝ) ^ η ≤ q) : 0 < log (q : ℝ) := by
-  exact log_pos (cutoff_one_lt hη hN hq)
 
-/-- A denominator above N leaves no positive residual integer. -/
-theorem product_count_zero {N D q : ℕ} (hD : 0 < D) (hND : N < D) :
-    (roughNumbers ((N : ℝ) / D) q).card = 0 := by
-  have hx : (N : ℝ) / D < 1 :=
-    lt_of_not_ge (fun h => (Nat.not_le_of_lt hND) ((unit_gate_iff N D hD).mp h))
-  rw [roughNumbers_empty_of_lt_one hx, card_empty]
 
-/-- Failing the nonunit gate does not remove a unit whose own gate holds. -/
-theorem product_count_eq_unit {N D q : ℕ} (hD : 0 < D) (hq : 1 ≤ q)
-    (hgate : ¬ D * q ≤ N) :
-    (roughNumbers ((N : ℝ) / D) q).card = if D ≤ N then 1 else 0 := by
-  have hx : (N : ℝ) / D < q :=
-    lt_of_not_ge (fun h => hgate ((nonunit_gate_iff N D q hD).mp h))
-  simpa only [unit_gate_iff N D hD] using
-    count_eq_unit_of_lt (by exact_mod_cast hq : (1 : ℝ) ≤ q) hx
 
 /-- Natural-product specialization on the full physical domain: no D*q <= N premise.
 The threshold is selected before N, D and q; tau never multiplies the unit. -/

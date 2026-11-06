@@ -141,25 +141,5 @@ theorem rankin_perfectPower_le_zeta_mul_LFunction_pow
       rw [hfac, norm_pow]
     _ = _ := by rw [norm_mul, mul_pow]
 
-/-- After the elementary zeta majorant, the weighted perfect-power lower has
-only the displayed strength.  At `e = r+1` its numerator is overwhelmed by
-`M^((r+1)σ)`; this records the quantitative Rankin barrier rather than hiding
-it behind a source predicate. -/
-theorem rankin_perfectPower_le_zetaMajorant_mul_LFunction_pow
-    (χ : DirichletCharacter ℂ q) [NeZero q]
-    (hquad : χ ^ 2 = 1) (r : ℕ) {e M : ℕ} (hepos : 0 < e)
-    (heven : ∃ t, e = 2 * t) (hM : 1 ≤ M) {σ : ℝ} (hσ : 1 < σ) :
-    (M : ℝ) / ((M ^ e : ℕ) : ℝ) ^ σ ≤
-      (1 + 1 / (σ - 1)) ^ (r + 1) * ‖χ.LFunction (σ : ℂ)‖ ^ (r + 1) := by
-  have hprod := rankin_perfectPower_le_zeta_mul_LFunction_pow
-    χ hquad r hepos heven hM hσ
-  have hz : ‖riemannZeta (σ : ℂ)‖ ≤ 1 + 1 / (σ - 1) := by
-    have h := AnalyticNumberTheory.LargeSieve.norm_dirichletLSeries_le
-      (1 : DirichletCharacter ℂ 1) σ 0 hσ
-    simp only [DirichletCharacter.modOne_eq_one, ofReal_zero, mul_zero, add_zero] at h
-    rw [LSeries_one_eq_riemannZeta (show 1 < (σ : ℂ).re by simpa using hσ)] at h
-    exact h
-  exact hprod.trans (mul_le_mul_of_nonneg_right
-    (pow_le_pow_left₀ (norm_nonneg _) hz (r + 1)) (by positivity))
 
 end DirichletCharacter

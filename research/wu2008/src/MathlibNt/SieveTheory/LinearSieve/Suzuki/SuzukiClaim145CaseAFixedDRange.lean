@@ -346,68 +346,6 @@ lemma exists_caseA_scalar_constant_for_fixed_q_uniform_in_S
     _ ≤ A * claim14_5Scale S H n (q : ℝ) d Δ
         (sourceSigma (q : ℝ) d) K x := mul_le_mul_of_nonneg_left hscale hA.le
 
-/-- A fixed finite quotient range admits one scalar constant, uniform in the
-depth, quotient, natural-ceiling cutoff, and real coordinate. -/
-theorem exists_claim145SmallDCaseAScalarComparison_of_fixedDmin
-    (S : BoundingSieve) (H : Section13HatLayers) (hH : Section13HatSourceContract H)
-    (Dmin : ℕ) {d Δ K C1 ΘK : ℝ} (hd : 2 < d) (hK : 0 < K)
-    (hCaseA_lt : ∀ q : ℕ, 2 ≤ q →
-      Real.log (q : ℝ) ≤ C1 * K ^ ΘK → q < Dmin) :
-    ∃ C145 : ℝ, 0 < C145 ∧
-      Claim145SmallDCaseAScalarComparison S H d Δ C145 K C1 ΘK := by
-  classical
-  let Aq : ℕ → ℝ := fun q => if hq : 2 ≤ q then
-    Classical.choose (exists_caseA_scalar_constant_for_fixed_q S H hH hq (Δ := Δ) hd hK)
-    else 0
-  have hAq_pos : ∀ q : ℕ, 2 ≤ q → 0 < Aq q := by
-    intro q hq
-    dsimp only [Aq]
-    rw [dif_pos hq]
-    exact (Classical.choose_spec
-      (exists_caseA_scalar_constant_for_fixed_q S H hH hq (Δ := Δ) hd hK)).1
-  have hAq_bound : ∀ q : ℕ, 2 ≤ q → ∀ (n p : ℕ) (x : ℝ),
-      p = ⌈(q : ℝ) ^ (1 / x)⌉₊ → 2 ≤ x →
-      suzukiSourceL (p : ℝ) K ^ (⌊x - 2⌋₊ + 1) /
-            ((⌊x - 2⌋₊ + 1).factorial : ℝ) *
-          Real.exp (suzukiSourceL (p : ℝ) K) ≤
-        Aq q * claim14_5Scale S H n (q : ℝ) d Δ
-          (sourceSigma (q : ℝ) d) K x := by
-    intro q hq
-    dsimp only [Aq]
-    rw [dif_pos hq]
-    exact (Classical.choose_spec
-      (exists_caseA_scalar_constant_for_fixed_q S H hH hq (Δ := Δ) hd hK)).2
-  let C145 : ℝ := 1 + ∑ q ∈ Finset.Ico 2 Dmin, Aq q
-  have hsum0 : 0 ≤ ∑ q ∈ Finset.Ico 2 Dmin, Aq q := by
-    apply Finset.sum_nonneg
-    intro q hq
-    exact (hAq_pos q (Finset.mem_Ico.mp hq).1).le
-  have hC145 : 0 < C145 := by dsimp [C145]; linarith
-  refine ⟨C145, hC145, ?_⟩
-  intro n q p x hq hp hx hsmall
-  have hqD : q < Dmin := hCaseA_lt q hq hsmall
-  have hterm : Aq q ≤ ∑ a ∈ Finset.Ico 2 Dmin, Aq a := by
-    apply Finset.single_le_sum
-    · intro a ha
-      exact (hAq_pos a (Finset.mem_Ico.mp ha).1).le
-    · simp [hq, hqD]
-  have hq1 : (1 : ℝ) < (q : ℝ) := by exact_mod_cast (show 1 < q by omega)
-  have hlogq : 0 < Real.log (q : ℝ) := Real.log_pos hq1
-  have hscale0 : 0 ≤ claim14_5Scale S H n (q : ℝ) d Δ
-      (sourceSigma (q : ℝ) d) K x := by
-    have hx0 : 0 < x := by linarith
-    have hsigma : 0 < sourceSigma (q : ℝ) d := sourceSigma_pos_of_nat_two_le hq
-    have hE : 0 ≤ errorEnvelope H n (q : ℝ) d x :=
-      errorEnvelope_nonneg H n hq1 hx0.le
-        (hH.toSection13HatContract.positive _ x hx0).le
-    unfold claim14_5Scale
-    exact mul_nonneg
-      (mul_nonneg
-        (mul_nonneg (suzukiVProduct_pos S (q : ℝ)).le
-          (div_nonneg (Real.exp_pos _).le (mul_pos hlogq hsigma).le)) hE)
-      (Real.rpow_nonneg hlogq.le _)
-  exact (hAq_bound q hq n p x hp hx).trans
-    (mul_le_mul_of_nonneg_right (by dsimp [C145]; linarith) hscale0)
 
 /-- Uniform-in-sieve fixed-`Dmin` scalar producer.  Its finite maximum is formed
 before `S`; the local-product contract is consumed only pointwise. -/

@@ -115,12 +115,6 @@ theorem clipped_profile_lower {δ t x y : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 100
     (wuImprovementLimit_nonneg false hd (by linarith)
       (by linarith [hs.1]) (by linarith [hs.2]))
 
-theorem clipped_dominates (n : ℕ) (δ s : ℝ) :
-    profile (ActualNineFeedback.transferredLower n) s -
-      ActualNineFeedback.deltaLoss δ * profile (ActualNineFeedback.transferredDebit n) s ≤
-        profile (clipped n δ) s := by
-  rw [← profile_sub_mul]
-  exact profile_mono (fun j => le_max_right _ _) s
 
 end
 end DirectFiniteF6

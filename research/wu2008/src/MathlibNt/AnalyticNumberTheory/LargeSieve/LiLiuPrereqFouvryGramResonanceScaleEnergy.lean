@@ -58,37 +58,5 @@ theorem wSeparatedCorrelationEnergy_resonance_scaleBox
   simpa only [mul_assoc] using mul_le_mul_of_nonneg_left hs
     (show 0 ≤ (Bβ * Bζ) ^ 2 * (2 ^ j 1 : ℕ) * Czero by positivity)
 
-/-- Concrete five-small exponent, with the local cardinal and both power
-envelopes expanded in the original energy bound. No base sum survives. -/
-theorem wSeparatedCorrelationEnergy_resonance_scale_half_support
-    {ε κ : ℝ} (hε : 0 < ε) (hκ : 0 < κ) :
-    ∃ Czero Cnonzero : ℝ, 0 < Czero ∧ 0 < Cnonzero ∧
-    ∀ (N : Finset ℕ) (F : ℕ) (a : ℤ) (x R S M Z T εSupport : ℝ)
-      (K : WExtractedKey) (b : ℕ) (j cap : Fin 5 → ℕ) (positive : Bool)
-      (c : Finset (ℕ × ℕ)) (β ζ : ℕ → ℝ) (Bβ Bζ : ℝ),
-      a ≠ 0 → 0 ≤ R → 0 ≤ S → 0 < M → 0 < Z →
-      (∀ n ∈ N, T ≤ (n : ℝ)) → (∀ n ∈ N, n ≤ F) →
-      1 < x → 0 < εSupport → x ^ εSupport ≤ T →
-      0 ≤ Bβ → 0 ≤ Bζ →
-      (∀ n ∈ N, |β n| ≤ Bβ) → (∀ s ∈ Ioc 0 ⌊S⌋₊, |ζ s| ≤ Bζ) →
-      wSeparatedCorrelationEnergy x N S
-        (wGramPrefix N a x (εSupport / 2) R S M Z K b j cap positive) c K β ζ a ≤
-        (Bβ * Bζ) ^ 2 * (2 ^ j 1 : ℕ) * Czero *
-          (2 ^ j 3 * 2 ^ j 2 * 2 ^ j 0 * (F / K.1.1) * 2 ^ j 4 : ℕ) *
-          (((2 ^ (j 0 + 1) * (F / K.1.1) * 2 ^ (j 4 + 1) : ℕ) : ℝ) ^ (2 * ε) *
-            (((K.1.2.1 * 2 ^ (j 2 + 1) +
-              2 ^ (j 0 + 1) * (F / K.1.1) * 2 ^ (j 4 + 1) : ℕ) : ℝ) ^ ε)) +
-        ∑ L ∈ (wGramLabels (wCoprimeFiber x N S
-            (wGramPrefix N a x (εSupport / 2) R S M Z K b j cap positive) c)).filter
-              (fun L => wGramNumerator K a L ≠ 0),
-          |wGramWeight K β ζ L| *
-            wGramFouvryCost κ Cnonzero a R S M Z K j cap L := by
-  obtain ⟨Czero, Cnonzero, hCzero, hCnonzero, henergy⟩ :=
-    wSeparatedCorrelationEnergy_resonance_scaleBox hε hκ
-  refine ⟨Czero, Cnonzero, hCzero, hCnonzero, ?_⟩
-  intro N F a x R S M Z T εSupport K b j cap positive c β ζ Bβ Bζ
-    ha hR hS hM hZ hNT hNF hx hSupportPos hSupport hBβ hBζ hβ hζ
-  exact henergy N F a x (εSupport / 2) R S M Z T εSupport K b j cap positive c β ζ Bβ Bζ
-    ha hR hS hM hZ hNT hNF hx (by linarith) hSupport hBβ hBζ hβ hζ
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

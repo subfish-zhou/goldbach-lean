@@ -74,12 +74,6 @@ theorem terminalAt_le_actual {d : ℝ} (hd : d≤D0) :
 
 def terminalLower : ℝ := terminalAt dPaid
 
-theorem terminalLower_le_actual : terminalLower ≤ firstFeedback NineFeedbackStrength.originalH 3 3 :=
-  terminalAt_le_actual dPaid_le
 
-theorem terminalLower_ge_old : SignedSigmaETerminal.lower ≤ terminalLower := by
-  unfold SignedSigmaETerminal.lower terminalLower terminalAt
-  exact add_le_add (mul_le_mul_of_nonneg_left profileLower_ge_old
-    SignedSigmaETerminal.logPayment_nonneg) le_rfl
 
 end D0FullDensity

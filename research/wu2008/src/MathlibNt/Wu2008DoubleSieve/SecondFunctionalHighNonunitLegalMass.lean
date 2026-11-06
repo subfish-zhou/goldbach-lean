@@ -81,13 +81,7 @@ theorem integral_bounds {n : ℕ} (j : Fin n) (phi : ℝ) {s : Set (Fin n → �
       _ = 10 * (∫ t in continuousCube n, continuousDensity t) := integral_const_mul _ _
       _ ≤ _ := mul_le_mul_of_nonneg_left (continuousCube_integral_bounds n).2 (by norm_num)
 
-theorem K20_integrable {a2 a3 b : ℝ} (ha : 1 / 10 ≤ a2) (hb : b ≤ 1 / 2) (phi : ℝ) :
-    IntegrableOn (fun t => G 3 phi t * continuousDensity t) (D20 a2 a3 b phi) :=
-  weighted_integrable_on 3 phi (D20_subset_cube ha hb)
 
-theorem K21_integrable {a3 b : ℝ} (ha : 1 / 10 ≤ a3) (hb : b ≤ 1 / 2) (phi : ℝ) :
-    IntegrableOn (fun t => G 4 phi t * continuousDensity t) (D21 a3 b phi) :=
-  weighted_integrable_on 4 phi (D21_subset_cube ha hb)
 
 theorem K20_bounds {a2 a3 b : ℝ} (ha : 1 / 10 ≤ a2) (hb : b ≤ 1 / 2) (phi : ℝ) :
     0 ≤ K20 a2 a3 b phi ∧ K20 a2 a3 b phi ≤ 10 * (4 : ℝ) ^ 5 :=
@@ -109,15 +103,6 @@ theorem weighted_formula {n : ℕ} {j : Fin n} {phi : ℝ} {t : Fin n → ℝ}
   simp only [div_eq_mul_inv, mul_inv_rev]
   ring
 
-/-- The denominator contains precisely the square of the penultimate coordinate. -/
-theorem weighted_formula_square {n : ℕ} {j : Fin n} {phi : ℝ} {t : Fin n → ℝ}
-    (hl : t ∈ legal j phi) :
-    G j phi t * continuousDensity t =
-      buchstab ((phi - ∑ i, t i) / t j) /
-        (t j ^ 2 * ∏ i ∈ Finset.univ.erase j, t i) := by
-  rw [weighted_formula hl, ← Finset.mul_prod_erase Finset.univ t (Finset.mem_univ j)]
-  congr 1
-  ring
 
 theorem K20_literal (a2 a3 b phi : ℝ) :
     K20 a2 a3 b phi = ∫ t in D20 a2 a3 b phi,
@@ -133,37 +118,7 @@ theorem K21_literal (a3 b phi : ℝ) :
   intro t ht
   exact weighted_formula ht.2
 
-theorem literal_integrable_on {n : ℕ} (j : Fin n) (phi : ℝ) {s : Set (Fin n → ℝ)}
-    (hs : MeasurableSet s) (hsub : s ⊆ continuousCube n) (hl : s ⊆ legal j phi) :
-    IntegrableOn (fun t => buchstab ((phi - ∑ i, t i) / t j) / (t j * ∏ i, t i)) s :=
-  (weighted_integrable_on j phi hsub).congr_fun (fun _ ht => weighted_formula (hl ht)) hs
 
-/-- Five coordinates, with precisely the fourth coordinate squared. -/
-theorem K20_expanded (a2 a3 b phi : ℝ) :
-    K20 a2 a3 b phi = ∫ t in D20 a2 a3 b phi,
-      buchstab ((phi - ∑ i, t i) / t 3) / (t 0 * t 1 * t 2 * t 3 ^ 2 * t 4) := by
-  rw [K20_literal]
-  apply setIntegral_congr_fun (D20_measurable a2 a3 b phi)
-  intro t _
-  have hd : t 3 * (∏ i, t i) = t 0 * t 1 * t 2 * t 3 ^ 2 * t 4 := by
-    simp only [Fin.prod_univ_succ, Fin.prod_univ_zero, mul_one]
-    change t 3 * (t 0 * (t 1 * (t 2 * (t 3 * t 4)))) = _
-    ring
-  dsimp only
-  rw [hd]
 
-/-- Six coordinates, with precisely the fifth coordinate squared. -/
-theorem K21_expanded (a3 b phi : ℝ) :
-    K21 a3 b phi = ∫ t in D21 a3 b phi,
-      buchstab ((phi - ∑ i, t i) / t 4) / (t 0 * t 1 * t 2 * t 3 * t 4 ^ 2 * t 5) := by
-  rw [K21_literal]
-  apply setIntegral_congr_fun (D21_measurable a3 b phi)
-  intro t _
-  have hd : t 4 * (∏ i, t i) = t 0 * t 1 * t 2 * t 3 * t 4 ^ 2 * t 5 := by
-    simp only [Fin.prod_univ_succ, Fin.prod_univ_zero, mul_one]
-    change t 4 * (t 0 * (t 1 * (t 2 * (t 3 * (t 4 * t 5))))) = _
-    ring
-  dsimp only
-  rw [hd]
 
 end Wu2008DoubleSieve.HighNonunitLegal

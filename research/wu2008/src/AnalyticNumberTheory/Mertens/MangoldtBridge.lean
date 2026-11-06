@@ -14,17 +14,6 @@ namespace AnalyticNumberTheory.Mertens
 
 open Filter Topology Asymptotics
 
-/-- The logarithm of zeta, expressed through the von Mangoldt Dirichlet
-series, has the standard normalized `O(s - 1)` behavior at `1` from the
-right. -/
-theorem zeta_log_vonMangoldt_isBigO :
-    (fun s : ℝ =>
-      (∑' n : ℕ, ArithmeticFunction.vonMangoldt n /
-        ((n : ℝ) ^ s * Real.log n)) + Real.log (s - 1)) =O[𝓝[>] 1]
-      fun s => s - 1 := by
-  refine log_riemannZeta_add_log_sub_isBigO_ofReal.congr' ?_ .rfl
-  filter_upwards [eventually_mem_nhdsWithin] with s hs
-  rw [log_riemannZeta_eq hs]
 
 /-- The prime Euler-log expansion of the zeta logarithm.  This is the
 analytic prime-side counterpart of the finite product bridge. -/
@@ -80,16 +69,6 @@ theorem primeEulerLog_tsum_decomposition {s : ℂ}
   intro p
   ring
 
-/-- Unconditional Euler-log decomposition in the half-plane of absolute
-convergence. -/
-theorem zeta_primeEulerLog_decomposition {s : ℂ} (hs : 1 < s.re) :
-    ∑' p : Nat.Primes, -Complex.log (1 - (p : ℂ) ^ (-s)) =
-      (∑' p : Nat.Primes, (p : ℂ) ^ (-s)) +
-        ∑' p : Nat.Primes,
-          (-Complex.log (1 - (p : ℂ) ^ (-s)) - (p : ℂ) ^ (-s)) :=
-  primeEulerLog_tsum_decomposition
-    (summable_zeta_primeDirichlet hs)
-    (summable_zeta_primeEulerCorrection hs)
 
 /-- Real specialization of the prime Euler-log expansion.  This is the
 normalization interface used by the Abelian finite-part argument at `s = 1`.-/

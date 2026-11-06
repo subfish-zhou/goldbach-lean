@@ -1,0 +1,300 @@
+{
+  "status": "FULL_CONTEXT_TYPES_RAW_VALUES_RETIREMENT_CONTROLS_21_ROOT_KERNELS_LITERAL_AXIOMS_PRODUCERS_PASS_NOT_ADOPTED",
+  "run": "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915",
+  "steps": [
+    {
+      "label": "before-types",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 5.084479816257954,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "16158ac909cab8bcfcff65ea93e9468510010cfdcd25b2d158437aac28a9e287",
+      "invocation_sha256": "30931d486f9429bc6e1e04c33d4d6d3655fb3ac711e26fb45df72eeccf7f927b"
+    },
+    {
+      "label": "after-types",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 4.939029708504677,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "a3907798072391d6f9d9b10a96bebaa060d9b4b84fd12cebb775226e4b922e5e",
+      "invocation_sha256": "3abbeb23e8ebad2c339a90fa131f47c512edc0a2c4add11fb7a07909e7c5216a"
+    },
+    {
+      "label": "before-values",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 3.8324463218450546,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "184c848d94d06faee81412591ac64c1e7e501fcd9811cb367ce1a7251a94f64e",
+      "invocation_sha256": "59f757b44fb7076fc2c7e36aee7c6790b4937d844617b214296c1137de9a38d2"
+    },
+    {
+      "label": "after-values",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 3.9330462887883186,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "a46652624b118d179d9a6047c348e2159a664bdf623c7f95aef7b6beff7372a4",
+      "invocation_sha256": "6169021e1d3c9bcef508657dc7db4fd41923e2eb68972fe7918b47a1ebf2f8c5"
+    },
+    {
+      "label": "literal-axioms",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 5.7381836399436,
+      "log_sha256": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "resources_sha256": "896909d3ab37687b769b5bb6ef24f2976bf8491e9071c997ae24d388d503ccf5",
+      "invocation_sha256": "a1abb0c13da26edba6cf228b62d85decab8e65715f0c65b2b620f1b396615950"
+    },
+    {
+      "label": "retirement-before-negative",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 10.396147940307856,
+      "log_sha256": "d9ee7d65c17413b83a402b2b3b1d4180ac35d65d319a23097dc98422ec1e9b45",
+      "resources_sha256": "11aa612fd7cba1de269d28b9d236421d870c34e13dde360d1e8353f045324699",
+      "invocation_sha256": "4a65df0e6f45e1604062da5e403150ed6516ef436a25b23ab17170153a8bdaf5"
+    },
+    {
+      "label": "retirement-after-absent",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 11.24942309036851,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "b9ecfc904359c3dc6321b874ebbebe06422928fb09a14b86615e24783e2db047",
+      "invocation_sha256": "704bc3d12347109c1ec4d477286c964eee32d9cbf2b538648bf8e60962eafe98"
+    },
+    {
+      "label": "kernel-WR2ClassicalCertificate",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.546118140220642,
+      "log_sha256": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+      "resources_sha256": "4cc3467c2304b644ffd4228cfaa97938b56f25f491474ef2341bc669e96edb6a",
+      "invocation_sha256": "793c18e9668b6d9fef14ec7ee30fead57ba5504d404498945006947fe57acff5"
+    },
+    {
+      "label": "kernel-W01ContinuousRoot",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.394632179290056,
+      "log_sha256": "ae1640249a6db09171374c39ef2cd803246756559a77f7e39081dbc278be497d",
+      "resources_sha256": "7fd2544131449f5497d16e3a0ae1e358f11ac228b605be466b9f37b701340580",
+      "invocation_sha256": "2f4d9d9a47e95f001c2984a0830be3e63a860760f2d3ee964f145cd6382bd54a"
+    },
+    {
+      "label": "kernel-W03Root",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.393035348504782,
+      "log_sha256": "c464c9e17085d67919d0d8fe9d233edf680a3f6d91d7851196d8f89bce68931a",
+      "resources_sha256": "84cbb7d733852ad787c214d9ef88641eee9fbb02d446ddb2d893f88b603956b9",
+      "invocation_sha256": "67060f2c4129f2d585ef264d676cfd54dd5368e77d60e11cdb519cb0199d0f79"
+    },
+    {
+      "label": "kernel-W13Root",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.14523145928979,
+      "log_sha256": "c8bb77bb271856fcbedfd1df5988a0504cdeddbc421840665e47258d2041af28",
+      "resources_sha256": "9c070606e063a680c0bd169bb2d6ef30acb7daa75687d52cc0ed9d6b5942565f",
+      "invocation_sha256": "370675e51e68746c6830b0cfd5a9fe35a7a5bc27dddf5ba5def85b4afc8152ce"
+    },
+    {
+      "label": "kernel-W14AcceptedThreshold",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.347660511732101,
+      "log_sha256": "04909797a4f57b11f783112d2252d2812f3d4f68712f4edc96c540197e195975",
+      "resources_sha256": "a258e96a4863d0aa2db1025d2938e08bc466257ccabe25748707e8e29a151d73",
+      "invocation_sha256": "2ec4041e5d7cf1be8feb858eb2d6e9bb35fa7e24da0a0ac5c86df8306641f892"
+    },
+    {
+      "label": "kernel-W15AcceptedThreshold",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.19766579568386,
+      "log_sha256": "439ad47ad60f61c6db1a91be5ce3b2c766610e9bba15340412c18fc4037505a2",
+      "resources_sha256": "ecaaf85ca39dc5338b2c77be7eb18b793151fa8d8b0862c12af1c2c14184b69e",
+      "invocation_sha256": "ad81ffed51bd56862a7e24d97531bb4c35bee0154a94e8362789b0976a5f586f"
+    },
+    {
+      "label": "kernel-W17ParentFullTypes",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.246396478265524,
+      "log_sha256": "d6effb264b12aa65b06f7f31224339358e11aeea6677b513f53d0f4455818839",
+      "resources_sha256": "750bdfca13d54afd9064d33621d5d3814d49368a798be4e510c30410dd7fd6a3",
+      "invocation_sha256": "2b424e1a348603defbb4303a070609a1beb291b34e166c601ae139f3f6922ecf"
+    },
+    {
+      "label": "kernel-WE10MajorAcceptedTotal",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.398599214851856,
+      "log_sha256": "0048cd9d29d7d1bb95bf969ba7f82504cb38c1e9d1d38dbf8dad805448be8679",
+      "resources_sha256": "a3cda70a6b78bdb3f3b0fa72e2b72db1185668b9eb2816306cf8234df020222f",
+      "invocation_sha256": "9d55768b3b5fc7e0da57a124c2ad198512707d3435a49217889b829301472867"
+    },
+    {
+      "label": "kernel-WRMapMMatrixProbe",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.29695987328887,
+      "log_sha256": "02ae56520bb5063521600ab3ae1a962defda16963a41ff60f328e500f788703f",
+      "resources_sha256": "890ce2e5def968406883130ead64b2061a5f1fb9d880dace0c7518c2ce57986a",
+      "invocation_sha256": "73fa64f93b2228c416afcccadba525e30f835578c1a89b1ca77344baac94fb03"
+    },
+    {
+      "label": "kernel-WRMapMMatrixRoot",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 7.391572460532188,
+      "log_sha256": "f46f47f0eac2ac0ef13d8f5e04cca91e906c894e581094f0a93b2d440a0f61cd",
+      "resources_sha256": "c23b783e1301eba4dc15b6020feb5ab7b46346fb3caf9a5f6924c6c89e59b075",
+      "invocation_sha256": "801fc5cc8efbe0b4a6bbd99fb15e8f39df6153b98b83e469136e17f32e62b34e"
+    },
+    {
+      "label": "kernel-WRecoveredFirstComparison",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.345724377781153,
+      "log_sha256": "c8f50d127bc3065af92c917e282b705f02022f1455b79cb9267d5989877f6d14",
+      "resources_sha256": "516adbbd6cc24105bf5a14a1337d112e9ac79b7ad35040fb4b8ca47411c7163a",
+      "invocation_sha256": "19f7626001fc17971b34610d20a7b69b366385a9274fb583e56e16cb2fc79619"
+    },
+    {
+      "label": "kernel-WSrcFifthAnalyticInstance",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.397504452615976,
+      "log_sha256": "713951c6b17e23fbde437821ee3ee774772562ef14ed782fb1d4db38cf3328e3",
+      "resources_sha256": "2f4266e4d05c59ea25a30d2383e547bed665ec320a526d99dce89b38955474bb",
+      "invocation_sha256": "edd67e9c7d881f3a7644abce1f454f7071316ab512ef7be6bbf3df7b2d6f37aa"
+    },
+    {
+      "label": "kernel-WSrcFourBudgetVerified",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.49649453535676,
+      "log_sha256": "02d41fa06543b62ff0d778ee8ea5fbd96a76de6e9291880b951b5270acbd634e",
+      "resources_sha256": "f1404e0ab956af6dca15fbfad3a05cf2c61f591c99650e6aefbc3977e58fa266",
+      "invocation_sha256": "7603f41f1e840ec1656b4d897fd45b3d04facb84d964d926f8fe09957df51479"
+    },
+    {
+      "label": "kernel-WSrcFourEnclosureCone",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.445112701505423,
+      "log_sha256": "c3b7dc0e99fae7d0b68ccf2079715b4d31a9dcfb869292932d2e5ac4ace00041",
+      "resources_sha256": "4bbd774bffbbd99ed3013e0128ce9f6bd4f0a3d33ad6f27fd80b36e2deb9265b",
+      "invocation_sha256": "0c098cb1875ab7b4a1ca124a6c0eb4a4a5bfd789dcd23dda1e9f130c24d17f4c"
+    },
+    {
+      "label": "kernel-WSrcFourEnclosureFullTypes",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.295944474637508,
+      "log_sha256": "ed582aca70e80f1fc003005ef16afba96e09905a8994e0292aa375d1cf84d013",
+      "resources_sha256": "6f2d202c4a19ca56dddc110cde749a58566d765560f13781017c250c228d6109",
+      "invocation_sha256": "7076a9720fb0418d597c3da99ebe795ec7bdf9dfbb37376a3675350214b3b6c3"
+    },
+    {
+      "label": "kernel-WSrcGridAccepted",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.247471805661917,
+      "log_sha256": "c97a8664e355f594c75d6741528b96a693c7b6415fd300e4b2c040d5bbc3cf36",
+      "resources_sha256": "227357830d84b687c490033cece7ba2cceb5a5cdabcced3706dc57b4015523de",
+      "invocation_sha256": "5f65d31b857dd683378de7712ec6171b2ff5f5c5e875951803552b879f61cb11"
+    },
+    {
+      "label": "kernel-WSrcSingleGridInstance",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.294343143701553,
+      "log_sha256": "bf91759a8eac474457f8bad82ea603e17f057733e0407468f4180cf17ff305e5",
+      "resources_sha256": "3b33763e7eaa095f44850dace06d23b2f78ba783ea440e9cd1150d16855fe527",
+      "invocation_sha256": "bf528d3604680d23fb76c6a38d5b33cf100cba5781d04244cb99a98a88175cb8"
+    },
+    {
+      "label": "kernel-WSrcSingleRoot",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.194311372935772,
+      "log_sha256": "fbc964b421cf597f49fb463f29cbf6ce6811af1f2c54c5e997026314ac0b6fab",
+      "resources_sha256": "205983d8e5747bdf262d926b7f69368c08c76c05707832c7210ed167d20e6430",
+      "invocation_sha256": "b0e5a1392b00e1c31a0b2a37a739743b6dbefc8ab56189d6601baec71b6f3376"
+    },
+    {
+      "label": "kernel-WSrcSixthGainRoot",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.195931944996119,
+      "log_sha256": "c926ae571f5975d89e412a075b37dc929dcff30d2463e97d537d1a1e89ddd0e6",
+      "resources_sha256": "72a699d34b36b9e4184ccce7cb43e824acb6e1bfb3f1ee08e5a9dec7c1e766d1",
+      "invocation_sha256": "6cbb5c45be48423e48021792e5d43df2b1a991e41d92c4ba43b4ccc5934d67e4"
+    },
+    {
+      "label": "kernel-WSrcSixthGridInstance",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.196237239986658,
+      "log_sha256": "c212161d571ccc1d41771b71436d27de2d6477e7757e029b12035690aa4bef5a",
+      "resources_sha256": "49eff70c51a008ac4bb819eac08d1bf36301f800f8ad6df14bfba763ee4f85ac",
+      "invocation_sha256": "4eb489bb4fc08f33551f9b79aded2b2f50107b3c7b1ce7ebd2df5785b47cf094"
+    },
+    {
+      "label": "kernel-Wu2008Research",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 9.295717395842075,
+      "log_sha256": "efd774aaedf2d81ff0076819df3c47cb896490f9127a351b00e87dd50675aa7b",
+      "resources_sha256": "1e5e18a68ffd87dfeb8bc59c56951d71146eb6a7c8585019f901ec96d364bf8b",
+      "invocation_sha256": "425f831fc3e7fb3f2d03658855810eea63537656344af4d9610279de84af8b88"
+    },
+    {
+      "label": "hf4-producer-check",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 8.5453632324934,
+      "log_sha256": "4517786421b6e14c364f2988f3f577400011bc37c8c2d1a7cff7ce1ad5527b9b",
+      "resources_sha256": "34eee387769875d8c3cf5627f41714c638405ebb2ebeb6d5d7a2b61cc15c6e9b",
+      "invocation_sha256": "95739d37bef6c8f2c9d93ec1f5aaeab4f9cc64485ff27c931ae1dd0eea6b8cb5"
+    },
+    {
+      "label": "c-eighth-producer-check",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.22441045939922333,
+      "log_sha256": "36cbaf11175cd00e5f8057b1fed3b04510054c28e1057ce1e052317331c0e4a9",
+      "resources_sha256": "94442e75dcdd68261684abc3ee055176d96b55939f96b7a29f0ba108d93bed55",
+      "invocation_sha256": "db1805d429286d96a88d3dbbecc49cb16499447783ef6ed1deecdb92ccaec470"
+    }
+  ],
+  "source_compilations": 3957,
+  "verified_unchanged": 194,
+  "types": 696,
+  "values": 183,
+  "current": null,
+  "kernels": 21,
+  "retired_absent": 2119,
+  "retirement_negative_control_passed": true,
+  "context_digest": "b99943e5a4c258e0f257c90ba5eadd37ba5e6384d0fbebb40b0c81bd7e126ec9",
+  "bindings": {
+    "/tmp/wu-unused-proof-post-hf4-v2/validate-prune.py": "d70ecc55240963152b074faa62af688b80d843b00e6f19fb3e876fa5972ca58c",
+    "/tmp/wu-unused-proof-post-hf4-v2/prune-plan.json": "71bacea034124cff9b5323af7e65b58eb45ae93c396327d6c65db7d9c741b16b",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-types.lean": "d9e4759a22add7a16ebd4ee64038a3784abefc5491dab9702fecdac17d5eaa1f",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/before-types.lean": "482866153fc3c58193b7c8f05949271086b7c7819bf4036d0de11cd767fd2279",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/after-types.lean": "bd0fc7cb4e505f637e5232e2a29045ea13079f46c201aa38b837f51cff14d9fb",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-values.lean": "a88b36cb9497284599136eeaa05c8f4787e096be9a354d872c2a1ea8e0d9b8db",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/before-values.lean": "468e230fc603d0395c43d2dff39486a22fe5f12e0bf96b67d7156fd779aa960c",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/after-values.lean": "8c99666e5de70e1d04ee5e9967fbcc4b791de800c1108f10f01cc272e45fb5c5",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/WuLiteralAcceptance.lean": "5371c1e8dcdb44391c5e646b89929f9729a7dbadecdff231a53eca2a4cefd72f",
+    "/tmp/wu-unused-proof-post-hf4-v2/RetiredAbsentTemplate.lean": "9719beb9d50bf2e83ff1c3876c622914576d6dd376d1921366b8ada46c432774",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/retirement-before-negative.lean": "4f441edcc693e3625a569805ff82753faf97b92466229896363862b1f30e5811",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/retirement-after-absent.lean": "2ea4a0812691609b4d129ee9b36511fcdd7605143c856b22d2b912262a6dd6b0",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/retirement-after-absent.json": "a617933df75f1b028d5d778adb62d8c356e86c3ede9a63d1187616e70935e98d"
+  }
+}

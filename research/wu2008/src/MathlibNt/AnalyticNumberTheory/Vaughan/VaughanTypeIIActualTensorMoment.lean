@@ -368,20 +368,5 @@ theorem vaughanActualTensorCoeffEnergy_le_BVScale
       mul_le_mul_of_nonneg_left hQuotient hfac
     _ = C * B ^ 2 * (y : ℝ) * Real.log (y + 1 : ℕ) ^ 6 := by ring
 
-/-- The actual-energy estimate closes the tensor-energy slot used by the full
-Type-II rectangle ledger.  Its premises are only the scalar divisor moment,
-a coefficient supremum, and the explicit quotient-mass estimate. -/
-theorem vaughanBilinearTensorEnergy_le_BVScale
-    (b : ℕ → ℂ) (y : ℕ) (DS ES : Finset ℕ) (B C : ℝ)
-    (hDS : ∀ d ∈ DS, 0 < d) (hES : ∀ e ∈ ES, 0 < e)
-    (hB : ∀ n ≤ y, ‖b n‖ ≤ B)
-    (hMoment : DivisorSquareMomentBound C) (hC : 0 ≤ C)
-    (hQuotient : vaughanQuotientMass y DS ≤
-      (y : ℝ) * Real.log (y + 1 : ℕ)) :
-    vaughanBilinearTensorEnergy vaughanMangoldtCoeff b y DS ES ≤
-      C * B ^ 2 * (y : ℝ) * Real.log (y + 1 : ℕ) ^ 6 :=
-  (vaughanBilinearTensorEnergy_le_actual b y DS ES hES).trans
-    (vaughanActualTensorCoeffEnergy_le_BVScale
-      b y DS ES B C hDS hES hB hMoment hC hQuotient)
 
 end AnalyticNumberTheory.LargeSieve

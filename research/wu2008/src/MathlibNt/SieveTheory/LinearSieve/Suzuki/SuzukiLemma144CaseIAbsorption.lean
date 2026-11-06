@@ -134,34 +134,7 @@ theorem eventually_caseISourceOrderCoefficient_le_sameC_gap
     _ = (1 - Δ) / (2 * sourceSigma D d) := by ring
     _ ≤ 1 - q.ρ := hqgap
 
-/-- Budget-valued form of the scalar theorem.  The side term is the proved
-source-order majorant, not an assumed absorption inequality. -/
-theorem eventually_caseISourceOrderBudget_le_sameC_gap
-    {A B d Δ : ℝ} (hA : 0 ≤ A) (hB : 0 ≤ B)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
-    ∀ᶠ D : ℝ in atTop,
-      ∃ q : Lemma144StrictFactor,
-        q.ρ = (1 + sigma12ContractionMultiplier (sourceSigma D d) Δ) / 2 ∧
-        caseISourceOrderCoefficient A D d * B ≤ (1 - q.ρ) * B := by
-  filter_upwards [eventually_caseISourceOrderCoefficient_le_sameC_gap
-      hA hΔ0 hΔ1 hd] with D hD
-  obtain ⟨q, hq, hcoef⟩ := hD
-  exact ⟨q, hq, mul_le_mul_of_nonneg_right hcoef hB⟩
 
-/-- Case-I's three displayed remainder families have one Claim-14.5 constant
-and two Lemma-8.7 endpoint constants `6 K²`.  For fixed positive `K`, their
-combined source-order coefficient is therefore eventually inside the same-`C`
-gap.  The theorem is scalar: it makes no assumption of the desired absorption
-inequality. -/
-theorem eventually_caseI_allExplicitRemainderCoefficient_le_sameC_gap
-    {A145 K d Δ : ℝ} (hA145 : 0 ≤ A145) (hK : 0 < K)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
-    ∀ᶠ D : ℝ in atTop,
-      ∃ q : Lemma144StrictFactor,
-        q.ρ = (1 + sigma12ContractionMultiplier (sourceSigma D d) Δ) / 2 ∧
-        caseISourceOrderCoefficient (A145 + 12 * K ^ 2) D d ≤ 1 - q.ρ := by
-  exact eventually_caseISourceOrderCoefficient_le_sameC_gap
-    (by positivity) hΔ0 hΔ1 hd
 
 /-- Earliest remaining non-scalar edge.  It says that the literal sum of the
 three explicit API budgets has Suzuki's source order.  This is deliberately a

@@ -31,23 +31,6 @@ noncomputable def omega3CofactorMultiplicityCarrier {i : ℕ}
       (primeWindow N (z d) (p2 : ℝ)).sigma fun p1 =>
         (range (N + 1)).filter fun n => 0 < n ∧ omega3Cofactor d p1 p2 n = e
 
-/-- A literal switched label lands in the cofactor carrier without losing
-its d, middle-prime label, or d-dependent upper endpoint. -/
-theorem omega3_switched_mem_cofactor_carrier {i N d p1 p2 p3 n : ℕ}
-    (W : Fin i → Finset ℕ) (z y : ℕ → ℝ)
-    (hd : d ∈ boxConvolutionSupport W)
-    (h3 : p3 ∈ primeWindow N (z d) (y d))
-    (h2 : p2 ∈ primeWindow N (z d) (p3 : ℝ))
-    (h1 : p1 ∈ primeWindow N (z d) (p2 : ℝ))
-    (hn : n ∈ omega3SwitchedFibre N d p1 p2 p3) :
-    ⟨d, p2, p1, n⟩ ∈ omega3CofactorMultiplicityCarrier N
-      (omega3Cofactor d p1 p2 n) W z y := by
-  have hp2 := mem_primeWindow.mp h2
-  have hp3 := mem_primeWindow.mp h3
-  have hn' := mem_filter.mp hn
-  refine mem_sigma.mpr ⟨hd, mem_sigma.mpr ⟨?_, mem_sigma.mpr
-    ⟨h1, mem_filter.mpr ⟨hn'.1, hn'.2.1, rfl⟩⟩⟩⟩
-  exact mem_primeWindow.mpr ⟨hp2.1, hp2.2.1, hp2.2.2.1, hp2.2.2.2.trans hp3.2.2.2⟩
 
 theorem omega3_cofactor_quotient_unique {d p1 p2 n m e : ℕ}
     (he : 0 < e)

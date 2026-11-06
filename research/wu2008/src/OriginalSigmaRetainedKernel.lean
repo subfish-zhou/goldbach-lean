@@ -81,7 +81,6 @@ theorem retainedD0_le : retainedD0 ≤ D0 := by
   norm_num only [show (3:ℝ)+2=5 by norm_num, show (3:ℝ)+1=4 by norm_num] at h
   exact h
 
-theorem retainedD0_lt_one : retainedD0 < 1 := retainedD0_le.trans_lt D0_lt_one
 
 def retainedWeight (t : ℝ) : ℝ := retainedPaid t/t
 

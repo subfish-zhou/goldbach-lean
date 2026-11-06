@@ -40,7 +40,6 @@ theorem div_continuous {f : ℝ → ℝ} (hf : Continuous f) :
 theorem B_continuous : Continuous B := moving_continuous k_continuous 2
 theorem C_continuous : Continuous C := moving_continuous (div_continuous B_continuous) 3
 theorem D_continuous : Continuous D := moving_continuous (div_continuous C_continuous) 4
-theorem E_continuous : Continuous E := moving_continuous (div_continuous D_continuous) 5
 
 theorem k_literal {v : ℝ} (hv : 2 ≤ v) : k v = log (v-1)/v := by
   simp only [k,max_eq_right (show (1:ℝ) ≤ v-1 by linarith),

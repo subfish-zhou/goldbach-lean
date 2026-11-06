@@ -21,16 +21,5 @@ theorem complete_coefficient_gt_negative_seventeen :
   unfold TruncatedElevenClassicalCountLower.classicalCoefficient
   linarith
 
-/-- Literal expansion of the original coefficient; no term or multiplicity is omitted. -/
-theorem full_literal_coefficient_gt_negative_seventeen :
-    (-17 : ℝ) <
-      24*wuLowerCoefficient (1/(2*truncatedSixthLowerAlpha)) +
-      8*wuLowerCoefficient (1/(2*truncatedSixthLowerBeta)) + fifthPairFlin +
-      truncatedSixthLowerF6lin + 47/481250 -
-      SingleUpperClassicalLimit.Glin (1/3) -
-      SingleUpperClassicalLimit.Glin truncatedSixthLowerSigma - 8*J9 -
-      16*SeventhEighth.J7 - 8*SeventhEighth.J8 -
-      8*FourRoughClosedMass.I10 - 8*FourRoughClosedMass.I11 :=
-  complete_coefficient_gt_negative_seventeen
 
 end Wu2008DoubleSieve.ClassicalFullCoefficientBounds

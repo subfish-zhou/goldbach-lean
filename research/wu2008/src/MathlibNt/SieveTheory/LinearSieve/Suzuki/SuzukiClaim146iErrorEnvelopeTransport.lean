@@ -27,14 +27,6 @@ theorem errorEnvelope_eq_lambda_div_internal
   norm_num [Real.rpow_one]
   field_simp [ne_of_gt hs]
 
-/-- Equivalent orientation: `lambda` is `s` times the error envelope, rather
-than literally the error envelope. -/
-theorem lambda_eq_s_mul_errorEnvelope
-    (H : Section13HatLayers) {N : ℕ} {D d s : ℝ} (hs : 0 < s) :
-    lambda H (ErrorSign.ofDepth N) D d 0 s =
-      s * errorEnvelope H N D d s := by
-  rw [errorEnvelope_eq_lambda_div_internal H hs]
-  field_simp [ne_of_gt hs]
 
 /-- Claim 14.6(i) makes the production error envelope antitone on the matching
 parity interval. -/

@@ -328,20 +328,6 @@ theorem weighted_primitive_vaughanTypeILong
   simpa [vaughanTypeILongCoeffMoment] using
     weighted_primitive_prefix_maximal (vaughanTypeILongCoeff b u v) 0 N Q hQ
 
-/-- Primitive large sieve in the publication-facing, genuinely rearranged
-form: its left side is a maximum of short-variable coefficients multiplying
-long-variable character sums. -/
-theorem weighted_primitive_vaughanTypeILong_rearranged
-    (b : ℤ → ℂ) (N Q u v : ℕ) (hQ : 0 < Q) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          vaughanTypeILongPrefixMaxSquare b N u v q χ) ≤
-      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-          vaughanTypeILongCoeffMoment b N u v := by
-  simpa only [← primitiveCharacterPrefixMaxSquare_typeI_eq_long] using
-    weighted_primitive_vaughanTypeILong b N Q u v hQ
 
 /-- Explicit BV-compatible `N * log^κ` coefficient scale.  The only premise is
 the minimal coefficient moment above. -/
@@ -378,31 +364,6 @@ theorem weighted_vaughan_prefix_large_sieve_long_typeI_ledger
     vaughanTypeICoeff] using
       weighted_vaughan_prefix_large_sieve_ledger b N Q u v hQ
 
-/-- The integrated weighted Vaughan ledger after inserting precisely the
-BV-scale coefficient-moment premise.  No Type-I character-sum estimate is
-assumed: the primitive large sieve was proved above from the coefficient
-moment. -/
-theorem weighted_vaughan_prefix_large_sieve_long_typeI_ledger_of_moment
-    (b : ℤ → ℂ) (N Q u v : ℕ) (C : ℝ) (κ : ℕ) (hQ : 0 < Q)
-    (hMoment : VaughanTypeILongCoeffMomentBound b N u v C κ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          primitiveCharacterPrefixMaxSquare (vaughanLambdaCoeff b) 0 N q χ) ≤
-      3 * (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-        ((C * (N : ℝ) * Real.log (N + 1 : ℕ) ^ κ) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanTypeIICoeff b u v n‖ ^ 2) +
-          (∑ n ∈ Finset.Icc (1 : ℤ) N, ‖vaughanSmallCoeff b v n‖ ^ 2)) := by
-  refine (weighted_vaughan_prefix_large_sieve_long_typeI_ledger
-    b N Q u v hQ).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · gcongr
-    exact hMoment
-  · have hLS : 0 ≤ primitiveLargeSieveConstant N Q := by
-      unfold primitiveLargeSieveConstant
-      positivity
-    positivity
 
 end
 

@@ -1,0 +1,13 @@
+{
+  "status": "SHARED_BATCH_ALL_34_GATES_PASSED_NOT_INSTALLED",
+  "report_path": "/tmp/wu-shared-proof-batch-v1/validation-inputs-02/report.json",
+  "report_sha256": "aa0c184e0942dc6fb0e8053bc2cd2de1864561b46838c4f78ca6507a73517905",
+  "context_digest": "62d8408dd7e4a6911ffd9e3d627a419a612289739c4d41c8f0036eac3fc49377",
+  "steps": 34,
+  "actual_report_status": "FULL_CONTEXT_EXPORTS_LITERALS_RETIREMENT_21_KERNELS_FRESH_UNION_PRODUCERS_PASS_NOT_INSTALLED",
+  "evidence_index": "completed-shared-validation-evidence-index.json",
+  "retained_types": 696,
+  "retained_definition_values": 183,
+  "changed_public_types": 33,
+  "independent_fresh_union_replay_exit_code": 0
+}

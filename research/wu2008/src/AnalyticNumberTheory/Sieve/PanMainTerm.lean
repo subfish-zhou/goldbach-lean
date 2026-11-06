@@ -280,36 +280,6 @@ noncomputable def panSelbergLiMainTerm
       (logarithmicIntegral ((N : ℝ) / a) /
         (Nat.totient (Nat.lcm d₁ d₂) : ℝ))
 
-/-- **Finite main-term factorization** (Liu §III, equation `eqn-m1`):
-the Selberg quadratic factor and the weighted `li` sum separate exactly. -/
-theorem panSelbergLiMainTerm_eq_factor_mul
-    (D A : Finset ℕ) (coeff f : ℕ → ℝ) (N : ℕ) :
-    panSelbergLiMainTerm D A coeff f N =
-      panSelbergQuadraticFactor D coeff * panLiWeightSum A f N := by
-  unfold panSelbergLiMainTerm panSelbergQuadraticFactor panLiWeightSum
-  calc
-    (∑ d₁ ∈ D, ∑ d₂ ∈ D, coeff d₁ * coeff d₂ *
-        ∑ a ∈ A, f a *
-          (logarithmicIntegral ((N : ℝ) / a) /
-            (Nat.totient (Nat.lcm d₁ d₂) : ℝ))) =
-      ∑ d₁ ∈ D, ∑ d₂ ∈ D,
-        (coeff d₁ * coeff d₂ / (Nat.totient (Nat.lcm d₁ d₂) : ℝ)) *
-          ∑ a ∈ A, f a * logarithmicIntegral ((N : ℝ) / a) := by
-            apply Finset.sum_congr rfl
-            intro d₁ hd₁
-            apply Finset.sum_congr rfl
-            intro d₂ hd₂
-            rw [Finset.mul_sum, Finset.mul_sum]
-            apply Finset.sum_congr rfl
-            intro a ha
-            ring
-    _ = (∑ d₁ ∈ D, ∑ d₂ ∈ D,
-          coeff d₁ * coeff d₂ / (Nat.totient (Nat.lcm d₁ d₂) : ℝ)) *
-        ∑ a ∈ A, f a * logarithmicIntegral ((N : ℝ) / a) := by
-          rw [Finset.sum_mul]
-          apply Finset.sum_congr rfl
-          intro d₁ hd₁
-          rw [Finset.sum_mul]
 
 /-! ## 2. Analytic input and reduction theorem -/
 
@@ -995,13 +965,6 @@ theorem panMainSieveAbsorption_of_dom {x : ℕ → ℝ} (hdom : ∀ X : ℕ, (X 
       _ = 128 * x X * (Real.log (x X)) ^ (A + 7) := by ring
   exact eventually_atTop.mp hev
 
-/-- The scale `x X = (X : ℝ)` satisfies domination definitionally,
-so it satisfies `PanMainSieveAbsorption`. -/
-theorem panMainSieveAbsorption_natCast :
-    PanMainSieveAbsorption (fun N : ℕ => (N : ℝ)) := by
-  apply panMainSieveAbsorption_of_dom
-  intro X
-  rfl
 
 /-- **Counterexample to logarithmic-saving absorption**:
 for `x X = (X : ℝ)`, the assertion that the polylogarithmic factor

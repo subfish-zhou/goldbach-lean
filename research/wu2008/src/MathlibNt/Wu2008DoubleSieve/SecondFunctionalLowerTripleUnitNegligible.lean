@@ -106,27 +106,6 @@ theorem unitMass_power_le {k i N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
       mul_le_mul_of_nonneg_left (inner d hd) (Nat.cast_nonneg _)
     _ = _ := by ring
 
-/-- The full six-band power bound uses the actual slab producer internally. -/
-theorem unitMass_six_power_bound (k : ℕ) {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s →
-      (∀ j : Fin 6, unitMass N δ Δ V p j ≤ 5^3 * (N:ℝ) *
-        (N:ℝ)^(-wuLocalExponent k δ/2) *
-          boxConvolutionReciprocalMass (convolutionWuWindows N Δ V)) ∧
-      (∑ j : Fin 6, unitMass N δ Δ V p j) ≤ (6*5^3) * (N:ℝ) *
-        (N:ℝ)^(-wuLocalExponent k δ/2) *
-          boxConvolutionReciprocalMass (convolutionWuWindows N Δ V) := by
-  obtain ⟨T,hT,hm⟩ := HighNonunit.source_cube_mass k hδ hδhi
-  refine ⟨T,hT,?_⟩
-  intro N hN i Δ V hb p hp hs
-  have hj := fun j => unitMass_power_le (by omega) hδ hδhi hb p hp hs j
-    (hm N hN i Δ V hb)
-  refine ⟨hj,?_⟩
-  have hh := sum_le_sum (s := (univ : Finset (Fin 6))) (fun j _ => hj j)
-  simpa only [sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul, Nat.cast_ofNat,
-    mul_assoc] using hh
 
 /-- Genuine logarithm versus power decay, with no numerical threshold oracle. -/
 theorem unit_power_log_decay {a : ℝ} (ha : 0 < a) :

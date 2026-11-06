@@ -112,33 +112,7 @@ theorem harcosCoefficient_eq_sum_monic (a b : ZMod p) (n : ℕ) :
   · intro v _ w _ h
     exact harcosMonic_injective n h
 
-/-- Interface to finite-UFD sums indexed by Mathlib's degree-exact monic subtype. -/
-theorem harcosCoefficient_eq_sum_monicDegreeEq (a b : ZMod p) (n : ℕ)
-    [Fintype (Polynomial.MonicDegreeEq (ZMod p) n)] :
-    harcosCoefficient a b n =
-      ∑ f : Polynomial.MonicDegreeEq (ZMod p) n, harcosEta a b f.val := by
-  rw [harcosCoefficient]
-  apply Fintype.sum_bijective (fun v : Fin n → ZMod p ↦
-    Polynomial.MonicDegreeEq.mk (harcosMonic n v)
-      (harcosMonic_monic n v) (harcosMonic_natDegree n v))
-  · constructor
-    · intro v w h
-      exact harcosMonic_injective n (congrArg Subtype.val h)
-    · intro f
-      obtain ⟨v, hv, _⟩ := harcosMonic_unique n f.val f.monic f.natDegree
-      exact ⟨v, Subtype.ext hv⟩
-  · intro v
-    rfl
 
-theorem harcosCoefficient_norm_le (a b : ZMod p) (n : ℕ) :
-    ‖harcosCoefficient a b n‖ ≤ (p : ℝ) ^ n := by
-  rw [harcosCoefficient_eq_sum_monic]
-  calc
-    ‖∑ f ∈ harcosMonicPolynomials p n, harcosEta a b f‖ ≤
-        ∑ f ∈ harcosMonicPolynomials p n, ‖harcosEta a b f‖ := norm_sum_le _ _
-    _ ≤ ∑ _f ∈ harcosMonicPolynomials p n, (1 : ℝ) :=
-      Finset.sum_le_sum (fun f _ ↦ harcosEta_norm_le_one a b f)
-    _ = (p : ℝ) ^ n := by simp [harcosMonicPolynomials_card]
 
 theorem harcosCoefficient_zero (a b : ZMod p) : harcosCoefficient a b 0 = 1 := by
   simp [harcosCoefficient, harcosMonic_zero, harcosEta_one]
@@ -353,10 +327,6 @@ theorem harcosLSeries_factorization (a b : ZMod p) (ha : a ≠ 0) :
   rw [harcosLSeries_eq_polynomial a b ha, harcosLPolynomial_factorization]
   simp
 
-theorem harcosReciprocalRoots_add_kloosterman (a b : ZMod p) :
-    harcosReciprocalRootPlus a b + harcosReciprocalRootMinus a b =
-      -completeKloosterman p a (b.val : ℤ) := by
-  rw [harcosReciprocalRoots_add, harcosCoefficient_one_residue]
 
 theorem harcosReciprocalRoots_mul_prime (a b : ZMod p) (ha : a ≠ 0) (hb : b ≠ 0) :
     harcosReciprocalRootPlus a b * harcosReciprocalRootMinus a b = (p : ℂ) := by
@@ -368,11 +338,5 @@ theorem harcosReciprocalRoots_ne_zero (a b : ZMod p) (ha : a ≠ 0) (hb : b ≠ 
   rw [harcosReciprocalRoots_mul_prime a b ha hb]
   exact Nat.cast_ne_zero.mpr (NeZero.ne p)
 
-/-- The inverses are actual complex zeros of the coefficient-generated polynomial. -/
-theorem harcosLPolynomial_roots (a b : ZMod p) (ha : a ≠ 0) (hb : b ≠ 0) :
-    (harcosLPolynomial a b).IsRoot (harcosReciprocalRootPlus a b)⁻¹ ∧
-      (harcosLPolynomial a b).IsRoot (harcosReciprocalRootMinus a b)⁻¹ := by
-  obtain ⟨hplus, hminus⟩ := harcosReciprocalRoots_ne_zero a b ha hb
-  simp [Polynomial.IsRoot, harcosLPolynomial_factorization, hplus, hminus]
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

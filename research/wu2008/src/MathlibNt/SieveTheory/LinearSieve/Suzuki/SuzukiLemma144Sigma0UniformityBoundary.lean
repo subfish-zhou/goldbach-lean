@@ -73,42 +73,6 @@ def ActualSigmaZeroClaim145Uniformity
         (D ⌈/⌉ p : ℕ) (p : ℕ) d Δ σ K
         (recursiveCoordinate D p) C145
 
-/-- Once the genuinely uniform Claim-14.5 statement is available, the endpoint
-estimate is just monotonicity of the finite low-prime sum.  This lemma makes the
-remaining analytic obligation exact; it does not accept the desired `Σ₀`
-inequality as a premise. -/
-theorem suzukiSigmaZero_eventually_le_claim145Budget_of_uniformity
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ σ K C145 : ℝ}
-    (huniform : ActualSigmaZeroClaim145Uniformity S H d Δ σ K C145)
-    (hnu : ∀ z p : ℕ, p ∈ suzukiSupportedBelow S z → 0 ≤ S.nu p)
-    (hq2 : ∀ (D N z p : ℕ), 2 ≤ N →
-      p ∈ (suzukiSupportedBelow S z).filter
-        (fun q : ℕ => (q : ℝ) < (D : ℝ) ^ (1 / σ)) → 2 ≤ D ⌈/⌉ p)
-    (hdom : ∀ (D N z p : ℕ), 2 ≤ N →
-      p ∈ (suzukiSupportedBelow S z).filter
-        (fun q : ℕ => (q : ℝ) < (D : ℝ) ^ (1 / σ)) →
-      recursiveCoordinate D p ∈
-        SuzukiFiniteContinuousLayers.suzukiParityDomainOne 2 (N - 1))
-    (hcoordσ : ∀ (D N z p : ℕ), 2 ≤ N →
-      p ∈ (suzukiSupportedBelow S z).filter
-        (fun q : ℕ => (q : ℝ) < (D : ℝ) ^ (1 / σ)) →
-      recursiveCoordinate D p ≤ σ) :
-    ∃ D₀ : ℝ, 1 < D₀ ∧ ∀ (D N z : ℕ), D₀ ≤ (D : ℝ) → 2 ≤ N →
-      suzukiSigmaZero S N D z ((D : ℝ) ^ (1 / σ)) ≤
-        suzukiSigmaZeroClaim145Budget S H N D z d Δ σ K C145 := by
-  rcases huniform with ⟨D₀, hD₀, hu⟩
-  refine ⟨D₀, hD₀, ?_⟩
-  intro D N z hD hN
-  unfold suzukiSigmaZero suzukiSigmaZeroClaim145Budget
-  apply Finset.sum_le_sum
-  intro p hp
-  have hpSupport : p ∈ suzukiSupportedBelow S z := (Finset.mem_filter.mp hp).1
-  have hpBound := hu D N z p hD hN hp (hq2 D N z p hN hp)
-    (hdom D N z p hN hp) (hcoordσ D N z p hN hp)
-  unfold Claim14_5Bound at hpBound
-  rw [suzukiActualTReal_natCast] at hpBound
-  exact mul_le_mul_of_nonneg_left hpBound (hnu z p hpSupport)
 
 
 end MathlibNt.SieveTheory

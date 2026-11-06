@@ -99,19 +99,6 @@ theorem common_profile_residueSup_real (A F K : ℝ)
   rw [heq]
   exact hbound x hx Q hQ S f r b hS hf hr hb
 
-/-- On positive source coordinates the quotient profile gives the literal
-fixed product endpoint, with no change to the prime count or li main term. -/
-theorem actualAPSum_div_profile (S : Finset ℕ) (f : ℕ → ℝ)
-    (y : ℝ) (d b : ℕ) (hS : ∀ m ∈ S, 1 ≤ m) :
-    actualAPSum S f (fun m => y / m) d b =
-      ∑ m ∈ S, if m.Coprime d then f m * ebar y d b m else 0 := by
-  unfold actualAPSum
-  apply sum_congr rfl
-  intro m hm
-  have hm0 : (m : ℝ) ≠ 0 := by
-    exact_mod_cast (show m ≠ 0 by have := hS m hm; omega)
-  have hprod : (m : ℝ) * (y / m) = y := by field_simp
-  rw [hprod]
 
 /-- The manuscript's W1 tail endpoints `x/m` and `eta*x/m`.
 Both retain a genuine reduced-residue supremum inside the weighted sum.
@@ -152,40 +139,6 @@ theorem common_profile_W1_tail_residueSup (A F η : ℝ)
     rw [hprod (η * x) m hm, one_mul]
     simpa only [one_mul] using mul_le_mul_of_nonneg_right hη1 hx0
 
-/-- The literal manuscript block profiles, at the correct ambient scale
-`2*H`. All constants precede `N,a,eta`; no restriction `N ≤ 2*H` is used.
-Only prime source coordinates in nonempty blocks are assumed. -/
-theorem common_profile_block_residueSup (A F : ℝ)
-    (hA : 0 < A) (hF : 0 ≤ F) :
-    ∃ B C : ℝ, 0 < B ∧ 0 < C ∧ ∃ X₀ : ℝ,
-      ∀ H : ℝ, X₀ ≤ 2 * H →
-      ∀ (N a η : ℝ) (Q : ℕ),
-      (Q : ℝ) ≤ Real.sqrt (2 * H) / Real.log (2 * H) ^ B →
-      ∀ (S : Finset ℕ) (f : ℕ → ℝ),
-      (∀ m ∈ S, m.Prime ∧ blockLower H m < blockUpper H N a η m) →
-      (∀ m ∈ S, |f m| ≤ F) →
-      ((∑ d ∈ Icc 1 Q, wuModulusWeight d *
-          actualAPResidueSup S f (fun m => blockLower H m / m) d) ≤
-        C * (2 * H) / Real.log (2 * H) ^ A) ∧
-      ((∑ d ∈ Icc 1 Q, wuModulusWeight d *
-          actualAPResidueSup S f (fun m => blockUpper H N a η m / m) d) ≤
-        C * (2 * H) / Real.log (2 * H) ^ A) := by
-  obtain ⟨B, C, hB, hC, X₀, hbound⟩ :=
-    common_profile_residueSup_real A F 1 hA hF (by norm_num)
-  refine ⟨B, C, hB, hC, X₀, ?_⟩
-  intro H hH N a η Q hQ S f hS hf
-  have hsource : ∀ m ∈ S, 1 ≤ m ∧ (m : ℝ) ≤ Real.sqrt (2 * H) := by
-    intro m hm
-    exact ⟨(hS m hm).1.one_le, block_source_sqrt_domain H N a η m (hS m hm).2⟩
-  constructor
-  · apply hbound (2 * H) hH Q hQ S f (fun m => blockLower H m / m) hsource hf
-    intro m hm
-    simpa only [one_mul] using
-      (block_prime_endpoint_domain H N a η m (hS m hm).1 (hS m hm).2).1
-  · apply hbound (2 * H) hH Q hQ S f (fun m => blockUpper H N a η m / m) hsource hf
-    intro m hm
-    simpa only [one_mul] using
-      (block_prime_endpoint_domain H N a η m (hS m hm).1 (hS m hm).2).2
 
 end
 end Wu2004MeanValue

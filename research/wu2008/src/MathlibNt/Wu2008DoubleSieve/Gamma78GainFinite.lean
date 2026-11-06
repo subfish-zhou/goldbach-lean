@@ -32,13 +32,6 @@ noncomputable def gamma78GainCount {i : ℕ} (N : ℕ) (W : Fin i → Finset ℕ
   ∑ x ∈ X, (convolutionCoeff W x.1 : ℝ) *
     (sourceSieveCount N (gamma5ClassicalProduct x) (x.1 * N) (x.2.1 : ℝ) : ℝ)
 
-theorem gamma78Gain_count_eq_nat {i : ℕ} (N : ℕ) (W : Fin i → Finset ℕ)
-    (X : Finset Gamma5ClassicalLabel) :
-    gamma78GainCount N W X =
-      ((∑ x ∈ X, convolutionCoeff W x.1 *
-        (sourceSieveCarrier N (x.1 * x.2.1 * x.2.2) (x.1 * N) (x.2.1 : ℝ)).card : ℕ) : ℝ) := by
-  simp only [gamma78GainCount, sourceSieveCount, gamma5ClassicalProduct, Nat.cast_sum, Nat.cast_mul,
-    Int.cast_natCast]
 
 theorem gamma78Gain_count_partition {α : Type*} [Fintype α] {i : ℕ}
     (N : ℕ) (W : Fin i → Finset ℕ)
@@ -64,28 +57,6 @@ theorem gamma78Gain_constants (tri : Bool) :
   cases tri <;> norm_num [gamma78GainLower, gamma78GainUpper, gamma5MassA,
     gamma6BaseB, gamma5ClassicalB, gamma5ClassicalS]
 
-theorem gamma78Gain_mem_labels_iff {i k N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1 / 2)
-    (hb : wuSourceBox k δ N i Δ V) (tri : Bool) (x : Gamma5ClassicalLabel) :
-    x ∈ gamma78GainLabels tri N δ (convolutionWuWindows N Δ V) ↔
-      x.1 ∈ boxConvolutionSupport (convolutionWuWindows N Δ V) ∧
-      x.2.1.Prime ∧ x.2.2.Prime ∧ x.2.1.Coprime N ∧ x.2.2.Coprime N ∧
-      wuLocalCutoff N δ x.1 gamma5ClassicalS ≤ (x.2.1 : ℝ) ∧ x.2.1 < x.2.2 ∧
-      (x.2.1 : ℝ) < ((N : ℝ) ^ (1 / 2 - δ) / x.1) ^ gamma6BaseB ∧
-      (if tri then True else
-        ((N : ℝ) ^ (1 / 2 - δ) / x.1) ^ gamma6BaseB ≤ (x.2.2 : ℝ)) ∧
-      (x.2.2 : ℝ) < ((N : ℝ) ^ (1 / 2 - δ) / x.1) ^ gamma78GainUpper tri := by
-  constructor
-  · intro hx
-    obtain ⟨hx,hp,hq,hqu⟩ := mem_filter.mp hx
-    obtain ⟨hd,hpp,hqq,hpN,hqN,hz,hpq,_⟩ :=
-      (gamma5Classical_mem_labels_iff hN hδ hδhi hb x).mp hx
-    exact ⟨hd,hpp,hqq,hpN,hqN,hz,hpq,hp,hq,hqu⟩
-  · rintro ⟨hd,hp,hq,hpN,hqN,hz,hpq,hpu,hql,hqu⟩
-    have hR := (gamma5Mass_support_geometry hN hδ hδhi hb hd).2.2.1
-    have hu := rpow_le_rpow_of_exponent_le hR.le (gamma78Gain_constants tri).2.2.2.2.2
-    exact mem_filter.mpr ⟨(gamma5Classical_mem_labels_iff hN hδ hδhi hb x).mpr
-      ⟨hd,hp,hq,hpN,hqN,hz,hpq,hqu.trans_le hu⟩,hpu,hql,hqu⟩
 
 noncomputable def gamma78GainV (t u : ℝ) : ℝ := (1 - t - u) / t
 

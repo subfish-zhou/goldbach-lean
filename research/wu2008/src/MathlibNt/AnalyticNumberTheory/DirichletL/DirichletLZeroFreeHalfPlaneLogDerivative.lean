@@ -209,35 +209,6 @@ theorem norm_LFunction_le_on_anchor_disk {q : ℕ} [NeZero q]
       nlinarith [abs_nonneg t]
     _ = _ := by ring
 
-/-- Quantitative logarithmic derivative in a zero-free half-plane.
-The only conditional analytic input is the displayed nonvanishing hypothesis.
-The explicit cost is one inverse width, uniformly in all real heights. -/
-theorem norm_logDeriv_LFunction_le_of_zeroFree_halfPlane
-    {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1)
-    {δ : ℝ} (hδ : 0 < δ) (hδ1 : δ ≤ 1 / 4)
-    (hzero : ∀ z : ℂ, 1 - δ ≤ z.re → χ.LFunction z ≠ 0)
-    (t β : ℝ) (hβlo : 1 - δ / 2 ≤ β) (hβhi : β ≤ 1 + δ) :
-    ‖logDeriv χ.LFunction ((β : ℂ) + I * t)‖ ≤
-      40 / δ * Real.log (32 * q * (1 + |t|) / δ) := by
-  have hq : (1 : ℝ) ≤ q := by exact_mod_cast (NeZero.pos q)
-  have hbB : δ / 4 < 8 * q * (1 + |t|) := by
-    have hprod : (1 : ℝ) ≤ q * (1 + |t|) := by
-      nlinarith [abs_nonneg t]
-    nlinarith
-  have hz : dist ((β : ℂ) + I * t) ((1 + δ / 2 : ℝ) + I * t) ≤ δ := by
-    rw [dist_add_right, dist_eq_norm, ← ofReal_sub, norm_real, Real.norm_eq_abs]
-    exact abs_le.mpr ⟨by linarith, by linarith⟩
-  have h := norm_logDeriv_le_small_disk χ.LFunction
-    ((1 + δ / 2 : ℝ) + I * t) ((β : ℂ) + I * t) hδ
-    (by positivity : 0 < δ / 4) hbB (χ.differentiable_LFunction hχ).differentiableOn
-    (fun w hw ↦ hzero w (anchor_disk_re_lower hδ t hw).le)
-    (fun w hw ↦ norm_LFunction_le_on_anchor_disk χ hχ hδ hδ1 t hw)
-    (delta_quarter_le_norm_LFunction_anchor χ hδ hδ1 t) hz
-  have harg : (8 * (q : ℝ) * (1 + |t|)) / (δ / 4) =
-      32 * q * (1 + |t|) / δ := by ring
-  rw [harg] at h
-  convert h using 1
-  ring
 
 end
 end Eq21LocalLog

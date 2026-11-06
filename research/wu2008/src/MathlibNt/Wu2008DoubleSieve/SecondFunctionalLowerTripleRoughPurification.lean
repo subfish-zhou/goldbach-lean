@@ -32,18 +32,7 @@ theorem profileRough_one (d p q : ℕ) : profileRough (d,p,q,1) := by
   intro r hr hd
   exact (hr.ne_one (Nat.dvd_one.mp hd)).elim
 
-/-- In particular, the canonical restriction never removes a unit residual. -/
-theorem roughFamily_unit_retained {i N d a q : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (p : SecondFunctionalParameters) (j : Fin 6)
-    (hx : (d,a,q,1) ∈ (sourceFamily N δ Δ V p j).labels) :
-    (d,a,q,1) ∈ (roughFamily N δ Δ V p j).labels :=
-  (mem_roughFamily_labels p j _).mpr ⟨hx,profileRough_one d a q⟩
 
-theorem roughFamily_original_mask {i N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (p : SecondFunctionalParameters) (j : Fin 6) {x : Label}
-    (hx : x ∈ (roughFamily N δ Δ V p j).labels) :
-    0 < x.2.2.2 ∧ Sifted (x.1*x.2.1*N) (cofactor x) x.2.2.1 :=
-  source_mask p j ((mem_roughFamily_labels p j x).mp hx).1
 
 /-- A proof adapter only; no nonunit or arity membership is imported. -/
 def squareProfile (x : Label) : HighNonunit.Profile := ⟨x.1,[x.2.1],x.2.2.1,x.2.2.2⟩

@@ -1,0 +1,23 @@
+test_corrupt_backup_rejected_before_restore (test_core.TransactionTests.test_corrupt_backup_rejected_before_restore) ... ok
+test_exact_commit (test_core.TransactionTests.test_exact_commit) ... ok
+test_failed_verification_restores_deletion_addition_and_metadata (test_core.TransactionTests.test_failed_verification_restores_deletion_addition_and_metadata) ... ok
+test_partial_replace_failure_rolls_back (test_core.TransactionTests.test_partial_replace_failure_rolls_back) ... ok
+test_path_escape_and_unlisted_target_rejected (test_core.TransactionTests.test_path_escape_and_unlisted_target_rejected) ... ok
+test_symlink_target_rejected (test_core.TransactionTests.test_symlink_target_rejected) ... ok
+test_actual_previously_compiled_payloads (test_exports.ExportReviewTests.test_actual_previously_compiled_payloads) ... ok
+test_boolean_universe_count_rejected (test_exports.ExportReviewTests.test_boolean_universe_count_rejected) ... ok
+test_empty_equal_payload_not_enough (test_exports.ExportReviewTests.test_empty_equal_payload_not_enough) ... ok
+test_hidden_value_omission_rejected (test_exports.ExportReviewTests.test_hidden_value_omission_rejected) ... ok
+test_wrong_definition_kind_rejected (test_exports.ExportReviewTests.test_wrong_definition_kind_rejected) ... ok
+test_wrong_requested_names_rejected (test_exports.ExportReviewTests.test_wrong_requested_names_rejected) ... ok
+test_boolean_exit_rejected (test_gates.GateTests.test_boolean_exit_rejected) ... ok
+test_exact_shape_only (test_gates.GateTests.test_exact_shape_only) ... ok
+test_failure_or_wrong_run_rejected (test_gates.GateTests.test_failure_or_wrong_run_rejected) ... ok
+test_gate_order_rejected (test_gates.GateTests.test_gate_order_rejected) ... ok
+test_missing_gate_rejected (test_gates.GateTests.test_missing_gate_rejected) ... ok
+test_proof_provenance_counts_rejected (test_gates.GateTests.test_proof_provenance_counts_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.356s
+
+OK

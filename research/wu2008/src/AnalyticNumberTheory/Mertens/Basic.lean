@@ -96,26 +96,8 @@ theorem primeProduct_pos (x : ℕ) : 0 < primeProduct x := by
   unfold primeProduct
   exact Finset.prod_pos fun p hp => primeFactor_pos (mem_primesUpTo.mp hp).1
 
-theorem primeProduct_nonneg (x : ℕ) : 0 ≤ primeProduct x :=
-  (primeProduct_pos x).le
 
-theorem primeProduct_le_one (x : ℕ) : primeProduct x ≤ 1 := by
-  unfold primeProduct
-  refine Finset.prod_le_one ?_ ?_
-  · intro p hp
-    exact (primeFactor_pos (mem_primesUpTo.mp hp).1).le
-  · intro p hp
-    exact primeFactor_le_one (mem_primesUpTo.mp hp).1
 
-/-- The finite Euler product is antitone in its cutoff. -/
-theorem primeProduct_antitone : Antitone primeProduct := by
-  intro x y hxy
-  unfold primeProduct
-  refine Finset.prod_le_prod_of_subset_of_le_one (primesUpTo_mono hxy) ?_ ?_
-  · intro p hp
-    exact (primeFactor_pos (mem_primesUpTo.mp hp).1).le
-  · intro p hp _
-    exact primeFactor_le_one (mem_primesUpTo.mp hp).1
 
 /-- Taking logarithms converts the finite Euler product into a finite sum. -/
 theorem log_primeProduct (x : ℕ) :

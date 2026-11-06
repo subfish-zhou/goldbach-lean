@@ -113,8 +113,6 @@ theorem tendsto_buchstab_tail_limit : Tendsto buchstab atTop (nhds buchstabTailL
 theorem buchstab_tail_limit_unique {L : ℝ} (hL : Tendsto buchstab atTop (nhds L)) :
     L = buchstabTailLimit := tendsto_nhds_unique hL tendsto_buchstab_tail_limit
 
-theorem existsUnique_buchstab_tail_limit : ∃! L : ℝ, Tendsto buchstab atTop (nhds L) :=
-  ⟨buchstabTailLimit, tendsto_buchstab_tail_limit, fun _ h => buchstab_tail_limit_unique h⟩
 
 /-- The requested factorial error, uniform in every real point beyond the threshold. -/
 theorem buchstab_tail_limit_error (m : ℕ) (hm : 3 ≤ m) :
@@ -124,13 +122,5 @@ theorem buchstab_tail_limit_error (m : ℕ) (hm : 3 ≤ m) :
   filter_upwards [eventually_ge_atTop (m : ℝ)] with y hy
   exact buchstab_tail_oscillation m hm y hy u hu
 
-theorem buchstab_tail_limit_bounds : 1 / 2 ≤ buchstabTailLimit ∧ buchstabTailLimit ≤ 1 := by
-  constructor
-  · apply ge_of_tendsto tendsto_buchstab_tail_limit
-    filter_upwards [eventually_ge_atTop (1 : ℝ)] with u hu
-    exact one_half_le_buchstab hu
-  · apply le_of_tendsto tendsto_buchstab_tail_limit
-    filter_upwards [eventually_ge_atTop (1 : ℝ)] with u hu
-    exact buchstab_le_one hu
 
 end Wu2008DoubleSieve.SecondFunctionalJointTail

@@ -75,13 +75,6 @@ theorem base_pos {N : ℕ} {t : Index} (ht : t ∈ base N) : 0 < cofactor t := b
 theorem labels_base {N : ℕ} {e : Bool} {t : Index} (ht : t ∈ labels N e) :
     t ∈ base N := (mem_filter.mp ht).1
 
-/-- Nonempty support is a proved restriction, not an assumption on all windows. -/
-theorem omitted_empty {N : ℕ} {e : Bool} {t : Index} (ht : t ∈ base N)
-    (hn : t ∉ labels N e) :
-    omega3ProfilePrimes N (lower N e t) (upper N e t) = ∅ := by
-  apply not_nonempty_iff_eq_empty.mp
-  intro hp
-  exact hn (mem_filter.mpr ⟨ht,hp⟩)
 
 theorem label_geometry {N : ℕ} {e : Bool} {t : Index} (ht : t ∈ labels N e) :
     0 < cofactor t ∧ 2 ≤ lower N e t ∧ lower N e t ≤ upper N e t ∧

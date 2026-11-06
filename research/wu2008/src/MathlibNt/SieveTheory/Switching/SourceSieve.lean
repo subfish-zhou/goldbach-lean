@@ -318,21 +318,6 @@ noncomputable def jurkatRichertSourceRemainderSum (N : ℕ) (ε : ℝ) : ℝ :=
       (fun d : ℕ => (d : ℝ) ≤ (N : ℝ) ^ (1 / 2 - ε)),
     |(jurkatRichertSourceBoundingSieve N).rem d|
 
-/-- The level-restricted remainder is literally a sum of Goldbach AP
-discrepancies. -/
-theorem jurkatRichertSourceRemainderSum_eq_AP
-    (N : ℕ) (ε : ℝ) (hEven : Even N) (hN : 2 < N) :
-    jurkatRichertSourceRemainderSum N ε =
-      ∑ d ∈ (jurkatRichertSourceSiftingProduct N).divisors.filter
-          (fun d : ℕ => (d : ℝ) ≤ (N : ℝ) ^ (1 / 2 - ε)),
-        |(((jurkatRichertSourceUnsiftedPrimeSupport N).filter
-              (fun p => p ≡ N [MOD d])).card : ℝ) -
-          AnalyticNumberTheory.Sieve.goldbachNu d *
-            LiuWeight.liuLogarithmicIntegral (2 / Real.log 2) N| := by
-  unfold jurkatRichertSourceRemainderSum
-  apply Finset.sum_congr rfl
-  intro d hd
-  rw [jurkatRichertSourceRem_eq_modEq_count N d hEven hN]
 
 /-- Every source modulus is coprime to the Goldbach integer: the source
 product omits precisely the cutoff primes dividing `N`. -/

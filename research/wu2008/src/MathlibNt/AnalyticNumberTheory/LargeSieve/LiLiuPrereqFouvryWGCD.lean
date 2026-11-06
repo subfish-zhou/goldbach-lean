@@ -138,8 +138,6 @@ theorem k_D : (v.k₁ * v.k₂).Coprime v.D := by
   exact (hkδ.mul_right (coprime_of_prime_support hkδ hv.δ₁_support)).mul_right
     (coprime_of_prime_support hkδ hv.δ₂_support)
 
-theorem n₁_d₁ : v.n₁.Coprime v.d₁ :=
-  coprime_of_prime_support hv.n₁_d hv.d₁_support
 
 theorem n₁_n₂ : v.n₁.Coprime v.n₂ :=
   hv.n_primitive.of_dvd_left (dvd_mul_left _ _)
@@ -190,21 +188,7 @@ theorem N₁_D (hc : WCompatible q r N₁ N₂) : N₁.Coprime v.D := by
   exact (hNδ.mul_right (coprime_of_prime_support hNδ hv.δ₁_support)).mul_right
     (coprime_of_prime_support hNδ hv.δ₂_support)
 
-theorem N₂_D (hc : WCompatible q r N₁ N₂) : N₂.Coprime v.D := by
-  have hNδ : N₂.Coprime v.δ := by
-    rw [hv.δ_eq]
-    exact hc.2.1.of_dvd_right (Nat.gcd_dvd_right q r)
-  exact (hNδ.mul_right (coprime_of_prime_support hNδ hv.δ₁_support)).mul_right
-    (coprime_of_prime_support hNδ hv.δ₂_support)
 
-theorem n_congruence (hc : WCompatible q r N₁ N₂) :
-    Nat.ModEq v.δ (v.d₁ * v.n₁) v.n₂ := by
-  have hdδ : v.d.Coprime v.δ := by
-    apply (hv.N₁_D hc).of_dvd
-    · rw [hv.N₁_eq]; exact dvd_mul_of_dvd_left (dvd_mul_right _ _) _
-    · exact dvd_mul_of_dvd_left (dvd_mul_right _ _) _
-  apply Nat.ModEq.cancel_left_of_coprime hdδ.symm.gcd_eq_one
-  simpa only [← hv.δ_eq, hv.N₁_eq, hv.N₂_eq, mul_assoc] using hc.2.2
 
 /-- All the arithmetic hypotheses of the existing three-factor phase follow
 from the canonical decomposition and the original W compatibility. -/

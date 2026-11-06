@@ -140,17 +140,5 @@ theorem schwartz_norm_le_rapidDecay (f : 𝓢(ℝ, ℂ)) (k : ℕ) :
   change (1 + |x|) ^ k * ‖f x‖ ≤ B at h
   nlinarith
 
-/-- The constant is chosen before both the positive scale and the frequency. -/
-theorem scaledDyadicCutoff_fourier_rapidDecay (k : ℕ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M → ∀ w : ℝ,
-      ‖𝓕 (fun x ↦ (scaledDyadicCutoff M x : ℂ)) w‖ ≤
-        C * M / (1 + |M * w|) ^ k := by
-  obtain ⟨C, hC, hbound⟩ := schwartz_norm_le_rapidDecay (𝓕 dyadicCutoffSchwartz) k
-  refine ⟨C, hC, fun M hM w ↦ ?_⟩
-  rw [scaledDyadicCutoff_fourier hM, norm_smul, Real.norm_eq_abs, abs_of_pos hM]
-  calc
-    _ ≤ M * (C / (1 + |M * w|) ^ k) :=
-      mul_le_mul_of_nonneg_left (hbound (M * w)) hM.le
-    _ = _ := by ring
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

@@ -124,51 +124,5 @@ theorem gamma16_outer_extension_eq {φ w : ℝ}
   rw [uIcc_of_le hw.1] at ht
   exact gamma16_middle_extension_eq hw ht
 
-theorem gamma16_literal_fibres_integrable (φ : ℝ) :
-    (∀ w ∈ Icc gamma16Alpha gamma16Beta, ∀ t ∈ Icc gamma16Alpha w, ∀ u ∈ Icc t w,
-      IntervalIntegrable (fun v =>
-        buchstab ((φ - t - u - v - w) / v) / (t * u * v ^ 2 * w)) volume u w) ∧
-    (∀ w ∈ Icc gamma16Alpha gamma16Beta, ∀ t ∈ Icc gamma16Alpha w,
-      IntervalIntegrable (fun u => ∫ v in u..w,
-        buchstab ((φ - t - u - v - w) / v) / (t * u * v ^ 2 * w)) volume t w) ∧
-    (∀ w ∈ Icc gamma16Alpha gamma16Beta,
-      IntervalIntegrable (fun t => ∫ u in t..w, ∫ v in u..w,
-        buchstab ((φ - t - u - v - w) / v) / (t * u * v ^ 2 * w)) volume gamma16Alpha w) ∧
-    IntervalIntegrable (fun w => ∫ t in gamma16Alpha..w, ∫ u in t..w, ∫ v in u..w,
-      buchstab ((φ - t - u - v - w) / v) / (t * u * v ^ 2 * w))
-      volume gamma16Alpha gamma16Beta := by
-  refine ⟨?_, ?_, ?_, ?_⟩
-  · intro w hw t ht u hu
-    have hc := (gamma16_full_extension_continuous φ).comp
-      (f := fun v : ℝ => (w, t, u, v))
-      (show Continuous (fun v : ℝ => (w, t, u, v)) by fun_prop)
-    apply ContinuousOn.intervalIntegrable
-    apply hc.continuousOn.congr
-    intro v hv
-    rw [uIcc_of_le hu.2] at hv
-    exact (gamma16_full_extension_eq hw ht hu hv).symm
-  · intro w hw t ht
-    have hc := (gamma16_inner_extension_continuous φ).comp
-      (f := fun u : ℝ => (w, t, u))
-      (show Continuous (fun u : ℝ => (w, t, u)) by fun_prop)
-    apply ContinuousOn.intervalIntegrable
-    apply hc.continuousOn.congr
-    intro u hu
-    rw [uIcc_of_le ht.2] at hu
-    exact (gamma16_inner_extension_eq hw ht hu).symm
-  · intro w hw
-    have hc := (gamma16_middle_extension_continuous φ).comp
-      (f := fun t : ℝ => (w, t))
-      (show Continuous (fun t : ℝ => (w, t)) by fun_prop)
-    apply ContinuousOn.intervalIntegrable
-    apply hc.continuousOn.congr
-    intro t ht
-    rw [uIcc_of_le hw.1] at ht
-    exact (gamma16_middle_extension_eq hw ht).symm
-  · apply ContinuousOn.intervalIntegrable
-    apply (gamma16_outer_extension_continuous φ).continuousOn.congr
-    intro w hw
-    rw [uIcc_of_le gamma16_constants.2.1] at hw
-    exact (gamma16_outer_extension_eq hw).symm
 
 end Wu2008DoubleSieve

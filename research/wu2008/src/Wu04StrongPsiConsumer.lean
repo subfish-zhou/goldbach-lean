@@ -39,11 +39,6 @@ theorem first_actual_unrounded {δ : ℝ} (hd : 0 < δ) (hh : δ ≤ 1/10) :
   rw [← Wu04ClassicalTelescope.first_classical_telescope] at hb
   linarith only [h,hb]
 
-/-- Exact gain against the accepted old complete certificate. -/
-theorem exact_gain_and_residual :
-    (14703:ℝ)/200000-52808/1000000 = 20707/1000000 ∧
-    5*(15826357:ℝ)/1000000000-14703/200000 = 1123357/200000000 ∧
-    0 < (1123357:ℝ)/200000000 := by norm_num
 
 /-- Literal remaining target, not a claimed counterexample or a dropped sup cost. -/
 theorem first_actual_residual_identity :

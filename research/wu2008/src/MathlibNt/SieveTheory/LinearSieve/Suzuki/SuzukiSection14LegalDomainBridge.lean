@@ -94,24 +94,7 @@ theorem suzukiSourceV_eq_extended_recurrence
       simpa [show n - 1 + 3 = n + 2 by omega] using hlowerFail
     rw [hzero, mul_zero]
 
-/-- Index two: no parity-domain hypothesis is needed. -/
-theorem suzukiSourceV_two_eq_extended_recurrence
-    (S : BoundingSieve) (D z : ℕ) :
-    suzukiSourceV S 2 D z =
-      ∑ p ∈ suzukiSupportedBelow S z,
-        S.nu p * suzukiSourceV S 1 (D ⌈/⌉ p) p := by
-  simpa using suzukiSourceV_eq_extended_recurrence S (n := 2) (D := D) (z := z)
-    (by norm_num) (by norm_num)
 
-/-- Index three: `z^3 ≤ D` is exactly the legal odd-domain assumption making
-Suzuki's extra outer upper cutoff automatic. -/
-theorem suzukiSourceV_three_eq_extended_recurrence
-    (S : BoundingSieve) {D z : ℕ} (hzD : z ^ 3 ≤ D) :
-    suzukiSourceV S 3 D z =
-      ∑ p ∈ suzukiSupportedBelow S z,
-        S.nu p * suzukiSourceV S 2 (D ⌈/⌉ p) p := by
-  simpa using suzukiSourceV_eq_extended_recurrence S (n := 3) (D := D) (z := z)
-    (by norm_num) (fun _ => hzD)
 
 /-- Exact induction invariant for the full bridge: at layer `n`, `z^n ≤ D`
 propagates to `p^(n-1) ≤ ceil(D/p)` for every supported outer prime `p < z`.
@@ -174,17 +157,7 @@ theorem suzukiSourceV_eq_section14ExtendedV_of_pow_le
                   simpa [Nat.add_assoc] using hzD
                 exact (not_lt_of_ge hDmul) (hpPow.trans_le hzD')
 
-/-- Index two closes under the exact even legal-domain hypothesis. -/
-theorem suzukiSourceV_two_eq_section14ExtendedV
-    (S : BoundingSieve) {D z : ℕ} (hzD : z ^ 2 ≤ D) :
-    suzukiSourceV S 2 D z = section14ExtendedV S 2 D z :=
-  suzukiSourceV_eq_section14ExtendedV_of_pow_le S 2 D z hzD
 
-/-- Index three closes under the exact odd legal-domain hypothesis. -/
-theorem suzukiSourceV_three_eq_section14ExtendedV
-    (S : BoundingSieve) {D z : ℕ} (hzD : z ^ 3 ≤ D) :
-    suzukiSourceV S 3 D z = section14ExtendedV S 3 D z :=
-  suzukiSourceV_eq_section14ExtendedV_of_pow_le S 3 D z hzD
 
 /-- Consequently the source-faithful parity sum agrees with the renamed §14
 extended sum on the uniform legal domain `z^N ≤ D`. -/

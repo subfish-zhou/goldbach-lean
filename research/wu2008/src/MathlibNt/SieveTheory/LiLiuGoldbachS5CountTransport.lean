@@ -39,37 +39,5 @@ theorem goldbachS5SquareCount_normalized (δ : ℝ) (hδ : 0 < δ) :
     exact_mod_cast goldbachS5SquareCount_le_QA N
   exact (mul_le_mul_of_nonneg_left hc (by norm_num : (0 : ℝ) ≤ 400)).trans hqa
 
-/-- Original S5Closed to the existing zero-prefix B10 sieve, with all finite losses paid.
-The threshold precedes the moving sieve cutoff Z, and the left carrier keeps epsilon. -/
-theorem goldbachS5Closed_le_B10ZeroPrefix_normalized (ε δ : ℝ)
-    (hε : 0 < ε) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N → ∀ Z : ℝ,
-      1 ≤ Z → Z ≤ Real.sqrt (N : ℝ) →
-      (goldbachS5Closed (goldbachDifferenceCarrier N ε) N
-        ((N : ℝ)^(4 / 53 : ℝ)) ((N : ℝ)^(1 / 3 : ℝ)) : ℝ) ≤
-        (goldbachB10SiftedCount N 0 ((N : ℝ)^(4 / 53 : ℝ))
-          ((N : ℝ)^(1 / 3 : ℝ)) Z : ℝ) +
-        δ * (SingularSeries.liuSingularSeries N * (N : ℝ) / Real.log (N : ℝ)^2) := by
-  obtain ⟨Ns, _hNs, hs⟩ := goldbachS5Closed_eventually_le_sifted_B9Plus ε hε
-  obtain ⟨Nb, hNb, hb⟩ := goldbachS4_finiteLoss_normalized (δ / 2) (by positivity)
-  obtain ⟨Nq, _hNq, hq⟩ := goldbachS5SquareCount_normalized (δ / 2) (by positivity)
-  refine ⟨max Ns (max Nb Nq), (hNb.trans (le_max_left _ _)).trans (le_max_right _ _), ?_⟩
-  intro N hN Z hZ hZu
-  have hNs : Ns ≤ N := (le_max_left _ _).trans hN
-  have hNb : Nb ≤ N := (le_max_left _ _).trans ((le_max_right _ _).trans hN)
-  have hNq : Nq ≤ N := (le_max_right _ _).trans ((le_max_right _ _).trans hN)
-  have hbnd := hs N hNs Z hZ
-  rw [goldbachB9PlusSifted_card_eq_B10ZeroPrefix] at hbnd
-  have hreal :
-      (goldbachS5Closed (goldbachDifferenceCarrier N ε) N
-        ((N : ℝ)^(4 / 53 : ℝ)) ((N : ℝ)^(1 / 3 : ℝ)) : ℝ) ≤
-        (goldbachB10SiftedCount N 0 ((N : ℝ)^(4 / 53 : ℝ))
-          ((N : ℝ)^(1 / 3 : ℝ)) Z : ℝ) +
-        400 * (goldbachBadCount (goldbachDifferenceCarrier N ε) N : ℝ) +
-        400 * (goldbachS5SquareCount N : ℝ) + 400 * (Nat.floor Z : ℝ) := by
-    exact_mod_cast hbnd
-  have hbad := hb N hNb ε Z (by linarith) hZu
-  have hsquare := hq N hNq
-  linarith
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

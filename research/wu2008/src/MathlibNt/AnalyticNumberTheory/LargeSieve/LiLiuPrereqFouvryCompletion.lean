@@ -66,9 +66,6 @@ theorem incompleteReciprocal_completion (d A : ℤ) (L : ℕ) :
 theorem stdAddChar_norm (u : ZMod q) : ‖ZMod.stdAddChar u‖ = 1 := by
   exact Circle.norm_coe (ZMod.toCircle u)
 
-theorem intervalFourier_zero (A : ℤ) (L : ℕ) :
-    intervalFourier q A L 0 = L := by
-  simp [intervalFourier]
 
 theorem intervalFourier_norm_le_length (A : ℤ) (L : ℕ) (m : ZMod q) :
     ‖intervalFourier q A L m‖ ≤ L := by
@@ -121,19 +118,7 @@ theorem completeKloosterman_modulus_one (m : ZMod 1) (d : ℤ) :
   simp only [hu, if_true, he, sum_const, card_univ, ZMod.card, nsmul_eq_mul,
     Nat.cast_one, one_mul]
 
-theorem incompleteReciprocal_modulus_one (d A : ℤ) (L : ℕ) :
-    incompleteReciprocal 1 d A L = L := by
-  have h (u : ZMod 1) : reciprocalPhase 1 d u = 1 := by
-    simp [reciprocalPhase, Subsingleton.elim u 1,
-      Subsingleton.elim (d : ZMod 1) 0]
-  simp [incompleteReciprocal, h]
 
-theorem incompleteReciprocal_zero_frequency (A : ℤ) (L : ℕ) :
-    incompleteReciprocal q 0 A L =
-      (((range L).filter (fun j : ℕ ↦
-        IsUnit ((A : ZMod q) + (j : ZMod q)))).card : ℂ) := by
-  classical
-  simp [incompleteReciprocal, reciprocalPhase, sum_boole]
 
 private theorem sin_pi_mul_lower {t : ℝ} (h0 : 0 ≤ t) (h1 : t ≤ 1) :
     2 * min t (1 - t) ≤ Real.sin (Real.pi * t) := by

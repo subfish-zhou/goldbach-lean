@@ -1,0 +1,86 @@
+{
+  "status": "READ_ONLY_FACTOR_REPRESENTATION_REVIEW_NOT_IMPLEMENTED_OR_COMPILED",
+  "candidate_manifest_sha256": "541e837ffee9ef8ea26be4370323d653b788b518ac3040a3113c8a2aea013ec1",
+  "files": [
+    {
+      "module": "CrossA1D",
+      "source_sha256": "67831816ac1100cbb7379f6a23bf985c62dac7b462916111aa6a4814f5700595",
+      "source_exact_effective_lines": 14,
+      "expanded_kernel_utf8_bytes": 776
+    },
+    {
+      "module": "CrossA2D",
+      "source_sha256": "58ee877b0d7cf6a4e9164a67c4a6983c0957443242781062960c4bcf84372cdc",
+      "source_exact_effective_lines": 14,
+      "expanded_kernel_utf8_bytes": 855
+    },
+    {
+      "module": "CrossA1B1",
+      "source_sha256": "1a1b4e61b6fb1a6e63ce608deff695d5feaa537cdd7d25c3c60d6c51ec0d9e91",
+      "source_exact_effective_lines": 14,
+      "expanded_kernel_utf8_bytes": 917
+    },
+    {
+      "module": "CrossA1B2",
+      "source_sha256": "7b441eb16eb48b58aa7f04e14cba9b2e3ddab50aa3b293229528447aa66cbd2d",
+      "source_exact_effective_lines": 14,
+      "expanded_kernel_utf8_bytes": 919
+    },
+    {
+      "module": "CrossA2B1",
+      "source_sha256": "30e1bdd8cae274a8db1718e4df3f000d56941ab472747e6d3efbd98e2d445918",
+      "source_exact_effective_lines": 14,
+      "expanded_kernel_utf8_bytes": 998
+    },
+    {
+      "module": "CrossA2B2",
+      "source_sha256": "9d7e378727d993382015bb6aae426e2bdc80a41f6037a78e78d41ecf81a63420",
+      "source_exact_effective_lines": 14,
+      "expanded_kernel_utf8_bytes": 987
+    },
+    {
+      "module": "CrossAB1",
+      "source_sha256": "9ade1cebfa55b7110d60bfd6d39debd6fd07215c2b791296ca5338f88bac6192",
+      "source_exact_effective_lines": 14,
+      "expanded_kernel_utf8_bytes": 701
+    },
+    {
+      "module": "CrossAB2",
+      "source_sha256": "9aca73fb0526543428ba6ac5065c7f1690fc818ed53e4362bcc8f1c69327f6f8",
+      "source_exact_effective_lines": 14,
+      "expanded_kernel_utf8_bytes": 703
+    }
+  ],
+  "affected_modules_if_changed": 77,
+  "expanded_kernel_utf8_bytes": 6856,
+  "source_exact_effective_lines": 112,
+  "protected_export_scan": [
+    {
+      "label": "after-types",
+      "reference_sha256": "438327bfea4259e8e55946910dca58aa0f157830563a5aa09fc5a8ebd56564d9",
+      "cross_namespace_occurrences": 0
+    },
+    {
+      "label": "after-values",
+      "reference_sha256": "adef6d4ac87f7f7967db4b11f9ed5f5f8a5336678e8169f52bf840ccfb5da3b0",
+      "cross_namespace_occurrences": 0
+    },
+    {
+      "label": "after-changed-types",
+      "reference_sha256": "f4d9b5b19f6f3634ff3405b386d000f1cc8106f95d61cbdadb925ec30034b1b5",
+      "cross_namespace_occurrences": 0
+    },
+    {
+      "label": "after-selberg-type",
+      "reference_sha256": "a41f9359c7327c73d6ce4d6fd9d93949ef8d7001a1e49c98030df4dd4440ab6f",
+      "cross_namespace_occurrences": 0
+    }
+  ],
+  "proposed_change": "Define each kernel using its original factor product and prove source_exact by rfl; reprove partial_exact directly, retaining all partial-fraction coefficients, primitives, endpoints and mass definitions.",
+  "unresolved": [
+    "Direct factor-to-partial-fraction proofs require actual Lean compilation; no speed or savings claim yet.",
+    "Review all source and compiled consumers, including F1CrossMass and WholeCrossEndpoints, before selecting the batch.",
+    "Kernel definitions change outside the proven integration interval; verify every relevant consumer is restricted to the established domain.",
+    "Complete the current frozen batch before compiling or merging another candidate."
+  ]
+}

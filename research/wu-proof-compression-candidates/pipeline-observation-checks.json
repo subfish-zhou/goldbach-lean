@@ -1,0 +1,6 @@
+{
+  "status": "STATE_OBSERVATION_FIXTURE_CASES_PASS_NOT_BUILD_OR_VALIDATION_ACCEPTANCE",
+  "cases": 4,
+  "script_sha256": "cfacfd344035738078720c7438083480b0a5b9011db056a2fb31f3ef7228cf08",
+  "source_build_restarted": false
+}

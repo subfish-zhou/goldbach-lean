@@ -33,13 +33,6 @@ theorem sum_powerset_two_pow_eq_three_pow {α : Type*} [DecidableEq α] (t : Fin
   simpa only [Finset.prod_const, show (1 : ℝ) + 2 = 3 by norm_num] using
     (Finset.prod_one_add (f := fun _ : α => (2 : ℝ)) t).symm
 
-/-- Every divisor of squarefree `q` is squarefree, so
-`divisors.filter Squarefree` removes no terms. -/
-theorem divisors_squarefree_filter_eq_self {q : ℕ} (hq : Squarefree q) :
-    q.divisors.filter Squarefree = q.divisors := by
-  classical
-  exact Finset.filter_eq_self.mpr fun d hd =>
-    hq.squarefree_of_dvd (Nat.dvd_of_mem_divisors hd)
 
 /-- **Subset-divisor bijection**: for squarefree `q`,
 `Σ_{S⊆primeFactors q} 2^{|S|}

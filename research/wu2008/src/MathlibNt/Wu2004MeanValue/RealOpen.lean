@@ -113,23 +113,6 @@ theorem manuscript_block_open_weighted (A F : ℝ) (hA : 0 < A) (hF : 0 ≤ F) :
     _ ≤ _ := hbound (2 * H) hH Q hQ S f (blockLower H) (blockUpper H N a η)
       b hsource hf hdom hb
 
-theorem manuscript_block_open_muSquare (A F : ℝ) (hA : 0 < A) (hF : 0 ≤ F) :
-    ∃ B C : ℝ, 0 < B ∧ 0 < C ∧ ∃ X₀ : ℝ,
-      ∀ H : ℝ, X₀ ≤ 2 * H →
-      ∀ (N : ℕ) (a η : ℝ) (Q : ℕ),
-      (Q : ℝ) ≤ Real.sqrt (2 * H) / Real.log (2 * H) ^ B →
-      ∀ (S : Finset ℕ) (f : ℕ → ℝ),
-      (∀ m ∈ S, m.Prime ∧ blockLower H m < blockUpper H N a η m) →
-      (∀ m ∈ S, |f m| ≤ F) →
-      (∑ d ∈ (Icc 1 Q).filter (fun d => N.Coprime d),
-        (((ArithmeticFunction.moebius d : ℤ) : ℝ) ^ 2) *
-        |actualOpenErrorSum S f (blockLower H) (blockUpper H N a η) d N|) ≤
-          C * (2 * H) / Real.log (2 * H) ^ A := by
-  obtain ⟨B, C, hB, hC, X₀, hbound⟩ := manuscript_block_open_weighted A F hA hF
-  refine ⟨B, C, hB, hC, X₀, ?_⟩
-  intro H hH N a η Q hQ S f hS hf
-  exact (muSquare_sum_le_wu _ _ (fun _ _ => abs_nonneg _)).trans
-    (hbound H hH N a η Q hQ S f hS hf)
 
 end
 end Wu2004MeanValue

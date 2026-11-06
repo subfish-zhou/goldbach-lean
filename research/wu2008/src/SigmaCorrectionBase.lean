@@ -25,15 +25,9 @@ theorem lowerRemainder_rational {x : ℝ} (hx : 0<x) : lowerRemainder x =
 def qA (t : ℝ) : ℝ := t^2+28*t+61
 def qB (t : ℝ) : ℝ := t^2+18*t+21
 
-theorem qA_pos {t : ℝ} (ht : 0<t) : 0<qA t := by unfold qA; positivity
 theorem qB_pos {t : ℝ} (ht : 0<t) : 0<qB t := by unfold qB; positivity
 
-/-- The transformed original beta and lower residual have the same quadratic. -/
-theorem original_quadratic_coincidence (t : ℝ) :
-    ((t+1)/2)^2+8*((t+1)/2)+1 = qB t/4 := by unfold qB; ring
 
-theorem original_quadratic_A (t : ℝ) :
-    ((t+2)/3)^2+8*((t+2)/3)+1 = qA t/9 := by unfold qA; ring
 
 /-- All four forced linear-pole orders, without dropping the fourth order. -/
 def poleFour (p a b c d t : ℝ) : ℝ :=

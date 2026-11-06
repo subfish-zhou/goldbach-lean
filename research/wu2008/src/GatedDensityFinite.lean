@@ -12,21 +12,7 @@ def upperSwitch (p : SecondFunctionalParameters) : ℝ := p.kappa1-2
 /-- The lower-boundary branch meeting point already forced by the gamma-eight domain. -/
 def lowerSwitch (p : SecondFunctionalParameters) : ℝ := p.S*(1-1/p.kappa2)-1
 
-theorem upperSwitch_boundary (p : SecondFunctionalParameters) :
-    1/(upperSwitch p+2)=upperP p .gammaEight := by
-  simp [upperSwitch,upperP]
 
-theorem lowerSwitch_boundary {p : SecondFunctionalParameters} (hp : AnalyticParameters p) :
-    (1-upperQ p .gammaEight)/(lowerSwitch p+1)=1/p.S := by
-  have hk : 1 < p.kappa2 := by
-    linarith [hp.two_lt_s,hp.mother.s_le_kappa3,hp.mother.kappa3_lt_kappa2]
-  have hk0 : p.kappa2 ≠ 0 := by linarith
-  have hS0 : p.S ≠ 0 := by linarith [hp.three_le_S]
-  have hq : 1-1/p.kappa2 ≠ 0 := by
-    have h := (div_lt_one (by linarith : 0<p.kappa2)).mpr hk
-    linarith
-  simp only [upperQ,lowerSwitch,sub_add_cancel]
-  field_simp [hk0,hS0,hq,ne_of_gt (sub_pos.mpr hk)]
 
 /-- Sorted original-domain branch meetings, clipped by the original cell endpoints. -/
 def firstSplit (p : SecondFunctionalParameters) (a b : ℝ) : ℝ :=
@@ -51,12 +37,6 @@ theorem densityEndpoint_le {p : SecondFunctionalParameters} (hp : AnalyticParame
     (kernelEndpoint_le hp .gammaSix ha hb hv)) (kernelEndpoint_le hp .gammaSeven ha hb hv))
       (kernelEndpoint_le hp .gammaEight ha hb hv)
 
-theorem densityEndpoint_nonneg {p : SecondFunctionalParameters} (hp : AnalyticParameters p)
-    {a b : ℝ} (ha : 1 ≤ a) (hab : a ≤ b) (hb : b ≤ 3) :
-    0 ≤ densityEndpoint p a b :=
-  add_nonneg (add_nonneg (add_nonneg (kernelEndpoint_nonneg hp .gammaFive ha hab hb)
-    (kernelEndpoint_nonneg hp .gammaSix ha hab hb)) (kernelEndpoint_nonneg hp .gammaSeven ha hab hb))
-      (kernelEndpoint_nonneg hp .gammaEight ha hab hb)
 
 theorem densityEndpoint_integral_le {p : SecondFunctionalParameters} (hp : AnalyticParameters p)
     {a b : ℝ} (ha : 1 ≤ a) (hab : a ≤ b) (hb : b ≤ 3) :
@@ -101,11 +81,6 @@ theorem densityFinite_le {p : SecondFunctionalParameters} (hp : AnalyticParamete
     (intervalPayment_le hp (clip_bounds (by norm_num : (1:ℝ) ≤ 3)).1
       (cell_order 1 3 k) (clip_bounds (by norm_num : (1:ℝ) ≤ 3)).2) (hz k)
 
-/-- The original H, and the original four coupledRow objects, not replacement rows. -/
-theorem original_four_densityFinite_le (i : Fin 4) :
-    densityFinite (coupledRow i) NineFeedbackStrength.originalH ≤
-      densityMoment (coupledRow i) NineFeedbackStrength.originalH :=
-  densityFinite_le (coupledRow_geometry i).1 _ CoupledIntegralRecovery.originalH_nonneg
 
 end
 end GatedDensityPayment

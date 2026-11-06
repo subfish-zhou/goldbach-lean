@@ -37,25 +37,6 @@ def Claim145SmallDCaseAScalarComparison
       C145 * claim14_5Scale S H n (q : ℝ) d Δ
         (sourceSigma (q : ℝ) d) K x
 
-/-- The actual `Claim14_5Bound` in the source-small-D alternative follows from
-production Lemma 14.3 and the Case-A scalar comparison. -/
-theorem claim14_5Bound_of_smallD_caseA_scalarComparison
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {n q p : ℕ} {x d Δ C145 K C1 ΘK : ℝ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hq : 2 ≤ q) (hp : p = ⌈(q : ℝ) ^ (1 / x)⌉₊) (hx : 2 ≤ x)
-    (hsmall : Real.log (q : ℝ) ≤ C1 * K ^ ΘK)
-    (hscalar : Claim145SmallDCaseAScalarComparison
-      S H d Δ C145 K C1 ΘK) :
-    Claim14_5Bound
-      (fun m D' z' => suzukiActualT S m ⌈D'⌉₊ ⌈z'⌉₊)
-      S H n (q : ℝ) (p : ℝ) d Δ
-        (sourceSigma (q : ℝ) d) K x C145 := by
-  have h143 := suzukiLemma14_3_natCeil_uniform_explicit
-    (S := S) (N := n) (D := q) (z := p) (s := x) (K := K)
-    hlocal (by omega) hx hp
-  unfold Claim14_5Bound
-  simpa using h143.trans (hscalar n q p x hq hp hx hsmall)
 
 /-- The moving source cutoff is positive already for every natural `q ≥ 2`;
 no eventual threshold is needed in the finite quotient branch. -/
@@ -264,91 +245,7 @@ theorem claim145_caseA_highS_growth_eventually
       ring
     _ ≤ s ^ (d - 2 * Θ) := hmain
 
-/-- The complete analytic chain on the source high-`s` side of Case A.  After
-one source threshold in `s`, the hypotheses `s ≥ √K/log K` and
-`log K ≤ 4 log s` turn the small-`D` alternative into the logarithmic gain
-used between Lemma 14.3 and (14.6).  The latter two production interfaces are
-then connected by `claim14_5Bound_of_smallD_caseA_scalarComparison` above.
-The statement deliberately retains the threshold relation instead of replacing
-it by compactness or a maximum over finitely many quotients. -/
-theorem claim145_caseA_highS_log_gain_eventually
-    {K d C1 Θ : ℝ} (hK : 1 < K) (hC1 : 0 < C1)
-    (hΘ : 0 ≤ Θ) (hgap : 0 < d - 2 * Θ) :
-    ∀ᶠ s : ℝ in atTop, ∀ D : ℝ, 1 < D →
-      Real.sqrt K / Real.log K ≤ s →
-      Real.log K ≤ 4 * Real.log s →
-      Real.log D ≤ C1 * K ^ Θ →
-      s * (Real.log (Real.log (3 * K)) +
-          2 * Real.log (Real.log (3 * s))) ≤
-        s * Real.log (1 + s ^ d / Real.log D) := by
-  filter_upwards [claim145_caseA_highS_growth_eventually hK hC1 hgap,
-      eventually_gt_atTop (1 : ℝ)] with s hgrowth hs
-  intro D hD hhigh hlogrel hsmall
-  have hchain := claim145_caseA_highS_power_chain hK hhigh hlogrel hC1.le hΘ hsmall
-  exact claim145_caseA_highS_log_gain_of_growth hD hK hs hC1 hchain hgrowth
 
-/-- Scalar normalization from the Claim-14.5 `V(q)` scale to the predecessor
-`V(p)` error envelope.  The only numerical input is the exposed coefficient
-inequality `C145 ≤ C log(q) σ(q)`; Euler monotonicity and positivity are proved
-here. -/
-theorem claim14_5Scale_le_vProduct_errorEnvelope_of_coefficient
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {n q p : ℕ} {x d Δ C C145 K : ℝ}
-    (hH : Section13HatContract H 2)
-    (hq : 2 ≤ q) (hx : 2 ≤ x)
-    (hpower : (q : ℝ) ^ (1 / x) = (p : ℝ))
-    (hσ : 0 < sourceSigma (q : ℝ) d)
-    (hC145 : 0 ≤ C145)
-    (hcoef : C145 ≤ C * (Real.log (q : ℝ) * sourceSigma (q : ℝ) d)) :
-    C145 * claim14_5Scale S H n (q : ℝ) d Δ
-        (sourceSigma (q : ℝ) d) K x ≤
-      suzukiVProduct S (p : ℝ) *
-        (C * Real.exp (Real.sqrt K) * errorEnvelope H n (q : ℝ) d x *
-          (Real.log (q : ℝ)) ^ (-Δ)) := by
-  have hq1 : (1 : ℝ) < (q : ℝ) := by exact_mod_cast (show 1 < q by omega)
-  have hlog : 0 < Real.log (q : ℝ) := Real.log_pos hq1
-  have hx0 : 0 < x := by linarith
-  have hexp : 1 / x ≤ (1 : ℝ) := (div_le_one hx0).2 (by linarith)
-  have hpq : (p : ℝ) ≤ (q : ℝ) := by
-    rw [← hpower]
-    exact Real.rpow_le_self_of_one_le (by exact_mod_cast (show 1 ≤ q by omega)) hexp
-  have hV : claim14_5VProduct S (q : ℝ) ≤ suzukiVProduct S (p : ℝ) := by
-    simpa [claim14_5VProduct, suzukiVProduct] using
-      suzukiVProduct_mono_antitone S hpq
-  have hE : 0 ≤ errorEnvelope H n (q : ℝ) d x :=
-    errorEnvelope_nonneg H n hq1 hx0.le
-      (hH.positive (ErrorSign.ofDepth n) x hx0).le
-  have hL : 0 ≤ (Real.log (q : ℝ)) ^ (-Δ) :=
-    Real.rpow_nonneg hlog.le _
-  have hden : 0 < Real.log (q : ℝ) * sourceSigma (q : ℝ) d :=
-    mul_pos hlog hσ
-  have hcoef' : C145 / (Real.log (q : ℝ) * sourceSigma (q : ℝ) d) ≤ C :=
-    (div_le_iff₀ hden).2 (by simpa [mul_comm] using hcoef)
-  have hcoef0 : 0 ≤ C145 / (Real.log (q : ℝ) * sourceSigma (q : ℝ) d) :=
-    div_nonneg hC145 hden.le
-  have hcommon : 0 ≤ Real.exp (Real.sqrt K) *
-      errorEnvelope H n (q : ℝ) d x * (Real.log (q : ℝ)) ^ (-Δ) := by
-    positivity
-  unfold claim14_5Scale
-  calc
-    C145 * (claim14_5VProduct S (q : ℝ) *
-        (Real.exp (Real.sqrt K) /
-          (Real.log (q : ℝ) * sourceSigma (q : ℝ) d)) *
-        errorEnvelope H n (q : ℝ) d x *
-        (Real.log (q : ℝ)) ^ (-Δ)) =
-      claim14_5VProduct S (q : ℝ) *
-        (C145 / (Real.log (q : ℝ) * sourceSigma (q : ℝ) d)) *
-        (Real.exp (Real.sqrt K) * errorEnvelope H n (q : ℝ) d x *
-          (Real.log (q : ℝ)) ^ (-Δ)) := by ring
-    _ ≤ suzukiVProduct S (p : ℝ) * C *
-        (Real.exp (Real.sqrt K) * errorEnvelope H n (q : ℝ) d x *
-          (Real.log (q : ℝ)) ^ (-Δ)) := by
-      exact mul_le_mul_of_nonneg_right
-        (mul_le_mul hV hcoef' hcoef0 (suzukiVProduct_pos S (p : ℝ)).le)
-        hcommon
-    _ = suzukiVProduct S (p : ℝ) *
-        (C * Real.exp (Real.sqrt K) * errorEnvelope H n (q : ℝ) d x *
-          (Real.log (q : ℝ)) ^ (-Δ)) := by ring
 
 
 end MathlibNt.SieveTheory

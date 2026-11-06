@@ -1,0 +1,16 @@
+{
+  "status": "PREPARED_TEN_GATES_BINDINGS_PASS_WAITING_EXISTING_BUILD_NOT_EXECUTED",
+  "plan": "/tmp/wu-mixed-pruning-validation-v2/validation-plan.json",
+  "plan_sha256": "9105c2560396c4af4eb0f9d458135b8e5c471ea272491592e7364d5224003ee5",
+  "bindings_checked": 30,
+  "source_build_live_identity": true,
+  "source_build_observed_status": {
+    "status": "running",
+    "verified": 249,
+    "planned": 4151,
+    "in_flight": 1
+  },
+  "validation_report_absent": true,
+  "pipeline_process": "/tmp/wu-mixed-pruning-pipeline-v1/process.json",
+  "observed_unix": 1793346483.9316244
+}

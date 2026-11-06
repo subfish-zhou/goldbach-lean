@@ -84,21 +84,6 @@ theorem raw_empty (N d M : ℕ) (a c e f : ℝ) :
   simp [secondFunctionalMotherGamma, fourthRowMotherPair, hw,
     secondFunctionalMotherGammaWords, hz]
 
-theorem original_empty {p : SecondFunctionalParameters} (h : p.S = p.kappa1)
-    {i : ℕ} (N : ℕ) (δ : ℝ) (W : Fin i → Finset ℕ) :
-    secondFunctionalMotherGammaSum p N δ W 6 = 0 ∧
-    secondFunctionalMotherGammaSum p N δ W 7 = 0 ∧
-    secondFunctionalMotherGammaSum p N δ W 8 = 0 := by
-  have hz (d : ℕ) := raw_empty N d N (wuLocalCutoff N δ d p.kappa1)
-    (wuLocalCutoff N δ d p.kappa2) (wuLocalCutoff N δ d p.kappa3)
-    (wuLocalCutoff N δ d p.s)
-  unfold secondFunctionalMotherGammaSum
-  rw [h]
-  refine ⟨sum_eq_zero (fun d _ => ?_), sum_eq_zero (fun d _ => ?_),
-    sum_eq_zero (fun d _ => ?_)⟩
-  · rw [(hz d).1, mul_zero]
-  · rw [(hz d).2.1, mul_zero]
-  · rw [(hz d).2.2, mul_zero]
 
 theorem prefix_pair_restrict (N d M : ℕ) (a b c e f : ℝ) (v w : ℕ) :
     secondFunctionalMotherPrefixTerm N d M a b c e f [v,w] =

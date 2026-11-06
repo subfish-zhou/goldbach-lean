@@ -1,0 +1,12 @@
+'AnalyticNumberTheory.Sieve.v3_moebius_abs_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticNumberTheory.Sieve.vaughanThird_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticNumberTheory.Sieve.v3_vonMangoldt_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticNumberTheory.Sieve.vaughanThird_abs_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticNumberTheory.Sieve.v3_harmonic_Icc_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticNumberTheory.Sieve.v3_card_multiples_Icc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticNumberTheory.Sieve.v3_lcm_inv_sum_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticNumberTheory.Sieve.v3_divisorCountSq_sum_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticNumberTheory.Sieve.panTypeIICharSqSum_le_additiveSieve' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'AnalyticNumberTheory.Sieve.panTypeIICharSqrtMeanMaxY_le_sum' depends on axioms: [propext, Classical.choice, Quot.sound]

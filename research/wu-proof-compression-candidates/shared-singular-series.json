@@ -1,0 +1,48 @@
+{
+  "status": "LOCAL_COMPILE_RETAINED_PUBLIC_TYPES_AXIOMS_AND_OLD_USES_PASS_NOT_INSTALLED",
+  "module": "MathlibNt.SieveTheory.Switching.MainTerm",
+  "before_sha256": "1c4c6a3f421211515cae2345c4c494b877f570087a67a6672af5531fef06f48f",
+  "after_sha256": "e221619a57e630d6485b60ff31021b008d3e992f6b663e089be7368e946875f2",
+  "physical_lines_saved": 323,
+  "bytes_saved": 15683,
+  "effective_lines_saved": 308,
+  "compile": {
+    "exit_code": 0,
+    "seconds": 6.01272164657712,
+    "source_sha256": "e221619a57e630d6485b60ff31021b008d3e992f6b663e089be7368e946875f2"
+  },
+  "type_comparison": {
+    "types_exact": true,
+    "retained_public_theorems": 20,
+    "before_sha256": "d4986915a3b506a41a66099c1cb607dfc048fd8564a99ca0f33966e5f93527b0",
+    "after_sha256": "d4986915a3b506a41a66099c1cb607dfc048fd8564a99ca0f33966e5f93527b0",
+    "status": "LOCAL_MODULE_ONLY_NOT_INSTALLED"
+  },
+  "old_helper_uses": {
+    "constants_scanned": 77065,
+    "incoming": [
+      {
+        "module": "MathlibNt.SieveTheory.Switching.MainTerm",
+        "target": "MathlibNt.SieveTheory.SwitchingPrinciple.prod_one_sub_ge_one_sub_sum",
+        "user": "MathlibNt.SieveTheory.SwitchingPrinciple.singularSeriesTruncated_ge_half"
+      },
+      {
+        "module": "MathlibNt.SieveTheory.Switching.MainTerm",
+        "target": "MathlibNt.SieveTheory.SwitchingPrinciple.sum_sq_recip_primes_ge_three_le_half",
+        "user": "MathlibNt.SieveTheory.SwitchingPrinciple.singularSeriesTruncated_ge_half"
+      }
+    ],
+    "modules": 4151
+  },
+  "downstream_compiled": false,
+  "accepted_sources_modified": false,
+  "axioms": {
+    "before_reports": 20,
+    "after_reports": 20,
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  }
+}

@@ -45,19 +45,7 @@ theorem mem_liuSelbergLambdaSourceCarrier {N d : ℕ} {epsilon : ℝ} :
     (liuPaperQModulus_squarefree N epsilon).ne_zero
   simp [liuSelbergLambdaSourceCarrier, Nat.mem_divisors, hQ0]
 
-theorem LiuSelbergLambdaAdmissible.support_dvd
-    {N d : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
-    (hlambda : LiuSelbergLambdaAdmissible N epsilon lambda)
-    (hd : lambda d ≠ 0) :
-    d ∣ liuPaperQModulus N epsilon :=
-  (hlambda.1 d hd).1
 
-theorem LiuSelbergLambdaAdmissible.support_le
-    {N d : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
-    (hlambda : LiuSelbergLambdaAdmissible N epsilon lambda)
-    (hd : lambda d ≠ 0) :
-    d ≤ paperQSourceCutoff N epsilon :=
-  (hlambda.1 d hd).2
 
 theorem LiuSelbergLambdaAdmissible.abs_le_one
     {N : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
@@ -65,14 +53,6 @@ theorem LiuSelbergLambdaAdmissible.abs_le_one
     |lambda d| ≤ 1 :=
   hlambda.2 d
 
-/-- Admissibility proves that the finite carrier loses no nonzero coefficient. -/
-theorem LiuSelbergLambdaAdmissible.eq_zero_of_not_mem_sourceCarrier
-    {N d : ℕ} {epsilon : ℝ} {lambda : ℕ → ℝ}
-    (hlambda : LiuSelbergLambdaAdmissible N epsilon lambda)
-    (hd : d ∉ liuSelbergLambdaSourceCarrier N epsilon) :
-    lambda d = 0 := by
-  by_contra hne
-  exact hd (mem_liuSelbergLambdaSourceCarrier.mpr (hlambda.1 d hne))
 
 /-- Liu's Selberg expression after expanding the square and interchanging the
 finite sums.  The inner term is the actual weighted prime count in the
@@ -254,17 +234,6 @@ theorem liuSelbergSquareCount_eq_switchedCount
       simp
       ring
 
-/-- Source-facing exact decomposition of Liu's original squared-divisor
-expression. -/
-theorem liuSelbergSquareCount_eq_logarithmicIntegralMainTerm_add_remainder
-    (kappa : ℝ) (N : ℕ) (epsilon : ℝ) (lambda : ℕ → ℝ) :
-    liuSelbergSquareCount N epsilon lambda =
-      liuSelbergMainTerm (liuLogarithmicIntegral kappa) N epsilon lambda +
-        liuSelbergRemainder (liuLogarithmicIntegral kappa) N epsilon lambda := by
-  rw [liuSelbergSquareCount_eq_switchedCount]
-  exact
-    liuSelbergSwitchedCount_eq_logarithmicIntegralMainTerm_add_remainder
-      kappa N epsilon lambda
 
 /-- The unproved numerical main-term estimate printed in Liu's source.  This is
 a transparent proposition, not an asserted analytic theorem. -/
@@ -275,20 +244,6 @@ def LiuSelbergMainTermUpperBound
       MathlibNt.SieveTheory.SingularSeries.liuSingularSeries N *
       (N : ℝ) / Real.log N ^ 2
 
-/-- Supported pairs have lcm dividing the squarefree paper modulus; in
-particular the lcm itself is squarefree. -/
-theorem liuSelberg_lcm_dvd_modulus_and_squarefree
-    {N d1 d2 : ℕ} {epsilon : ℝ}
-    (hd1 : d1 ∈ liuSelbergLambdaSourceCarrier N epsilon)
-    (hd2 : d2 ∈ liuSelbergLambdaSourceCarrier N epsilon) :
-    Nat.lcm d1 d2 ∣ liuPaperQModulus N epsilon ∧
-      Squarefree (Nat.lcm d1 d2) := by
-  have h1 := (mem_liuSelbergLambdaSourceCarrier.mp hd1).1
-  have h2 := (mem_liuSelbergLambdaSourceCarrier.mp hd2).1
-  have hlcm : Nat.lcm d1 d2 ∣ liuPaperQModulus N epsilon :=
-    Nat.lcm_dvd h1 h2
-  exact ⟨hlcm,
-    (liuPaperQModulus_squarefree N epsilon).squarefree_of_dvd hlcm⟩
 
 /-- The elementary lcm-product inequality used in the source cutoff. -/
 theorem liuSelberg_lcm_le_mul {d1 d2 : ℕ}
@@ -569,41 +524,5 @@ theorem eventually_liuSelbergSwitchedCount_le_of_mainTermUpperBound_sourceInputs
   rw [liuSelbergSwitchedCount_eq_logarithmicIntegralMainTerm_add_remainder]
   exact add_le_add hmainN (le_trans (le_abs_self _) hRN)
 
-/-- Conditional eventual bound for Liu's original squared-divisor Selberg
-expression, obtained from the exact square expansion and switched-count bound. -/
-theorem eventually_liuSelbergSquareCount_le_of_mainTermUpperBound_sourceInputs
-    (kappa epsilon A B C1 C2 C3 : ℝ) (u v : ℕ)
-    (lambda : ℕ → ℕ → ℝ)
-    (hepsilon : 0 < epsilon) (hB : 0 ≤ B)
-    (hmain : ∀ᶠ N : ℕ in atTop,
-      LiuSelbergMainTermUpperBound kappa N epsilon (lambda N))
-    (hlambda : ∀ᶠ N : ℕ in atTop,
-      LiuSelbergLambdaAdmissible N epsilon (lambda N))
-    (hI : ∀ᶠ N : ℕ in atTop,
-      LiuMainPanTypeIPieceBoundAt N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C1 u)
-    (hII : ∀ᶠ N : ℕ in atTop,
-      LiuMainPanTypeIIPieceBoundAt N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C2 u v)
-    (hresidual : ∀ᶠ N : ℕ in atTop,
-      LiuMainPanSignedResidualBoundAt (liuLogarithmicIntegral kappa) N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C3 u v) :
-    ∀ᶠ N : ℕ in atTop,
-      liuSelbergSquareCount N epsilon (lambda N) ≤
-        3.94033 *
-            MathlibNt.SieveTheory.SingularSeries.liuSingularSeries N *
-            (N : ℝ) / Real.log N ^ 2 +
-          ((C1 + C2 + C3) * N / Real.log N ^ A +
-            15 * liuLogarithmicIntegralUpperConstant kappa *
-              liuSourceR1P₂ReciprocalBound *
-              paperQStyleDivisorWeightLogConstant *
-              (N : ℝ) ^ (9 / 10 : ℝ) * Real.log N ^ 2) := by
-  have hM :=
-    eventually_liuSelbergSwitchedCount_le_of_mainTermUpperBound_sourceInputs
-      kappa epsilon A B C1 C2 C3 u v lambda hepsilon hB
-        hmain hlambda hI hII hresidual
-  filter_upwards [hM] with N hMN
-  rw [liuSelbergSquareCount_eq_switchedCount]
-  exact hMN
 
 end MathlibNt.SieveTheory.LiuWeight

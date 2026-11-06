@@ -39,8 +39,6 @@ theorem lowerIterate_le_Ainf (n : ℕ) (i : Fin 9) : lowerIterate n i ≤ Ainf i
 theorem Ainf_nonneg (i : Fin 9) : 0 ≤ Ainf i :=
   (lowerIterate_nonneg 0 i).trans (lowerIterate_le_Ainf 0 i)
 
-theorem Ainf_le_B (i : Fin 9) : Ainf i ≤ B i :=
-  ciSup_le (fun n => lowerIterate_le_B n i)
 
 theorem lowerIterate_tendsto (i : Fin 9) :
     Tendsto (fun n => lowerIterate n i) atTop (𝓝 (Ainf i)) :=

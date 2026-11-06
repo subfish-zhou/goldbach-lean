@@ -98,11 +98,6 @@ theorem true_endpoint_gain_bounds : (3881/1000000:ℝ) <
     fifth_num
   exact ⟨hh.1.trans_le hl,hu.trans_lt hh.2⟩
 
-theorem true_integral_upper_gain : (3881/1000000:ℝ) <
-    endpoint (cap/a) 0-FifthActualIntegralRecovery.logIntegral := by
-  have h := true_endpoint_gain_bounds.1
-  have hi := integral_upper
-  linarith only [h,hi]
 
 open JointLogTotalComparison TotalEndpointComparison
 open GlobalSignedActualComparison

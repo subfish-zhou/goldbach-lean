@@ -432,29 +432,6 @@ theorem mainSum_upperRosserWeight_le_boundaryChains
   rw [LinearSieve.mainSum_upperRosserWeight_eq_setDensitySum]
   exact hmul
 
-/-- The finite upper-sieve bound with the selected boundary mass indexed directly
-by Buchstab pair depth.  This is the exact discrete expression to split into a
-fixed-depth approximation and a large-depth tail. -/
-theorem mainSum_upperRosserWeight_le_boundaryChains_by_depth
-    {S : BoundingSieve} {K z Δ s : ℝ}
-    (hz : 2 ≤ z) (hΔ : 0 < Δ)
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hcut : ∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z)
-    (hs : s = Real.log Δ / Real.log z) (hslo : 3 / 2 ≤ s) :
-    S.mainSum
-          (LinearSieve.upperRosserWeight S.prodPrimes (Nat.floor Δ + 1)) ≤
-      (1 + ∑ q ∈ S.prodPrimes.primeFactors,
-        (S.nu q / (1 - S.nu q)) *
-          ((Real.log (z + 1) / Real.log ((q : ℝ) + 1) *
-            (1 + K / Real.log ((q : ℝ) + 1))) *
-            ∑ k ∈ Finset.range
-                ((S.prodPrimes.primeFactors.filter (fun p => q < p)).card + 1),
-              LinearSieve.upperRosserBoundaryChainsFixedDepthDensity
-                (fun p => S.nu p / (1 - S.nu p)) (Nat.floor Δ + 1) q
-                (S.prodPrimes.primeFactors.filter (fun p => q < p)) k)) *
-        ∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p) := by
-  simpa only [LinearSieve.sum_upperRosserBoundary_eq_sum_fixedDepthDensity] using
-    mainSum_upperRosserWeight_le_boundaryChains hz hΔ hlocal hcut hs hslo
 
 /-- The literal source sieve inherits the real-endpoint dimension-one estimate
 from the Goldbach local-factor interval bound. -/

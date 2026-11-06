@@ -195,21 +195,6 @@ theorem sum_lambdaPrimePowerCorrection_standardBVRange_le (N : ℕ) (B : ℝ) :
         primePowerCorrectionExplicitBound N :=
   sum_lambdaPrimePowerCorrectionPrefixMaxError_le N _
 
-/-- Once the elementary scalar majorant fits in an `N/log^A N` budget, the
-whole prime-power contribution on the genuine Standard-BV range fits in the
-same budget.  This theorem performs the finite `q,residue,prefix` bookkeeping;
-its premise is purely one-dimensional. -/
-theorem sum_lambdaPrimePowerCorrection_standardBVRange_payable
-    {N : ℕ} {A B C : ℝ}
-    (hpay :
-      (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B : ℝ) *
-          primePowerCorrectionExplicitBound N ≤
-        C * (N : ℝ) / Real.log N ^ A) :
-    (∑ q ∈ Finset.Icc 1
-        (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),
-      lambdaPrimePowerCorrectionPrefixMaxError N q) ≤
-        C * (N : ℝ) / Real.log N ^ A :=
-  (sum_lambdaPrimePowerCorrection_standardBVRange_le N B).trans hpay
 
 /-- The two genuinely global source terms left by partial summation: the
 principal PNT prefix at modulus one, after Abel amplification, and the scalar

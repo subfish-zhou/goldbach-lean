@@ -156,29 +156,5 @@ theorem omega3XIntegral_middle_intervalIntegrable {φ l h : ℝ}
   rw [uIcc_of_le hlh]
   exact omega3XIntegral_middle_continuousOn hl
 
-/-- Joint continuity includes the moving and degenerate source endpoints. -/
-theorem omega3XIntegral_continuousOn :
-    ContinuousOn (fun p : ℝ × ℝ × ℝ => omega3XIntegral p.1 p.2.1 p.2.2)
-      {p | 2 ≤ p.1 ∧ p.1 ≤ p.2.1 ∧ p.2.1 ≤ 10} := by
-  have hmap : ContinuousOn (fun p : ℝ × ℝ × ℝ => (1 / p.2.1, 1 / p.1, p.2.2))
-      {p | 2 ≤ p.1 ∧ p.1 ≤ p.2.1 ∧ p.2.1 ≤ 10} := by
-    apply ContinuousOn.prodMk
-    · apply continuousOn_const.div continuous_snd.fst.continuousOn
-      intro p hp
-      dsimp at hp
-      linarith [hp.1, hp.2.1]
-    · apply ContinuousOn.prodMk
-      · apply continuousOn_const.div continuous_fst.continuousOn
-        intro p hp
-        dsimp at hp
-        linarith [hp.1]
-      · fun_prop
-  apply (omega3XIntegralExtension_continuous.comp_continuousOn hmap).congr
-  intro p hp
-  have hs0 : 0 < p.1 := by linarith [hp.1]
-  have ht0 : 0 < p.2.1 := hs0.trans_le hp.2.1
-  exact (omega3XIntegralExtension_eq
-    (one_div_le_one_div_of_le ht0 hp.2.2)
-    (one_div_le_one_div_of_le hs0 hp.2.1)).symm
 
 end Wu2008DoubleSieve

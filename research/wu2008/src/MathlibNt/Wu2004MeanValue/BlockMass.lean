@@ -43,14 +43,5 @@ theorem blockMass_uniform_bound :
         (div_nonneg (by linarith) hlog.le)
     _ = (4 * C) * H / Real.log H := by ring
 
-/-- The requested fixed-parameter quantifiers for the literal block mass.
-The upper restriction on `a` and the restriction on `eta` are not needed for
-the stronger uniform theorem, but are retained here as the manuscript API. -/
-theorem exists_blockMass_le (a : ℝ) (ha : 3 / 2 < a) (_ha2 : a < 2) :
-    ∃ C H₀ : ℝ, 0 < C ∧ ∀ H : ℝ, H₀ ≤ H →
-      ∀ (N : ℕ) (η : ℝ), η ≤ 1 →
-        0 ≤ blockMass H N a η ∧ blockMass H N a η ≤ C * H / Real.log H := by
-  obtain ⟨C, hC, hbound⟩ := blockMass_uniform_bound
-  exact ⟨C, 4, hC, fun H hH N η _hη => hbound H hH N a η ha⟩
 
 end Wu2004MeanValue

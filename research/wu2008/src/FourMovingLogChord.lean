@@ -374,12 +374,6 @@ theorem remainder_exact : upperRemainder = 1281382825291110461956767712995150312
   rw [remainder_substitution,SixthExactEnvelopeGap.remainder_exact,mother_gain_exact]
   norm_num
 
-/-- Strict exact descent of the parent upper certificate, backed by a new actual producer. -/
-theorem upper_strict_descent : upperRational < SixthExactEnvelopeGap.upperRational ∧
-    upperRemainder < SixthExactEnvelopeGap.upperRemainder := by
-  have hg : 0 < motherGain := by rw [mother_gain_exact]; norm_num
-  rw [upper_substitution,remainder_substitution]
-  constructor <;> linarith only [hg]
 
 theorem actual_lower_bounds : (685040/1000000:ℝ) < actualLower ∧ actualLower < 685041/1000000 := by
   rw [actual_lower_exact]
@@ -397,9 +391,6 @@ theorem remainder_bounds : (893/1000000:ℝ) < upperRemainder ∧ upperRemainder
   rw [remainder_exact]
   norm_num
 
-theorem remaining_cap_bounds : (27084/1000000:ℝ) < remainingCap ∧ remainingCap < 27085/1000000 := by
-  rw [remaining_cap_exact]
-  norm_num
 
 theorem actual_four_magnitude : (685040/1000000:ℝ) < 8*I10+8*I11 :=
   actual_lower_bounds.1.trans_le actual_four_lower

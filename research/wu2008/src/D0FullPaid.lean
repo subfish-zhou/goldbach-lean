@@ -64,9 +64,5 @@ def finiteTerminal : ℝ := terminalAt finiteD
 theorem finiteTerminal_le_actual : finiteTerminal≤firstFeedback NineFeedbackStrength.originalH 3 3 :=
   terminalAt_le_actual finiteD_le_D0
 
-theorem finiteTerminal_ge_old : SignedSigmaETerminal.lower≤finiteTerminal := by
-  unfold SignedSigmaETerminal.lower finiteTerminal terminalAt
-  exact add_le_add (mul_le_mul_of_nonneg_left finiteProfile_ge_old
-    SignedSigmaETerminal.logPayment_nonneg) le_rfl
 
 end D0FullDensity

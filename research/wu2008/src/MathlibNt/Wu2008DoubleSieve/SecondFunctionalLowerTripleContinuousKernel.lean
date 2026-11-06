@@ -106,23 +106,7 @@ theorem weighted_legal_literal {phi : ℝ} {t : Point}
     ring
   rw [hd]
 
-theorem K_literal {a b c e f phi : ℝ} (hp : CompactParameters a b c e f)
-    (hphi : 2 ≤ phi) (j : Fin 6) :
-    K a b c e f j phi = ∫ t in D a b c e f j,
-      LiLiuPrereqBuchstab.buchstab ((phi - (t 0 + t 1 + t 2)) / t 1) /
-        (t 0 * t 1 ^ 2 * t 2) := by
-  apply setIntegral_congr_fun (D_measurable a b c e f j)
-  intro t ht
-  exact weighted_legal_literal (cube_legal hphi (D_subset_cube hp j ht))
 
-theorem literal_integrable {a b c e f phi : ℝ} (hp : CompactParameters a b c e f)
-    (hphi : 2 ≤ phi) (j : Fin 6) :
-    IntegrableOn (fun t : Point =>
-      LiLiuPrereqBuchstab.buchstab ((phi - (t 0 + t 1 + t 2)) / t 1) /
-        (t 0 * t 1 ^ 2 * t 2)) (D a b c e f j) :=
-  (K_integrable hp j phi).congr_fun
-    (fun _ ht => weighted_legal_literal (cube_legal hphi (D_subset_cube hp j ht)))
-    (D_measurable a b c e f j)
 
 /-- Actual reciprocal mother coordinates, without changing any parameter. -/
 theorem mother_compact_parameters (p : SecondFunctionalParameters)
@@ -140,19 +124,6 @@ theorem mother_compact_parameters (p : SecondFunctionalParameters)
     one_div_le_one_div_of_le hs0 hp.s_le_kappa3,
     one_div_le_one_div_of_le (by norm_num) hs⟩
 
-/-- No assertion of global continuity across the legal face is used. -/
-theorem G_continuousOn_cube {phi : ℝ} (hphi : 2 ≤ phi) :
-    ContinuousOn (G phi) (continuousCube 3) := by
-  have hd : ∀ t ∈ continuousCube 3, t (1 : Fin 3) ≠ 0 := by
-    intro t ht
-    have h := (ht 1 (mem_univ _)).1
-    linarith
-  have hn : Continuous (fun t : Point => phi - (t 0 + t 1 + t 2)) := by fun_prop
-  have hc := LiLiuPrereqBuchstab.continuous_buchstab.comp_continuousOn
-    (hn.continuousOn.div (continuous_apply 1).continuousOn hd)
-  apply (hc.div (continuous_apply 1).continuousOn hd).congr
-  intro t ht
-  exact G_cube_literal hphi ht
 
 /-- The dictionary has six independent entries, with every displayed endpoint closed. -/
 theorem D_six_literal (a b c e f : ℝ) :

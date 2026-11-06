@@ -174,14 +174,5 @@ theorem le_quadraticSiegelPowerSummatory_pow
     _ = ∑ n ∈ S, (quadraticSiegelPowerCoefficient χ (r + 1) n).re := himage.symm
     _ ≤ quadraticSiegelPowerSummatory χ (r + 1) (M ^ e) := hsmall
 
-/-- The requested scan-free `X^(1/r)` specialization: at even positive depth
-`r`, the summatory function through the perfect `r`-th power `M^r` is at
-least `M`. -/
-theorem le_quadraticSiegelPowerSummatory_selfPow
-    (χ : DirichletCharacter ℂ q) (hquad : χ ^ 2 = 1)
-    {r : ℕ} (hrpos : 0 < r) (hreven : ∃ t, r = 2 * t) (M : ℕ) :
-    (M : ℝ) ≤ quadraticSiegelPowerSummatory χ r (M ^ r) := by
-  obtain ⟨r₀, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hrpos)
-  exact le_quadraticSiegelPowerSummatory_pow χ hquad r₀ hrpos hreven M
 
 end DirichletCharacter

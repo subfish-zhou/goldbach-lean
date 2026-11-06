@@ -693,47 +693,6 @@ theorem lemma14_4_caseI_evenEndpoint_sameC_successor_of_sourceScalar
   rw [h149, h2]
   linarith [hzeroDirect, hmiddle, h11, h12qSupported', hside]
 
-/-- Source-large-log even endpoint. `C1min` is selected before all later
-`C1,C,C145,K,Dmin,D,M`; the scalar endpoint input is discharged pointwise from
-`C1*K^Theta < log D`. -/
-theorem exists_lemma14_4_caseI_evenEndpoint_sameC_sourceLargeLog
-    (S : BoundingSieve) (H : Section13HatLayers) {d Δ Θ : ℝ}
-    (hH : Section13HatSourceContract H) (hd1 : 1 < d)
-    (hΔ0 : 0 < Δ) (hΘ : 0 < Θ)
-    (hmargin : Δ + 2 / Θ < 1)
-    (hd : 7 / (1 - (Δ + 2 / Θ)) < d) :
-    ∃ C1min : ℝ, 1 ≤ C1min ∧
-      ∀ (C1 C C145 K : ℝ) (Dmin : ℕ),
-        C1min ≤ C1 → 2 ≤ K → HasDimensionOneLocalProductBound S K →
-        0 < C → 0 < C145 → 2 ≤ Dmin →
-        ∀ᶠ D : ℕ in atTop, ∀ M : ℕ, Even M → 2 ≤ M →
-          (2 : ℝ) ≤ sourceSigma (D : ℝ) d →
-          C1 * K ^ Θ < Real.log (D : ℝ) →
-          Lemma144MovingDomainGlobalDepthAt S H C K d Δ (M - 1) Dmin →
-          suzukiActualT S M D ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊ ≤
-            suzukiVProduct S ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊ *
-              finiteSourceLayer 1 2 M 2 +
-            sigma12InheritedBudget S H M D
-              ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊ C K d Δ 2 := by
-  obtain ⟨C1min, hC1min, hscalar⟩ :=
-    exists_caseI1423_sourceScalar_sourceLargeLog_uniform hΔ0 hΘ hmargin hd
-  refine ⟨C1min, hC1min, ?_⟩
-  intro C1 C C145 K Dmin hC1 hK hlocal hC hC145 hDmin
-  have hη0 : 0 < 2 / Θ := by positivity
-  have hΔ1 : Δ < 1 := by linarith [hmargin, hη0]
-  have hdWeak : 7 / (1 - Δ) < d := by
-    have hden : 0 < 1 - (Δ + 2 / Θ) := sub_pos.mpr hmargin
-    have hdenWeak : 0 < 1 - Δ := by linarith [hη0]
-    have hfrac : 7 / (1 - Δ) ≤ 7 / (1 - (Δ + 2 / Θ)) := by
-      apply (div_le_div_iff₀ hdenWeak hden).2
-      nlinarith [hη0]
-    exact hfrac.trans_lt hd
-  have hsucc := lemma14_4_caseI_evenEndpoint_sameC_successor_of_sourceScalar
-    S H hH hd1 hΔ0 hΔ1 hdWeak hK hlocal hC hC145 hDmin
-  filter_upwards [hsucc, eventually_ge_atTop (2 : ℕ)] with D hsuccD hD2
-  intro M hM hM2 h2σ hlarge hglobal
-  exact hsuccD M hM hM2 h2σ
-    (hscalar C1 K (D : ℝ) hC1 hK (by exact_mod_cast hD2) hlarge) hglobal
 
 
 end MathlibNt.SieveTheory

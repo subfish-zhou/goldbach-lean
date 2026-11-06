@@ -89,36 +89,5 @@ theorem fouvryG9SmallOutputRectangle_bound {C₀ : ℝ} (hC₀ : 0 < C₀)
         _ = (4*C₀*(5 : ℝ)^(1/4 : ℝ))*((N : ℝ)^(1/2 : ℝ)*(N : ℝ)^(1/4 : ℝ)) := by ring
         _ = _ := by rw [← Real.rpow_add hN0]; norm_num
 
-/-- Uniform in every real e and every cutoff in the square-root window. -/
-theorem fouvryG9SmallOutput_total (A : ℕ) {ρ : ℝ} (hρ : 1 < ρ) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → ∀ e z : ℝ, 0 ≤ z → z ≤ Real.sqrt (N : ℝ) →
-      (∑ k ∈ fouvryG9GridUsed N e ρ, fouvryG9SmallOutputRectangle N ρ k z) ≤
-        (N : ℝ)/Real.log (N : ℝ)^A := by
-  obtain ⟨C₀,hC₀,hfib⟩ := fouvryG9RemainderMajorant_fibres (by norm_num : (0 : ℝ) < 1/4)
-  let G : ℝ := (1/Real.log ρ+1)^3
-  let B : ℝ := 4*C₀*(5 : ℝ)^(1/4 : ℝ)
-  obtain ⟨M,hM⟩ := eventually_atTop.mp
-    (g9Transport_eventually_envelope (G*B) A (by norm_num : (0 : ℝ) < 1/4))
-  refine ⟨⌈M⌉₊, ?_⟩
-  intro N hN e z hz hzu
-  have hMN : M ≤ (N : ℝ) := (Nat.le_ceil M).trans (by exact_mod_cast hN)
-  obtain ⟨hN1,hlog,hpay⟩ := hM (N : ℝ) hMN
-  have hlogρ : 0 < Real.log ρ := Real.log_pos hρ
-  have hG : 0 ≤ G := by dsimp [G]; positivity
-  have hB : 0 ≤ B := by dsimp [B]; positivity
-  have hlogs : Real.log (N : ℝ)^3 ≤ Real.log (N : ℝ)^5 :=
-    pow_le_pow_right₀ hlog (by norm_num)
-  calc
-    _ ≤ ∑ _k ∈ fouvryG9GridUsed N e ρ, B*(N : ℝ)^(1-(1/4 : ℝ)) := by
-      apply sum_le_sum
-      intro k _
-      exact fouvryG9SmallOutputRectangle_bound hC₀ hfib hN1 ρ k hz hzu
-    _ = ((fouvryG9GridUsed N e ρ).card : ℝ)*(B*(N : ℝ)^(1-(1/4 : ℝ))) := by simp
-    _ ≤ (G*Real.log (N : ℝ)^3)*(B*(N : ℝ)^(1-(1/4 : ℝ))) :=
-      mul_le_mul_of_nonneg_right (fouvryG9GridCost_card hρ hlog) (by positivity)
-    _ = (G*B)*(N : ℝ)^(1-(1/4 : ℝ))*Real.log (N : ℝ)^3 := by ring
-    _ ≤ (G*B)*(N : ℝ)^(1-(1/4 : ℝ))*Real.log (N : ℝ)^5 :=
-      mul_le_mul_of_nonneg_left hlogs (by positivity)
-    _ ≤ _ := hpay
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

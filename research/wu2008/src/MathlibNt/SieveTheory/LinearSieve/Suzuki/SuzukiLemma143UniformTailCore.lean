@@ -94,26 +94,6 @@ theorem suzukiActualT_le_exponentialTail_of_support
     _ = suzukiExponentialTail L M := by
       simp only [suzukiExponentialTail, f]
 
-/-- Generic-`β` formulation of the exact tail stage.  It combines the actual
-support cutoff and the Lemma 14.1 pointwise estimate, and removes both the
-parity restriction and the upper endpoint `N`. -/
-theorem suzukiActualT_le_uniform_tsum
-    (S : BoundingSieve) {N D z : ℕ} {β s L : ℝ}
-    (hβs : β ≤ s) (hL : 0 ≤ L)
-    (hsupport : SuzukiActualSupportVanishing S D z β s)
-    (h141 : SuzukiLemma141Majorant S D z L) :
-    suzukiActualT S N D z ≤
-      ∑' n : ℕ,
-        if ⌊s - β⌋₊ + 1 ≤ n then L ^ n / (n.factorial : ℝ) else 0 := by
-  have hfloor : (⌊s - β⌋₊ : ℝ) ≤ s - β :=
-    Nat.floor_le (sub_nonneg.mpr hβs)
-  apply suzukiActualT_le_exponentialTail_of_support S hL
-  · intro n hn
-    apply hsupport n
-    have hnFloor : n ≤ ⌊s - β⌋₊ := by omega
-    have hnFloorR : (n : ℝ) ≤ (⌊s - β⌋₊ : ℕ) := by exact_mod_cast hnFloor
-    exact hnFloorR.trans hfloor
-  · exact h141
 
 /-- Suzuki Lemma 14.3 at the exact exponential-tail stage (`β = 2`).  This is
 uniform in `N`: no term on the right depends on `N`. -/
@@ -129,17 +109,6 @@ theorem suzukiLemma14_3_uniform_exponentialTail
     omega
   · exact h141
 
-/-- Spelling out the tail makes the floor endpoint and the absence of `N` on
-its right-hand side explicit. -/
-theorem suzukiLemma14_3_uniform_tsum
-    (S : BoundingSieve) {N D z : ℕ} {s L : ℝ}
-    (hz : 0 < z) (hs : 2 ≤ s) (hL : 0 ≤ L)
-    (hpow : z ^ (⌊s - 2⌋₊ + 2) ≤ D)
-    (h141 : SuzukiLemma141Majorant S D z L) :
-    suzukiActualT S N D z ≤
-      ∑' n : ℕ, if ⌊s - 2⌋₊ + 1 ≤ n then L ^ n / (n.factorial : ℝ) else 0 := by
-  simpa [suzukiExponentialTail] using
-    suzukiLemma14_3_uniform_exponentialTail S hz hs hL hpow h141
 
 
 end MathlibNt.SieveTheory

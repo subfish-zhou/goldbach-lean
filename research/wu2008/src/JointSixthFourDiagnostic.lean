@@ -51,9 +51,6 @@ theorem certificate_strictly_insufficient :
   unfold shortfall coefficient
   linarith only [sixth_deficit_retained]
 
-/-- The failure belongs to this lower certificate; actual Q remains unrestricted above it. -/
-theorem coefficient_lt_target : coefficient < AnalyticTotalThreshold.target := by
-  linarith only [certificate_strictly_insufficient,shortfall_positive]
 
 end
 end Wu2008DoubleSieve.JointSixthFourDiagnostic

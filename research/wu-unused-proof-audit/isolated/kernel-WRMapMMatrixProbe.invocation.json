@@ -1,0 +1,36 @@
+{
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+    "--verbose",
+    "WRMapMMatrixProbe"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/kernel-WRMapMMatrixProbe.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+    "--verbose",
+    "WRMapMMatrixProbe"
+  ],
+  "environment": {
+    "LEAN_PATH": "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+    "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1",
+    "TMPDIR": "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/tmp"
+  },
+  "bindings": {
+    "/tmp/wu-unused-proof-post-hf4-v2/validate-prune.py": "d70ecc55240963152b074faa62af688b80d843b00e6f19fb3e876fa5972ca58c",
+    "/tmp/wu-unused-proof-post-hf4-v2/prune-plan.json": "71bacea034124cff9b5323af7e65b58eb45ae93c396327d6c65db7d9c741b16b",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-types.lean": "d9e4759a22add7a16ebd4ee64038a3784abefc5491dab9702fecdac17d5eaa1f",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/before-types.lean": "482866153fc3c58193b7c8f05949271086b7c7819bf4036d0de11cd767fd2279",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/after-types.lean": "bd0fc7cb4e505f637e5232e2a29045ea13079f46c201aa38b837f51cff14d9fb",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-values.lean": "a88b36cb9497284599136eeaa05c8f4787e096be9a354d872c2a1ea8e0d9b8db",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/before-values.lean": "468e230fc603d0395c43d2dff39486a22fe5f12e0bf96b67d7156fd779aa960c",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/after-values.lean": "8c99666e5de70e1d04ee5e9967fbcc4b791de800c1108f10f01cc272e45fb5c5",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/WuLiteralAcceptance.lean": "5371c1e8dcdb44391c5e646b89929f9729a7dbadecdff231a53eca2a4cefd72f",
+    "/tmp/wu-unused-proof-post-hf4-v2/RetiredAbsentTemplate.lean": "9719beb9d50bf2e83ff1c3876c622914576d6dd376d1921366b8ada46c432774",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/retirement-before-negative.lean": "4f441edcc693e3625a569805ff82753faf97b92466229896363862b1f30e5811",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/retirement-after-absent.lean": "2ea4a0812691609b4d129ee9b36511fcdd7605143c856b22d2b912262a6dd6b0",
+    "/tmp/wu-unused-proof-post-hf4-v2/validation-1793221685056247262/retirement-after-absent.json": "a617933df75f1b028d5d778adb62d8c356e86c3ede9a63d1187616e70935e98d"
+  }
+}

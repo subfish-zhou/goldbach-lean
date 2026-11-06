@@ -12,11 +12,6 @@ theorem U_literal {m : ℕ} (phi b : ℝ) (t : Fin (m+1) → ℝ) :
     U phi b t = if t (Fin.last m) < phi - ∑ i, t i ∧ phi - ∑ i, t i < b
       then 1 / (phi - ∑ i, t i) else 0 := rfl
 
-theorem U_prime_coordinates {m : ℕ} {R : ℝ}
-    (f : Fin (m+1) → primeSlabPrimes R) (phi b : ℝ) :
-    U phi b (SecondFunctionalUnitPrimeFibre.coordinate f) =
-      F (phi - ∑ i, Real.log (f i).val / Real.log R)
-        (Real.log (f (Fin.last m)).val / Real.log R) b := rfl
 
 noncomputable def dot {n : ℕ} (c t : Fin n → ℝ) : ℝ := ∑ i, c i * t i
 
@@ -70,12 +65,6 @@ theorem G_range {m r : ℕ} (phi b : ℝ) (C : Fin r → Fin (m+1) → ℝ)
   · exact U_range phi b ht
   · norm_num
 
-theorem U_weighted_integrable {m : ℕ} (phi b : ℝ) :
-    IntegrableOn (fun t => U phi b t * continuousDensity t) (continuousCube (m+1)) := by
-  apply continuousDensity_mul_integrable (U_measurable phi b) (K := 10)
-  intro t ht
-  rw [Real.norm_eq_abs, abs_of_nonneg (U_range phi b ht).1]
-  exact (U_range phi b ht).2
 
 theorem G_weighted_integrable {m r : ℕ} (phi b : ℝ)
     (C : Fin r → Fin (m+1) → ℝ) (gamma : Fin r → ℝ) (strict : Fin r → Bool) :

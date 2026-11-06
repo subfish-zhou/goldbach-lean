@@ -1,0 +1,10 @@
+{
+  "status": "SYNTHETIC_POLICY_CASES_PASS_NOT_LEAN_CENSUS_OR_DELETION_ACCEPTANCE",
+  "cases": [
+    "unused source definition selected without altering raw payload",
+    "generated definition auxiliary conservatively retained",
+    "retained incoming reference pins definition",
+    "retention propagates from definition to proof dependency",
+    "source and actual root kind mismatch rejected"
+  ]
+}

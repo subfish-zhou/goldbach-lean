@@ -29,22 +29,10 @@ theorem original_finiteLower_pos : 0 < finiteLower NineFeedbackStrength.original
 def terminalLower : ℝ := log 2*finiteLower NineFeedbackStrength.originalH+
   RemainingHf.paidCells NineFeedbackStrength.originalH 3
 
-theorem terminalLower_le : terminalLower ≤ firstFeedback NineFeedbackStrength.originalH 3 3 := by
-  have he := RemainingHf.paidCells_le CoupledIntegralRecovery.originalH_nonneg
-    (by norm_num : (3:ℝ)≤3) (by norm_num [upperNode] : (3:ℝ)-2≤upperNode 0)
-  have ha := mul_le_mul_of_nonneg_left original_finiteLower (log_nonneg (by norm_num : (1:ℝ)≤2))
-  norm_num only [show (3:ℝ)-1=2 by norm_num,show (4:ℝ)/2=2 by norm_num] at he
-  unfold terminalLower
-  simp only [firstFeedback,profileJ,intervalIntegral.integral_same,zero_div,add_zero]
-  linarith only [ha,he]
 
 def terminalFinite : ℝ := RemainingHf.splitLower 2*finiteLower NineFeedbackStrength.originalH+
   RemainingHf.paidCells NineFeedbackStrength.originalH 3
 
-theorem terminalFinite_le : terminalFinite ≤ terminalLower := by
-  unfold terminalFinite terminalLower
-  exact add_le_add (mul_le_mul_of_nonneg_right
-    (RemainingHf.splitLower_le (by norm_num : (1:ℝ)≤2)) original_finiteLower_pos.le) le_rfl
 
 end
 end SigmaRemaining

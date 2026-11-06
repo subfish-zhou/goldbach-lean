@@ -243,13 +243,5 @@ theorem goldbachB10DivisorAtoms_eq_residueFilter
     exact mem_goldbachB10DivisorAtoms_iff.mpr
       ⟨hxB10, (goldbachB10Atom_output_dvd_iff_residueCondition hd hdN hxB10).mpr hcond⟩
 
-theorem goldbachB10DivisorAtoms_card_eq_residueFilter_card
-    {N d : ℕ} {ε b c : ℝ}
-    (hd : 1 ≤ d)
-    (hdN : Nat.Coprime d N) :
-    (goldbachB10DivisorAtoms N d ε b c).card =
-      ((goldbachB10Atoms N ε b c).filter
-        (goldbachB10DivisorResidueCondition N d)).card := by
-  rw [goldbachB10DivisorAtoms_eq_residueFilter hd hdN]
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

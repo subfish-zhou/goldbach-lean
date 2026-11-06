@@ -238,92 +238,6 @@ theorem threeOmega_eq_sum_twoOmega_divisors {q : ℕ} (hq : Squarefree q) :
       exact (Nat.mem_primeFactors.mp ((Finset.mem_powerset.mp hs) hp)).1
     rw [Nat.primeFactors_prod hprime]
 
-/-- **Regrouping Pan weights**: for squarefree `Q`,
-`Σ_{q|Q}3^{ω(q)}f(q)
- = Σ_{d|Q}2^{ω(d)}·Σ_{m|Q/d}f(d·m)`.
-Combine `3^{ω(q)} = Σ_{d|q}2^{ω(d)}` with the
-divisibility-indexed bijection `(q,d) ↔ (d,m=q/d)`.
-This replaces the `3^{ω(q)}`-weighted modulus sum by a
-`2^{ω(d)}`-weighted double sum, as in Pan's classical
-enlargement of the modulus sum (1963). -/
-theorem threeOmegaWeightedSum_packaging (Q : ℕ) (hQ : Squarefree Q) (f : ℕ → ℝ) :
-    (∑ q ∈ Q.divisors, (3 : ℝ) ^ q.primeFactors.card * f q) =
-      ∑ d ∈ Q.divisors, (2 : ℝ) ^ d.primeFactors.card *
-        (∑ m ∈ (Q / d).divisors, f (d * m)) := by
-  rw [Finset.sum_congr rfl (by
-    intro q hq
-    have hsqq : Squarefree q := hQ.squarefree_of_dvd (Nat.dvd_of_mem_divisors hq)
-    have hP : (3 : ℝ) ^ q.primeFactors.card =
-        ∑ d ∈ q.divisors, (2 : ℝ) ^ d.primeFactors.card := by
-      exact_mod_cast threeOmega_eq_sum_twoOmega_divisors hsqq
-    rw [hP, Finset.sum_mul])]
-  have hrhs : (∑ d ∈ Q.divisors, (2 : ℝ) ^ d.primeFactors.card *
-        (∑ m ∈ (Q / d).divisors, f (d * m))) =
-      ∑ d ∈ Q.divisors, ∑ m ∈ (Q / d).divisors, (2 : ℝ) ^ d.primeFactors.card * f (d * m) := by
-    apply Finset.sum_congr rfl
-    intro d hd
-    rw [Finset.mul_sum]
-  rw [hrhs]
-  rw [← Finset.sum_sigma (s := Q.divisors) (t := fun q => q.divisors)
-    (f := fun x => (2 : ℝ) ^ x.2.primeFactors.card * f x.1)]
-  rw [← Finset.sum_sigma (s := Q.divisors) (t := fun d => (Q / d).divisors)
-    (f := fun x => (2 : ℝ) ^ x.1.primeFactors.card * f (x.1 * x.2))]
-  apply Finset.sum_bij (i := fun x _ => ⟨x.2, x.1 / x.2⟩)
-  · intro x hx
-    rcases Finset.mem_sigma.mp hx with ⟨hq, hd⟩
-    have hqQ : x.1 ∣ Q := (Nat.mem_divisors.mp hq).1
-    have hQ0 : Q ≠ 0 := (Nat.mem_divisors.mp hq).2
-    have hdq : x.2 ∣ x.1 := (Nat.mem_divisors.mp hd).1
-    have hdQ : x.2 ∣ Q := dvd_trans hdq hqQ
-    rw [Finset.mem_sigma]
-    constructor
-    · rw [Nat.mem_divisors]
-      exact ⟨hdQ, hQ0⟩
-    · rw [Nat.mem_divisors]
-      constructor
-      · exact (Nat.dvd_div_iff_mul_dvd hdQ).2 (by simpa [Nat.mul_div_cancel' hdq] using hqQ)
-      · exact Nat.ne_of_gt (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero hQ0) hdQ)
-          (Nat.pos_of_dvd_of_pos hdQ (Nat.pos_of_ne_zero hQ0)))
-  · intro a ha b hb h
-    rcases Finset.mem_sigma.mp ha with ⟨ha₁, ha₂⟩
-    rcases Finset.mem_sigma.mp hb with ⟨hb₁, hb₂⟩
-    have hd₁q₁ : a.2 ∣ a.1 := (Nat.mem_divisors.mp ha₂).1
-    have hd₂q₂ : b.2 ∣ b.1 := (Nat.mem_divisors.mp hb₂).1
-    cases a with
-    | mk q₁ d₁ =>
-      cases b with
-      | mk q₂ d₂ =>
-          apply Sigma.ext
-          · have hd : d₁ = d₂ := by simpa using congrArg Sigma.fst h
-            have hq : q₁ / d₁ = q₂ / d₂ := by simpa using congrArg Sigma.snd h
-            calc
-              q₁ = d₁ * (q₁ / d₁) := (Nat.mul_div_cancel' hd₁q₁).symm
-              _ = d₂ * (q₂ / d₂) := by rw [hq, hd]
-              _ = q₂ := Nat.mul_div_cancel' hd₂q₂
-          · exact heq_of_eq (by simpa using congrArg Sigma.fst h)
-  · intro b hb
-    rcases Finset.mem_sigma.mp hb with ⟨hd, hm⟩
-    have hdQ : b.1 ∣ Q := (Nat.mem_divisors.mp hd).1
-    have hQ0 : Q ≠ 0 := (Nat.mem_divisors.mp hd).2
-    have hmQd : b.2 ∣ Q / b.1 := (Nat.mem_divisors.mp hm).1
-    have hb1 : b.1 ≠ 0 := ne_of_gt (Nat.pos_of_dvd_of_pos hdQ (Nat.pos_of_ne_zero hQ0))
-    have hb2 : b.2 ≠ 0 := ne_of_gt (Nat.pos_of_dvd_of_pos hmQd
-      (Nat.div_pos (Nat.le_of_dvd (Nat.pos_of_ne_zero hQ0) hdQ)
-        (Nat.pos_of_dvd_of_pos hdQ (Nat.pos_of_ne_zero hQ0))))
-    refine ⟨⟨b.1 * b.2, b.1⟩, ?_, ?_⟩
-    · rw [Finset.mem_sigma]
-      constructor
-      · rw [Nat.mem_divisors]
-        constructor
-        · exact (Nat.dvd_div_iff_mul_dvd hdQ).1 hmQd
-        · exact hQ0
-      · rw [Nat.mem_divisors]
-        exact ⟨dvd_mul_right b.1 b.2, mul_ne_zero hb1 hb2⟩
-    · simp [Nat.mul_div_cancel_left b.2 (Nat.pos_of_ne_zero hb1)]
-  · intro x hx
-    rcases Finset.mem_sigma.mp hx with ⟨hq, hd⟩
-    have hdq : x.2 ∣ x.1 := (Nat.mem_divisors.mp hd).1
-    rw [Nat.mul_div_cancel' hdq]
 
 /-! ## 2. Uniform weighted distribution interface for sieve applications -/
 
@@ -334,14 +248,6 @@ distribution remainder. -/
 noncomputable def weightedPanRemainder (S : BoundingSieve) (w : ℕ → ℝ) : ℝ :=
   ∑ d ∈ S.prodPrimes.divisors, w d * |S.rem d|
 
-/-- The `3^{ω(d)}`-weighted remainder is exactly the lcm
-double sum `Σ_{d₁,d₂}|rem [d₁,d₂]|` in the Selberg expansion. -/
-theorem weightedPanRemainder_eq_lcmDoubleSum (S : BoundingSieve) :
-    weightedPanRemainder S (fun d => (3 : ℝ) ^ d.primeFactors.card) =
-      ∑ d₁ ∈ S.prodPrimes.divisors, ∑ d₂ ∈ S.prodPrimes.divisors,
-        |S.rem (Nat.lcm d₁ d₂)| := by
-  unfold weightedPanRemainder
-  exact lcmPairWeightedSum S.prodPrimes S.prodPrimes_squarefree (fun d => |S.rem d|)
 
 /-- The counting-sieve error with coefficient sequence 1 is
 bounded by the `3^{ω(d)}`-weighted remainder sum, generalizing
@@ -512,17 +418,6 @@ theorem abs_panDistributionNoncoprimeSum_le
       intro a ha
       by_cases hcop : a.Coprime q <;> simp [hcop, abs_mul]
 
-/-- Liu's finite `R = R_coprime + R_noncoprime` triangle bound. The first term
-is the source-faithful Pan sum; the second is the still-separate `R₁`
-majorant. -/
-theorem abs_panDistributionFullSum_le_coprime_add_noncoprime
-    (y X q l : ℕ) (f : ℕ → ℝ) :
-    |panDistributionFullSum y X q l f| ≤
-      |panDistributionSum y X q l f| +
-        panDistributionNoncoprimeMajorant y X q l f := by
-  rw [panDistributionFullSum_eq_coprime_add_noncoprime]
-  exact le_trans (abs_add_le _ _)
-    (add_le_add_right (abs_panDistributionNoncoprimeSum_le y X q l f) _)
 
 /-- Canonical representatives of the reduced residue classes modulo `q`.
 For `q = 1` this is the singleton `{0}`; for `q = 0` it is empty. -/
@@ -704,21 +599,6 @@ theorem primesInAPBelow_one (y q l : ℕ) :
     exact ⟨hp1, ⟨hpp, ⟨by simpa [one_mul] using
       (Nat.lt_succ_iff.mp (Finset.mem_range.mp hp1)), by simpa using hcong⟩⟩⟩
 
-/-- At `a = 1`, the scaled count equals `primesInAP`,
-the ordinary AP count in the BV interface. -/
-theorem primesInAPBelow_one_eq_primesInAP (y q l : ℕ) :
-    primesInAPBelow y 1 q l = primesInAP y q l := by
-  simpa [primesInAP] using primesInAPBelow_one y q l
 
-/-- At `a = 1`, the distribution error is
-`π(y;q,l) − li(y)/φ(q)`, the ordinary AP prime error for
-the implemented main-term proxy. -/
-theorem panDistributionError_one (y q l : ℕ) :
-    panDistributionError y 1 q l =
-      (((Finset.range (y + 1)).filter (fun p => p.Prime ∧ p ≡ l [MOD q])).card : ℝ) -
-        logarithmicIntegral (y : ℝ) / Nat.totient q := by
-  unfold panDistributionError
-  rw [primesInAPBelow_one]
-  simp [logarithmicIntegral]
 
 end AnalyticNumberTheory.Sieve

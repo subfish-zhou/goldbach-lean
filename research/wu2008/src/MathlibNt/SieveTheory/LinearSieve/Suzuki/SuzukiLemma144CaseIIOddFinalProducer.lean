@@ -130,23 +130,6 @@ theorem lemma144_caseII_odd_sameC_producer_of_raw_and_scaling
   exact lemma14_4_caseII_odd_successor_sameC_producer_of_endpoint_gap
     hrelative hnormalize hs1 hs3
 
-theorem lemma144_caseII_odd_sameC_producer_of_raw_internal
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ C K C145 s : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hd1 : 1 < d) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d)
-    (hC : 0 < C) (hK : 0 < K) (hC145 : 0 < C145)
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hraw : Lemma144CaseIIOddRawRoundedProducer S H
-      (caseIIOddClaim145Endpoint S d) d Δ C K)
-    (hs1 : 1 < s) (hs3 : s ≤ 3) :
-    Lemma144CaseIIOddSuccessorSameCProducer S H d Δ C K s := by
-  have h146 : Lemma144CaseIIOddSourceClaim146 H d Δ := by
-    simpa [Lemma144CaseIIOddSourceClaim146] using
-      (eventually_claim14_6_full_internal_at_sourceSigma hH hd1 hΔ0 hΔ1)
-  exact lemma144_caseII_odd_sameC_producer_of_raw_and_scaling S H
-    hH hd1 hΔ0 hΔ1 hd hC hK hC145 hlocal h146 hraw hs1 hs3
 
 
 end MathlibNt.SieveTheory

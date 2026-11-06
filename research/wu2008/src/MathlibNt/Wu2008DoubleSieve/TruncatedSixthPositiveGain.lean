@@ -132,12 +132,5 @@ theorem actual_count_object (N : ℕ) :
       ((N : ℝ) ^ truncatedSixthLowerLambda),
       sieveCount N (t.1 * t.2) N ((N : ℝ) ^ truncatedSixthLowerAlpha) := rfl
 
-/-- The classical term stays the original fixed-delta canonical lower coefficient. -/
-theorem fdelta_object : truncatedSixthLowerFdelta (1/1000) =
-    4 * ∫ x in truncatedSixthLowerAlpha..truncatedSixthLowerBeta,
-      ∫ y in truncatedSixthLowerBeta..truncatedSixthLowerSigma,
-        if truncatedSixthLowerRegion (1/1000) x y then
-          wuLowerCoefficient (truncatedSixthLowerS (1/1000) x y) /
-            (x * y * (truncatedSixthLowerC (1/1000) - x - y)) else 0 := rfl
 
 end Wu2008DoubleSieve.TruncatedSixthPositiveGain

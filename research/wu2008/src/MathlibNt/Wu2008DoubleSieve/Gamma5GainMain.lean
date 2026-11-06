@@ -96,37 +96,5 @@ theorem gamma5Gain_full_count_upper (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
     (1 + ρ) ^ 2 * gamma5ClassicalMainMass N δ W L - (∑ j, H j * m j) + ρ * Θ at hcount
   nlinarith
 
-/-- Expanded literal legal-domain coefficient, with no assumed family or mass estimate. -/
-theorem gamma5Gain_full_count_literal (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ i : ℕ, ∀ Δ : ℝ, ∀ V : Fin i → ℝ, wuSourceBox k δ N i Δ V →
-      gamma5ClassicalCount N δ (convolutionWuWindows N Δ V)
-        (gamma5ClassicalLabels N δ (convolutionWuWindows N Δ V)) ≤
-      (gamma5MassC5 -
-        (∫ t in gamma5MassA..gamma5ClassicalB, ∫ u in t..gamma5ClassicalB,
-          if 2 * u ≤ 1 ∧ u + 2 * t ≤ 1 then
-            wuImprovementLimit true δ (gamma5ClassicalS * (1 - t - u)) /
-              (t * u * (1 - t - u)) else 0) + ε) *
-        boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
-  have heq : gamma5GainIntegral δ =
-      ∫ t in gamma5MassA..gamma5ClassicalB, ∫ u in t..gamma5ClassicalB,
-        if 2 * u ≤ 1 ∧ u + 2 * t ≤ 1 then
-          wuImprovementLimit true δ (gamma5ClassicalS * (1 - t - u)) /
-            (t * u * (1 - t - u)) else 0 := by
-    unfold gamma5GainIntegral
-    apply intervalIntegral.integral_congr
-    intro t _
-    apply intervalIntegral.integral_congr
-    intro u _
-    dsimp only
-    by_cases h : gamma5GainLegal t u
-    · rw [gamma5GainLiteral, if_pos h,
-        if_pos (show 2 * u ≤ 1 ∧ u + 2 * t ≤ 1 from h)]
-      rfl
-    · rw [gamma5GainLiteral, if_neg h,
-        if_neg (show ¬(2 * u ≤ 1 ∧ u + 2 * t ≤ 1) from h)]
-  rw [← heq]
-  exact gamma5Gain_full_count_upper k hk hδ hδhi hε
 
 end Wu2008DoubleSieve

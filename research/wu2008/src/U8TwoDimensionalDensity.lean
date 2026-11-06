@@ -98,16 +98,5 @@ theorem support_prime_not_dvd_pair {N p d : ℕ} {e R : ℝ} {t : ℕ × ℕ}
   · exact (ne_of_lt hplt') ((hdata.1.dvd_iff_eq hp.ne_one).mp h).symm
   · exact (ne_of_lt hplt2) ((hdata.2.1.dvd_iff_eq hp.ne_one).mp h).symm
 
-theorem localRoots_eq_roots {N p d : ℕ} [Fact p.Prime] {e R : ℝ} {t : ℕ × ℕ}
-    (ht : t ∈ pairs N e) (hpd : p ∣ d) (hd : d ≠ 0)
-    (hdR : (d : ℝ) ≤ R) (hR : R < (N : ℝ)^originalAlpha) :
-    ((localRoots p N (t.1*t.2)).card : ℝ) = roots N p := by
-  have ha := support_prime_not_dvd_pair ht Fact.out hpd hd hdR hR
-  unfold roots
-  split_ifs with h
-  · rw [localRoots_card_one_of_dvd_N ha h]
-    norm_num
-  · rw [localRoots_card_two ha h]
-    norm_num
 
 end U8Literal.SmallProduct.TwoDimensional

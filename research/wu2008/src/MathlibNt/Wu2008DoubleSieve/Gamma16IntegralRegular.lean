@@ -77,12 +77,5 @@ theorem gamma16_outer_regular {P φ : ℝ} (hφ : 2 ≤ φ) (hP : φ ≤ P) :
     show (4 : ℝ) * 160 = 640 by norm_num,
     show 4 * (4 * (4 * K + 100) + 400) + 10 * 160 = 64 * K + 4800 by ring] using ho
 
-theorem gamma16_outer_integrable {φ : ℝ} (hφ : 2 ≤ φ) :
-    IntervalIntegrable (fun w => gamma16OuterWeight φ w / w)
-      volume gamma16Alpha gamma16Beta := by
-  have h := gamma16_outer_regular hφ (le_refl φ)
-  exact primeOrdered_integrable (primeOrdered_continuous_of_lipschitz h.2)
-    ⟨gamma16_constants.1, gamma16_constants.2.1.trans gamma16_constants.2.2.1⟩
-    ⟨gamma16_constants.1.trans gamma16_constants.2.1, gamma16_constants.2.2.1⟩
 
 end Wu2008DoubleSieve

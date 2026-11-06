@@ -37,10 +37,5 @@ theorem g9IntegerFibre_centered_eq (U V : Finset ℕ) (α β : ℕ → ℝ) (a :
   rw [g9IntegerFibreDivisibility_eq]
   rfl
 
-theorem g9IntegerFibre_signedError (U V Q : Finset ℕ) (α β c : ℕ → ℝ) (a : ℤ) :
-    (∑ q ∈ reducedModuli Q a, c q *
-      (g9IntegerFibreDivisibility U V α β a q-g9IntegerFibreCenter U V α β q)) =
-      signedError U V Q α β c a := by
-  simp only [g9IntegerFibre_centered_eq, signedError]
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

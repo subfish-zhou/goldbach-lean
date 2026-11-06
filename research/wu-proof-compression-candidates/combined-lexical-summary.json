@@ -1,0 +1,37 @@
+{
+  "status": "LEXICAL_COMBINED_DECLARATION_SEARCH_NOT_REFERENCES_DELETION_OR_ACCEPTED_SAVINGS",
+  "source_manifest_sha256": "2f4b834f8e1c357b502218784e3e926d142e439a443817a143f821a53406ffc6",
+  "definition_only_candidates": 184,
+  "definition_only_provisional_lines": 1005,
+  "combined_candidates": 3807,
+  "combined_modules": 853,
+  "source_declaration_kinds": {
+    "def": 816,
+    "theorem": 2674,
+    "abbrev": 4,
+    "lemma": 313
+  },
+  "combined_provisional_effective_lines": 78180,
+  "nonempty_rounds": 25,
+  "lexical_fixed_point_reached": true,
+  "old_proof_candidates_all_included": true,
+  "definition_only_candidates_all_included": true,
+  "additional_candidates_beyond_separate_searches": 648,
+  "additional_proof_candidates": 12,
+  "additional_definition_candidates_after_proof_removal": 636,
+  "frozen_lean_sources_edited": false,
+  "lean_processes_executed_by_search": 0,
+  "remaining_requirements": [
+    "Current 34 validation gates must pass",
+    "An expanded mixed-kind compiled reference census is required; the existing 2975-target theorem census is insufficient for added targets",
+    "Definition and generated auxiliary ownership, registrations and current consumers must be reviewed",
+    "Compiler ranges and disjoint reversible edits",
+    "Retained type/value/precision checks, source compilation and kernel validation before installation"
+  ],
+  "artifacts": {
+    "unused-definitions-opportunities.json.gz": "cf0cc37312425c39b642dc7511f1be4934714cf1aba76355fe3811649a753bbd",
+    "unused-definitions-scanner.py.gz": "1c0754682f0109d4690b83b2e3e3ddfa85ff7d333616ab11e9d52798672dead6",
+    "combined-declarations-opportunities.json.gz": "1b4f3e1485880d77605a8dcf9f6088e834357a2949441efbf019d36a380b6469",
+    "combined-declarations-scanner.py.gz": "a87f2dcb232f3630dd78f0fa9b5cbc0371b95a70b0044212694c2b07869094a8"
+  }
+}

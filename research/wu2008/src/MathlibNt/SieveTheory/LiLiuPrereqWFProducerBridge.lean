@@ -17,13 +17,7 @@ namespace MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser
 open ArithmeticFunction Finset SwitchingPrinciple
 open scoped Classical
 
-theorem lowerAdmissibleSet_iff_producer (L : ℝ) (s : Finset ℕ) :
-    LowerAdmissibleSet L s ↔ LinearSieve.LowerRosserAdmissibleSet ⌈L⌉₊ s :=
-  lowerAdmissibleSet_iff_natCeil L s
 
-theorem upperAdmissibleSet_iff_producer (L : ℝ) (s : Finset ℕ) :
-    UpperAdmissibleSet L s ↔ LinearSieve.UpperRosserAdmissibleSet ⌈L⌉₊ s :=
-  upperAdmissibleSet_iff_natCeil L s
 
 theorem setWeight_eq_producer (L : ℝ) (s : Finset ℕ) :
     setWeight L s = LinearSieve.lowerRosserSetWeight ⌈L⌉₊ s := by
@@ -41,9 +35,6 @@ theorem lowerSetDensity_eq_producer (L : ℝ) (g : ℕ → ℝ) (B : Finset ℕ)
     lowerSetDensity L g B = LinearSieve.lowerRosserSetDensitySum g ⌈L⌉₊ B := by
   simp only [lowerSetDensity, LinearSieve.lowerRosserSetDensitySum, setWeight_eq_producer]
 
-theorem upperSetDensity_eq_producer (L : ℝ) (g : ℕ → ℝ) (B : Finset ℕ) :
-    upperSetDensity L g B = LinearSieve.upperRosserSetDensitySum g ⌈L⌉₊ B := by
-  simp only [upperSetDensity, LinearSieve.upperRosserSetDensitySum, upperSetWeight_eq_producer]
 
 variable (B : Finset ℕ) (hB : ∀ p ∈ B, p.Prime)
   (g : ArithmeticFunction ℝ) (hgm : g.IsMultiplicative)

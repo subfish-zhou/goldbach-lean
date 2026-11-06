@@ -7,3 +7,5 @@ See [validation.json](validation.json), [measurement.json](measurement.json), [a
 The local adoption archive is `../wu2008/build/adoptions/structural-v9-1793177513339524821`: it preserves source-proof receipts, 78 acceptance gates, registration/private-scope reviews, generator reproduction, failed runs, bounded proof-parameter bridges and the 4,709 historical orphan receipts. Removing receipt metadata is not counted as Lean code savings. Production verification reuses 3,500 actual source compilations and verifies 651 unchanged dependencies; its cached check is not represented as 4,151 fresh compilations.
 
 The private-inclusive constant census covers 4,151 modules in 21 scopes. All 2,096 candidates have zero direct incoming references. This is research-scope metadata, not proof of external API or registration safety; none of its provisional 31,152 lines has been removed. The separate uniform Hf4 semantic prototype also remains uninstalled.
+
+The later [constructive Hf4 acceptance](../wu-hf4-constructive-audit/README.md) records the current installed totals and generator. This directory remains evidence for its historical snapshot.

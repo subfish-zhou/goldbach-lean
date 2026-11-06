@@ -262,23 +262,5 @@ theorem chen1973Lemma6_eq19_dyadic_pair_second_moment_scalar
         (mul_nonneg chen1973Lemma6_eq19SharpConstant_pos.le (by positivity))
     _ = _ := by ring
 
-/-- Literal positive-level source-cell specialization.  The interval containment
-is derived from the real source packet; `Eq19I` is not replaced by an unproved
-printed exponential expression. -/
-theorem chen1973Lemma6_eq19_dyadic_pair_second_moment_source
-    {x L B lastD level k : ℕ}
-    (P : Chen1973Lemma6Eq19SourceParameters x L B lastD level k)
-    (m : ℕ) (σ v : ℝ) (hσ : 1 / 2 ≤ σ) :
-    chen1973Lemma6Eq19PairSecondMoment x L level B k m (σ + v * I) ≤
-      9 * chen1973Lemma6Eq19SharpConstant * chen1973Lemma6Eq19I x L level /
-        Real.log x ^ 2 *
-        ((chen1973Lemma6Eq19SourceQ L level : ℝ) +
-          (chen1973Lemma6Eq19PairD B k : ℝ) / chen1973Lemma6Eq19SourceD L level) *
-        (chen1973Lemma6Eq19PairD B k : ℝ) ^ (1 - 2 * σ) := by
-  exact chen1973Lemma6_eq19_dyadic_pair_second_moment_scalar
-    x L level B k m (chen1973Lemma6Eq19SourceD L level)
-    (chen1973Lemma6Eq19SourceQ L level) P.hx P.hB σ v hσ
-    (chen1973Lemma6Eq19SourceD_pos P)
-    (chen1973Lemma6_eq19_conductorBlock_subset_source_Ioc P)
 
 end AnalyticNumberTheory.LargeSieve

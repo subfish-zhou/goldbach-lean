@@ -116,46 +116,6 @@ theorem naturalCeilContract_to_sourceCoordinate_errorEnvelope_of_claim14_6
       (coordinate_bounds (hCeil p hp).1 (hCeil p hp).2).1
   · exact hIH
 
-/-- Fully discharged production ceiling bridge.  In addition to Claim 14.6(i)
-for the error envelope, Proposition 9.3 supplies the source-layer comparison
-from the same explicit ceiling bounds and the two parity-domain memberships.
-Thus callers provide the genuine natural-ceiling induction contract, with no
-pre-packaged `hSource` or `hError` inequality. -/
-theorem naturalCeilContract_to_sourceCoordinate_errorEnvelope_of_claim14_6_and_parityDomain
-    (support : Finset ℕ) (T : ℕ → ℕ → ℕ → ℝ) (V : ℕ → ℝ)
-    (H : Section13HatLayers) (β C K Δ d : ℝ) (N D : ℕ) (σ τ : ℝ)
-    (hH : Section13HatContract H β)
-    (hV : ∀ p ∈ sigmaOneCarrier support D σ τ, 0 ≤ V p)
-    (hC : 0 ≤ C)
-    (hlog : ∀ p ∈ sigmaOneCarrier support D σ τ,
-      0 ≤ Real.log ((D ⌈/⌉ p : ℕ) : ℝ))
-    (hCeil : ∀ p ∈ sigmaOneCarrier support D σ τ, 2 ≤ p ∧ 2 * p ≤ D)
-    (hSourceDomain : ∀ p ∈ sigmaOneCarrier support D σ τ,
-      inheritedCoordinate D p ∈ SuzukiFiniteContinuousLayers.KappaOneModel.parityDomain β (N - 1) ∧
-      recursiveCoordinate D p ∈ SuzukiFiniteContinuousLayers.KappaOneModel.parityDomain β (N - 1))
-    (hClaim : ∀ p ∈ sigmaOneCarrier support D σ τ,
-      Claim14_6_MonotoneLambdaPremise H ((D ⌈/⌉ p : ℕ) : ℝ) d σ)
-    (hErrorDomain : ∀ p ∈ sigmaOneCarrier support D σ τ,
-      inheritedCoordinate D p ∈
-          Icc (H.betaHat + (ErrorSign.ofDepth (N - 1)).epsilon) σ ∧
-      recursiveCoordinate D p ∈
-          Icc (H.betaHat + (ErrorSign.ofDepth (N - 1)).epsilon) σ)
-    (hIH : NaturalCeilPointwiseInductionContract support T V
-      (fun n D' s => errorEnvelope H n (D' : ℝ) d s)
-      β C K Δ N D σ τ) :
-    PointwiseInductionContract support T V
-      (fun n D' s => errorEnvelope H n (D' : ℝ) d s)
-      β C K Δ N D σ τ := by
-  apply naturalCeilContract_to_sourceCoordinate_errorEnvelope_of_claim14_6
-    support T V H β C K Δ d N D σ τ hH hV hC hlog
-  · intro p hp
-    exact finiteSourceLayer_recursive_le_inherited hH.beta_gt_one (N - 1) D p
-      (hCeil p hp).1 (hCeil p hp).2
-      (hSourceDomain p hp).1 (hSourceDomain p hp).2
-  · exact hCeil
-  · exact hClaim
-  · exact hErrorDomain
-  · exact hIH
 
 end SuzukiLemma144KappaOne
 end MathlibNt.SieveTheory.SwitchingPrinciple

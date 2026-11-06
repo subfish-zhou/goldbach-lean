@@ -63,8 +63,6 @@ def rectangleSifted (N : ℕ) (ρ : ℝ) (k : Key) (P : Finset ℕ) : ℝ :=
     (fun t => output N t.2 t.1)
     (fun t => longAlpha N ρ k t.1 * rectangleBeta N t.2) P
 
-theorem longAlpha_nonneg (N : ℕ) (ρ : ℝ) (k : Key) (m : ℕ) :
-    0 ≤ longAlpha N ρ k m := by unfold longAlpha; positivity
 
 theorem longAlpha_le_divisors (N : ℕ) (ρ : ℝ) (k : Key) (m : ℕ) :
     longAlpha N ρ k m ≤ (m.divisors.card : ℝ) := by
@@ -88,8 +86,6 @@ theorem longAlpha_le_divisors (N : ℕ) (ρ : ℝ) (k : Key) (m : ℕ) :
       _ = y.1*y.2 := hym.symm
       _ = x.1*y.2 := by rw [he]
 
-theorem longAlpha_firstIndex (N : ℕ) (ρ : ℝ) (i i' j l m : ℕ) :
-    longAlpha N ρ (i,j,l) m = longAlpha N ρ (i',j,l) m := rfl
 
 /-- Exact fibre regrouping, valid for signed kernels and repeated products. -/
 theorem long_sum (N : ℕ) (ρ : ℝ) (k : Key) (F : ℕ → ℝ) :

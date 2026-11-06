@@ -176,8 +176,6 @@ def vaughanActualTypeIILogPay (N Q : ℕ) : ℝ :=
     (1 + 2 * (2 * (Nat.ceil (Real.log ((Q : ℝ) ^ 2) / Real.log 2) : ℝ) + 12)) *
     Real.log (N + 1 : ℕ) ^ 5)
 
-lemma vaughanActualTypeIILogPay_nonneg (N Q : ℕ) :
-    0 ≤ vaughanActualTypeIILogPay N Q := Real.sqrt_nonneg _
 
 /-- Physical bound for a genuine hyperbolic shell.  Its proof uses the actual
 collected-prefix square, row-prefix maximal large sieve, Möbius energy, and
@@ -305,18 +303,6 @@ theorem apNormalizedVaughanActualCollectedShellMean_physical
         R * ((N : ℝ) + T) := hmean
     _ = _ := by rfl
 
-/-- Unconditional analytic Type-II input: all shell estimates are produced in
-this module.  The only parameter relation is the standard Vaughan choice
-`u ≤ v`; there is no per-shell premise. -/
-theorem vaughanDirectAPNormalizedTypeIIInput_unconditional
-    (N Q u v : ℕ) (hQ : 0 < Q) (huv : u ≤ v) :
-    VaughanDirectAPNormalizedTypeIIInput N Q u v
-      ((vaughanTypeIIActiveCanonicalRectangles N u v).card : ℝ)
-      (vaughanActualTypeIILogPay N Q) := by
-  apply vaughanDirectAPNormalizedTypeIIInput_of_actual_collected_shells
-  intro kl hkl
-  exact apNormalizedVaughanActualCollectedShellMean_physical
-    N Q u v kl.1 kl.2 hQ huv hkl
 
 end
 

@@ -22,8 +22,6 @@ def D19 (b c e f : ℝ) : Set Point :=
 /-- The selected coordinate is p3; q is coordinate 3, not a residual. -/
 noncomputable abbrev G (phi : ℝ) : Point → ℝ := HighNonunitLegal.G 2 phi
 
-theorem legal_literal (phi : ℝ) (t : Point) :
-    t ∈ HighNonunitLegal.legal 2 phi ↔ (∑ i, t i) + t 2 ≤ phi := Iff.rfl
 
 theorem G_measurable (phi : ℝ) : Measurable (G phi) := HighNonunitLegal.G_measurable 2 phi
 
@@ -56,9 +54,6 @@ theorem D16_subset_cube {b c e f : ℝ} (hp : CompactParameters b c e f) :
 noncomputable def K16 (c e phi : ℝ) : ℝ :=
   ∫ t in D16 c e, G phi t * continuousDensity t
 
-theorem K16_integrable {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
-    IntegrableOn (fun t => G phi t * continuousDensity t) (D16 c e) :=
-  HighNonunitLegal.weighted_integrable_on 2 phi (D16_subset_cube hp)
 
 theorem K16_bounds {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
     0 ≤ K16 c e phi ∧ K16 c e phi ≤ 10 * (4 : ℝ) ^ 4 :=
@@ -87,9 +82,6 @@ theorem D17_subset_cube {b c e f : ℝ} (hp : CompactParameters b c e f) :
 noncomputable def K17 (c e f phi : ℝ) : ℝ :=
   ∫ t in D17 c e f, G phi t * continuousDensity t
 
-theorem K17_integrable {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
-    IntegrableOn (fun t => G phi t * continuousDensity t) (D17 c e f) :=
-  HighNonunitLegal.weighted_integrable_on 2 phi (D17_subset_cube hp)
 
 theorem K17_bounds {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
     0 ≤ K17 c e f phi ∧ K17 c e f phi ≤ 10 * (4 : ℝ) ^ 4 :=
@@ -118,9 +110,6 @@ theorem D18_subset_cube {b c e f : ℝ} (hp : CompactParameters b c e f) :
 noncomputable def K18 (c e f phi : ℝ) : ℝ :=
   ∫ t in D18 c e f, G phi t * continuousDensity t
 
-theorem K18_integrable {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
-    IntegrableOn (fun t => G phi t * continuousDensity t) (D18 c e f) :=
-  HighNonunitLegal.weighted_integrable_on 2 phi (D18_subset_cube hp)
 
 theorem K18_bounds {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
     0 ≤ K18 c e f phi ∧ K18 c e f phi ≤ 10 * (4 : ℝ) ^ 4 :=
@@ -149,9 +138,6 @@ theorem D19_subset_cube {b c e f : ℝ} (hp : CompactParameters b c e f) :
 noncomputable def K19 (b c e f phi : ℝ) : ℝ :=
   ∫ t in D19 b c e f, G phi t * continuousDensity t
 
-theorem K19_integrable {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
-    IntegrableOn (fun t => G phi t * continuousDensity t) (D19 b c e f) :=
-  HighNonunitLegal.weighted_integrable_on 2 phi (D19_subset_cube hp)
 
 theorem K19_bounds {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
     0 ≤ K19 b c e f phi ∧ K19 b c e f phi ≤ 10 * (4 : ℝ) ^ 4 :=
@@ -193,28 +179,8 @@ theorem integral_legal_literal (s : Set Point) (hs : MeasurableSet s) (phi : ℝ
   intro t ht
   exact weighted_legal_literal ht.2
 
-theorem K16_literal (c e phi : ℝ) :
-    K16 c e phi = ∫ t in D16 c e ∩ HighNonunitLegal.legal 2 phi,
-      LiLiuPrereqBuchstab.buchstab ((phi - (t 0 + t 1 + t 2 + t 3)) / t 2) /
-        (t 0 * t 1 * t 2 ^ 2 * t 3) :=
-  integral_legal_literal (D16 c e) (D16_measurable c e) phi
 
-theorem K17_literal (c e f phi : ℝ) :
-    K17 c e f phi = ∫ t in D17 c e f ∩ HighNonunitLegal.legal 2 phi,
-      LiLiuPrereqBuchstab.buchstab ((phi - (t 0 + t 1 + t 2 + t 3)) / t 2) /
-        (t 0 * t 1 * t 2 ^ 2 * t 3) :=
-  integral_legal_literal (D17 c e f) (D17_measurable c e f) phi
 
-theorem K18_literal (c e f phi : ℝ) :
-    K18 c e f phi = ∫ t in D18 c e f ∩ HighNonunitLegal.legal 2 phi,
-      LiLiuPrereqBuchstab.buchstab ((phi - (t 0 + t 1 + t 2 + t 3)) / t 2) /
-        (t 0 * t 1 * t 2 ^ 2 * t 3) :=
-  integral_legal_literal (D18 c e f) (D18_measurable c e f) phi
 
-theorem K19_literal (b c e f phi : ℝ) :
-    K19 b c e f phi = ∫ t in D19 b c e f ∩ HighNonunitLegal.legal 2 phi,
-      LiLiuPrereqBuchstab.buchstab ((phi - (t 0 + t 1 + t 2 + t 3)) / t 2) /
-        (t 0 * t 1 * t 2 ^ 2 * t 3) :=
-  integral_legal_literal (D19 b c e f) (D19_measurable b c e f) phi
 
 end Wu2008DoubleSieve.FourPrimeContinuous

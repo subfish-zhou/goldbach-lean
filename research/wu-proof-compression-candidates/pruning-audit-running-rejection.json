@@ -1,0 +1,6 @@
+{
+  "status": "RUNNING_PRUNING_BUILD_REJECTED_NO_SUCCESS_OUTPUT",
+  "actual_exception": "Pruning build is not terminal and fully passed; no context acceptance",
+  "no_output_written": true,
+  "scope": "Readiness rejection only; no completed-build audit or Lean validation executed"
+}

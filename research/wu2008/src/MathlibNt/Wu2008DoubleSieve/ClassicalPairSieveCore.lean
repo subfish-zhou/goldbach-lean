@@ -113,11 +113,6 @@ theorem classicalOutputWeight_test (N : ℕ) (S : Finset (ℕ × ℕ)) (f : ℕ 
     simp [Ne.symm hne]
   · exact fun hn => (hn hb).elim
 
-theorem classicalBoundingSieve_mass (N : ℕ) (S : Finset (ℕ × ℕ)) (he : Even N) (Z : ℝ) :
-    (∑ b ∈ (classicalBoundingSieve N S he Z).support,
-      (classicalBoundingSieve N S he Z).weights b) = classicalMass N S := by
-  simpa only [classicalBoundingSieve, classicalMass, mul_one, sum_const, nsmul_eq_mul] using
-    classicalOutputWeight_test N S (fun _ => 1)
 
 theorem classicalBoundingSieve_multSum (N : ℕ) (S : Finset (ℕ × ℕ))
     (he : Even N) (Z : ℝ) (q : ℕ) :

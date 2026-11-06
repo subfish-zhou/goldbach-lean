@@ -1,0 +1,61 @@
+{
+  "status": "ACTUAL_INCREMENTAL_SOURCE_BUILD_PASS_NOT_VALIDATION_OR_INSTALLATION",
+  "unix": 1793338723.8170185,
+  "source_process": {
+    "status": "SOURCE_BUILD_TERMINAL_NOT_ACCEPTED",
+    "run": "/tmp/wu-shared-proof-batch-v1/run-20261028-01",
+    "pid": 2150856,
+    "start_ticks": "2025480995",
+    "command": [
+      "/usr/bin/python3",
+      "/tmp/wu-shared-proof-batch-v1/run-20261028-01/build.py",
+      "--all",
+      "--jobs",
+      "2",
+      "--lean-threads",
+      "1",
+      "--timeout",
+      "7200",
+      "--first",
+      "AnalyticNumberTheory.Sieve.PanV3SquareMean",
+      "--first",
+      "MathlibNt.SieveTheory.Switching.MainTerm",
+      "--first",
+      "MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne"
+    ],
+    "log": "/tmp/wu-shared-proof-batch-v1/run-20261028-01/incremental-build-resume2.log",
+    "started_unix": 1793333558.335441,
+    "affected_modules": 3297,
+    "cache_candidates": 854,
+    "source_modules": 4151,
+    "original_preflight_sha256": "108c6f604fad7cf23b7f00357d9123cbc02888fd203ee29d5fc341656bfba7e0",
+    "bundle_repair_sha256": "678019444c2d0cf0f459ee8b26039ab77550beeba99fdbd5de4ad7d94969f902",
+    "parallel_checkpoint_sha256": "aa0873dabbdf9e92cb05ffb150b07692cfd394c4b4bb52497a3d5007e2ad4be6",
+    "prior_source_compile_successes": 995,
+    "jobs": 2,
+    "lean_threads": 1,
+    "prior_exit_code_unknown": true,
+    "verified_cached_receipts_before_resume": 3366,
+    "missing_handle_checkpoint_sha256": "c0f49fb861d59f4728926aa086975492e740fb3c41994ef6613c497be4ae09f0",
+    "builder_sha256": "cf5ff7a722e4154504489686ab3dd5b62b9bbd6b967063d15ee2e1c37efd6316",
+    "child_pid": 2150867,
+    "exit_code": 0,
+    "finished_unix": 1793338688.9674644
+  },
+  "source_status": {
+    "status": "passed",
+    "root": "Wu2008Research",
+    "verified": 4151,
+    "planned": 4151,
+    "old_proof_objects_used": false
+  },
+  "bindings": {
+    "/tmp/wu-shared-proof-batch-v1/run-20261028-01/process.json": "611e6894ffba9c9e03a60fffbecab1d08a43512742f74ca4b16816bf492d949e",
+    "/tmp/wu-shared-proof-batch-v1/run-20261028-01/build/STATUS.json": "b8ca5146fbf0387c4095eeb126c8ae97e905c9d3bba3e384f6e7b988ed5f44f7",
+    "/tmp/wu-shared-proof-batch-v1/run-20261028-01/source-manifest.json": "2f4b834f8e1c357b502218784e3e926d142e439a443817a143f821a53406ffc6",
+    "/tmp/wu-shared-proof-batch-v1/run-20261028-01/incremental-build-resume2.log": "2c28549a2f6dd43769df0c08227d8bce9224fa57ee05370466ea695916a6a54c",
+    "/home/azureuser/goldbach-lean/research/wu2008/source-manifest.json": "c7950a5796a848c7c0fc0f58f68c41746a570d137f54ab298c64a31d14f71e39"
+  },
+  "validation_plan": "/tmp/wu-shared-proof-batch-v1/validation-inputs-02/validation-plan.json",
+  "candidate_effective_lines_not_installed": 774
+}

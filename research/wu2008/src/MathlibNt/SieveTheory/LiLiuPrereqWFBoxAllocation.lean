@@ -133,23 +133,5 @@ theorem exists_boxPartition_of_prefixSquareBound (weight : α → ℝ) {M N : �
       · exact ⟨left, right ++ [a], hpart.right a,
           hleft, by simpa using hfits⟩
 
-/-- Real-list form with the explicit indexed hypothesis and the usual sublist,
-permutation, and product conclusions. The partition witness records disjoint
-occurrences; disjointness of values is neither required nor appropriate. -/
-theorem exists_real_box_partition {M N : ℝ} (hM : 1 ≤ M) (hN : 1 ≤ N)
-    (input : List ℝ)
-    (hprefix : ∀ (i : ℕ) (hi : i < input.length),
-      (input.take i).prod * input[i] ^ 2 ≤ M * N) :
-    ∃ left right : List ℝ, BoxPartition left right input ∧
-      left.Sublist input ∧ right.Sublist input ∧ (left ++ right).Perm input ∧
-      left.prod * right.prod = input.prod ∧ left.prod ≤ M ∧ right.prod ≤ N := by
-  have hbound : PrefixSquareBound id (M * N) input := by
-    simpa only [PrefixSquareBound, List.map_id, id_eq] using hprefix
-  obtain ⟨left, right, hpart, hleft, hright⟩ :=
-    exists_boxPartition_of_prefixSquareBound id hM hN input hbound
-  refine ⟨left, right, hpart, hpart.sublists.1, hpart.sublists.2, hpart.perm, ?_, ?_, ?_⟩
-  · simpa using hpart.prod_eq id
-  · simpa using hleft
-  · simpa using hright
 
 end MathlibNt.SieveTheory.LiLiuPrereqWFBoxAllocation

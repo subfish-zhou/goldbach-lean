@@ -548,21 +548,5 @@ theorem tsum_liuSelbergCorrection
   filter_upwards [Filter.eventually_ge_atTop 2] with z hz
   exact (liuSelbergCorrection_finiteEulerProduct hNeven hz).symm
 
-theorem tendsto_liuSelbergCorrection_partialSums
-    {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
-    Filter.Tendsto
-      (fun x : ℕ => ∑ d ∈ Finset.Icc 1 x, liuSelbergCorrection N d)
-      Filter.atTop (nhds (1 / (2 * liuSingularSeries N))) := by
-  have hs := (summable_norm_liuSelbergCorrection hNeven hN).of_norm
-  have ht := hs.hasSum.tendsto_sum_nat
-  have ht' := ht.comp (Filter.tendsto_add_atTop_nat 1)
-  rw [tsum_liuSelbergCorrection hNeven hN] at ht'
-  apply ht'.congr'
-  filter_upwards [] with x
-  rw [show Finset.Icc 1 x = (Finset.range (x + 1)).erase 0 by
-    ext n
-    simp only [Finset.mem_Icc, Finset.mem_erase, Finset.mem_range]
-    omega]
-  simp
 
 end MathlibNt.SieveTheory.LiuWeight

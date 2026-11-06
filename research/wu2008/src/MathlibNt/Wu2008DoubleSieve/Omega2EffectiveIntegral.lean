@@ -48,15 +48,5 @@ theorem omega2_integral_intervalIntegrable {f : ℝ → ℝ} {s t : ℝ}
       (by change 1 - u ≠ 0; linarith [h.2.1])
   simpa only [div_eq_mul_inv] using hm.intervalIntegrable.mul_continuousOn hc
 
-theorem omega2_effective_integral_eventually_integrable (upper : Bool) (k : ℕ)
-    {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    ∀ᶠ N0 : ℕ in atTop, ∀ s t : ℝ, 2 ≤ s → s ≤ t → 3 ≤ t → t ≤ 5 →
-      IntervalIntegrable (fun u =>
-        wuEffectiveCoefficient upper (k + 1) δ N0 (t * u) / (u * (1 - u)))
-        volume (1 - 1 / s) (1 - 1 / t) := by
-  filter_upwards [wu_effective_threshold_uniform_monotone upper (k + 1) (by omega)
-    hδ hδhi] with N0 hN0
-  intro s t hs hst ht ht5
-  exact omega2_integral_intervalIntegrable hN0 hs hst ht ht5
 
 end Wu2008DoubleSieve

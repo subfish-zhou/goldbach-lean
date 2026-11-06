@@ -64,26 +64,6 @@ theorem suzukiLemma85_finiteAbel {𝕜 : Type*} [CommRing 𝕜]
   rw [finiteAbelSum_Ico hwz hdiff, hRz]
   ring
 
-/-- Fully explicit tail-sum form.  A prime sum is obtained by taking `a n = 0`
-off primes.  No positivity, monotonicity, continuity, or primality hypothesis is
-used by this exact finite identity. -/
-theorem suzukiLemma85_finiteAbel_tail {𝕜 : Type*} [CommRing 𝕜]
-    (a H : ℕ → 𝕜) {w z : ℕ} (hwz : w ≤ z) :
-    (∑ n ∈ Finset.Ico w z, a n * H n) =
-      -H z + (1 + ∑ p ∈ Finset.Ico w z, a p) * H w +
-        ∑ n ∈ Finset.Ico w z,
-          (1 + ∑ p ∈ Finset.Ico (n + 1) z, a p) *
-            (H (n + 1) - H n) := by
-  let R : ℕ → 𝕜 := fun x => 1 + ∑ p ∈ Finset.Ico x z, a p
-  apply suzukiLemma85_finiteAbel (R := R) hwz
-  · simp [R]
-  · intro n hn
-    have hnz : n ≤ z := (Finset.mem_Ico.mp hn).2.le
-    have hsnz : n + 1 ≤ z := (Finset.mem_Ico.mp hn).2
-    dsimp [R]
-    rw [Finset.sum_Ico_eq_sub a hnz, Finset.sum_Ico_eq_sub a hsnz,
-      Finset.sum_range_succ]
-    ring
 
 /-- Sum `(R x - R y) * g x` over consecutive nodes `x,y` of a finite list. -/
 def finiteNodeAtomSum {α A : Type*} [CommRing A]

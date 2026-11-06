@@ -18,12 +18,6 @@ theorem coupledLower_le_original (i : Fin 4) : coupledLower (coupledRow i) ≤
   unfold coupledLower CoupledJLogRecovery.actualLower at *
   linarith only [ha,hj]
 
-theorem coupled_exact_replacement (p : SecondFunctionalParameters) : coupledLower p=
-    CoupledJLogRecovery.cubicLower p+CoupledFiniteAssembly.aCoefficient p*
-      (SigmaExistingLogError.finiteLower NineFeedbackStrength.originalH-
-        CubicCommonProfile.finiteLower NineFeedbackStrength.originalH) := by
-  unfold coupledLower CoupledJLogRecovery.cubicLower
-  ring
 
 def firstCoefficient (s S : ℝ) : ℝ := log (4/(S-1))+log ((S-1)/(s-1))/2
 
@@ -44,23 +38,11 @@ theorem firstLower_le {s S : ℝ} (hs : 2 ≤ s) (hS : 3 ≤ S) (hS5 : S ≤ 5)
   unfold firstLower firstCoefficient firstFeedback CoupledJLogRecovery.jTerm at *
   linarith only [ha,he,hj]
 
-theorem first_original_rows (i : Fin 5) : firstLower (firstNode i) (firstS i) ≤
-    firstFeedback NineFeedbackStrength.originalH (firstNode i) (firstS i) := by
-  rcases i with ⟨i,hi⟩
-  have h : i=0 ∨ i=1 ∨ i=2 ∨ i=3 ∨ i=4 := by omega
-  rcases h with rfl | rfl | rfl | rfl | rfl
-  all_goals apply firstLower_le <;> norm_num [firstNode,firstS,upperNode]
 
 theorem terminal_J_zero : CoupledJLogRecovery.jRest NineFeedbackStrength.originalH 3 3=0 := by
   norm_num [CoupledJLogRecovery.jRest,jStart,FiniteEndpointPayment.left,
     FiniteEndpointPayment.right,FiniteEndpointPayment.clip]
 
-theorem first_terminal_exact : firstLower 3 3=
-    log 2*SigmaExistingLogError.finiteLower NineFeedbackStrength.originalH+
-      correctedCells NineFeedbackStrength.originalH 3 := by
-  unfold firstLower firstCoefficient
-  rw [terminal_J_zero]
-  norm_num
 
 end
 end SigmaJJoint

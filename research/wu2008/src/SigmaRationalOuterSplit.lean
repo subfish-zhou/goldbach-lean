@@ -21,13 +21,7 @@ theorem split_factors {n d : ℝ} (hd : 0<d) (hn : d≤n) :
   simp only [leftFactor,rightFactor]
   constructor <;> field_simp [hd.ne',hnd] <;> ring
 
-theorem splitLowerDen_pos {n d : ℝ} (hn : 0<n) (hd : 0<d) : 0<splitLowerDen n d :=
-  mul_pos (lowerDen_pos (add_pos hn hd) (by positivity))
-    (lowerDen_pos (by positivity) (add_pos hn hd))
 
-theorem splitUpperDen_pos {n d : ℝ} (hn : 0<n) (hd : 0<d) : 0<splitUpperDen n d :=
-  mul_pos (upperDen_pos (add_pos hn hd) (by positivity))
-    (upperDen_pos (by positivity) (add_pos hn hd))
 
 theorem splitLower_homogeneous {n d : ℝ} (hd : 0<d) (hn : d≤n) :
     RemainingHf.splitLower (n/d)=splitLowerNum n d/splitLowerDen n d := by
@@ -77,14 +71,6 @@ theorem eighthRight_identity (t : ℝ) :
   unfold qHom quadN quadD eighthRight
   ring
 
-theorem eighthLeft_pos {t : ℝ} (ht : 1≤t) : 0<eighthLeft t := by
-  rw [←eighthLeft_identity]
-  apply qHom_pos <;> dsimp [quadN,quadD] <;> positivity
 
-theorem eighthRight_pos {t : ℝ} (ht : 1≤t) : 0<eighthRight t := by
-  have h : 0<qHom (2*quadN t) (quadN t+quadD t) := by
-    apply qHom_pos <;> dsimp [quadN,quadD] <;> positivity
-  rw [eighthRight_identity] at h
-  linarith only [h]
 
 end SigmaRationalOuterFTC

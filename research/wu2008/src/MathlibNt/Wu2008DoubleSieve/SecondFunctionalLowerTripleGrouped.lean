@@ -223,22 +223,6 @@ theorem decode_encode {x : Source} (hx : x ∈ sources N W a f lo hi pre) :
     simpa only [cofactor, mul_assoc, mul_comm, mul_left_comm] using Nat.mul_div_cancel' hdv
   simp only [decode, encode, hprod, Nat.sub_sub_self hle]
 
-/-- Exact arbitrary original tests on the image, before the one-sided physical enlargement. -/
-theorem source_test_dictionary (test : Source → ℝ) :
-    (∑ x ∈ sources N W a f lo hi pre, test x) =
-      ∑ y ∈ (sources N W a f lo hi pre).image (encode N), test (decode N y) := by
-  rw [sum_image encode_injOn]
-  exact sum_congr rfl (fun x hx => congrArg test (decode_encode hx).symm)
 
-/-- Unit quotient instances enter the same wide family directly. -/
-theorem unit_retained (hd : ∀ d ∈ boxConvolutionSupport W, 0 < d)
-    (hN : 4 ≤ N) (he : Even N) {d p q r ell : ℕ}
-    (hx : (⟨d,(p,q,r),ell⟩ : Source) ∈ sources N W a f lo hi pre)
-    (hn : (N-ell)/(d*p*q*r) = 1) :
-    (d,p,q,1) ∈ (family N W a f lo hi pre hd).labels ∧
-      r ∈ ((family N W a f lo hi pre hd).primes (d,p,q,1)).filter
-        (fun r => (N-cofactor (d,p,q,1)*r).Prime) := by
-  have h := inclusion hd hN he (mem_image_of_mem (encode N) hx)
-  simpa only [encode, hn, mem_sigma] using h
 
 end Wu2008DoubleSieve.LowerTripleGrouped

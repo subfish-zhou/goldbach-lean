@@ -59,12 +59,6 @@ theorem omega3XIntegralKernel_uniformContinuousOn (M : ℝ) :
   intro p hp
   exact omega3XIntegralKernelExtension_eq hp.2.1.1 hp.2.2.1.1 hp.2.2.2.1
 
-theorem omega3XIntegralKernel_continuousOn (M : ℝ) :
-    ContinuousOn
-      (fun p : ℝ × ℝ × ℝ × ℝ => omega3XIntegralKernel p.1 p.2.1 p.2.2.1 p.2.2.2)
-      (Icc 2 M ×ˢ (Icc (1 / 10) (1 / 2) ×ˢ
-        (Icc (1 / 10) (1 / 2) ×ˢ Icc (1 / 10) (1 / 2)))) :=
-  (omega3XIntegralKernel_uniformContinuousOn M).continuousOn
 
 /-- A finite phi-independent majorant; it remains valid at u=1. -/
 theorem omega3XIntegralKernel_bounds {φ a b c : ℝ} (hφ : 2 ≤ φ)

@@ -146,21 +146,6 @@ theorem eighth_classicalPairGeometry {N : ℕ} (hN : 512 ≤ N) :
   have hb3 : (3 : ℝ) ≤ p.2 := by linarith
   exact ⟨ha, hb, hab, hza, hsize, by exact_mod_cast hb3⟩
 
-/-- One common C and T for both literal original pair families. -/
-theorem seventh_eighth_full_convolution_distribution (A : ℝ) {δ : ℝ}
-    (hA : 0 < A) (hδ : 0 < δ) :
-    ∃ C : ℝ, 0 < C ∧ ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → ∀ Z : ℝ,
-      classicalPairR1 N (seventhPairs N) (⌊(N : ℝ) ^ (1 / 2 - δ)⌋₊ + 1) Z ≤
-          C * N / log (N : ℝ) ^ A ∧
-      classicalPairR1 N (eighthPairs N) (⌊(N : ℝ) ^ (1 / 2 - δ)⌋₊ + 1) Z ≤
-          C * N / log (N : ℝ) ^ A := by
-  obtain ⟨C, hC, T, _, hd⟩ := classicalPair_balanced_distribution A hA hδ
-  refine ⟨C, hC, max T 512, le_max_right _ _, ?_⟩
-  intro N hN Z
-  have hNT := (le_max_left T 512).trans hN
-  have h512 := (le_max_right T 512).trans hN
-  exact ⟨hd N hNT _ (seventh_classicalPairGeometry h512) Z,
-    hd N hNT _ (eighth_classicalPairGeometry h512) Z⟩
 
 /-- Closed lower prime atoms are not discarded by the profile translation. -/
 theorem classicalPair_lower_nat_iff (b r : ℕ) :
@@ -183,15 +168,5 @@ theorem classicalPair_physical_fibre {N : ℕ} {S : Finset (ℕ × ℕ)}
     ninthPairProduct, ninthProfileUpper_nat_iff hN (show 0 < p.1 * p.2 from hm)]
   tauto
 
-theorem classicalPair_physical_card {N : ℕ} {S : Finset (ℕ × ℕ)}
-    (hS : ClassicalPairGeometry N S) :
-    (physical N S).card = ∑ p ∈ S,
-      ((omega3ProfilePrimes N ((p.2 : ℝ) - 1)
-        (ninthProfileUpper N (ninthPairProduct p))).filter
-          (fun r => (N - ninthPairProduct p * r).Prime)).card := by
-  rw [physical, card_sigma]
-  apply sum_congr rfl
-  intro p hp
-  rw [classicalPair_physical_fibre hS hp]
 
 end Wu2008DoubleSieve.SeventhEighth

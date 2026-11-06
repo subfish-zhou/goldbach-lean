@@ -45,9 +45,6 @@ theorem actual_remaining (i : Fin 3) {δ : ℝ} (hd : 0<δ) (hh : δ≤1/10) :
       coupledFeedback (row i) (actualNine δ)≤wuImprovementLimit true δ (row i).s :=
   actual_of_paid (coupledRow_geometry i.succ) (remaining_classical i) (complete_paid i) hd hh
 
-theorem budget_remaining (i : Fin 3) :
-    classicalCore (row i)-2*costCore (row i)≤classicalNumerator (row i)-2*coupledCostMass (row i) := by
-  linarith only [remaining_classical i,complete_paid i]
 
 end
 end Wu04RemainingCost

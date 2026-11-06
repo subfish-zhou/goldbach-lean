@@ -71,8 +71,6 @@ theorem joint_actual_lower :
 def fixedGap : ℝ := JointHMotherPayment.unroundedCoefficient - lowerCoefficient
 def residualGap : ℝ := JointHMotherPayment.unroundedCoefficient - residualCoefficient
 
-theorem fixedGap_pos : 0 < fixedGap := sub_pos.mpr joint_actual_lower
-theorem residualGap_pos : 0 < residualGap := sub_pos.mpr joint_actual_residual_lower
 
 /-- Each instance spends its own full positive difference Qjoint - L. -/
 theorem full_fixed_count : CorrelationPayment.CountBound lowerCoefficient :=
@@ -87,21 +85,8 @@ theorem fixed_gain_gt_one_hundredth :
   rw [fixed_improvement_identity]
   linarith only [FifthClassicalShape.gain_gt]
 
-theorem residual_gain_gt_one_hundredth :
-    CorrelationPayment.residualCoefficient + 1/100 < residualCoefficient := by
-  rw [residual_improvement_identity]
-  linarith only [FifthClassicalShape.gain_gt]
 
-theorem joint_improvement_identity :
-    lowerCoefficient = JointHMotherPayment.lowerCoefficient +
-      SignedTotalCorrelation.correlationGain/4 + FifthClassicalShape.gain/4 := by
-  rw [fixed_improvement_identity, SignedTotalCorrelation.fixed_improvement_identity]
 
-theorem joint_gain_gt_nine_four_hundredths :
-    JointHMotherPayment.lowerCoefficient + 9/400 < lowerCoefficient := by
-  have hc := SignedTotalCorrelation.fixed_gain_gt_one_eightieth
-  have hs := fixed_gain_gt_one_hundredth
-  linarith only [hc,hs]
 
 end
 end Wu2008DoubleSieve.FifthShapePayment

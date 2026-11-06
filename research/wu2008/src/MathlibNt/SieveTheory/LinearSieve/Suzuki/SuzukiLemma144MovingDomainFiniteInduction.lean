@@ -176,38 +176,6 @@ def Lemma144MovingDomainCaseIIHCase
       Lemma144MovingDomainNatCeilRestrictedAt
         S H C K d Δ (N + 1) DII (Lemma144CaseIIFinalSide (N + 1))
 
-/-- Total finite-depth assembly using the exact Case-II moving-domain packet.
-Case I is the logical complement of the odd low strip. -/
-theorem lemma14_4_movingDomain_full_finiteDepth
-    (S : BoundingSieve) (H : Section13HatLayers)
-    (C K d Δ : ℝ) (depth : ℕ)
-    (hbase : ∃ Dmin : ℕ, 2 ≤ Dmin ∧
-      Lemma144MovingDomainNatCeilAt S H C K d Δ 1 Dmin)
-    (hcaseI : ∀ N Dmin : ℕ,
-      1 ≤ N → N < depth → 2 ≤ Dmin →
-      Lemma144MovingDomainGlobalDepthAt S H C K d Δ N Dmin →
-      ∃ DI : ℕ, Dmin ≤ DI ∧
-        Lemma144MovingDomainNatCeilRestrictedAt S H C K d Δ (N + 1) DI
-          (fun x => ¬ Lemma144CaseIIFinalSide (N + 1) x))
-    (hcaseII : Lemma144MovingDomainCaseIIHCase S H C K d Δ depth) :
-    ∃ Dmin : ℕ, 2 ≤ Dmin ∧
-      ∀ N : ℕ, 1 ≤ N → N ≤ depth →
-        Lemma144MovingDomainGlobalDepthAt S H C K d Δ N Dmin := by
-  apply lemma14_4_movingDomain_finiteDepth_induction
-    S H C K d Δ depth hbase
-  intro N Dmin hN hNdepth hDmin hIH
-  obtain ⟨DI, hIDI, hI⟩ := hcaseI N Dmin hN hNdepth hDmin hIH
-  obtain ⟨DII, hIDII, hII⟩ := hcaseII N Dmin hN hNdepth hDmin hIH
-  refine ⟨max DI DII, hIDI.trans (le_max_left _ _), ?_⟩
-  apply lemma144MovingDomainNatCeilAt_of_restricted_cases
-    (QI := fun x => ¬ Lemma144CaseIIFinalSide (N + 1) x)
-    (QII := Lemma144CaseIIFinalSide (N + 1))
-  · intro x _hx
-    by_cases hxII : Lemma144CaseIIFinalSide (N + 1) x
-    · exact Or.inr hxII
-    · exact Or.inl hxII
-  · exact hI
-  · exact hII
 
 
 end MathlibNt.SieveTheory

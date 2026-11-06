@@ -63,14 +63,6 @@ theorem internal_level_log {N T : ℝ} (hN : 1 < N) (hT : 0 < T) (δ η : ℝ) :
   rw [Real.log_rpow (div_pos (Real.rpow_pos_of_pos (by linarith) _)
     (Real.rpow_pos_of_pos hT _)), global_level_log hN hT]
 
-/-- Exact normalization along T=N^x, with the original 5/9 level. -/
-theorem global_normalization {N : ℝ} (hN : 1 < N) (x δ : ℝ) :
-    Real.log N / (2*Real.log (N^(5/9-δ)/(N^x)^(5/9 : ℝ))) =
-      1/(2*((5/9 : ℝ)*(1-x)-δ)) := by
-  rw [global_level_log hN (Real.rpow_pos_of_pos (by linarith) _),
-    Real.log_rpow (by linarith : 0 < N)]
-  have hn : Real.log N ≠ 0 := ne_of_gt (Real.log_pos hN)
-  field_simp
 
 /-- At fixed parameters the internal normalization costs 1+eta+eta^9. -/
 theorem internal_normalization {N : ℝ} (hN : 1 < N) (x δ η : ℝ) :

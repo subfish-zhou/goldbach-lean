@@ -65,9 +65,6 @@ theorem lower_coefficient_identity : lowerCoefficient = Phase20.paidCoefficient+
   rw [← GCurvatureChord.quarter_eq_exact,improvement_identity]
   ring
 
-theorem full_fixed_improvement : Phase24.lowerCoefficient < lowerCoefficient := by
-  unfold lowerCoefficient Phase24.lowerCoefficient
-  linarith only [classical_strict_improvement]
 
 /-- Positive actual slack, not zero loss, and not a new superior Q-family. -/
 def paymentEta : ℝ := Phase20.unroundedCoefficient-lowerCoefficient

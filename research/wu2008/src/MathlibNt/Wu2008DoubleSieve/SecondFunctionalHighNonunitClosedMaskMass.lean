@@ -68,15 +68,6 @@ theorem closed_mask_integrable {n : ℕ} {Q : Type*} [Countable Q]
       (fun t => G j phi t * continuousDensity t) t) (continuousCube n) at h
   simpa only [closed_indicator, mem_ofPred_eq] using h
 
-theorem closed_mask_measurable {n : ℕ} {Q : Type*} [Countable Q]
-    (j : Fin n) (phi : ℝ) (C : Q → Fin n → ℝ) (gamma : Q → ℝ) :
-    Measurable (fun t => (if ∀ q, (∑ i, C q i * t i) ≤ gamma q
-      then G j phi t else 0) * continuousDensity t) := by
-  have hg := (G_measurable j phi).indicator (closed_affine_measurable C gamma)
-  have hd : Measurable (continuousDensity : (Fin n → ℝ) → ℝ) := by
-    unfold continuousDensity
-    fun_prop
-  exact hg.mul hd
 
 private theorem integral_closed_mask {n : ℕ} (j : Fin n) (phi : ℝ)
     (s : Set (Fin n → ℝ)) (hs : MeasurableSet s)
@@ -88,17 +79,7 @@ private theorem integral_closed_mask {n : ℕ} (j : Fin n) (phi : ℝ)
   rw [inter_eq_right.mpr hsub] at h
   simpa only [closed_indicator] using h.symm
 
-theorem K20_closed_mask_integrable (a2 a3 b phi : ℝ) :
-    IntegrableOn (fun t : Fin 5 → ℝ =>
-      (if ∀ q, (∑ i, C20 q i * t i) ≤ gamma20 a2 a3 b q then G 3 phi t else 0) *
-        continuousDensity t) (continuousCube 5) :=
-  by simpa only using closed_mask_integrable 3 phi C20 (gamma20 a2 a3 b)
 
-theorem K21_closed_mask_integrable (a3 b phi : ℝ) :
-    IntegrableOn (fun t : Fin 6 → ℝ =>
-      (if ∀ q, (∑ i, C21 q i * t i) ≤ gamma21 a3 b q then G 4 phi t else 0) *
-        continuousDensity t) (continuousCube 6) :=
-  by simpa only using closed_mask_integrable 4 phi C21 (gamma21 a3 b)
 
 theorem K20_closed_mask_literal {a2 a3 b : ℝ} (ha : 1 / 10 ≤ a2) (hb : b ≤ 1 / 2)
     (phi : ℝ) :

@@ -24,12 +24,6 @@ theorem word_ne {M : ℕ} {a b c f : ℝ} {cs l : List ℕ}
   obtain ⟨q,hq,hcol⟩ := List.mem_map.mp hm
   exact colour_ne_three (((secondFunctionalMother_tuple_mem _ _ _).mp hl).2.2 q hq) hcol
 
-theorem label_filter_empty (M : ℕ) (a b c f : ℝ) (cs : List ℕ) (hcs : 3 ∈ cs) :
-    ((secondFunctionalMotherTuples (primeWindow M a f) cs.length).filter
-      fun l => l.map (secondFunctionalMotherColour b c f) = cs) = ∅ := by
-  apply eq_empty_iff_forall_notMem.mpr
-  intro l hl
-  exact word_ne hcs (mem_filter.mp hl).1 (mem_filter.mp hl).2
 
 theorem prefix_zero (N d M : ℕ) (a b c f : ℝ) (cs : List ℕ) (hcs : 3 ∈ cs) :
     secondFunctionalMotherPrefixTerm N d M a b c f f cs = 0 := by
@@ -71,11 +65,6 @@ theorem nonunit_sum_zero (p : SecondFunctionalParameters) (he : p.kappa3 = p.s)
   intro d _
   rw [he, masked_prefix_zero false N d _ _ _ _ _ hword, mul_zero]
 
-theorem actual_nonunit_source_zero (p : SecondFunctionalParameters) (he : p.kappa3 = p.s)
-    {i : ℕ} (N : ℕ) (δ : ℝ) (W : Fin i → Finset ℕ) {j : Fin 4} (hj : j ≠ 0) :
-    FourPrimeNonunit.actualSource N δ p W j = 0 := by
-  rw [FourPrimeNonunit.actual_source_eq]
-  exact nonunit_sum_zero p he N δ W hj
 
 /-- Explicit retained original counts. In particular multiword Gamma10/13/14 remain. -/
 noncomputable def retained (p : SecondFunctionalParameters)

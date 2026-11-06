@@ -39,56 +39,5 @@ def expression : ℝ :=
   (39081/25000000 : ℝ)*log (29/28 : ℝ)*log (312/191 : ℝ)+
   (72943/50000000 : ℝ)*log (30/29 : ℝ)*log (312/191 : ℝ)+
   (223939/50000000 : ℝ)*log (12398/11349 : ℝ)*log (256/191 : ℝ)
-theorem expression_eq_margin : expression = margin 3 := by
-  have inv_0 : log (39/50 : ℝ) = -log (50/39 : ℝ) := by
-    rw [show (39/50 : ℝ) = ((50/39 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_1 : log (16/25 : ℝ) = -log (25/16 : ℝ) := by
-    rw [show (16/25 : ℝ) = ((25/16 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_2 : log (25/52 : ℝ) = -log (52/25 : ℝ) := by
-    rw [show (25/52 : ℝ) = ((52/25 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_3 : log (191/312 : ℝ) = -log (312/191 : ℝ) := by
-    rw [show (191/312 : ℝ) = ((312/191 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_4 : log (184/265 : ℝ) = -log (265/184 : ℝ) := by
-    rw [show (184/265 : ℝ) = ((265/184 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_5 : log (206/233 : ℝ) = -log (233/206 : ℝ) := by
-    rw [show (206/233 : ℝ) = ((233/206 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_6 : log (331/412 : ℝ) = -log (412/331 : ℝ) := by
-    rw [show (331/412 : ℝ) = ((412/331 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_7 : log (12398/15423 : ℝ) = -log (15423/12398 : ℝ) := by
-    rw [show (12398/15423 : ℝ) = ((15423/12398 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_8 : log (39346/42371 : ℝ) = -log (42371/39346 : ℝ) := by
-    rw [show (39346/42371 : ℝ) = ((42371/39346 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_9 : log (703/824 : ℝ) = -log (824/703 : ℝ) := by
-    rw [show (703/824 : ℝ) = ((824/703 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_10 : log (397471/439375 : ℝ) = -log (439375/397471 : ℝ) := by
-    rw [show (397471/439375 : ℝ) = ((439375/397471 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_11 : log (106761551/119193600 : ℝ) = -log (119193600/106761551 : ℝ) := by
-    rw [show (106761551/119193600 : ℝ) = ((119193600/106761551 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_12 : log (16999/18624 : ℝ) = -log (18624/16999 : ℝ) := by
-    rw [show (16999/18624 : ℝ) = ((18624/16999 : ℝ))⁻¹ by norm_num,log_inv]
-  have inv_13 : log (748/873 : ℝ) = -log (873/748 : ℝ) := by
-    rw [show (748/873 : ℝ) = ((873/748 : ℝ))⁻¹ by norm_num,log_inv]
-  have elast0 := e_0_8
-  have elast1 := e_1_8
-  norm_num only [div_one] at elast0 elast1
-  have hpub : NineFeedbackStrength.publication ((3 : Fin 4).castAdd 5)=(11776059/1000000000 : ℝ) := by
-    change NineFeedbackStrength.publication ((2 : Fin 3).succ.castAdd 5)=_
-    rw [NineFeedbackStrength.publication_coupled_succ]
-    simp [Wu04RemainingCore.publication,show (2 : Fin 3)≠0 by decide,show (2 : Fin 3)≠1 by decide]
-  unfold margin
-  rw [hpub,CoupledCMArithmetic.profile_value]
-  simp only [CoupledCMCollection.jRest,CoupledFiniteAssembly.eRest,tail,densityFinite,
-    Fin.sum_univ_succ,Fin.sum_univ_zero,add_zero]
-  dsimp [NineFeedbackStrength.originalH,coupledRow,SecondFunctionalPositive.parameters,
-    SecondFunctionalParameters.row4,NineFeedbackStrength.publication,Wu04RemainingCore.publication]
-  norm_num [expression,CoupledFiniteAssembly.aCoefficient,left,right,clip,upperLeft,upperNode,
-    jStart,CoupledCMCollectedJ.cell,pa,pb,pc,pd,gate,middle,
-    middleRatio,oldMiddleBox,gateStart,upperSwitch,lowerSwitch,intervalPayment,
-    firstSplit,secondSplit,densityEndpoint,kernelEndpoint,feedbackPole,feedbackLower,
-    feedbackUpper,upperP,upperQ,lowerQ,GatedDensityPayment.ratio,
-    NineFeedbackStrength.publication,Wu04RemainingCore.publication,
-    e_0_0,e_0_1,e_0_2,e_0_3,e_0_4,e_0_5,e_0_6,e_0_7,e_0_8,e_1_0,e_1_1,e_1_2,e_1_3,e_1_4,e_1_5,e_1_6,e_1_7,e_1_8]
-  simp only [inv_6,inv_9,elast0,elast1]
-  ring
 end
 end CoupledCMRowThree

@@ -53,18 +53,6 @@ def chen1973Lemma6MobiusPartialSum {d : ℕ} (H : ℕ) (s : ℂ)
   ∑ n ∈ Finset.Icc 1 H,
     ((ArithmeticFunction.moebius n : ℤ) : ℂ) * χ.1 (n : ZMod d) / (n : ℂ) ^ s
 
-/-- The exact finite square before collecting equal products into the source's
-coefficient `j(n)`.  Both indices are natural-order finite partial sums, so this
-identity is valid equally on the `Re(s)≤1` line used in (15). -/
-theorem chen1973Lemma6_mobiusPartialSum_sq
-    {d H : ℕ} (s : ℂ) (χ : PrimitiveCharacter d) :
-    chen1973Lemma6MobiusPartialSum H s χ ^ 2 =
-      ∑ a ∈ Finset.Icc 1 H, ∑ b ∈ Finset.Icc 1 H,
-        (((ArithmeticFunction.moebius a : ℤ) : ℂ) * χ.1 (a : ZMod d) / (a : ℂ) ^ s) *
-          (((ArithmeticFunction.moebius b : ℤ) : ℂ) * χ.1 (b : ZMod d) / (b : ℂ) ^ s) := by
-  unfold chen1973Lemma6MobiusPartialSum
-  simp only [pow_two, Finset.sum_mul, Finset.mul_sum]
-  rw [Finset.sum_comm]
 
 /-- A dyadic shell with the source convention `B·2^k < size ≤ B·2^(k+1)`. -/
 def chen1973Lemma6DyadicShell {α : Type*} [DecidableEq α]
@@ -150,15 +138,6 @@ theorem chen1973Lemma6_dyadicShell_pairwiseDisjoint
   intro i hi j hj hij
   exact chen1973Lemma6_dyadicShell_disjoint S size hB hij
 
-/-- Exact sum reindexing over the source dyadic hull. -/
-theorem chen1973Lemma6_sum_dyadicShell
-    {α : Type*} [DecidableEq α] (S : Finset α) (size : α → ℕ)
-    {B K : ℕ} (hB : 0 < B) (f : α → ℝ) :
-    ∑ a ∈ chen1973Lemma6DyadicHull S size B K, f a =
-      ∑ k ∈ Finset.range (K + 1),
-        ∑ a ∈ chen1973Lemma6DyadicShell S size B k, f a := by
-  rw [← chen1973Lemma6_biUnion_dyadicShell_eq_hull S size hB]
-  exact Finset.sum_biUnion (chen1973Lemma6_dyadicShell_pairwiseDisjoint S size hB)
 
 /-- The literal p. 119 prime-pair shell
 `x^(13/30)2^k < p₁p₂ ≤ x^(13/30)2^(k+1)`, represented by an honest natural
@@ -226,57 +205,5 @@ theorem chen1973Lemma6_eq19_or_eq20
     · exact Or.inl ⟨hlevel, Or.inr ⟨by omega, hLB⟩⟩
     · exact Or.inr ⟨hlevel, by omega, hLast⟩
 
-/-- Transparent source chain (12), (13), (19)--(21) to Lemma 6's terminal
-`2.01` bound.  Each analytic input is a concrete inequality about the displayed
-quantity; there is no `Prop` wrapper carrying the conclusion. -/
-theorem chen1973Lemma6M2_le_twoPointZeroOne
-    (x D L I1 B I2 m : ℕ)
-    (Phi : (d : ℕ) → PrimitiveCharacter d → ℝ → ℂ)
-    (h12 : chen1973Lemma5M2 x D ≤
-      Real.log x ^ 6 * chen1973Lemma6DyadicMajorant x L I1 B I2 m Phi)
-    (h19 : ∀ level ∈ Finset.Icc 1 I1, ∀ k ∈ Finset.range (I2 + 1),
-      chen1973Lemma6Eq19Cell x L B D level k →
-        chen1973Lemma6NmBlock x L level B k m Phi ≤ x / Real.log x ^ 20)
-    (h20 : ∀ level ∈ Finset.Icc 1 I1, ∀ k ∈ Finset.range (I2 + 1),
-      chen1973Lemma6Eq20Cell x L B D level k →
-        chen1973Lemma6NmBlock x L level B k m Phi ≤ x / Real.log x ^ 20)
-    (h21 : ∀ k ∈ Finset.range (I2 + 1),
-      chen1973Lemma6NmBlock x L 0 B k m Phi ≤ x / Real.log x ^ 20)
-    (hLast : ∀ level ∈ Finset.Icc 1 I1, L * 2 ^ level ≤ 2 * D)
-    (hAbsorb : Real.log x ^ 6 *
-      (((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) *
-        (x / Real.log x ^ 20)) ≤ x / Real.log x ^ (2.01 : ℝ)) :
-    chen1973Lemma5M2 x D ≤ x / Real.log x ^ (2.01 : ℝ) := by
-  have hcellBound : ∀ level ∈ Finset.range (I1 + 1), ∀ k ∈ Finset.range (I2 + 1),
-      chen1973Lemma6NmBlock x L level B k m Phi ≤ x / Real.log x ^ 20 := by
-    intro level hlevel k hk
-    by_cases hl0 : level = 0
-    · simpa [hl0] using h21 k hk
-    · have hlI : level ∈ Finset.Icc 1 I1 := by
-        simp only [Finset.mem_range] at hlevel
-        simp only [Finset.mem_Icc]
-        omega
-      rcases chen1973Lemma6_eq19_or_eq20 (x := x) (B := B)
-          (Finset.mem_Icc.mp hlI).1 (hLast level hlI) with hcell | hcell
-      · exact h19 level hlI k hk hcell
-      · exact h20 level hlI k hk hcell
-  have hmajorant : chen1973Lemma6DyadicMajorant x L I1 B I2 m Phi ≤
-      ((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) * (x / Real.log x ^ 20) := by
-    unfold chen1973Lemma6DyadicMajorant
-    calc
-      (∑ level ∈ Finset.range (I1 + 1),
-        ∑ k ∈ Finset.range (I2 + 1), chen1973Lemma6NmBlock x L level B k m Phi) ≤
-          ∑ level ∈ Finset.range (I1 + 1),
-            ∑ _k ∈ Finset.range (I2 + 1), x / Real.log x ^ 20 :=
-        Finset.sum_le_sum fun level hlevel => Finset.sum_le_sum (hcellBound level hlevel)
-      _ = ((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) * (x / Real.log x ^ 20) := by
-        simp [mul_assoc]
-  calc
-    chen1973Lemma5M2 x D ≤
-        Real.log x ^ 6 * chen1973Lemma6DyadicMajorant x L I1 B I2 m Phi := h12
-    _ ≤ Real.log x ^ 6 *
-        (((I1 + 1 : ℕ) : ℝ) * ((I2 + 1 : ℕ) : ℝ) * (x / Real.log x ^ 20)) :=
-      mul_le_mul_of_nonneg_left hmajorant (by positivity)
-    _ ≤ x / Real.log x ^ (2.01 : ℝ) := hAbsorb
 
 end AnalyticNumberTheory.LargeSieve

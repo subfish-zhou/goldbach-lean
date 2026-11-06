@@ -142,17 +142,5 @@ theorem omega2_normalized_paid {δ η ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1
   exact (sub_le_sub_right (hT1 N ((le_max_left _ _).trans hN) he) _).trans
     (hT2 N ((le_max_right _ _).trans hN))
 
-/-- Immediate literal mother consumption. This is not a claim that the
-remaining normalized moving prime sum has already been replaced by J. -/
-theorem count_normalized_paid {δ η ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
-    (hη : 0 < η) (hη1 : η ≤ 1) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      2*C6 N ≤ O1 N δ - normalizedMain N δ η + O3 N δ + ε*truncatedSixthMassScale N := by
-  obtain ⟨T, hT4, hT⟩ := omega2_normalized_paid hδ hδhi hη hη1 hε
-  refine ⟨T, hT4, ?_⟩
-  intro N hN he
-  have hf := count_finite (show 2 ≤ N by omega) hδ hδhi
-  have hb := hT N hN he
-  linarith
 
 end Wu2008DoubleSieve.HighSix

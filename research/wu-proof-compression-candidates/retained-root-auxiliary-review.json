@@ -1,0 +1,1151 @@
+{
+  "status": "ACTUAL_CENSUS_RETAINED_ROOT_REVIEW_NOT_OWNERSHIP_OR_DELETION_ACCEPTANCE",
+  "census_sha256": "5fad0de9d3875b74ca8d6f1746bd3e859755e2993f0e569678484a73875c7878",
+  "retained_roots": 92,
+  "outside_reference_edges": 138,
+  "direct_root_edges": 67,
+  "direct_root_edges_from_recorded_cross_module_ownership_issues": 67,
+  "direct_root_edges_from_other_users": 0,
+  "indirect_edges_to_proof_named_helpers": 71,
+  "indirect_suffix_counts": {
+    "_proof_1": 34,
+    "_proof_2": 21,
+    "_proof_4": 4,
+    "_proof_3": 5,
+    "_proof_6": 1,
+    "_proof_5": 6
+  },
+  "outside_user_declarations": 51,
+  "cross_module_user_declarations": 33,
+  "proof_auxiliary_example": {
+    "dependency": "AnalyticNumberTheory.Sieve.ThreeOmegaWeightedPanCondition._proof_1",
+    "directNamedTarget": false,
+    "target": "AnalyticNumberTheory.Sieve.ThreeOmegaWeightedPanCondition",
+    "user": "AnalyticNumberTheory.Sieve.PanMeanValueUniform",
+    "userFamily": null,
+    "userModule": "AnalyticNumberTheory.Sieve.WeightedPan"
+  },
+  "source_findings": [
+    "The example user has an explicit expanded proposition body; its recorded dependency is on a generated proof-named helper, not on the candidate definition itself.",
+    "The ordinary source syntax and ConstantInfo references describe different ownership boundaries; a compiled incoming family edge is intentionally a conservative retention condition."
+  ],
+  "requires_before_additional_deletion": [
+    "Query equation/matcher metadata and types of proof-named helpers; do not infer ownership solely from suffixes.",
+    "If deleting an unused source root regenerates shared helpers, compile that module separately and compare retained types and actual numerical definitions.",
+    "Collect all incoming edges to cross-module auxiliaries; the current census did not include them in its target member map.",
+    "Recompute source/compiled dependency closure and perform required downstream and kernel checks."
+  ],
+  "current_frozen_candidate_unchanged": true,
+  "current_selected_deletions": 3715,
+  "additional_deletions_executed": 0,
+  "edges": [
+    {
+      "dependency": "AnalyticNumberTheory.Sieve.ThreeOmegaWeightedPanCondition._proof_1",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.Sieve.ThreeOmegaWeightedPanCondition",
+      "user": "AnalyticNumberTheory.Sieve.PanMeanValueUniform",
+      "userFamily": null,
+      "userModule": "AnalyticNumberTheory.Sieve.WeightedPan"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.Sieve.ThreeOmegaWeightedPanCondition._proof_1",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.Sieve.ThreeOmegaWeightedPanCondition",
+      "user": "AnalyticNumberTheory.Sieve.PanMeanValueUniformCrude",
+      "userFamily": null,
+      "userModule": "AnalyticNumberTheory.Sieve.WeightedPan"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.Sieve.PanMainTermAbsorbedBound._proof_2",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.Sieve.PanMainTermAbsorbedBound",
+      "user": "AnalyticNumberTheory.Sieve.PanSourceFaithfulSignedMainBound",
+      "userFamily": null,
+      "userModule": "AnalyticNumberTheory.Sieve.PanVaughanPointwise"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.Sieve.PanMainTermAbsorbedBound._proof_1",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.Sieve.PanMainTermAbsorbedBound",
+      "user": "AnalyticNumberTheory.Sieve.PanSourceFaithfulSignedMainBound",
+      "userFamily": null,
+      "userModule": "AnalyticNumberTheory.Sieve.PanVaughanPointwise"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.Sieve.PanMainTermAbsorbedBound._proof_2",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.Sieve.PanMainTermAbsorbedBound",
+      "user": "AnalyticNumberTheory.Sieve.PanMeanValueUniform.of_sourceFaithfulSignedInputs",
+      "userFamily": null,
+      "userModule": "AnalyticNumberTheory.Sieve.PanVaughanPointwise"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.Sieve.ThreeOmegaWeightedPanCondition._proof_1",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.Sieve.ThreeOmegaWeightedPanCondition",
+      "user": "AnalyticNumberTheory.Sieve.PanMeanValueUniform.of_sourceFaithfulSignedInputs",
+      "userFamily": null,
+      "userModule": "AnalyticNumberTheory.Sieve.PanVaughanPointwise"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.Sieve.PanMainTermAbsorbedBound._proof_1",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.Sieve.PanMainTermAbsorbedBound",
+      "user": "AnalyticNumberTheory.Sieve.PanMeanValueUniform.of_sourceFaithfulSignedInputs",
+      "userFamily": null,
+      "userModule": "AnalyticNumberTheory.Sieve.PanVaughanPointwise"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.vaughanTypeIFirstShortEnergy",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.vaughanTypeIFirstShortEnergy",
+      "user": "AnalyticNumberTheory.LargeSieve.vaughanTypeIFirstShortEnergy.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIPhysicalInput"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.variableLengthPrimitivePrefixBudget",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.variableLengthPrimitivePrefixBudget",
+      "user": "AnalyticNumberTheory.LargeSieve.variableLengthPrimitivePrefixBudget.congr_simp",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Vaughan.VaughanDirectAPNormalizedTypeIPhysicalInput"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.rowShellShortEnergy",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.rowShellShortEnergy",
+      "user": "AnalyticNumberTheory.LargeSieve.rowShellShortEnergy.congr_simp",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Vaughan.VaughanTypeIActualDyadic"
+    },
+    {
+      "dependency": "MathlibNt.SieveTheory.MovingClaim14_6iiiAtSource._proof_1",
+      "directNamedTarget": false,
+      "target": "MathlibNt.SieveTheory.MovingClaim14_6iiiAtSource",
+      "user": "MathlibNt.SieveTheory.MovingCaseIIRelativeAssembler",
+      "userFamily": null,
+      "userModule": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingClaim146ToCaseIIFinal"
+    },
+    {
+      "dependency": "MathlibNt.SieveTheory.MovingClaim14_6iiiAtSource._proof_1",
+      "directNamedTarget": false,
+      "target": "MathlibNt.SieveTheory.MovingClaim14_6iiiAtSource",
+      "user": "MathlibNt.SieveTheory.MovingCaseIINormalization",
+      "userFamily": null,
+      "userModule": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiMovingClaim146ToCaseIIFinal"
+    },
+    {
+      "dependency": "MathlibNt.SieveTheory.MovingClaim14_6iiiAtSource._proof_1",
+      "directNamedTarget": false,
+      "target": "MathlibNt.SieveTheory.MovingClaim14_6iiiAtSource",
+      "user": "MathlibNt.SieveTheory.claim14_5_caseII_natEventual_of_internalClaim146",
+      "userFamily": null,
+      "userModule": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiClaim146FullInternal"
+    },
+    {
+      "dependency": "MathlibNt.SieveTheory.CaseISigma11FiniteLayerEnvelopeFactor._proof_1",
+      "directNamedTarget": false,
+      "target": "MathlibNt.SieveTheory.CaseISigma11FiniteLayerEnvelopeFactor",
+      "user": "MathlibNt.SieveTheory.CaseISigma12QDEnvelopeFactor",
+      "userFamily": null,
+      "userModule": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144ExplicitRemaindersSourceOrder"
+    },
+    {
+      "dependency": "MathlibNt.SieveTheory.Lemma144GlobalDepthAt._proof_1",
+      "directNamedTarget": false,
+      "target": "MathlibNt.SieveTheory.Lemma144GlobalDepthAt",
+      "user": "MathlibNt.SieveTheory.Lemma144UniformNatCeilAt",
+      "userFamily": null,
+      "userModule": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144FiniteInductionFinal"
+    },
+    {
+      "dependency": "MathlibNt.SieveTheory.suzukiProposition118SourceQPrefix._proof_1",
+      "directNamedTarget": false,
+      "target": "MathlibNt.SieveTheory.suzukiProposition118SourceQPrefix",
+      "user": "MathlibNt.SieveTheory.suzukiProposition118SourceQPrefix.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceQFiniteTelescoping"
+    },
+    {
+      "dependency": "MathlibNt.SieveTheory.suzukiProposition118SourceQPrefix",
+      "directNamedTarget": true,
+      "target": "MathlibNt.SieveTheory.suzukiProposition118SourceQPrefix",
+      "user": "MathlibNt.SieveTheory.suzukiProposition118SourceQPrefix.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiProposition118SourceQFiniteTelescoping"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Tuples",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Tuples",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Tuples",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Tuples",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.mem_gamma16Tuples",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.mem_gamma16Tuples",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.mem_gamma16Tuples",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.mem_gamma16Tuples",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Tuples.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Tuples.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Tuples.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Tuples.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Carriers"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma6BasePairs",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma6BasePairs",
+      "user": "Wu2008DoubleSieve.gamma6BaseArithmeticPairs.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma6BaseMain"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma6BaseArithmeticPairs",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma6BaseArithmeticPairs",
+      "user": "Wu2008DoubleSieve.gamma6BaseArithmeticPairs.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma6BaseMain"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma6BaseH",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma6BaseH",
+      "user": "Wu2008DoubleSieve.gamma6BaseArithmeticPairs.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma6BaseMain"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma6BaseC6",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma6BaseC6",
+      "user": "Wu2008DoubleSieve.gamma6BaseC6.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma6BaseCount"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma6BaseIntegral",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma6BaseIntegral",
+      "user": "Wu2008DoubleSieve.gamma6BaseC6.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma6BaseCount"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma6BaseIntegral",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma6BaseIntegral",
+      "user": "Wu2008DoubleSieve.gamma6BaseIntegral.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma6BaseCount"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma78GainCount",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma78GainCount",
+      "user": "Wu2008DoubleSieve.gamma78GainCount.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma78GainPacking"
+    },
+    {
+      "dependency": "DirichletCharacter.quadraticSiegelPowerCoefficient",
+      "directNamedTarget": true,
+      "target": "DirichletCharacter.quadraticSiegelPowerCoefficient",
+      "user": "DirichletCharacter.quadraticSiegelPowerSummatory.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelRankinBarrier"
+    },
+    {
+      "dependency": "DirichletCharacter.quadraticSiegelPowerSummatory",
+      "directNamedTarget": true,
+      "target": "DirichletCharacter.quadraticSiegelPowerSummatory",
+      "user": "DirichletCharacter.quadraticSiegelPowerSummatory.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelRankinBarrier"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq17ShiftIntegrand",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq17ShiftIntegrand",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq17ShiftIntegrand.congr_simp",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17ShiftPayments"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19MobiusFourthMoment",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19MobiusFourthMoment",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19MobiusFourthMoment.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final"
+    },
+    {
+      "dependency": "_private.MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19.0.AnalyticNumberTheory.LargeSieve.eq19Weight",
+      "directNamedTarget": true,
+      "target": "_private.MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19.0.AnalyticNumberTheory.LargeSieve.eq19Weight",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19MobiusFourthMoment.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final"
+    },
+    {
+      "dependency": "_private.MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19.0.AnalyticNumberTheory.LargeSieve.eq19Weight",
+      "directNamedTarget": true,
+      "target": "_private.MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19.0.AnalyticNumberTheory.LargeSieve.eq19Weight",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19LDerivFourthMoment.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19LDerivFourthMoment",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19LDerivFourthMoment",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19LDerivFourthMoment.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final"
+    },
+    {
+      "dependency": "_private.MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19.0.AnalyticNumberTheory.LargeSieve.eq19Weight",
+      "directNamedTarget": true,
+      "target": "_private.MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19.0.AnalyticNumberTheory.LargeSieve.eq19Weight",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19PairSecondMoment.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final"
+    },
+    {
+      "dependency": "_private.MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19.0.AnalyticNumberTheory.LargeSieve.eq19PairPolynomial",
+      "directNamedTarget": true,
+      "target": "_private.MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19.0.AnalyticNumberTheory.LargeSieve.eq19PairPolynomial",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19PairSecondMoment.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19PairSecondMoment",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19PairSecondMoment",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq19PairSecondMoment.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19Final"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx._proof_2",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6SourceWeightHeight"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6SourceWeightHeight"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx._proof_1",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Equation20Ilx.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6SourceWeightHeight"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Beta",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Beta",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq20CorrectedSecondIntegral.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19BetaSmall"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq20CorrectedSecondIntegral",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq20CorrectedSecondIntegral",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq20CorrectedSecondIntegral.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19BetaSmall"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq17CorrectedKernel",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq17CorrectedKernel",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq20CorrectedSecondIntegral.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19BetaSmall"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6B",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6B",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6Eq20CorrectedSecondIntegral.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19BetaSmall"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6A._proof_1",
+      "directNamedTarget": false,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6A",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6B.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19BetaSmall"
+    },
+    {
+      "dependency": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6B",
+      "directNamedTarget": true,
+      "target": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6B",
+      "user": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6B.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation19BetaSmall"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16X",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16X",
+      "user": "Wu2008DoubleSieve.gamma16X.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16PrimeFibre",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16PrimeFibre",
+      "user": "Wu2008DoubleSieve.gamma16X.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Profiles",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Profiles",
+      "user": "Wu2008DoubleSieve.gamma16X.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Alpha.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Alpha.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Alpha.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Beta.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Beta.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Beta.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MassReorder"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Alpha.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Kernel"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Alpha.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Kernel"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Alpha._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Alpha",
+      "user": "Wu2008DoubleSieve.gamma16Alpha.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Kernel"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Beta.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Kernel"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Beta.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Kernel"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Beta",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Beta",
+      "user": "Wu2008DoubleSieve.gamma16Beta.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16Kernel"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16ClippedKernel",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16ClippedKernel",
+      "user": "Wu2008DoubleSieve.gamma16ClippedKernel.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16IntegralEnvelope"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Clip",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Clip",
+      "user": "Wu2008DoubleSieve.gamma16ClippedKernel.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16IntegralEnvelope"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Kernel",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Kernel",
+      "user": "Wu2008DoubleSieve.gamma16ClippedKernel.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16IntegralEnvelope"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Kernel",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Kernel",
+      "user": "Wu2008DoubleSieve.gamma16Kernel.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16IntegralEnvelope"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16PrimeKernelSum",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16PrimeKernelSum",
+      "user": "Wu2008DoubleSieve.gamma16PrimeKernelSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MainMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16MassPrimes",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16MassPrimes",
+      "user": "Wu2008DoubleSieve.gamma16PrimeKernelSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MainMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.Gamma16MassTuple",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.Gamma16MassTuple",
+      "user": "Wu2008DoubleSieve.gamma16PrimeKernelSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MainMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Kernel",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Kernel",
+      "user": "Wu2008DoubleSieve.gamma16PrimeKernelSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MainMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16S",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16S",
+      "user": "Wu2008DoubleSieve.gamma16S.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16SieveFamily"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16PrimeFibre",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16PrimeFibre",
+      "user": "Wu2008DoubleSieve.gamma16S.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16SieveFamily"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Profiles",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Profiles",
+      "user": "Wu2008DoubleSieve.gamma16S.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16SieveFamily"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Encode",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16Encode",
+      "user": "Wu2008DoubleSieve.gamma16PrimeFibre.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16SieveFamily"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Profiles._proof_4",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Profiles",
+      "user": "Wu2008DoubleSieve.gamma16PrimeFibre.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16SieveFamily"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16PrimeFibre",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16PrimeFibre",
+      "user": "Wu2008DoubleSieve.gamma16PrimeFibre.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16SieveFamily"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16Profiles._proof_3",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16Profiles",
+      "user": "Wu2008DoubleSieve.gamma16PrimeFibre.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16SieveFamily"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16FamilyX._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16FamilyX",
+      "user": "Wu2008DoubleSieve.gamma16FamilyMissing.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MissingMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16FamilyMissing",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16FamilyMissing",
+      "user": "Wu2008DoubleSieve.gamma16FamilyMissing.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MissingMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16FamilyX._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16FamilyX",
+      "user": "Wu2008DoubleSieve.gamma16FamilyMissing.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma16MissingMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16FamilyX._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16FamilyX",
+      "user": "Wu2008DoubleSieve.gamma16FamilyX.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGateProfiles"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16FamilyX._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma16FamilyX",
+      "user": "Wu2008DoubleSieve.gamma16FamilyX.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGateProfiles"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma16FamilyX",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma16FamilyX",
+      "user": "Wu2008DoubleSieve.gamma16FamilyX.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGateProfiles"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGatePrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum._proof_4",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGatePrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGatePrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGatePrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleNoGateLower",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleNoGateLower",
+      "user": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGatePrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum._proof_3",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGatePrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleNoGateUpper",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleNoGateUpper",
+      "user": "Wu2008DoubleSieve.fourthRowTripleNoGatePrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleNoGatePrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum._proof_3",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedPrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum._proof_4",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedPrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedPrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedPrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedStop",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedStop",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedPrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedPrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedMiddleStart",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedMiddleStart",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedPrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedStart",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedStart",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedPrimeSum.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedPrimeMass"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedFibre",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedFibre",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedResidual.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedAP",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedAP",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedResidual.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedResidual",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedResidual",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedResidual.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedR1._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedR1",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedR1.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedResidual",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedResidual",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedR1.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedR1",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedR1",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedR1.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedBand._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedBand",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles._proof_3",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedBand",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedBand",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedDistribution"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedSwitching"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedBand._proof_2",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedBand",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedSwitching"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedSwitching"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedSwitching"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles._proof_3",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedSwitching"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.fourthRowTripleGatedBand",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.fourthRowTripleGatedBand",
+      "user": "Wu2008DoubleSieve.fourthRowTripleGatedProfiles.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowTripleGatedSwitching"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma78GainC",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma78GainC",
+      "user": "Wu2008DoubleSieve.gamma78GainC.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.Gamma78GainMain"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma78GainLabels",
+      "directNamedTarget": true,
+      "target": "Wu2008DoubleSieve.gamma78GainLabels",
+      "user": "Wu2008DoubleSieve.gamma78GainLabels.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowGamma78LinkFinite"
+    },
+    {
+      "dependency": "Wu2008DoubleSieve.gamma78GainLabels._proof_1",
+      "directNamedTarget": false,
+      "target": "Wu2008DoubleSieve.gamma78GainLabels",
+      "user": "Wu2008DoubleSieve.gamma78GainLabels.eq_1",
+      "userFamily": null,
+      "userModule": "MathlibNt.Wu2008DoubleSieve.FourthRowGamma78LinkFinite"
+    },
+    {
+      "dependency": "WidthIntervals.sharedPaid._proof_6",
+      "directNamedTarget": false,
+      "target": "WidthIntervals.sharedPaid",
+      "user": "WidthIntervals.jPaid",
+      "userFamily": null,
+      "userModule": "WidthIntervals"
+    },
+    {
+      "dependency": "WidthIntervals.sharedPaid._proof_4",
+      "directNamedTarget": false,
+      "target": "WidthIntervals.sharedPaid",
+      "user": "WidthIntervals.jPaid",
+      "userFamily": null,
+      "userModule": "WidthIntervals"
+    },
+    {
+      "dependency": "WidthIntervals.sharedPaid._proof_5",
+      "directNamedTarget": false,
+      "target": "WidthIntervals.sharedPaid",
+      "user": "WidthIntervals.jPaid",
+      "userFamily": null,
+      "userModule": "WidthIntervals"
+    },
+    {
+      "dependency": "TerminalESigned.cellFinite._proof_1",
+      "directNamedTarget": false,
+      "target": "TerminalESigned.cellFinite",
+      "user": "TerminalESigned.jointFiniteLower",
+      "userFamily": null,
+      "userModule": "TerminalESignedLedger"
+    },
+    {
+      "dependency": "TerminalESigned.cellFinite._proof_5",
+      "directNamedTarget": false,
+      "target": "TerminalESigned.cellFinite",
+      "user": "TerminalESigned.jointFiniteLower",
+      "userFamily": null,
+      "userModule": "TerminalESignedLedger"
+    },
+    {
+      "dependency": "TerminalESigned.cellFinite._proof_5",
+      "directNamedTarget": false,
+      "target": "TerminalESigned.cellFinite",
+      "user": "TerminalESigned.profileLogUnpaid_nonneg",
+      "userFamily": null,
+      "userModule": "TerminalESignedLedger"
+    },
+    {
+      "dependency": "TerminalESigned.cellFinite._proof_1",
+      "directNamedTarget": false,
+      "target": "TerminalESigned.cellFinite",
+      "user": "TerminalESigned.jointFiniteLower_le",
+      "userFamily": null,
+      "userModule": "TerminalESignedLedger"
+    },
+    {
+      "dependency": "TerminalESigned.cellFinite._proof_5",
+      "directNamedTarget": false,
+      "target": "TerminalESigned.cellFinite",
+      "user": "TerminalESigned.jointFiniteLower_le",
+      "userFamily": null,
+      "userModule": "TerminalESignedLedger"
+    },
+    {
+      "dependency": "TerminalESigned.cellFinite._proof_5",
+      "directNamedTarget": false,
+      "target": "TerminalESigned.cellFinite",
+      "user": "TerminalESigned.profileLogUnpaid",
+      "userFamily": null,
+      "userModule": "TerminalESignedLedger"
+    },
+    {
+      "dependency": "TerminalESigned.cellFinite._proof_1",
+      "directNamedTarget": false,
+      "target": "TerminalESigned.cellFinite",
+      "user": "SignedSigmaETerminal.lower_le_actual",
+      "userFamily": null,
+      "userModule": "SignedSigmaETerminal"
+    },
+    {
+      "dependency": "TerminalESigned.cellFinite._proof_5",
+      "directNamedTarget": false,
+      "target": "TerminalESigned.cellFinite",
+      "user": "SignedSigmaETerminal.lower_le_actual",
+      "userFamily": null,
+      "userModule": "SignedSigmaETerminal"
+    }
+  ],
+  "distinct_referenced_proof_auxiliaries": 37,
+  "actual_compiler_kinds_of_referenced_proof_auxiliaries": {
+    "theorem": 37
+  }
+}

@@ -19,19 +19,6 @@ def fourthRowMotherBandCount (x y z : ℕ) : List ℕ → ℕ
         if j = 2 then fourthRowMotherBandCount x y (z - 1) (h :: cs) else 0
       else 0
 
-theorem fourthRowMother_coloured_empty (cs : List ℕ) :
-    (fourthRowMotherColoured ∅ (fun _ => 0) cs).card =
-      fourthRowMotherBandCount 0 0 0 cs := by
-  cases cs with
-  | nil =>
-      simp only [fourthRowMotherColoured, List.length_nil, fourthRowMother_prefixes_zero,
-        filter_singleton, List.map_nil, ite_true, card_singleton, fourthRowMotherBandCount]
-  | cons j cs =>
-      cases cs with
-      | nil =>
-          simp [fourthRowMotherColoured, fourthRowMotherPrefixes, fourthRowMotherBandCount]
-      | cons h cs =>
-          simp [fourthRowMotherColoured, fourthRowMother_prefixes_empty, fourthRowMotherBandCount]
 
 theorem fourthRowMother_colour_count_sum (s : Finset ℕ) (χ : ℕ → ℕ)
     (hcap : ∀ p ∈ s, χ p ≤ 2) :

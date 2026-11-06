@@ -139,8 +139,5 @@ theorem seed_lower {s : ℝ} (hs : 2 ≤ s) : FullAdmissibleSeed.seed s ≤ prof
   have hf : 1 ≤ 300*H0 := by linarith only [H0_margin]
   exact (le_mul_of_one_le_left (FullAdmissibleSeed.seed_nonneg s) hf).trans (scaled_seed_lower hs)
 
-theorem profile_measurable : Measurable profile := by
-  unfold profile
-  fun_prop
 
 end Row4LogProfile

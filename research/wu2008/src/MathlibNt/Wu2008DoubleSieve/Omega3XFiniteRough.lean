@@ -84,19 +84,6 @@ theorem omega3Strengthened_rough_of_not_dvd {N d p1 p2 n : ℕ}
   · exact h1 (he ▸ hqn)
   · exact hg.2.2 q hq hq2 he hqn
 
-/-- The unit is present precisely when the size and retained prime gcd tests hold. -/
-theorem omega3XNCountFibre_one_iff {N d p1 p2 p3 : ℕ}
-    (hd : 0 < d) (h1 : 0 < p1) (h2 : 0 < p2) (h3 : 0 < p3) :
-    1 ∈ omega3XNCountFibre N d p1 p2 p3 ↔
-      1 ≤ omega3XScale N d p1 p2 p3 ∧ (p1 * p2).Coprime (d * N) := by
-  rw [mem_omega3XNCountFibre_iff_real hd h1 h2 h3]
-  constructor
-  · intro h
-    exact ⟨by simpa only [Nat.cast_one] using h.2.1, h.2.2.1⟩
-  · rintro ⟨hx, hcop⟩
-    refine ⟨by decide, by simpa only [Nat.cast_one] using hx, hcop, by simp, ?_⟩
-    intro q hq _ _ hq1
-    exact hq.ne_one (Nat.dvd_one.mp hq1)
 
 theorem omega3XNCountFibre_split (N d p1 p2 p3 : ℕ) :
     (omega3XNCountFibre N d p1 p2 p3).card =
@@ -149,13 +136,7 @@ noncomputable def omega3XRepeatedMajorant {i : ℕ} (N : ℕ) (δ s t : ℝ)
   ∑ d ∈ boxConvolutionSupport W, (convolutionCoeff W d : ℝ) *
     ∑ p ∈ omega3XPrimes N δ s t d, (⌊omega3XScale N d p.1 p.2.1 p.2.2 / p.1⌋₊ : ℝ)
 
-theorem omega3XRoughMajorant_nonneg {i : ℕ} (N : ℕ) (δ s t : ℝ)
-    (W : Fin i → Finset ℕ) : 0 ≤ omega3XRoughMajorant N δ s t W :=
-  sum_nonneg fun _ _ => mul_nonneg (Nat.cast_nonneg _) (sum_nonneg fun _ _ => Nat.cast_nonneg _)
 
-theorem omega3XRepeatedMajorant_nonneg {i : ℕ} (N : ℕ) (δ s t : ℝ)
-    (W : Fin i → Finset ℕ) : 0 ≤ omega3XRepeatedMajorant N δ s t W :=
-  sum_nonneg fun _ _ => mul_nonneg (Nat.cast_nonneg _) (sum_nonneg fun _ _ => Nat.cast_nonneg _)
 
 /-- Physical upper bound for X, before any asymptotic error payment.
 The convolution weight occurs once and the closed p3 endpoint is unchanged. -/

@@ -46,22 +46,6 @@ theorem U3_high_psi_integral_upper {δ ε : ℝ} (hδ : 0 < δ)
   rw [← hs]
   nlinarith only [ha,hb]
 
-/-- Paper PsiOne notation keeps the entire fixed-delta penalty in the full high count. -/
-theorem U3_high_source_integral_upper {δ ε : ℝ} (hδ : 0 < δ)
-    (hδhi : δ ≤ 1/100) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      highCount N δ (1/3) ≤
-        (4*(∫ t in ((1/2-δ)/2)..(1/3 : ℝ), weight δ t/t) -
-          4*firstFunctionalGainPsiOne s S*primeIntegral δ +
-          4*(2*δ/(1-2*δ))*omega3XIntegralEnvelope s S*primeIntegral δ+ε)*
-            truncatedSixthMassScale N := by
-  obtain ⟨T,hT4,hT⟩ := U3_high_psi_integral_upper hδ hδhi hε
-  refine ⟨T,hT4,?_⟩
-  intro N hN he
-  have h := hT N hN he
-  rw [psi_source_penalty hδhi] at h
-  convert h using 1
-  ring
 
 /-- Reassemble low and high actual U3 counts, not a gain added to an old upper bound. -/
 theorem U3_psi_Gdelta_upper {δ ε : ℝ} (hδ : 0 < δ)

@@ -227,17 +227,6 @@ theorem highConductorHarmonicFactor_le (Q R : ℕ) :
   · intro d hd hnot
     positivity
 
-/-- If the high range is nonempty, its Cauchy factor still contains the final
-summand `1/Q`.  Thus Cauchy supplies no automatic power of `R`; any useful
-inverse-log gain must enter the high-conductor analytic estimate itself. -/
-theorem inv_Q_le_highConductorHarmonicFactor
-    {Q R : ℕ} (hRQ : R < Q) :
-    ((Q : ℝ)⁻¹) ≤ highConductorHarmonicFactor Q R := by
-  unfold highConductorHarmonicFactor
-  apply Finset.single_le_sum (f := fun d : ℕ => ((d : ℝ)⁻¹))
-  · intro d hd
-    positivity
-  · exact Finset.mem_Icc.mpr ⟨by omega, le_rfl⟩
 
 /-- Exact high-conductor Type-I direct mean. -/
 def highConductorVaughanTypeIMean (N Q C u v : ℕ) : ℝ :=
@@ -369,27 +358,6 @@ def LambdaToLowHighConductorConnector (N Q C : ℕ) : Prop :=
     2 * (lowConductorPhysical N Q C + highConductorPhysical N Q C) +
       2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q
 
-/-- At a fixed `N,Q`, a Standard-BV estimate follows once every named physical
-lane is dominated and their literal total fits the target.  The theorem does
-not allow the modulus exponent `B` to pay a `Q`-independent `N` term: such a
-term remains in `P.nonprincipal` until the Vaughan hybrid hypothesis saves it. -/
-theorem standardBV_sufficient_at
-    (A : ℝ) (B C N Q : ℕ) (K : ℝ)
-    (P : StandardBVPhysicalTerms)
-    (hQ : Q = MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B)
-    (_hconnector : LambdaToLowHighConductorConnector N Q C)
-    (hcomponents :
-      (∑ q ∈ Finset.Icc 1 Q,
-        MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-        P.total (discreteAbelAmplifierPrefixMax N))
-    (hpay : P.total (discreteAbelAmplifierPrefixMax N) ≤
-      K * (N : ℝ) / Real.log (N : ℝ) ^ A) :
-    (∑ q ∈ Finset.Icc 1
-        (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),
-      MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-        K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-  subst Q
-  exact hcomponents.trans hpay
 
 /-- Quantifier-faithful sufficient interface for Standard BV.  For each target
 `A`, choose the conductor exponent `C`; then choose the modulus exponent `B`.
@@ -410,21 +378,6 @@ def StandardBVSufficient : Prop :=
           P.total (discreteAbelAmplifierPrefixMax N) ≤
             K * (N : ℝ) / Real.log (N : ℝ) ^ A
 
-/-- The sufficient interface has exactly the usual Standard-BV conclusion. -/
-theorem standardBV_of_sufficient (h : StandardBVSufficient) :
-    ∀ A : ℝ, 0 < A →
-      ∃ _C : ℕ, ∃ B : ℕ, ∃ K : ℝ, 0 < K ∧
-        ∀ᶠ N : ℕ in Filter.atTop,
-          (∑ q ∈ Finset.Icc 1
-              (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N B),
-            MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-              K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-  intro A hA
-  obtain ⟨C, B, K, hK, hN⟩ := h A hA
-  refine ⟨C, B, K, hK, ?_⟩
-  filter_upwards [hN] with N hPN
-  obtain ⟨P, _hconnector, hcomp, hpay⟩ := hPN
-  exact hcomp.trans hpay
 
 end
 

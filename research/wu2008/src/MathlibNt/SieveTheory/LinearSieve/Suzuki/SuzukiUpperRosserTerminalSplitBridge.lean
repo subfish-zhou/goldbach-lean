@@ -332,55 +332,6 @@ theorem upperRosser_terminalSplit_unifiedRelativeCarrierTail
   rw [sum_terminal_sqrt_split]
   exact add_le_add hlarge (hconvert.trans (mul_le_mul_of_nonneg_left hsmallAbs hB))
 
-/-- Strongest unconditional terminal-split consumer currently available.  The
-small lane is geometric in `L`, but its exact coefficient is
-
-`B(z,2) * card(small terminals)`.
-
-Thus the Euler denominator and terminal cardinality are both paid explicitly;
-this statement deliberately does not promote the result to a cutoff uniform in
-the varying sieve and endpoint. -/
-theorem exists_upperRosser_terminalSplit_relativeCarrierTail_explicit
-    (K : ℝ) (hK : 1 ≤ K) :
-    ∃ Q : ℝ, ∃ N : ℕ, ∃ τ : ℕ → ℝ,
-      2 ≤ Q ∧ Tendsto τ atTop (nhds 0) ∧
-      ∀ (S : BoundingSieve) (L n : ℕ) (z Δ s : ℝ),
-        2 ≤ z → 0 < Δ → s = Real.log Δ / Real.log z →
-        HasDimensionOneLocalProductBound S K →
-        (∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z) →
-        (∀ q ∈ S.prodPrimes.primeFactors.filter
-          (fun q : ℕ => Real.sqrt (z + 1) ≤ (q : ℝ) + 1), Q ≤ q) →
-        (∑ q ∈ S.prodPrimes.primeFactors,
-          ∑ j ∈ Finset.range n,
-            LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity
-              S.nu (Nat.floor Δ + 1) q
-              (S.prodPrimes.primeFactors.filter (fun p => q < p))
-              (L + j + N)) ≤
-          (S.prodPrimes.primeFactors.filter
-              (fun q : ℕ => Real.sqrt (z + 1) ≤ (q : ℝ) + 1)).card *
-            (180 * (101 / 100 : ℝ) * (9 / 10 : ℝ) ^ (L + N)) +
-          upperRosserTerminalEulerConversionFactor K z 2 *
-            ((S.prodPrimes.primeFactors.filter
-              (fun q : ℕ => ¬ Real.sqrt (z + 1) ≤ (q : ℝ) + 1)).card * τ L) := by
-  obtain ⟨Q, hQ, hlarge⟩ :=
-    exists_upperRosser_largeTerminal_relativeBlock_sum_le_card K hK
-  obtain ⟨N, τ, hτ, hsmall⟩ :=
-    exists_upperRosser_smallTerminal_absoluteBlock_sum_le_card_mul_tail K hK
-  refine ⟨Q, N, τ, hQ, hτ, ?_⟩
-  intro S L n z Δ s hz hΔ hs hlocal hcut hQterm
-  have hB : 0 ≤ upperRosserTerminalEulerConversionFactor K z 2 := by
-    unfold upperRosserTerminalEulerConversionFactor
-    have hlogz : 0 ≤ Real.log (z + 1) := Real.log_nonneg (by linarith)
-    have hlogthree : 0 < Real.log (2 + 1 : ℝ) := Real.log_pos (by norm_num)
-    positivity
-  exact upperRosser_terminalSplit_unifiedRelativeCarrierTail
-    (B := upperRosserTerminalEulerConversionFactor K z 2)
-    (S := S) (L := L) (n := n) (N := N) (z := z) (Δ := Δ) (τ := τ L) hB
-    (by
-      simpa only [Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
-        hlarge S (L + N) n z Δ s hz hΔ hs hlocal hcut hQterm)
-    (hsmall S L n z Δ s hz hΔ hs hlocal hcut)
-    (upperRosserSmallTerminalAggregateConversion_two hlocal hcut)
 
 
 end

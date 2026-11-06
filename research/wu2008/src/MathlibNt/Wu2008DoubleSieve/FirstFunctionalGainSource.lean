@@ -65,13 +65,6 @@ theorem firstFunctionalGainPsi_eq_source_sub_penalty {δ s t : ℝ}
   field_simp [show 1 - 2 * δ ≠ 0 by linarith]
   ring
 
-/-- The loss is nonnegative; it cannot be dropped from a lower bound. -/
-theorem firstFunctionalGain_delta_penalty_nonneg {δ s t : ℝ}
-    (hδ : 0 ≤ δ) (hδhi : δ < 1 / 2)
-    (hs : 2 ≤ s) (hst : s ≤ t) (ht : t ≤ 10) :
-    0 ≤ (2 * δ / (1 - 2 * δ)) * omega3XIntegralEnvelope s t :=
-  mul_nonneg (div_nonneg (by positivity) (by linarith))
-    (omega3XIntegralEnvelope_bounds hs hst ht).1
 
 theorem firstFunctionalGainPsi_self (δ s : ℝ) :
     firstFunctionalGainPsi δ s s = 0 := by

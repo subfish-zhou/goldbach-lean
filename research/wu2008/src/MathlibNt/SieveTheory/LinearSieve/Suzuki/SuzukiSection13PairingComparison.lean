@@ -26,23 +26,12 @@ theorem section10KappaOneAdjointPlus_dde (s : ℝ) :
   norm_num [section10KappaOneAdjointPlus]
   ring
 
-theorem section10KappaOneAdjointMinus_dde (s : ℝ) :
-    HasDerivAt (fun u => u * section10KappaOneAdjointMinus u)
-      (2 * section10KappaOneAdjointMinus s - section10KappaOneAdjointMinus (s + 1)) s := by
-  have heq : (fun u : ℝ => u * section10KappaOneAdjointMinus u) = id := by
-    funext u
-    simp [section10KappaOneAdjointMinus]
-  rw [heq]
-  apply (hasDerivAt_id s).congr_deriv
-  norm_num [section10KappaOneAdjointMinus]
 
 theorem section10KappaOneAdjointPlus_pos {s : ℝ} (hs : 2 ≤ s) :
     0 < section10KappaOneAdjointPlus s := by
   dsimp [section10KappaOneAdjointPlus]
   nlinarith [sq_nonneg (s - 1)]
 
-theorem section10KappaOneAdjointMinus_pos (s : ℝ) :
-    0 < section10KappaOneAdjointMinus s := by simp [section10KappaOneAdjointMinus]
 
 /-- Thus the previously missing positive standard-adjoint object is explicit at
 `κ=1`; no existence or positivity axiom is needed. -/
@@ -133,12 +122,6 @@ theorem section10SignedPairing_eq_of_dde
   norm_num at hFTC
   linarith
 
-/-- The `Q̂` DDE and the explicit positive adjoint are now fully constructed.
-The only omitted field is pairing-zero itself; unlike the old bridge, this
-record cannot conceal Lemma 10.17 or an adjacent-value estimate. -/
-theorem section13QhatAdjointCore {H : Section13HatLayers}
-    (_hH : Section13HatContract H 2) : Section10StandardAdjoint section10KappaOneAdjointPlus :=
-  section10KappaOneStandardAdjointPlus
 
 
 end MathlibNt.SieveTheory.SwitchingPrinciple.SuzukiLemma144KappaOne

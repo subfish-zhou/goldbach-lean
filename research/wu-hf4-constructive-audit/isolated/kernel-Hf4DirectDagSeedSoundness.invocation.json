@@ -1,0 +1,61 @@
+{
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+    "--verbose",
+    "Hf4DirectDagSeedSoundness"
+  ],
+  "execution_command": [
+    "/usr/bin/time",
+    "-v",
+    "-o",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/kernel-Hf4DirectDagSeedSoundness.resources",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+    "--verbose",
+    "Hf4DirectDagSeedSoundness"
+  ],
+  "environment": {
+    "LEAN_PATH": "/tmp/wu-hf4-installed-v7-resume-v1/run-1793181743956774759/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+    "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+  },
+  "bindings": {
+    "/home/azureuser/goldbach-lean/research/wu2008/source-manifest.json": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+    "/home/azureuser/goldbach-lean/scripts/check.py": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+    "/home/azureuser/goldbach-lean/research/wu2008/build.py": "cf5ff7a722e4154504489686ab3dd5b62b9bbd6b967063d15ee2e1c37efd6316",
+    "/home/azureuser/goldbach-lean/research/wu2008/lean-toolchain": "62c2d9c0fc1ec4c67e151c11eff41ca004ef38e179cf9476c230406e6defedef",
+    "/home/azureuser/goldbach-lean/research/wu2008/lakefile.toml": "c332b6f1ff5e0a1ecfedf8d4c247e5d712c5e909af5bef60221148c4ac208917",
+    "/home/azureuser/goldbach-lean/research/wu2008/lake-manifest.json": "d360c103a90b63fd6c53650c2cbe0b11fd10d103f248e88ff8352f02fb2ce0ab",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveOriginalSoundness.lean": "39f9dad7e78264b8c12471d8cc676f36b08075923c2886b9756e9c8b964a6d09",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4CheckedDagSoundness.lean": "b70407469f32c84c1b952cf7027b0ef7df233057afea3aae4886cef466535e51",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveDagSoundness.lean": "b1e42a2d447f7783a38041298fa94ed17f0fb5095bd3d5dd3e78baf2ca21dc95",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectCoordinates.lean": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructionConditions.lean": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructionRounding.lean": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagProgram.lean": "2453aa5d85fa0d28579879e80031074781455f4d049f9357cbb119c01292fe25",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableData.lean": "76c8f3a83cef23fd234bdb4fb3e28a69a0255a284d1c434be36fde993ace6f27",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagSemantics.lean": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableChecks.lean": "4bfae798d1e436c0d86e939b31553ac8adeba0f8e10a984a544b1459e26eec6d",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableSoundness.lean": "603c3aa1418327522bfebf9fed19bfa4aa2d1602d63c43034ac65b07657699ff",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTablePublic.lean": "fa715b4bcca2c6c7854bb12b4a68d36a8297eb7633faea43c4aea46ef0012cee",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectKernel.lean": "c9615839b1184c70a57c82af09a26f0a471d27627f8e7f8dfaa33e4106cec581",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDag.lean": "e927bbfdbcc305bddb9c2f8e53d2fdad0e82d020da05756caf8b25b75bbfec1f",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveDagData.lean": "ecbe88019a941520360bf8175d428492ce7a57a42c42d9740c3ed8950bcfdd73",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4CheckedDagData.lean": "5eca00cff8ec16117b8240283156761f2afd182155b781f035098457a4a92008",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagSeedSoundness.lean": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4QuadAggregate.lean": "09174c493913f5d9d1221cc8a1f0dddd9f25b3f2549f26832d10996b2b7f2d0b",
+    "/tmp/wu-hf4-uniform-interface-v1/comparison.json": "59076fc492f17dea8aa0fb0e6eeb23895478aacb4a64132c22d356c300f8f7b7",
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/report.json": "eb0a506ba6ad1ca4852f26d80f3d00d4d971f7e17774a5c4967b717666813faa",
+    "/tmp/wu-hf4-portable-producer-v3/test-actual.log": "2ece75d7903dd9f4cff3ea7b77b7e0a34f15d08bb74ccff3c5f88aa0a825fc1d",
+    "/tmp/wu-hf4-portable-producer-v3/produce.py": "d37beed27dba96bfe01843eaa1423b7940c89489b10262dfcee1e23b8c55c5fb",
+    "/tmp/wu-hf4-portable-producer-v3/frozen-inputs.json": "f194909749bf9f7750f6e08ce3755ef046b3b68cc341415277cd94793bdd46c4",
+    "/tmp/wu-hf4-post-v5-integration-v2/retired-declarations.json": "905f6f38250e338e91b4ab8e8d8cc8c736a0b4c856f26ae7f120009fb09ff5e7",
+    "/tmp/wu-hf4-post-v5-integration-v2/reference-audit.json": "816ddf7231f45b588aabe4d1132e925e0ec196dcf3cff76b2c0540b0dd6cc610",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validate.py": "2d0b6b144f33605d0ea38f871b578615ad16ac64f336ae721b88d52b0d8e1cb5",
+    "/tmp/wu-hf4-installed-v7-resume-v1/plan.json": "a3c6a7d76c2ddab52de70e75e6f09769ceb4b213e43f3f249190f8d13a57a04e",
+    "/tmp/wu-public-interface-audit-v2/InterfaceTemplate.lean": "26acc89d938f60a51338ad2b9ef5949531a07e2646171b6e4aedab0cd4b243fa",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-types.lean": "e069f61c1fe567eb2a1ea2ad183b980484a8ae9a723b977785e89902a506ee5f",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-types.lean": "d9e4759a22add7a16ebd4ee64038a3784abefc5491dab9702fecdac17d5eaa1f",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-values.lean": "759759f68be160ac9b40058addc8560a89e7a2fe3e2e5c135340e9babcba82f7",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-values.lean": "a88b36cb9497284599136eeaa05c8f4787e096be9a354d872c2a1ea8e0d9b8db",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/WuLiteralAcceptance.lean": "5371c1e8dcdb44391c5e646b89929f9729a7dbadecdff231a53eca2a4cefd72f"
+  }
+}

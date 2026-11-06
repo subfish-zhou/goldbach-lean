@@ -122,18 +122,6 @@ theorem omega3X_prime_mass_threshold (k : ℕ) {δ : ℝ}
       (eventually_ge_atTop primeErrorStart))
   exact ⟨max 4 T, le_max_left _ _, fun N hN => hT N ((le_max_right _ _).trans hN)⟩
 
-theorem omega3XPrimes_reciprocal_uniform (k : ℕ) {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V),
-      ∀ s t : ℝ, 2 ≤ s → s ≤ t → t ≤ 10 →
-        (∑ p ∈ omega3XPrimes N δ s t d, 1 / ((p.1 : ℝ) * p.2.1 * p.2.2)) ≤
-          (5 / (wuLocalExponent k δ / 10)) ^ 3 := by
-  obtain ⟨T, hT4, hT⟩ := omega3X_prime_mass_threshold k hδ hδhi
-  refine ⟨T, hT4, ?_⟩
-  intro N hN i Δ V hb d hd s t hs hst ht
-  exact omega3XPrimes_reciprocal_source_le (by omega) hδ hδhi hb hs hst ht hd (hT N hN)
 
 /-- One positive constant and one threshold precede N and every source box. -/
 theorem omega3X_weighted_scale_mass_uniform (k : ℕ) {δ : ℝ}

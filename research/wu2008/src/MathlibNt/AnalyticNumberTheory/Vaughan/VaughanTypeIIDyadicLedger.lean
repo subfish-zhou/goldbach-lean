@@ -72,38 +72,8 @@ theorem vaughanCanonicalDyadicBlock_pow_bounds {N u k d : ℕ}
     (mem_vaughanCanonicalDyadicBlock.mp hd).2.2.2
   exact (Nat.log_eq_iff (Or.inr ⟨by omega, hpos.ne'⟩)).mp hlog
 
-/-- Distinct canonical blocks are disjoint. -/
-theorem vaughanCanonicalDyadicBlock_disjoint {N u k₁ k₂ : ℕ}
-    (h : k₁ ≠ k₂) :
-    Disjoint (vaughanCanonicalDyadicBlock N u k₁)
-      (vaughanCanonicalDyadicBlock N u k₂) := by
-  rw [Finset.disjoint_left]
-  intro d hd₁ hd₂
-  exact h (vaughanCanonicalDyadicBlock_level_unique hd₁ hd₂)
 
-/-- The canonical blocks cover the retained interval exactly. -/
-theorem biUnion_vaughanCanonicalDyadicBlock (N u : ℕ) :
-    (vaughanCanonicalDyadicBases N u).biUnion
-      (vaughanCanonicalDyadicBlock N u) = vaughanTypeIIRange N u := by
-  ext d
-  constructor
-  · simp only [Finset.mem_biUnion]
-    rintro ⟨k, hk, hd⟩
-    exact (Finset.mem_filter.mp hd).1
-  · intro hd
-    exact Finset.mem_biUnion.mpr
-      ⟨Nat.log 2 d, (mem_own_vaughanCanonicalDyadicBlock hd).1,
-        (mem_own_vaughanCanonicalDyadicBlock hd).2⟩
 
-/-- If the strict cutoff reaches the upper endpoint, every canonical block
-base disappears.  This includes the `N = 0` boundary. -/
-theorem vaughanCanonicalDyadicBases_eq_empty_of_le {N u : ℕ} (hNu : N ≤ u) :
-    vaughanCanonicalDyadicBases N u = ∅ := by
-  have hrange : vaughanTypeIIRange N u = ∅ := by
-    ext d
-    simp [vaughanTypeIIRange]
-    omega
-  simp [vaughanCanonicalDyadicBases, hrange]
 
 /-- Exact one-dimensional fibrewise sum ledger. -/
 theorem sum_vaughanCanonicalDyadicBlock {M : Type*} [AddCommMonoid M]
@@ -165,34 +135,7 @@ theorem vaughanCanonicalDyadicRectangleBlock_level_unique
   · exact vaughanCanonicalDyadicBlock_level_unique
       (Finset.mem_product.mp h₁).2 (Finset.mem_product.mp h₂).2
 
-/-- Distinct canonical rectangles are pairwise disjoint. -/
-theorem vaughanCanonicalDyadicRectangleBlock_disjoint
-    {N u v : ℕ} {kl₁ kl₂ : ℕ × ℕ} (h : kl₁ ≠ kl₂) :
-    Disjoint (vaughanCanonicalDyadicRectangleBlock N u v kl₁)
-      (vaughanCanonicalDyadicRectangleBlock N u v kl₂) := by
-  rw [Finset.disjoint_left]
-  intro de hde₁ hde₂
-  exact h (vaughanCanonicalDyadicRectangleBlock_level_unique hde₁ hde₂)
 
-/-- The rectangle family is an exact disjoint cover of all pairs satisfying
-`u < d ≤ N` and `v < e ≤ N`. -/
-theorem biUnion_vaughanCanonicalDyadicRectangleBlock (N u v : ℕ) :
-    (vaughanCanonicalDyadicRectangles N u v).biUnion
-      (vaughanCanonicalDyadicRectangleBlock N u v) =
-        vaughanTypeIIRange N u ×ˢ vaughanTypeIIRange N v := by
-  ext de
-  constructor
-  · simp only [Finset.mem_biUnion]
-    rintro ⟨kl, hkl, hde⟩
-    exact Finset.mem_product.mpr
-      ⟨(Finset.mem_filter.mp (Finset.mem_product.mp hde).1).1,
-        (Finset.mem_filter.mp (Finset.mem_product.mp hde).2).1⟩
-  · intro hde
-    obtain ⟨hd, he⟩ := Finset.mem_product.mp hde
-    exact Finset.mem_biUnion.mpr
-      ⟨(Nat.log 2 de.1, Nat.log 2 de.2),
-        (mem_own_vaughanCanonicalDyadicRectangleBlock hd he).1,
-        (mem_own_vaughanCanonicalDyadicRectangleBlock hd he).2⟩
 
 /-- Precise `O(log² N)` natural-number rectangle count. -/
 theorem card_vaughanCanonicalDyadicRectangles_le (N u v : ℕ) :

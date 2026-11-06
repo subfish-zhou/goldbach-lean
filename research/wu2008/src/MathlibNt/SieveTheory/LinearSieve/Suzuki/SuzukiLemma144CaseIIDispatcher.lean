@@ -62,36 +62,6 @@ theorem lemma14_4_caseII_natCeil_base_successor_dispatcher
     exact lemma14_4_base_one_natCeil hz hD hdom hs3 hroot2 hK hlocal
   · exact hsuccessor N hN (by omega) hdom
 
-/-- The same dispatcher with the successor producer restricted to the sharp
-odd-successor range `3 ≤ M`.  This is convenient when the caller records the
-stronger parity consequence, while the direct endpoint itself only consumes
-`2 ≤ M`. -/
-theorem lemma14_4_caseII_natCeil_base_odd_three_dispatcher
-    {S : BoundingSieve} {D z N : ℕ} {s K : ℝ}
-    {P : ℕ → ℝ → Prop}
-    (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊)
-    (hD : 1 < (D : ℝ))
-    (hdom : s ∈ suzukiParityDomainOne 2 N)
-    (hs3 : s ≤ 3)
-    (hroot2 : 2 ≤ (D : ℝ) ^ (1 / s))
-    (hK : 0 ≤ K)
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hbase :
-      suzukiSourceV S 1 D z ≤ suzukiVProduct S (z : ℝ) *
-          (finiteSourceLayer 1 2 1 s + 9 * K / (s * Real.log (D : ℝ))) →
-        P 1 s)
-    (hoddSuccessor : ∀ M : ℕ, Odd M → 3 ≤ M →
-      s ∈ suzukiParityDomainOne 2 M → P M s)
-    (hN : Odd N) :
-    P N s := by
-  apply lemma14_4_caseII_natCeil_base_successor_dispatcher
-    hz hD hdom hs3 hroot2 hK hlocal hbase
-  intro M hM hM2 hMdom
-  exact hoddSuccessor M hM (by
-    rcases odd_eq_one_or_three_le M hM with hM1 | hM3
-    · omega
-    · exact hM3) hMdom
-  exact hN
 
 -- Audited source signature (in `C2DoubleRoundedDirectAssembly.lean`):
 -- `caseII_total_le_doubleRounded_direct_concrete_relative_natCeil` consumes

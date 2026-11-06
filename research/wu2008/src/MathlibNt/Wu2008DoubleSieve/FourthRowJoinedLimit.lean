@@ -40,35 +40,5 @@ theorem fourthRowJoinedLimit_actual_phi_upper (k : ℕ) (hk : 1 ≤ k) {δ ε : 
   unfold fourthRowJoinedLimitCoefficient
   nlinarith only [hmN, hqN]
 
-/-- The original actual H limit satisfies the fixed-delta fourth-row feedback.
-The same coefficient works for all positive depths; no limiting regularity
-in delta, numerical inversion, or caller-supplied count bound is assumed. -/
-theorem fourthRowJoinedLimit_actual_H_lower {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) :
-    wuUpperCoefficient (5 / 2) - fourthRowJoinedLimitCoefficient δ / 5 ≤
-      wuImprovementLimit true δ (5 / 2) := by
-  have hδhalf : δ < 1 / 2 := by linarith
-  change _ ≤ ⨅ k : ℕ, wuImprovementAtInfinity true (k + 1) δ (5 / 2)
-  apply le_ciInf
-  intro k
-  apply le_of_forall_pos_le_add
-  intro ε hε
-  obtain ⟨T, _, hT⟩ := fourthRowJoinedLimit_actual_phi_upper (k + 1) (by omega)
-    hδ hδhi (show 0 < 5 * ε by positivity)
-  have hmem : wuUpperCoefficient (5 / 2) - fourthRowJoinedLimitCoefficient δ / 5 - ε ∈
-      wuEventualImprovements true (k + 1) δ (5 / 2) := by
-    refine ⟨T, ?_⟩
-    intro N hN _ he i Δ V hb
-    have hc := hT N hN he i Δ V hb
-    change wuBoxPhi N δ (convolutionWuWindows N Δ V) (5 / 2) ≤
-      (wuUpperCoefficient (5 / 2) -
-        (wuUpperCoefficient (5 / 2) - fourthRowJoinedLimitCoefficient δ / 5 - ε)) *
-          boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V)
-    nlinarith only [hc]
-  have hs := le_csSup (wuEventualImprovements_bddAbove true (k + 1) hδ hδhalf
-    (show (1 : ℝ) ≤ 5 / 2 by norm_num) (by norm_num)) hmem
-  change wuUpperCoefficient (5 / 2) - fourthRowJoinedLimitCoefficient δ / 5 - ε ≤
-    wuImprovementAtInfinity true (k + 1) δ (5 / 2) at hs
-  linarith
 
 end Wu2008DoubleSieve

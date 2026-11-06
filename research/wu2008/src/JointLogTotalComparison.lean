@@ -129,9 +129,6 @@ theorem fixedCertificate_le_analytic : fixedCertificate ≤ analyticCertificate 
   unfold fixedCertificate analyticCertificate retainedExtra Phase20.psiPaymentLoss at *
   linarith only [hp,hj]
 
-theorem fixedCertificate_lt_actual :
-    fixedCertificate < JointHMotherPayment.unroundedCoefficient :=
-  fixedCertificate_le_analytic.trans_lt analyticCertificate_lt_actual
 
 /-- Exact nonnegative remainder; no target inequality is assumed. -/
 def logRemainder : ℝ := (logTotal-logPayment)/4
@@ -181,8 +178,6 @@ theorem rationalDeficit_exact :
     8*V (5000/4469)-rationalTotal = rationalDeficit := by
   norm_num [V,upperLog,lowerLog,rationalTotal,rationalDeficit]
 
-theorem rationalDeficit_positive : 0 < rationalDeficit := by
-  norm_num [rationalDeficit]
 
 /-- This is the target envelope slack, not an extra Taylor remainder. -/
 def targetSlack : ℝ := 8*(V (5000/4469)-log (5000/4469))

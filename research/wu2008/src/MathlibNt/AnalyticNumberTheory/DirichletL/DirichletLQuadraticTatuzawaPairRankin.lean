@@ -214,26 +214,5 @@ theorem tatuzawaPair_square_le_zeta_sq_mul_valueProduct
       rw [hfac, norm_mul, norm_mul, norm_mul]
       ring
 
-/-- The same pair lower bound after paying the elementary zeta-pole
-majorant.  The right side now displays precisely the `(σ-1)⁻²` loss which a
-genuine Deuring--Heilbronn/value-transfer step must beat. -/
-theorem tatuzawaPair_square_le_zetaMajorant_sq_mul_valueProduct
-    (χ₁ : DirichletCharacter ℂ q₁) (χ₂ : DirichletCharacter ℂ q₂)
-    [NeZero q₁] [NeZero q₂]
-    (h₁ : χ₁ ^ 2 = 1) (h₂ : χ₂ ^ 2 = 1)
-    (M : ℕ) {σ : ℝ} (hσ : 1 < σ) :
-    (M : ℝ) / ((M ^ 2 : ℕ) : ℝ) ^ σ ≤
-      (1 + 1 / (σ - 1)) ^ 2 *
-        (‖χ₁.LFunction (σ : ℂ)‖ * ‖χ₂.LFunction (σ : ℂ)‖) := by
-  have hpair := tatuzawaPair_square_le_zeta_sq_mul_valueProduct
-    χ₁ χ₂ h₁ h₂ M hσ
-  have hz : ‖riemannZeta (σ : ℂ)‖ ≤ 1 + 1 / (σ - 1) := by
-    have h := AnalyticNumberTheory.LargeSieve.norm_dirichletLSeries_le
-      (1 : DirichletCharacter ℂ 1) σ 0 hσ
-    simp only [DirichletCharacter.modOne_eq_one, ofReal_zero, mul_zero, add_zero] at h
-    rw [LSeries_one_eq_riemannZeta (show 1 < (σ : ℂ).re by simpa using hσ)] at h
-    exact h
-  exact hpair.trans (mul_le_mul_of_nonneg_right
-    (pow_le_pow_left₀ (norm_nonneg _) hz 2) (by positivity))
 
 end DirichletCharacter

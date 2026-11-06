@@ -43,17 +43,6 @@ theorem caseITau_eq_s_of_log_threshold
   rw [hid] at hratio
   linarith
 
-/-- Exact Case-I wrapper: `β + ε_N ≤ s` supplies `β ≤ s`, so the explicit
-logarithmic threshold forces `τ=s`. -/
-theorem caseITau_eq_s_of_claim14_5CaseI
-    {β D s σ : ℝ} {N : ℕ} (hβ : 1 < β)
-    (hcaseI : Claim14_5CaseI β N s σ) (hD : 1 < D)
-    (hDlarge : β * Real.log 2 ≤ (β - 1) * Real.log D) :
-    caseITau D s = s := by
-  have hβs : β ≤ s := by
-    have heps : 0 ≤ ((N % 2 : ℕ) : ℝ) := Nat.cast_nonneg _
-    exact (le_add_of_nonneg_right heps).trans hcaseI.1
-  exact caseITau_eq_s_of_log_threshold hβ hβs hD hDlarge
 
 /-- Once `τ=s`, the Case-I power coordinate identifies the upper split cutoff
 with the source cutoff `z`. -/

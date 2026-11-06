@@ -125,43 +125,6 @@ theorem sigma12_middle_le_qD_lemma8_7
       (lemma8_7_qD_of_claim14_6_ii (S := S) (H := H) (sign := sign)
         hH hD hz2 hv2 hw2 hwv hvz hz hv hw hτ hτσ hK hlocal hii)
 
-/-- Combined source-correct middle-range estimate for `Σ₁₁ + Σ₁₂`.
-Both terms use the same exact carrier `w ≤ p < v` and the same independent
-Euler-ratio cutoff `z`. -/
-theorem sigma11_add_sigma12_middle_le
-    {S : BoundingSieve} {H : Section13HatLayers}
-    {β D z v w s τ σ K d Δ : ℝ} {N : ℕ}
-    (sign : ErrorSign) (R : ℝ → ℝ)
-    (hβ : 1 < β)
-    (hsdom : s ∈ KappaOneModel.parityDomain β N)
-    (hτdom : τ - 1 ∈ KappaOneModel.parityDomain β (N - 1))
-    (hsτ : s ≤ τ)
-    (hmajorant : ∀ p ∈ S.prodPrimes.primeFactors,
-      w ≤ (p : ℝ) → (p : ℝ) < v →
-      R (Real.log D / Real.log p) ≤
-        qD H sign.opposite D d Δ (Real.log D / Real.log p))
-    (hH : Section13HatContract H β)
-    (hD : 1 < D) (hz2 : 2 ≤ z) (hv2 : 2 ≤ v) (hw2 : 2 ≤ w)
-    (hwv : w ≤ v) (hvz : v ≤ z)
-    (hz : z = D ^ (1 / s)) (hv : v = D ^ (1 / τ))
-    (hw : w = D ^ (1 / σ))
-    (hτ : H.betaHat + sign.epsilon < τ) (hτσ : τ ≤ σ)
-    (hK : 2 ≤ K) (hlocal : HasDimensionOneLocalProductBound S K)
-    (hii : Claim14_6_MonotoneQPremise H D d Δ σ) :
-    suzukiLemmaEightSevenPrimeSum S D w v z
-        (fun t => finiteSourceLayer 1 β (N - 1) (t - 1)) +
-      suzukiLemmaEightSevenPrimeSum S D w v z R ≤
-      finiteSourceLayer 1 β N s +
-        (6 * K ^ 2 * finiteSourceLayer 1 β (N - 1) (τ - 1) /
-          Real.log w) * (τ / s) +
-      ((1 / s) * (∫ t in τ..σ, qD H sign.opposite D d Δ t) +
-        (6 * K ^ 2 * qD H sign.opposite D d Δ τ / Real.log w) *
-          (τ / s)) := by
-  exact add_le_add
-    (sigma11_middle_le_finiteSourceLayer_add_endpoint hβ hsdom hτdom hsτ hτσ
-      hD hz2 hv2 hw2 hwv hvz hz hv hw hK hlocal)
-    (sigma12_middle_le_qD_lemma8_7 sign R hmajorant hH hD hz2 hv2 hw2
-      hwv hvz hz hv hw hτ hτσ hK hlocal hii)
 
 
 end SuzukiLemma144KappaOne

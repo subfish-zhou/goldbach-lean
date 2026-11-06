@@ -56,12 +56,6 @@ theorem packing_mem {N n k : ℕ} {K : Finset ℕ} (hk : k ∈ packing N n K) :
   obtain ⟨p,hp,rfl⟩ := mem_image.mp hj
   simpa only [outer,inner,Nat.unpair_pair] using And.intro hi hp
 
-theorem packing_encode {N n i : ℕ} {p : ℕ × ℕ} {K : Finset ℕ}
-    (hi : i ∈ K) (hp : p ∈ truncatedSixthMassPacking N
-      (loX n i) (hiX n i) (loY n i) (hiY n i)) :
-    Nat.pair i (Nat.pair p.1 p.2) ∈ packing N n K := by
-  apply mem_biUnion.mpr
-  exact ⟨i,hi,mem_image.mpr ⟨Nat.pair p.1 p.2,mem_image.mpr ⟨p,hp,rfl⟩,rfl⟩⟩
 
 theorem low_geometry {δ : ℝ} {n i : ℕ} (hi : i ∈ lowCells δ n) :
     truncatedSixthLowerAlpha ≤ loX n i ∧

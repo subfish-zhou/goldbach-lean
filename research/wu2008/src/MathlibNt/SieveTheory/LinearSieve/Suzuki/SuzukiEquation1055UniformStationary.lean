@@ -100,18 +100,6 @@ lemma PlusFirstCrossing.slope_pos_before
   · exact w.initial_pos u ⟨hβu, hu⟩
   · exact w.before_crossing_pos u (lt_of_not_ge hu) hus
 
-/-- The witness really records the least point in the closed nonpositive set. -/
-lemma PlusFirstCrossing.isLeast_nonpositive
-    {R ξ : ℝ → ℝ} {c β s₀ : ℝ}
-    (w : PlusFirstCrossing R ξ c β s₀) :
-    IsLeast {u : ℝ | s₀ ≤ u ∧ w.slope u ≤ 0} w.s := by
-  constructor
-  · exact ⟨w.s₀_lt_s.le, w.crossing_nonpos⟩
-  · intro u hu
-    by_contra hsu
-    have hus : u < w.s := lt_of_not_ge hsu
-    have hβu : β ≤ u := le_trans w.beta_lt_s₀.le hu.1
-    exact (not_lt_of_ge hu.2) (w.slope_pos_before hβu hus)
 
 /-- Continuity turns the weak sign at the first point into stationarity. -/
 lemma PlusFirstCrossing.slope_at_crossing_eq_zero
@@ -639,16 +627,6 @@ theorem equation1055_strict_at_stationary
   rw [hform]
   nlinarith
 
-/-- Uniform stationary formulation: for the fixed `S₀`, every `c` beyond the
-single source threshold excludes every stationary candidate by strict (10.55).
--/
-theorem equation1055_uniform_stationary
-    {R : ℝ → ℝ} {β S₀ : ℝ}
-    (src : Equation1055StationarySource R β S₀) :
-    ∀ c, src.C ≤ c → ∀ w : PlusStationaryCandidate R c S₀,
-      1 < plusPairingScalarRatio xi c w.s := by
-  intro c hc w
-  exact equation1055_strict_at_stationary src hc w
 
 private def crossing_to_stationaryCandidate
     {R : ℝ → ℝ} {β c S₀ : ℝ}

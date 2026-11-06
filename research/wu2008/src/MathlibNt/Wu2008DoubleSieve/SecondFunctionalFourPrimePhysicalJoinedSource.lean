@@ -5,16 +5,6 @@ namespace Wu2008DoubleSieve
 open Finset FourthRowPhiOmega2 HighSourcePayload
 open scoped Classical
 
-/-- Original nonunit counts enter the physical family without additional source screens. -/
-theorem fourprime_source_le_physical_primeMass {i N : ℕ} {δ Δ : ℝ}
-    (V : Fin i → ℝ) (p : SecondFunctionalParameters) (hN : 4 ≤ N) (he : Even N)
-    (j : Fin 4) :
-    secondFunctionalFourPrimeNonunitSum p N δ (convolutionWuWindows N Δ V) j ≤
-      (FourPrimeNonunit.sourceFamily N δ Δ V p j).primeMass := by
-  rw [(FourPrimeNonunit.sourceFamily_dictionary N δ Δ V p j).1]
-  exact FourPrimeNonunit.actual_source_le p (convolutionWuWindows N Δ V)
-    (fun _ hd => boxConvolutionSupport_pos
-      (fun _ _ hq => (mem_convolutionWuWindows.mp hq).1.pos) hd) hN he j
 
 /-- The lower ledger retains every original coefficient and all four labelled families. -/
 theorem fourprime_physical_lowerLedger_eq {i : ℕ} (N : ℕ) (δ Δ : ℝ)

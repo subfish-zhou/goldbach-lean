@@ -73,19 +73,6 @@ theorem fourthRowTripleNoGate_gamma14_upper (k : ℕ) {δ ε : ℝ}
             boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) :=
   fourthRowTripleNoGate_prefix_upper k false hδ hδhi hε
 
-theorem fourthRowTripleNoGate_natural_card_upper (k : ℕ) (eleven : Bool) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-        (Nat.card {a // a ∈ fourthRowTripleNoGateOriginalLabels N δ
-          (convolutionWuWindows N Δ V) eleven} : ℝ) ≤
-          (2 / (1 - 2 * δ) * fourthRowTripleNoGateEnvelope eleven + ε) *
-            boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
-  obtain ⟨T, hT4, hT⟩ := fourthRowTripleNoGate_prefix_upper k eleven hδ hδhi hε
-  refine ⟨T, hT4, ?_⟩
-  intro N hN he i Δ V hb
-  rw [fourthRowTripleNoGate_natural_card]
-  exact hT N hN he i Δ V hb
 
 theorem fourthRowTripleNoGate_joint_upper (k : ℕ) {δ ε : ℝ}
     (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :

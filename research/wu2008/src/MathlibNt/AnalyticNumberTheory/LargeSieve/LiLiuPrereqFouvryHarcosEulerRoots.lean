@@ -89,22 +89,6 @@ theorem harcosEulerSeries_character (a b : ZMod p) :
     harcosCoefficient_eq_sum_monic]
   rfl
 
-/-- The finite algebraic content of Harcos's equation (10), for the actual character. -/
-theorem harcosEuler_character_powerSum (a : ZMod p) (b : ℤ)
-    (ha : a ≠ 0) (hb : (b : ZMod p) ≠ 0) (α β : ℂ)
-    (hsum : α + β = -completeKloosterman p a b) (hprod : α * β = (p : ℂ))
-    (n : ℕ) (hn : n ≠ 0) :
-    harcosEulerLogCoefficient (harcosEtaHom a (b : ZMod p)).toMonoidHom n =
-      -(α ^ n + β ^ n) := by
-  apply harcosEulerLogCoefficient_eq_powerSum _ α β _ n hn
-  rw [harcosEulerSeries_character, harcosLSeries_eq_polynomial a (b : ZMod p) ha,
-    harcosLPolynomial_eq a b ha hb]
-  simp only [Polynomial.coe_add, Polynomial.coe_one, Polynomial.coe_mul,
-    Polynomial.coe_C, Polynomial.coe_X, Polynomial.coe_pow]
-  have hs := congrArg PowerSeries.C hsum
-  have hp := congrArg PowerSeries.C hprod
-  simp only [map_add, map_neg, map_mul] at hs hp
-  linear_combination PowerSeries.X * hs - PowerSeries.X ^ 2 * hp
 
 /-- The actual irreducible coefficients for the explicitly constructed reciprocal roots. -/
 theorem harcosEuler_character_reciprocalRoots (a b : ZMod p) (ha : a ≠ 0)

@@ -153,9 +153,5 @@ theorem gamma_upper_exact : gammaUpper =
   norm_num [gammaUpper,K,moment,p0,p1,p2,c,m,denominator,L,U,v,a,b,
     truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
 
-/-- More than three quarters of the previous full Gamma upper are removed. -/
-theorem substantial_descent : 4*gammaUpper < CorrectedCoefficientUpper.gammaUpper := by
-  rw [gamma_upper_exact,CorrectedCoefficientUpper.gamma_upper_exact]
-  norm_num
 
 end GammaFullUpper

@@ -98,27 +98,6 @@ theorem goldbachB10Fiber_eq_productQFiber
   ext q
   simp [goldbachB10Fiber, goldbachB10ProductQFiber, goldbachB10Point]
 
-theorem goldbachB10Atoms_card_eq_sum_productSupport
-    (N : ℕ) (ε b c : ℝ) :
-    (goldbachB10Atoms N ε b c).card =
-      ∑ m ∈ goldbachC10ProductSupport N b c,
-        goldbachC10Coeff N b c m * (goldbachB10ProductQFiber N ε m).card := by
-  classical
-  calc
-    (goldbachB10Atoms N ε b c).card =
-        ∑ rs ∈ goldbachC10Pairs N b c, (goldbachB10Fiber N ε rs).card := by
-          simp [goldbachB10Atoms]
-    _ = ∑ rs ∈ goldbachC10Pairs N b c,
-          (goldbachB10ProductQFiber N ε (goldbachC10Prod rs)).card := by
-            refine Finset.sum_congr rfl ?_
-            intro rs hrs
-            rw [goldbachB10Fiber_eq_productQFiber]
-    _ = ∑ m ∈ goldbachC10ProductSupport N b c,
-          goldbachC10Coeff N b c m * (goldbachB10ProductQFiber N ε m).card := by
-            simpa using
-              goldbachC10_sum_nat_eq_sum_productSupport
-                (N := N) (b := b) (c := c)
-                (f := fun m => (goldbachB10ProductQFiber N ε m).card)
 
 /-- The literal sifted `q`-fibre above a fixed product label `m = rs`. -/
 noncomputable def goldbachB10ProductSiftedQFiber
@@ -132,35 +111,6 @@ theorem goldbachB10SiftedFiber_eq_productSiftedQFiber
       goldbachB10ProductSiftedQFiber N ε Z (goldbachC10Prod rs) := by
   rw [goldbachB10SiftedFiber, goldbachB10ProductSiftedQFiber, goldbachB10Fiber_eq_productQFiber]
 
-theorem goldbachB10SiftedCount_eq_sum_productSupport
-    (N : ℕ) (ε b c Z : ℝ) :
-    goldbachB10SiftedCount N ε b c Z =
-      ∑ m ∈ goldbachC10ProductSupport N b c,
-        (goldbachC10Coeff N b c m : ℤ) *
-          (((goldbachB10ProductQFiber N ε m).filter
-            (fun q => literalHPoint N 1 Z (N - m * q))).card : ℤ) := by
-  classical
-  calc
-    goldbachB10SiftedCount N ε b c Z =
-        ∑ rs ∈ goldbachC10Pairs N b c,
-          ((goldbachB10SiftedFiber N ε Z rs).card : ℤ) := by
-            simp [goldbachB10SiftedCount]
-    _ = ∑ rs ∈ goldbachC10Pairs N b c,
-          ((goldbachB10ProductSiftedQFiber N ε Z (goldbachC10Prod rs)).card : ℤ) := by
-            refine Finset.sum_congr rfl ?_
-            intro rs hrs
-            rw [goldbachB10SiftedFiber_eq_productSiftedQFiber]
-    _ = ∑ m ∈ goldbachC10ProductSupport N b c,
-          (goldbachC10Coeff N b c m : ℤ) * ((goldbachB10ProductSiftedQFiber N ε Z m).card : ℤ) := by
-            simpa using
-              goldbachC10_sum_int_eq_sum_productSupport
-                (N := N) (b := b) (c := c)
-                (f := fun m => ((goldbachB10ProductSiftedQFiber N ε Z m).card : ℤ))
-    _ = ∑ m ∈ goldbachC10ProductSupport N b c,
-          (goldbachC10Coeff N b c m : ℤ) *
-            (((goldbachB10ProductQFiber N ε m).filter
-              (fun q => literalHPoint N 1 Z (N - m * q))).card : ℤ) := by
-            rfl
 
 /-- The inverse-residue `q`-filter above a fixed product label `m = rs`. -/
 noncomputable def goldbachB10ProductResidueQFiber
@@ -168,12 +118,6 @@ noncomputable def goldbachB10ProductResidueQFiber
   (goldbachB10ProductQFiber N ε m).filter
     (fun q => (q : ZMod d) = (N : ZMod d) * (m : ZMod d)⁻¹)
 
-theorem goldbachB10ProductResidueQFiber_eq_filter
-    (N d : ℕ) (ε : ℝ) (m : ℕ) :
-    goldbachB10ProductResidueQFiber N d ε m =
-      (goldbachB10ProductQFiber N ε m).filter
-        (fun q : ℕ => (q : ZMod d) = (N : ZMod d) * (m : ZMod d)⁻¹) := by
-  rfl
 
 theorem mem_goldbachB10ProductResidueQFiber_iff
     {N d : ℕ} {ε : ℝ} {m q : ℕ} :

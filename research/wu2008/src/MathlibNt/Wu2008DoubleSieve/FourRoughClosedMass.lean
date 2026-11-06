@@ -50,14 +50,6 @@ theorem mem_labels {N a b c d : ℕ} {l u : ℕ → ℝ} :
     c ∈ primesIcc b ((N : ℝ)^beta) ∧ d ∈ primesIcc (l c) (u c) := by
   simp [labels, Prod.mk.injEq, and_assoc]
 
-theorem mass_eq_nested (N : ℕ) (l u : ℕ → ℝ) :
-    mass N (labels N l u) =
-    ∑ a ∈ primesIcc ((N : ℝ)^alpha) ((N : ℝ)^beta),
-    ∑ b ∈ primesIcc a ((N : ℝ)^beta),
-    ∑ c ∈ primesIcc b ((N : ℝ)^beta),
-    ∑ d ∈ primesIcc (l c) (u c),
-      (((roughNumbers ((N : ℝ)/(a*b*c*d)) b).erase 1).card : ℝ) := by
-  simp only [mass, labels, sum_map, sum_sigma, flatten_apply, cofactor, fourModulusProduct, Nat.cast_mul]
 
 theorem T10_subset (N : ℕ) : T10 N ⊆ labels10 N := by
   rintro ⟨a,b,c,d⟩ ht
@@ -118,11 +110,6 @@ theorem physical_card_le_strictMass (N : ℕ) (S : Finset Quad) :
       obtain ⟨hn,hn1,hr,hlt,_⟩ := mem_filter.mp hn
       exact mem_filter.mpr ⟨hn,hn1,hr,hlt⟩)
 
-theorem original_physical_cards_le (N : ℕ) :
-    ((Physical10 N).card : ℝ) ≤ rawMass10 N ∧
-    ((Physical11 N).card : ℝ) ≤ rawMass11 N :=
-  ⟨(physical_card_le_strictMass N _).trans (original_strict_masses_le N).1,
-   (physical_card_le_strictMass N _).trans (original_strict_masses_le N).2⟩
 
 end
 end Wu2008DoubleSieve.FourRoughClosedMass

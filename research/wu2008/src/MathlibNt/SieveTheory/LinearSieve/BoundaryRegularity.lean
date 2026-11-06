@@ -158,43 +158,6 @@ theorem inv_sq_mul_upperRosserBoundaryMass_le_of_lower_bound
       rw [pow_succ]
       ring
 
-/-- The inner integrand in the Rosser pair recursion is integrable on every
-positive screened interval, at every finite depth. -/
-theorem integrableOn_inv_mul_upperRosserBoundaryMassAux
-    (k : ℕ) {s a b : ℝ} (ha : 0 < a) (hb : b ≤ 1) :
-    MeasureTheory.IntegrableOn
-      (fun x => x⁻¹ * upperRosserBoundaryMassAux k (s - x) a x)
-      (Set.Ioo a b) := by
-  have hfinite : MeasureTheory.volume (Set.Ioo a b) < ⊤ := by
-    rw [Real.volume_Ioo]
-    exact ENNReal.ofReal_lt_top
-  have hmassMeas : MeasureTheory.StronglyMeasurable
-      (fun x => upperRosserBoundaryMassAux k (s - x) a x) := by
-    have h := (stronglyMeasurable_upperRosserBoundaryMassAux k).comp_measurable
-      (show Measurable (fun x : ℝ => ((s - x, a), x)) by fun_prop)
-    convert h using 1
-    funext x
-    rfl
-  have hmeas : MeasureTheory.StronglyMeasurable
-      (fun x => x⁻¹ * upperRosserBoundaryMassAux k (s - x) a x) :=
-    measurable_id.inv.stronglyMeasurable.mul hmassMeas
-  apply MeasureTheory.IntegrableOn.of_bound hfinite hmeas.aestronglyMeasurable
-    (a⁻¹ * (a⁻¹ * a⁻¹) ^ k)
-  filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with x hx
-  have hxpos : 0 < x := ha.trans hx.1
-  have hxinv : x⁻¹ ≤ a⁻¹ := (inv_le_inv₀ hxpos ha).2 hx.1.le
-  have hmass := upperRosserBoundaryMassAux_le_inv_sq_pow k
-    (s := s - x) (a := a) (b := x) ha (hx.2.le.trans hb)
-  rw [Real.norm_eq_abs, abs_of_nonneg
-    (mul_nonneg (inv_nonneg.mpr hxpos.le)
-      (upperRosserBoundaryMassAux_nonneg k ha.le))]
-  calc
-    x⁻¹ * upperRosserBoundaryMassAux k (s - x) a x ≤
-        a⁻¹ * upperRosserBoundaryMassAux k (s - x) a x :=
-      mul_le_mul_of_nonneg_right hxinv
-        (upperRosserBoundaryMassAux_nonneg k ha.le)
-    _ ≤ a⁻¹ * (a⁻¹ * a⁻¹) ^ k :=
-      mul_le_mul_of_nonneg_left hmass (inv_nonneg.mpr ha.le)
 
 /-- The complete fixed-depth Rosser boundary integrand is integrable on every
 compact interval bounded away from zero. -/
@@ -226,27 +189,6 @@ theorem integrableOn_inv_sq_mul_upperRosserBoundaryMass
       (upperRosserBoundaryMass_nonneg k (hc.trans ha.1).le))]
   exact inv_sq_mul_upperRosserBoundaryMass_le_of_lower_bound k hc ha.1.le
 
-/-- On every screened compact parameter box, the full three-parameter residual
-mass is integrable.  This supplies a common dominated-convergence envelope for
-fixed-depth Darboux approximations. -/
-theorem integrableOn_upperRosserBoundaryMassAux_compactBox
-    (k : ℕ) (s₀ s₁ : ℝ) {c : ℝ} (hc : 0 < c) :
-    MeasureTheory.IntegrableOn
-      (fun p : (ℝ × ℝ) × ℝ =>
-        upperRosserBoundaryMassAux k p.1.1 p.1.2 p.2)
-      ((Set.Icc s₀ s₁ ×ˢ Set.Icc c 1) ×ˢ Set.Icc c 1) := by
-  have hcompact :
-      IsCompact ((Set.Icc s₀ s₁ ×ˢ Set.Icc c 1) ×ˢ Set.Icc c 1) :=
-    (isCompact_Icc.prod isCompact_Icc).prod isCompact_Icc
-  apply MeasureTheory.IntegrableOn.of_bound hcompact.measure_lt_top
-    (stronglyMeasurable_upperRosserBoundaryMassAux k).aestronglyMeasurable
-    ((c⁻¹ * c⁻¹) ^ k)
-  filter_upwards
-      [MeasureTheory.ae_restrict_mem hcompact.measurableSet] with p hp
-  rw [Real.norm_eq_abs, abs_of_nonneg
-    (upperRosserBoundaryMassAux_nonneg k (hc.le.trans hp.1.2.1))]
-  exact upperRosserBoundaryMassAux_le_of_lower_bound
-    k hc hp.1.2.1 hp.2.2
 
 /-- Uniform norm bound for the inner integral, shared by integrability and
 dominated-convergence arguments. -/
@@ -457,22 +399,6 @@ private theorem continuousAt_rosser_outer_parametric
   · filter_upwards [hinner] with x hx hmem
     exact continuousAt_const.mul (hx hmem)
 
-/-- Dominated convergence for the inner integral in one Rosser pair.  It is
-enough that the residual mass be continuous in its level almost everywhere in
-the peeled inner coordinate. -/
-theorem continuousAt_integral_inv_mul_upperRosserBoundaryMassAux_level_of_ae
-    (k : ℕ) {s a x₀ : ℝ} (ha : 0 < a) (hx₀ : x₀ ≤ 1)
-    (hcont : ∀ᵐ x₁ ∂MeasureTheory.volume.restrict (Set.Ioo a x₀),
-      ContinuousAt (fun t => upperRosserBoundaryMassAux k t a x₁)
-        (s - x₀ - x₁)) :
-    ContinuousAt (fun t => ∫ x₁ in Set.Ioo a x₀,
-      x₁⁻¹ * upperRosserBoundaryMassAux k (t - x₀ - x₁) a x₁) s := by
-  apply continuousAt_rosser_inner_parametric k continuousAt_const continuousAt_const ha
-    (Filter.Eventually.of_forall fun _ => hx₀)
-  have hcont' := (MeasureTheory.ae_restrict_iff' measurableSet_Ioo).mp hcont
-  filter_upwards [hcont'] with x hx hmem
-  exact (hx hmem).comp (x := s)
-    (show ContinuousAt (fun t : ℝ => t - x₀ - x) s by fun_prop)
 
 /-- Dominated convergence for the inner Rosser integral when both the residual
 level and the positive lower cutoff vary.  The moving lower face is negligible,
@@ -662,38 +588,7 @@ theorem continuousOn_upperRosserBoundaryMassAux_level_lower_succ
     (continuousAt_upperRosserBoundaryMassAux_level_lower_succ k
       (hc.trans_le hp.2.1) hb).continuousWithinAt
 
-/-- Joint residual-level/lower-cutoff continuity has a uniform modulus on each
-compact box screened away from zero. -/
-theorem exists_upperRosserBoundaryMassAux_level_lower_modulus_succ
-    (k : ℕ) {b r₀ r₁ c ε : ℝ} (hb : b ≤ 1) (hc : 0 < c) (hε : 0 < ε) :
-    ∃ δ > 0, ∀ p ∈ Set.Icc r₀ r₁ ×ˢ Set.Icc c 1,
-      ∀ q ∈ Set.Icc r₀ r₁ ×ˢ Set.Icc c 1, dist p q < δ →
-        |upperRosserBoundaryMassAux (k + 1) p.1 p.2 b -
-          upperRosserBoundaryMassAux (k + 1) q.1 q.2 b| < ε := by
-  have hcompact : IsCompact (Set.Icc r₀ r₁ ×ˢ Set.Icc c 1) :=
-    isCompact_Icc.prod isCompact_Icc
-  have huniform :=
-    hcompact.uniformContinuousOn_of_continuous
-      (continuousOn_upperRosserBoundaryMassAux_level_lower_succ k hb hc)
-  simpa [Real.dist_eq] using
-    (Metric.uniformContinuousOn_iff.mp huniform ε hε)
 
-/-- The outer integral in one Rosser pair is continuous in the residual level
-provided its inner integral is almost everywhere continuous there.  The moving
-face `x₀ = s / 3` is a singleton and hence does not obstruct dominated
-convergence. -/
-theorem continuousAt_upperRosserBoundaryMassAux_succ_level_of_ae
-    (k : ℕ) {s a b : ℝ} (ha : 0 < a) (hb : b ≤ 1)
-    (hinner : ∀ᵐ x₀ ∂MeasureTheory.volume.restrict (Set.Ioo a b),
-      ContinuousAt (fun t => ∫ x₁ in Set.Ioo a x₀,
-        x₁⁻¹ * upperRosserBoundaryMassAux k (t - x₀ - x₁) a x₁) s) :
-    ContinuousAt (fun t => upperRosserBoundaryMassAux (k + 1) t a b) s := by
-  simp_rw [upperRosserBoundaryMassAux_succ]
-  apply continuousAt_rosser_outer_parametric k continuousAt_const (by fun_prop) ha
-    (Filter.Eventually.of_forall fun t => (min_le_left b (t / 3)).trans hb)
-  have hinner' := (MeasureTheory.ae_restrict_iff' measurableSet_Ioo).mp hinner
-  filter_upwards [hinner'] with x hx hmem
-  exact hx ⟨hmem.1, hmem.2.trans_le (min_le_left _ _)⟩
 
 /-- Every positive-depth recursive Rosser boundary mass is continuous in its
 residual level.  At depth zero there are two affine jumps; after one peeled
@@ -771,27 +666,6 @@ theorem exists_upperRosserBoundaryMassAux_level_modulus_succ
       k (r₀ := r₀) (r₁ := r₁) ha hb) ε hε
   simpa [Real.dist_eq] using h
 
-/-- On a sufficiently short residual-level cell, the left-endpoint value plus
-an arbitrarily small error majorizes every positive-depth value in that cell. -/
-theorem exists_upperRosserBoundaryMassAux_level_cell_majorant_succ
-    (k : ℕ) {a b r₀ r₁ ε : ℝ} (ha : 0 < a) (hb : b ≤ 1) (hε : 0 < ε) :
-    ∃ δ > 0, ∀ {l r s : ℝ}, l ∈ Set.Icc r₀ r₁ → r ∈ Set.Icc r₀ r₁ →
-      l ≤ s → s ≤ r → r - l < δ →
-        upperRosserBoundaryMassAux (k + 1) s a b ≤
-          upperRosserBoundaryMassAux (k + 1) l a b + ε := by
-  obtain ⟨δ, hδ, hmod⟩ :=
-    exists_upperRosserBoundaryMassAux_level_modulus_succ k ha hb hε
-  refine ⟨δ, hδ, ?_⟩
-  intro l r s hl hr hls hsr hlr
-  have hs : s ∈ Set.Icc r₀ r₁ :=
-    ⟨hl.1.trans hls, hsr.trans hr.2⟩
-  have hdist : |s - l| < δ := by
-    rw [abs_of_nonneg (sub_nonneg.mpr hls)]
-    linarith
-  have hclose := hmod s hs l hl hdist
-  linarith [le_abs_self
-    (upperRosserBoundaryMassAux (k + 1) s a b -
-      upperRosserBoundaryMassAux (k + 1) l a b)]
 
 /-- At fixed level and positive lower cutoff, enlarging an inherited upper face
 up to the global cutoff can only increase the recursive boundary mass. -/
@@ -922,31 +796,6 @@ theorem exists_upperRosserBoundaryMassAux_level_upper_cell_majorant_succ
       _ ≤ upperRosserBoundaryMassAux (k + 1) l a c + ε := by
         linarith
 
-/-- Specialization of the two-parameter cell estimate to the affine residual
-`s - x₀ - x`.  On a short inner-coordinate cell, its lower residual corner and
-lower cutoff jointly majorize every positive-depth residual, up to `ε`. -/
-theorem exists_upperRosserBoundaryMassAux_inner_cell_majorant_succ
-    (k : ℕ) {s x₀ a l r r₀ r₁ ε : ℝ}
-    (ha : 0 < a) (hl : l ∈ Set.Icc a 1) (hr : r ∈ Set.Icc a 1)
-    (hresL : s - x₀ - r ∈ Set.Icc r₀ r₁)
-    (hresR : s - x₀ - l ∈ Set.Icc r₀ r₁) (hε : 0 < ε) :
-    ∃ δ > 0, r - l < δ → ∀ x ∈ Set.Icc l r,
-      upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x ≤
-        upperRosserBoundaryMassAux (k + 1) (s - x₀ - r) a l + ε := by
-  obtain ⟨δ, hδ, hcell⟩ :=
-    exists_upperRosserBoundaryMassAux_level_upper_cell_majorant_succ
-      k ha hr hresL hε
-  refine ⟨δ, hδ, fun hlrδ x hx => ?_⟩
-  apply hcell (s := s - x₀ - x) (c := l) (b := x)
-  · constructor
-    · exact hresL.1.trans (by linarith [hx.2])
-    · exact (by linarith [hx.1] : s - x₀ - x ≤ s - x₀ - l).trans hresR.2
-  · exact hl
-  · linarith [hx.2]
-  · linarith [hx.1, hlrδ]
-  · exact hx.1
-  · exact hx.2
-  · exact hlrδ
 
 /-- At positive residual depth, the residual level and inherited upper cutoff
 vary jointly continuously on every compact screened rectangle. This is a
@@ -976,20 +825,6 @@ theorem exists_upperRosserBoundaryMassAux_level_upper_modulus_succ
   simpa [Real.dist_eq] using
     (Metric.uniformContinuousOn_iff.mp huniform ε hε)
 
-/-- At fixed residual level and positive lower cutoff, the inherited upper face
-varies continuously on any compact interval below the global cutoff, including
-the part where that face lies below the lower cutoff. At positive depth the mass
-vanishes there; at depth zero it is independent of the inherited upper face. -/
-theorem continuousOn_upperRosserBoundaryMassAux_upper_global
-    (k : ℕ) {s a c : ℝ} (ha : 0 < a) :
-    ContinuousOn (fun b => upperRosserBoundaryMassAux k s a b) (Set.Icc c 1) := by
-  cases k with
-  | zero =>
-      simp only [upperRosserBoundaryMassAux_zero]
-      fun_prop
-  | succ k =>
-      exact continuousOn_rosser_mass k continuousOn_const continuousOn_const continuousOn_id
-        (fun _ _ => ha) (fun _ hb => hb.2)
 
 /-- Positive-depth residual mass has one uniform modulus in the residual level,
 lower cutoff, and inherited upper face on every screened compact box. -/
@@ -1036,29 +871,6 @@ theorem exists_integral_inv_mul_upperRosserBoundaryMassAux_lower_modulus_succ
   dsimp only at hclose
   linarith [(abs_lt.mp hclose).2]
 
-/-- Increasing the outer endpoint of a positive-depth inner Rosser integral by
-a short amount has uniformly small cost, simultaneously for every lower cutoff
-in a compact positive screen. -/
-theorem exists_integral_inv_mul_upperRosserBoundaryMassAux_outer_endpoint_modulus_succ
-    (k : ℕ) {s₀ s₁ c ε : ℝ} (hc : 0 < c) (hε : 0 < ε) :
-    ∃ δ > 0, ∀ {s a x₀ y₀ : ℝ},
-      s ∈ Set.Icc s₀ s₁ → a ∈ Set.Icc c 1 →
-      x₀ ∈ Set.Icc c 1 → y₀ ∈ Set.Icc c 1 →
-      a ≤ x₀ → x₀ ≤ y₀ → y₀ - x₀ < δ →
-      (∫ x in Set.Ioo a y₀, x⁻¹ *
-          upperRosserBoundaryMassAux (k + 1) (s - y₀ - x) a x) ≤
-        (∫ x in Set.Ioo a x₀, x⁻¹ *
-          upperRosserBoundaryMassAux (k + 1) (s - x₀ - x) a x) + ε := by
-  obtain ⟨δ, hδ, hmod⟩ := rosser_inner_joint_modulus (k + 1)
-    (s₀ := s₀) (s₁ := s₁) hc hε
-  refine ⟨δ, hδ, ?_⟩
-  intro s a x₀ y₀ hs ha hx₀ hy₀ _hax hxy hwidth
-  have hdist : dist ((s, a), y₀) ((s, a), x₀) < δ := by
-    simpa [Prod.dist_eq, Real.dist_eq, abs_of_nonneg (sub_nonneg.mpr hxy), hδ] using hwidth
-  have hclose := hmod ((s, a), y₀) ⟨⟨hs, ha⟩, hy₀⟩
-    ((s, a), x₀) ⟨⟨hs, ha⟩, hx₀⟩ hdist
-  dsimp only at hclose
-  linarith [(abs_lt.mp hclose).2]
 
 /-- The joint inner-integral modulus also covers a mesh cell crossing the
 moving lower cutoff. Empty and coincident intervals need no separate strip

@@ -1,0 +1,17 @@
+{
+  "status": "ACTUAL_SIGTERM_INTERRUPTION_RESUMED_VERIFIED_CACHES_UNCHANGED_NOT_ACCEPTED",
+  "interrupted_process_sha256": "cccf2e87df3249b9f7fb48915b2f5bfd79713daa98cefd50f362b2f0da1b2db5",
+  "valid_completed_receipts_preserved": 928,
+  "completed_modules_recompiled_observed": 0,
+  "interruption_cause_unknown": true,
+  "source_manifest_unchanged": true,
+  "cache_review_archive": "mixed-pruning-sigterm-cache-review.json.gz",
+  "cache_review_archive_sha256": "c21087968093ab04c8f12a2f23a82a2538c87b11cd1ed2f142e7a42dfc2839c9",
+  "source_run": "/tmp/wu-mixed-pruning-batch-v1",
+  "resume_pid": 2264309,
+  "resume_start_ticks": "2026949642",
+  "pipeline": "/tmp/wu-mixed-pruning-pipeline-v2/process.json",
+  "observed_unix": 1793348408.581864,
+  "interrupted_child_exit_code": -15,
+  "interrupted_wrapper_tool_exit_code": 1
+}

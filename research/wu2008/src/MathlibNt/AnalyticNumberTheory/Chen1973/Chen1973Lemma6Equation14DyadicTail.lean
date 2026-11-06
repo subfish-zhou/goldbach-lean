@@ -450,18 +450,6 @@ theorem chen1973Lemma6_CH_polynomial_moment_fixed_log_five
       · exact mul_nonneg (mul_nonneg (by positivity) hC) hA
     _ = _ := by unfold chen1973Lemma6Eq14DyadicConstant; ring
 
-/-- Explicit binder order: one absolute C works for every finite CH polynomial
-and all imaginary parts of s, with no conductor-order assumption. -/
-theorem chen1973Lemma6_CH_polynomial_moment_exists_absolute :
-    ∃ C : ℝ, 0 < C ∧ ∀ (H D Q : ℕ) (s : ℂ),
-      2 ≤ H → 0 < D → 1 ≤ s.re →
-      (∑ d ∈ Ioc D Q, (1 / (d.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter d,
-          ‖∑ n ∈ Icc (1 : ℤ) (H * H : ℕ),
-            chen1973Lemma6CHWeightedCoefficient H s n * χ.1 (n : ZMod d)‖ ^ 2) ≤
-        C * ((Q : ℝ) / H + 1 / D) * (1 + Real.log (H + 1 : ℕ)) ^ 5 := by
-  exact ⟨chen1973Lemma6Eq14DyadicConstant, chen1973Lemma6Eq14DyadicConstant_pos,
-    chen1973Lemma6_CH_polynomial_moment_fixed_log_five⟩
 
 
 end AnalyticNumberTheory.LargeSieve

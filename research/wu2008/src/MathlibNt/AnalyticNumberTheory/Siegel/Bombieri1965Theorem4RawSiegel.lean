@@ -170,12 +170,5 @@ theorem fourFactor_rawLandauSiegelLowerBound : RawLandauSiegelLowerBound := by
       (by linarith [hβ.1]) hz
   · exact hn
 
-/-- Requested headline specialization; no lower-bound source is a hypothesis. -/
-theorem fourFactor_raw_siegel_one_over_ten_thousand :
-    ∃ c : ℝ, 0 < c ∧
-      ∀ (q : ℕ) [NeZero q] (χ : DirichletCharacter ℂ q),
-        χ.IsPrimitive → χ^2 = 1 → χ ≠ 1 →
-        c*(q:ℝ)^(-(1/10000:ℝ)) ≤ (χ.LFunction 1).re :=
-  fourFactor_rawLandauSiegelLowerBound (1/10000) (by norm_num)
 
 end AnalyticNumberTheory.LargeSieve

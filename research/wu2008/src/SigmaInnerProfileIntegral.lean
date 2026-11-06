@@ -80,8 +80,6 @@ theorem original_d0Lower_le_profile : d0Lower NineFeedbackStrength.originalH ≤
   exact div_le_div_of_nonneg_left original_numerator_pos.le (sub_pos.mpr D0_lt_one)
     (by linarith only [SigmaRemaining.d0Paid_le])
 
-theorem original_d0Lower_pos : 0 < d0Lower NineFeedbackStrength.originalH :=
-  div_pos original_numerator_pos (sub_pos.mpr SigmaRemaining.d0Paid_lt_one)
 
 theorem old_finiteLower_le : SigmaRemaining.finiteLower NineFeedbackStrength.originalH ≤
     d0Lower NineFeedbackStrength.originalH :=

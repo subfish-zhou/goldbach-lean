@@ -35,17 +35,6 @@ theorem transferLower_le_original {q : ℕ → ℝ}
     exact mul_le_mul (hq i hi2 hib.2) (SourceLogRational.lower_le_log hratio)
       (SourceLogRational.lower_nonneg hratio) ((hq0 i).trans (hq i hi2 hib.2))
 
-theorem transferLower_nonneg {q : ℕ → ℝ} (hq0 : ∀ i, 0 ≤ q i)
-    {j : ℕ} (hj : j ≤ 29) : 0 ≤ transferLower q j := by
-  have hs := WuSource.SrcGrid.start_bounds_all hj
-  have hr : 1 ≤ rNode (max 2 (j-10))/(rNode j-1) :=
-    (one_le_div (by linarith [hs.2.2.1])).mpr hs.2.2.2
-  apply add_nonneg
-  · exact mul_nonneg (RationalCandidate.lowerH_nonneg 0) (SourceLogRational.lower_nonneg hr)
-  · apply sum_nonneg
-    intro i _
-    exact mul_nonneg (hq0 i) (SourceLogRational.lower_nonneg
-      ((one_le_div (rNode_pos _)).mpr (rNode_mono (by omega))))
 
 end WuPaper.R2Xi.SourceRational
 #print axioms WuPaper.R2Xi.SourceRational.transferLower_le_original

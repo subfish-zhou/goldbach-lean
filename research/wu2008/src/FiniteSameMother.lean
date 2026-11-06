@@ -11,8 +11,6 @@ def Qn (n : ℕ) : ℝ := LogP2.Qlog + (DirectFiniteF6.C n-FullSourceLog.GammaLo
 
 def Qbest (n : ℕ) : ℝ := max LogP2.Qlog (Qn n)
 
-theorem Qn_identity (n : ℕ) :
-    Qn n = LogP2.Qlog + (DirectFiniteF6.C n-FullSourceLog.GammaLog6)/4 := rfl
 
 theorem Qn_monotone : Monotone Qn := by
   intro n m hnm
@@ -20,13 +18,8 @@ theorem Qn_monotone : Monotone Qn := by
   unfold Qn
   linarith only [h]
 
-theorem Qbest_monotone : Monotone Qbest := by
-  intro n m hnm
-  exact max_le_max le_rfl (Qn_monotone hnm)
 
-theorem Qlog_le_Qbest (n : ℕ) : LogP2.Qlog ≤ Qbest n := le_max_left _ _
 
-theorem Qn_le_Qbest (n : ℕ) : Qn n ≤ Qbest n := le_max_right _ _
 
 /-- Discharge the only slot with the unconditional, symbolic finite F6 theorem. -/
 theorem supplied_sixth (n : ℕ) : SixthSlotAssembly.SixthLower (DirectFiniteF6.C n) := by

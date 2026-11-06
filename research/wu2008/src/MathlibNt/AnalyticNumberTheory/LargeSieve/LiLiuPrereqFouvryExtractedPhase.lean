@@ -96,9 +96,6 @@ def wExtractedArithmeticPhase (a h : ℤ) (z : WExtractedTuple) : ℂ :=
   fourier h (wSmallRootPhase v.d v.d₁ v.δ v.δ₁ v.δ₂
     v.k₁ v.k₂ v.n₁ v.n₂ a) * fourier h (wReciprocalPhase v a)
 
-theorem norm_wExtractedArithmeticPhase (a h : ℤ) (z : WExtractedTuple) :
-    ‖wExtractedArithmeticPhase a h z‖ = 1 := by
-  simp only [wExtractedArithmeticPhase, norm_mul, fourier_apply, Circle.norm_coe, mul_one]
 
 /-- The fixed-key sum now has only a five-variable analytic weight.
 The original cutoff, low-omega tests, compatibility, and signed coefficients

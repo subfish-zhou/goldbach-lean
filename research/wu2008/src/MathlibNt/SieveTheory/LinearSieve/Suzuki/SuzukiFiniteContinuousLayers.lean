@@ -178,41 +178,7 @@ theorem dPowDensity_nonneg {κ t : ℝ} (hκ : 0 ≤ κ) (ht : 0 ≤ t) :
     0 ≤ dPowDensity κ t :=
   mul_nonneg hκ (Real.rpow_nonneg ht _)
 
-theorem suzukiLayerNumerator_one_nonneg {κ β s : ℝ}
-    (hκ : 0 ≤ κ) (hβ : 1 ≤ β) (hs : β - 1 < s) :
-    0 ≤ suzukiLayerNumerator κ β 1 s := by
-  rw [suzukiLayerNumerator_one]
-  apply intervalIntegral.integral_nonneg
-  · exact min_le_right _ _
-  · intro t ht
-    apply dPowDensity_nonneg hκ
-    have hslow : 0 < s := lt_of_le_of_lt (by linarith) hs
-    have hmin : 0 ≤ baseLower β s := by
-      rw [baseLower]
-      exact le_min hslow.le (by linarith)
-    exact hmin.trans ht.1
 
-/-- One source-correct recursive positivity step: the induction hypothesis is on
-the preceding normalized layer. -/
-theorem suzukiLayerNumerator_succ_succ_nonneg
-    {κ β s : ℝ} {n : ℕ} (hκ : 0 ≤ κ) (hβ : 1 ≤ β)
-    (hprev : ∀ t ∈ Set.Icc (recursionLower β s (n + 2)) (β + (n + 2)),
-      0 ≤ suzukiLayer κ β (n + 1) (t - 1)) :
-    0 ≤ suzukiLayerNumerator κ β (n + 2) s := by
-  rw [suzukiLayerNumerator_succ_succ]
-  apply intervalIntegral.integral_nonneg
-  · simpa only [recursionLower, Nat.cast_add, Nat.cast_ofNat] using
-      (min_le_right (max s (β + sourceEpsilon (n + 2))) (β + (n + 2 : ℕ)))
-  · intro t ht
-    exact mul_nonneg (hprev t ht)
-      (dPowDensity_nonneg hκ (by
-        have hthreshold : 0 ≤ β + sourceEpsilon (n + 2) := by
-          exact add_nonneg (by linarith) (Nat.cast_nonneg _)
-        have hupper : 0 ≤ β + (n + 2 : ℕ) := by positivity
-        have hlower : 0 ≤ recursionLower β s (n + 2) := by
-          rw [recursionLower]
-          exact le_min (hthreshold.trans (le_max_right _ _)) hupper
-        exact hlower.trans ht.1))
 
 @[simp] theorem finiteSideLayer_zero (side : Side) (κ β s : ℝ) :
     finiteSideLayer side κ β 0 s = 0 := by simp [finiteSideLayer]
@@ -226,10 +192,5 @@ theorem finiteSourceLayer_eq_upper_of_odd (κ β : ℝ) {N : ℕ} (hN : Odd N) (
   rw [Nat.odd_iff.mp hN]
   rfl
 
-theorem finiteSourceLayer_eq_lower_of_even (κ β : ℝ) {N : ℕ} (hN : Even N) (s : ℝ) :
-    finiteSourceLayer κ β N s = finiteSideLayer .lower κ β N s := by
-  unfold finiteSourceLayer finiteSideLayer
-  rw [Nat.even_iff.mp hN]
-  rfl
 
 end MathlibNt.SieveTheory.SuzukiFiniteContinuousLayers

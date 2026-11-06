@@ -215,27 +215,5 @@ theorem panTypeIWeight3_le_Q_mul_sumTwoPowWeighted (Q : ℕ) :
 
 /-! ## 4. W1 theorem -/
 
-/-- **W1 theorem**:
-`Σ_{q≤Q} μ²(q)·3^{ω(q)}·φ(q)/q ≤ C·Q·(log(Q+2))²`
-for all `Q : ℕ`.
-Apply lemma A (`φ/q ≤ 1`), restrict to squarefree integers,
-expand by lemma B, exchange sums and count positive multiples
-by `Q/d`, restore `μ²`, and apply lemma C
-(`sumTwoPowWeighted_le_polylog`).
-The shift `Q+2` matches lemma C; replacing it by `Q`
-would make the bound false at `Q = 1`. -/
-theorem panTypeIWeight3_le_polylog :
-    ∃ C : ℝ, 0 < C ∧ ∀ Q : ℕ,
-      panTypeIWeight3 Q ≤ C * (Q : ℝ) * (Real.log (Q + 2)) ^ (2 : ℝ) := by
-  classical
-  obtain ⟨C₁, hC₁pos, hC₁⟩ := sumTwoPowWeighted_le_polylog
-  refine ⟨C₁, hC₁pos, ?_⟩
-  intro Q
-  calc
-    panTypeIWeight3 Q ≤ (Q : ℝ) * sumTwoPowWeighted Q :=
-      panTypeIWeight3_le_Q_mul_sumTwoPowWeighted Q
-    _ ≤ (Q : ℝ) * (C₁ * (Real.log (Q + 2)) ^ (2 : ℝ)) := by
-          exact mul_le_mul_of_nonneg_left (hC₁ Q) (Nat.cast_nonneg Q)
-    _ = C₁ * (Q : ℝ) * (Real.log (Q + 2)) ^ (2 : ℝ) := by ring
 
 end AnalyticNumberTheory.Sieve

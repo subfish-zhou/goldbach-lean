@@ -82,28 +82,6 @@ theorem h_lower_on {δ u : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
       (by linarith [hu.1,hv.1]) (by linarith [hv.2])) (by linarith [hu.1,hv.1])
   linarith only [hc,hi,h_seven_halves hδ hδhi]
 
-/-- The second cross step reaches H(4), beyond the original short seed interval. -/
-theorem H_four {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) :
-    seed/182 ≤ wuImprovementLimit true δ 4 := by
-  have hc := wuImprovementLimit_upper_cross (s := (4 : ℝ)) (t := (9/2 : ℝ))
-    hδ (by linarith) (by norm_num) (by norm_num) (by norm_num)
-  norm_num only at hc
-  have hnonneg := wuImprovementLimit_nonneg true hδ (by linarith : δ < 1/2)
-    (s := (9/2 : ℝ)) (by norm_num) (by norm_num)
-  have hi : seed/182 ≤ ∫ u in (3 : ℝ)..(7/2), wuImprovementLimit false δ u/u := by
-    have hm : (∫ u in (3 : ℝ)..(7/2), (seed/26)*(2/7)) ≤
-        ∫ u in (3 : ℝ)..(7/2), wuImprovementLimit false δ u/u := by
-      apply intervalIntegral.integral_mono_on (by norm_num) intervalIntegrable_const
-        (wuImprovementLimit_div_intervalIntegrable false hδ (by linarith)
-          (by norm_num) (by norm_num) (by norm_num))
-      intro u hu
-      apply (le_div_iff₀ (by linarith [hu.1])).2
-      have hs := h_lower_on hδ hδhi hu
-      have hh := mul_le_mul_of_nonneg_left hu.2 seed_pos.le
-      nlinarith only [hs,hh]
-    rw [intervalIntegral.integral_const,smul_eq_mul] at hm
-    linarith only [hm]
-  linarith only [hc,hnonneg,hi]
 
 end
 end Wu2008DoubleSieve.HighSixPhase7

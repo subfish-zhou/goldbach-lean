@@ -308,10 +308,6 @@ theorem liuSelbergArithmeticFunction_eq_convolution :
   rw [liuSelbergCorrection, ← mul_assoc,
     liuReciprocal_mul_liuMoebiusReciprocal, one_mul]
 
-theorem liuSelbergArithmetic_eq_convolution (N n : ℕ) :
-    liuSelbergArithmetic N n =
-      (liuReciprocal * liuSelbergCorrection N) n := by
-  rw [← liuSelbergArithmeticFunction_apply, liuSelbergArithmeticFunction_eq_convolution]
 
 theorem liuSelbergCorrection_prime_pow_sum
     {N p k : ℕ} (hp : p.Prime) :
@@ -340,10 +336,6 @@ private theorem liuSelbergArithmeticFunction_prime_pow_one
       (hp.coprime_iff_not_dvd.mpr hpn)]
   simp [hp.primeFactors]
 
-private theorem liuSelbergArithmeticFunction_prime_pow_zero
-    (N p : ℕ) :
-    liuSelbergArithmeticFunction N (p ^ 0) = 1 := by
-  simp
 
 private theorem liuSelbergArithmeticFunction_prime_pow_eq_zero
     {N p k : ℕ} (hp : p.Prime) (hk : 2 ≤ k) :
@@ -367,10 +359,6 @@ private theorem liuSelbergArithmeticFunction_prime_pow_eq_zero_of_dvd
     Nat.Coprime.of_dvd_left (dvd_pow_self p (by omega)) h.2
   exact (hp.coprime_iff_not_dvd.mp hcop) hpn
 
-private theorem liuMoebiusReciprocal_prime_pow_zero
-    (p : ℕ) :
-    liuMoebiusReciprocal (p ^ 0) = 1 := by
-  simp [liuMoebiusReciprocal]
 
 @[simp] theorem liuMoebiusReciprocal_one :
     liuMoebiusReciprocal 1 = 1 := by

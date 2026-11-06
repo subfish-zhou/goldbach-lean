@@ -101,7 +101,5 @@ theorem actual_below_target : U8CanonicalMother.improvedCoefficient < 8*log (500
   have hl := log_lower (by norm_num : (1:ℝ) ≤ 5000/4469)
   linarith only [ha,hl]
 
-theorem not_target_below_actual : ¬ 8*log (5000/4469) < U8CanonicalMother.improvedCoefficient :=
-  not_lt.mpr actual_below_target.le
 
 end MiddleCorrelatedActual

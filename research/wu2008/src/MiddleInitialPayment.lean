@@ -45,9 +45,6 @@ theorem gain_bounds : (23498/1000000:ℝ) < gain ∧ gain < 23499/1000000 := by
   rw [gain_exact]
   norm_num
 
-theorem true_gain_bounds : (23498/1000000:ℝ) < gainReal ∧ gainReal < 29135/1000000 := by
-  have hu : paid V lowerLog < (29135/1000000:ℝ) := by norm_num [paid,V,lowerLog,upperLog]
-  exact ⟨gain_bounds.1.trans_le payment.1,payment.2.trans_lt hu⟩
 
 /-- Only this middle upper is replaced. No lower-side recovery is reused. -/
 def newMiddleUpper : ℝ := ExactWeightTripleEnclosure.middleUpper-gain
@@ -58,8 +55,5 @@ theorem middle_upper : BaseGSharedActualRecovery.middleKernel ≤ newMiddleUpper
   unfold newMiddleUpper gain
   linarith only [hm,hp]
 
-theorem middle_descent : (23498/1000000:ℝ) < ExactWeightTripleEnclosure.middleUpper-newMiddleUpper := by
-  unfold newMiddleUpper
-  linarith only [gain_bounds.1]
 
 end MiddleInitialPayment

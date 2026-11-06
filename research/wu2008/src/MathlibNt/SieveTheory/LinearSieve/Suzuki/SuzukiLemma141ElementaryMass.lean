@@ -100,15 +100,6 @@ private theorem elementaryMass_nonneg (S : BoundingSieve) (n z : ℕ) :
   have htSub := (mem_powersetCard.mp ht).1 hp
   exact nu_nonneg_of_mem_primeFactors S (mem_filter.mp htSub).1
 
-private theorem sourceDiscreteEuler_nonneg (S : BoundingSieve) (z : ℕ) :
-    0 ≤ sourceDiscreteEuler S z := by
-  unfold sourceDiscreteEuler
-  apply prod_nonneg
-  intro p hp
-  have hpP := (mem_filter.mp hp).1
-  have hlt := S.nu_lt_one_of_prime p (Nat.prime_of_mem_primeFactors hpP)
-    (Nat.mem_primeFactors.mp hpP).2.1
-  linarith
 
 private theorem sourceDiscreteEuler_le_one (S : BoundingSieve) (z : ℕ) :
     sourceDiscreteEuler S z ≤ 1 := by

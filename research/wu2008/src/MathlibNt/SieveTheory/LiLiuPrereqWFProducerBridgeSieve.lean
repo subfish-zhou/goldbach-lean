@@ -181,15 +181,6 @@ theorem densityBoundingSieve_localProduct {K : ℝ} (hK : 0 ≤ K)
     rw [← hfilter]
     exact densityBoundingSieve_dimensionOne B hB g hgm hg hdim w z hw hwz
 
-theorem densityBoundingSieve_empty_carrier
-    (hz : ∀ p ∈ B, g p = 0) :
-    (densityBoundingSieve B hB g hgm hg).prodPrimes = 1 := by
-  have hE : nonzeroDensityPrimes B g = ∅ := by
-    apply Finset.eq_empty_iff_forall_notMem.mpr
-    intro p hp
-    exact (Finset.mem_filter.mp hp).2 (hz p (Finset.mem_filter.mp hp).1)
-  change (nonzeroDensityPrimes B g).prod id = 1
-  rw [hE, Finset.prod_empty]
 
 #check densityBoundingSieve
 #print axioms densityBoundingSieve

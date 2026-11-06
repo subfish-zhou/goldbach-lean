@@ -134,12 +134,5 @@ theorem eval_zero (L : List (ℝ × ℝ × ℝ)) (t : ℝ)
     rw [eval_skip _ _ _ _ _ (hL _ (List.mem_cons_self ..))]
     exact ih (fun r hr => hL r (List.mem_cons_of_mem _ hr))
 
-/-- The convention is zero at 2, below 2, and beyond the last cell at 4.1. -/
-theorem profile_zero_outside (t : ℝ) (ht : t ≤ 2 ∨ 41 / 10 < t) : profile t = 0 := by
-  apply eval_zero
-  intro r hr
-  simp only [table, List.mem_cons, List.not_mem_nil, or_false] at hr
-  rcases hr with h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h
-  all_goals subst r; rintro ⟨h₁,h₂⟩; rcases ht with ht | ht <;> dsimp only at h₁ h₂ <;> linarith
 
 end Wu08Staircase

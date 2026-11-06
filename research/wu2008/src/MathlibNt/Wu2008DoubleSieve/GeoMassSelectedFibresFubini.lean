@@ -51,13 +51,6 @@ theorem fibreKernel_inner (m k : ℕ) (a b t : ℝ) :
     rfl
   · simp [fibreKernel, ht]
 
-/-- Absolute integrability of the literal one-dimensional fibre profile. -/
-theorem fibre_profile_integrable (m k : ℕ) {a b : ℝ} (ha : 0 < a) :
-    IntegrableOn (fun t => pureOrderedMass m a t * pureOrderedMass k t b / t^2)
-      (Icc a b) := by
-  have hi := (fibreKernel_integrable m k (b := b) ha).integral_prod_left
-  simp_rw [fibreKernel_inner] at hi
-  exact (integrable_indicator_iff measurableSet_Icc).mp hi
 
 /-- The selected fibre identity before the harmless dimension cast. -/
 theorem selectedOrderedMass_fibre_add (m k : ℕ) {a b : ℝ}

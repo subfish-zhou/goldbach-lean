@@ -198,33 +198,7 @@ theorem vaughanBilinearBlock_norm_sq_le
       (fun d => ‖α d * χ.1 (d : ZMod q)‖)
       (fun d => ‖vaughanBilinearInner β c y E q d χ‖)
 
-/-- Primitive-character block-norm interface.  A future bilinear primitive
-large sieve can consume the remaining sum of outer energies directly. -/
-theorem sum_primitive_vaughanBilinearBlock_norm_sq_le
-    (α β : ℕ → ℂ) (c : ℕ → ℂ) (y D E q : ℕ) :
-    (∑ χ : PrimitiveCharacter q,
-      ‖vaughanBilinearBlock α β c y D E q χ‖ ^ 2) ≤
-      ∑ χ : PrimitiveCharacter q,
-        vaughanBilinearLeftEnergy α D q χ *
-          vaughanBilinearOuterEnergy β c y D E q χ := by
-  exact Finset.sum_le_sum fun χ _ =>
-    vaughanBilinearBlock_norm_sq_le α β c y D E q χ
 
-/-- Literal physical scale after Cauchy in `d`: a pointwise bound on the
-twisted left coefficient costs exactly the block length `D`, not `D²`. -/
-theorem vaughanBilinearLeftEnergy_le_blockLength
-    (α : ℕ → ℂ) (D q : ℕ) (χ : PrimitiveCharacter q) (A : ℝ)
-    (hA : ∀ d ∈ vaughanDyadicBlock D,
-      ‖α d * χ.1 (d : ZMod q)‖ ^ 2 ≤ A) :
-    vaughanBilinearLeftEnergy α D q χ ≤ (D : ℝ) * A := by
-  unfold vaughanBilinearLeftEnergy
-  calc
-    (∑ d ∈ vaughanDyadicBlock D,
-        ‖α d * χ.1 (d : ZMod q)‖ ^ 2) ≤
-        ∑ _d ∈ vaughanDyadicBlock D, A :=
-      Finset.sum_le_sum fun d hd => hA d hd
-    _ = ((vaughanDyadicBlock D).card : ℝ) * A := by simp
-    _ = (D : ℝ) * A := by rw [card_vaughanDyadicBlock]
 
 /-- Vaughan's actual factor weights for the Type-II rectangle. -/
 def vaughanMoebiusCoeff (d : ℕ) : ℂ := ((ArithmeticFunction.moebius d : ℤ) : ℂ)
@@ -311,21 +285,6 @@ theorem vaughanTypeIIBlockPrefix_eq_bilinear
   exact vaughanBilinearBlockPrefix_eq_separated
     vaughanMoebiusCoeff vaughanMangoldtCoeff b y D E q χ hD hE
 
-/-- Finite family version: once positive dyadic block bases have been selected,
-the whole block sum is reindexed rectangle by rectangle.  Disjoint-cover
-bookkeeping is intentionally separate from this algebraic theorem. -/
-theorem sum_vaughanTypeIIBlockPrefix_eq_bilinear
-    (b : ℕ → ℂ) (y q : ℕ) (χ : PrimitiveCharacter q)
-    (DS ES : Finset ℕ)
-    (hDS : ∀ D ∈ DS, 0 < D) (hES : ∀ E ∈ ES, 0 < E) :
-    (∑ D ∈ DS, ∑ E ∈ ES, vaughanTypeIIBlockPrefix b y D E q χ) =
-      ∑ D ∈ DS, ∑ E ∈ ES, vaughanTypeIIBilinearBlock b y D E q χ := by
-  apply Finset.sum_congr rfl
-  intro D hD
-  apply Finset.sum_congr rfl
-  intro E hE
-  exact vaughanTypeIIBlockPrefix_eq_bilinear b y D E q χ
-    (hDS D hD) (hES E hE)
 
 end
 

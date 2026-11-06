@@ -37,28 +37,7 @@ noncomputable def caseIIQDRelativeEndpointCoeffA0
     (_d Δ _C K : ℝ) : ℝ :=
   216 * K ^ 2 * (1 + 3 * K) * ((3 : ℝ) / 2) ^ Δ
 
-/-- Exact `a₀ + σ a₁` decomposition of the algebraic coefficient occurring in
-`caseIIAlgebraicEndpointCoeff`.  The statement displays that coefficient
-rather than using its coarse name as a black box. -/
-theorem caseIIAlgebraicEndpointCoeff_exact_sigma_split
-    (N : ℕ) (σ K : ℝ) :
-    9 * K * finiteSourceLayer 1 2 N 3 +
-        18 * K ^ 2 * σ * (1 + 3 * K) *
-          finiteSourceLayer 1 2 (N - 1) 2 =
-      caseIIAlgebraicEndpointCoeffA0 N K +
-        σ * caseIIAlgebraicEndpointCoeffA1 N K := by
-  unfold caseIIAlgebraicEndpointCoeffA0 caseIIAlgebraicEndpointCoeffA1
-  ring
 
-/-- Exact extraction of the single factor `σ` from the cubic `q_D(3)` endpoint
-coefficient. -/
-theorem caseIIQDEndpointCoeff_exact_sigma_split
-    (d Δ σ C K : ℝ) :
-    72 * K ^ 2 * σ * (1 + 3 * K) * C * Real.exp (Real.sqrt K) *
-        ((3 : ℝ) / 2) ^ Δ =
-      σ * caseIIQDEndpointCoeffA0 d Δ C K := by
-  unfold caseIIQDEndpointCoeffA0
-  ring
 
 /-- The raw cubic endpoint coefficient is paid by one (not two) copies of the
 common scale. -/
@@ -139,34 +118,6 @@ theorem caseII_positiveEndpoint_packet_fixed_coefficients
       caseIIAlgebraicEndpointCoeffA1 caseIIQDEndpointCoeffA0;
     ring
 
-/-- The same restatement specialized to the production normalization
-`L = (log D)^(-Δ)` and the production error envelope.  This formulation makes
-its correct location manifest and is directly consumable by eventual bounds. -/
-theorem caseII_positiveEndpoint_relative_packet_fixed_coefficients
-    (H : Section13HatLayers)
-    {N : ℕ} {D d Δ σ s C K I B0 V lhs : ℝ}
-    (hpacket :
-      lhs ≤ B0 + V *
-        (I +
-          ((9 * K * finiteSourceLayer 1 2 N 3 +
-                18 * K ^ 2 * σ * (1 + 3 * K) *
-                  finiteSourceLayer 1 2 (N - 1) 2) *
-                (Real.log D) ^ (Δ - 1) +
-            (72 * K ^ 2 * σ * (1 + 3 * K) * C *
-                Real.exp (Real.sqrt K) * ((3 : ℝ) / 2) ^ Δ) /
-              Real.log D +
-            27 * K * (Real.log D) ^ (Δ - 1) *
-              errorEnvelope H N D d s) * (Real.log D) ^ (-Δ))) :
-      lhs ≤ B0 + V *
-        (I +
-          ((caseIIAlgebraicEndpointCoeffA0 N K *
-                (Real.log D) ^ (Δ - 1) +
-            σ * caseIIAlgebraicEndpointCoeffA1 N K *
-                (Real.log D) ^ (Δ - 1) +
-            σ * caseIIQDEndpointCoeffA0 d Δ C K / Real.log D +
-            27 * K * (Real.log D) ^ (Δ - 1) *
-              errorEnvelope H N D d s) * (Real.log D) ^ (-Δ))) := by
-  exact caseII_positiveEndpoint_packet_fixed_coefficients hpacket
 
 
 end MathlibNt.SieveTheory

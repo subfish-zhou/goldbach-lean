@@ -168,45 +168,5 @@ theorem ordinaryRosser_upper_density_canonical {ρ : ℝ} (hρ : 0 < ρ) :
   simpa only [jr1965F_eq_of_le_three hshi, jurkatRichertUpperLinearSieveFactor,
     if_pos hshi] using h
 
-/-- A genuine upper sieve estimate for the actual unscaled source, with
-canonical `F` and the literal ordinary AP remainder. -/
-theorem ordinarySieve_upper_canonical_with_AP_error {ρ : ℝ} (hρ : 0 < ρ) :
-    ∃ z0 : ℝ, ∀ N d Q : ℕ, ∀ _he : Even N, 2 ≤ N → ∀ z level s : ℝ,
-      z0 ≤ z → 2 ≤ z → 0 < level →
-      s = Real.log level / Real.log z → 3 / 2 ≤ s → s ≤ 3 →
-      ⌊level⌋₊ + 1 ≤ Q / d + 1 →
-      (sourceSieveCount N d (d * N) z : ℝ) ≤
-        (AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418.logarithmicIntegral N /
-          (Nat.totient d : ℝ)) *
-          ((jr1965F s + ρ) *
-            ∏ p ∈ primeWindow (d * N) 0 z, (1 - 1 / ((p : ℝ) - 1))) +
-          ∑ q ∈ (Icc 1 (Q / d)).filter (fun q => q.Coprime (d * N)),
-            |primeAPError N (d * q) N| := by
-  obtain ⟨z0, hdensity⟩ := ordinaryRosser_upper_density_canonical hρ
-  refine ⟨z0, ?_⟩
-  intro N d Q he hN z level s hz0 hz hl hs hslo hshi hD
-  have hlogz : 0 < Real.log z := Real.log_pos (by linarith)
-  have hs1 : 1 ≤ Real.log level / Real.log z := by rw [← hs]; linarith
-  have hloglevel : Real.log z ≤ Real.log level := by
-    simpa only [one_mul] using (le_div_iff₀ hlogz).mp hs1
-  have hzlevel : z ≤ level := (Real.log_le_log_iff (by linarith) hl).mp hloglevel
-  have hlevelD : level < (⌊level⌋₊ + 1 : ℕ) := by
-    exact_mod_cast Nat.lt_floor_add_one level
-  have hzD : z ≤ (⌊level⌋₊ + 1 : ℕ) := hzlevel.trans hlevelD.le
-  have hD1 : 1 < ⌊level⌋₊ + 1 := by
-    have hD2 : (2 : ℝ) ≤ (⌊level⌋₊ + 1 : ℕ) := hz.trans hzD
-    exact_mod_cast (show (1 : ℝ) < (⌊level⌋₊ + 1 : ℕ) by linarith)
-  have hfinite := ordinaryRosser_upper_finite (N := N) (d := d) hD1 hzD
-  have hden := hdensity N d he z level s hz0 hz hl hs hslo hshi
-  have hX : 0 ≤
-      AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418.logarithmicIntegral N /
-        (Nat.totient d : ℝ) :=
-    div_nonneg (LiuWeight.liuLogarithmicIntegral_nonneg 0 (by norm_num)
-      (by exact_mod_cast hN)) (Nat.cast_nonneg _)
-  have hmain := mul_le_mul_of_nonneg_left hden hX
-  have herr := ordinaryRosserRemainder_le_AP (upper := true) (N := N) (d := d)
-    (Q := Q) z hD
-  have habs := le_abs_self (ordinaryRosserRemainder true N d (⌊level⌋₊ + 1) z)
-  linarith
 
 end Wu2008DoubleSieve

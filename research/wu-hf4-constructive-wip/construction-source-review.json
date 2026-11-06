@@ -1,0 +1,20 @@
+{
+  "status": "SOURCE_REVIEW_OF_ALREADY_IMPLEMENTED_CONSTRUCTION_NOT_NEW_FORMAL_ACCEPTANCE",
+  "computed_intermediate_fields": 74200,
+  "intermediate_payload_function": false,
+  "constructs": [
+    "addition",
+    "multiplication",
+    "reciprocal"
+  ],
+  "retained_shared_seeds": 47,
+  "retained_endpoint_targets": 80,
+  "denominator": 100000000000000,
+  "canonical_fields_sha256": "e797b939f8cbb0a48f5c2b0e75853807de778b560a3a5d1fc75d3ef1eda0071f",
+  "sources": {
+    "Hf4ConstructiveDagData": "ecbe88019a941520360bf8175d428492ce7a57a42c42d9740c3ed8950bcfdd73",
+    "Hf4ConstructiveTableData": "76c8f3a83cef23fd234bdb4fb3e28a69a0255a284d1c434be36fde993ace6f27",
+    "Hf4ConstructionConditions": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96"
+  },
+  "current_candidate_installed": false
+}

@@ -17,11 +17,6 @@ theorem exact_local_gain_lower :
   norm_num at h ⊢
   exact h
 
-/-- The resulting coefficient is strictly above the unmodified exactQuarter. -/
-theorem exact_coefficient_strict :
-    GCurvatureChord.exactQuarter < GCurvatureChord.exactQuarter+
-      (3629895479136046171/11308652260919376406875 : ℝ) := by
-  linarith
 
 /-- Positivity of the original scale; no independent counting estimate is used. -/
 theorem original_scale_positive {N : ℕ} (hN : 512 ≤ N) :

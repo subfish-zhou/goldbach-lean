@@ -45,13 +45,6 @@ theorem correction_nonneg {z : ℝ} (hz : z ≤ 7/16) : 0 ≤ correction z := by
 noncomputable def correctionKernel (x y : ℝ) : ℝ :=
   2*(lam-x-y)*correction (1/2-x-y)/(x*y)
 
-theorem correctionKernel_nonneg {x y : ℝ} (hx : x ∈ Icc a b) (hy : y ∈ Icc b (lam-x)) :
-    0 ≤ correctionKernel x y := by
-  have hz := retained_z_bounds hx hy
-  unfold correctionKernel
-  exact div_nonneg (mul_nonneg (mul_nonneg (by norm_num) (by linarith [hy.2]))
-    (correction_nonneg (hz.2.1.trans hz.2.2.le)))
-    (mul_pos (geometry.1.trans_le hx.1) (geometry.2.2.1.trans_le hy.1)).le
  theorem retained_joint_lower {x y : ℝ} (hx : x ∈ Icc a b)
     (hy : y ∈ Icc b (lam-x)) :
     polynomialKernel x y + correctionKernel x y ≤ truncatedSixthZeroDeltaRegular 0 (x,y) := by
@@ -106,9 +99,6 @@ noncomputable def polynomialPart (x y : ℝ) : ℝ := A1 x*y+A2 x*y^2/2+A3 x*y^3
 noncomputable def innerPrimitive (x y : ℝ) : ℝ := (2/x)*(A0 x*log y+polynomialPart x y)
 noncomputable def movingCorrection (x : ℝ) : ℝ := innerPrimitive x (lam-x)-innerPrimitive x b
 
-theorem correction_initial (x : ℝ) : correction (1/2-x) = d0 x := by
-  unfold correction d0
-  ring
 
 theorem initial_nonneg {x : ℝ} (hx : x ∈ Icc a b) : 0 ≤ d0 x := by
   have ha : (1/16 : ℝ) < a := by norm_num [a,truncatedSixthLowerAlpha]

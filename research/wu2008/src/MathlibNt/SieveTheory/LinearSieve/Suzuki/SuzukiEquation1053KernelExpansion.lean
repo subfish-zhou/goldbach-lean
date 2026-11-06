@@ -31,11 +31,6 @@ structure MinusFirstCrossingCandidate (R ξ : ℝ → ℝ) (c : ℝ) where
   window_upper : ∀ t ∈ Icc (s - 1) s,
     envelopeMinus R ξ c t ≤ envelopeMinus R ξ c (s - 1)
 
-/-- Explicit κ=1 adjoint positivity on the complete shifted unit window. -/
-lemma explicit_adjoint_window_pos {s t : ℝ} (hs : 2 ≤ s)
-    (ht : t ∈ Icc (s - 1) s) :
-    0 < explicitKappaOneAdjointPlus (t + 1) :=
-  explicitKappaOneAdjointPlus_pos (by linarith [ht.1])
 
 /-- Source-correct normalized pairing step preceding (10.56).  Notice the
 factor `W₋(s-1)` on the right. -/
@@ -95,17 +90,7 @@ adjoint estimates. -/
 def Equation1053EarliestScalarInequality (ξ : ℝ → ℝ) (c s : ℝ) : Prop :=
   equation1056ScalarRatio ξ c s < 1
 
-/-- The explicit adjoint input to (10.47) is already internal: its shifted
-logarithmic slope differs from `2/s` by at most `2/s³`. -/
-theorem explicit_adjoint_1041 {s : ℝ} (hs : 2 ≤ s) :
-    |kappaOneLogSlope s - 2 / s| ≤ 2 / s ^ 3 :=
-  kappaOne_logSlope_error hs
 
-/-- Likewise the differentiated rational bound used in (10.51). -/
-theorem explicit_adjoint_1042 {s : ℝ} (hs : 2 ≤ s) :
-    |-4 * (2 * s ^ 2 + 1) / (2 * s ^ 2 - 1) ^ 2 + 2 / s ^ 2| ≤
-      4 / s ^ 4 :=
-  kappaOne_logSlope_deriv_error hs
 
 
 end Section10Equation1053KernelExpansion

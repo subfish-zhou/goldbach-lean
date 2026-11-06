@@ -46,16 +46,6 @@ noncomputable def goldbachB9LogGridUpperSum (n : ℕ) : ℝ :=
         (goldbachB9AlphaGridPoint n q.1) (goldbachB9AlphaGridPoint n (q.1 + 1))
         (goldbachB9BetaGridPoint n q.2) (goldbachB9BetaGridPoint n (q.2 + 1))
 
-theorem goldbachB9LogGridMajorant_eq_primeReciprocalProducts (n N : ℕ) :
-    goldbachB9LogGridMajorant n N =
-      ∑ q ∈ goldbachB9LogGridCells n,
-        (1 / (1 - goldbachB9AlphaGridPoint n (q.1 + 1) -
-          goldbachB9BetaGridPoint n (q.2 + 1))) *
-          (PrimeReciprocalLogScale.primeReciprocalLogInterval N
-            (goldbachB9AlphaGridPoint n q.1) (goldbachB9AlphaGridPoint n (q.1 + 1)) *
-          PrimeReciprocalLogScale.primeReciprocalLogInterval N
-            (goldbachB9BetaGridPoint n q.2) (goldbachB9BetaGridPoint n (q.2 + 1))) := by
-  simp only [goldbachB9LogGridMajorant, primeReciprocalLogRectangle_eq_mul]
 
 theorem mem_goldbachB9LogGridCells_iff {n : ℕ} {q : Fin n × Fin n} :
     q ∈ goldbachB9LogGridCells n ↔

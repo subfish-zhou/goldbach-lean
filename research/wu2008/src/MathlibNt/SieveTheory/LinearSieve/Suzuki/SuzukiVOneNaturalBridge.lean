@@ -124,20 +124,4 @@ theorem section14ExtendedV_one_eq_suzukiVOne
       _ = S.nu p * sourceDiscreteEuler S p := by
         rw [suzukiVProduct_mul_localRatio_eq_sourceDiscreteEuler S hpz]
 
-theorem section14ExtendedV_one_normalized_eq_suzukiVOneNormalized
-    (S : BoundingSieve) {Dnat znat : ℕ} {z s : ℝ}
-    (hD : 1 < (Dnat : ℝ)) (hs : (1 : ℝ) ≤ s)
-    (hz : z = (Dnat : ℝ) ^ (1 / s)) (hznat : znat = ⌈z⌉₊) :
-    section14ExtendedV S 1 Dnat znat / suzukiVProduct S z =
-      suzukiVOneNormalized S (Dnat : ℝ) 2 z := by
-  rw [section14ExtendedV_one_eq_suzukiVOne S hD hs hz hznat, suzukiVOne]
-  exact mul_div_cancel_left₀ _ (ne_of_gt (suzukiVProduct_pos S z))
 
-theorem section14ExtendedV_one_le_of_suzukiVOne_le
-    (S : BoundingSieve) {Dnat znat : ℕ} {z s E : ℝ}
-    (hD : 1 < (Dnat : ℝ)) (hs : (1 : ℝ) ≤ s)
-    (hz : z = (Dnat : ℝ) ^ (1 / s)) (hznat : znat = ⌈z⌉₊)
-    (hbase : suzukiVOne S (Dnat : ℝ) 2 z ≤ E) :
-    section14ExtendedV S 1 Dnat znat ≤ E := by
-  rw [section14ExtendedV_one_eq_suzukiVOne S hD hs hz hznat]
-  exact hbase

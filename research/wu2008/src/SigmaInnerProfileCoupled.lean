@@ -12,12 +12,6 @@ def coupledLower (p : SecondFunctionalParameters) : ℝ :=
   SigmaRemaining.coupledLower p + CoupledFiniteAssembly.aCoefficient p *
     (d0Lower NineFeedbackStrength.originalH - SigmaRemaining.finiteLower NineFeedbackStrength.originalH)
 
-theorem old_coupledLower_le (i : Fin 4) : SigmaRemaining.coupledLower (coupledRow i) ≤
-    coupledLower (coupledRow i) := by
-  have ha := CoupledFiniteAssembly.aCoefficient_nonneg (coupledRow_geometry i)
-  have h := mul_nonneg ha (sub_nonneg.mpr old_finiteLower_le)
-  unfold coupledLower
-  linarith only [h]
 
 theorem coupledLower_le_original (i : Fin 4) : coupledLower (coupledRow i) ≤
     coupledFeedback (coupledRow i) NineFeedbackStrength.originalH := by

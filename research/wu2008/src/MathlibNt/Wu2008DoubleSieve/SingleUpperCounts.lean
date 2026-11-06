@@ -216,21 +216,5 @@ theorem actual_upper_main {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
     (le_abs_self (remainder N δ r)).trans (hT N hN r)
   exact hf.trans (add_le_add le_rfl hb)
 
-/-- Both original negative summands with one common threshold and one shared
-error. Their overlap is added twice, never replaced by a union. -/
-theorem both_upper_main {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
-    (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      (U N (1/3) : ℝ) + (U N truncatedSixthLowerSigma : ℝ) ≤
-        main N δ (1/3) + main N δ truncatedSixthLowerSigma +
-          ε * truncatedSixthMassScale N := by
-  obtain ⟨T, hT4, hT⟩ := actual_upper_main hδ hδhi (half_pos hε)
-  refine ⟨T, hT4, ?_⟩
-  intro N hN
-  have hσ : truncatedSixthLowerSigma ≤ (1/3 : ℝ) := by
-    norm_num [truncatedSixthLowerSigma, truncatedSixthLowerAlpha]
-  have h1 := hT N hN (1/3) le_rfl
-  have h2 := hT N hN truncatedSixthLowerSigma hσ
-  linarith
 
 end Wu2008DoubleSieve.SingleUpperCounts

@@ -20,15 +20,6 @@ theorem muSquare_sum_le_wu (T : Finset ℕ) (E : ℕ → ℝ)
   have hpow : (1 : ℝ) ≤ 3 ^ d.primeFactors.card := one_le_pow₀ (by norm_num)
   nlinarith [sq_nonneg ((ArithmeticFunction.moebius d : ℤ) : ℝ)]
 
-theorem muSquare_actualAPResidueSup_le_wu (S : Finset ℕ) (f r : ℕ → ℝ) (Q : ℕ) :
-    (∑ d ∈ Icc 1 Q, (((ArithmeticFunction.moebius d : ℤ) : ℝ) ^ 2) *
-      actualAPResidueSup S f r d) ≤
-      ∑ d ∈ Icc 1 Q, wuModulusWeight d * actualAPResidueSup S f r d := by
-  apply muSquare_sum_le_wu
-  intro d hd
-  obtain ⟨b, _, _, heq, _⟩ := actualAPResidueSup_attained S f r d (mem_Icc.mp hd).1
-  rw [heq]
-  exact abs_nonneg _
 
 end
 end Wu2004MeanValue

@@ -157,32 +157,6 @@ theorem exists_claim145_gap_constant_threshold_commonScale_uniform
   apply (le_div_iff₀ (show (0 : ℝ) < 32 by norm_num)).2
   nlinarith
 
-/-- One outer cutoff simultaneously supplies the Case-I midpoint absorption
-and the Case-II endpoint-gap inequality.  It is selected with `A,B,E,d,Δ`
-fixed and before the late constants `C145,C`; this is the exact quantifier order
-needed to choose `C1` first. -/
-theorem exists_lemma144_caseI_caseII_commonScale_cutoff_uniform
-    {A B E d Δ : ℝ}
-    (hA : 0 < A) (hB : 0 ≤ B) (hE : 0 ≤ E)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) :
-    ∃ D0 : ℝ, 1 < D0 ∧ ∀ (C145 C D : ℝ),
-      0 ≤ C145 → C = lemma144CommonScale A C145 → D0 ≤ D →
-      (∃ q : Lemma144StrictFactor,
-        q.ρ = (1 + sigma12ContractionMultiplier (sourceSigma D d) Δ) / 2 ∧
-        caseISourceOrderCoefficient (C145 / C + B / C + E) D d ≤ 1 - q.ρ) ∧
-      C145 ≤ 27 * C * (1 - Δ) * Real.log D / 32 := by
-  have hI := eventually_caseISourceOrderCoefficient_commonScale_uniform
-    hA hB hE hΔ0 hΔ1 hd
-  obtain ⟨DI, hDI⟩ := eventually_atTop.1 hI
-  obtain ⟨DII, hDII, hII⟩ :=
-    exists_claim145_gap_constant_threshold_commonScale_uniform hA hΔ1
-  refine ⟨max DI DII, hDII.trans_le (le_max_right _ _), ?_⟩
-  intro C145 C D hC145 hCeq hD
-  have hD_I : DI ≤ D := (le_max_left _ _).trans hD
-  have hD_II : DII ≤ D := (le_max_right _ _).trans hD
-  exact ⟨hDI D hD_I C145 C hC145 hCeq,
-    hII C145 C D hC145 hCeq hD_II⟩
 
 
 end MathlibNt.SieveTheory

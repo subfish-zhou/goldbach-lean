@@ -31,9 +31,6 @@ theorem actual_exact_upper :
   rw [← rational_upper_eq]
   exact JCubicCompleteCoefficient.complete_rational_upper
 
-/-- This compares only the envelope, not the original coefficient, to the benchmark. -/
-theorem envelope_above_benchmark : (899/250 : ℝ) < exactUpper := by
-  norm_num [exactUpper]
 
 theorem actual_exact_interval :
     (3/2 : ℝ) < TruncatedElevenClassicalCountLower.classicalCoefficient ∧

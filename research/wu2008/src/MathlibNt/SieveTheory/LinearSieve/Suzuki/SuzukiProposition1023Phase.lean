@@ -137,54 +137,5 @@ lemma coarse_phase_uniform_on_Icc {s t : ℝ} (hs : phaseThreshold ≤ s)
   dsimp [phaseConstant]
   linarith
 
-/-- Proposition 10.23, coarse phase-integral upper bound for `κ=b=1`.
-The bound is proved for the canonical `xi`; no phase estimate is a premise. -/
-theorem proposition1023_coarse_phase :
-    ∀ᶠ s : ℝ in atTop,
-      (∫ t in (1 : ℝ)..s, xi t) ≤
-        s * Real.log s + s * Real.log (Real.log (3 * s)) + phaseConstant * s := by
-  filter_upwards [eventually_ge_atTop phaseThreshold] with s hs
-  have hs1 : 1 ≤ s := le_trans (by
-    dsimp [phaseThreshold]
-    exact (Real.one_lt_exp_iff.mpr (by norm_num : (0 : ℝ) < 2)).le) hs
-  have hxiInt : IntervalIntegrable xi volume 1 s :=
-    xi_continuous.intervalIntegrable 1 s
-  let M : ℝ := Real.log s + Real.log (Real.log (3 * s)) + phaseConstant
-  have hMInt : IntervalIntegrable (fun _ : ℝ => M) volume 1 s :=
-    continuous_const.intervalIntegrable 1 s
-  have hmono : (∫ t in (1 : ℝ)..s, xi t) ≤ ∫ _t in (1 : ℝ)..s, M := by
-    apply intervalIntegral.integral_mono_on hs1 hxiInt hMInt
-    intro t ht
-    exact coarse_phase_uniform_on_Icc hs ht
-  rw [intervalIntegral.integral_const] at hmono
-  change (∫ t in (1 : ℝ)..s, xi t) ≤ (s - 1) * M at hmono
-  have hspos : 0 < s := lt_of_lt_of_le (by
-    dsimp [phaseThreshold]
-    exact Real.exp_pos 2) hs
-  have hlogs : 0 ≤ Real.log s := Real.log_nonneg (by linarith)
-  have h3slog : 1 < Real.log (3 * s) := by
-    have hlogs2 : 2 ≤ Real.log s := by
-      rw [← Real.exp_log hspos] at hs
-      dsimp [phaseThreshold] at hs
-      exact Real.exp_le_exp.mp hs
-    have h3spos : 0 < 3 * s := mul_pos (by norm_num) hspos
-    have hm := Real.strictMonoOn_log.monotoneOn hspos h3spos (by nlinarith : s ≤ 3 * s)
-    linarith
-  have hloglog : 0 ≤ Real.log (Real.log (3 * s)) :=
-    (Real.log_pos h3slog).le
-  have hxA0 : 0 ≤ xi phaseThreshold := (xi_pos (by
-    dsimp [phaseThreshold]
-    exact Real.one_lt_exp_iff.mpr (by norm_num))).le
-  have hlogL : 0 ≤ Real.log phaseLogConstant := (Real.log_pos phaseLogConstant_gt_one).le
-  have hC : 0 ≤ phaseConstant := by
-    dsimp [phaseConstant]
-    positivity
-  have hM : 0 ≤ M := by dsimp [M]; positivity
-  calc
-    (∫ t in (1 : ℝ)..s, xi t) ≤ (s - 1) * M := hmono
-    _ ≤ s * M := by nlinarith
-    _ = s * Real.log s + s * Real.log (Real.log (3 * s)) + phaseConstant * s := by
-      dsimp [M]
-      ring
 
 end Section10CanonicalXi

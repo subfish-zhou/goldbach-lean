@@ -111,40 +111,6 @@ theorem optimal_main_le_two_log {N : ℕ} (hN : Even N) {β Z : ℝ}
       one_div_le_one_div_of_le hc hden
     _ = _ := by field_simp
 
-/-- For the unchanged original pair model, beta precedes one common threshold.
-The statement simultaneously supplies the actual denominator, existing optimal
-main matrix, normalization, and polynomial weight envelope. -/
-theorem exists_original_two_log_and_optimal {β : ℝ} (hβ : 0 < β)
-    (hβα : β < originalAlpha) :
-    ∃ N0 : ℕ, ∀ N ≥ N0, ∀ hN : Even N,
-      1 < N ∧ (N : ℝ)^β < (N : ℝ)^originalAlpha ∧
-      (β^2/64) * (Real.log N)^2 / SingularSeries.liuSingularSeries N ≤
-        denominator N ((N : ℝ)^(1/3 : ℝ)) ((N : ℝ)^β) ∧
-      mainMatrix N ((N : ℝ)^(1/3 : ℝ)) ((N : ℝ)^β)
-        (optimalWeight N hN ((N : ℝ)^(1/3 : ℝ)) ((N : ℝ)^β)) ≤
-          (64/β^2) * SingularSeries.liuSingularSeries N / (Real.log N)^2 ∧
-      optimalWeight N hN ((N : ℝ)^(1/3 : ℝ)) ((N : ℝ)^β) 1 = 1 ∧
-      ∀ d : ℕ, |optimalWeight N hN ((N : ℝ)^(1/3 : ℝ)) ((N : ℝ)^β) d| ≤ d := by
-  have he := eventually_denominator_two_log hβ
-  obtain ⟨N0,hN0⟩ := (eventually_atTop.1 he)
-  refine ⟨max N0 2, ?_⟩
-  intro N hNN hN
-  have hNtwo : 1 < N := by omega
-  have hlegal := power_cutoff_legal hNtwo hβ hβα
-  have hden := hN0 N (le_trans (le_max_left _ _) hNN) hN _ hlegal.2.2
-  exact ⟨hNtwo,hlegal.2.1,hden,optimal_main_le_two_log hN hβ hNtwo hden,
-    optimalWeight_one N hN _ hlegal.1, fun d => optimalWeight_abs_le N hN _ hlegal.1 d⟩
 
-/-- Pair support remains disjoint from every support prime at the same fixed
-exponent; this consumes the original pair definition, without a CRT premise. -/
-theorem optimal_power_support_prime_not_dvd_pair {N p d : ℕ} (hN : Even N)
-    (hNtwo : 1 < N) {β e : ℝ} (hβ : 0 < β) (hβα : β < originalAlpha)
-    {t : ℕ × ℕ} (ht : t ∈ pairs N e) (hp : p.Prime) (hpd : p ∣ d)
-    (hw : optimalWeight N hN ((N : ℝ)^(1/3 : ℝ)) ((N : ℝ)^β) d ≠ 0) :
-    ¬ p ∣ t.1*t.2 := by
-  have hs := optimalWeight_support N hN _ _ hw
-  have hd0 : d ≠ 0 := ne_zero_of_dvd_ne_zero (sievePrimes_prod_ne_zero _) hs.1
-  exact support_prime_not_dvd_pair ht hp hpd hd0 hs.2
-    (power_cutoff_legal hNtwo hβ hβα).2.1
 
 end U8Literal.SmallProduct.TwoDimensional

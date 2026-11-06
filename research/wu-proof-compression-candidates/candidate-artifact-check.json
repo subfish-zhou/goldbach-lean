@@ -1,0 +1,31 @@
+{
+  "status": "REVIEW_PATCHES_REPLAY_MEASUREMENTS_AND_STORED_TYPES_PASS_NOT_DOWNSTREAM_ACCEPTANCE",
+  "checks": [
+    {
+      "candidate": "jurkat-cutoff",
+      "effective_lines": 21,
+      "physical_lines": 18,
+      "bytes": 492,
+      "public_type_comparison_records": 3
+    },
+    {
+      "candidate": "pan-shared-square",
+      "effective_lines": 445,
+      "physical_lines": 460,
+      "bytes": 25271,
+      "public_type_comparison_records": 10
+    },
+    {
+      "candidate": "shared-singular-series",
+      "effective_lines": 308,
+      "physical_lines": 323,
+      "bytes": 15683,
+      "public_type_comparison_records": 20
+    }
+  ],
+  "total_savings": {
+    "effective_lines": 774,
+    "physical_lines": 801,
+    "bytes": 41446
+  }
+}

@@ -197,13 +197,6 @@ theorem rawLandauSiegelLowerBound_of_eventualTatuzawaValueProductSeparation
   rawLandauSiegelLowerBound_of_atMostOneEventualEffectiveException
     (atMostOneEventualEffectiveException_of_valueProductSeparation hsep)
 
-/-- Final Tatuzawa reduction with no uniqueness-shaped source: the remaining
-input is the direct two-character value-product power lower bound. -/
-theorem rawLandauSiegelLowerBound_of_eventualTatuzawaValueProductPowerLowerBound
-    (hprod : EventualTatuzawaValueProductPowerLowerBound) :
-    RawLandauSiegelLowerBound :=
-  rawLandauSiegelLowerBound_of_eventualTatuzawaValueProductSeparation
-    (eventualTatuzawaValueProductSeparation_of_powerLowerBound hprod)
 
 end
 

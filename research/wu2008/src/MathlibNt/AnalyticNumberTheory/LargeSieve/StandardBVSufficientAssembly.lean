@@ -208,44 +208,6 @@ theorem standardBV_sufficient_at_closed
       _ = (KL + KH + 180) * (N : ℝ) / Real.log N ^ A := by ring
   exact hpacket.trans htotal
 
-/-- Narrow Standard-BV endpoint.  Its only premises are the genuine low SW/PNT
-source and the genuine high Vaughan hybrid source; all finite connectors and
-all elementary payment premises have disappeared. -/
-theorem standardBV_of_lowSW_highTypeITypeII
-    (hlow : StandardBVLowSiegelWalfiszSource)
-    (hhigh : StandardBVHighTypeITypeIIHybridSource) :
-    ∀ A : ℕ, ∃ B : ℕ, ∃ K : ℝ, 0 < K ∧
-      ∀ᶠ N : ℕ in Filter.atTop,
-        (∑ q ∈ Finset.Icc 1
-            (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)),
-          MathlibNt.SieveTheory.BombieriVinogradov.standardPrimeAPPrefixMaxError N q) ≤
-          K * (N : ℝ) / Real.log N ^ A := by
-  intro A
-  let B : ℕ := A + 3
-  let C : ℕ := 1
-  obtain ⟨KL, hKL, hlowN⟩ := hlow A C B
-  obtain ⟨u, v, KH, hKH, hhighN⟩ := hhigh A C B
-  refine ⟨B, KL + KH + 180, by positivity, ?_⟩
-  filter_upwards [hlowN, hhighN, StandardBVPayload_payable A,
-    eventually_ge_atTop (3 : ℕ)] with N hLN hHN hpayload hN
-  let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-  have hlog0 : 0 ≤ Real.log (N : ℝ) := Real.log_nonneg (by
-    exact_mod_cast (show 1 ≤ N by omega))
-  have hcut : (Q : ℝ) ≤ Real.sqrt N / Real.log N ^ (A + 3) := by
-    calc
-      (Q : ℝ) =
-          (Nat.floor ((N : ℝ) ^ (1 / 2 : ℝ) /
-            Real.log N ^ ((A + 3 : ℕ) : ℝ)) : ℝ) := by
-              simp [Q, MathlibNt.SieveTheory.LiuWeight.panModulusCutoff, B]
-      _ ≤ (N : ℝ) ^ (1 / 2 : ℝ) /
-            Real.log N ^ ((A + 3 : ℕ) : ℝ) :=
-        Nat.floor_le (div_nonneg
-          (Real.rpow_nonneg (by positivity) _)
-          (Real.rpow_nonneg hlog0 _))
-      _ = Real.sqrt N / Real.log N ^ (A + 3) := by
-        rw [Real.sqrt_eq_rpow, Real.rpow_natCast]
-  exact standardBV_sufficient_at_closed A B C N Q u v KL KH
-    (by omega) rfl hLN hHN (hpayload Q hcut)
 
 end
 

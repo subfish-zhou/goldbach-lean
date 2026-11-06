@@ -206,29 +206,5 @@ theorem primeCoefficient_trueLi_quadrature (A : ℝ) (hA : 0 < A) :
     (mul_le_mul_of_nonneg_left
       (wuPrimeCoefficientWeight_variation_le hf hB hfb ha hab hq hlq hqb haq) hE)
 
-/-- The preceding PNT estimate for Wu's actual finite-threshold functions.
-Both thresholds are chosen before `N0`, the endpoints, or the source scale. -/
-theorem wuEffectiveCoefficient_trueLi_quadrature (upper : Bool)
-    (k : ℕ) (hk : 1 ≤ k) {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2)
-    (A : ℝ) (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧ ∃ X0 T : ℕ, ∀ N0 : ℕ, T ≤ N0 →
-      ∀ X : ℕ, X0 ≤ X → ∀ q : ℝ, ∀ a b : ℕ,
-        3 ≤ a → a ≤ b → b ≤ X → 1 < q → 2 ≤ log q →
-        ((b + 1 : ℕ) : ℝ) ≤ q ^ (1 / 2 : ℝ) →
-        log q / log (a + 1 : ℕ) - 1 ≤ 10 →
-        |(∑ n ∈ (Finset.Ico a b).filter (fun n => (n + 1).Prime),
-            wuPrimeCoefficientWeight (wuEffectiveCoefficient upper k δ N0) q (n + 1)) -
-          ∑ n ∈ Finset.Ico a b,
-            (logarithmicIntegral (n + 1) - logarithmicIntegral n) *
-              wuPrimeCoefficientWeight (wuEffectiveCoefficient upper k δ N0) q (n + 1)| ≤
-          (C * (X : ℝ) / log X ^ A) * (2200 / (a + 1 : ℕ)) := by
-  obtain ⟨C, hC, X0, hPNT⟩ := primeCoefficient_trueLi_quadrature A hA
-  obtain ⟨T, hT⟩ := eventually_atTop.mp
-    (wuEffectiveCoefficient_uniform_monotone_bound upper k hk hδ hδhi)
-  refine ⟨C, hC, X0, T, ?_⟩
-  intro N0 hN0 X hX q a b ha hab hb hq hlq hqb haq
-  simpa only [show (20 : ℝ) * 110 = 2200 by norm_num] using
-    hPNT X hX (wuEffectiveCoefficient upper k δ N0) 110 q (hT N0 hN0).1
-      (by norm_num) (hT N0 hN0).2 a b ha hab hb hq hlq hqb haq
 
 end Wu2008DoubleSieve

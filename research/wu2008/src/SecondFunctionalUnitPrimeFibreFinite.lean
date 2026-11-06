@@ -61,12 +61,6 @@ theorem physical_eq {B X q H : ℝ} (hB : 0 < B) (hX : 0 ≤ X) (hH : 0 ≤ H) :
     exact ⟨⟨hp, Nat.cast_nonneg _, hh⟩, hq,
       by simpa [mul_comm] using (le_div_iff₀ hB).mp hx⟩
 
-theorem physical_card {B X q H : ℝ} (hB : 0 < B) (hX : 0 ≤ X)
-    (hq : 0 ≤ q) (hH : 0 ≤ H) :
-    ((physical B X q H).card : ℝ) =
-      primePi (min (X / B) H) - primePi (min (min (X / B) H) q) := by
-  rw [physical_eq hB hX hH]
-  exact fibre_card hq (le_min (div_nonneg hX hB.le) hH)
 
 noncomputable def count (R v ell b : ℝ) : ℝ :=
   ((fibre (R ^ ell) (R ^ (min v b))).card : ℝ)

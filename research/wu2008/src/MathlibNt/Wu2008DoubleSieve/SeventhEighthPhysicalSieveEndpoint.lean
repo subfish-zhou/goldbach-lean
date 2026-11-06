@@ -161,16 +161,4 @@ theorem seventh_eighth_physical_upper_classicalMass {ε : ℝ} (hε : 0 < ε) :
   exact ⟨hu N hN he _ (seventh_classicalPairGeometry (hT.trans hN)),
     hu N hN he _ (eighth_classicalPairGeometry (hT.trans hN))⟩
 
-/-- Original pair coprimality is internal source data. It was not needed
-by the stronger generic sieve and is never extended to r or its output. -/
-theorem seventh_eighth_pair_coprime (N : ℕ) :
-    (∀ p ∈ seventhPairs N, p.1.Coprime N ∧ p.2.Coprime N) ∧
-    (∀ p ∈ eighthPairs N, p.1.Coprime N ∧ p.2.Coprime N) := by
-  constructor
-  · intro p hp
-    obtain ⟨_, _, ha, hb, _⟩ := lowerPairs_data (mem_filter.mp hp).1
-    exact ⟨ha, hb⟩
-  · intro p hp
-    obtain ⟨_, _, ha, hb, _⟩ := lowerPairs_data (mem_filter.mp hp).1
-    exact ⟨ha, hb⟩
 end Wu2008DoubleSieve.SeventhEighth

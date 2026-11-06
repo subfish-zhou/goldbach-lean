@@ -18,11 +18,6 @@ theorem actual_upper : U8CanonicalMother.improvedCoefficient < upperCoefficient 
   unfold upperCoefficient
   linarith only [ho,hg,hs]
 
-theorem exact_descent : MiddleInitialActual.upperCoefficient-upperCoefficient =
-    65179308691530313902851808311/9839809192196786654880000000000 := by
-  unfold MiddleInitialActual.upperCoefficient upperCoefficient
-  rw [GammaFullUpper.gamma_upper_exact,CorrectedCoefficientUpper.gamma_upper_exact]
-  ring
 
 def rationalCap : ℝ := 892230/1000000+
   (GammaFullUpper.gammaUpper-47/481250)/4+4979/1000000
@@ -75,13 +70,6 @@ theorem actual_remaining_identity :
   unfold upperCoefficient upperSlack
   ring
 
-theorem slack_components :
-    0 < MiddleInitialActual.upperRational-JointHMotherPayment.unroundedCoefficient ∧
-    0 ≤ (GammaFullUpper.gammaUpper-Gamma6)/4 ∧
-    0 ≤ U8ActualThreshold.gainUpper-2*(U8CanonicalMother.L-U8CanonicalMother.I) := by
-  refine ⟨sub_pos.mpr MiddleInitialActual.actual_upper,?_,?_⟩
-  · linarith only [GammaFullUpper.gamma_upper]
-  · linarith only [CorrectedCoefficientUpper.small_correction_interval.2]
 
 /-- The improved upper certificate, not the actual coefficient, exceeds target. -/
 theorem certificate_above_target : 8*log (5000/4469) < upperCoefficient := by
@@ -99,21 +87,7 @@ def budget : ℝ := 4*(8*lowerLog (5000/4469)-892230/1000000-4979/1000000)+47/48
 theorem budget_exact : budget = 65346038131997983/16343425342648250000 := by
   norm_num [budget,lowerLog]
 
-/-- Exact shortfall of this sufficient certificate; not an estimate of Gamma6. -/
-theorem budget_shortfall : GammaFullUpper.gammaUpper-budget =
-    3416781944956460156750770692661002167567/918949639534698102715284382388491200000000 := by
-  rw [GammaFullUpper.gamma_upper_exact,budget_exact]
-  norm_num
 
-theorem cap_remaining_exact : rationalCap-8*lowerLog (5000/4469) =
-    3416781944956460156750770692661002167567/3675798558138792410861137529553964800000000 := by
-  rw [cap_exact]
-  norm_num [lowerLog]
 
-/-- Both signs remain unresolved: this records exactly what is still unpaid. -/
-theorem actual_target_iff : U8CanonicalMother.improvedCoefficient < 8*log (5000/4469) ↔
-    upperCoefficient-8*log (5000/4469) < upperSlack := by
-  rw [← actual_remaining_identity]
-  constructor <;> intro h <;> linarith only [h]
 
 end GammaFullActual

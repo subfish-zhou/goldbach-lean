@@ -84,14 +84,7 @@ theorem retained_first_functional {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/10
   dsimp [amplitude] at *
   linarith only [hf,hH,hi,hp]
 
-/-- The proposed rho sums the full comparison, not its original half weight. -/
-theorem candidate_rho_identity : rho = (289/5200 : ℝ)+(76979/393263) := by
-  norm_num [rho]
 
-/-- This strict gap is the precise obstruction in the fixed proposed proof. -/
-theorem candidate_rho_exceeds_retained :
-    (289/5200 : ℝ)+(1/2)*(76979/393263) < rho := by
-  norm_num [rho]
 
 end
 end Wu2008DoubleSieve.HighSixPhase9

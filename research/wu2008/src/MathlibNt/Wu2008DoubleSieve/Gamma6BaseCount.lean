@@ -17,19 +17,6 @@ theorem gamma6Base_C6_bounds : 0 ≤ gamma6BaseC6 ∧ gamma6BaseC6 ≤ 64 :=
   gamma6Base_integral_bounds le_rfl gamma6Base_constants.2.1.le le_rfl
     le_rfl gamma6Base_constants.2.2.2.1.le le_rfl
 
-theorem gamma6Base_C6_integrable :
-    (∀ t ∈ Icc (25 / 103 : ℝ) (25 / 89),
-      IntervalIntegrable (fun u => 1 / (t * u * (1 - t - u))) volume (100 / 291) (2 / 5)) ∧
-    IntervalIntegrable
-      (fun t => ∫ u in (100 / 291 : ℝ)..(2 / 5), 1 / (t * u * (1 - t - u)))
-      volume (25 / 103) (25 / 89) := by
-  have hA : gamma5MassA = (25 / 103 : ℝ) := by norm_num [gamma5MassA, gamma5ClassicalS]
-  rw [← hA]
-  constructor
-  · intro t ht
-    exact gamma6Base_inner_integrable ht.1 ht.2 le_rfl gamma6Base_constants.2.2.2.1.le le_rfl
-  · exact gamma6Base_outer_integrable le_rfl gamma6Base_constants.2.1.le le_rfl
-      le_rfl gamma6Base_constants.2.2.2.1.le le_rfl
 
 theorem gamma6Base_rectangle_count_upper (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
     (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) (hε : 0 < ε) :
@@ -87,15 +74,5 @@ theorem gamma6Base_full_count_upper (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
   rw [gamma6Base_full_labels_eq (by omega) hδ (by linarith) hb] at hh
   exact hh
 
-theorem gamma6Base_full_count_literal (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ i : ℕ, ∀ Δ : ℝ, ∀ V : Fin i → ℝ, wuSourceBox k δ N i Δ V →
-      gamma5ClassicalCount N δ (convolutionWuWindows N Δ V)
-        (gamma6BaseLabels N δ (convolutionWuWindows N Δ V)) ≤
-      ((∫ t in (25 / 103 : ℝ)..(25 / 89),
-        ∫ u in (100 / 291 : ℝ)..(2 / 5), 1 / (t * u * (1 - t - u))) + ε) *
-        boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
-  simpa only [← gamma6Base_C6_literal] using gamma6Base_full_count_upper k hk hδ hδhi hε
 
 end Wu2008DoubleSieve

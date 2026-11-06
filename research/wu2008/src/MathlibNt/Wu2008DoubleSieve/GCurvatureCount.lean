@@ -55,10 +55,6 @@ theorem quarter_eq_exact : newBalance/4 = exactQuarter := by
   rw [newBalance_eq_exact]
   rfl
 
-theorem exact_quarter_gain :
-    exactQuarter = SixthLogCubicCorrection.exactQuarter+100/35829 := by
-  unfold exactQuarter exactBalance SixthLogCubicCorrection.exactQuarter
-  ring
 
 noncomputable def actualEpsilon : ℝ :=
   TruncatedElevenClassicalCountLower.classicalCoefficient-newBalance

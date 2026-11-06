@@ -65,10 +65,6 @@ theorem source_refinedGood_subset_one894 (N : ℕ) :
     refinedGood N (9469 / 5000) ⊆ refinedGood N (947 / 500) :=
   refinedGood_mono N (by norm_num)
 
-/-- Thus any lower bound for the source count transfers without loss. -/
-theorem source_refinedGood_card_le_one894 (N : ℕ) :
-    (refinedGood N (9469 / 5000)).card ≤ (refinedGood N (947 / 500)).card :=
-  card_le_card (source_refinedGood_subset_one894 N)
 
 /-- Positive source count gives an actual representation with the requested
 integer-power constraint. The analytic positivity estimate remains upstream. -/
@@ -89,11 +85,6 @@ theorem refinedGood_complement_ge_two {N p : ℕ} {a : ℝ}
   have hq2 := hq.two_le
   omega
 
-theorem not_mem_refinedGood_of_complement_le_one {N p : ℕ} {a : ℝ}
-    (h : N - p ≤ 1) : p ∉ refinedGood N a := by
-  intro hp
-  have := refinedGood_complement_ge_two hp
-  omega
 
 theorem refinedGood_subset_chenGood (N : ℕ) (a : ℝ) :
     refinedGood N a ⊆ chenGoodRepresentations N := by

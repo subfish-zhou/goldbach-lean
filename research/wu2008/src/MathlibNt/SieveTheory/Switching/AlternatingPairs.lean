@@ -550,19 +550,6 @@ theorem upperRosserAlternatingPairDiscreteRelativeIterate_succ
     upperRosserAlternatingPairDiscreteRelativeIterate
   field_simp [hres]
 
-/-- Restoring the ambient Euler product cancels one relative reverse-pair
-transition exactly. -/
-theorem upperRosserAlternatingPairDiscreteRelativeTransition_mul_eulerProduct
-    (nu : ℕ → ℝ) {P : Finset ℕ} {p₀ p₁ : ℕ}
-    (hfactor : ∀ p ∈ P, 1 - nu p ≠ 0) :
-    upperRosserAlternatingPairDiscreteRelativeTransition nu P p₀ p₁ *
-        ∏ p ∈ P, (1 - nu p) =
-      nu p₀ * nu p₁ *
-        ∏ p ∈ P.filter (fun p => p₀ < p), (1 - nu p) := by
-  have hprod : (∏ p ∈ P, (1 - nu p)) ≠ 0 :=
-    Finset.prod_ne_zero_iff.mpr hfactor
-  unfold upperRosserAlternatingPairDiscreteRelativeTransition
-  field_simp [hprod]
 
 /-- A relative reverse-pair transition is the selected pair divided by the
 Euler product through the larger new prime.  This form isolates precisely the
@@ -827,105 +814,7 @@ theorem upperRosserAlternatingPairDiscreteRelativeTransition_le_logCocycle
             (1 - S.nu p)⁻¹) := by ring
     _ ≤ _ := mul_le_mul_of_nonneg_left hgaps hweight
 
-/-- Multiplying by the natural terminal-scale ratio cancels the full main
-logarithmic growth of a relative transition.  This is the one-step Lyapunov
-transfer needed to iterate the completed operator without paying a fresh
-Euler-product factor at every pair. -/
-theorem
-    upperRosserAlternatingPairDiscreteRelativeTransition_mul_logScale_le
-    {S : BoundingSieve} {K : ℝ} {q p₀ p₁ : ℕ} {P : Finset ℕ}
-    (hlocal : HasDimensionOneLocalProductBound S K) (hK : 0 ≤ K)
-    (hq : q ∈ S.prodPrimes.primeFactors)
-    (hP : P ⊆ S.prodPrimes.primeFactors)
-    (hqP : ∀ p ∈ P, q < p) (hp₀ : p₀ ∈ P) (hp₁ : p₁ ∈ P)
-    (h10 : p₁ < p₀) :
-    upperRosserAlternatingPairDiscreteRelativeTransition S.nu P p₀ p₁ *
-        (Real.log ((q : ℝ) + 1) / Real.log p₀) ≤
-      ((S.nu p₀ / (1 - S.nu p₀)) *
-        (S.nu p₁ / (1 - S.nu p₁))) *
-        ((1 + K / Real.log ((q : ℝ) + 1)) *
-          (1 + K / Real.log ((p₁ : ℝ) + 1))) := by
-  have hp₀Prime : p₀.Prime := Nat.prime_of_mem_primeFactors (hP hp₀)
-  have hqPrime : q.Prime := Nat.prime_of_mem_primeFactors hq
-  have hlogq : 0 < Real.log ((q : ℝ) + 1) :=
-    Real.log_pos (by exact_mod_cast (Nat.lt_add_one_iff.mpr hqPrime.pos))
-  have hlogp₀ : 0 < Real.log p₀ :=
-    Real.log_pos (by exact_mod_cast hp₀Prime.one_lt)
-  have htransition :=
-    upperRosserAlternatingPairDiscreteRelativeTransition_le_logCocycle
-      hlocal hK hq hP hqP hp₀ hp₁ h10
-  have hscale : 0 ≤ Real.log ((q : ℝ) + 1) / Real.log p₀ :=
-    div_nonneg hlogq.le hlogp₀.le
-  calc
-    _ ≤ (((S.nu p₀ / (1 - S.nu p₀)) *
-          (S.nu p₁ / (1 - S.nu p₁))) *
-        ((Real.log p₀ / Real.log ((q : ℝ) + 1)) *
-          (1 + K / Real.log ((q : ℝ) + 1)) *
-            (1 + K / Real.log ((p₁ : ℝ) + 1)))) *
-        (Real.log ((q : ℝ) + 1) / Real.log p₀) :=
-      mul_le_mul_of_nonneg_right htransition hscale
-    _ = _ := by
-      field_simp [hlogq.ne', hlogp₀.ne']
 
-/-- The local-product hypothesis gives the first quantitative bound for a
-relative reverse-pair transition.  It charges exactly one interval factor from
-the previous terminal prime through the larger new prime; retaining this factor
-inside the recursive state avoids the invalid absolute-tail cancellation. -/
-theorem upperRosserAlternatingPairDiscreteRelativeTransition_le_localProduct
-    {S : BoundingSieve} {K : ℝ} {q p₀ p₁ : ℕ} {P : Finset ℕ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hq : q ∈ S.prodPrimes.primeFactors)
-    (hP : P ⊆ S.prodPrimes.primeFactors)
-    (hqP : ∀ p ∈ P, q < p) (hp₀ : p₀ ∈ P) (hp₁ : p₁ ∈ P) :
-    upperRosserAlternatingPairDiscreteRelativeTransition S.nu P p₀ p₁ ≤
-      (S.nu p₀ * S.nu p₁) *
-        (Real.log ((p₀ : ℝ) + 1) / Real.log ((q : ℝ) + 1) *
-          (1 + K / Real.log ((q : ℝ) + 1))) := by
-  let L := P.filter (fun p => p ≤ p₀)
-  have hfactor : ∀ p ∈ P, 1 - S.nu p ≠ 0 := by
-    intro p hp
-    have hpS := hP hp
-    have hpPrime : p.Prime := Nat.prime_of_mem_primeFactors hpS
-    have hpDvd : p ∣ S.prodPrimes :=
-      (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpS |>.2
-    exact ne_of_gt (sub_pos.mpr (S.nu_lt_one_of_prime p hpPrime hpDvd))
-  have hqPrime : q.Prime := Nat.prime_of_mem_primeFactors hq
-  have hq₀ : (2 : ℝ) ≤ (q : ℝ) + 1 := by
-    exact_mod_cast (hqPrime.two_le.trans (Nat.le_succ q))
-  have hqp₀ : (q : ℝ) + 1 ≤ (p₀ : ℝ) + 1 := by
-    exact_mod_cast (Nat.add_le_add_right (Nat.le_of_lt (hqP p₀ hp₀)) 1)
-  have hLsubset : L ⊆ S.prodPrimes.primeFactors := by
-    intro p hp
-    exact hP (Finset.mem_filter.mp hp).1
-  have hLinterval : ∀ p ∈ L,
-      (q : ℝ) + 1 ≤ (p : ℝ) ∧ (p : ℝ) < (p₀ : ℝ) + 1 := by
-    intro p hp
-    have hp' := Finset.mem_filter.mp hp
-    constructor
-    · exact_mod_cast (Nat.add_one_le_iff.mpr (hqP p hp'.1))
-    · exact_mod_cast (Nat.lt_add_one_iff.mpr hp'.2)
-  have hproduct :=
-    prod_inv_one_sub_nu_le_of_subset_interval hlocal hq₀ hqp₀
-      hLsubset hLinterval
-  rw [upperRosserAlternatingPairDiscreteRelativeTransition_eq_div_lowerProduct
-    S.nu hfactor]
-  change
-    (S.nu p₀ * S.nu p₁) / ∏ p ∈ L, (1 - S.nu p) ≤ _
-  rw [div_eq_mul_inv, ← Finset.prod_inv_distrib]
-  exact mul_le_mul_of_nonneg_left hproduct
-    (mul_nonneg
-      (by
-        have hpS := hP hp₀
-        have hpPrime : p₀.Prime := Nat.prime_of_mem_primeFactors hpS
-        have hpDvd : p₀ ∣ S.prodPrimes :=
-          (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpS |>.2
-        exact (S.nu_pos_of_prime p₀ hpPrime hpDvd).le)
-      (by
-        have hpS := hP hp₁
-        have hpPrime : p₁.Prime := Nat.prime_of_mem_primeFactors hpS
-        have hpDvd : p₁ ∣ S.prodPrimes :=
-          (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hpS |>.2
-        exact (S.nu_pos_of_prime p₁ hpPrime hpDvd).le))
 
 /-- The ordered reverse-pair condition keeps the renormalized residual ratio
 above three.  Both geometric inductions use this same admissibility step. -/

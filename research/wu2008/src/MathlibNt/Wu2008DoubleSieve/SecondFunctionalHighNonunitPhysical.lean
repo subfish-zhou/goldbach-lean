@@ -153,24 +153,10 @@ theorem physical_primeMass_dictionary {i N : ℕ} {W : Fin i → Finset ℕ}
   simp only [← sum_filter, sum_const, nsmul_eq_mul, ← fibre_eq_raw_filter] at h
   simpa only [LabelledPhysical.Family.primeMass, envelope, physicalFamily, mul_comm] using h
 
-/-- The redundant range cap follows from positivity and the physical product cap. -/
-theorem rawFibre_mem_iff {N : ℕ} (e f : ℕ → ℝ) (x : Profile)
-    (hx : 0 < cofactor x) (q : ℕ) :
-    q ∈ rawFibre N e f x ↔ q.Prime ∧ x.2.2.1 < q ∧
-      e x.1 ≤ (q : ℝ) ∧ (q : ℝ) ≤ f x.1 ∧ cofactor x*q ≤ N := by
-  simp only [rawFibre, mem_filter, mem_range, Nat.lt_succ_iff]
-  constructor
-  · exact And.right
-  · intro h
-    exact ⟨(Nat.le_mul_of_pos_left q hx).trans h.2.2.2.2, h⟩
 
 theorem penultimate_dvd (x : Profile) : x.2.2.1 ∣ cofactor x := by
   exact (List.dvd_prod (by simp : x.2.2.1 ∈ x.2.1 ++ [x.2.2.1])).trans
     (dvd_mul_left _ _)
 
-theorem fibre_empty_of_deleted {N : ℕ} (e f : ℕ → ℝ) (x : Profile)
-    (hx : 0 < cofactor x) (hdel : ¬ physicalLower e x ≤ physicalUpper N f x) :
-    fibre N e f x = ∅ := by
-  rw [fibre_eq_raw_filter, rawFibre_empty_of_deleted e f x hx hdel, filter_empty]
 
 end Wu2008DoubleSieve.HighNonunit

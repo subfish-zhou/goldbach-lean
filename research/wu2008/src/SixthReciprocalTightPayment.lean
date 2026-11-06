@@ -337,11 +337,6 @@ theorem remainder_shift : upperRemainder = GlobalSignedActualComparison.upperRem
   unfold GlobalSignedActualComparison.upperRemainder
   ring
 
-theorem quarter_decrease_bounds : (3506/1000000:ℝ) <
-    (SixthFullRationalEnclosure.payment-payment)/4 ∧
-    (SixthFullRationalEnclosure.payment-payment)/4 < 3507/1000000 := by
-  rw [SixthFullRationalEnclosure.payment_rational,payment_rational]
-  norm_num
 
 theorem upper_exact : upperRational = 1025918560989639910578747088982418804657101332724281869279370612659721793624292438848630867066392769294744852894330691766011369952390633140953472365972408668253901333364998234176636954026915524766218828689419118591031507865884583949497553548314491428132505576588426828102255928696300377888712375911359713017602115368385593758346555432732697634215032111/1122920570776473089584766627526823146118260997196453327408953652215330051779511860935653443455292483981630832535806830073849125985759463318381310840113111833123949557247238380440535424825088837261174382956609049416128957219931997661982031965197966686191052751229614798994023693115573988388030385287156746236226389539170045283622312016872243200000000000 := by
   unfold upperRational
@@ -363,20 +358,7 @@ theorem actual_Q_bounds : (822040/1000000:ℝ) < JointHMotherPayment.unroundedCo
   have hu : upperRational < (913617/1000000:ℝ) := by rw [upper_exact]; norm_num
   exact ⟨GlobalSignedActualComparison.actual_Q_rational_bounds.1,actual_upper.trans hu⟩
 
-/-- This improved upper route still straddles the target; no claim about actual Q's sign. -/
-theorem actual_target_lower : (-15433/1000000:ℝ) <
-    AnalyticTotalThreshold.target-JointHMotherPayment.unroundedCoefficient := by
-  have ht := log_lower (by norm_num : (1:ℝ) ≤ 5000/4469)
-  have hu := actual_upper
-  have hr := remainder_bounds.2
-  unfold upperRemainder AnalyticTotalThreshold.target at *
-  linarith only [ht,hu,hr]
 
-/-- Even zero nonnegative sixth payment cannot close this fixed upper ledger alone. -/
-theorem fixed_other_payments_floor : (1800/1000000:ℝ) <
-    GlobalSignedActualComparison.upperRemainder-SixthFullRationalEnclosure.payment/4 := by
-  rw [GlobalSignedActualComparison.upperRemainder_exact,SixthFullRationalEnclosure.payment_rational]
-  norm_num
 
 end
 end Wu2008DoubleSieve.SixthReciprocalTightPayment

@@ -1,0 +1,29 @@
+{
+  "status": "RESUMED_RUNNING_NOT_PROJECT_ACCEPTANCE_NOT_ADOPTED",
+  "observed_unix": 1793182112.8206556,
+  "actual_run": "/tmp/wu-hf4-installed-v7-resume-v1/run-1793181743956774759",
+  "actual_source_status": {
+    "status": "running",
+    "current": "WE10FourMajorOuter",
+    "completed": 81,
+    "planned": 389,
+    "verified_unchanged": 3762,
+    "started_unix": 1793182102.622313
+  },
+  "completed_source_proofs": 81,
+  "genuine_paused_prefix": 53,
+  "new_successful_compilations": 28,
+  "planned_new_compilations": 336,
+  "unchanged_dependencies": 3762,
+  "all_completed_exit_zero": true,
+  "worker_session": 36814,
+  "after_source_validation_session": 18896,
+  "source_manifest_sha256": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+  "files": {
+    "resume-inputs.json": "93cadf73069445a1a065654536bfb09c5b249c709dc57eb2d0ed5498a49f795d",
+    "validate.py": "2d0b6b144f33605d0ea38f871b578615ad16ac64f336ae721b88d52b0d8e1cb5",
+    "after-source-pins.json": "badd2ca97e0b35d8cc418b48f0cd8cca9df2c34a5da95770b1a528106b8ed5de",
+    "after-source.py": "120b641fc9475e841933896e05d6d40a583b719a5e548f8b0bed0a65f06cc095",
+    "run.py": "837abaa77a888ff40824260e4094e6ba57f668e042ead0d1a8c406067200ad81"
+  }
+}

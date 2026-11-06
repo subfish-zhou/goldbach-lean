@@ -612,18 +612,6 @@ theorem claim145_caseB_uniform_in_S
     simpa only [σ, L, b, x, mul_assoc] using hdesired
   exact suzukiLemma14_3_le_claim145Scale_of_scalar_at S H hlocal hD h_cond1 hs h_cond2 hKpos hC145 hprop h_cond3 h_cond4
 
-/-- Compatibility specialization of the uniform-in-`S` Case-B theorem. -/
-theorem claim145_caseB_uniform
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ Θ : ℝ}
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) (hTheta : 1 ≤ Θ)
-    (hH : Section13HatSourceContract H) :
-    ∃ C1min CB : ℝ, 0 < C1min ∧ 0 < CB ∧
-      Claim145CaseBClosed S H d Δ Θ C1min CB := by
-  obtain ⟨C1min, CB, hC1min, hCB, hall⟩ :=
-    claim145_caseB_uniform_in_S H hΔ0 hΔ1 hd hTheta hH
-  exact ⟨C1min, CB, hC1min, hCB, hall S⟩
 
 
 end MathlibNt.SieveTheory

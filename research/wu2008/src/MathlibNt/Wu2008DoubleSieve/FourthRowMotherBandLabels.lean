@@ -41,17 +41,6 @@ theorem fourthRowMother_cross_pairs_card (s : Finset ℕ) (χ : ℕ → ℕ) :
       fourthRowMotherColourCount s χ 0 * fourthRowMotherColourCount s χ 2 :=
   card_product _ _
 
-theorem fourthRowMother_cross_pairs_order {s : Finset ℕ} {χ : ℕ → ℕ}
-    (hχ : Monotone χ) {p q : ℕ} (hpq : (p, q) ∈ fourthRowMotherCrossPairs s χ) :
-    p < q := by
-  obtain ⟨hp, hq⟩ := mem_product.mp hpq
-  have hp' := (mem_filter.mp hp).2
-  have hq' := (mem_filter.mp hq).2
-  change χ p = 0 at hp'
-  change χ q = 2 at hq'
-  by_contra h
-  have hh := hχ (show q ≤ p by omega)
-  omega
 
 noncomputable def fourthRowMotherLabelWeight (s : Finset ℕ) (χ : ℕ → ℕ) : ℝ :=
   4 + (if (s.filter fun p => χ p = 0) = ∅ then 1 else 0) -

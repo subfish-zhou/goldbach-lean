@@ -94,9 +94,6 @@ theorem closedPrimeK_rows (g : Row → ℝ) (R phi : ℝ) :
 noncomputable def closedPrimeKj (R a b c e f : ℝ) (j : Fin 6) (phi : ℝ) : ℝ :=
   closedPrimeK (D a b c e f j) R phi
 
-theorem closedPrimeKj_nonneg {R : ℝ} (hR : 1 < R) (a b c e f : ℝ)
-    (j : Fin 6) (phi : ℝ) : 0 ≤ closedPrimeKj R a b c e f j phi :=
-  closedPrimeK_nonneg _ hR phi
 
 theorem K_mask_literal {a b c e f : ℝ} (hp : CompactParameters a b c e f)
     (j : Fin 6) (phi : ℝ) :

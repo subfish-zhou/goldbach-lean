@@ -42,21 +42,6 @@ theorem original_upper_fixed_parameters {δ ρ τ : ℝ}
   refine ⟨hθ,hupper,?_⟩
   nlinarith only [hupper,hθ]
 
-/-- Unconditional in the analytic margin and rho/tau witnesses. No Uk count or
-abstract H/h limit is used: this is an actual Fin2 upper improvement. -/
-theorem original_upper {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 50*highEta) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N → ∀ Δ : ℝ,
-      1+log (N : ℝ)^(-4 : ℝ) ≤ Δ → Δ < 1+2*log (N : ℝ)^(-4 : ℝ) →
-      ∀ V : Fin 2 → ℝ, (∀ j, (N : ℝ)^(100/1327 : ℝ) ≤ V j) → OriginalRectangles N V →
-      0 < boxTheta N ((N : ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) ∧
-      wuBoxPhi N δ (convolutionWuWindows N Δ V) (29/10) ≤
-        (wuUpperCoefficient (29/10)-1/10000)*
-          boxTheta N ((N : ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) ∧
-      wuBoxPhi N δ (convolutionWuWindows N Δ V) (29/10) <
-        wuUpperCoefficient (29/10)*
-          boxTheta N ((N : ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) :=
-  original_upper_fixed_parameters hδ hδhi rho_bounds.1 rho_bounds.2.1 rho_bounds.2.2
-    (by norm_num : (0:ℝ)<1/100) le_rfl
 
 end
 end ActualLogGain

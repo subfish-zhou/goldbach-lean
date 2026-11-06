@@ -169,23 +169,7 @@ theorem I11_eq_regular : I11 = ∫ x in alpha..beta, regularOuter11 x := by
   rw [uIcc_of_le fixed_geometry.2.2.1] at hx
   exact (outer11_eq hx).symm
 
-theorem I10_outer_integrable : IntervalIntegrable
-    (fun x => ∫ y in x..beta, ∫ z in y..beta, ∫ t in z..beta, kernel x y z t)
-    volume alpha beta := by
-  apply ContinuousOn.intervalIntegrable
-  apply regularOuter10_continuous.continuousOn.congr
-  intro x hx
-  rw [uIcc_of_le fixed_geometry.2.2.1] at hx
-  exact (outer10_eq hx).symm
 
-theorem I11_outer_integrable : IntervalIntegrable
-    (fun x => ∫ y in x..beta, ∫ z in y..beta, ∫ t in beta..lam-z, kernel x y z t)
-    volume alpha beta := by
-  apply ContinuousOn.intervalIntegrable
-  apply regularOuter11_continuous.continuousOn.congr
-  intro x hx
-  rw [uIcc_of_le fixed_geometry.2.2.1] at hx
-  exact (outer11_eq hx).symm
 
 theorem regularKernel_nonneg (x y z t : ℝ) : 0 ≤ regularKernel x y z t :=
   div_nonneg (buchstab_nonneg (le_trans (by norm_num) (le_max_left _ _)))

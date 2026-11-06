@@ -12,7 +12,6 @@ def publication (i : Fin 9) : ℝ :=
     (fun j => Fin.cases (motive := fun _ => ℝ) Wu04CurvePaid.publication Wu04RemainingCore.publication j)
     Wu04FirstCore.publication i
 
-theorem publication_coupled_zero : publication (0 : Fin 9) = Wu04CurvePaid.publication := rfl
 
 theorem publication_coupled_succ (i : Fin 3) :
     publication (i.succ.castAdd 5) = Wu04RemainingCore.publication i := by

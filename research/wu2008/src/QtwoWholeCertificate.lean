@@ -6,18 +6,6 @@ open FixedCoefficientUpperEnclosure (a b)
 open QtwoWholeLower
 noncomputable section
 
-/-- Disjoint decomposition of every remaining old analytic slot after the new
-full-weight curvature payment. No upper-bound saving is treated as a gain. -/
-theorem remainder_split : remainder =
-    (BaseSharedSlack.block-BaseSharedSlack.gain)+
-    (GlobalLowerSlack.fifthLogSlack-QtwoWeightedMoment.gain)/4+
-    (GlobalLowerSlack.jSlack+GlobalLowerSlack.jPaymentSlack+GlobalLowerSlack.fifthRecurrence+
-      GlobalLowerSlack.sixthLogSlack+GlobalLowerSlack.sixthRecurrence+
-      GlobalLowerSlack.fourSlack+GlobalLowerSlack.analyticPaymentSlack)/4+
-    (GlobalLowerSlack.retainedPaymentSlack-SixthRetainedSlack.gain)+
-    (2*(U8CanonicalMother.L-U8CanonicalMother.I)-U8ActualThreshold.gainLower) := by
-  unfold remainder BaseSharedSlack.block GlobalLowerSlack.realSlack
-  ring
 
 def correction : ℝ := (QtwoWeightedMoment.gain-GlobalLowerSlack.fifthGain)/4-
   FullAdmissibleStrength.polynomialPayment/4+
@@ -33,11 +21,6 @@ theorem gain_exact : QtwoWeightedMoment.gain =
   rw [gain_exact_relation,GlobalLowerSlack.fifthGain_exact]
   norm_num [QtwoWeightedMoment.meanXY,a,b,truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
 
-theorem extra_classical_quarter :
-    (1/1000:ℝ) < (QtwoWeightedMoment.gain-GlobalLowerSlack.fifthGain)/4 ∧
-      (QtwoWeightedMoment.gain-GlobalLowerSlack.fifthGain)/4 < 2/1000 := by
-  rw [gain_exact,GlobalLowerSlack.fifthGain_exact]
-  norm_num
 
 /-- Fixed exact rational evaluation of the complete new correction; no search. -/
 theorem correction_bounds : (1/1000:ℝ) < correction ∧ correction < 2/1000 := by
@@ -71,16 +54,7 @@ theorem certificate_shortfall : (3/50:ℝ) < threshold-rationalFloor ∧
 def unpaidMass : ℝ := FeedbackLimit.Cinf/4+
   (fifthGain-4*fullSeed*(b-a)^2)/4+remainder
 
-theorem actual_mass_identity : PositiveTwoPayment.Qtwo = rationalFloor+unpaidMass := by
-  have h := remainder_identity
-  unfold rationalFloor fullFloor unpaidMass at *
-  linarith only [h]
 
-theorem unpaidMass_pos : 0 < unpaidMass := by
-  have h5 := fifth_gain_seed_lower
-  change 4*fullSeed*(b-a)^2 ≤ fifthGain at h5
-  unfold unpaidMass
-  linarith only [h5,FeedbackLimit.Cinf_nonneg,remainder_pos]
 
 /-- Full actual lower-count consumer; no independent P2 lower bounds are added. -/
 theorem certificate_ordinary_P2 :

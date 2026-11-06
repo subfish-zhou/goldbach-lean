@@ -56,14 +56,6 @@ theorem upper_homogeneous {n d : ℝ} (hn : 0<n) (hd : 0<d) :
   field_simp [hn.ne',hd.ne',hnd]
   ring
 
-/-- The left split produces a new homogeneous quadratic in the original numerator and denominator. -/
-theorem qHom_left (n d : ℝ) : qHom (n+d) (2*d)=n^2+18*n*d+21*d^2 := by
-  unfold qHom
-  ring
 
-/-- The right split has a different forced homogeneous quadratic. -/
-theorem qHom_right (n d : ℝ) : qHom (2*n) (n+d)=21*n^2+18*n*d+d^2 := by
-  unfold qHom
-  ring
 
 end SigmaRationalOuterFTC

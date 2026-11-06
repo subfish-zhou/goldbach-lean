@@ -54,37 +54,7 @@ theorem quadraticRemainder_abs_le (N : ℕ) (e : ℝ) (t : ℕ × ℕ)
       intro f _
       ring
 
-/-- On actual small-prime-supported sieve divisors, the main kernel is the canonical nu_N. -/
-theorem quadratic_eq_nuN_add_remainder {N : ℕ} {e Z : ℝ} {t : ℕ × ℕ}
-    (ht : t ∈ pairs N e) (hZ : Z ≤ (N : ℝ)^originalAlpha)
-    (D : Finset ℕ) (w : ℕ → ℝ)
-    (hD : ∀ d ∈ D, d ∣ (sievePrimes Z).prod id) :
-    quadratic N e t D w = (interval N e t).card *
-      (∑ d ∈ D, ∑ f ∈ D, w d*w f * (nuN N (Nat.lcm d f) : ℝ)/(Nat.lcm d f)) +
-      quadraticRemainder N e t D w := by
-  rw [quadratic_eq_main_add_remainder]
-  congr 2
-  apply sum_congr rfl
-  intro d hd
-  apply sum_congr rfl
-  intro f hf
-  rw [small_sieve_rootCount ht (Nat.lcm_dvd (hD d hd) (hD f hf)) hZ]
 
-/-- The same genuine remainder has a pair-independent small-support bound. -/
-theorem quadraticRemainder_abs_le_nuN {N : ℕ} {e Z : ℝ} {t : ℕ × ℕ}
-    (ht : t ∈ pairs N e) (hZ : Z ≤ (N : ℝ)^originalAlpha)
-    (D : Finset ℕ) (w : ℕ → ℝ)
-    (hD : ∀ d ∈ D, d ∣ (sievePrimes Z).prod id) :
-    |quadraticRemainder N e t D w| ≤
-      2*∑ d ∈ D, ∑ f ∈ D, |w d| *|w f| *(nuN N (Nat.lcm d f) : ℝ) := by
-  apply (quadraticRemainder_abs_le N e t D w
-    (fun d hd => ne_zero_of_dvd_ne_zero (sievePrimes_prod_ne_zero Z) (hD d hd))).trans_eq
-  congr 1
-  apply sum_congr rfl
-  intro d hd
-  apply sum_congr rfl
-  intro f hf
-  rw [small_sieve_rootCount ht (Nat.lcm_dvd (hD d hd) (hD f hf)) hZ]
 
 /-- A useful height contract, proved without selecting or optimizing weights. -/
 theorem quadraticRemainder_abs_le_height (N : ℕ) (e : ℝ) (t : ℕ × ℕ)
@@ -134,21 +104,6 @@ theorem quadraticRemainder_abs_le_polynomial (N R : ℕ) (e : ℝ) (t : ℕ × �
   have hb := quadraticRemainder_abs_le_height N e t D w hD
   nlinarith [sq_le_sq₀ hsum0 (by positivity : 0 ≤ ((R : ℝ)+1)*(R : ℝ)^2) |>.mpr hsum]
 
-/-- The CRT product is the actual main term on every legal finite sieve support. -/
-theorem quadratic_eq_CRT_product_add_remainder {N : ℕ} {e Z : ℝ} {t : ℕ × ℕ}
-    (ht : t ∈ pairs N e) (D : Finset ℕ) (w : ℕ → ℝ)
-    (hD : ∀ d ∈ D, d ∣ (sievePrimes Z).prod id) :
-    quadratic N e t D w = (interval N e t).card *
-      (∑ d ∈ D, ∑ f ∈ D, w d*w f *
-        ((∏ p ∈ (Nat.lcm d f).primeFactors, if p ∣ (t.1*t.2)*N then 1 else 2 : ℕ) : ℝ) /
-        (Nat.lcm d f)) + quadraticRemainder N e t D w := by
-  rw [quadratic_eq_main_add_remainder]
-  congr 2
-  apply sum_congr rfl
-  intro d hd
-  apply sum_congr rfl
-  intro f hf
-  rw [residueRootCount_original ht (sieve_lcm_squarefree (hD d hd) (hD f hf))]
 
 /-- Pair-independent kernel without changing the original sieve cutoff. -/
 theorem quadratic_eq_nuN_of_small_support {N : ℕ} {e Z : ℝ} {t : ℕ × ℕ}
@@ -213,38 +168,6 @@ theorem sum_quadratic_eq_nuN_of_small_support {N : ℕ} {e Z : ℝ}
   intro t ht
   exact quadratic_eq_nuN_of_small_support ht D w hD hs
 
-/-- An actual finite smallPrefix bound, not a normalized sigma-payment theorem.
-The cube-root sieve and alpha remain unchanged. The weight contract is an explicit input. -/
-theorem smallPrefix_card_le_CRT_nuN_polynomial (N R : ℕ) (e : ℝ)
-    (hN : 4 ≤ N) (he : e ≤ 1/2) (D : Finset ℕ) (w : ℕ → ℝ) (h1 : 1 ∈ D)
-    (hD : ∀ d ∈ D, d ∣ (sievePrimes ((N : ℝ)^(1/3 : ℝ))).prod id) (hw1 : w 1 = 1)
-    (hs : ∀ d ∈ D, ∀ p ∈ d.primeFactors, (p : ℝ) < (N : ℝ)^originalAlpha)
-    (hR : ∀ d ∈ D, d ≤ R) (hw : ∀ d ∈ D, |w d| ≤ d) :
-    ((smallPrefix N e).card : ℝ) ≤
-      (∑ t ∈ pairs N e, ((interval N e t).card : ℝ)) *
-      (∑ d ∈ D, ∑ f ∈ D, w d*w f * (nuN N (Nat.lcm d f) : ℝ)/(Nat.lcm d f)) +
-      2*((N : ℝ)+1)^2*((R : ℝ)+1)^2*(R : ℝ)^4 := by
-  have hbase := smallPrefix_card_le_cubeRootQuadratic N e hN he D w h1 hD hw1
-  rw [sum_quadratic_eq_nuN_of_small_support D w hD hs] at hbase
-  have hnonzero : ∀ d ∈ D, d ≠ 0 := fun d hd =>
-    ne_zero_of_dvd_ne_zero (sievePrimes_prod_ne_zero _) (hD d hd)
-  have herr := sum_quadraticRemainder_abs_le_polynomial N R e D w hnonzero hR hw
-  exact hbase.trans (add_le_add le_rfl ((le_abs_self _).trans herr))
 
-/-- The absolute CRT error also has the common numerator on independently small support. -/
-theorem quadraticRemainder_abs_le_nuN_of_small_support {N : ℕ} {e Z : ℝ} {t : ℕ × ℕ}
-    (ht : t ∈ pairs N e) (D : Finset ℕ) (w : ℕ → ℝ)
-    (hD : ∀ d ∈ D, d ∣ (sievePrimes Z).prod id)
-    (hs : ∀ d ∈ D, ∀ p ∈ d.primeFactors, (p : ℝ) < (N : ℝ)^originalAlpha) :
-    |quadraticRemainder N e t D w| ≤
-      2 * ∑ d ∈ D, ∑ f ∈ D, |w d| * |w f| * (nuN N (Nat.lcm d f) : ℝ) := by
-  apply (quadraticRemainder_abs_le N e t D w
-    (fun d hd => ne_zero_of_dvd_ne_zero (sievePrimes_prod_ne_zero Z) (hD d hd))).trans_eq
-  congr 1
-  apply sum_congr rfl
-  intro d hd
-  apply sum_congr rfl
-  intro f hf
-  rw [lcm_rootCount_small_support ht (hD d hd) (hD f hf) (hs d hd) (hs f hf)]
 
 end U8Literal.SmallProduct

@@ -50,9 +50,6 @@ theorem rational_masses_positive : 0 < rationalTen ∧ 0 < rationalEleven := by
   have hb := fixed_geometry.2.1.trans_le fixed_geometry.2.2.1
   constructor <;> dsimp only [rationalTen, rationalEleven] <;> positivity
 
-theorem actual_masses_positive : 0 < I10 ∧ 0 < I11 :=
-  ⟨rational_masses_positive.1.trans_le actual_ten_lower,
-    rational_masses_positive.2.trans_le actual_eleven_lower⟩
 
 /-- The original two negative terms retain their respective weights eight and eight. -/
 theorem actual_weighted_lower : weightedRational ≤ 8*I10+8*I11 := by

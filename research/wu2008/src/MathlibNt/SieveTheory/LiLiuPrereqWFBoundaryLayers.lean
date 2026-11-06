@@ -72,60 +72,8 @@ theorem upperSmallBoundary_highLayer (P : Finset ℕ) {D ε : ℝ}
     Even s.card ∧ 1 < ε * (s.card + 3) :=
   ⟨hb.2.2.1, small_cubic_failure_card P hD hε hq hs hb.2.2.2⟩
 
-/-- A finite source-aligned restriction of the same lower boundary kernel. -/
-theorem lowerBoundaryDensity_eq_highLayers (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (g : ℕ → ℝ) {q : ℕ} {B : Finset ℕ}
-    (hq : q ∈ geometricSmallPrimes P D ε) (hB : B ⊆ geometricSmallPrimes P D ε) :
-    lowerBoundaryDensity (D ^ ε) g q B =
-      ∑ s ∈ B.powerset.filter (fun s => ¬Even s.card ∧ 1 < ε * (s.card + 3)),
-        if LowerBoundary (D ^ ε) q s then ∏ p ∈ s, g p else 0 := by
-  rw [lowerBoundaryDensity, Finset.sum_filter]
-  apply Finset.sum_congr rfl
-  intro s hs
-  by_cases hb : LowerBoundary (D ^ ε) q s
-  · have hh := lowerSmallBoundary_highLayer P hD hε hq
-      ((Finset.mem_powerset.mp hs).trans hB) hb
-    simp only [if_pos hb, if_pos hh]
-  · simp only [if_neg hb, ite_self]
 
-theorem upperBoundaryDensity_eq_highLayers (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (g : ℕ → ℝ) {q : ℕ} {B : Finset ℕ}
-    (hq : q ∈ geometricSmallPrimes P D ε) (hB : B ⊆ geometricSmallPrimes P D ε) :
-    upperBoundaryDensity (D ^ ε) g q B =
-      ∑ s ∈ B.powerset.filter (fun s => Even s.card ∧ 1 < ε * (s.card + 3)),
-        if UpperBoundary (D ^ ε) q s then ∏ p ∈ s, g p else 0 := by
-  rw [upperBoundaryDensity, Finset.sum_filter]
-  apply Finset.sum_congr rfl
-  intro s hs
-  by_cases hb : UpperBoundary (D ^ ε) q s
-  · have hh := upperSmallBoundary_highLayer P hD hε hq
-      ((Finset.mem_powerset.mp hs).trans hB) hb
-    simp only [if_pos hb, if_pos hh]
-  · simp only [if_neg hb, ite_self]
 
-/-- In the Li--Liu parameter range a lower boundary needs at least seven
-tail primes (and the new least prime); the upper boundary needs six. -/
-theorem lowerSmallBoundary_card_seven (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (hεsmall : ε < 1 / 8) {q : ℕ} {s : Finset ℕ}
-    (hq : q ∈ geometricSmallPrimes P D ε) (hs : s ⊆ geometricSmallPrimes P D ε)
-    (hb : LowerBoundary (D ^ ε) q s) : 7 ≤ s.card := by
-  obtain ⟨hodd, hlayer⟩ := lowerSmallBoundary_highLayer P hD hε hq hs hb
-  have hsix : 6 ≤ s.card := by
-    by_contra! hn
-    have hc : (s.card : ℝ) ≤ 5 := by exact_mod_cast (show s.card ≤ 5 by omega)
-    nlinarith
-  have hne : s.card ≠ 6 := by
-    intro h
-    norm_num [h] at hodd
-  omega
 
-theorem upperSmallBoundary_card_six (P : Finset ℕ) {D ε : ℝ}
-    (hD : 2 ≤ D) (hε : 0 < ε) (hεsmall : ε < 1 / 8) {q : ℕ} {s : Finset ℕ}
-    (hq : q ∈ geometricSmallPrimes P D ε) (hs : s ⊆ geometricSmallPrimes P D ε)
-    (hb : UpperBoundary (D ^ ε) q s) : 6 ≤ s.card := by
-  have hlayer := (upperSmallBoundary_highLayer P hD hε hq hs hb).2
-  by_contra! hn
-  have hc : (s.card : ℝ) ≤ 5 := by exact_mod_cast (show s.card ≤ 5 by omega)
-  nlinarith
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF.SmallRosser

@@ -46,9 +46,6 @@ theorem fract_lt_one (x : ℝ) : Int.fract x < 1 :=
 `‖x‖ = min(x − ⌊x⌋, 1 − (x − ⌊x⌋))`. -/
 noncomputable def distToInt (x : ℝ) : ℝ := min (Int.fract x) (1 - Int.fract x)
 
-theorem distToInt_nonneg (x : ℝ) : 0 ≤ distToInt x := by
-  dsimp [distToInt]
-  exact le_min (fract_nonneg x) (sub_nonneg.mpr (fract_lt_one x).le)
 
 theorem distToInt_le_half (x : ℝ) : distToInt x ≤ 1 / 2 := by
   dsimp [distToInt]
@@ -78,16 +75,6 @@ theorem charReal_nat_mul (n : ℕ) (x : ℝ) : charReal (n * x) = (charReal x) ^
         ring]
   rw [Complex.exp_nsmul]
 
-/-- `e` is 1-periodic: `e(x+1) = e(x)`, since `exp(2πi) = 1`. -/
-theorem charReal_periodic : Function.Periodic charReal 1 := by
-  intro x
-  dsimp [charReal]
-  rw [show (2 * Real.pi * ((x + 1 : ℝ) : ℂ)) * Complex.I =
-      (2 * Real.pi * (x : ℂ)) * Complex.I + 2 * Real.pi * Complex.I by
-        rw [Complex.ofReal_add, Complex.ofReal_one]
-        ring]
-  rw [Complex.exp_add, Complex.exp_two_pi_mul_I]
-  ring
 
 /-- `e(a + b) = e(a)·e(b)`: the character maps addition in `ℝ`
 to multiplication in `ℂ`. -/
@@ -257,18 +244,6 @@ theorem geomSum_exp_bound_far (N : ℕ) {x : ℝ} (hx : ¬ ∃ k : ℤ, (k : ℝ
     _ ≤ 1 / (2 * distToInt x) := by
           exact one_div_le_one_div_of_le hd hsin
 
-/-- **Geometric-sum bound**: the two components of
-  |Σ_{n<N} e(nx)| ≤ min(N, 1/(2‖x‖)).
-The trivial component holds for all `N, x`; the nontrivial component
-requires `x ∉ ℤ`. -/
-theorem geomSum_exp_bound (N : ℕ) (x : ℝ) :
-    ‖∑ n ∈ Finset.range N, charReal (n * x)‖ ≤ N ∧
-      ((¬ ∃ k : ℤ, (k : ℝ) = x) →
-        ‖∑ n ∈ Finset.range N, charReal (n * x)‖ ≤ 1 / (2 * distToInt x)) := by
-  constructor
-  · exact geomSum_exp_bound_trivial N x
-  · intro hx
-    exact geomSum_exp_bound_far N hx
 
 /-! ## 5. Interval geometric-sum bound -/
 

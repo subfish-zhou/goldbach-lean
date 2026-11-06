@@ -98,12 +98,6 @@ theorem norm_primePrefix_sub_coprimePrimePrefix_le {q : ℕ}
           exact Nat.mem_primeFactors.mpr ⟨hp, not_not.mp
             (by simpa only [hp.coprime_iff_not_dvd] using hc), hm.ne'⟩)
 
-/-- Existing arithmetic count makes the correction at most log₂(m). -/
-theorem norm_primePrefix_sub_coprimePrimePrefix_le_log2 {q : ℕ}
-    (χ : DirichletCharacter ℂ q) (y m : ℕ) (hm : 0 < m) :
-    ‖primePrefix χ y - coprimePrimePrefix χ y m‖ ≤ (Nat.log2 m : ℝ) :=
-  (norm_primePrefix_sub_coprimePrimePrefix_le χ y m hm).trans
-    (by exact_mod_cast card_primeFactors_le_log2 hm)
 
 /-- The same actual prime indicator in the Icc normalization used by Pan. -/
 theorem coprimePrimePrefix_eq_Icc {q : ℕ}
@@ -121,14 +115,6 @@ theorem coprimePrimePrefix_eq_Icc {q : ℕ}
   intro n _
   split_ifs <;> simp
 
-/-- The unrestricted actual prime coefficient in Pan's Icc normalization. -/
-theorem primePrefix_eq_Icc {q : ℕ} (χ : DirichletCharacter ℂ q) (y : ℕ) :
-    primePrefix χ y =
-      ∑ n ∈ Icc 1 y, (if n.Prime then (1 : ℂ) else 0) * χ (n : ZMod q) := by
-  have he : primePrefix χ y = coprimePrimePrefix χ y 1 := by
-    simp [primePrefix, coprimePrimePrefix]
-  rw [he, coprimePrimePrefix_eq_Icc]
-  simp
 
 /-- Whole-a norm retained; the triangle inequality is used only for paying the
 low-conductor bad-prime correction.  No high-conductor estimate is claimed. -/

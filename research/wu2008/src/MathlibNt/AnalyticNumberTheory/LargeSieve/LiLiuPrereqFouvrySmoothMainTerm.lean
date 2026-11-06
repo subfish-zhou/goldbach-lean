@@ -309,19 +309,6 @@ theorem dispersionUV_smooth_uniform_error :
         (CU + CV) * smoothUErrorEnvelope N Q β c a := add_le_add hv hu
     _ = _ := by ring
 
-/-- The canonical cutoff support removes the support-containment hypothesis. -/
-theorem dispersionV_sub_U_dyadicCutoff_uniform_error :
-    ∃ C : ℝ, 0 < C ∧ ∀ M : ℝ, 0 < M →
-      ∀ N Q : Finset ℕ, ∀ β c : ℕ → ℝ, ∀ a : ℤ,
-      (∀ q ∈ Q, q ≠ 0) →
-      |dispersionV (dyadicCutoffNatSupport M) N Q
-          (fun m ↦ scaledDyadicCutoff M m) β c a -
-        dispersionU (dyadicCutoffNatSupport M) N Q
-          (fun m ↦ scaledDyadicCutoff M m) β c a| ≤
-        C * (smoothUErrorEnvelope N Q β c a + smoothVErrorEnvelope N Q β c a) := by
-  obtain ⟨C, hC, hbound⟩ := dispersionUV_smooth_uniform_error
-  exact ⟨C, hC, fun M hM N Q β c a hQ ↦
-    (hbound M hM _ (scaledDyadicCutoff_mem_natSupport hM) N Q β c a hQ).2.2⟩
 
 /-- The constructed cutoff, rather than an assumed majorant, gives the
 smoothed dispersion reduction for an alpha support in `[M, 2M]`. -/

@@ -52,10 +52,6 @@ theorem originalTriplePair_injOn (N : ℕ) (a η : ℝ) :
   subst p'
   rfl
 
-theorem originalTripleCount_eq_card_image (N : ℕ) (a η : ℝ) :
-    originalTripleCount N a η =
-      ((originalTriples N a η).image originalTriplePair).card :=
-  (card_image_of_injOn (originalTriplePair_injOn N a η)).symm
 
 theorem originalTriple_pairValue {N : ℕ} {a η : ℝ} {t : ℕ × ℕ × ℕ}
     (ht : t ∈ originalTriples N a η) :

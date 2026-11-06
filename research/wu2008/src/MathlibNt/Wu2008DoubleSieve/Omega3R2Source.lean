@@ -14,12 +14,6 @@ namespace Wu2008DoubleSieve
 open Finset Real
 open scoped Classical
 
-theorem omega3_source_moduli_exact (N q : ℕ) (δ : ℝ) :
-    q ∈ omega3SieveModuli N (⌊(N : ℝ) ^ (1 / 2 - δ)⌋₊ + 1)
-        (sqrt ((N : ℝ) ^ (1 / 2 - δ))) ↔
-      q ∈ (ordinarySievePrimeProduct N (sqrt ((N : ℝ) ^ (1 / 2 - δ)))).divisors ∧
-        (q : ℝ) ≤ (N : ℝ) ^ (1 / 2 - δ) := by
-  rw [omega3SieveModuli, mem_filter, Nat.lt_succ_iff, Nat.le_floor_iff (by positivity)]
 
 theorem omega3_sieve_R2_relative (k : ℕ) {δ ε : ℝ}
     (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :

@@ -25,15 +25,6 @@ def wCorrelationInnerWeight (K : WExtractedKey) (β ζ : ℕ → ℝ)
   ζ ((K.1.2.2.1 * K.1.2.2.2.2 / K.2) * t.1.1.2.2) *
     β (K.1.1 * (wGCDTuple (wExtractedOriginal t.1)).n₂)
 
-/-- Equality of the two inner arithmetic coordinates suffices. Neither
-the first modulus nor its coefficient is concealed in this weight. -/
-theorem wCorrelationInnerWeight_eq (K : WExtractedKey) (β ζ : ℕ → ℝ)
-    {t u : WExtractedTuple × ℤ}
-    (hn : (wGCDTuple (wExtractedOriginal t.1)).n₂ =
-      (wGCDTuple (wExtractedOriginal u.1)).n₂)
-    (hs : t.1.1.2.2 = u.1.1.2.2) :
-    wCorrelationInnerWeight K β ζ t = wCorrelationInnerWeight K β ζ u := by
-  simp only [wCorrelationInnerWeight, hn, hs]
 
 theorem wExtractedCoefficient_eq_outer_inner
     {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}

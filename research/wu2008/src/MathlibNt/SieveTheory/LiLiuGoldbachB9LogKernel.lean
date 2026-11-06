@@ -98,10 +98,6 @@ theorem goldbachB9PairLogKernelTerm_nonneg
     (mul_nonneg (mul_nonneg (Nat.cast_nonneg rs.1) (Nat.cast_nonneg rs.2))
       (goldbachB9OneSubPrimeLogExponent_pos hN hrs).le)
 
-theorem goldbachB9PairLogKernel_nonneg {N : ℕ} (hN : 2 ≤ N) :
-    0 ≤ goldbachB9PairLogKernel N := by
-  rw [goldbachB9PairLogKernel_eq_logCoordinateSum]
-  exact Finset.sum_nonneg (fun _ hrs => goldbachB9PairLogKernelTerm_nonneg hN hrs)
 
 noncomputable def goldbachB9PairsInLogRectangle
     (N : ℕ) (a₀ a₁ b₀ b₁ : ℝ) : Finset (ℕ × ℕ) :=

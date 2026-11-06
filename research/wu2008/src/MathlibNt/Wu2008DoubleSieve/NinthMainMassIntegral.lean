@@ -211,23 +211,6 @@ theorem J9_eq_iterated :
   rw [ninthMainInner_eq ht]
   rw [div_div, mul_comm (1 - t) t]
 
-theorem J9_eq_triangle_integral :
-    J9 = ∫ t in ninthProfileK2..ninthProfileSigma,
-      ∫ v in ninthProfileSigma..((1 - t) / 2), 1 / (t * v * (1 - t - v)) := by
-  rw [J9_eq_iterated]
-  apply intervalIntegral.integral_congr
-  intro t ht
-  rw [uIcc_of_le ninthMain_parameters.2.1.le] at ht
-  dsimp only
-  unfold ninthMainInner
-  simp only [ninthMainTop, ninthMainKernel, ninthMainClip, min_eq_left ht.2]
-  rw [← intervalIntegral.integral_div]
-  apply intervalIntegral.integral_congr
-  intro v _
-  dsimp only
-  simp only [div_div]
-  congr 1
-  ring
 
 theorem J9_nonneg : 0 ≤ J9 := by
   apply intervalIntegral.integral_nonneg ninthMain_parameters.2.1.le

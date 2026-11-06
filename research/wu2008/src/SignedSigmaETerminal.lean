@@ -25,20 +25,6 @@ theorem lower_le_actual : lower ≤ firstFeedback NineFeedbackStrength.originalH
 def correctedLower : ℝ := RemainingHf.splitLower 2*SigmaSignedCells.correctedProfile+
   TerminalESigned.massPaid NineFeedbackStrength.originalH
 
-theorem correctedLower_le_actual : correctedLower ≤ firstFeedback NineFeedbackStrength.originalH 3 3 := by
-  have hc := SigmaSignedCells.profileLower_pos.trans_le SigmaSignedCells.profileLower_le_corrected
-  have hs := mul_le_mul_of_nonneg_left SigmaSignedCells.correctedProfile_le
-    (log_nonneg (by norm_num : (1:ℝ)≤2))
-  have hl := mul_le_mul_of_nonneg_right (RemainingHf.splitLower_le (by norm_num : (1:ℝ)≤2)) hc.le
-  have hm := TerminalESigned.massPaid_le CoupledIntegralRecovery.originalH_nonneg
-  have he := TerminalECells.mass_le CoupledIntegralRecovery.originalH_nonneg
-  unfold correctedLower
-  simp only [firstFeedback,profileJ,intervalIntegral.integral_same,zero_div,add_zero]
-  linarith only [hs,hl,hm,he]
 
-theorem lower_le_corrected : lower ≤ correctedLower := by
-  unfold lower correctedLower
-  exact add_le_add
-    (mul_le_mul_of_nonneg_left SigmaSignedCells.profileLower_le_corrected logPayment_nonneg) le_rfl
 end
 end SignedSigmaETerminal

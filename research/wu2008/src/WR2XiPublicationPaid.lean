@@ -95,18 +95,5 @@ theorem Xi2_publication_paid (r : Fin 4) {δ : ℝ} (hd : 0 < δ)
   have hb := secondPublication_baseline r hd hr
   linarith only [h,hb]
 
-/-- A uniform positive baseline for all four original kernels on one positive radius. -/
-theorem Xi2_four_rows_positive_baseline : ∃ d : ℝ, 0 < d ∧ d ≤ 1/10 ∧
-    ∀ δ : ℝ, 0 < δ → δ ≤ d → ∀ r : Fin 4,
-      (1:ℝ)/100 +
-        (∫ t in (1:ℝ)..3, wuImprovementLimit true δ t * Xi2 (gamma5OriginalRow r) t) <
-        wuImprovementLimit true δ (gamma5OriginalRow r).s := by
-  refine ⟨Wu04RemainingStrongFourRows.commonRadius,
-    Wu04RemainingStrongFourRows.commonRadius_pos,
-    (min_le_left _ _).trans (min_le_left _ _), ?_⟩
-  intro δ hd hr r
-  have hp := Xi2_publication_paid r hd hr
-  have hb := secondPublication_paid_gt_one_hundredth r
-  linarith only [hp, hb]
 
 end WuPaper.R2Xi

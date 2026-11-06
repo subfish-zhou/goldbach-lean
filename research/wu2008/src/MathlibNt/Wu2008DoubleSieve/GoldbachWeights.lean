@@ -257,18 +257,6 @@ theorem primeWindow_mul_of_prime_above (N : ℕ) {d : ℕ} {z w : ℝ}
       exact (not_lt_of_ge hwd) hqw
     exact ⟨hq, ⟨(Nat.coprime_primes hq hd).mpr hqd, hqN⟩, hzq, hqw⟩
 
-/-- The finite source weight with the printed `P(N)` prime summation ranges.
-The hypothesis `w ≤ d` is retained explicitly instead of silently assuming
-the later analytic parameter specialization. -/
-theorem wu_proposition44_prime_weight (N : ℕ) {d : ℕ} {z w : ℝ}
-    (hd : d.Prime) (hzw : z ≤ w) (hwd : w ≤ (d : ℝ)) :
-    2 * sieveCount N d N w ≤
-      2 * sieveCount N d (d * N) z -
-        (∑ q ∈ primeWindow N z w, sieveCount N (d * q) (d * N) z) +
-        ∑ t ∈ orderedTriples (primeWindow N z w),
-          sieveCount N (d * (t.1 * t.2.1 * t.2.2)) (d * N * t.1) (t.2.1 : ℝ) := by
-  simpa only [primeWindow_mul_of_prime_above N hd hwd] using
-    wu_proposition44_finite_weight N d hzw
 
 def SiftedLE (M n : ℕ) (z : ℝ) : Prop :=
   ∀ q : ℕ, q.Prime → q.Coprime M → (q : ℝ) ≤ z → ¬q ∣ n

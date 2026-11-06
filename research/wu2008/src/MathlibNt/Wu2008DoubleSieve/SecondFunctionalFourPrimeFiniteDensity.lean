@@ -54,23 +54,5 @@ theorem source_four_finite_density (k : ℕ) {δ ρ ε : ℝ}
     linarith
   exact ⟨fun j => join _ _ _ (ha.1 j) (hraw.1 j), join _ _ _ ha.2 hraw.2⟩
 
-/-- The actual original mother source consumes every paid finite word. -/
-theorem mother_source_four_finite_density (k : ℕ) {δ ρ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (hρ : 0 < ρ) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s → ∀ j : Fin 4,
-      actualSource N δ p (convolutionWuWindows N Δ V) j ≤ finiteBuchstabMain N δ Δ V p j *
-        ((1+ρ)*(1+ρ*exp (-eulerMascheroniConstant))*(8/(1-2*δ))*wuSingularSeries N/log N) +
-        ε * boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  obtain ⟨T,hT,hd⟩ := source_four_finite_density k hδ hδhi hρ hε
-  refine ⟨T,hT,?_⟩
-  intro N hN hn i Δ V hb p hp hs j
-  have ha := actual_source_le (N := N) (δ := δ) p (convolutionWuWindows N Δ V)
-    (fun d h => (omega3_source_support_le_Q (by have := hT.trans hN; omega) hδ hδhi hb h).1)
-    (hT.trans hN) hn j
-  have hj := (hd N hN hn i Δ V hb p hp hs).1 j
-  rw [(sourceFamily_dictionary N δ Δ V p j).1] at hj
-  exact ha.trans hj
 
 end Wu2008DoubleSieve.FourPrimeNonunit

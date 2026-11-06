@@ -54,17 +54,5 @@ theorem step_lower_with_tail (n : ℕ) (g : ℕ → ℝ) (hg0 : g 0 = 1)
   have hx13 : x ∈ Icc (1:ℝ) 3 := ⟨ha.1.trans hx.1, hx.2⟩
   exact mul_nonneg (hH x hx13) (hd x hx13)
 
-/-- Discarding the nonnegative tail only weakens the lower bound. -/
-theorem step_lower (n : ℕ) (g : ℕ → ℝ) (hg0 : g 0 = 1)
-    (hg : StrictMonoOn g (Iic n)) (hb : ∀ k ≤ n, g k ∈ Icc 1 3)
-    (H d : ℝ → ℝ) (hH : AntitoneOn H (Icc 1 3))
-    (hH0 : ∀ x ∈ Icc 1 3, 0 ≤ H x) (hd0 : ∀ x ∈ Icc 1 3, 0 ≤ d x)
-    (hd : IntervalIntegrable d volume 1 3)
-    (hHd : IntervalIntegrable (fun x => H x * d x) volume 1 3) :
-    (∑ k ∈ Finset.range n, (∫ x in g k..g (k+1), d x) * H (g (k+1))) ≤
-      ∫ x in (1:ℝ)..3, H x * d x := by
-  have ht := tail_nonnegative H d (hb n le_rfl) hH0 hd0
-  have hs := step_lower_with_tail n g hg0 hg hb H d hH hd0 hd hHd
-  linarith only [ht, hs]
 
 end Wu2008DoubleSieve.SecondFunctionalPositive

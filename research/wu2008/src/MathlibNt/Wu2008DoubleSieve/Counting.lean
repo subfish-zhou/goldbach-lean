@@ -37,14 +37,6 @@ theorem mem_wuPrimeComplements {N p : ℕ} :
   simp only [wuPrimeComplements, Finset.mem_filter, Finset.mem_range,
     Nat.lt_succ_iff]
 
-/-- The frozen almost-prime predicate itself excludes zero, but permits one. -/
-theorem wuPrimeComplements_eq_filter_isAtMostAlmostPrime (N : ℕ) :
-    wuPrimeComplements N =
-      (Finset.range (N + 1)).filter
-        (fun p => p.Prime ∧ Nat.IsAtMostAlmostPrime 2 (N - p)) := by
-  ext p
-  rw [mem_wuPrimeComplements, Finset.mem_filter, Finset.mem_range, Nat.lt_succ_iff]
-  simp only [Nat.IsAtMostAlmostPrime, Nat.pos_iff_ne_zero]
 
 theorem mem_releaseGoodRepresentations {N p : ℕ} :
     p ∈ chenGoodRepresentations N ↔
@@ -103,11 +95,6 @@ theorem wuPrimeComplements_card_eq_release (N : ℕ) :
     Finset.card_union_of_disjoint (release_disjoint_unit N)]
   split_ifs <;> simp
 
-theorem release_card_le_wu_card_le_add_one (N : ℕ) :
-    (chenGoodRepresentations N).card ≤ (wuPrimeComplements N).card ∧
-      (wuPrimeComplements N).card ≤ (chenGoodRepresentations N).card + 1 := by
-  rw [wuPrimeComplements_card_eq_release]
-  split_ifs <;> omega
 
 theorem mem_totalizedOmegaPrimeComplements {N p : ℕ} :
     p ∈ totalizedOmegaPrimeComplements N ↔
@@ -157,23 +144,7 @@ theorem totalizedOmegaPrimeComplements_card_eq_wu (N : ℕ) :
     Finset.card_union_of_disjoint (wu_disjoint_zero N)]
   split_ifs <;> simp
 
-/-- Both exceptional fibres are explicit; no parity or size condition is hidden. -/
-theorem totalizedOmegaPrimeComplements_card_eq_release (N : ℕ) :
-    (totalizedOmegaPrimeComplements N).card =
-      (chenGoodRepresentations N).card +
-        (if (N - 1).Prime then 1 else 0) + (if N.Prime then 1 else 0) := by
-  rw [totalizedOmegaPrimeComplements_card_eq_wu, wuPrimeComplements_card_eq_release]
 
-/-- On the even integers used by Wu's theorem, zero never contributes. -/
-theorem totalizedOmegaPrimeComplements_eq_wu_of_even {N : ℕ}
-    (hN : Even N) (hlarge : 4 ≤ N) :
-    totalizedOmegaPrimeComplements N = wuPrimeComplements N := by
-  have hnot : ¬N.Prime := by
-    intro hp
-    have htwo := hp.even_iff.mp hN
-    omega
-  rw [totalizedOmegaPrimeComplements_eq_wu_union_zero, if_neg hnot]
-  simp
 
 theorem wuPrimeComplements_eq_empty_of_le_two {N : ℕ} (hN : N ≤ 2) :
     wuPrimeComplements N = ∅ := by
@@ -183,20 +154,6 @@ theorem wuPrimeComplements_eq_empty_of_le_two {N : ℕ} (hN : N ≤ 2) :
   have := hp.two_le
   omega
 
-theorem releaseGoodRepresentations_eq_empty_of_le_two {N : ℕ} (hN : N ≤ 2) :
-    chenGoodRepresentations N = ∅ := by
-  apply Finset.eq_empty_iff_forall_notMem.mpr
-  intro p hp
-  obtain ⟨hpN, hp, _, _⟩ := mem_releaseGoodRepresentations.mp hp
-  have := hp.two_le
-  omega
 
-/-- At `N = 2`, totalization creates a representation with complement zero;
-the positive-complement count and the release count are both empty. -/
-theorem totalizedOmegaPrimeComplements_two :
-    totalizedOmegaPrimeComplements 2 = {2} := by
-  rw [totalizedOmegaPrimeComplements_eq_wu_union_zero,
-    wuPrimeComplements_eq_empty_of_le_two (by omega)]
-  simp [Nat.prime_two]
 
 end MathlibNt.Wu2008DoubleSieve

@@ -102,11 +102,6 @@ theorem panSourceD_norm_le (m n : ℕ) : ‖panSourceD m n‖ ≤ 1 := by
 /-- The precise reciprocal-square-root sum in (2.23). -/
 def panHalfSum (N : ℕ) : ℝ := ∑ n ∈ Finset.Icc 1 N, (Real.sqrt n)⁻¹
 
-theorem panHalfSum_eq_rpow (N : ℕ) :
-    panHalfSum N = ∑ n ∈ Finset.Icc 1 N, (n : ℝ) ^ (-(1 / 2) : ℝ) := by
-  apply Finset.sum_congr rfl
-  intro n _
-  rw [Real.rpow_neg (Nat.cast_nonneg n), Real.sqrt_eq_rpow]
 
 theorem panHalfSum_nonneg (N : ℕ) : 0 ≤ panHalfSum N := by
   unfold panHalfSum
@@ -190,27 +185,7 @@ theorem pan223_horizontal_pointwise {q : ℕ} (f : ℕ → ℂ) (hf : ∀ n, ‖
 
 /-! ## Integrability and the finite-shift estimate -/
 
-/-- Both vertical sections are genuine finite integrals. -/
-theorem pan223_vertical_integrable {q : ℕ} (f : ℕ → ℂ)
-    (m H y A₁ A₂ k : ℕ) (χ : PrimitiveCharacter q) (hy : 0 < y)
-    {α T v : ℝ} (hT : 0 ≤ T) (hv : v ∈ Icc (1 / 2) α) :
-    IntervalIntegrable (chen1973VerticalSection (pan223Kernel f m H y A₁ A₂ k χ) v)
-      volume (-T) T := by
-  apply Eq21FiniteContour_vertical_intervalIntegrable hT hv
-  apply (pan223Kernel_differentiableOn f m H y A₁ A₂ k χ hy).continuousOn.mono
-  intro s hs
-  exact lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 2) hs.1
 
-/-- Both horizontal integrals exist independently of the contour identity. -/
-theorem pan223_horizontal_integrable {q : ℕ} (f : ℕ → ℂ)
-    (m H y A₁ A₂ k : ℕ) (χ : PrimitiveCharacter q) (hy : 0 < y)
-    {α t : ℝ} (hα : 1 / 2 ≤ α) :
-    IntervalIntegrable (fun u : ℝ => pan223Kernel f m H y A₁ A₂ k χ (u + t * I))
-      volume (1 / 2) α := by
-  apply Eq21FiniteContour_horizontal_intervalIntegrable hα (le_refl |t|)
-  apply (pan223Kernel_differentiableOn f m H y A₁ A₂ k χ hy).continuousOn.mono
-  intro s hs
-  exact lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1 / 2) hs.1
 
 /-- Each horizontal edge separately has the original half-sum bound. -/
 theorem pan223_horizontal_integral_bound {q : ℕ} (f : ℕ → ℂ)

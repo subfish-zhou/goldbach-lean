@@ -60,16 +60,6 @@ theorem actual_highGain_lower {ε : ℝ} (hε : 0 < ε) :
             (MixedEta.selected N n (MixedSixth.highCells δ n)) :=
   highGain_lower hε
 
-/-- The same delta cap admits a coarse resolution beyond any externally requested threshold. -/
-theorem highGain_lower_arbitrarily_fine {ε : ℝ} (hε : 0 < ε) :
-    ∃ d : ℝ, 0 < d ∧ ∀ δ : ℝ, 0 ≤ δ → δ ≤ d →
-      ∀ m : ℕ, ∃ n : ℕ, m ≤ n ∧ ∀ᶠ N : ℕ in atTop,
-        (HighConsumer.highGain-ε)*truncatedSixthMassScale N ≤ E N n δ := by
-  obtain ⟨d,hd,h⟩ := highGain_lower hε
-  refine ⟨d,hd,?_⟩
-  intro δ hδ hdδ m
-  obtain ⟨n0,hn0⟩ := h δ hδ hdδ
-  exact ⟨max m n0,le_max_left _ _,hn0 _ (le_max_right _ _)⟩
 
 end
 end HighIncrement

@@ -29,8 +29,6 @@ noncomputable def Q : Matrix (Fin 4) (Fin 4) ℝ := ∑' n : ℕ, matrix ^ n
 theorem Q_mul_one_sub : Q * (1-matrix) = 1 :=
   geom_series_mul_neg matrix actual_operator_norm_lt_one
 
-theorem one_sub_mul_Q : (1-matrix) * Q = 1 :=
-  mul_neg_geom_series matrix actual_operator_norm_lt_one
 
 theorem Q_nonnegative (i j : Fin 4) : 0 ≤ Q i j := by
   have hs : HasSum (fun n : ℕ => (matrix ^ n : Fin 4 → Fin 4 → ℝ)) Q :=

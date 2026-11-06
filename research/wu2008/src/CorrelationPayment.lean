@@ -36,10 +36,6 @@ theorem residual_coefficient_lt :
 theorem full_residual_count : CountBound residualCoefficient :=
   pay residual_coefficient_lt
 
-theorem residual_coefficient_identity :
-    residualCoefficient = JointHMotherPayment.lowerCoefficient+
-      SignedTotalCorrelation.correlationGain/4+SignedTotalCorrelation.retainedResidual/4 := by
-  rw [residualCoefficient, SignedTotalCorrelation.fixed_improvement_identity]
 
 theorem residual_strict_improvement :
     JointHMotherPayment.lowerCoefficient+1/80 < residualCoefficient := by

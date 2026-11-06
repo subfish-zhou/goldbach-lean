@@ -138,22 +138,5 @@ theorem closedKMass_six_abs_uniform (k : ℕ) {δ epsilon : ℝ}
   rw [← sum_sub_distrib]
   exact (abs_sum_le_sum_abs _ _).trans hsum
 
-/-- Requested one-sided terminals, with the unchanged actual-phi integral main. -/
-theorem closedKMass_six_uniform (k : ℕ) {δ epsilon : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (he : 0 < epsilon) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s →
-        (∀ j : Fin 6, closedKMass N δ Δ V p j ≤ integralKMass N δ Δ V p j +
-          epsilon * ((N:ℝ)/log N) * boxConvolutionReciprocalMass (convolutionWuWindows N Δ V)) ∧
-        (∑ j : Fin 6, closedKMass N δ Δ V p j) ≤
-          (∑ j : Fin 6, integralKMass N δ Δ V p j) +
-          epsilon * ((N:ℝ)/log N) * boxConvolutionReciprocalMass (convolutionWuWindows N Δ V) := by
-  obtain ⟨T,hT4,hT⟩ := closedKMass_six_abs_uniform k hδ hδhi he
-  refine ⟨T,hT4,?_⟩
-  intro N hN i Δ V hb p hp hs
-  obtain ⟨hj,_,ha⟩ := hT N hN i Δ V hb p hp hs
-  exact ⟨fun j => sub_le_iff_le_add'.mp ((le_abs_self _).trans (hj j)),
-    sub_le_iff_le_add'.mp ((le_abs_self _).trans ha)⟩
 
 end Wu2008DoubleSieve.LowerTripleSourceK

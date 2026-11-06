@@ -457,22 +457,6 @@ theorem primitiveGaussFareyDyadicLayerLedger_le
 def primitiveGaussFareyMediumLongLayers (N R : ℕ) : Finset ℕ :=
   (Finset.range (Nat.log2 N + 1)).filter fun k => R < 2 ^ k ∧ 2 ^ k ≤ R ^ 2
 
-/-- Medium-long payment with the single external Rademacher--Menshov factor
-visible.  The right side retains the exact layer length and the true `j`-summed
-coefficient energy; hence it is the faithful scale to use when deciding whether
-a half-budget closes. -/
-theorem primitiveGaussFareyMediumLongLedger_le
-    (b : ℕ → ℕ → ℤ → ℂ) (N R : ℕ) (hR : 0 < R) :
-    ((Nat.log2 N + 1 : ℕ) : ℝ) *
-        ∑ k ∈ primitiveGaussFareyMediumLongLayers N R,
-          primitiveGaussFareyDyadicLayerLedger (b k) N R k ≤
-      ((Nat.log2 N + 1 : ℕ) : ℝ) *
-        ∑ k ∈ primitiveGaussFareyMediumLongLayers N R,
-          primitiveGaussFareyCellFactor R (2 ^ k) *
-            primitiveGaussFareyDyadicLayerCoefficientEnergy (b k) N k := by
-  apply mul_le_mul_of_nonneg_left _ (by positivity)
-  exact Finset.sum_le_sum fun k hk =>
-    primitiveGaussFareyDyadicLayerLedger_le (b k) N R k hR
 
 /-- The layers still requiring a primitive analytic source after the
 medium-long Gauss--Farey payment: precisely `R² < 2^k`. -/

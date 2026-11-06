@@ -223,31 +223,7 @@ theorem upperRosserBoundarySourceIntegral_normalize
     (upperRosserBoundarySourceIntegral_homogeneous
       k (c := b) (s := s / b) (b := 1) hb)
 
-theorem upperRosserBoundarySourceIntegral_eq_zero_of_upper_le_support
-    (k : ℕ) {s b : ℝ} (hs : 0 ≤ s)
-    (hb : b ≤ s / 3 ^ (k + 1)) :
-    upperRosserBoundarySourceIntegral k s b = 0 := by
-  unfold upperRosserBoundarySourceIntegral
-  apply MeasureTheory.integral_eq_zero_of_ae
-  filter_upwards [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with a ha
-  rw [upperRosserBoundaryMassAux_eq_zero_of_terminal_le k hs (ha.2.le.trans hb)]
-  simp
 
-theorem upperRosserBoundarySourceIntegral_eq_integral_of_lower_le_support
-    (k : ℕ) {s c b : ℝ} (hs : 0 ≤ s) (hc : 0 ≤ c)
-    (hcs : c ≤ s / 3 ^ (k + 1)) :
-    upperRosserBoundarySourceIntegral k s b =
-      ∫ a in Set.Ioo c b,
-        a⁻¹ * a⁻¹ * upperRosserBoundaryMassAux k s a b := by
-  apply MeasureTheory.setIntegral_eq_of_subset_of_forall_sdiff_eq_zero
-    measurableSet_Ioo
-  · intro a ha
-    exact ⟨hc.trans_lt ha.1, ha.2⟩
-  · intro a ha
-    have hale : a ≤ s / 3 ^ (k + 1) := by
-      exact le_of_not_gt fun hlt => ha.2 ⟨hcs.trans_lt hlt, ha.1.2⟩
-    rw [upperRosserBoundaryMassAux_eq_zero_of_terminal_le k hs hale]
-    simp
 
 
 /-- The first positive-depth triangular Fubini kernel is genuinely integrable.

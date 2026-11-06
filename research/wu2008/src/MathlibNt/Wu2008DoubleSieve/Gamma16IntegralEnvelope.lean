@@ -16,16 +16,6 @@ def gamma16ExponentRegion : Set (ℝ × ℝ × ℝ × ℝ) :=
   {p | gamma16Alpha ≤ p.1 ∧ p.1 ≤ p.2.1 ∧ p.2.1 ≤ p.2.2.1 ∧
     p.2.2.1 ≤ p.2.2.2 ∧ p.2.2.2 ≤ gamma16Beta}
 
-theorem gamma16_exponent_region_fibres (t u v w : ℝ) :
-    (t, u, v, w) ∈ gamma16ExponentRegion ↔
-      w ∈ Icc gamma16Alpha gamma16Beta ∧ t ∈ Icc gamma16Alpha w ∧
-        u ∈ Icc t w ∧ v ∈ Icc u w := by
-  constructor
-  · rintro ⟨hat, htu, huv, hvw, hwb⟩
-    exact ⟨⟨hat.trans (htu.trans (huv.trans hvw)), hwb⟩,
-      ⟨hat, htu.trans (huv.trans hvw)⟩, ⟨htu, huv.trans hvw⟩, ⟨huv, hvw⟩⟩
-  · rintro ⟨hw, ht, hu, hv⟩
-    exact ⟨ht.1, hu.1, hv.1, hv.2, hw.2⟩
 
 noncomputable def gamma16FourthIntegral (φ : ℝ) : ℝ :=
   ∫ w in gamma16Alpha..gamma16Beta, ∫ t in gamma16Alpha..w,

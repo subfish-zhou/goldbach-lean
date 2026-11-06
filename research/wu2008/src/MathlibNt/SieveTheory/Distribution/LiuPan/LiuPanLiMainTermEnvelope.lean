@@ -120,15 +120,6 @@ theorem abs_liuPanLi_mainTerm_Ioc_le (κ : ℝ) (N q A₁ A₂ : ℕ) :
       liuPanLiEnvelopeConstant κ * N * (1 + Real.log N) / q.totient :=
   abs_liuPanLi_mainTerm_finset_le κ N q _
 
-/-- The constant is selected before all endpoints and moduli. -/
-theorem exists_abs_liuPanLi_mainTerm_Ioc_le (κ : ℝ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ N q A₁ A₂ : ℕ, 2 ≤ N → 0 < q →
-      |∑ a ∈ (Ioc A₁ A₂).filter (fun a => a.Coprime q),
-          liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-            liuLogarithmicIntegral κ ((N : ℝ) / a) / (q.totient : ℝ)| ≤
-        C * N * (1 + Real.log N) / q.totient :=
-  ⟨liuPanLiEnvelopeConstant κ, liuPanLiEnvelopeConstant_pos κ,
-    fun N q A₁ A₂ _ _ => abs_liuPanLi_mainTerm_Ioc_le κ N q A₁ A₂⟩
 
 /-- The extra reciprocal-totient payment is independent of N, q and the window. -/
 def liuPanLiModulusEnvelopeConstant (κ : ℝ) : ℝ :=
@@ -178,14 +169,5 @@ theorem modulus_mul_abs_liuPanLi_mainTerm_Ioc_le (κ : ℝ)
       liuPanLiModulusEnvelopeConstant κ * N * (1 + Real.log N) ^ 2 :=
   modulus_mul_abs_liuPanLi_mainTerm_finset_le κ hN hq hqN _
 
-/-- Quantifier order suitable for the later actual interval-maximal error bound. -/
-theorem exists_modulus_mul_abs_liuPanLi_mainTerm_Ioc_le (κ : ℝ) :
-    ∃ C : ℝ, 0 < C ∧ ∀ N q A₁ A₂ : ℕ, 2 ≤ N → 0 < q → q ≤ N →
-      (q : ℝ) * |∑ a ∈ (Ioc A₁ A₂).filter (fun a => a.Coprime q),
-          liuWeight N (liuSourceZ10 N) (liuSourceY3 N) a *
-            liuLogarithmicIntegral κ ((N : ℝ) / a) / (q.totient : ℝ)| ≤
-        C * N * (1 + Real.log N) ^ 2 :=
-  ⟨liuPanLiModulusEnvelopeConstant κ, liuPanLiModulusEnvelopeConstant_pos κ,
-    fun _ _ A₁ A₂ hN hq hqN => modulus_mul_abs_liuPanLi_mainTerm_Ioc_le κ hN hq hqN A₁ A₂⟩
 
 end MathlibNt.SieveTheory.LiuWeight

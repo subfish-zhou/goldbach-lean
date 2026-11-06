@@ -42,10 +42,6 @@ theorem boxConvolutionReciprocalMass_eq_product {i : ℕ} (W : Fin i → Finset 
   intro t _
   simp only [Nat.cast_prod, prod_inv_distrib, one_mul]
 
-theorem boxConvolutionReciprocalMass_zero_depth (W : Fin 0 → Finset ℕ) :
-    boxConvolutionReciprocalMass W = 1 := by
-  rw [boxConvolutionReciprocalMass_eq_product]
-  simp
 
 theorem boxConvolutionSupport_pos {i : ℕ} {W : Fin i → Finset ℕ}
     (hW : ∀ j p, p ∈ W j → 0 < p) {d : ℕ} (hd : d ∈ boxConvolutionSupport W) :
@@ -154,24 +150,5 @@ theorem boxConvolution_total_mass_le {i : ℕ} {W : Fin i → Finset ℕ}
     _ = (d : ℝ) * ((convolutionCoeff W d : ℝ) / d) := by field_simp
     _ ≤ _ := mul_le_mul_of_nonneg_right hdle (by positivity)
 
-/-- The actual ordinary convolution mass bound (3.6), uniformly in depth
-and the permitted real endpoints. -/
-theorem wu_boxConvolution_total_mass_upper (k : ℕ) {α : ℝ} (hα : 0 < α) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → ∀ i : ℕ, i ≤ k → ∀ Δ : ℝ,
-      1 + Real.log (N : ℝ) ^ (-4 : ℝ) ≤ Δ →
-      Δ < 1 + 2 * Real.log (N : ℝ) ^ (-4 : ℝ) →
-      ∀ V : Fin i → ℝ, (∀ j, (N : ℝ) ^ α ≤ V j) → (∀ j, V j ≤ N) →
-        (∑ d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V),
-          (convolutionCoeff (convolutionWuWindows N Δ V) d : ℝ)) ≤
-            (∏ j, V j) * 6 ^ k := by
-  obtain ⟨N₀, hbound⟩ := wu_boxConvolution_mass_bounds k hα
-  refine ⟨N₀, ?_⟩
-  intro N hN i hik Δ hΔlo hΔhi V hVlo hVhi
-  have hmass := (hbound N hN i hik Δ hΔlo hΔhi V hVlo hVhi).2
-  exact (boxConvolution_total_mass_le
-    (fun j p hp => (mem_convolutionWuWindows.mp hp).1.pos)
-    (fun j p hp => (mem_convolutionWuWindows.mp hp).2.2.2.le)).trans
-      (mul_le_mul_of_nonneg_left hmass
-        (prod_nonneg (fun j _ => (Real.rpow_nonneg (Nat.cast_nonneg N) α).trans (hVlo j))))
 
 end Wu2008DoubleSieve

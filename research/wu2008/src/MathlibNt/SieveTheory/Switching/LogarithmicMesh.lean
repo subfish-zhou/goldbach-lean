@@ -217,43 +217,6 @@ theorem sum_nu_div_one_sub_le_of_subset_interval
     hlocal hz₁ hz₁₂ hT hinterval
   linarith
 
-/-- Quantitative mesh form of the Stieltjes mass bound.  If both the logarithmic
-width and the local-product error are at most `η`, the normalized density mass
-of the cell is at most `2η + η²`. -/
-theorem sum_nu_div_one_sub_le_of_log_mesh
-    {S : BoundingSieve} {K z₁ z₂ η : ℝ} {T : Finset ℕ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hz₁ : 2 ≤ z₁) (hz₁₂ : z₁ ≤ z₂)
-    (hT : T ⊆ S.prodPrimes.primeFactors)
-    (hinterval : ∀ p ∈ T, z₁ ≤ (p : ℝ) ∧ (p : ℝ) < z₂)
-    (hK : 0 ≤ K) (hη : 0 ≤ η)
-    (hmesh : Real.log z₂ / Real.log z₁ ≤ 1 + η)
-    (herror : K / Real.log z₁ ≤ η) :
-    ∑ p ∈ T, S.nu p / (1 - S.nu p) ≤ 2 * η + η ^ 2 := by
-  have hlog₁ : 0 < Real.log z₁ := Real.log_pos (by linarith)
-  have hlog₂ : 0 ≤ Real.log z₂ :=
-    Real.log_nonneg (by linarith)
-  have hcorrection : 0 ≤ 1 + K / Real.log z₁ :=
-    add_nonneg zero_le_one (div_nonneg hK hlog₁.le)
-  have hproduct :
-      Real.log z₂ / Real.log z₁ * (1 + K / Real.log z₁) ≤
-        (1 + η) * (1 + η) := by
-    calc
-      Real.log z₂ / Real.log z₁ * (1 + K / Real.log z₁) ≤
-          (1 + η) * (1 + K / Real.log z₁) :=
-        mul_le_mul_of_nonneg_right hmesh hcorrection
-      _ ≤ (1 + η) * (1 + η) := by
-        apply mul_le_mul_of_nonneg_left
-        · linarith
-        · linarith
-  calc
-    ∑ p ∈ T, S.nu p / (1 - S.nu p) ≤
-        Real.log z₂ / Real.log z₁ *
-          (1 + K / Real.log z₁) - 1 :=
-      sum_nu_div_one_sub_le_of_subset_interval
-        hlocal hz₁ hz₁₂ hT hinterval
-    _ ≤ (1 + η) * (1 + η) - 1 := sub_le_sub_right hproduct 1
-    _ = 2 * η + η ^ 2 := by ring
 
 /-- Logarithmic-coordinate form of the interval mass estimate.  On the cell
 `[z^a, z^b)`, the main local-product increment is exactly `b / a`; this is the
@@ -378,41 +341,6 @@ theorem weighted_sum_nu_div_one_sub_le_of_rpow_Icc_add_atom
     (fun p => w p * (S.nu p / (1 - S.nu p)))]
   exact add_le_add hU hE
 
-/-- Finite upper-sum principle for the normalized density measure.  Assigning
-each prime to a real interval reduces a weighted prime sum to the corresponding
-sum of local-product increments.  Geometric logarithmic meshes are obtained by
-taking `lo i` and `hi i` to be consecutive powers of the global cutoff. -/
-theorem weighted_sum_nu_div_one_sub_le_partition
-    {ι : Type*} [Fintype ι] [DecidableEq ι]
-    {S : BoundingSieve} {K : ℝ} {T : Finset ℕ}
-    {cell : ℕ → ι} {lo hi M : ι → ℝ} {w : ℕ → ℝ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hT : T ⊆ S.prodPrimes.primeFactors)
-    (hlo : ∀ i, 2 ≤ lo i) (hlohi : ∀ i, lo i ≤ hi i)
-    (hinterval : ∀ p ∈ T, lo (cell p) ≤ (p : ℝ) ∧ (p : ℝ) < hi (cell p))
-    (hM : ∀ i, 0 ≤ M i)
-    (hw : ∀ p ∈ T, 0 ≤ w p ∧ w p ≤ M (cell p)) :
-    ∑ p ∈ T, w p * (S.nu p / (1 - S.nu p)) ≤
-      ∑ i, M i *
-        (Real.log (hi i) / Real.log (lo i) *
-          (1 + K / Real.log (lo i)) - 1) := by
-  rw [← Finset.sum_fiberwise T cell
-    (fun p => w p * (S.nu p / (1 - S.nu p)))]
-  apply Finset.sum_le_sum
-  intro i hi_mem
-  apply weighted_sum_nu_div_one_sub_le_of_subset_interval
-    hlocal (hlo i) (hlohi i)
-  · intro p hp
-    exact hT (Finset.mem_filter.mp hp).1
-  · intro p hp
-    have hpT := (Finset.mem_filter.mp hp).1
-    have hcell := (Finset.mem_filter.mp hp).2
-    simpa [hcell] using hinterval p hpT
-  · exact hM i
-  · intro p hp
-    have hpT := (Finset.mem_filter.mp hp).1
-    have hcell := (Finset.mem_filter.mp hp).2
-    simpa [hcell] using hw p hpT
 
 /-- Finite logarithmic-coordinate upper sum.  Each cell is an interval
 `[z^(a i), z^(b i))`, so its local-product increment has the explicit
@@ -1012,97 +940,6 @@ theorem upperRosserFixedDepthMesh_darbouxSum_le_integral_add
       dsimp [g, E, h]
       ring
 
-/-- A sufficiently fine explicit logarithmic mesh simultaneously majorizes the
-positive-depth residual mass in both peeled prime coordinates.  The corner uses
-the right endpoints for the residual level and the left endpoint for the
-inherited upper cutoff, exactly as required by the two-partition comparison. -/
-theorem exists_upperRosserFixedDepthMesh_mass_majorant_succ
-    (k : ℕ) {s a ε : ℝ} (ha : 0 < a) (ha1 : a < 1) (hε : 0 < ε) :
-    ∃ m : ℕ, ∀ i j : Fin (m + 1), ∀ x₀ x₁ : ℝ,
-      x₀ ∈ Set.Icc (upperRosserFixedDepthMeshLeft a m j)
-        (upperRosserFixedDepthMeshRight a m j) →
-      x₁ ∈ Set.Icc (upperRosserFixedDepthMeshLeft a m i)
-        (upperRosserFixedDepthMeshRight a m i) →
-      LinearSieve.upperRosserBoundaryMassAux (k + 1) (s - x₀ - x₁) a x₁ ≤
-        LinearSieve.upperRosserBoundaryMassAux (k + 1)
-          (s - upperRosserFixedDepthMeshRight a m j -
-            upperRosserFixedDepthMeshRight a m i)
-          a (upperRosserFixedDepthMeshLeft a m i) + ε := by
-  obtain ⟨δ, hδ, hmod⟩ :=
-    LinearSieve.exists_upperRosserBoundaryMassAux_level_upper_modulus_succ
-      k (a := a) (r₀ := s - 2) (r₁ := s - 2 * a) ha hε
-  obtain ⟨m, hm⟩ : ∃ m : ℕ, 2 * (1 - a) / δ < m := exists_nat_gt _
-  have hwidth :
-      2 * upperRosserFixedDepthMeshWidth a m < δ := by
-    have hcross : 2 * (1 - a) < δ * (m : ℝ) := by
-      simpa [mul_comm] using (div_lt_iff₀ hδ).1 hm
-    dsimp [upperRosserFixedDepthMeshWidth]
-    rw [show 2 * ((1 - a) / ((m : ℝ) + 1)) =
-      (2 * (1 - a)) / ((m : ℝ) + 1) by ring]
-    rw [div_lt_iff₀ (by positivity : (0 : ℝ) < (m : ℝ) + 1)]
-    nlinarith
-  refine ⟨m, ?_⟩
-  intro i j x₀ x₁ hx₀ hx₁
-  let li := upperRosserFixedDepthMeshLeft a m i
-  let ri := upperRosserFixedDepthMeshRight a m i
-  let lj := upperRosserFixedDepthMeshLeft a m j
-  let rj := upperRosserFixedDepthMeshRight a m j
-  let h := upperRosserFixedDepthMeshWidth a m
-  have hli := upperRosserFixedDepthMeshLeft_mem ha1 m i
-  have hri := upperRosserFixedDepthMeshRight_mem ha1 m i
-  have hlj := upperRosserFixedDepthMeshLeft_mem ha1 m j
-  have hrj := upperRosserFixedDepthMeshRight_mem ha1 m j
-  have hx₀mem : x₀ ∈ Set.Icc a 1 :=
-    ⟨hlj.1.trans hx₀.1, hx₀.2.trans hrj.2⟩
-  have hx₁mem : x₁ ∈ Set.Icc a 1 :=
-    ⟨hli.1.trans hx₁.1, hx₁.2.trans hri.2⟩
-  have hactual :
-      (s - x₀ - x₁, x₁) ∈ Set.Icc (s - 2) (s - 2 * a) ×ˢ Set.Icc a 1 := by
-    refine ⟨⟨?_, ?_⟩, hx₁mem⟩
-    · linarith [hx₀mem.2, hx₁mem.2]
-    · linarith [hx₀mem.1, hx₁mem.1]
-  have hcorner :
-      (s - rj - ri, li) ∈ Set.Icc (s - 2) (s - 2 * a) ×ˢ Set.Icc a 1 := by
-    refine ⟨⟨?_, ?_⟩, hli⟩
-    · linarith [hrj.2, hri.2]
-    · linarith [hrj.1, hri.1]
-  have hwidthPos : 0 < h := upperRosserFixedDepthMeshWidth_pos ha1 m
-  have hriWidth : ri - li = h := by
-    dsimp [ri, li, h, upperRosserFixedDepthMeshRight]
-    ring
-  have hrjWidth : rj - lj = h := by
-    dsimp [rj, lj, h, upperRosserFixedDepthMeshRight]
-    ring
-  have hx₀gap : 0 ≤ rj - x₀ ∧ rj - x₀ ≤ h := by
-    constructor
-    · linarith [hx₀.2]
-    · linarith [hx₀.1, hrjWidth]
-  have hx₁gap : 0 ≤ ri - x₁ ∧ ri - x₁ ≤ h := by
-    constructor
-    · linarith [hx₁.2]
-    · linarith [hx₁.1, hriWidth]
-  have hdist :
-      dist (s - x₀ - x₁, x₁) (s - rj - ri, li) < δ := by
-    rw [Prod.dist_eq, max_lt_iff, Real.dist_eq, Real.dist_eq]
-    constructor
-    · change |(s - x₀ - x₁) - (s - rj - ri)| < δ
-      rw [show (s - x₀ - x₁) - (s - rj - ri) =
-          (rj - x₀) + (ri - x₁) by ring,
-          abs_of_nonneg (add_nonneg hx₀gap.1 hx₁gap.1)]
-      have htwo : h + h < δ := by
-        dsimp [h] at *
-        linarith
-      exact (add_le_add hx₀gap.2 hx₁gap.2).trans_lt htwo
-    · change |x₁ - li| < δ
-      rw [abs_of_nonneg (sub_nonneg.mpr hx₁.1)]
-      have hgap : x₁ - li ≤ h := by linarith [hx₁.2, hriWidth]
-      exact hgap.trans_lt (by nlinarith [hwidth, hwidthPos])
-  have hclose := hmod _ hactual _ hcorner hdist
-  have hone := le_abs_self
-    (LinearSieve.upperRosserBoundaryMassAux (k + 1) (s - x₀ - x₁) a x₁ -
-      LinearSieve.upperRosserBoundaryMassAux (k + 1) (s - rj - ri) a li)
-  dsimp [li, ri, lj, rj] at hone ⊢
-  linarith
 
 /-- One sufficiently fine logarithmic mesh majorizes the positive-depth residual
 mass simultaneously for every level in a fixed compact interval.  This removes
@@ -1202,33 +1039,6 @@ theorem exists_upperRosserFixedDepthMesh_mass_majorant_succ_uniform
   dsimp [li, ri, lj, rj] at hone ⊢
   linarith
 
-/-- A finite family of positive lower cutoffs admits one common refinement
-threshold.  Hence any finer mesh simultaneously supplies all residual
-majorants, uniformly over the prescribed level interval. -/
-theorem exists_upperRosserFixedDepthMesh_mass_majorant_succ_uniform_finite
-    {ι : Type*} [Fintype ι] (k : ℕ) (a : ι → ℝ) {s₀ s₁ ε : ℝ}
-    (ha : ∀ t, 0 < a t) (ha1 : ∀ t, a t < 1) (hε : 0 < ε) :
-    ∃ N : ℕ, ∀ m, N ≤ m → ∀ t, ∀ s ∈ Set.Icc s₀ s₁,
-      ∀ i j : Fin (m + 1), ∀ x₀ x₁ : ℝ,
-        x₀ ∈ Set.Icc (upperRosserFixedDepthMeshLeft (a t) m j)
-          (upperRosserFixedDepthMeshRight (a t) m j) →
-        x₁ ∈ Set.Icc (upperRosserFixedDepthMeshLeft (a t) m i)
-          (upperRosserFixedDepthMeshRight (a t) m i) →
-        LinearSieve.upperRosserBoundaryMassAux
-            (k + 1) (s - x₀ - x₁) (a t) x₁ ≤
-          LinearSieve.upperRosserBoundaryMassAux (k + 1)
-              (s - upperRosserFixedDepthMeshRight (a t) m j -
-                upperRosserFixedDepthMeshRight (a t) m i)
-              (a t) (upperRosserFixedDepthMeshLeft (a t) m i) + ε := by
-  classical
-  choose N hN using fun t =>
-    exists_upperRosserFixedDepthMesh_mass_majorant_succ_uniform
-      k (s₀ := s₀) (s₁ := s₁) (ha t) (ha1 t) hε
-  refine ⟨∑ t, N t, ?_⟩
-  intro m hm t
-  apply hN t m
-  exact (Finset.single_le_sum
-    (fun u _ => Nat.zero_le (N u)) (Finset.mem_univ t)).trans hm
 
 /-- One sufficiently fine logarithmic mesh simultaneously controls the residual
 level, the distinguished-prime cutoff, and the inherited upper face.  Thus the
@@ -1476,63 +1286,7 @@ theorem upperRosserBoundaryChains_logarithmicCoordinates_even_lt_suffix
     (upperRosserBoundaryChains_logarithmicCoordinates_mem
       hz hΔ hs hcut hq hl).1.even_coordinate_lt_suffix_add_terminal hi heven
 
-/-- The innermost pair of every nonempty explicit boundary chain, normalized by
-the distinguished-prime coordinate, lies in the initial `r = 3` cell of
-`upperRosserAlternatingPairTransform`. -/
-theorem upperRosserBoundaryChains_last_pair_log_ratios_mem
-    {S : BoundingSieve} {z Δ s : ℝ} {q k : ℕ} {l : List ℕ}
-    (hz : 2 ≤ z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log z)
-    (hcut : ∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z)
-    (hq : q ∈ S.prodPrimes.primeFactors)
-    (hl : l ∈ LinearSieve.upperRosserBoundaryChains
-      (Nat.floor Δ + 1) q
-      (S.prodPrimes.primeFactors.filter (fun p => q < p)))
-    (hlen : (LinearSieve.logarithmicCoordinates z l).length =
-      2 * (k + 1)) :
-    (LinearSieve.logarithmicCoordinates z l)[2 * k + 1] /
-        (Real.log q / Real.log z) ∈ Set.Ioo (1 : ℝ) 3 ∧
-      (LinearSieve.logarithmicCoordinates z l)[2 * k] /
-          (Real.log q / Real.log z) ∈
-        Set.Ioo
-          ((LinearSieve.logarithmicCoordinates z l)[2 * k + 1] /
-            (Real.log q / Real.log z))
-          (((LinearSieve.logarithmicCoordinates z l)[2 * k + 1] /
-              (Real.log q / Real.log z) + 3) / 2) := by
-  have hmem := upperRosserBoundaryChains_logarithmicCoordinates_mem
-    hz hΔ hs hcut hq hl
-  have hbelow : LinearSieve.UpperRosserLogRegionBelow s
-      (Real.log q / Real.log z) 2
-      (LinearSieve.logarithmicCoordinates z l) := by
-    refine ⟨hmem.1, ?_⟩
-    intro x hx
-    exact
-      ⟨(hmem.2 x hx).1, (hmem.2 x hx).2.trans_lt (by norm_num)⟩
-  have hqPrime : q.Prime := Nat.prime_of_mem_primeFactors hq
-  have ha : 0 < Real.log q / Real.log z :=
-    div_pos (Real.log_pos (by exact_mod_cast hqPrime.one_lt))
-      (Real.log_pos (by linarith))
-  exact hbelow.last_pair_ratios_mem hlen ha
 
-/-- Enlarging the global upper face by any positive amount places every
-discrete boundary chain in the strict bounded region used by the recursive
-continuous mass. -/
-theorem upperRosserBoundaryChains_logarithmicCoordinates_mem_below
-    {S : BoundingSieve} {z Δ s ε : ℝ} {q : ℕ} {l : List ℕ}
-    (hz : 2 ≤ z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log z)
-    (hcut : ∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z)
-    (hq : q ∈ S.prodPrimes.primeFactors)
-    (hl : l ∈ LinearSieve.upperRosserBoundaryChains
-      (Nat.floor Δ + 1) q
-      (S.prodPrimes.primeFactors.filter (fun p => q < p)))
-    (hε : 0 < ε) :
-    LinearSieve.UpperRosserLogRegionBelow s
-      (Real.log q / Real.log z) (1 + ε)
-      (LinearSieve.logarithmicCoordinates z l) := by
-  have hmem := upperRosserBoundaryChains_logarithmicCoordinates_mem
-    hz hΔ hs hcut hq hl
-  refine ⟨hmem.1, ?_⟩
-  intro x hx
-  exact ⟨(hmem.2 x hx).1, (hmem.2 x hx).2.trans_lt (by linarith)⟩
 
 /-- At each fixed even depth, both the distinguished prime and every selected
 prime coordinate stay in a compact interval bounded away from zero.  This is
@@ -1609,39 +1363,8 @@ def upperRosserFixedDepthAmbientBox (k : ℕ) :
     Set (Fin (2 * k) → ℝ) :=
   Set.Icc (fun _ => 1 / (2 * 3 ^ k)) (fun _ => 1)
 
-theorem upperRosserFixedDepthAmbientBox_isCompact (k : ℕ) :
-    IsCompact (upperRosserFixedDepthAmbientBox k) :=
-  isCompact_Icc
 
-theorem upperRosserFixedDepthAmbientBox_measurableSet (k : ℕ) :
-    MeasurableSet (upperRosserFixedDepthAmbientBox k) :=
-  measurableSet_Icc
 
-/-- The vector form of fixed-depth support, suitable for integration against
-the product Lebesgue measure on `Fin (2k) → ℝ`. -/
-theorem upperRosserLogCoordinateVector_mem_fixedDepthAmbientBox
-    {S : BoundingSieve} {z Δ s : ℝ} {q k : ℕ} {l : List ℕ}
-    (hz : 2 ≤ z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log z)
-    (hslo : 3 / 2 ≤ s)
-    (hcut : ∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z)
-    (hq : q ∈ S.prodPrimes.primeFactors)
-    (hl : l ∈ LinearSieve.upperRosserBoundaryChains
-      (Nat.floor Δ + 1) q
-      (S.prodPrimes.primeFactors.filter (fun p => q < p)))
-    (hlen : l.length = 2 * k) :
-    (fun i => (upperRosserLogCoordinateVector z l k hlen).get i) ∈
-      upperRosserFixedDepthAmbientBox k := by
-  have hsupport := upperRosserBoundaryChains_fixed_length_logarithmic_support
-    hz hΔ hs hslo hcut hq hl hlen
-  constructor <;> intro i
-  · apply (hsupport.2 _ ?_).1.le
-    change (upperRosserLogCoordinateVector z l k hlen).get i ∈
-      LinearSieve.logarithmicCoordinates z l
-    exact List.get_mem _ _
-  · apply (hsupport.2 _ ?_).2
-    change (upperRosserLogCoordinateVector z l k hlen).get i ∈
-      LinearSieve.logarithmicCoordinates z l
-    exact List.get_mem _ _
 
 /-- A lower bound for a logarithmic coordinate gives a uniform bound for the
 local-product correction occurring in every logarithmic cell. -/

@@ -255,37 +255,7 @@ def targetFloor : ℝ := 7/50-1/200-1/20-1/100-1/100000-1/100000-
 def targetCeiling : ℝ := 3/20-3/10000-FourActualCapRecovery.recovery/4-
   (2539/100000)/4-lowerBound/4
 
-/-- Reconsume the full actual-Q ledger, not a subtraction from an old bound. -/
-theorem actual_target_difference :
-    targetFloor < AnalyticTotalThreshold.target-JointHMotherPayment.unroundedCoefficient ∧
-    AnalyticTotalThreshold.target-JointHMotherPayment.unroundedCoefficient < targetCeiling := by
-  have he := JointSharedTightEnclosure.target_exact_difference
-  have hq := TightActualQComparison.actual_error_interval
-  have hd : (7/50:ℝ) < JointLogTotalComparison.rationalDeficit ∧
-      JointLogTotalComparison.rationalDeficit < 3/20 := by
-    norm_num [JointLogTotalComparison.rationalDeficit]
-  have hp := PsiG18Strength.two_recoveries_bounds
-  have hl := SixthLogTotalMagnitude.log_remainder_cap
-  have hj := SixthLogTotalMagnitude.jextra_bounds
-  have ht := SixthLogTotalMagnitude.target_slack_bounds
-  have hs := SixthLogTotalMagnitude.square_bounds
-  have h6n := SixthFullRationalEnclosure.sixth_log_loss_enclosure.1
-  have h6u := SixthFullRationalEnclosure.sixth_log_loss_lt
-  have h5 := FifthLogTotalMagnitude.recovery_decimal_rational_bounds
-  have hb := triple_payments
-  unfold targetFloor targetCeiling
-  constructor <;> linarith only [he,hq.1,hq.2,hd.1,hd.2,hp.1,hp.2,hl.1,hl.2,hj.1,hj.2,
-    ht.1,ht.2,hs.1,hs.2,h6n,h6u,h5.1,h5.2,hb.1,hb.2]
 
-/-- The improvement is strict and absolute; these resulting endpoints still cross zero. -/
-theorem improvement_and_remaining_sign :
-    (652/10000:ℝ) < lowerBound ∧ upperBound < (17/20)*(2258/10000) ∧
-    TightActualQComparison.floor < targetFloor ∧ targetCeiling < TightActualQComparison.ceiling ∧
-    targetFloor < 0 ∧ 0 < targetCeiling := by
-  norm_num [lowerBound,upperBound,lowerEnvelope,upperEnvelope,
-    JointSharedTightEnclosure.baseUpperPayment,JointLogTotalComparison.V,lowerLog,upperLog,
-    targetFloor,targetCeiling,TightActualQComparison.floor,TightActualQComparison.ceiling,
-    FourActualCapRecovery.recovery_exact]
 
 end
 end Wu2008DoubleSieve.ExactWeightTripleEnclosure

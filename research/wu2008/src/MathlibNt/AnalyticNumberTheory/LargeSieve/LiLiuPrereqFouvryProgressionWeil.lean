@@ -208,30 +208,5 @@ theorem iv3CorrelationProgression_eq_reciprocalProgression
     intro hu
     exact ht ((ZMod.isUnit_iff_coprime (b + v * t) (n * r * s * s')).mp hu)
 
-/-- Paired IV.3 cancellation after freezing a residue class, uniformly in its
-start and unit step and in the signed residue/frequencies. No extra mask or
-arbitrary coefficients are allowed. The parameter interval can be long. -/
-theorem iv3CorrelationProgression_fouvry {ε : ℝ} (hε : 0 < ε) :
-    ∃ C : ℝ, 0 < C ∧
-      ∀ (D d₁ n n₂ n₂' r s s' : ℕ) (a h h' : ℤ) (b v X Y : ℕ),
-        0 < n → 0 < r → 0 < s → 0 < s' →
-        (D * n₂ * n₂').Coprime (n * r * s * s') →
-        v.Coprime (n * r * s * s') → X ≤ Y →
-        ‖iv3CorrelationProgression D d₁ n n₂ n₂' r s s' a h h' b v X Y‖ ≤
-          C * (1 + ((Y : ℝ) - X) / (n * r * s * s' : ℕ)) *
-            Real.sqrt ((n * r * s * s').gcd
-              (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h').natAbs) *
-            (n * r * s * s' : ℕ) ^ (1 / 2 + ε : ℝ) := by
-  obtain ⟨C, hC, hbound⟩ := reciprocalProgression_fouvry hε
-  refine ⟨C, hC, ?_⟩
-  intro D d₁ n n₂ n₂' r s s' a h h' b v X Y hn hr hs hs' hB hv hXY
-  let : NeZero (n * r * s * s') := ⟨by positivity⟩
-  rw [iv3CorrelationProgression_eq_reciprocalProgression hn hr hs hs' hB]
-  have he := hbound (n * r * s * s') inferInstance
-    (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h' *
-      wPhaseInverse (D * n₂ * n₂') (n * r * s * s')) b v X Y hv
-    (by exact_mod_cast hXY)
-  rw [iv3_gcd_inverse_twist hB] at he
-  simpa only [Int.cast_natCast] using he
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

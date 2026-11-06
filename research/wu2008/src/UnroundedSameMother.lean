@@ -45,8 +45,6 @@ theorem payment_loss_pos : 0 < unroundedCoefficient-paidCoefficient := by
   rw [payment_loss_decomposition]
   exact add_pos_of_pos_of_nonneg classical_payment_loss_pos psi_payment_loss_nonneg
 
-theorem paid_coefficient_lt_unrounded : paidCoefficient < unroundedCoefficient :=
-  sub_pos.mp payment_loss_pos
 
 /-- Supply the actual P18 raw H producer once at the same mother, with epsilon = 4 eta.
 Delta is selected before the common arithmetic threshold. No two count bounds are added. -/

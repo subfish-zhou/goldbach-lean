@@ -40,11 +40,5 @@ theorem gamma5_profile_loss (r : Fin 4) (z : Fin 9 → ℝ) :
   · simp only [h, mul_zero]
   · rw [nineProfile_cell z (gamma5_kernel_support_first_cell r h)]
 
-theorem gamma5_basis_loss (r : Fin 4) (k : Fin 9) :
-    (∫ v in (1:ℝ)..3, nineProfile (nodeBasis k) v *
-      generalKernel (rowParameters r).1 (rowParameters r).2 v) =
-      if k = 0 then gamma5CellLoss r else 0 := by
-  rw [gamma5_profile_loss]
-  by_cases h : k = 0 <;> simp [nodeBasis, h, eq_comm]
 
 end WuPaper.R2Xi

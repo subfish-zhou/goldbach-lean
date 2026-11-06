@@ -10,34 +10,6 @@ open AnalyticNumberTheory.LargeSieve
 
 noncomputable section
 
-theorem coprimePrincipalSum_div_le_principalModulusSup (F K : ℝ) (hF : 0 ≤ F) :
-    ∃ x₀ : ℝ, ∀ x ≥ x₀, ∀ (d : ℕ) (S : Finset ℕ) (f r : ℕ → ℝ),
-      0 < d → (d : ℝ) ≤ x →
-      (∀ m ∈ S, 1 ≤ m ∧ (m : ℝ) ≤ Real.sqrt x) →
-      (∀ m ∈ S, |f m| ≤ F) →
-      (∀ m ∈ S, 2 ≤ r m ∧ (m : ℝ) * r m ≤ K * x) →
-      |coprimePrincipalSum (S.filter (fun m => m.Coprime d)) f r d| / d.totient ≤
-        principalModulusSup x F K d := by
-  obtain ⟨C, hC, x₀, hbound⟩ := coprimePrincipalSum_log_saving 1 F K (by norm_num) hF
-  refine ⟨max 2 x₀, ?_⟩
-  intro x hx d S f r hd hdx hS hf hr
-  have hx₀ := (le_max_right 2 x₀).trans hx
-  have hx2 := (le_max_left 2 x₀).trans hx
-  have hlog0 : 0 < Real.log x := Real.log_pos (by linarith)
-  unfold principalModulusSup
-  apply le_csSup
-  · refine ⟨(C * x / Real.log x ^ (1 : ℝ)) / d.totient, ?_⟩
-    intro v hv
-    rcases Set.mem_insert_iff.mp hv with rfl | hv
-    · have hx0 : 0 ≤ x := by linarith
-      positivity
-    · obtain ⟨T, g, t, hT, hg, ht, rfl⟩ := hv
-      apply div_le_div_of_nonneg_right _ (by positivity)
-      exact hbound x hx₀ d (T.filter (fun m => m.Coprime d)) g t hd hdx
-        (fun m hm => hT m (mem_filter.mp hm).1)
-        (fun m hm => hg m (mem_filter.mp hm).1)
-        (fun m hm => ht m (mem_filter.mp hm).1)
-  · exact Set.mem_insert_of_mem _ ⟨S, f, r, hS, hf, hr, rfl⟩
 
 theorem principal_selected_unweighted_log_saving (A F K : ℝ)
     (hA : 0 < A) (hF : 0 ≤ F) :

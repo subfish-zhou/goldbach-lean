@@ -62,33 +62,7 @@ theorem wu_inserted_arithmetic_weight {N d p : ℕ}
       Nat.cast_sub (by omega : 1 ≤ p), Nat.cast_one]
     field_simp
 
-theorem wu_inserted_arithmetic_weight_le {N d p : ℕ}
-    (hN : 0 < N) (hd : 0 < d) (hp : p.Prime) (hp2 : 2 < p) (hpN : p.Coprime N) :
-    wuSingularSeries ((d * p) * N) / (Nat.totient (d * p) : ℝ) ≤
-      (wuSingularSeries (d * N) / (Nat.totient d : ℝ)) / ((p : ℝ) - 2) := by
-  rw [wu_inserted_arithmetic_weight hN hd hp hp2 hpN, div_eq_mul_inv]
-  apply mul_le_mul_of_nonneg_left
-  · split_ifs
-    · have hp2' : (2 : ℝ) < p := by exact_mod_cast hp2
-      simpa only [one_div] using one_div_le_one_div_of_le
-        (by linarith : 0 < (p : ℝ) - 2) (by linarith : (p : ℝ) - 2 ≤ p)
-    · simp
-  · exact div_nonneg (wuSingularSeries_pos _ (Nat.mul_pos hd hN)).le (Nat.cast_nonneg _)
 
-/-- The complete discrepancy is supported only on the repeated-prime lane. -/
-theorem wu_inserted_arithmetic_weight_defect {N d p : ℕ}
-    (hN : 0 < N) (hd : 0 < d) (hp : p.Prime) (hp2 : 2 < p) (hpN : p.Coprime N) :
-    (wuSingularSeries (d * N) / (Nat.totient d : ℝ)) / ((p : ℝ) - 2) -
-        wuSingularSeries ((d * p) * N) / (Nat.totient (d * p) : ℝ) =
-      if p ∣ d then
-        (wuSingularSeries (d * N) / (Nat.totient d : ℝ)) *
-          (2 / ((p : ℝ) * ((p : ℝ) - 2)))
-      else 0 := by
-  rw [wu_inserted_arithmetic_weight hN hd hp hp2 hpN]
-  have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp.ne_zero
-  have hpr : (2 : ℝ) < p := by exact_mod_cast hp2
-  have hp2' : (p : ℝ) - 2 ≠ 0 := by linarith
-  split_ifs <;> field_simp <;> ring
 
 theorem reboxing_log_denominator {q p : ℝ} (hq : 1 < q) (hp : 0 < p) :
     log (q / p) = log q * (1 - log p / log q) := by

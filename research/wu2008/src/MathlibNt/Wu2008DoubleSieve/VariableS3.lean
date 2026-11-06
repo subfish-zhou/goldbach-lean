@@ -168,20 +168,5 @@ theorem lowerS3_le_variable_add_paid_error {N : ℕ} (hN : 4 ≤ N) (he : Even N
   rw [hpow] at hb
   linarith
 
-theorem variableS3_eventually {κ σ : ℝ} (hκ : 0 < κ) (hκσ : κ < σ) :
-    ∃ N0 : ℕ, ∀ N : ℕ, N0 ≤ N → Even N →
-      (lowerS3 N ((N : ℝ) ^ κ) ((N : ℝ) ^ σ) : ℝ) ≤
-        (variableS3Main N ((N : ℝ) ^ κ) ((N : ℝ) ^ σ) : ℝ) +
-          (variableS3Triples N ((N : ℝ) ^ κ) ((N : ℝ) ^ σ) : ℝ) +
-          2 * (1 / κ) ^ 2 * (N : ℝ) ^ (1 - κ) := by
-  have hz : ∀ᶠ N : ℕ in Filter.atTop, 2 ≤ (N : ℝ) ^ κ :=
-    ((tendsto_rpow_atTop hκ).comp tendsto_natCast_atTop_atTop).eventually
-      (Filter.eventually_ge_atTop 2)
-  apply Filter.eventually_atTop.mp
-  filter_upwards [hz, Filter.eventually_ge_atTop (4 : ℕ)] with N hzN hN
-  intro he
-  exact lowerS3_le_variable_add_paid_error hN he hκ hzN
-    (Real.rpow_le_rpow_of_exponent_le
-      (by exact_mod_cast (show 1 ≤ N by omega)) hκσ.le)
 
 end Wu2008DoubleSieve

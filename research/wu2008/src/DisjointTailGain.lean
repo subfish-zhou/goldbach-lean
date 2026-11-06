@@ -12,9 +12,6 @@ def Ctail : ℝ := 2*(16*k4/truncatedSixthLowerAlpha^4)*
   ((b0-a0)^5-(truncatedSixthLowerAlpha-a0)^5)/5
 def Ctotal : ℝ := Cgeo+Ctail
 
-theorem fixed_endpoints : a0 = (7/2654 : ℝ) ∧ b0 = (15023/132700 : ℝ) ∧
-    b0-truncatedSixthLowerAlpha = (5023/132700 : ℝ) := by
-  norm_num [a0,b0,truncatedSixthLowerAlpha]
 
 theorem Ctail_exact : Ctail =
     (596451289474909364593/1199841552000000000000000 : ℝ) := by

@@ -107,20 +107,5 @@ theorem wMaskedZeroMode_abs_le_largeGCD
         ((filter_subset _ _).trans hQ) c (fun q hq ↦ hc q (mem_filter.mp hq).1)
     _ = _ := by dsimp [B]; ring
 
-/-- Direct specialization to the first exclusion `d=gcd(N₁,N₂)>Y`. -/
-theorem wLargeBetaGCDZeroMode_abs_le
-    {k : ℕ} (hk : 1 ≤ k) (j : ℕ) {T L Y : ℝ}
-    (hT : 1 ≤ T) (hL : 1 ≤ L) (hY : 0 < Y)
-    (M : ℝ) (N Q : Finset ℕ)
-    (hN : N ⊆ Ioc 0 ⌊T⌋₊) (hQ : Q ⊆ Ioc 0 ⌊L⌋₊)
-    (β c : ℕ → ℝ) (hβ : ∀ n ∈ N, |β n| ≤ (fouvryTau k n : ℝ))
-    (hc : ∀ q ∈ Q, |c q| ≤ (fouvryTau j q : ℝ)) (a : ℤ) :
-    |wMaskedZeroMode M N Q β c a (fun t ↦ Y < (t.2.1.gcd t.2.2 : ℝ))| ≤
-      |M * dyadicCutoffMass| *
-        (T ^ 2 * (1 + Real.log T) ^ (k ^ 2 - 1) *
-          Real.sqrt ((1 + Real.log T) / Y)) *
-        (1 + Real.log L) ^ (2 * j ^ 2 + 1) :=
-  wMaskedZeroMode_abs_le_largeGCD hk j hT hL hY M N Q hN hQ β c hβ hc a
-    _ (fun _ _ h ↦ h)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

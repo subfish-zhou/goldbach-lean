@@ -102,15 +102,6 @@ theorem logMoment_one_eq (n : ℕ) {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
 noncomputable def momentPrimitiveOne (n : ℕ) (a b t : ℝ) : ℝ :=
   Real.log (b/a) * momentPrimitive n a t - momentPrimitive (n+1) a t
 
-theorem hasDerivAt_momentPrimitiveOne (n : ℕ) {a b t : ℝ}
-    (ha : 0 < a) (hb : 0 < b) (ht : 0 < t) :
-    HasDerivAt (momentPrimitiveOne n a b)
-      (Real.log (t/a)^n * Real.log (b/t) / t^2) t := by
-  convert! ((hasDerivAt_momentPrimitive n ha ht).const_mul (Real.log (b/a))).sub
-    (hasDerivAt_momentPrimitive (n+1) ha ht) using 1
-  rw [Real.log_div hb.ne' ht.ne', Real.log_div hb.ne' ha.ne',
-    Real.log_div ht.ne' ha.ne', pow_succ]
-  ring
 
 theorem elementaryMomentZero_self (n : ℕ) {a : ℝ} (ha : 0 < a) :
     elementaryMomentZero n a a = 0 := by

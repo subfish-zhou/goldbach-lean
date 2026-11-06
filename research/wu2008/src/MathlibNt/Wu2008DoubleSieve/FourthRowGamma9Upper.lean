@@ -24,25 +24,9 @@ theorem fourthRowGamma9Integral_eq (φ : ℝ) :
     fourthRowGamma9Integral φ = omega3XIntegral (5 / 2) (89 / 25) φ := by
   norm_num [fourthRowGamma9Integral, omega3XIntegral, omega3XIntegralKernel]
 
-theorem fourthRowGamma9I_eq_envelope :
-    fourthRowGamma9I = omega3XIntegralEnvelope (5 / 2) (89 / 25) := rfl
 
-theorem fourthRowGamma9I_eq_sSup :
-    fourthRowGamma9I = sSup (fourthRowGamma9Integral '' Ici 2) := by
-  simp only [fourthRowGamma9I, omega3XIntegralEnvelope, fourthRowGamma9Integral_eq]
 
-theorem fourthRowGamma9Integral_bddAbove :
-    BddAbove (fourthRowGamma9Integral '' Ici 2) := by
-  simpa only [fourthRowGamma9Integral_eq] using
-    (omega3XIntegral_bddAbove (s := 5 / 2) (t := 89 / 25)
-      (by norm_num) (by norm_num) (by norm_num))
 
-theorem fourthRowGamma9I_bounds :
-    0 ≤ fourthRowGamma9I ∧ fourthRowGamma9I ≤ 10000 * (2 / 5 - 25 / 89) ^ 3 := by
-  have h := omega3XIntegralEnvelope_bounds (s := 5 / 2) (t := 89 / 25)
-    (by norm_num) (by norm_num) (by norm_num)
-  norm_num only [fourthRowGamma9I, one_div_div] at h ⊢
-  exact h
 
 /-- Actual Omega3, not an upper extracted backwards from a mixed inequality.
 The two analytic errors and the fixed coefficient slack each cost epsilon/3. -/
@@ -90,12 +74,5 @@ theorem fourthRowGamma9_actual_upper (k : ℕ) {δ ε : ℝ}
   dsimp only [f, fourthRowGamma9I] at hx hcoef ⊢
   linarith only [hs, hx, hcoef]
 
-/-- The fixed-delta excess over 2I9 is explicit, not an asymptotic error. -/
-theorem fourthRowGamma9_fixed_delta_loss {δ : ℝ} (hδhi : δ < 1 / 2) :
-    2 / (1 - 2 * δ) * fourthRowGamma9I - 2 * fourthRowGamma9I =
-      4 * δ / (1 - 2 * δ) * fourthRowGamma9I := by
-  have hd : 1 - 2 * δ ≠ 0 := by linarith
-  field_simp
-  ring
 
 end Wu2008DoubleSieve

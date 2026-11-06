@@ -24,11 +24,6 @@ def cellFinite (a b : ℝ) : ℝ := rationalFull b-rationalFull a+
   (minusCoeff (2/3)-minusCoeff 2)*RemainingHf.splitLower (rightMinus b/rightMinus a)+
   (plusCoeff (2/3)-plusCoeff 2)*RemainingHf.splitLower (rightPlus b/rightPlus a)
 
-theorem cellPaid_eq_cellFinite (a b : ℝ) : cellPaid a b=cellFinite a b := by
-  obtain ⟨h0,h1,h2,h3,h4,h5,h6,h7,h8⟩ := coefficient_signs
-  simp only [cellPaid,cellFinite,logPaid,RemainingHf.signed,
-    if_neg (not_le.mpr h0),if_neg (not_le.mpr h1),if_neg (not_le.mpr h2),
-    if_pos h3.le,if_pos h4.le,if_pos h5.le,if_pos h6.le,if_pos h7.le,if_pos h8.le]
 
 /-- Literal full E remainder, not the old paidCells difference. -/
 def eUnpaid : ℝ := TerminalECells.mass NineFeedbackStrength.originalH-massPaid NineFeedbackStrength.originalH
@@ -44,10 +39,6 @@ theorem profileLogUnpaid_nonneg : 0≤profileLogUnpaid :=
   mul_nonneg (sub_nonneg.mpr (RemainingHf.splitLower_le (by norm_num : (1:ℝ)≤2)))
     SigmaRemaining.original_finiteLower_pos.le
 
-theorem exact_terminal_remainders :
-    TerminalECells.lower=finiteLower+profileLogUnpaid+eUnpaid := by
-  unfold TerminalECells.lower finiteLower profileLogUnpaid eUnpaid
-  ring
 
 /-- The accepted parent sigma branch can consume this same E ledger without duplication. -/
 def jointFiniteLower : ℝ := RemainingHf.splitLower 2*SigmaPrimitiveCells.profileLower+

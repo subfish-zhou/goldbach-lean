@@ -1,0 +1,162 @@
+{
+  "0": {
+    "source": "Hf4QuadPanel0.lean",
+    "header": "theorem mass_bounds : ((17511388157/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass 1 (21/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass 1 (21/20) \u2264 (21990320141/6000000000000000)"
+  },
+  "1": {
+    "source": "Hf4QuadBatch0.lean",
+    "header": "theorem mass_bounds : ((42735154237/2000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (21/20) (11/10) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (21/20) (11/10) \u2264 (44167542079/2000000000000000)"
+  },
+  "2": {
+    "source": "Hf4QuadBatch0.lean",
+    "header": "theorem mass_bounds : ((54983970103/1000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (11/10) (23/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (11/10) (23/20) \u2264 (27828694777/500000000000000)"
+  },
+  "3": {
+    "source": "Hf4QuadBatch0.lean",
+    "header": "theorem mass_bounds : ((75615759727/750000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (23/20) (6/5) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (23/20) (6/5) \u2264 (304339421431/3000000000000000)"
+  },
+  "4": {
+    "source": "Hf4QuadBatch1.lean",
+    "header": "theorem mass_bounds : ((234731806523/1500000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (6/5) (5/4) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (6/5) (5/4) \u2264 (117798272821/750000000000000)"
+  },
+  "5": {
+    "source": "Hf4QuadBatch1.lean",
+    "header": "theorem mass_bounds : ((1320201268963/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (5/4) (13/10) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (5/4) (13/10) \u2264 (1323374584873/6000000000000000)"
+  },
+  "6": {
+    "source": "Hf4QuadBatch1.lean",
+    "header": "theorem mass_bounds : ((869573851603/3000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (13/10) (27/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (13/10) (27/20) \u2264 (435512932469/1500000000000000)"
+  },
+  "7": {
+    "source": "Hf4QuadBatch2.lean",
+    "header": "theorem mass_bounds : ((1093929758717/3000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (27/20) (7/5) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (27/20) (7/5) \u2264 (1095256637681/3000000000000000)"
+  },
+  "8": {
+    "source": "Hf4QuadBatch2.lean",
+    "header": "theorem mass_bounds : ((2659799257229/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (7/5) (29/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (7/5) (29/20) \u2264 (106488928679/240000000000000)"
+  },
+  "9": {
+    "source": "Hf4QuadBatch2.lean",
+    "header": "theorem mass_bounds : ((314954555417/600000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (29/20) (3/2) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (29/20) (3/2) \u2264 (787939918763/1500000000000000)"
+  },
+  "10": {
+    "source": "Hf4QuadBatch3.lean",
+    "header": "theorem mass_bounds : ((1217530203413/2000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (3/2) (31/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (3/2) (31/20) \u2264 (1218204654199/2000000000000000)"
+  },
+  "11": {
+    "source": "Hf4QuadBatch3.lean",
+    "header": "theorem mass_bounds : ((4165178758679/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (31/20) (8/5) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (31/20) (8/5) \u2264 (4167029268029/6000000000000000)"
+  },
+  "12": {
+    "source": "Hf4QuadBatch3.lean",
+    "header": "theorem mass_bounds : ((4684176470717/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (8/5) (33/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (8/5) (33/20) \u2264 (937174127203/1200000000000000)"
+  },
+  "13": {
+    "source": "Hf4QuadBatch4.lean",
+    "header": "theorem mass_bounds : ((5206966839587/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (33/20) (17/10) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (33/20) (17/10) \u2264 (1041703925701/1200000000000000)"
+  },
+  "14": {
+    "source": "Hf4QuadBatch4.lean",
+    "header": "theorem mass_bounds : ((5731363703357/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (17/10) (7/4) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (17/10) (7/4) \u2264 (5732788793351/6000000000000000)"
+  },
+  "15": {
+    "source": "Hf4QuadBatch4.lean",
+    "header": "theorem mass_bounds : ((6255541384729/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (7/4) (9/5) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (7/4) (9/5) \u2264 (6256850842267/6000000000000000)"
+  },
+  "16": {
+    "source": "Hf4QuadBatch5.lean",
+    "header": "theorem mass_bounds : ((564831380779/500000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (9/5) (37/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (9/5) (37/20) \u2264 (564931775211/500000000000000)"
+  },
+  "17": {
+    "source": "Hf4QuadBatch5.lean",
+    "header": "theorem mass_bounds : ((3648700217911/3000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (37/20) (19/10) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (37/20) (19/10) \u2264 (3649255214407/3000000000000000)"
+  },
+  "18": {
+    "source": "Hf4QuadBatch5.lean",
+    "header": "theorem mass_bounds : ((976594892569/750000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (19/10) (39/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (19/10) (39/20) \u2264 (3906891603151/3000000000000000)"
+  },
+  "19": {
+    "source": "Hf4QuadBatch6.lean",
+    "header": "theorem mass_bounds : ((4161590251993/3000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (39/20) 2 \u2227\n    SigmaActualBlockSeparable.endpointCellMass (39/20) 2 \u2264 (4162063361221/3000000000000000)"
+  },
+  "20": {
+    "source": "Hf4QuadBatch6.lean",
+    "header": "theorem mass_bounds : ((8827946374543/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass 2 (41/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass 2 (41/20) \u2264 (8828821822639/6000000000000000)"
+  },
+  "21": {
+    "source": "Hf4QuadBatch6.lean",
+    "header": "theorem mass_bounds : ((777205780931/500000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (41/20) (21/10) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (41/20) (21/10) \u2264 (194318339979/125000000000000)"
+  },
+  "22": {
+    "source": "Hf4QuadBatch7.lean",
+    "header": "theorem mass_bounds : ((654551533467/400000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (21/10) (43/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (21/10) (43/20) \u2264 (3273008426327/2000000000000000)"
+  },
+  "23": {
+    "source": "Hf4QuadBatch7.lean",
+    "header": "theorem mass_bounds : ((10302975706067/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (43/20) (11/5) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (43/20) (11/5) \u2264 (10303674263243/6000000000000000)"
+  },
+  "24": {
+    "source": "Hf4QuadBatch7.lean",
+    "header": "theorem mass_bounds : ((1796712675513/1000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (11/5) (9/4) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (11/5) (9/4) \u2264 (449205237451/250000000000000)"
+  },
+  "25": {
+    "source": "Hf4QuadBatch8.lean",
+    "header": "theorem mass_bounds : ((2812485416669/1500000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (9/4) (23/10) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (9/4) (23/10) \u2264 (1125054642059/600000000000000)"
+  },
+  "26": {
+    "source": "Hf4QuadBatch8.lean",
+    "header": "theorem mass_bounds : ((2927949619921/1500000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (23/10) (47/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (23/10) (47/20) \u2264 (5856181034321/3000000000000000)"
+  },
+  "27": {
+    "source": "Hf4QuadBatch8.lean",
+    "header": "theorem mass_bounds : ((6082861207903/3000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (47/20) (12/5) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (47/20) (12/5) \u2264 (6083124147787/3000000000000000)"
+  },
+  "28": {
+    "source": "Hf4QuadBatch9.lean",
+    "header": "theorem mass_bounds : ((4203877263587/2000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (12/5) (49/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (12/5) (49/20) \u2264 (4204041049541/2000000000000000)"
+  },
+  "29": {
+    "source": "Hf4QuadBatch9.lean",
+    "header": "theorem mass_bounds : ((13049481354647/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (49/20) (5/2) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (49/20) (5/2) \u2264 (13049941004429/6000000000000000)"
+  },
+  "30": {
+    "source": "Hf4QuadBatch9.lean",
+    "header": "theorem mass_bounds : ((2695851347101/1200000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (5/2) (51/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (5/2) (51/20) \u2264 (13479686861231/6000000000000000)"
+  },
+  "31": {
+    "source": "Hf4QuadBatch10.lean",
+    "header": "theorem mass_bounds : ((1737621129151/750000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (51/20) (13/5) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (51/20) (13/5) \u2264 (434417886841/187500000000000)"
+  },
+  "32": {
+    "source": "Hf4QuadBatch10.lean",
+    "header": "theorem mass_bounds : ((14314652431237/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (13/5) (53/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (13/5) (53/20) \u2264 (14315030850379/6000000000000000)"
+  },
+  "33": {
+    "source": "Hf4QuadBatch10.lean",
+    "header": "theorem mass_bounds : ((14720359204091/6000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (53/20) (27/10) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (53/20) (27/10) \u2264 (14720714488721/6000000000000000)"
+  },
+  "34": {
+    "source": "Hf4QuadBatch11.lean",
+    "header": "theorem mass_bounds : ((251969289693/100000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (27/10) (11/4) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (27/10) (11/4) \u2264 (2519748599913/1000000000000000)"
+  },
+  "35": {
+    "source": "Hf4QuadBatch11.lean",
+    "header": "theorem mass_bounds : ((5169376160163/2000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (11/4) (14/5) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (11/4) (14/5) \u2264 (5169480988789/2000000000000000)"
+  },
+  "36": {
+    "source": "Hf4QuadBatch11.lean",
+    "header": "theorem mass_bounds : ((5296788265951/2000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (14/5) (57/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (14/5) (57/20) \u2264 (5296886951373/2000000000000000)"
+  },
+  "37": {
+    "source": "Hf4QuadBatch12.lean",
+    "header": "theorem mass_bounds : ((5421655859689/2000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (57/20) (29/10) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (57/20) (29/10) \u2264 (5421748836573/2000000000000000)"
+  },
+  "38": {
+    "source": "Hf4QuadBatch12.lean",
+    "header": "theorem mass_bounds : ((2772007574167/1000000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (29/10) (59/20) \u2227\n    SigmaActualBlockSeparable.endpointCellMass (29/10) (59/20) \u2264 (554410292433/200000000000000)"
+  },
+  "39": {
+    "source": "Hf4QuadBatch12.lean",
+    "header": "theorem mass_bounds : ((566390443661/200000000000000):\u211d) \u2264 SigmaActualBlockSeparable.endpointCellMass (59/20) 3 \u2227\n    SigmaActualBlockSeparable.endpointCellMass (59/20) 3 \u2264 (707998417403/250000000000000)"
+  }
+}

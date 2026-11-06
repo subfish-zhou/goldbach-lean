@@ -131,19 +131,5 @@ theorem improved_gain_certificate :
   exact ⟨by dsimp [improvedCoefficient]; linarith only [hl],
     by dsimp [improvedCoefficient]; linarith only [hp]⟩
 
-/-- A literal positive rational gain on the same unrestricted ordinary count. -/
-theorem rational_gain_ordinary_P2 (η : ℝ) (hη : 0 < η) :
-    ∃ δ : ℝ, 0 < δ ∧ δ ≤ 1/100 ∧
-      ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-        (Q+(70/17 : ℝ)*((1/10 : ℝ)-(100/1327))^2-η)*M N ≤
-          ((Finset.filter (fun p => Nat.Prime p ∧ 0 < N-p ∧
-            ArithmeticFunction.cardFactors (N-p) ≤ 2) (Finset.range (N+1))).card : ℝ) := by
-  obtain ⟨δ,hδ,hδhi,T,hT,h⟩ := improved_ordinary_P2 η hη
-  refine ⟨δ,hδ,hδhi,T,hT,?_⟩
-  intro N hN he
-  have hc : Q+(70/17 : ℝ)*((1/10 : ℝ)-(100/1327))^2-η ≤ improvedCoefficient-η := by
-    linarith only [improved_gain_certificate.1]
-  have hs : 0 ≤ M N := (HighSixPhase6.original_scale_positive (hT.trans hN)).le
-  exact (mul_le_mul_of_nonneg_right hc hs).trans (h N hN he)
 
 end U8CanonicalMother

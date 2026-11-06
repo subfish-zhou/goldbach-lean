@@ -1,0 +1,44 @@
+{
+  "status": "UNCOMPILED_NOT_INSTALLED_NOT_PART_OF_RUNNING_BATCH",
+  "patch_root": "Wu source directory (src/)",
+  "base_manifest_sha256": "2f4b834f8e1c357b502218784e3e926d142e439a443817a143f821a53406ffc6",
+  "modules": [
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.RealCharacterSquareSum",
+      "before_sha256": null,
+      "after_sha256": "8fc5c73acb4c7fe76e6e7a153656659f50d5a19c7dbfd8662a8e4f87b69960cd",
+      "effective_lines_saved": -140,
+      "physical_lines_saved": -149,
+      "bytes_saved": -7497
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanV1SquareMean",
+      "before_sha256": "dc6d297a6655176cf88223fd512053a8a4e17fa2072c96ded583d264e1615ee2",
+      "after_sha256": "b5bdcaefb6177ca8f8def60c3bc080b85eb5fb331d30405cddb823aa8126270f",
+      "effective_lines_saved": 135,
+      "physical_lines_saved": 150,
+      "bytes_saved": 7474
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanV3SquareMean",
+      "before_sha256": "1cb15af8779264534e03a44469681bd7416f8f1b6a1247175354e153e4a616bb",
+      "after_sha256": "6fb03d254f502b1e15160221d194334a96fb9ac94b18fe8d9eec8996e3bf56dc",
+      "effective_lines_saved": 135,
+      "physical_lines_saved": 150,
+      "bytes_saved": 7517
+    }
+  ],
+  "projected_incremental_savings": {
+    "effective_lines_saved": 130,
+    "physical_lines_saved": 151,
+    "bytes_saved": 7494
+  },
+  "required_checks": [
+    "Compile the common module and both applications under the Lean lock.",
+    "Compare every retained public type with the frozen batch.",
+    "Check both retired private reindex helpers' actual incoming uses.",
+    "Check the new import graph for cycles and source/object consistency.",
+    "Validate affected downstream sources before installation.",
+    "Check standard axioms and replay the final kernel after the affected build."
+  ]
+}

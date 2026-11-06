@@ -104,17 +104,5 @@ theorem gamma6Gain_integral_literal (δ : ℝ) :
   norm_num [gamma6GainIntegral, gamma6GainLiteral, gamma5GainV, gamma5ClassicalS,
     gamma5MassA, gamma6BaseB, gamma6BaseC, gamma6BaseF]
 
-theorem gamma6Gain_full_count_literal (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ i : ℕ, ∀ Δ : ℝ, ∀ V : Fin i → ℝ, wuSourceBox k δ N i Δ V →
-      gamma5ClassicalCount N δ (convolutionWuWindows N Δ V)
-        (gamma6BaseLabels N δ (convolutionWuWindows N Δ V)) ≤
-      (gamma6BaseC6 -
-        (∫ t in (25 / 103 : ℝ)..(25 / 89), ∫ u in (100 / 291 : ℝ)..(2 / 5),
-          wuImprovementLimit true δ ((103 / 25) * (1 - t - u)) / (t * u * (1 - t - u))) + ε) *
-        boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
-  rw [← gamma6Gain_integral_literal]
-  exact gamma6Gain_full_count_upper k hk hδ hδhi hε
 
 end Wu2008DoubleSieve

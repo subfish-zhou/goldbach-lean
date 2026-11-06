@@ -70,13 +70,6 @@ def paidCorrectedCoupled (p : Wu2008DoubleSieve.SecondFunctionalParameters) : â„
   SigmaSignedCells.coupledLower p+CoupledFiniteAssembly.aCoefficient p*
     (paidCorrectedProfile-SigmaSignedCells.profileLower)
 
-theorem paidCorrectedCoupled_le (i : Fin 4) : paidCorrectedCoupled (ActualNineFeedback.coupledRow i)â‰¤
-    ActualNineFeedback.coupledFeedback (ActualNineFeedback.coupledRow i) NineFeedbackStrength.originalH := by
-  have h := mul_le_mul_of_nonneg_left paidCorrectedProfile_le
-    (CoupledFiniteAssembly.aCoefficient_nonneg (ActualNineFeedback.coupledRow_geometry i))
-  have hc := SigmaSignedCells.correctedCoupledLower_le i
-  unfold paidCorrectedCoupled SigmaSignedCells.correctedCoupledLower at *
-  linarith only [h,hc]
 
 end
 end SigmaCorrectionFTC

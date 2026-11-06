@@ -168,14 +168,6 @@ theorem convolutionAPError_le_maximal_sum {i k N Q : ℕ} {α : ℝ}
 noncomputable def convolutionModulusCutoff (N : ℕ) (δ : ℝ) : ℕ :=
   ⌊(N : ℝ) ^ (1 / 2 - δ)⌋₊
 
-/-- Floors encode the exact real combined-modulus restriction. -/
-theorem convolutionModulusCutoff_quotient_iff {N d q : ℕ} (δ : ℝ) (hd : 0 < d) :
-    q ≤ convolutionModulusCutoff N δ / d ↔
-      (d : ℝ) * (q : ℝ) ≤ (N : ℝ) ^ (1 / 2 - δ) := by
-  rw [Nat.le_div_iff_mul_le hd]
-  unfold convolutionModulusCutoff
-  rw [Nat.le_floor_iff (Real.rpow_nonneg (Nat.cast_nonneg N) _)]
-  simp only [Nat.cast_mul, mul_comm]
 
 theorem eventually_log_rpow_le_rpow (B : ℝ) {δ : ℝ} (hδ : 0 < δ) :
     ∀ᶠ N : ℕ in atTop, Real.log (N : ℝ) ^ B ≤ (N : ℝ) ^ δ := by

@@ -135,23 +135,5 @@ theorem source_rough_density (k : ℕ) {δ ρ ε : ℝ}
     simp only [roughFamily] at hj hd ⊢
     linarith
 
-/-- Every actual original word has the same canonical rough-mass density bound. -/
-theorem mother_source_rough_density (k : ℕ) {δ ρ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (hρ : 0 < ρ) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → ∀ j : Fin 4,
-      actualSource N δ p (convolutionWuWindows N Δ V) j ≤ (roughFamily N δ Δ V p j).mass *
-        ((1+ρ)*(1+ρ*exp (-eulerMascheroniConstant))*(8/(1-2*δ))*wuSingularSeries N/log N) +
-        ε * boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  obtain ⟨T,hT,hd⟩ := source_rough_density k hδ hδhi hρ hε
-  refine ⟨T,hT,?_⟩
-  intro N hN hn i Δ V hb p hp j
-  have hs := actual_source_le (N := N) (δ := δ) p (convolutionWuWindows N Δ V)
-    (fun d h => (omega3_source_support_le_Q (by have := hT.trans hN; omega) hδ hδhi hb h).1)
-    (hT.trans hN) hn j
-  have hj := (hd N hN hn i Δ V hb p hp).1 j
-  rw [(sourceFamily_dictionary N δ Δ V p j).1] at hj
-  exact hs.trans hj
 
 end Wu2008DoubleSieve.FourPrimeNonunit

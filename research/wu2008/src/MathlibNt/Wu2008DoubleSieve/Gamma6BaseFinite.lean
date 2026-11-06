@@ -96,12 +96,5 @@ theorem gamma6Base_pair_coordinates {R p q : ℝ}
   exact ⟨(le_div_iff₀ (log_pos hR)).mpr ha, (div_le_iff₀ (log_pos hR)).mpr hb,
     (le_div_iff₀ (log_pos hR)).mpr hc, (div_le_iff₀ (log_pos hR)).mpr hf⟩
 
-theorem gamma6Base_count_eq_nat {i : ℕ} (N : ℕ) (δ : ℝ) (W : Fin i → Finset ℕ)
-    (X : Finset Gamma5ClassicalLabel) :
-    gamma5ClassicalCount N δ W X =
-      ((∑ x ∈ X, convolutionCoeff W x.1 *
-        (sourceSieveCarrier N (gamma5ClassicalProduct x) (x.1 * N)
-          (wuLocalCutoff N δ x.1 gamma5ClassicalS)).card : ℕ) : ℝ) :=
-  gamma5ClassicalCount_eq_nat_count N δ W X
 
 end Wu2008DoubleSieve

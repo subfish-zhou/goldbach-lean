@@ -91,24 +91,6 @@ theorem dispersionU_eq_double_sum
     simp [hq, hr, div_eq_mul_inv, mul_inv_rev]
     <;> ring
 
-/-- The exact divisor expansion to which the Poisson estimate for U must be applied. -/
-theorem dispersionU_eq_moebius
-    (S N Q : Finset ℕ) (w β c : ℕ → ℝ) (a : ℤ)
-    (hQ : ∀ q ∈ Q, q ≠ 0) :
-    dispersionU S N Q w β c a =
-      ∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-        (c q * c r / ((q.totient : ℝ) * (r.totient : ℝ))) *
-          coprimeMass N β q * coprimeMass N β r *
-            ∑ d ∈ (q * r).divisors, (ArithmeticFunction.moebius d : ℝ) *
-              ∑ m ∈ S, if d ∣ m then w m else 0 := by
-  rw [dispersionU_eq_double_sum]
-  apply Finset.sum_congr rfl
-  intro q hq
-  apply Finset.sum_congr rfl
-  intro r hr
-  rw [coprime_weight_eq_moebius S w
-    (mul_ne_zero (hQ q (Finset.mem_filter.mp hq).1)
-      (hQ r (Finset.mem_filter.mp hr).1))]
 
 /-- The mixed term with the m-sum exposed, as in F84 (7.13), without inverse notation. -/
 theorem dispersionV_eq_progression_sum

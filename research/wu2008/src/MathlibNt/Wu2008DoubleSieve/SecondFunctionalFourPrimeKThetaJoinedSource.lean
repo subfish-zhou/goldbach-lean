@@ -58,29 +58,6 @@ theorem source_four_kTheta (k : ℕ) {δ ε : ℝ}
       (finiteBuchstabMain_all4_le_sourceClosedKMass hN4 hδ hδhi hb p hp hs)
       hq.2.2 hu.2
 
-/-- Every original source, and the complete four-source sum, have one epsilon budget. -/
-theorem mother_source_four_kTheta (k : ℕ) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s →
-      let W := convolutionWuWindows N Δ V
-      let Θ := boxTheta N ((N:ℝ)^(1/2-δ)) W
-      (∀ j : Fin 4, actualSource N δ p W j ≤
-        (2/(1-2*δ))*sourceKTheta N δ Δ V p j + ε*Θ) ∧
-      (∑ j : Fin 4, actualSource N δ p W j) ≤
-        (2/(1-2*δ))*(∑ j : Fin 4, sourceKTheta N δ Δ V p j) + ε*Θ := by
-  obtain ⟨T,hT,hd⟩ := source_four_kTheta k hδ hδhi hε
-  refine ⟨T,hT,?_⟩
-  intro N hN hn i Δ V hb p hp hs
-  have hle (j : Fin 4) : actualSource N δ p (convolutionWuWindows N Δ V) j ≤
-      (sourceFamily N δ Δ V p j).primeMass := by
-    rw [(sourceFamily_dictionary N δ Δ V p j).1]
-    exact actual_source_le (N := N) (δ := δ) p (convolutionWuWindows N Δ V)
-      (fun d h => (omega3_source_support_le_Q (by have := hT.trans hN; omega) hδ hδhi hb h).1)
-      (hT.trans hN) hn j
-  have h := hd N hN hn i Δ V hb p hp hs
-  exact ⟨fun j => (hle j).trans (h.1 j), (sum_le_sum (fun j _ => hle j)).trans h.2⟩
 
 end Wu2008DoubleSieve.FourPrimeNonunit
 
@@ -114,38 +91,6 @@ theorem kTheta_joined_source
   rw [(FourPrimeNonunit.sourceFamily_dictionary N δ Δ V p 0).1] at h1
   nlinarith only [h0,h1]
 
-/-- Regression on the actual row3 record, not a surrogate tuple. -/
-theorem row3_kTheta_joined_source (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-        5 * wuBoxPhi N δ (convolutionWuWindows N Δ V) SecondFunctionalParameters.row3.s ≤
-          (4 * wuUpperCoefficient SecondFunctionalParameters.row3.S + wuUpperCoefficient SecondFunctionalParameters.row3.kappa1 -
-            4 * wuImprovementLimit true δ SecondFunctionalParameters.row3.S - wuImprovementLimit true δ SecondFunctionalParameters.row3.kappa1 -
-            J δ SecondFunctionalParameters.row3.s SecondFunctionalParameters.row3.S - J δ SecondFunctionalParameters.row3.kappa2 SecondFunctionalParameters.row3.S - J δ SecondFunctionalParameters.row3.kappa3 SecondFunctionalParameters.row3.S + ε) *
-              boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) +
-          (retained SecondFunctionalParameters.row3 N δ (convolutionWuWindows N Δ V) +
-            (2/(1-2*δ))*FourPrimeNonunit.sourceKTheta N δ Δ V SecondFunctionalParameters.row3 0) := by
-  exact kTheta_joined_source SecondFunctionalParameters.row3 SecondFunctionalParameters.row3_motherAdmissible
-    SecondFunctionalParameters.row3_last_eq
-    (by norm_num [SecondFunctionalParameters.row3]) (by norm_num [SecondFunctionalParameters.row3])
-    (by norm_num [SecondFunctionalParameters.row3]) (by norm_num [SecondFunctionalParameters.row3]) k hk hδ hδhi hε
 
-/-- Regression on the actual row4 record, not a surrogate tuple. -/
-theorem row4_kTheta_joined_source (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-        5 * wuBoxPhi N δ (convolutionWuWindows N Δ V) SecondFunctionalParameters.row4.s ≤
-          (4 * wuUpperCoefficient SecondFunctionalParameters.row4.S + wuUpperCoefficient SecondFunctionalParameters.row4.kappa1 -
-            4 * wuImprovementLimit true δ SecondFunctionalParameters.row4.S - wuImprovementLimit true δ SecondFunctionalParameters.row4.kappa1 -
-            J δ SecondFunctionalParameters.row4.s SecondFunctionalParameters.row4.S - J δ SecondFunctionalParameters.row4.kappa2 SecondFunctionalParameters.row4.S - J δ SecondFunctionalParameters.row4.kappa3 SecondFunctionalParameters.row4.S + ε) *
-              boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) +
-          (retained SecondFunctionalParameters.row4 N δ (convolutionWuWindows N Δ V) +
-            (2/(1-2*δ))*FourPrimeNonunit.sourceKTheta N δ Δ V SecondFunctionalParameters.row4 0) := by
-  exact kTheta_joined_source SecondFunctionalParameters.row4 SecondFunctionalParameters.row4_motherAdmissible
-    SecondFunctionalParameters.row4_last_eq
-    (by norm_num [SecondFunctionalParameters.row4]) (by norm_num [SecondFunctionalParameters.row4])
-    (by norm_num [SecondFunctionalParameters.row4]) (by norm_num [SecondFunctionalParameters.row4]) k hk hδ hδhi hε
 
 end Wu2008DoubleSieve.SecondFunctionalZeroWidth

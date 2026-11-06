@@ -187,21 +187,5 @@ theorem gamma78Gain_approx_integral_tendsto {δ : ℝ} (tri : Bool) (hδ : 0 < �
   · filter_upwards [gamma78Gain_strict_ae tri,gamma78Gain_H_pullback_ae hδ hδhi] with v hv hc
     exact gamma78Gain_approx_tendsto hv hc
 
-theorem gamma78Gain_approx_le_kernel {δ : ℝ} (tri : Bool)
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (n : ℕ) (v : ℝ × ℝ) :
-    gamma78GainApprox tri δ n v ≤ gamma78GainKernel tri δ v := by
-  by_cases hex : ∃ j ∈ gamma78GainInner tri n, v ∈ truncatedSixthClosureCell n j
-  · obtain ⟨j,hj,hv⟩ := hex
-    have hr := gamma78Gain_inner_subset hj hv
-    let r := gamma78GainInnerRectangle tri n ⟨j,hj⟩
-    have hsample : gamma78GainV v.1 v.2 ≤ gamma78GainSample n j := by
-      have ha : 0 < r.box.A := (by norm_num [gamma5MassA,gamma5ClassicalS] : 0 < gamma5MassA).trans r.box.lower
-      have hh := gamma78Gain_V_antitone ha hv.1.1 hv.2.1 (gamma78Gain_region_unit hr).2.2
-      exact hh.trans (le_add_of_nonneg_right (by positivity))
-    rw [gamma78Gain_approx_at_cell hj hv,gamma78GainKernel,Set.indicator_of_mem hr]
-    exact mul_le_mul_of_nonneg_right (gamma5Gain_H_antitone hδ hδhi hsample)
-      (gamma5Gain_smooth_bounds v).1
-  · rw [gamma78Gain_approx_zero (by simpa only [not_exists,not_and] using hex)]
-    exact (gamma78Gain_kernel_bounds tri hδ hδhi v).1
 
 end Wu2008DoubleSieve

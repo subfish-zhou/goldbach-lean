@@ -46,8 +46,5 @@ theorem base_upper :
 theorem base_difference : baseBound-newBase = (925957/10125000 : ℝ) := by
   norm_num [baseBound,newBase,a,b,truncatedSixthLowerAlpha,truncatedSixthLowerBeta]
 
-theorem strict_base_improvement : newBase < baseBound := by
-  have h := base_difference
-  linarith
 
 end Wu2008DoubleSieve.BaseUpperSplitRecurrence

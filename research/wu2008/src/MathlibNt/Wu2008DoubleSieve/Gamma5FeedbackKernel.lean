@@ -66,20 +66,6 @@ theorem gamma5Feedback_B_ratio (v : ℝ) :
   rw [heq, div_mul_eq_div_div]
   norm_num [gamma5ClassicalS, gamma5ClassicalB]
 
-theorem gamma5Feedback_joins :
-    gamma5FeedbackB gamma5FeedbackVm = 0 ∧
-    gamma5FeedbackB gamma5FeedbackVc =
-      gamma5FeedbackP gamma5FeedbackVc * log (200 / 191) ∧
-    gamma5FeedbackR gamma5FeedbackVc =
-      gamma5FeedbackP gamma5FeedbackVc * log (200 / 191) ∧
-    gamma5FeedbackR gamma5FeedbackVe = 0 ∧
-    gamma5FeedbackLegalMiddle gamma5FeedbackVc = 0 ∧
-    gamma5FeedbackLegalMiddle gamma5FeedbackVe = gamma5FeedbackB gamma5FeedbackVe ∧
-    gamma5FeedbackB gamma5FeedbackVf = gamma5FeedbackA gamma5FeedbackVf ∧
-    gamma5FeedbackA gamma5FeedbackVp = 0 := by
-  norm_num [gamma5FeedbackB, gamma5FeedbackA, gamma5FeedbackR, gamma5FeedbackLegalMiddle,
-    gamma5FeedbackVm, gamma5FeedbackVc, gamma5FeedbackVe, gamma5FeedbackVf, gamma5FeedbackVp,
-    gamma5FeedbackKappa, gamma5ClassicalS, gamma5ClassicalB, gamma5MassA]
 
 noncomputable def gamma5FeedbackDensity (v t : ℝ) : ℝ :=
   1 / (v * t * (gamma5FeedbackW v - t))

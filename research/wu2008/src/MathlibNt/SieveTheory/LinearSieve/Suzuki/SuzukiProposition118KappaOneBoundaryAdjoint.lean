@@ -129,17 +129,6 @@ theorem suzukiProposition118LowerBoundaryPairingScalar_eq_neg (A : ℝ) :
     suzukiProposition118KappaOneBeta,
     suzukiProposition118KappaOneRho]
 
-/-- Exact algebraic form of the last Proposition-11.8 step.  Once the genuine
-source-series Iwaniec pairing is proved to vanish, its boundary constant is
-forced to equal the explicit source formula (and hence zero). -/
-theorem suzukiLowerBoundaryLimit_eq_boundaryFormula_of_pairing_zero
-    (p : ℝ → ℝ) (A : ℝ)
-    (hpair : suzukiProposition118LowerBoundaryPairingScalar A = 0) :
-    suzukiLowerBoundaryLimit =
-      suzukiProposition118KappaOneBoundaryFormula p := by
-  rw [suzukiProposition118LowerBoundaryPairingScalar_eq_neg] at hpair
-  rw [suzukiProposition118KappaOneBoundaryFormula_eq_zero]
-  linarith
 
 /-- The earliest still-unproved source edge, stated literally rather than used
 as a hidden field: the genuine source-series pairing at `β=2` must be shown to

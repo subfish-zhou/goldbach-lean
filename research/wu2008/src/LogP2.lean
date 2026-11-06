@@ -104,9 +104,5 @@ theorem coefficient_identity : Qlog = U8CanonicalMother.improvedCoefficient +
 theorem coefficient_difference : Qlog = U8CanonicalMother.improvedCoefficient +
     (FullSourceLog.GammaLog6-FullAdmissibleSeed.Gamma6)/4 := coefficient_identity
 
-theorem coefficient_strict_gain : U8CanonicalMother.improvedCoefficient < Qlog := by
-  rw [coefficient_identity]
-  have h := FullSourceLog.sourceLogGain_pos
-  linarith only [h]
 
 end LogP2

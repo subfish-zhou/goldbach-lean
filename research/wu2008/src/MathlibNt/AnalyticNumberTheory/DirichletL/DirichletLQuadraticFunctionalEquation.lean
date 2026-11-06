@@ -18,10 +18,5 @@ theorem IsPrimitive.completedLFunction_one_sub_quadratic
       N ^ (s - 1 / 2) * χ.rootNumber * χ.completedLFunction s := by
   rw [hχ.completedLFunction_one_sub, inv_eq_self_of_sq_eq_one hquad]
 
-/-- The root number in the primitive quadratic lane has norm one. -/
-theorem IsPrimitive.norm_rootNumber_of_quadratic
-    {χ : DirichletCharacter ℂ N} (hχ : χ.IsPrimitive) (_hquad : χ ^ 2 = 1) :
-    ‖χ.rootNumber‖ = 1 :=
-  hχ.norm_rootNumber
 
 end DirichletCharacter

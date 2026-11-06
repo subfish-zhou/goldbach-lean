@@ -135,14 +135,6 @@ theorem sum_norm_sq_leftSinTwist_le
       min 1 (L * |t|) ^ 2 := (sq_le_sq₀ (abs_nonneg _) hmin).2 hs
   simpa [mul_comm] using mul_le_mul_of_nonneg_left hs2 (sq_nonneg ‖a m‖)
 
-/-- Nonnegative-frequency form with the literal damping factor `min 1 (L*t)`. -/
-theorem sum_norm_sq_leftSinTwist_le_of_nonneg
-    (a : ℤ → ℂ) (y t L : ℝ) (s : Finset ℤ)
-    (ht : 0 ≤ t) (hL : 0 ≤ L)
-    (hlog : ∀ m ∈ s, |Real.log y - Real.log (m : ℝ)| ≤ L) :
-    ∑ m ∈ s, ‖leftSinTwist a y t m‖ ^ 2 ≤
-      (min 1 (L * t)) ^ 2 * ∑ m ∈ s, ‖a m‖ ^ 2 := by
-  simpa [abs_of_nonneg ht] using sum_norm_sq_leftSinTwist_le a y t L s hL hlog
 
 /-- A cosine twist never enlarges coefficient energy. -/
 theorem sum_norm_sq_leftCosTwist_le
@@ -166,13 +158,6 @@ theorem sum_norm_sq_rightSinTwist_le
   simpa [leftSinTwist, rightSinTwist, mul_neg, Real.sin_neg] using
     sum_norm_sq_leftSinTwist_le b 1 t L s hL (by simpa using hlog)
 
-/-- Nonnegative-frequency right sine-energy form. -/
-theorem sum_norm_sq_rightSinTwist_le_of_nonneg
-    (b : ℤ → ℂ) (t L : ℝ) (s : Finset ℤ)
-    (ht : 0 ≤ t) (hL : 0 ≤ L) (hlog : ∀ n ∈ s, |Real.log (n : ℝ)| ≤ L) :
-    ∑ n ∈ s, ‖rightSinTwist b t n‖ ^ 2 ≤
-      (min 1 (L * t)) ^ 2 * ∑ n ∈ s, ‖b n‖ ^ 2 := by
-  simpa [abs_of_nonneg ht] using sum_norm_sq_rightSinTwist_le b t L s hL hlog
 
 /-- Right cosine energy bound. -/
 theorem sum_norm_sq_rightCosTwist_le

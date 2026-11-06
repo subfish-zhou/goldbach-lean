@@ -52,24 +52,5 @@ theorem omega3SieveR1_le_common_layers {i : ℕ} (N D : ℕ) (δ s t Z : ℝ)
     (fun q c => (omega3SieveAPCount N δ s c q : ℝ) -
       (omega3CofactorPrimeFibreLE N δ s c).card / (Nat.totient q : ℝ))
 
-/-- The source hypotheses themselves provide the fixed layer count.
-The same layers work for every modulus, sieve level D and cutoff Z. -/
-theorem omega3_cofactor_R1_common_layers (k : ℕ) {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ s t : ℝ, 2 ≤ s → s ≤ t → t ≤ 10 →
-      let W := convolutionWuWindows N Δ V
-      let L := omega3CofactorLabels N δ s t W
-      (∀ q : ℕ, omega3SieveAPResidual N δ s t W q =
-        ∑ j ∈ range (omega3LayerCount k δ), omega3LayerAPResidual N δ s W L j q) ∧
-      (∀ (D : ℕ) (Z : ℝ), omega3SieveR1 N D δ s t Z W ≤
-        ∑ j ∈ range (omega3LayerCount k δ), omega3LayerR1 N D δ s Z W L j) := by
-  obtain ⟨T, hT4, hT⟩ := omega3_cofactor_layers_bounded k hδ hδhi
-  refine ⟨T, hT4, ?_⟩
-  intro N hN i Δ V hb s t hs hst ht W L
-  have hcard := (hT N hN i Δ V hb s t hs hst ht).1
-  exact ⟨omega3SieveAPResidual_eq_common_layers N δ s t W _ hcard,
-    fun D Z => omega3SieveR1_le_common_layers N D δ s t Z W _ hcard⟩
 
 end Wu2008DoubleSieve

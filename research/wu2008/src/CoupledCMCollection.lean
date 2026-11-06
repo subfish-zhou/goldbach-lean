@@ -87,13 +87,6 @@ theorem margin_eq (i : Fin 4) : margin i=NineFeedbackStrength.publication (i.cas
   unfold CubicMiddleJoint.lower remainder
   ring
 
-/-- The complete signed expression is attached to the actual four hc margins. -/
-theorem margin_le_original (i : Fin 4) : margin i≤
-    NineFeedbackStrength.publication (i.castAdd 5)+
-      coupledFeedback (coupledRow i) NineFeedbackStrength.originalH-
-      NineFeedbackStrength.originalH (i.castAdd 5) := by
-  rw [margin_eq]
-  exact CubicMiddleJoint.original_hc_margin i
 
 end
 end CoupledCMCollection

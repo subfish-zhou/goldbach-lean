@@ -90,10 +90,6 @@ theorem denominatorPayment_le {x : ℝ} (hx : 1 ≤ x) :
   rw [hb,he] at h
   linarith only [h]
 
-theorem denominatorPayment_nonneg {x : ℝ} (hx : 1 ≤ x) : 0 ≤ denominatorPayment x := by
-  have hx0 : 0 < x := by linarith
-  unfold denominatorPayment F1LowerResidual.denom
-  positivity
 
 theorem denominatorPayment_pos {x : ℝ} (hx : 1 < x) : 0 < denominatorPayment x := by
   have hx0 : 0 < x := by linarith

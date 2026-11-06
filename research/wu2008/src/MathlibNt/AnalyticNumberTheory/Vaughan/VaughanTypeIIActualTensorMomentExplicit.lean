@@ -444,16 +444,6 @@ theorem divisorSquareMomentBound_27 :
       mul_le_mul_of_nonneg_left hpow hX0
     _ = 27 * (X : ℝ) * Real.log (X + 1 : ℕ) ^ 3 := by ring
 
-theorem vaughanActualTensorCoeffEnergy_canonical_le_BVScale_unconditional
-    (b : ℕ → ℂ) (y N u v k l : ℕ) (B : ℝ)
-    (hB : ∀ n ≤ y, ‖b n‖ ≤ B) :
-    vaughanActualTensorCoeffEnergy b y
-        (vaughanCanonicalDyadicBlock N u k)
-        (vaughanCanonicalDyadicBlock N v l) ≤
-      27 * B ^ 2 * (y : ℝ) * Real.log (y + 1 : ℕ) ^ 5 := by
-  simpa using
-    (vaughanActualTensorCoeffEnergy_canonical_le_BVScale
-      b y N u v k l B 27 hB divisorSquareMomentBound_27 (by positivity))
 
 theorem vaughanBilinearTensorEnergy_canonical_le_BVScale_unconditional
     (b : ℕ → ℂ) (y N u v k l : ℕ) (B : ℝ)

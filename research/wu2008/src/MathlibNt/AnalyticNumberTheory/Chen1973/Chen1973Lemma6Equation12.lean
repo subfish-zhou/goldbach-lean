@@ -146,27 +146,6 @@ theorem chen1973Lemma6NmMax_nonneg (x D M : ℕ) :
   apply Finset.le_max'
   simp
 
-/-- This identity is valid only under the deliberately strong hypothesis that
-one fixed `m` is coprime to every prime pair.  It is not the outer-`d`
-regrouping used in equation (12). -/
-theorem chen1973Lemma5M2_eq_NmTotient_of_allPrimePairsCoprime
-    {x D m : ℕ}
-    (hpair : ∀ pp ∈ chen1973Lemma5PrimePairs x,
-      Nat.Coprime (pp.1 * pp.2) m) :
-    chen1973Lemma5M2 x D = chen1973Lemma6NmTotient x D m := by
-  classical
-  unfold chen1973Lemma5M2 chen1973Lemma5M2InnerMajorant
-    chen1973Lemma6NmTotient
-  apply Finset.sum_congr rfl
-  intro l hl
-  congr 1
-  apply congrArg norm
-  apply Finset.sum_congr rfl
-  intro χ hχ
-  split_ifs with hprincipal
-  · rfl
-  rw [chen1973Lemma6_primitiveTwist_eq_actualPhi]
-  rw [Finset.filter_eq_self.2 (fun pp hpp => hpair pp hpp)]
 
 /-- The genuine outer `d` carrier immediately before (12), reusing the
 Lemma-5 source definition rather than introducing a second carrier. -/
@@ -219,61 +198,6 @@ fact, not a caller-supplied equation-(12) hypothesis. -/
 def Chen1973Equation12OuterGrouping (x D : ℕ) : Prop :=
   chen1973Lemma5M2Source x D = chen1973Lemma6OuterTotientSum x D
 
-theorem chen1973Lemma6_outerGrouping (x D : ℕ) :
-    Chen1973Equation12OuterGrouping x D :=
-  chen1973Lemma5M2Source_eq_outerTotientSum x D
 
-/-- Source equation (12), consuming the two-layer source object and conditional
-only on the two scalar estimates printed immediately after the now-proved
-outer grouping: the pointwise
-`φ(l)`-to-`l` replacement and the total outer-weight bound.  No single `m` is
-chosen uniformly for all prime pairs. -/
-theorem chen1973Lemma6_equation12_of_outerGrouping
-    {x D M : ℕ} (hx : 1 ≤ x) (hDM : D ≤ M)
-    (htotient : ∀ d ∈ chen1973Lemma6OuterDivisors x D,
-      chen1973Lemma6NmTotient x D d ≤ Real.log x * chen1973Lemma6Nm x D d)
-    (hweight : chen1973Lemma6OuterWeightSum x D ≤ Real.log x ^ 5) :
-    chen1973Lemma5M2Source x D ≤
-      Real.log x ^ 6 * chen1973Lemma6NmMax x D M := by
-  have hlog : 0 ≤ Real.log x := Real.log_nonneg (by exact_mod_cast hx)
-  have htotientSum :
-      chen1973Lemma6OuterTotientSum x D ≤
-        Real.log x * chen1973Lemma6OuterLiteralSum x D := by
-    unfold chen1973Lemma6OuterTotientSum chen1973Lemma6OuterLiteralSum
-    rw [Finset.mul_sum]
-    apply Finset.sum_le_sum
-    intro d hd
-    calc
-      chen1973Lemma6OuterWeight d * chen1973Lemma6NmTotient x D d ≤
-          chen1973Lemma6OuterWeight d *
-            (Real.log x * chen1973Lemma6Nm x D d) :=
-        mul_le_mul_of_nonneg_left (htotient d hd)
-          (chen1973Lemma6OuterWeight_nonneg d)
-      _ = Real.log x *
-          (chen1973Lemma6OuterWeight d * chen1973Lemma6Nm x D d) := by ring
-  have hliteralMax :
-      chen1973Lemma6OuterLiteralSum x D ≤
-        chen1973Lemma6OuterWeightSum x D * chen1973Lemma6NmMax x D M := by
-    unfold chen1973Lemma6OuterLiteralSum chen1973Lemma6OuterWeightSum
-    rw [Finset.sum_mul]
-    apply Finset.sum_le_sum
-    intro d hd
-    have hdmem := (Finset.mem_filter.mp hd).1
-    have hdIcc := Finset.mem_Icc.mp hdmem
-    exact mul_le_mul_of_nonneg_left
-      (chen1973Lemma6Nm_le_max hdIcc.1 (hdIcc.2.trans hDM))
-      (chen1973Lemma6OuterWeight_nonneg d)
-  calc
-    chen1973Lemma5M2Source x D ≤ chen1973Lemma6OuterTotientSum x D :=
-      (chen1973Lemma5M2Source_eq_outerTotientSum x D).le
-    _ ≤ Real.log x * chen1973Lemma6OuterLiteralSum x D := htotientSum
-    _ ≤ Real.log x *
-        (chen1973Lemma6OuterWeightSum x D * chen1973Lemma6NmMax x D M) :=
-      mul_le_mul_of_nonneg_left hliteralMax hlog
-    _ ≤ Real.log x *
-        (Real.log x ^ 5 * chen1973Lemma6NmMax x D M) := by
-      apply mul_le_mul_of_nonneg_left _ hlog
-      exact mul_le_mul_of_nonneg_right hweight (chen1973Lemma6NmMax_nonneg x D M)
-    _ = Real.log x ^ 6 * chen1973Lemma6NmMax x D M := by ring
 
 end AnalyticNumberTheory.LargeSieve

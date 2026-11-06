@@ -158,9 +158,5 @@ theorem variableS3Main_le_T9_add_error {N : ℕ} {k1 k2 : ℝ}
         (1 / k2 ^ 2) * (N : ℝ) ^ (1 - k1) := by linarith
     _ = _ := by ring
 
-theorem ninth_switching_final_parameters :
-    (1 / 14 : ℝ) ≤ 100 / 1327 ∧ (100 / 1327 : ℝ) ≤ 1 / 3 ∧
-      (100 / 1327 : ℝ) ≤ 25 / 206 := by
-  norm_num
 
 end Wu2008DoubleSieve

@@ -22,9 +22,6 @@ theorem fourthRowMother_negative_split (N d : ℕ) (a u : ℝ) :
     fourthRowMotherSingle N d (d * N) a u = fourthRowMotherBadPrime N d a u at h
   linarith
 
-theorem fourthRowMother_bad_prime_nonneg (N d : ℕ) (a u : ℝ) :
-    0 ≤ fourthRowMotherBadPrime N d a u :=
-  sum_nonneg fun _ _ => by simp only [sourceSieveCount, Int.cast_natCast]; positivity
 
 theorem fourthRowMother_bad_prime_mono (N d : ℕ) (a : ℝ) {u v : ℝ} (huv : u ≤ v) :
     fourthRowMotherBadPrime N d a u ≤ fourthRowMotherBadPrime N d a v := by
@@ -37,14 +34,6 @@ theorem fourthRowMother_bad_prime_mono (N d : ℕ) (a : ℝ) {u v : ℝ} (huv : 
     simp only [sourceSieveCount, Int.cast_natCast]
     positivity
 
-theorem fourthRowMother_bad_prime_is_badD {N d p ell : ℕ} {a : ℝ}
-    (hp : p.Prime) (hpd : p ∣ d)
-    (hell : ell ∈ sourceSieveCarrier N (d * p) (d * N) a) :
-    p ∣ d ∧ p ∣ (N - ell) / d ∧ ¬d.Coprime ((N - ell) / d) := by
-  have hdiv := (mem_filter.mp hell).2.2.1
-  have hd : d ∣ N - ell := (dvd_mul_right d p).trans hdiv
-  have hpn := (Nat.dvd_div_iff_mul_dvd hd).mpr hdiv
-  exact ⟨hpd, hpn, Nat.Prime.not_coprime_iff_dvd.mpr ⟨p, hp, hpd, hpn⟩⟩
 
 theorem fourthRowMother_single_floor {N d p : ℕ} {a : ℝ}
     (hN : 4 ≤ N) (he : Even N) :

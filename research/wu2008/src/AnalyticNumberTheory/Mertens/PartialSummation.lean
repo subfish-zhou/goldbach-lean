@@ -150,13 +150,6 @@ theorem thetaErrorKernel_interval_sub_total_eq_neg_tail {x : ℝ} (hx : 2 ≤ x)
   have h := intervalIntegral.integral_Ioi_sub_Ioi integrableOn_thetaErrorKernel hx
   linarith
 
-/-- The theta-error kernel is integrable on every finite interval beginning at
-two. -/
-theorem intervalIntegrable_thetaErrorKernel {x : ℝ} (hx : 2 ≤ x) :
-    IntervalIntegrable thetaErrorKernel volume 2 x := by
-  rw [intervalIntegrable_iff_integrableOn_Icc_of_le hx]
-  exact locallyIntegrableOn_thetaErrorKernel.integrableOn_compact_subset
-    Set.Icc_subset_Ici_self isCompact_Icc
 
 /-- Splitting the theta term in the Abel integral into its identity main term
 and its theta-error term. -/
@@ -601,44 +594,5 @@ theorem primeReciprocal_doubleSum_eq (A B : Finset ℕ) :
   intro q hq
   ring
 
-/-- **Double reciprocal sum bound**: for `3 ≤ a ≤ b ≤ c`,
-`Σ_{a ≤ p₁ ≤ b} Σ_{b ≤ p₂ ≤ c} 1/(p₁p₂)
- ≤ (log(log b/log a) + E)·(log(log c/log b) + E)`,
-where `E` comes from the explicit error in Mertens' second theorem. -/
-theorem primeReciprocal_doubleSum_le :
-    ∃ E : ℝ, 0 < E ∧ ∀ a b c : ℕ, 3 ≤ a → a ≤ b → b ≤ c →
-      (∑ p₁ ∈ (Finset.range (b + 1)).filter (fun p₁ => p₁.Prime ∧ a ≤ p₁),
-        ∑ p₂ ∈ (Finset.range (c + 1)).filter (fun p₂ => p₂.Prime ∧ b ≤ p₂),
-          1 / ((p₁ : ℝ) * (p₂ : ℝ))) ≤
-        (log (log (b : ℝ) / log (a : ℝ)) + E) * (log (log (c : ℝ) / log (b : ℝ)) + E) := by
-  obtain ⟨E, hE, hE'⟩ := primeReciprocalSum_range_le
-  refine ⟨E, hE, ?_⟩
-  intro a b c ha hab hbc
-  have hb3 : 3 ≤ b := le_trans ha hab
-  have hA : (∑ p₁ ∈ (Finset.range (b + 1)).filter (fun p₁ => p₁.Prime ∧ a ≤ p₁), 1 / (p₁ : ℝ)) ≤
-      log (log (b : ℝ) / log (a : ℝ)) + E := by
-    have hbnd := hE' a b ha hab
-    rwa [← primeReciprocalSum_range_eq a b (by omega) hab] at hbnd
-  have hB : (∑ p₂ ∈ (Finset.range (c + 1)).filter (fun p₂ => p₂.Prime ∧ b ≤ p₂), 1 / (p₂ : ℝ)) ≤
-      log (log (c : ℝ) / log (b : ℝ)) + E := by
-    have hbnd := hE' b c hb3 hbc
-    rwa [← primeReciprocalSum_range_eq b c (by omega) hbc] at hbnd
-  have hfac := primeReciprocal_doubleSum_eq
-    ((Finset.range (b + 1)).filter (fun p₁ => p₁.Prime ∧ a ≤ p₁))
-    ((Finset.range (c + 1)).filter (fun p₂ => p₂.Prime ∧ b ≤ p₂))
-  rw [hfac]
-  have hBsum0 : 0 ≤ ∑ p₂ ∈ (Finset.range (c + 1)).filter (fun p₂ => p₂.Prime ∧ b ≤ p₂), 1 / (p₂ : ℝ) := by
-    exact Finset.sum_nonneg fun p _ => by positivity
-  have hAlog0 : 0 ≤ log (log (b : ℝ) / log (a : ℝ)) + E := by
-    have hlogb : 0 < log (b : ℝ) := Real.log_pos (by exact_mod_cast (by omega : 1 < b))
-    have hloga : 0 < log (a : ℝ) := Real.log_pos (by exact_mod_cast (by omega : 1 < a))
-    have hratio_ge : 1 ≤ log (b : ℝ) / log (a : ℝ) := by
-      have hge : log (a : ℝ) ≤ log (b : ℝ) :=
-        Real.log_le_log (by exact_mod_cast (by omega : 0 < a)) (by exact_mod_cast hab)
-      rw [le_div_iff₀ hloga]
-      simpa using hge
-    have hlog_ge : 0 ≤ log (log (b : ℝ) / log (a : ℝ)) := Real.log_nonneg hratio_ge
-    linarith [hE.le]
-  exact mul_le_mul hA hB hBsum0 hAlog0
 
 end AnalyticNumberTheory.Mertens

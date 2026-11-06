@@ -43,11 +43,6 @@ noncomputable def caseIIRoundedEndpointErr
     (caseIIPositiveDeltaIntegralPart H N (D : ℝ) yr d Δ σ C K s +
       caseIIRoundedFiniteEndpointCorrections N (D : ℝ) d Δ σ C K s zr)
 
-/-- A strict cutoff at a real number has the same natural carrier as a strict
-cutoff at its natural ceiling. -/
-theorem nat_lt_natCeil_iff {x : ℝ} {z p : ℕ} (hz : z = ⌈x⌉₊) :
-    p < z ↔ (p : ℝ) < x := by
-  rw [hz, Nat.lt_ceil]
 
 /-- Euler products are literally unchanged by replacing a strict real cutoff
 with its natural ceiling. -/
@@ -56,18 +51,6 @@ theorem suzukiVProduct_natCeil_real_eq
     suzukiVProduct S (z : ℝ) = suzukiVProduct S x := by
   exact suzukiVProduct_natCeil_eq S hz
 
-/-- At the real cubic coordinate, the product-ratio coefficient has the exact
-`1 + 3K/log D` form. -/
-theorem caseIIRoundedProductTransportCoeff_cuberoot
-    {D K yr : ℝ} (hD : 0 < D)
-    (hyr : yr = D ^ (1 / (3 : ℝ))) :
-    caseIIRoundedProductTransportCoeff K yr =
-      1 + 3 * K / Real.log D := by
-  have hlog : Real.log yr = (1 / 3 : ℝ) * Real.log D := by
-    rw [hyr, Real.log_rpow hD]
-  unfold caseIIRoundedProductTransportCoeff
-  rw [hlog]
-  ring
 
 /-- The rounded integral term is bounded at the genuine real cubic coordinate.
 No equality between the cube root and the cast of its ceiling is needed. -/
@@ -133,24 +116,6 @@ theorem caseIIRoundedEndpointErr_eq_realTransport
   unfold caseIIRoundedEndpointErr
   rw [suzukiVProduct_natCeil_real_eq S hz]
 
-/-- Exact log/product transport expansion when both real coordinates are the
-prescribed powers and the target Euler carrier is their natural ceiling. -/
-theorem caseIIRoundedEndpointErr_eq_logD_realProduct
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {N D z : ℕ} {yr zr d Δ σ C K B0 s : ℝ}
-    (hD : 0 < (D : ℝ)) (hs : s ≠ 0)
-    (hzr : zr = (D : ℝ) ^ (1 / s)) (hz : z = ⌈zr⌉₊) :
-    caseIIRoundedEndpointErr S H N D z yr zr d Δ σ C K B0 s =
-      B0 + suzukiVProduct S zr *
-        (caseIIPositiveDeltaIntegralPart H N (D : ℝ) yr d Δ σ C K s +
-          (caseIIAlgebraicEndpointCoeffA0 N K +
-              σ * caseIIAlgebraicEndpointCoeffA1 N K) /
-                Real.log (D : ℝ) +
-          (σ * caseIIQDEndpointCoeffA0 d Δ C K /
-              Real.log (D : ℝ)) * (Real.log (D : ℝ)) ^ (-Δ)) := by
-  rw [caseIIRoundedEndpointErr_eq_realTransport S H hz,
-    caseIIRoundedFiniteEndpointCorrections_eq_logD hD hs hzr]
-  ring
 
 /-- Positive-`Δ` rounded relative packet with fixed coefficients.  The
 algebraic and cubic-`q_D` terms do not acquire an error-envelope factor; only

@@ -113,22 +113,5 @@ theorem omega3XBuchstabMain_le_integral_paid (k : ℕ) {δ ε : ℝ}
   convert hw using 1
   ring
 
-/-- The raw X now has no residual finite prime sum on its right-hand side. -/
-theorem omega3SieveX_le_integral_paid (k : ℕ) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ s t : ℝ, 2 ≤ s → s ≤ t → t ≤ 10 →
-        let W := convolutionWuWindows N Δ V
-        omega3SieveX N δ s t W ≤ omega3XIntegralMain N δ s t W +
-          ε * ((N : ℝ) / log N) * boxConvolutionReciprocalMass W := by
-  obtain ⟨T1, hT14, hT1⟩ := omega3SieveX_le_buchstab_paid k hδ hδhi (half_pos hε)
-  obtain ⟨T2, _, hT2⟩ := omega3XBuchstabMain_le_integral_paid k hδ hδhi (half_pos hε)
-  refine ⟨max T1 T2, hT14.trans (le_max_left _ _), ?_⟩
-  intro N hN i Δ V hb s t hs hst ht
-  have h1 := hT1 N ((le_max_left _ _).trans hN) i Δ V hb s t hs hst ht
-  have h2 := hT2 N ((le_max_right _ _).trans hN) i Δ V hb s t hs hst ht
-  dsimp only at h1 h2 ⊢
-  linarith
 
 end Wu2008DoubleSieve

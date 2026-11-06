@@ -73,15 +73,5 @@ theorem both_signed_aggregate_distribution (A : ℝ) {δ : ℝ}
       mul_le_mul_of_nonneg_right (by linarith) (by positivity)
     _ = _ := by ring
 
-/-- The advertised two-family endpoint with one C and one T, not a threshold
-or N-sized loss chosen separately for each original prime label. -/
-theorem physical10_physical11_signed_BV (A : ℝ) {δ : ℝ}
-    (hA : 0 < A) (hδ : 0 < δ) :
-    ∃ C : ℝ, 0 < C ∧ ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → ∀ Z : ℝ,
-      signedR1 N false (⌊(N : ℝ)^(1/2-δ)⌋₊+1) Z ≤ C*N/log (N : ℝ)^A ∧
-      signedR1 N true (⌊(N : ℝ)^(1/2-δ)⌋₊+1) Z ≤ C*N/log (N : ℝ)^A := by
-  obtain ⟨C,hC,T,hT,hd⟩ := both_signed_aggregate_distribution A hA hδ
-  exact ⟨((layerBound : ℝ)+1)*C,by positivity,T,hT,
-    fun N hN Z => ⟨hd N hN false Z,hd N hN true Z⟩⟩
 
 end Wu2008DoubleSieve.LastPrimeFour

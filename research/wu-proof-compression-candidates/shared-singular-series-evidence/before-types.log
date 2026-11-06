@@ -1,0 +1,58 @@
+'MathlibNt.SieveTheory.SwitchingPrinciple.moebius_real_isLowerMoebius' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.abs_moebius_real_le_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.mainSum_moebius_eq_correctedChenSieveProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenErrSum_moebius_le_errSum_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenCandidates_card_ge_X_mul_sieveProduct_sub_errSum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenNu_inv_prime' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenNu_inv_prime_localFactor' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenSelbergSum_mul_singularSeriesTruncated' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.primeProduct_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenSelbergSum_eq_sieveProduct_inv' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenSieveProduct_eq_singularSeries_mul_primeProduct' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenMainTerm_lower_of_estimates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.CorrectedChenMainTermLower_of_uniform_estimates' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenZ_sub_one_le_N' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenZ_sub_one_ge_two_of_large' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.correctedChenZ_log_le_logN' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.CorrectedChenMainTermLower_of_singularSeries_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.CorrectedChenMainTermLower_of_singularSeries_lower' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.singularSeriesTruncated_ge_half' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MathlibNt.SieveTheory.SwitchingPrinciple.singularSeriesTruncatedLowerBound_ge_half' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

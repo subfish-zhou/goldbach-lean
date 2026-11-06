@@ -63,11 +63,6 @@ def indexedBoundingSieve (N : ℕ) (T : Finset (Σ _ : ℕ, ℕ)) (z X : ℝ)
   nu_lt_one_of_prime := fun _ hp hd =>
     goldbachNu_lt_one_of_prime hp (prime_gt_two_of_dvd_siftingProduct hN hp hd)
 
-theorem indexedBoundingSieve_weight_sum (N : ℕ) (T : Finset (Σ _ : ℕ, ℕ))
-    (z X : ℝ) (hN : Even N) :
-    (∑ n ∈ (indexedBoundingSieve N T z X hN).support,
-      (indexedBoundingSieve N T z X hN).weights n) = (T.card : ℝ) := by
-  simpa [indexedBoundingSieve] using indexedValueWeight_sum N T (fun _ => 1)
 
 theorem indexedBoundingSieve_multSum (N : ℕ) (T : Finset (Σ _ : ℕ, ℕ))
     (z X : ℝ) (hN : Even N) (d : ℕ) :

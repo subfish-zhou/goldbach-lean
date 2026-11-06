@@ -27,10 +27,6 @@ theorem real_block_cutoff_le_half {x H B : ℝ} (hx : 16 ≤ x)
       _ ≤ x := by linarith
   exact (Real.sqrt_le_sqrt hlevel).trans hsx
 
-theorem half_lt_sub_of_small_product {η x t : ℝ} (hx : 0 < x)
-    (hη : η < 1 / 2) (ht : t ≤ η * x) :
-    x / 2 < x - t := by
-  nlinarith [mul_lt_mul_of_pos_right hη hx]
 
 /-- At one common eventual threshold, every retained scale passes an arbitrary
 fixed block threshold. Cutoff control is uniform even in all `B ≥ 0`. -/

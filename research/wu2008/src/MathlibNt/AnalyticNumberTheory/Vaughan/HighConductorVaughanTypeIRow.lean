@@ -81,27 +81,6 @@ theorem highConductorVaughanTypeIRow_squareLedger_le_expanded
   rw [← vaughanTypeIRowCoefficient_energy_eq]
   exact highConductorVaughanTypeIRow_squareLedger_le R Q L hQ a b M
 
-/-- The AP-normalized `1/φ(d)` mean for one actual Type-I row.  The exact
-high-conductor restriction survives both Cauchy steps.  Its square is controlled
-by the harmonic tail times the proved, expanded physical row ledger. -/
-theorem highConductorVaughanTypeIRow_mean_sq_le
-    (R Q L : ℕ) (hQ : 0 < Q) (a : ℂ) (b : ℤ → ℂ) (M : ℤ) :
-    (highConductorPrimitiveMean R Q
-        (highConductorVaughanTypeIRowAmplitude a b M L)) ^ 2 ≤
-      highConductorHarmonicTail R Q *
-        ((((Nat.log2 L + 1 : ℕ) : ℝ) ^ 2) *
-          primitiveLargeSieveConstant L Q *
-            (‖a‖ ^ 2 *
-              ∑ n ∈ Finset.Icc (M + 1) (M + L), ‖b n‖ ^ 2)) := by
-  calc
-    _ ≤ highConductorHarmonicTail R Q *
-          highConductorPrimitiveSquareLedger R Q
-            (highConductorVaughanTypeIRowAmplitude a b M L) :=
-      highConductorPrimitiveMean_sq_le_harmonic_mul_squareLedger R Q _
-    _ ≤ _ := mul_le_mul_of_nonneg_left
-      (highConductorVaughanTypeIRow_squareLedger_le_expanded
-        R Q L hQ a b M)
-      (Finset.sum_nonneg fun d hd => by positivity)
 
 end
 end AnalyticNumberTheory.LargeSieve

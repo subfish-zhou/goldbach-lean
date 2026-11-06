@@ -112,12 +112,6 @@ theorem fourthRowTripleGated_output_test {i : ℕ} (N : ℕ) (δ : ℝ) (W : Fin
     simp [Ne.symm hn]
   · exact fun hn => (hn hb).elim
 
-theorem fourthRowTripleGated_mass {i : ℕ} (N : ℕ) (δ : ℝ)
-    (W : Fin i → Finset ℕ) (L : Finset Omega3CofactorIndex) :
-    (∑ b ∈ range (N + 1), fourthRowTripleGatedWeight N δ W L b) =
-      fourthRowTripleGatedX N δ W L := by
-  simpa only [fourthRowTripleGatedX, mul_one, sum_const, nsmul_eq_mul] using
-    fourthRowTripleGated_output_test N δ W L (fun _ => 1)
 
 theorem fourthRowTripleGated_sifted {i : ℕ} (N : ℕ) (he : Even N) (δ Z : ℝ)
     (W : Fin i → Finset ℕ) (L : Finset Omega3CofactorIndex) :

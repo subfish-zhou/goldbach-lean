@@ -10,8 +10,6 @@ def middleMass : ℝ := k4*(33/5-sB)^4
 def Cmid : ℝ := 2*16*middleMass*(2/5)*truncatedSixthLowerAlpha
 def Cfull : ℝ := Cgeo+Ctail+Cmid
 
-theorem sB_identity : (1/2-b0)/truncatedSixthLowerAlpha = sB := by
-  norm_num [sB,b0,truncatedSixthLowerAlpha]
 
 theorem sB_domain : sB ∈ Icc (5 : ℝ) (33/5) := by norm_num [sB]
 

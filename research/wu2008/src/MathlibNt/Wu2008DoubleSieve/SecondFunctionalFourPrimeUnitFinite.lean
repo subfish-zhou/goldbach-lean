@@ -39,9 +39,6 @@ def word (j : Fin 4) : List ℕ :=
 theorem word_length (j : Fin 4) : (word j).length = 4 := by
   fin_cases j <;> rfl
 
-theorem word_dictionary (j : Fin 4) :
-    secondFunctionalMotherGammaWords (16 + j.val) = [word j] := by
-  fin_cases j <;> rfl
 
 theorem word_last (j : Fin 4) : (word j).getD 3 0 = 2 ∨ (word j).getD 3 0 = 3 := by
   fin_cases j <;> simp [word]

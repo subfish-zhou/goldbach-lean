@@ -26,12 +26,5 @@ lemma LSeries_twist_vonMangoldt_eq_neg_logDeriv_LFunction
   rw [deriv_LFunction_eq_deriv_LSeries χ hs, LFunction_eq_LSeries χ hs]
   exact LSeries_twist_vonMangoldt_eq χ hs
 
-/-- The negative logarithmic derivative is continuous wherever a nonprincipal
-Dirichlet L-function is nonzero. -/
-lemma continuousOn_neg_logDeriv_LFunction
-    {χ : DirichletCharacter ℂ q} (hχ : χ ≠ 1) :
-    ContinuousOn (fun s ↦ -deriv (LFunction χ) s / LFunction χ s)
-      {s | LFunction χ s ≠ 0} :=
-  continuousOn_neg_logDeriv_LFunction_of_nontriv hχ
 
 end DirichletCharacter

@@ -88,16 +88,5 @@ theorem exceptional_bound {N : ℕ} {κ w V X : ℝ} {S : Finset Quad}
       rw [sum_const, nsmul_eq_mul, mul_comm]
     _ ≤ _ := mul_le_mul_of_nonneg_left (exceptionalOutputs_card hX) (by positivity)
 
-/-- Finite physical reduction, before any asymptotic payment. -/
-theorem source_le_physical_finite {N : ℕ} {κ w V X : ℝ} {S : Finset Quad}
-    (hN : 4 ≤ N) (he : Even N) (hκ : 0 < κ) (hX : 0 ≤ X)
-    (hS : S ⊆ fourModulusDomain N ((N : ℝ)^κ) w V)
-    (hcap : ∀ t ∈ S, (fourModulusProduct t : ℝ) ≤ X) :
-    ((∑ t ∈ S, sieveCount N (fourModulusProduct t) N (t.2.1 : ℝ) : ℤ) : ℝ) ≤
-      (physical N S).card + (1/κ)^4 * (sqrt N + 1 + X) := by
-  rw [source_cast]
-  have hh : ((raw N S).card : ℝ) ≤ (physical N S).card + (exceptional N S).card :=
-    by exact_mod_cast raw_le_physical_exceptional (S := S) hN he
-  exact hh.trans (add_le_add le_rfl (exceptional_bound hN he hκ hX hS hcap))
 
 end Wu2008DoubleSieve.TruncatedFourPhysical

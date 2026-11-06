@@ -34,29 +34,7 @@ theorem primeRectangle_uniform_threshold (n : ℕ) (ε : ℝ) (hε : 0 < ε) :
   intro R hR
   exact hR0 R ((le_max_left _ _).trans hR)
 
-/-- Literal four-dimensional reciprocal-prime rectangle consumer. -/
-theorem primeRectangle_fin4 {R : ℝ}
-    (hR : 1 < R) (hs : primeOrderedMertensStart ≤ R ^ (1 / 10 : ℝ))
-    (A B : Fin 4 → ℝ) (hA : ∀ i, 1 / 10 ≤ A i)
-    (hAB : ∀ i, A i ≤ B i) (hB : ∀ i, B i ≤ 1 / 2) :
-    |(∑ p : Fin 4 → primeSlabPrimes R,
-      if ∀ i, log (p i).val / log R ∈ Icc (A i) (B i)
-      then ∏ i, 1 / ((p i).val : ℝ) else 0) - ∏ i, ∫ t in A i..B i, 1 / t| ≤
-      4 * primeOrderedDiscrepancy R * (4 + primeOrderedDiscrepancy R) ^ 3 := by
-  simpa [primeRectangleMass, primeSlabWeight] using
-    primeRectangle_discrepancy hR hs A B hA hAB hB
 
-/-- Literal five-dimensional reciprocal-prime rectangle consumer. -/
-theorem primeRectangle_fin5 {R : ℝ}
-    (hR : 1 < R) (hs : primeOrderedMertensStart ≤ R ^ (1 / 10 : ℝ))
-    (A B : Fin 5 → ℝ) (hA : ∀ i, 1 / 10 ≤ A i)
-    (hAB : ∀ i, A i ≤ B i) (hB : ∀ i, B i ≤ 1 / 2) :
-    |(∑ p : Fin 5 → primeSlabPrimes R,
-      if ∀ i, log (p i).val / log R ∈ Icc (A i) (B i)
-      then ∏ i, 1 / ((p i).val : ℝ) else 0) - ∏ i, ∫ t in A i..B i, 1 / t| ≤
-      5 * primeOrderedDiscrepancy R * (4 + primeOrderedDiscrepancy R) ^ 4 := by
-  simpa [primeRectangleMass, primeSlabWeight] using
-    primeRectangle_discrepancy hR hs A B hA hAB hB
 
 /-- A common ambient threshold precedes N, every R above N^lambda, and all endpoints. -/
 theorem primeRectangle_ambient_threshold (rho : ℝ) (hrho : 0 < rho)

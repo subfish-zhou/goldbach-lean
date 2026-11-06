@@ -32,7 +32,6 @@ def cell (N : ℕ) (e ρ : ℝ) (k : Key) : Finset Label := by
   classical
   exact (physicalPrefix N e).filter fun x => gridKey ρ x=k
 
-theorem originalAlpha_eq : originalAlpha = alpha := rfl
 
 theorem physicalSmall_data {N : ℕ} {x : Label} (hx : x ∈ physicalSmall N) :
     x.1.1.Prime ∧ x.1.2.Prime ∧ x.2.Prime ∧
@@ -146,10 +145,4 @@ theorem output_eq_original {N : ℕ} {x : Label} (hx : x ∈ physicalSmall N) :
   unfold output
   rw [← Nat.cast_mul, hm, ← Nat.cast_sub hprod.le, Int.natAbs_natCast]
 
-/-- A bad output is still prime; this is an explicit small-output sieve boundary, not copN loss. -/
-theorem outputBad_prime {N : ℕ} {e : ℝ} {P : Finset ℕ} {x : Label}
-    (hx : x ∈ outputBad N e P) : (output N x.1.1 (x.1.2*x.2)).Prime := by
-  have hs := (mem_filter.mp (mem_filter.mp hx).1).1
-  rw [output_eq_original hs]
-  exact (physicalSmall_data hs).2.2.2.2.2.2.2.2.2.2.2.2.2
 end U8Literal

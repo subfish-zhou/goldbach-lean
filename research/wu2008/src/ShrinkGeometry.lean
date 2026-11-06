@@ -52,16 +52,6 @@ theorem domain_iff (t x y : ℝ) : (x, y) ∈ domain t ↔
   · rintro ⟨ha,hb,hc,hd,he⟩
     exact ⟨⟨ha,hb⟩,hc,hd,by linarith⟩
 
-theorem domain_zero : domain 0 = goodP := by
-  ext v
-  rcases v with ⟨x,y⟩
-  rw [domain_iff]
-  simp only [goodP, originalP_eq_clippedP, clippedP, mem_inter_iff, mem_ofPred_eq]
-  constructor
-  · rintro ⟨ha,hb,hc,hd,he⟩
-    exact ⟨⟨ha,hb,hc,by linarith⟩,by linarith⟩
-  · rintro ⟨⟨ha,hb,hc,he⟩,hd⟩
-    exact ⟨ha,hb,hc,by linarith,by linarith⟩
 
 theorem domain_subset {t : ℝ} (ht : 0 ≤ t) : domain t ⊆ domain 0 := by
   intro v hv

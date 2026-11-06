@@ -70,28 +70,7 @@ theorem uniform (m r : ℕ) (C : Fin r → Fin (m+1) → ℝ)
   intro R hR
   exact hT R ((le_max_left _ _).trans hR)
 
-theorem uniform_fin4 (r : ℕ) (C : Fin r → Fin 4 → ℝ)
-    (hC : ∀ q, ∃ j, 1 ≤ |C q j|) (epsilon : ℝ) (he : 0 < epsilon) :
-    ∃ T : ℝ, 1 < T ∧ ∀ R : ℝ, T ≤ R → ∀ (phi b : ℝ)
-      (gamma : Fin r → ℝ) (strict : Fin r → Bool),
-      |primeSum R phi b C gamma strict - integral phi b C gamma strict| < epsilon :=
-  uniform 3 r C hC epsilon he
 
-theorem uniform_fin5 (r : ℕ) (C : Fin r → Fin 5 → ℝ)
-    (hC : ∀ q, ∃ j, 1 ≤ |C q j|) (epsilon : ℝ) (he : 0 < epsilon) :
-    ∃ T : ℝ, 1 < T ∧ ∀ R : ℝ, T ≤ R → ∀ (phi b : ℝ)
-      (gamma : Fin r → ℝ) (strict : Fin r → Bool),
-      |primeSum R phi b C gamma strict - integral phi b C gamma strict| < epsilon :=
-  uniform 4 r C hC epsilon he
 
-/-- The empty extra mask does not remove either intrinsic strict gate. -/
-theorem uniform_empty (m : ℕ) (epsilon : ℝ) (he : 0 < epsilon) :
-    ∃ T : ℝ, 1 < T ∧ ∀ R : ℝ, T ≤ R → ∀ (phi b : ℝ),
-      |(∑ f : Fin (m+1) → primeSlabPrimes R,
-          primeSlabWeight R f * U phi b (gridCoordinates R f)) -
-        (∫ t in continuousCube (m+1), U phi b t * continuousDensity t)| < epsilon := by
-  obtain ⟨T,hT,h⟩ := uniform m 0 Fin.elim0 (fun q => Fin.elim0 q) epsilon he
-  refine ⟨T,hT,fun R hR phi b => ?_⟩
-  simpa only [primeSum, integral, G_empty] using h R hR phi b Fin.elim0 Fin.elim0
 
 end SecondFunctionalUnitMasked

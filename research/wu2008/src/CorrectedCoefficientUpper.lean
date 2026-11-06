@@ -101,10 +101,6 @@ theorem sixth_correction_interval :
   have hu := gamma_upper
   constructor <;> linarith only [hl,hu]
 
-/-- These are the original small-segment endpoints, not the fifth triangle. -/
-theorem original_small_endpoints : OriginalU8.SymbolicSmallGain.a = (100/1327:ℝ) ∧
-    OriginalU8.SymbolicSmallGain.b = (1/10:ℝ) := by
-  constructor <;> rfl
 
 theorem small_correction_interval :
     U8ActualThreshold.gainLower ≤ 2*(U8CanonicalMother.L-U8CanonicalMother.I) ∧
@@ -185,16 +181,6 @@ theorem small_width_bounds : (377/1000000:ℝ) < smallWidth ∧ smallWidth < 378
   rw [small_upper_exact,U8ActualThreshold.gainLower_exact]
   norm_num
 
-/-- All three widths are proved from actual enclosing pairs. -/
-theorem component_corridors :
-    GlobalLowerSlack.lowerOld < JointHMotherPayment.unroundedCoefficient ∧
-    JointHMotherPayment.unroundedCoefficient < FifthReciprocalAffineUpper.upperRational ∧
-    FullAdmissibleStrength.polynomialPayment ≤ Gamma6 ∧ Gamma6 ≤ gammaUpper ∧
-    U8ActualThreshold.gainLower ≤ 2*(U8CanonicalMother.L-U8CanonicalMother.I) ∧
-    2*(U8CanonicalMother.L-U8CanonicalMother.I) ≤ U8ActualThreshold.gainUpper :=
-  ⟨GlobalLowerSlack.old_actual_lower,FifthReciprocalAffineUpper.actual_upper,
-    FullAdmissibleStrength.polynomial_payment,gamma_upper,
-    small_correction_interval.1,small_correction_interval.2⟩
 
 /-- Only certificate widths are ranked; no actual slack ranking is inferred. -/
 theorem certificate_width_dominance :
@@ -206,11 +192,6 @@ theorem certificate_width_dominance :
   · linarith only [hg.1]
   constructor <;> linarith only [ho.1,hs.1,hs.2,hg.2]
 
-/-- More than eight ninths of this corridor's width comes from the old package. -/
-theorem old_package_fraction_of_width :
-    8*(upperCoefficient-GlobalLowerSlack.lowerCoefficient) < 9*oldWidth := by
-  rw [width_identity]
-  linarith only [certificate_width_dominance.2.2]
 
 /-- Retaining the old upper endpoint cannot prove the corrected object below target,
 even if both added components could be tightened down to their certified lower ends.
@@ -242,11 +223,5 @@ theorem target_inside_corridor :
   have hg := small_correction_interval.1.trans small_correction_interval.2
   exact old_upper_architecture_obstruction gammaUpper U8ActualThreshold.gainUpper hs hg
 
-/-- The still-unclosed strict comparison, expressed with the literal upper deficit. -/
-theorem actual_target_iff_upper_deficit :
-    8*log (5000/4469) < U8CanonicalMother.improvedCoefficient ↔
-    upperCoefficient-U8CanonicalMother.improvedCoefficient <
-      upperCoefficient-8*log (5000/4469) := by
-  constructor <;> intro h <;> linarith only [h]
 
 end CorrectedCoefficientUpper

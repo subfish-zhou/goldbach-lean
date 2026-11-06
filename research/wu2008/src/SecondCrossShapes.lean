@@ -7,8 +7,6 @@ noncomputable section
 def k3 : ℝ := 125/32292
 def k4 : ℝ := 625/3616704
 
-theorem k3_identity : k3 = (25/468)*(5/23)/3 := by norm_num [k3]
-theorem k4_identity : k4 = k3*(5/28)/4 := by norm_num [k3,k4]
 
 /-- A genuine polynomial FTC; no continuity is assumed for the improvement limit. -/
 theorem square_reverse_integral (a b k : ℝ) :

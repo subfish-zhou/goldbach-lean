@@ -76,16 +76,5 @@ theorem localRoots_card_original {N p : ℕ} [Fact p.Prime] {e : ℝ} {t : ℕ �
     · rw [localRoots_card_two ha hN, if_neg]
       exact fun h => (hp.dvd_mul.mp h).elim ha hN
 
-/-- Prime-pair membership maps into no bad residue for every legal sieve prime. -/
-theorem primePair_avoids_localRoots {N p r : ℕ} [Fact p.Prime] {e Z : ℝ}
-    {t : ℕ × ℕ} (ht : t ∈ pairs N e) (hr : r ∈ primePair N e t)
-    (hp : p ∈ sievePrimes Z) (hZb : Z ≤ (t.2 : ℝ)) (hZo : Z ≤ (1-e)*(N : ℝ)) :
-    (r : ZMod p) ∉ localRoots p N (t.1*t.2) := by
-  intro hbad
-  have hd := (twoLinear_dvd_iff_local (mem_filter.mp hr).1).mpr hbad
-  have hc := primePair_coprime ht hr hZb hZo
-  have hpQ : p ∣ (sievePrimes Z).prod id := dvd_prod_of_mem id hp
-  exact (show p ≠ 1 from (mem_sievePrimes.mp hp).1.ne_one)
-    (Nat.eq_one_of_dvd_coprimes hc hd hpQ)
 
 end U8Literal.SmallProduct

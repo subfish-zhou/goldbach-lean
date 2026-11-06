@@ -76,15 +76,6 @@ theorem omega3_switched_upper_finite {i N D : ℕ} (he : Even N)
     omega3SieveX N δ s t W * ordinaryRosserMainSum true N 1 D Z + _ at hfinite
   linarith
 
-theorem omega3_switched_strict_upper_finite {i N D : ℕ} (he : Even N)
-    (δ s t Z : ℝ) (W : Fin i → Finset ℕ)
-    (hd : ∀ d ∈ boxConvolutionSupport W, 0 < d)
-    (hD : 1 < D) (hZ : Z ≤ (D : ℝ)) :
-    omega3SwitchedSiftedCount N δ s t Z W ≤
-      omega3SieveX N δ s t W * ordinaryRosserMainSum true N 1 D Z +
-        omega3SieveR1 N D δ s t Z W + omega3SieveR2 N D δ s t Z W :=
-  (omega3_switched_sifted_le_closed N δ s t Z W hd).trans
-    (omega3_switched_upper_finite he δ s t Z W hD hZ)
 
 /-- The frozen uniform upper-density producer is consumed with its true
 log-level ratio. The actual X and the two actual residuals remain exposed. -/
@@ -119,11 +110,5 @@ theorem omega3_switched_upper_density {ρ : ℝ} (hρ : 0 < ρ) :
   have hfinite := omega3_switched_upper_finite he δ s t Z W hD hZD
   linarith
 
-/-- In particular ep=N is not discarded: zero survives precisely when
-the sifting product is one. -/
-theorem omega3_sifted_zero_iff (N : ℕ) (Z : ℝ) :
-    Sifted N 0 Z ↔ ordinarySievePrimeProduct N Z = 1 := by
-  rw [sifted_iff_product_coprime]
-  simp
 
 end Wu2008DoubleSieve

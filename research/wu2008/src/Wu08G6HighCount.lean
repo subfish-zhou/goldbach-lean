@@ -38,36 +38,12 @@ theorem supplied_sixth_exact :
   rw [he]
   exact FeedbackLimit.supplied_sixth
 
-theorem supplied_sixth_capped : SixthSlotAssembly.SixthLower
-    (published FeedbackLimit.Winf - (16129:ℝ)/40000*heightCap FeedbackLimit.Winf) := by
-  intro ε hε
-  obtain ⟨T,hT,hcount⟩ := FeedbackLimit.supplied_sixth ε hε
-  refine ⟨T,hT,fun N hN he => ?_⟩
-  have hc := legal_lower FeedbackLimit.Winf
-  change _ ≤ FeedbackLimit.Cinf at hc
-  have hm := mul_le_mul_of_nonneg_right
-    (show truncatedSixthLowerF6lin+published FeedbackLimit.Winf-
-      (16129:ℝ)/40000*heightCap FeedbackLimit.Winf-ε ≤
-      truncatedSixthLowerF6lin+FeedbackLimit.Cinf-ε by linarith only [hc])
-    (truncatedSixthClosure_scale_nonneg (show 4 ≤ N by omega))
-  have hm' : (truncatedSixthLowerF6lin+(published FeedbackLimit.Winf-
-      (16129:ℝ)/40000*heightCap FeedbackLimit.Winf)-ε)*wuSingularSeries N*N/Real.log N^(2:ℕ) ≤
-      (truncatedSixthLowerF6lin+FeedbackLimit.Cinf-ε)*wuSingularSeries N*N/Real.log N^(2:ℕ) := by
-    simpa only [truncatedSixthMassScale,mul_div_assoc,mul_assoc,sub_eq_add_neg,add_assoc] using hm
-  exact hm'.trans (hcount N hN he)
 
 /-- Analytic full-domain target in the *same* two-positive-slot mother.
 This number alone is NOT claimed to be a lower bound for P2. -/
 def Qpublished : ℝ := PositiveTwoPayment.Qtwo +
   (published FeedbackLimit.Winf-FeedbackLimit.Cinf)/4
 
-/-- Full replacement expanded: only the sixth slot changes, once. -/
-theorem Qpublished_same_mother :
-    Qpublished = LogP2.Qlog + (published FeedbackLimit.Winf-FullSourceLog.GammaLog6+
-      PositiveTwoPayment.increment PositiveSecondPayment.secondGain PositiveCoreResume.fifthGain)/4 := by
-  rw [Qpublished,PositiveTwoPayment.Qtwo_eq_Qof]
-  unfold PositiveTwoPayment.Qof FeedbackLimit.Qinf
-  ring
 
 /-- The exact debit recovers the actually paid coefficient, not a difference
 between unrelated estimates of Q. -/

@@ -225,22 +225,5 @@ theorem wu_primeWindow_reciprocal_mass_upper {α : ℝ} (hα : 0 < α) :
     linarith
   exact (mul_le_mul_iff_right₀ hY0).mp hm
 
-/-- The literal two-sided order statement (3.9), with one threshold before
-both real parameters and with no empty-box premise. -/
-theorem wu_primeWindow_reciprocal_mass_bounds {α : ℝ} (hα : 0 < α) :
-    ∃ N₀ : ℕ, ∀ N : ℕ, N₀ ≤ N → ∀ Δ V : ℝ,
-      1 + Real.log (N : ℝ) ^ (-4 : ℝ) ≤ Δ →
-      Δ < 1 + 2 * Real.log (N : ℝ) ^ (-4 : ℝ) →
-      (N : ℝ) ^ α ≤ V → V ≤ N →
-      1 / (12 * Real.log (N : ℝ) ^ 5) ≤
-        (∑ p ∈ primeWindow N (V / Δ) V, (1 : ℝ) / p) ∧
-      (∑ p ∈ primeWindow N (V / Δ) V, (1 : ℝ) / p) ≤
-        (4 / α + 2) / Real.log (N : ℝ) ^ 5 := by
-  obtain ⟨N₁, hlo⟩ := wu_primeWindow_reciprocal_mass_lower hα
-  obtain ⟨N₂, hhi⟩ := wu_primeWindow_reciprocal_mass_upper hα
-  refine ⟨max N₁ N₂, ?_⟩
-  intro N hN Δ V hΔlo hΔhi hVlo hVhi
-  exact ⟨hlo N ((le_max_left _ _).trans hN) Δ V hΔlo hΔhi hVlo hVhi,
-    hhi N ((le_max_right _ _).trans hN) Δ V hΔlo hΔhi hVlo⟩
 
 end Wu2008DoubleSieve

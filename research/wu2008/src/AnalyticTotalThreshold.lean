@@ -121,27 +121,8 @@ theorem retained_replacements_identity :
     Phase20.psiPaymentLoss
   ring
 
-/-- A sufficient whole-expression comparison, with no new count consumer. -/
-theorem sufficient_comparison (h : target < coefficient) :
-    target < JointHMotherPayment.unroundedCoefficient :=
-  h.trans_le coefficient_le_actual
 
-/-- A necessary and sufficient comparison retaining every actual model error. -/
-theorem exact_remaining_obligation :
-    target < JointHMotherPayment.unroundedCoefficient ↔
-      4*(target-coefficient) < signedLoss+fifthLoss+sixthLoss+fourLoss := by
-  have he := actual_gap_identity
-  constructor <;> intro h <;> linarith only [he,h]
 
-/-- Restore Psi directly in the accepted certificate without expanding its domain. -/
-theorem rawPsi_restored_strict :
-    SharedRationalPayment.residualCoefficient+Phase20.psiPaymentLoss <
-      JointHMotherPayment.unroundedCoefficient := by
-  have h := SharedRationalPayment.complete_residual_lower
-  rw [JointHMotherPayment.unrounded_coefficient_identity]
-  unfold SharedRationalPayment.residualCoefficient FifthShapePayment.residualCoefficient
-    FifthShapePayment.lowerCoefficient Phase20.psiPaymentLoss
-  linarith only [h]
 
 end
 end Wu2008DoubleSieve.AnalyticTotalThreshold

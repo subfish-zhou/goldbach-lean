@@ -13,9 +13,6 @@ theorem continuousBand_measurable {n : ℕ} (c : Fin n → ℝ) (γ η : ℝ) :
   apply measurableSet_le _ measurable_const
   fun_prop
 
-theorem continuousSlab_integrable {n : ℕ} (c : Fin n → ℝ) (γ η : ℝ) :
-    IntegrableOn continuousDensity (continuousCube n ∩ continuousBand c γ η) :=
-  (continuousDensity_integrable n).mono_set inter_subset_left
 
 /-- The one-dimensional slice lies in a centered interval for either coefficient sign. -/
 theorem continuousSlice_subset {c d η : ℝ} (hc : 1 ≤ |c|) :
@@ -224,25 +221,7 @@ theorem continuousCapFace_bounds {n : ℕ} (j : Fin n) (φ b η : ℝ) (hη : 0 
   rw [continuousCapFace_eq]
   exact continuousSlab_bounds j (fun _ => 1) (φ - b) η (by norm_num) hη
 
-/-- Both actual moving faces for the four-prefix case, with unrestricted moving parameter. -/
-theorem continuousFaces_fin4 (φ b η : ℝ) (hη : 0 ≤ η) :
-    (0 ≤ (∫ t in continuousCube 4 ∩ continuousLowerFace φ η, continuousDensity t) ∧
-      (∫ t in continuousCube 4 ∩ continuousLowerFace φ η, continuousDensity t) ≤
-        (4 : ℝ) ^ 3 * (20 * η)) ∧
-    (0 ≤ (∫ t in continuousCube 4 ∩ continuousCapFace φ b η, continuousDensity t) ∧
-      (∫ t in continuousCube 4 ∩ continuousCapFace φ b η, continuousDensity t) ≤
-        (4 : ℝ) ^ 3 * (20 * η)) :=
-  ⟨continuousLowerFace_bounds φ η hη, continuousCapFace_bounds (0 : Fin 4) φ b η hη⟩
 
-/-- Both actual moving faces for the five-prefix case. -/
-theorem continuousFaces_fin5 (φ b η : ℝ) (hη : 0 ≤ η) :
-    (0 ≤ (∫ t in continuousCube 5 ∩ continuousLowerFace φ η, continuousDensity t) ∧
-      (∫ t in continuousCube 5 ∩ continuousLowerFace φ η, continuousDensity t) ≤
-        (4 : ℝ) ^ 4 * (20 * η)) ∧
-    (0 ≤ (∫ t in continuousCube 5 ∩ continuousCapFace φ b η, continuousDensity t) ∧
-      (∫ t in continuousCube 5 ∩ continuousCapFace φ b η, continuousDensity t) ≤
-        (4 : ℝ) ^ 4 * (20 * η)) :=
-  ⟨continuousLowerFace_bounds φ η hη, continuousCapFace_bounds (0 : Fin 5) φ b η hη⟩
 
 theorem continuousLowerFace_null {n : ℕ} (φ : ℝ) :
     volume (continuousCube (n + 1) ∩ continuousLowerFace (n := n) φ 0) = 0 := by
@@ -257,14 +236,6 @@ theorem continuousCapFace_null {n : ℕ} (j : Fin n) (φ b : ℝ) :
   simpa [continuousBand, sub_eq_zero] using
     continuousHyperplane_null j (fun _ => 1) (φ - b) (by norm_num)
 
-theorem continuousFaces_fin4_null (φ b : ℝ) :
-    volume (continuousCube 4 ∩ continuousLowerFace φ 0) = 0 ∧
-      volume (continuousCube 4 ∩ continuousCapFace φ b 0) = 0 :=
-  ⟨continuousLowerFace_null φ, continuousCapFace_null (0 : Fin 4) φ b⟩
 
-theorem continuousFaces_fin5_null (φ b : ℝ) :
-    volume (continuousCube 5 ∩ continuousLowerFace φ 0) = 0 ∧
-      volume (continuousCube 5 ∩ continuousCapFace φ b 0) = 0 :=
-  ⟨continuousLowerFace_null φ, continuousCapFace_null (0 : Fin 5) φ b⟩
 
 end Wu2008DoubleSieve

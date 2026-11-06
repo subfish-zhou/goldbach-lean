@@ -9,10 +9,6 @@ noncomputable def newBase : ℝ :=
 noncomputable def baseGain : ℝ :=
   233560459810704852486281/1329913530839140977712500
 
-/-- All logarithmic coefficients in the two affine increments are positive. -/
-theorem affine_log_coefficients_pos :
-    (0 : ℝ) < 34832/30375-4*(56/243) ∧ 0 < 340/243-5*(2776/10125) := by
-  norm_num
 
 /-- Rational payment is made only after the actual recurrence and FTC. -/
 theorem base_recurrence_lower :
@@ -37,8 +33,6 @@ theorem exact_base_gain : newBase-54035471/1012500 = baseGain := by
 
 theorem base_gain_pos : 0 < baseGain := by norm_num [baseGain]
 
-theorem base_strictly_improved : (54035471/1012500 : ℝ) < newBase := by
-  linarith [exact_base_gain,base_gain_pos]
 
 noncomputable def newBalance : ℝ :=
   newBase+3/2+RationalMovingSixth.rationalSixth+47/481250-

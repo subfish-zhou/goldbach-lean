@@ -76,8 +76,5 @@ theorem actual_matrix_row_sum (i : Fin 4) : (∑ j : Fin 4, matrix i j) ≤ 4/5 
   have hmass := actual_density_mass_bound i
   linarith only [hclip, hmass]
 
-theorem actual_matrix_strict_contraction :
-    ∃ c : ℝ, 0 ≤ c ∧ c < 1 ∧ ∀ i : Fin 4, (∑ j : Fin 4, matrix i j) ≤ c :=
-  ⟨4/5, by norm_num, by norm_num, actual_matrix_row_sum⟩
 
 end Wu2008DoubleSieve.ActualMatrixContraction

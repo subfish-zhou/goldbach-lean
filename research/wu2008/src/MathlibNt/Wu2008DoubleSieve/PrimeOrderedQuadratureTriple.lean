@@ -264,22 +264,7 @@ theorem primeOrderedTripleIntegral_eq (A B : ℝ) (f : ℝ → ℝ → ℝ → �
   intro c _
   ring
 
-theorem primeOrderedTripleSum_self {R A : ℝ} (hR : 1 < R)
-    (f : ℝ → ℝ → ℝ → ℝ) :
-    primeOrderedTripleSum R A A f = 0 := by
-  unfold primeOrderedTripleSum
-  apply sum_eq_zero
-  intro p₁ hp₁
-  have hR0 : 0 ≤ R := by linarith
-  have hp₁' := (mem_primesIcc (rpow_nonneg hR0 _)).mp hp₁
-  apply sum_eq_zero
-  intro p₂ hp₂
-  have hp₂' := (mem_primesIoc (rpow_nonneg hR0 _)).mp hp₂
-  exact False.elim (not_lt_of_ge (hp₂'.2.2.trans hp₁'.2.1) hp₂'.2.1)
 
-theorem primeOrderedTripleIntegral_self (A : ℝ) (f : ℝ → ℝ → ℝ → ℝ) :
-    primeOrderedTripleIntegral A A f = 0 := by
-  simp only [primeOrderedTripleIntegral, intervalIntegral.integral_same]
 
 /-- Uniform ordered three-prime quadrature, with an actual strict finite prime
 carrier and the actual iterated integral. The only hypotheses on the entire

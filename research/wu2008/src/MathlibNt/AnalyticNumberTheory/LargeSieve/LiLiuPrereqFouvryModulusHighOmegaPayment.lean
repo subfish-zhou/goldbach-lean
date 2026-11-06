@@ -86,34 +86,6 @@ theorem betaClean_modulusHighOmega_signedError_dyadic_log_payment (i k j A : ℕ
       mul_le_mul_of_nonneg_left hpay (by linarith)
     _ = _ := by ring
 
-/-- Original beta, with an explicit additional term covering divisor indices
-and `m*n=a`. No exponential cutoff gain is asserted for that additional term. -/
-theorem modulusHighOmega_eventually_signedError_bound (i k j : ℕ)
-    {δ : ℝ} (hδ : 0 < δ) :
-    ∀ᶠ x : ℝ in atTop, ∀ M T L : ℝ,
-      1 ≤ M → 1 ≤ T → 1 ≤ L → x = 4 * M * T → L ≤ x →
-      ∀ S N Q : Finset ℕ,
-      (∀ m ∈ S, M ≤ (m : ℝ) ∧ (m : ℝ) ≤ 2 * M) →
-      (∀ n ∈ N, T ≤ (n : ℝ) ∧ (n : ℝ) ≤ 2 * T) →
-      Q ⊆ Ioc 0 ⌊L⌋₊ →
-      ∀ α β c : ℕ → ℝ,
-      (∀ m ∈ S, |α m| ≤ (fouvryTau i m : ℝ)) →
-      (∀ n ∈ N, |β n| ≤ (fouvryTau k n : ℝ)) →
-      (∀ q ∈ Q, |c q| ≤ (fouvryTau j q : ℝ)) →
-      ∀ a : ℤ, a ≠ 0 → |(a : ℝ)| ≤ x →
-      ∀ ξ : ℝ, (∀ q ∈ Q, c q ≠ 0 → ξ < (q.primeFactors.card : ℝ)) →
-      |signedError S N Q α β c a| ≤
-        6 * (2 : ℝ) ^ (-ξ) * x *
-          (1 + Real.log (2 * x)) ^ modulusHighOmegaLogExponent i k j +
-        4 * (M + L) * x ^ (3 * δ) := by
-  filter_upwards [eventually_ge_atTop (1 : ℝ),
-    betaPayment_eventually_signedError_bound i k j hδ] with x hx hdiv
-  intro M T L hM hT hL hscale hLx S N Q hS hN hQ α β c hα hβ hc a ha hax ξ hω
-  rw [signedError_eq_clean_add_divisorPart]
-  exact (abs_add_le _ _).trans (add_le_add
-    (betaClean_modulusHighOmega_signedError_dyadic_bound i k j hM hT hx hscale hLx
-      S N Q hS hN hQ α β c hα hβ hc a hax ξ hω)
-    (hdiv M T L hM hT hL hscale hLx S N Q hS hN hQ α β c hα hβ hc a ha hax))
 
 /-- Genuine original-beta payment under the C.2 scale restrictions.
 All orders may be zero, and one threshold works for every changing residue

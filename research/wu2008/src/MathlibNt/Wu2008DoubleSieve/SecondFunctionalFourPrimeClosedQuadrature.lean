@@ -173,8 +173,6 @@ theorem closedPrimeK_rows (g : Row → ℝ) (R phi : ℝ) :
 noncomputable def closedPrimeK16 (R c e phi : ℝ) : ℝ :=
   closedPrimeK (D16 c e) R phi
 
-theorem closedPrimeK16_nonneg {R : ℝ} (hR : 1 < R) (c e phi : ℝ) :
-    0 ≤ closedPrimeK16 R c e phi := closedPrimeK_nonneg _ hR phi
 
 theorem K16_mask_literal {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
     K16 c e phi = ∫ t in continuousCube 4,
@@ -187,8 +185,6 @@ theorem K16_mask_literal {b c e f : ℝ} (hp : CompactParameters b c e f) (phi :
 noncomputable def closedPrimeK17 (R c e f phi : ℝ) : ℝ :=
   closedPrimeK (D17 c e f) R phi
 
-theorem closedPrimeK17_nonneg {R : ℝ} (hR : 1 < R) (c e f phi : ℝ) :
-    0 ≤ closedPrimeK17 R c e f phi := closedPrimeK_nonneg _ hR phi
 
 theorem K17_mask_literal {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
     K17 c e f phi = ∫ t in continuousCube 4,
@@ -201,8 +197,6 @@ theorem K17_mask_literal {b c e f : ℝ} (hp : CompactParameters b c e f) (phi :
 noncomputable def closedPrimeK18 (R c e f phi : ℝ) : ℝ :=
   closedPrimeK (D18 c e f) R phi
 
-theorem closedPrimeK18_nonneg {R : ℝ} (hR : 1 < R) (c e f phi : ℝ) :
-    0 ≤ closedPrimeK18 R c e f phi := closedPrimeK_nonneg _ hR phi
 
 theorem K18_mask_literal {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
     K18 c e f phi = ∫ t in continuousCube 4,
@@ -215,8 +209,6 @@ theorem K18_mask_literal {b c e f : ℝ} (hp : CompactParameters b c e f) (phi :
 noncomputable def closedPrimeK19 (R b c e f phi : ℝ) : ℝ :=
   closedPrimeK (D19 b c e f) R phi
 
-theorem closedPrimeK19_nonneg {R : ℝ} (hR : 1 < R) (b c e f phi : ℝ) :
-    0 ≤ closedPrimeK19 R b c e f phi := closedPrimeK_nonneg _ hR phi
 
 theorem K19_mask_literal {b c e f : ℝ} (hp : CompactParameters b c e f) (phi : ℝ) :
     K19 b c e f phi = ∫ t in continuousCube 4,

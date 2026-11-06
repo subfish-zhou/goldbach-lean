@@ -63,26 +63,5 @@ theorem wu_signed_rosser_remainder_relative (k L : ℕ) {δ ε : ℝ}
     _ = ε * (c * (N : ℝ) / Real.log N ^ (5 * k + 2)) := by ring
     _ ≤ _ := mul_le_mul_of_nonneg_left hT hε.le
 
-/-- Relative payment at the actual common level, with its support
-restriction discharged from the literal source boxes. -/
-theorem wu_common_level_remainder_relative (k L : ℕ) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hε : 0 < ε) :
-    ∃ N0 : ℕ, ∀ N : ℕ, N0 ≤ N →
-      ∀ i : ℕ, i ≤ k → ∀ Δ : ℝ,
-        1 + Real.log (N : ℝ) ^ (-4 : ℝ) ≤ Δ →
-        Δ < 1 + 2 * Real.log (N : ℝ) ^ (-4 : ℝ) →
-        ∀ V : Fin i → ℝ, (∀ j, (N : ℝ) ^ (δ ^ (k + 1)) ≤ V j) →
-          boxSquaredPrefixes ((N : ℝ) ^ (1 / 2 - δ)) V →
-          ∀ upper : Fin L → Bool, ∀ z : Fin L → ℕ → ℝ,
-          |∑ l, convolutionRosserRemainder N (convolutionWuWindows N Δ V)
-            (upper l) (fun _ => wuCommonRosserLevel N δ V) (z l)| ≤
-              ε * boxTheta N ((N : ℝ) ^ (1 / 2 - δ))
-                (convolutionWuWindows N Δ V) := by
-  obtain ⟨N0, h⟩ := wu_signed_rosser_remainder_relative k L hδ hδhi hε
-  refine ⟨N0, ?_⟩
-  intro N hN i hik Δ hlo hhi V hV hprefix upper z
-  apply h N hN i hik Δ hlo hhi V hV hprefix upper
-  intro _l d hd
-  exact wuCommonRosserLevel_le_combined hd
 
 end Wu2008DoubleSieve

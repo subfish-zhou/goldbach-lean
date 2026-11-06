@@ -152,25 +152,6 @@ theorem gamma6Gain_integral_eq {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
   intro t ht
   exact gamma6Gain_inner_eq (by simpa only [uIcc_of_le gamma6Base_constants.2.1.le] using ht)
 
-theorem gamma6Gain_integral_bounds {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    0 ≤ gamma6GainIntegral δ ∧ gamma6GainIntegral δ ≤ gamma6BaseC6 := by
-  constructor
-  · rw [gamma6Gain_integral_eq hδ hδhi]
-    exact integral_nonneg (fun v => (gamma6Gain_kernel_bounds hδ hδhi v).1)
-  · apply intervalIntegral.integral_mono_on gamma6Base_constants.2.1.le
-      (gamma6Gain_outer_integrable hδ hδhi)
-      (gamma6Base_outer_integrable le_rfl gamma6Base_constants.2.1.le le_rfl le_rfl
-        gamma6Base_constants.2.2.2.1.le le_rfl)
-    intro t ht
-    apply intervalIntegral.integral_mono_on gamma6Base_constants.2.2.2.1.le
-      (gamma6Gain_inner_integrable hδ hδhi ht)
-      (gamma6Base_inner_integrable ht.1 ht.2 le_rfl gamma6Base_constants.2.2.2.1.le le_rfl)
-    intro u hu
-    rw [← gamma6Gain_kernel_eq_literal ht hu, gamma6GainKernel,
-      Set.indicator_of_mem (show (t,u) ∈ gamma6GainRegion from ⟨ht,hu⟩),
-      ← gamma6Gain_smooth_eq ht hu]
-    exact (mul_le_mul_of_nonneg_right (gamma5Gain_H_bounds hδ hδhi _).2
-      (gamma5Gain_smooth_bounds _).1).trans_eq (one_mul _)
 
 theorem gamma6Gain_rectangle_inner_approx (r : Gamma6GainRectangle) {ε : ℝ} (hε : 0 < ε) :
     ∃ τ : ℝ, 0 < τ ∧ r.A + τ < r.B - τ ∧ r.C + τ < r.D - τ ∧

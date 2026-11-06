@@ -104,30 +104,6 @@ lemma chen1973_natCast_zmod_eq_one_iff
   · intro h
     exact ((Nat.modEq_iff_dvd' (n := p) (a := 1) (b := m) (by omega)).mpr h).symm
 
-/-- Exact one-prime magnitude in the order used by Chen. -/
-theorem chen1973_prime_characterSum_norm
-    {p m : ℕ} (hp : p.Prime) (hodd : Odd p) (hm : 0 < m)
-    (hmp : Nat.Coprime m p) :
-    ‖chen1973Lemma4CharacterSum p m‖ = chen1973Lemma4LocalMagnitude p m := by
-  rw [chen1973_prime_characterSum_eq hp hodd hmp]
-  have hcong := chen1973_natCast_zmod_eq_one_iff (m := m) hp hm
-  by_cases hz : (m : ZMod p) = 1
-  · have hpm : p ∣ m - 1 := hcong.mp hz
-    rw [if_pos hz]
-    unfold chen1973Lemma4LocalMagnitude
-    rw [if_pos hpm, Nat.totient_prime hp]
-    have hp2 : 2 ≤ p := hp.two_le
-    have hcast : ((p - 1 : ℕ) : ℂ) - 1 = ((p - 2 : ℕ) : ℂ) := by
-      rw [Nat.cast_sub hp.one_le, Nat.cast_sub hp2]
-      push_cast
-      ring
-    rw [hcast]
-    simp
-  · have hpm : ¬p ∣ m - 1 := fun h => hz (hcong.mpr h)
-    rw [if_neg hz]
-    unfold chen1973Lemma4LocalMagnitude
-    rw [if_neg hpm]
-    simp
 
 /-- The product of the prime factors of squarefree `k` which divide `n` is
 exactly `gcd k n`. -/
@@ -159,24 +135,5 @@ theorem chen1973_localMagnitude_product_le_selected
       exact Nat.sub_le p 2
     · simp [chen1973Lemma4LocalMagnitude, hpm]
 
-/-- The elementary last line of Chen's proof.  The premise is the exact finite
-CRT reindexing asserted by the two preceding displayed equalities on p. 115,
-not a proposition-valued black box. -/
-theorem chen1973_lemma4_of_squarefree_local_factorization
-    {k m : ℕ} (_hkOdd : Odd k) (hkSq : Squarefree k)
-    (hm : 0 < m) (_hmk : Nat.Coprime m k) (hm1 : m ≠ 1)
-    (hfactor : ‖chen1973Lemma4CharacterSum k m‖ =
-      ∏ p ∈ k.primeFactors, chen1973Lemma4LocalMagnitude p m) :
-    ‖chen1973Lemma4CharacterSum k m‖ ≤ (Nat.gcd (m - 1) k : ℝ) := by
-  rw [hfactor]
-  norm_cast
-  rw [Nat.gcd_comm]
-  have hmgt : 1 < m := by omega
-  calc
-    (∏ p ∈ k.primeFactors, chen1973Lemma4LocalMagnitude p m) ≤
-        ∏ p ∈ k.primeFactors.filter (· ∣ m - 1), p :=
-      chen1973_localMagnitude_product_le_selected k m
-    _ = k.gcd (m - 1) :=
-      chen1973_prod_selected_primeFactors_eq_gcd hkSq (by omega)
 
 end AnalyticNumberTheory.LargeSieve

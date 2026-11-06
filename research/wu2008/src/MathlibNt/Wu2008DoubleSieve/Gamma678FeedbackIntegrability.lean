@@ -119,16 +119,5 @@ theorem weighted_integrable (j : Kind) {H : ℝ → ℝ} {M : ℝ}
     ((hm.comp measurable_fst).mul (masked_measurable j)).aestronglyMeasurable (M := 100 * M)
   exact Filter.Eventually.of_forall (fun p => weighted_bound j hM hb p.1 p.2)
 
-theorem masked_row_integrable (j : Kind) (v : ℝ) : Integrable (masked j v) := by
-  have hs : Function.support (masked j v) ⊆ Icc a b := by
-    intro t ht
-    exact (masked_support j (a := (v, t)) ht).2
-  apply (integrableOn_iff_integrable_of_support_subset hs).mp
-  apply Measure.integrableOn_of_bounded isCompact_Icc.measure_lt_top.ne
-    ((masked_measurable j).comp (measurable_const.prodMk measurable_id)).aestronglyMeasurable (M := 100)
-  exact Filter.Eventually.of_forall (fun t => by
-    change ‖masked j v t‖ ≤ 100
-    rw [Real.norm_eq_abs, abs_of_nonneg (masked_bounds j v t).1]
-    exact (masked_bounds j v t).2)
 
 end Wu2008DoubleSieve.Gamma678Feedback

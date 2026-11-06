@@ -85,19 +85,6 @@ lemma qD_mul_eq_short_minus
   simp only [perturbation]
   ring
 
-lemma qD_mul_eq_at_plus_boundary
-    {H : Section13HatLayers} {β D d Δ : ℝ}
-    (hH : Section13HatContract H β) :
-    qD H ErrorSign.minus D d Δ (β + 1) * (β + 1) =
-      β * perturbation D d 1 β *
-        ((β + 1) / β) ^ (1 + Δ) := by
-  have ht : 1 < β + 1 := by linarith [hH.beta_gt_one]
-  rw [← equation14_15 H ErrorSign.minus D d Δ (β + 1) ht]
-  rw [lambda_eq_perturb_mul_weightedHat]
-  rw [show β + 1 - 1 = β by ring]
-  rw [hH.initial_minus β (by linarith [hH.beta_gt_one]) le_rfl]
-  simp only [perturbation]
-  ring
 
 lemma qD_mul_antitoneOn_short_minus
     {H : Section13HatLayers} {β D d Δ τ σ ρ : ℝ}

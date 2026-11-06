@@ -540,26 +540,6 @@ theorem
         add_nonneg
           (LinearSieve.upperRosserBoundaryMassAux_nonneg 1 haPos.le) hρ.le
 
-/-- Compatibility specialization of the depth-one comparison to the
-traditional one-sixth screen. -/
-theorem
-    exists_upperRosserBoundaryChainsFixedDepthDensity_one_le_boundaryMassAux_add
-    (K ρ : ℝ) (hK : 1 ≤ K) (hρ : 0 < ρ) :
-    ∃ z₀ : ℝ, 2 ≤ z₀ ∧
-      ∀ (S : BoundingSieve) (z Δ s b : ℝ) (q : ℕ) (P : Finset ℕ),
-        z₀ ≤ z → 0 < Δ → HasDimensionOneLocalProductBound S K →
-        s = Real.log Δ / Real.log z →
-        q.Prime → q ∉ P → P ⊆ S.prodPrimes.primeFactors →
-        (∀ p ∈ P, q ≤ p) →
-        (∀ p ∈ P, Real.log p / Real.log z < b) →
-        1 / 6 ≤ Real.log q / Real.log z → b ≤ 1 →
-        LinearSieve.upperRosserBoundaryChainsFixedDepthDensity
-            (fun p => S.nu p / (1 - S.nu p))
-            (Nat.floor Δ + 1) q P 1 ≤
-          LinearSieve.upperRosserBoundaryMassAux 1 s
-            (Real.log q / Real.log z) b + ρ :=
-  exists_upperRosserBoundaryChainsFixedDepthDensity_one_le_boundaryMassAux_add_screened
-    K ρ (1 / 6) hK hρ (by norm_num) (by norm_num)
 
 /-- Above a fixed cutoff depending only on the local-product constant and a
 positive screen, the residual-error factor is uniformly bounded. -/

@@ -437,15 +437,6 @@ theorem liuSingularSeriesTail_le_one (z : ℕ) :
   exact (div_le_one (liuUniversalProductTruncated_pos z)).2
     (liuUniversalProduct_le_truncated z)
 
-theorem tendsto_liuSingularSeriesTail_one :
-    Filter.Tendsto liuSingularSeriesTail Filter.atTop (nhds 1) := by
-  have hc : Filter.Tendsto (fun _ : ℕ => liuUniversalProduct) Filter.atTop
-      (nhds liuUniversalProduct) := tendsto_const_nhds
-  have h := hc.div tendsto_liuUniversalProductTruncated liuUniversalProduct_ne_zero
-  change Filter.Tendsto
-    ((fun _ : ℕ => liuUniversalProduct) / liuUniversalProductTruncated)
-      Filter.atTop (nhds 1)
-  simpa only [div_self liuUniversalProduct_ne_zero] using h
 
 theorem liuSingularSeriesTruncatedAtN_eq_div_tail
     (N : ℕ) (hN : 0 < N) :

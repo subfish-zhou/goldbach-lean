@@ -115,11 +115,6 @@ theorem hasDerivAt_jet (A B : ℝ) (js : List (Fin 5)) (m x : Point)
           ((ih (m + phaseB)).const_mul (coeffB B i)) using 1
     all_goals rfl
 
-theorem jet_append_eq_deriv (A B : ℝ) (js : List (Fin 5)) (m x : Point)
-    (j : Fin 5) :
-    jet A B (js ++ [j]) m x =
-      deriv (fun t => jet A B js m (Function.update x j t)) (x j) :=
-  (hasDerivAt_jet A B js m x j).deriv.symm
 
 def logBox (x : Point) : Prop :=
   ∀ i, 0 ≤ x i ∧ x i ≤ Real.log 2

@@ -178,25 +178,6 @@ theorem J8_eq_pairInner : J8 = ∫ t in alpha..(1 / 3), pairInner pairLower8 t /
   rw [uIcc_of_le (classical_parameters.2.1.le.trans classical_parameters.2.2.le)] at ht
   exact (pairInner_div_eq_slice pairLower8 t (by dsimp [pairLower8, pairTop]; linarith [ht.2])).symm
 
-/-- The regular extension used by outer quadrature is the original seventh
-logarithmic weight on its actual interval. -/
-theorem pairInner7_eq_log {t : ℝ} (ht : t ∈ Icc sigma (1 / 3 : ℝ)) :
-    pairInner pairLower7 t = log ((1 - 2 * t) / t) / (1 - t) := by
-  have ht0 : 0 < t := (classical_parameters.1.trans classical_parameters.2.1).trans_le ht.1
-  have hlow : pairLower7 t = t := max_eq_left (by
-    have hs : (1 / 10 : ℝ) ≤ sigma := by norm_num [sigma, alpha]
-    exact hs.trans ht.1)
-  have he := pairInner_div_eq_slice pairLower7 t
-    (by rw [hlow]; dsimp [pairTop]; linarith [ht.2])
-  rw [hlow] at he
-  change pairInner pairLower7 t / t =
-    ∫ v in t..((1-t)/2), classicalKernel t v at he
-  rw [seventh_slice ht] at he
-  have halg : log ((1 - 2 * t) / t) / (t * (1 - t)) =
-      (log ((1 - 2 * t) / t) / (1 - t)) / t := by
-    rw [div_div, mul_comm (1-t) t]
-  rw [halg] at he
-  exact (div_left_inj' ht0.ne').mp he
 
 /-- The eighth extension likewise agrees with its literal logarithmic weight. -/
 theorem pairInner8_eq_log {t : ℝ} (ht : t ∈ Icc alpha (1 / 3 : ℝ)) :

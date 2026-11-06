@@ -209,36 +209,7 @@ theorem abs_liuMainNoncoprimeSum_liuWeight_mod_le_abs_main_sum_of_dvd_paperQStyl
  · intro r hr hrd
    exact (prime_le_and_not_dvd_of_dvd_paperQStyleModulus hd hr hrd).2
 
-/-- **Proxy specialization.** Exact finite `R₁` majorant using ANT's historical
-`x / log x` model. This is not a theorem about the paper's true `li`. -/
-theorem panDistributionNoncoprimeMajorant_liuWeight_mod_eq_abs_li_sum_of_dvd_paperQStyleModulus
-    (N z w y Y X d : ℕ) (hwy : w ≤ y)
-    (hd : d ∣ paperQStyleModulus N w) :
-    AnalyticNumberTheory.Sieve.panDistributionNoncoprimeMajorant
-        Y X d (N % d) (liuWeight N z y) =
-      ∑ p ∈ (liuWeightPairs N z y).filter
-          (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-        |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
- simpa [← liuMainNoncoprimeMajorant_proxy] using
-   liuMainNoncoprimeMajorant_liuWeight_mod_eq_abs_main_sum_of_dvd_paperQStyleModulus
-     AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y Y X d hwy hd
 
-/-- **Proxy specialization.** Signed finite `R₁` bound using ANT's historical
-`x / log x` model. Its type exhibits `N`, independent `z,w,y`, and the
-hypothesis `d ∣ Q(N,w)`. -/
-theorem abs_panDistributionNoncoprimeSum_liuWeight_mod_le_abs_li_sum_of_dvd_paperQStyleModulus
-    (N z w y Y X d : ℕ) (hwy : w ≤ y)
-    (hd : d ∣ paperQStyleModulus N w) :
-    |AnalyticNumberTheory.Sieve.panDistributionNoncoprimeSum
-        Y X d (N % d) (liuWeight N z y)| ≤
-      ∑ p ∈ (liuWeightPairs N z y).filter
-          (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-        |AnalyticNumberTheory.Sieve.logarithmicIntegral
-          ((Y : ℝ) / (p.1 * p.2))| / Nat.totient d := by
-  simpa [← liuMainNoncoprimeSum_proxy] using
-    abs_liuMainNoncoprimeSum_liuWeight_mod_le_abs_main_sum_of_dvd_paperQStyleModulus
-      AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y Y X d hwy hd
 
 /-- The exact divisor index in Liu 2022, `main.tex` lines 296--300 (`eqn-r0`),
 using the explicit non-strict `paperQStyleModulus` convention. In particular,
@@ -334,12 +305,6 @@ theorem paperQStyleSourceR1Majorant_eq_abs_main_sum
             |main ((N : ℝ) / (p.1 * p.2))| / Nat.totient d) := by
   exact paperQStyleMainR1Majorant_eq_abs_main_sum main N z w y D N hwy
 
-/-- Source-facing outer triangle bound with `X = N`. -/
-theorem abs_paperQStyleSourceR1SignedSum_le_majorant
-    (main : ℝ → ℝ) (N z w y D : ℕ) :
-    |paperQStyleSourceR1SignedSum main N z w y D| ≤
-      paperQStyleSourceR1Majorant main N z w y D :=
-  abs_paperQStyleMainR1SignedSum_le_majorant main N z w y D N
 
 /-! ## Reduction under a paper-li upper model -/
 
@@ -467,31 +432,6 @@ noncomputable def liuSourceR1NestedPairReciprocalSum (N d : ℕ) : ℝ :=
   ∑ p₁ ∈ liuSourceR1P₁Range N d,
     ∑ p₂ ∈ liuSourceR1P₂Range N p₁, 1 / ((p₁ : ℝ) * p₂)
 
-/-- Exact reindexing of the retained pair sum into Liu's nested source ranges.
-The redundant `p₁*p₂ ≤ N` filter follows from the exact square-root condition. -/
-theorem paperQStyleR1PairReciprocalSum_source_eq_nested (N d : ℕ) :
-    paperQStyleR1PairReciprocalSum
-        N (liuSourceZ10 N) (liuSourceY3 N) d =
-      liuSourceR1NestedPairReciprocalSum N d := by
-  classical
-  unfold paperQStyleR1PairReciprocalSum liuWeightPairs
-    liuSourceR1NestedPairReciprocalSum liuSourceR1P₁Range liuSourceR1P₂Range
-  simp only [Finset.sum_filter]
-  change (∑ a ∈ range (N + 1) ×ˢ range (N + 1), _) = _
-  rw [Finset.sum_product]
-  apply Finset.sum_congr rfl
-  intro p₁ hp₁
-  by_cases h1 : p₁.Prime <;> by_cases hz : liuSourceZ10 N < p₁ <;>
-    by_cases hy1 : p₁ ≤ liuSourceY3 N <;> by_cases hd : p₁ ∣ d <;>
-    simp [LiuPairConditions, h1, hz, hy1, hd]
-  all_goals
-    apply Finset.sum_congr rfl
-    intro p₂ hp₂
-    by_cases h2 : p₂.Prime <;> by_cases hy2 : liuSourceY3 N < p₂ <;>
-      by_cases hs : p₁ * p₂ ^ 2 ≤ N <;> simp [h2, hy2, hs]
-    have hprod : p₁ * p₂ ≤ N := liuWeightSupport_le
-      ⟨(p₁, p₂), mem_liuWeightPairs.mpr ⟨h1, h2, hz, hy1, hy2, hs⟩, rfl⟩
-    simp [hprod]
 
 /-- The corrected rectangular source range: `p₁ > N^(1/10)` and
 `N^(1/3) < p₂ ≤ N^(9/20)`, with primality and `p₁ ∣ d` retained. -/
@@ -791,15 +731,6 @@ def PaperQStyleR1PairUniformBound
   0 ≤ M ∧ ∀ d ∈ paperQStyleR1Divisors N w D,
     paperQStyleR1PairReciprocalSum N z y d ≤ M
 
-/-- Every per-modulus pair reciprocal sum is nonnegative. -/
-lemma paperQStyleR1PairReciprocalSum_nonneg
-    (N z y d : ℕ) :
-    0 ≤ paperQStyleR1PairReciprocalSum N z y d := by
-  classical
-  unfold paperQStyleR1PairReciprocalSum
-  apply Finset.sum_nonneg
-  intro p hp
-  positivity
 
 /-- At the frozen source cutoffs and `D₂`, every per-modulus pair sum is bounded
 by `5 C₂ N^(-1/10)`. -/
@@ -1288,30 +1219,7 @@ theorem paperQStyleMainR1SignedSum_proxy
       paperQStyleOuterR1SignedSum N z w y D X := by
   rfl
 
-/-- **Proxy specialization.** Exact outer rewrite with ANT's `x / log x`
-compatibility model. It is not an identification with the paper's true `li`. -/
-theorem paperQStyleOuterR1Majorant_eq_abs_li_sum
-    (N z w y D X : ℕ) (hwy : w ≤ y) :
-    paperQStyleOuterR1Majorant N z w y D X =
-      ∑ d ∈ paperQStyleR1Divisors N w D,
-        (3 : ℝ) ^ d.primeFactors.card *
-          (∑ p ∈ (liuWeightPairs N z y).filter
-              (fun p => p.1 * p.2 ≤ X ∧ p.1 ∣ d),
-            |AnalyticNumberTheory.Sieve.logarithmicIntegral
-              ((N : ℝ) / (p.1 * p.2))| / Nat.totient d) := by
-  simpa [paperQStyleMainR1Majorant_proxy] using
-    paperQStyleMainR1Majorant_eq_abs_main_sum
-      AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y D X hwy
 
-/-- **Proxy specialization.** Outer triangle bound for the legacy signed finite
-sum. This does not assert a true-`li` model or any estimate from lines 304--319. -/
-theorem abs_paperQStyleOuterR1SignedSum_le_majorant
-    (N z w y D X : ℕ) (_hwy : w ≤ y) :
-    |paperQStyleOuterR1SignedSum N z w y D X| ≤
-      paperQStyleOuterR1Majorant N z w y D X := by
-  simpa [paperQStyleMainR1SignedSum_proxy, paperQStyleMainR1Majorant_proxy] using
-    abs_paperQStyleMainR1SignedSum_le_majorant
-      AnalyticNumberTheory.Sieve.logarithmicIntegral N z w y D X
 
 /-- The natural cutoff obtained by flooring the paper's real exponent
 `N^(1/4 - ε/2)`. -/

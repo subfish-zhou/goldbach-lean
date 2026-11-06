@@ -53,18 +53,7 @@ theorem apPrimePowerCorrection_le_global (y q l : ℕ) :
   · simp only [hmod, if_false]
     exact div_nonneg vonMangoldt_nonneg (nat_log_nonneg n)
 
-/-- Modulo one the progression restriction disappears exactly. -/
-theorem apPrimePowerCorrection_mod_one (y l : ℕ) :
-    apPrimePowerCorrection y 1 l = globalPrimePowerCorrection y := by
-  simp [apPrimePowerCorrection, globalPrimePowerCorrection, Nat.modEq_one]
 
-/-- The zero-modulus term in Liu's outer average is killed by its squared
-Möbius weight, independently of the residue convention modulo zero. -/
-theorem liuPanPrimePower_modulusWeight_zero :
-    ((((ArithmeticFunction.moebius 0 : ℤ) : ℝ) ^ 2) *
-     (3 : ℝ) ^ (0 : ℕ).primeFactors.card) = 0 := by
-  rw [ArithmeticFunction.moebius_eq_zero_of_not_squarefree not_squarefree_zero]
-  norm_num
 
 private theorem sum_not_prime_vonMangoldt_eq_psi_sub_theta (y : ℕ) :
     (∑ n ∈ range (y + 1), if n.Prime then 0 else Λ n) =
@@ -96,13 +85,6 @@ theorem globalPrimePowerCorrection_le_psi_sub_theta (y : ℕ) :
     _ = (Chebyshev.psi y - Chebyshev.theta y) / Real.log 2 := by
       rw [sum_not_prime_vonMangoldt_eq_psi_sub_theta]
 
-/-- The AP correction is bounded by the same Chebyshev tail, uniformly in the
-modulus and residue. -/
-theorem apPrimePowerCorrection_le_psi_sub_theta (y q l : ℕ) :
-    apPrimePowerCorrection y q l ≤
-      (Chebyshev.psi y - Chebyshev.theta y) / Real.log 2 :=
-  (apPrimePowerCorrection_le_global y q l).trans
-    (globalPrimePowerCorrection_le_psi_sub_theta y)
 
 /-- The global correction is nonnegative, including at `y = 0, 1`. -/
 theorem globalPrimePowerCorrection_nonneg (y : ℕ) :
@@ -132,15 +114,6 @@ theorem exists_globalPrimePowerCorrection_le_sqrt :
       dsimp [D]
       ring
 
-/-- Asymptotic form of the effective global correction bound. -/
-theorem globalPrimePowerCorrection_isBigO_sqrt :
-    globalPrimePowerCorrection =O[atTop]
-      (fun y : ℕ => Real.sqrt y) := by
-  rw [Asymptotics.isBigO_iff]
-  obtain ⟨C, hC, h⟩ := exists_globalPrimePowerCorrection_le_sqrt
-  refine ⟨C, Filter.Eventually.of_forall fun y => ?_⟩
-  simpa [Real.norm_eq_abs, abs_of_nonneg (globalPrimePowerCorrection_nonneg y),
-    abs_of_nonneg (Real.sqrt_nonneg _)] using h y
 
 /-! ## Lifting the global estimate through Liu's finite maxima -/
 
@@ -194,42 +167,6 @@ theorem liuPanPrimePowerSqrtSupport_source_eq_pairSqrtMass (N : ℕ) :
       · intro p hp
         rfl
 
-/-- Cauchy--Schwarz reduces the source pair square-root mass to the exact pair
-cardinality and the already controlled reciprocal pair mass. -/
-theorem liuPanPrimePowerPairSqrtMass_sq_le (N : ℕ) :
-    liuPanPrimePowerPairSqrtMass N ^ 2 ≤
-      (liuWeightPairs N (liuSourceZ10 N) (liuSourceY3 N)).card *
-        ((N : ℝ) * liuWeightPairReciprocalSum N) := by
-  classical
-  let P := liuWeightPairs N (liuSourceZ10 N) (liuSourceY3 N)
-  calc
-    liuPanPrimePowerPairSqrtMass N ^ 2 =
-        (∑ p ∈ P, (1 : ℝ) * Real.sqrt (N / (p.1 * p.2) : ℕ)) ^ 2 := by
-      simp [liuPanPrimePowerPairSqrtMass, P]
-    _ ≤ (∑ p ∈ P, (1 : ℝ) ^ 2) *
-        ∑ p ∈ P, (Real.sqrt (N / (p.1 * p.2) : ℕ)) ^ 2 :=
-      sum_mul_sq_le_sq_mul_sq P (fun _ => (1 : ℝ))
-        (fun p => Real.sqrt (N / (p.1 * p.2) : ℕ))
-    _ = (P.card : ℝ) *
-        ∑ p ∈ P, ((N / (p.1 * p.2) : ℕ) : ℝ) := by
-      simp only [one_pow, sum_const, nsmul_eq_mul, mul_one,
-        Real.sq_sqrt (Nat.cast_nonneg _)]
-    _ ≤ (P.card : ℝ) *
-        ∑ p ∈ P, (N : ℝ) / (p.1 * p.2 : ℕ) := by
-      apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg _)
-      apply sum_le_sum
-      intro p hp
-      exact Nat.cast_div_le
-    _ = (liuWeightPairs N (liuSourceZ10 N) (liuSourceY3 N)).card *
-        ((N : ℝ) * liuWeightPairReciprocalSum N) := by
-      simp only [P]
-      congr 1
-      unfold liuWeightPairReciprocalSum
-      rw [mul_sum]
-      apply sum_congr rfl
-      intro p hp
-      simp only [Nat.cast_mul]
-      ring
 
 theorem liuPanPrimePowerSqrtSupport_nonneg
     (y X : ℕ) (f : ℕ → ℝ) :
@@ -353,16 +290,6 @@ theorem liuMainPanPrimePowerSqrtSupport_eq_mul
     liuPanPrimePowerModulusWeightMass
   rw [sum_mul]
 
-/-- Source specialization of the exact factorization: the only remaining
-inputs are the modulus weight mass and Liu's pair square-root mass. -/
-theorem liuMainPanPrimePowerSqrtSupport_source_eq_mul
-    (N : ℕ) (B : ℝ) :
-    liuMainPanPrimePowerSqrtSupport N
-      (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) B =
-      liuPanPrimePowerModulusWeightMass N B *
-        liuPanPrimePowerPairSqrtMass N := by
-  rw [liuMainPanPrimePowerSqrtSupport_eq_mul,
-    liuPanPrimePowerSqrtSupport_source_eq_pairSqrtMass]
 
 theorem liuMainPanAPPrimePowerCorrection_average_le_sqrtSupport
     {C : ℝ} (hC : 0 ≤ C)
@@ -391,28 +318,5 @@ theorem liuMainPanAPPrimePowerCorrection_average_le_sqrtSupport
     _ = C * liuMainPanPrimePowerSqrtSupport N f B := by
       simp only [liuMainPanPrimePowerSqrtSupport, mul_sum, mul_left_comm]
 
-/-- An explicit bound for the remaining finite support functional is exactly
-the additional input needed to close the existing fixed-`N` correction bound. -/
-theorem LiuMainPanAPPrimePowerCorrectionBoundAt.of_sqrtSupport
-    {C K : ℝ} (hC : 0 ≤ C)
-    (hglobal : ∀ t : ℕ,
-      globalPrimePowerCorrection t ≤ C * Real.sqrt t)
-    {N : ℕ} {f : ℕ → ℝ} {A B : ℝ}
-    (hsupport :
-      liuMainPanPrimePowerSqrtSupport N f B ≤
-        K * N / Real.log N ^ A) :
-    LiuMainPanAPPrimePowerCorrectionBoundAt N f A B (C * K) := by
-  unfold LiuMainPanAPPrimePowerCorrectionBoundAt
-  calc
-    (∑ q ∈ range (panModulusCutoff N B + 1),
-      (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) *
-        (3 : ℝ) ^ q.primeFactors.card *
-        liuPanAPPrimePowerCorrectionMaxY N q N f) ≤
-        C * liuMainPanPrimePowerSqrtSupport N f B :=
-      liuMainPanAPPrimePowerCorrection_average_le_sqrtSupport
-        hC hglobal N f B
-    _ ≤ C * (K * N / Real.log N ^ A) :=
-      mul_le_mul_of_nonneg_left hsupport hC
-    _ = (C * K) * N / Real.log N ^ A := by ring
 
 end MathlibNt.SieveTheory.LiuWeight

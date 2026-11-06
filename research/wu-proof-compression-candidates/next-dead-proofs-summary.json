@@ -1,0 +1,19 @@
+{
+  "status": "LEXICAL_FIXED_POINT_AND_REFERENCE_ALGORITHM_AGREE_NOT_COMPILED_CENSUS_OR_ACCEPTANCE",
+  "manifest_sha256": "2f4b834f8e1c357b502218784e3e926d142e439a443817a143f821a53406ffc6",
+  "rounds_including_terminal_empty": 26,
+  "candidate_declarations": 2975,
+  "candidate_modules": 813,
+  "provisional_effective_lines": 74042,
+  "visibility": {
+    "private": 267,
+    "public": 2708
+  },
+  "first_16_rounds_match_original_rescanning_algorithm": true,
+  "consumer_files": 2075,
+  "archival_exclusions": 1405,
+  "opportunities_sha256": "3ca43c41c4e0369a1d69c09ea54a1066f1b4c76112dc611ee9235c22087f67ef",
+  "source_files_modified": false,
+  "lean_census_executed": false,
+  "warning": "This is a lexical model. The provisional line total is not an accepted reduction; actual compiled references and exact compiler ranges are still required."
+}

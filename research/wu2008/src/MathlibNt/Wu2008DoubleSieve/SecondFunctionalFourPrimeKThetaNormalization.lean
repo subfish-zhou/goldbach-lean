@@ -69,15 +69,6 @@ theorem sourceKTheta_sum (N : ℕ) (δ Δ : ℝ) {i : ℕ} (V : Fin i → ℝ)
   simp only [HighSourcePayload.theta, mul_sum]
   exact sum_comm
 
-/-- Explicit original mass, with the actual supported-d phi in every K. -/
-theorem sourceLegalKMass_literal (N : ℕ) (δ Δ : ℝ) {i : ℕ} (V : Fin i → ℝ)
-    (p : SecondFunctionalParameters) (j : Fin 4) :
-    sourceLegalKMass N δ Δ V p j =
-      ∑ d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V),
-        (convolutionCoeff (convolutionWuWindows N Δ V) d : ℝ) *
-          ((N:ℝ)/d/log ((N:ℝ)^(1/2-δ)/d)) *
-            legalK (1/p.kappa1) (1/p.kappa2) (1/p.kappa3) (1/p.s)
-              (omega3XPhi N d δ) j := rfl
 
 /-- No totient substitution, envelope, or normalized probability weights. -/
 theorem sourceKTheta_literal (N : ℕ) (δ Δ : ℝ) {i : ℕ} (V : Fin i → ℝ)
@@ -90,20 +81,6 @@ theorem sourceKTheta_literal (N : ℕ) (δ Δ : ℝ) {i : ℕ} (V : Fin i → �
           legalK (1/p.kappa1) (1/p.kappa2) (1/p.kappa3) (1/p.s)
             (omega3XPhi N d δ) j := rfl
 
-/-- Genuine support-weight nonnegativity and the original-Theta cap.
-This uses the same generic normalization API; the cap pays errors only. -/
-theorem sourceLegalK_mass_theta_bounds {i k N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (hN : 4 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V) (p : SecondFunctionalParameters)
-    (hp : p.MotherAdmissible) (hs : 2 ≤ p.s) (j : Fin 4) :
-    0 ≤ sourceLegalKMass N δ Δ V p j ∧
-      0 ≤ sourceKTheta N δ Δ V p j ∧
-      sourceKTheta N δ Δ V p j ≤ 10*(4:ℝ)^4 *
-        boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  exact ⟨HighSourcePayload.mass_nonneg hN hδ hδhi hb
-      (fun d _ => (sourceLegalK_bounds N d δ p hp hs j).1),
-    HighSourcePayload.theta_bounds hN hδ hδhi hb
-      (fun d _ => sourceLegalK_bounds N d δ p hp hs j)⟩
 
 /-- A single positive rho and threshold precede N, boxes, mother parameters and j.
 The fixed delta loss and original li/Theta weights are retained. The all-four

@@ -66,15 +66,6 @@ theorem reboxingAlpha_terminal_unique {q Δ s t : ℝ} {r n : ℕ}
     exact (not_lt_of_ge (hh.trans hr.1)) hn.2
   omega
 
-theorem reboxingAlpha_terminal_equal {q Δ s : ℝ} {r : ℕ}
-    (hq : 0 < q) (hΔ : 1 < Δ)
-    (hr : reboxingAlpha q Δ s r ≤ q ^ (1 / s) ∧
-      q ^ (1 / s) < reboxingAlpha q Δ s (r + 1)) : r = 0 := by
-  apply reboxingAlpha_terminal_unique hq hΔ hr
-  constructor
-  · simp [reboxingAlpha]
-  · simpa [reboxingAlpha] using
-      mul_lt_mul_of_pos_left hΔ (rpow_pos_of_pos hq (1 / s))
 
 /-- Exact, unique half-open membership. No nonzero-terminal assumption. -/
 theorem reboxingAlpha_partition {q Δ t x : ℝ} (hq : 0 < q) (hΔ : 1 < Δ)

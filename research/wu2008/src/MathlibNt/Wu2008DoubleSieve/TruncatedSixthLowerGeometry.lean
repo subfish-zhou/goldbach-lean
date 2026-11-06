@@ -78,25 +78,8 @@ theorem truncatedSixthLower_prefix_slack {δ x y : ℝ}
   obtain ⟨_, hx, _, _, hsum⟩ := h
   linarith
 
-theorem truncatedSixthLower_retained {δ x y : ℝ}
-    (hδ : 0 < δ) (h : truncatedSixthLowerRegion δ x y) :
-    x + y < truncatedSixthLowerLambda := by
-  have hs := h.2.2.2.2
-  unfold truncatedSixthLowerC at hs
-  unfold truncatedSixthLowerLambda
-  linarith
 
-theorem truncatedSixthLower_regions_disjoint (δ x y : ℝ) :
-    ¬(truncatedSixthLowerAdmissibleRegion δ x y ∧ truncatedSixthLowerWedge δ x y) :=
-  fun h => (not_lt_of_ge h.1.2) h.2.2
 
-theorem truncatedSixthLower_regions_cover (δ x y : ℝ) :
-    truncatedSixthLowerRegion δ x y ↔
-      truncatedSixthLowerAdmissibleRegion δ x y ∨ truncatedSixthLowerWedge δ x y := by
-  unfold truncatedSixthLowerAdmissibleRegion truncatedSixthLowerWedge
-  exact ⟨fun h => (le_or_gt y (truncatedSixthLowerC δ / 2)).elim
-    (fun hy => Or.inl ⟨h, hy⟩) (fun hy => Or.inr ⟨h, hy⟩),
-    fun h => h.elim And.left And.left⟩
 
 theorem truncatedSixthLower_depth_two {δ : ℝ}
     (hδ : 0 < δ) (hδhi : δ < 1 / 100) :

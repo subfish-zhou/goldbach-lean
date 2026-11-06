@@ -349,19 +349,6 @@ theorem tendsto_weightedPrimeReciprocalLogSum_const
   rw [hid]
   ring
 
-/-- A fixed finite linear combination of constant logarithmic cells converges
-to the same linear combination of logarithmic masses. -/
-theorem tendsto_finset_weightedPrimeReciprocalLogSum_const
-    {ι : Type*} (s : Finset ι) (c a b : ι → ℝ)
-    (ha : ∀ i ∈ s, 0 < a i) (hab : ∀ i ∈ s, a i < b i) :
-    Tendsto
-      (fun N : ℕ => ∑ i ∈ s,
-        weightedPrimeReciprocalLogSum (fun _ => c i) N (a i) (b i))
-      atTop
-      (nhds (∑ i ∈ s, c i * log (b i / a i))) := by
-  refine tendsto_finsetSum s ?_
-  intro i hi
-  exact tendsto_weightedPrimeReciprocalLogSum_const (ha i hi) (hab i hi)
 
 /-- Mertens' prefix with the common, scale-dependent term removed. -/
 private noncomputable def normalizedPrimeReciprocalPrefix
@@ -1290,69 +1277,7 @@ noncomputable def goldbachSieveProduct (N z : ℕ) : ℝ :=
   ((range z).filter (fun p => Nat.Prime p ∧ ¬ p ∣ N)).prod
     (fun p => 1 - 1 / ((p : ℝ) - 1))
 
-/-- Local logarithmic correction for an odd prime p ≥ 3:
-|log(1 - 1/(p-1)) + 1/(p-1)| ≤ 2/(p-1)². -/
-private lemma log_one_sub_prime_odd_bound {p : ℕ} (hp : p.Prime) (hp2 : p ≠ 2) :
-    |log (1 - 1 / ((p : ℝ) - 1)) + 1 / ((p : ℝ) - 1)| ≤ 2 / ((p : ℝ) - 1) ^ 2 := by
-  let t : ℝ := 1 / ((p : ℝ) - 1)
-  have hp3 : 3 ≤ p := by
-    have h2lt : 2 < p := by
-      have h2le : 2 ≤ p := hp.two_le
-      omega
-    omega
-  have ht0 : 0 < t := by
-    unfold t
-    have hpos : 0 < (p : ℝ) - 1 := by
-      have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-      linarith
-    exact div_pos one_pos hpos
-  have htle : t ≤ 1 / 2 := by
-    unfold t
-    have h2le : (2 : ℝ) ≤ (p : ℝ) - 1 := by
-      have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-      linarith
-    exact one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2) h2le
-  have hp1 : (p : ℝ) - 1 ≠ 0 := by
-    have : (3 : ℝ) ≤ p := by exact_mod_cast hp3
-    have : 0 < (p : ℝ) - 1 := by linarith
-    exact ne_of_gt this
-  have hsubst : |log (1 - 1 / ((p : ℝ) - 1)) + 1 / ((p : ℝ) - 1)| =
-      |log (1 - t) + t| := by
-    simp [t]
-  have hrhs : 2 * t ^ 2 = 2 / ((p : ℝ) - 1) ^ 2 := by
-    unfold t
-    field_simp [hp1]
-  rw [hsubst, ← hrhs]
-  exact log_one_sub_bound ht0 htle
 
-/-- Sieve-product upper bound: V(z, N) ≤ 1, since every factor lies in [0, 1].
-The factor at p = 2 can be zero when N is odd. -/
-theorem goldbachSieveProduct_le_one (N z : ℕ) :
-    goldbachSieveProduct N z ≤ 1 := by
-  unfold goldbachSieveProduct
-  exact Finset.prod_le_one
-    (fun (p : ℕ) hp => by
-      have hp' : p.Prime := (mem_filter.mp hp).2.1
-      have hp2 : 2 ≤ p := hp'.two_le
-      have hle : 1 / ((p : ℝ) - 1) ≤ 1 := by
-        have hpos : 0 < (p : ℝ) - 1 := by
-          have : (2 : ℝ) ≤ p := by exact_mod_cast hp2
-          linarith
-        rw [div_le_iff₀ hpos]
-        have : (1 : ℝ) ≤ (p : ℝ) - 1 := by
-          have : (2 : ℝ) ≤ p := by exact_mod_cast hp2
-          linarith
-        nlinarith
-      linarith)
-    (fun (p : ℕ) hp => by
-      have hp' : p.Prime := (mem_filter.mp hp).2.1
-      have hp2 : 2 ≤ p := hp'.two_le
-      have hpos : 0 < (p : ℝ) - 1 := by
-        have : (2 : ℝ) ≤ p := by exact_mod_cast hp2
-        linarith
-      have hnonneg : 0 ≤ 1 / ((p : ℝ) - 1) :=
-        div_nonneg zero_le_one (le_of_lt hpos)
-      exact sub_le_self (a := (1 : ℝ)) hnonneg)
 
 /-- **Sieve-product identity**: V(z,N) = Π_{p<z}(1-1/p) · 𝔖(N,z-1).
 
@@ -1441,103 +1366,6 @@ theorem sieveProduct_identity (N z : ℕ) (hz : 2 ≤ z) (hN : Even N) :
     Finset.prod_eq_one hF_pd
   rw [hLHS, hRHS, mul_one]
 
-/-- **Order of the sieve product**: there are c₁, c₂ > 0 such that,
-for every even N ≥ 4 and z ≥ 3,
-  c₁·𝔖(N,z-1)/log z ≤ V(z,N) ≤ c₂·𝔖(N,z-1)/log z.
-
-This follows directly from V = Π_{p<z}(1-1/p)·𝔖(N,z-1) and
-`primeProduct_asymptotic_order`, which gives Π_{p<z}(1-1/p) = Θ(1/log z). -/
-theorem sieveProduct_order :
-    ∃ c₁ c₂ : ℝ, 0 < c₁ ∧ ∀ N z : ℕ, 3 ≤ z → Even N → 4 ≤ N →
-      c₁ * SingularSeries.singularSeriesTruncated N (z - 1) / log z ≤
-        goldbachSieveProduct N z ∧
-      goldbachSieveProduct N z ≤
-        c₂ * SingularSeries.singularSeriesTruncated N (z - 1) / log z := by
-  obtain ⟨c₁0, c₂0, hc₁0, hPP⟩ := primeProduct_asymptotic_order
-  refine ⟨c₁0, 2 * c₂0, hc₁0, ?_⟩
-  intro N z hz hN hN4
-  have h1z : 1 ≤ z := by omega
-  have hz2 : 2 ≤ z - 1 := by omega
-  have hz1 : 1 ≤ z - 1 := by omega
-  have hz3 : (3 : ℝ) ≤ z := by exact_mod_cast (by omega : 3 ≤ z)
-  have hlogz : 0 < log z := Real.log_pos (by linarith : (1 : ℝ) < z)
-  have hz1r : (1 : ℝ) < (z : ℝ) - 1 := by linarith
-  have hcast : ((z - 1 : ℕ) : ℝ) = (z : ℝ) - 1 :=
-    by simpa using (Nat.cast_sub h1z)
-  have hlogz1 : 0 < log (z - 1) := by
-    exact Real.log_pos hz1r
-  have h𝔖 : 0 < SingularSeries.singularSeriesTruncated N (z - 1) :=
-    SingularSeries.singularSeriesTruncated_pos N (z - 1) hz1
-  have hP := hPP (z - 1) hz2
-  have hlelog1 : log (z - 1) ≤ log z := by
-    have hpos1 : 0 < (z : ℝ) - 1 := by linarith
-    have hle1 : (z : ℝ) - 1 ≤ (z : ℝ) := by linarith
-    exact (Real.log_le_log_iff hpos1 (by linarith : 0 < (z : ℝ))).2 hle1
-  have hlog_ratio : (1 / 2 : ℝ) * log z ≤ log (z - 1) := by
-    have hsqrt : Real.sqrt z ≤ (z : ℝ) - 1 := by
-      have hz1pos : 0 ≤ (z : ℝ) - 1 := by linarith
-      have hsq : (z : ℝ) ≤ ((z : ℝ) - 1) ^ 2 := by
-        have hdiff : ((z : ℝ) - 1) ^ 2 - (z : ℝ) =
-            ((z : ℝ) - 2) ^ 2 + ((z : ℝ) - 3) := by ring
-        have hnonneg : 0 ≤ ((z : ℝ) - 1) ^ 2 - (z : ℝ) := by
-          rw [hdiff]
-          have h1 : 0 ≤ ((z : ℝ) - 2) ^ 2 := sq_nonneg _
-          have h2 : 0 ≤ (z : ℝ) - 3 := by linarith
-          nlinarith
-        linarith
-      exact (Real.sqrt_le_iff).2 ⟨hz1pos, hsq⟩
-    have hlogsqrt : log (Real.sqrt z) = (1 / 2 : ℝ) * log z := by
-      rw [Real.log_sqrt (by exact_mod_cast (by omega : 0 ≤ z))]
-      ring
-    have hle : log (Real.sqrt z) ≤ log (z - 1) := by
-      have hpos1 : 0 < Real.sqrt z :=
-        Real.sqrt_pos.2 (by exact_mod_cast (by omega : 0 < z))
-      have hpos2 : 0 < (z : ℝ) - 1 := by linarith
-      exact (Real.log_le_log_iff hpos1 hpos2).2 hsqrt
-    rwa [hlogsqrt] at hle
-  have hid := sieveProduct_identity N z (by omega) hN
-  have hV_low : c₁0 * SingularSeries.singularSeriesTruncated N (z - 1) / log (z - 1) ≤
-      goldbachSieveProduct N z := by
-    rw [hid]
-    have hmul := mul_le_mul_of_nonneg_right hP.1 (le_of_lt h𝔖)
-    -- Normalize hmul : c₁0/log(z-1) · 𝔖 ≤ P·𝔖.
-    simpa [div_eq_mul_inv, hcast, mul_assoc, mul_left_comm, mul_comm] using hmul
-  have hV_up : goldbachSieveProduct N z ≤
-      c₂0 * SingularSeries.singularSeriesTruncated N (z - 1) / log (z - 1) := by
-    rw [hid]
-    have hmul := mul_le_mul_of_nonneg_right hP.2 (le_of_lt h𝔖)
-    simpa [div_eq_mul_inv, hcast, mul_assoc, mul_left_comm, mul_comm] using hmul
-  -- Replace log(z-1) by log z in the bounds.
-  have hA : c₁0 * SingularSeries.singularSeriesTruncated N (z - 1) / log z ≤
-      c₁0 * SingularSeries.singularSeriesTruncated N (z - 1) / log (z - 1) := by
-    have hnonneg : 0 ≤ c₁0 * SingularSeries.singularSeriesTruncated N (z - 1) :=
-      mul_nonneg (le_of_lt hc₁0) (le_of_lt h𝔖)
-    exact div_le_div_of_nonneg_left hnonneg hlogz1 hlelog1
-  have hB : c₂0 * SingularSeries.singularSeriesTruncated N (z - 1) / log (z - 1) ≤
-      (2 * c₂0) * SingularSeries.singularSeriesTruncated N (z - 1) / log z := by
-    -- 1/log(z-1) ≤ 2/log z
-    have hnonneg : 0 ≤ c₂0 * SingularSeries.singularSeriesTruncated N (z - 1) := by
-      -- c₂0 ≥ 0 follows from the primeProduct upper bound.
-      have hc20 : 0 ≤ c₂0 := by
-        have hb := hPP 2 (by norm_num)
-        have hlog2 : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-        have : (0 : ℝ) ≤ c₂0 / log 2 :=
-          (div_nonneg hc₁0.le hlog2.le).trans (hb.1.trans hb.2)
-        simpa using (le_div_iff₀ hlog2).mp this
-      exact mul_nonneg hc20 (le_of_lt h𝔖)
-    -- To get c₂0·𝔖/log(z-1) ≤ 2·c₂0·𝔖/log z, use 1/log(z-1) ≤ 2/log z,
-    -- which follows from log z ≤ 2·log(z-1).
-    have hdiv : (c₂0 * SingularSeries.singularSeriesTruncated N (z - 1)) / log (z - 1) ≤
-        (c₂0 * SingularSeries.singularSeriesTruncated N (z - 1)) / (log z / 2) := by
-      have hle : log z / 2 ≤ log (z - 1) := by linarith [hlog_ratio]
-      exact div_le_div_of_nonneg_left hnonneg (by linarith : 0 < log z / 2) hle
-    have hnorm : (c₂0 * SingularSeries.singularSeriesTruncated N (z - 1)) / (log z / 2) =
-        (2 * c₂0) * SingularSeries.singularSeriesTruncated N (z - 1) / log z := by
-      field_simp [hlogz.ne']
-    exact hdiv.trans (le_of_eq hnorm)
-  constructor
-  · exact hA.trans hV_low
-  · exact hV_up.trans hB
 
 /-! ## 4.5 Sums of 1/(p-1) over primes (for Selberg Lemma 2) -/
 
@@ -1755,12 +1583,6 @@ theorem primeCountingPNT_implies_prime_number_theorem (hPNT : PrimeCountingPNT) 
       mul_le_mul_of_nonneg_right hcx hscale
     _ = ε * (x : ℝ) / log x := by ring
 
-/-- π(x) ≥ 1 for x ≥ 2, since the prime 2 is counted. -/
-theorem primeCount_pos (x : ℕ) (hx : 2 ≤ x) : 0 < primeCount x := by
-  unfold primeCount
-  apply Finset.card_pos.mpr
-  use 2
-  simp [mem_filter, mem_range, hx, Nat.prime_two]
 
 /-- **Prime number theorem (PNT)**: π(x) ~ x / log x.
 

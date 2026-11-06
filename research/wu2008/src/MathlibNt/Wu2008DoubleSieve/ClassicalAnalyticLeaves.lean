@@ -101,16 +101,5 @@ theorem sixth_nonneg : 0 ≤ truncatedSixthLowerF6lin := by
       ((mul_nonneg (by norm_num) truncatedSixthLower_parameters.1.le).trans hb.2.2.1)
   · exact le_rfl
 
-/-- An unconditional analytic lower estimate for the two literal base terms. -/
-theorem base_log_lower :
-    24 * log (1127/200 : ℝ) + 8 * log (78/25 : ℝ) ≤
-      24 * wuLowerCoefficient (1/(2*truncatedSixthLowerAlpha)) +
-      8 * wuLowerCoefficient (1/(2*truncatedSixthLowerBeta)) := by
-  have h1 := lower_ge_log (s := 1/(2*truncatedSixthLowerAlpha)) (by
-    norm_num [truncatedSixthLowerAlpha])
-  have h2 := lower_ge_log (s := 1/(2*truncatedSixthLowerBeta)) (by
-    norm_num [truncatedSixthLowerBeta])
-  norm_num [truncatedSixthLowerAlpha, truncatedSixthLowerBeta] at h1 h2 ⊢
-  linarith
 
 end Wu2008DoubleSieve.ClassicalAnalyticLeaves

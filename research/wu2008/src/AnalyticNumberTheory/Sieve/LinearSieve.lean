@@ -538,20 +538,6 @@ def UniformJurkatRichertLowerBound (SP : ℕ → BoundingSieve)
             (fs (DN N / zN N) - η₀) -
           (SP N).errSum (fun _ => 1) ≤ (SP N).siftedSum
 
-/-- A uniform main-term estimate and nonnegative total mass imply
-the uniform sieve lower bound. -/
-theorem UniformJurkatRichertLowerBound_of_uniformMainTerm
-    (SP : ℕ → BoundingSieve) (zN DN : ℕ → ℝ) (fs : ℝ → ℝ)
-    (hmass : ∀ N : ℕ, 0 ≤ (SP N).totalMass)
-    (hmain : UniformJurkatRichertMainTerm SP zN DN fs) :
-    UniformJurkatRichertLowerBound SP zN DN fs := by
-  rcases hmain with ⟨N₀, η₀, hη₀, hN⟩
-  refine ⟨N₀, η₀, hη₀, ?_⟩
-  intro N hN₀ hEven
-  rcases hN N hN₀ hEven with ⟨muMinus, hmu, hbnd, hmainN⟩
-  refine ⟨muMinus, hmu, hbnd, ?_⟩
-  exact siftedSum_lower_bound_of_mainTerm (S := SP N) (fs := fs) (t := DN N / zN N)
-    (η := η₀) (muMinus := muMinus) (hmass := hmass N) hmu hbnd hmainN
 
 /-! ## 6. Application in Chen's theorem -/
 

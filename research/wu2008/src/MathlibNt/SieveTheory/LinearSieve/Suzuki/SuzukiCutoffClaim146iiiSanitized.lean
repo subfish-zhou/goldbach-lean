@@ -333,10 +333,6 @@ def SourceCutoffLogDomination
           max 1 (Real.log (1 + t ^ d / Real.log D)) ≤
         Real.log (Real.exp 1 * t)
 
-private lemma source_bridge_Qhat_rfl
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    (sign : ErrorSign) :
-    (section13_bridgeAtThree hH sign).Qhat = section13Qhat H := rfl
 
 private lemma source_bridge_K_opposite_rfl
     {H : Section13HatLayers} (hH : Section13HatSourceContract H)

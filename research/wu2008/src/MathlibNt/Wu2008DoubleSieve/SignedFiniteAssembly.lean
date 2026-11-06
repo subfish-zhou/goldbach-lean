@@ -162,29 +162,5 @@ theorem s3_delta2_exact_moving (N : ℕ) (z w u v V : ℝ)
   change _ = _ + _ - s3Upsilon11MissingMass N z w u V at hM
   omega
 
-theorem s3_delta2_exact_source_parameters {N : ℕ} {κ₁ κ₂ : ℝ}
-    (hN : 1 ≤ N) (hκ₁ : 1 / 18 ≤ κ₁) (hκ : κ₁ ≤ κ₂)
-    (hupper : 3 * κ₁ + κ₂ ≤ 1 / 2) (hparam : 3 * κ₁ - κ₂ ≤ 1 / 6) :
-    let z := (N : ℝ) ^ κ₁
-    let w := (N : ℝ) ^ κ₂
-    let u := (N : ℝ) ^ (1 / 2 - 3 * κ₁)
-    let v := (N : ℝ) ^ (1 / 3 : ℝ)
-    let V := (N : ℝ) ^ (1 / 2 - 2 * κ₁)
-    s3Delta2Quotient N z w u v +
-        s3FourSourceMajorant N (orderedTriples (primeWindow N z w)) +
-        s3Upsilon11Source N z w V =
-      s3RetainedTripleMass N z w u v +
-        s3FourModulusGain N (orderedTriples (primeWindow N z w)) +
-        s3FourModulusGain N (s3SecondRange N z w u) +
-        s3Upsilon11MissingMass N z w u V -
-        s3Upsilon11ExcessMass N z w u V -
-        s3RepeatedFirstPrimeMass N (orderedTriples (primeWindow N z w)) -
-        s3RepeatedFirstPrimeMass N (s3SecondRange N z w u) := by
-  apply s3_delta2_exact_moving
-  · apply Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast hN)
-    linarith
-  · apply Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast hN)
-    linarith
-  · exact s3ThirdRange_subset_source_triples hN hκ hparam
 
 end Wu2008DoubleSieve

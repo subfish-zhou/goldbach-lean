@@ -61,49 +61,7 @@ theorem gamma5Feedback_kernel_identity (v : ℝ) :
       simp only [gamma5FeedbackLegalKernel, if_neg hmid, gamma5FeedbackFullKernel,
         gamma5FeedbackLossKernel, if_neg hlow, mul_zero, sub_zero, heq]
 
-theorem gamma5Feedback_loss_bounds (v : ℝ) :
-    0 ≤ gamma5FeedbackLossKernel v ∧ gamma5FeedbackLossKernel v ≤ 20 := by
-  have hb := gamma5Feedback_full_legal_bounds v
-  have he := gamma5Feedback_kernel_identity v
-  constructor <;> linarith
 
-theorem gamma5Feedback_loss_integrable : Integrable gamma5FeedbackLossKernel := by
-  have he : gamma5FeedbackLossKernel =
-      fun v => (gamma5FeedbackFullKernel v - gamma5FeedbackLegalKernel v) / 5 := by
-    funext v
-    have := gamma5Feedback_kernel_identity v
-    linarith
-  rw [he]
-  exact (gamma5Feedback_full_integrable.sub gamma5Feedback_legal_integrable).div_const 5
 
-theorem gamma5Feedback_kernel_support :
-    Function.support gamma5FeedbackFullKernel ⊆ Icc gamma5FeedbackVm gamma5FeedbackVp ∧
-    Function.support gamma5FeedbackLegalKernel ⊆ Icc gamma5FeedbackVc gamma5FeedbackVp ∧
-    Function.support gamma5FeedbackLossKernel ⊆ Icc gamma5FeedbackVm gamma5FeedbackVe := by
-  have ho := gamma5Feedback_breakpoints
-  have hmc : gamma5FeedbackVm < gamma5FeedbackVc := ho.2.2.2.2.2.2.1
-  have hce : gamma5FeedbackVc < gamma5FeedbackVe := ho.2.2.2.2.2.2.2.1
-  have hef : gamma5FeedbackVe < gamma5FeedbackVf := ho.2.2.2.2.2.2.2.2.1
-  have hfp : gamma5FeedbackVf < gamma5FeedbackVp := ho.2.2.2.2.2.2.2.2.2.1
-  refine ⟨?_, ?_, ?_⟩
-  · intro v hv
-    by_contra hn
-    exact hv ((gamma5Feedback_full_slice v).symm.trans (gamma5Feedback_slice_outside hn))
-  · intro v hv
-    by_contra hn
-    have hn1 : ¬(gamma5FeedbackVc < v ∧ v < gamma5FeedbackVe) :=
-      fun h => hn ⟨h.1.le, by linarith [h.2]⟩
-    have hn2 : ¬(gamma5FeedbackVe ≤ v ∧ v ≤ gamma5FeedbackVf) :=
-      fun h => hn ⟨by linarith [h.1], h.2.trans hfp.le⟩
-    have hn3 : ¬(gamma5FeedbackVf < v ∧ v ≤ gamma5FeedbackVp) :=
-      fun h => hn ⟨by linarith [h.1], h.2⟩
-    exact hv (by simp only [gamma5FeedbackLegalKernel, if_neg hn1, if_neg hn2, if_neg hn3])
-  · intro v hv
-    by_contra hn
-    have hn1 : ¬(gamma5FeedbackVm ≤ v ∧ v ≤ gamma5FeedbackVc) :=
-      fun h => hn ⟨h.1, h.2.trans hce.le⟩
-    have hn2 : ¬(gamma5FeedbackVc < v ∧ v < gamma5FeedbackVe) :=
-      fun h => hn ⟨hmc.le.trans h.1.le, h.2.le⟩
-    exact hv (by simp only [gamma5FeedbackLossKernel, if_neg hn1, if_neg hn2])
 
 end Wu2008DoubleSieve

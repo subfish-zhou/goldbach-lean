@@ -41,25 +41,6 @@ theorem omega3Layer_prime_error_eq_profile {N q : ℕ} {δ s : ℝ}
   unfold omega3SieveAPCount omega3ProfileError
   rw [omega3Layer_prime_fibre_eq_profile he hepos, (omega3LayerLabel_mem he).2]
 
-theorem omega3SieveAPResidual_eq_layers {i N B q : ℕ} {δ s t : ℝ}
-    (W : Fin i → Finset ℕ)
-    (hB : ∀ e, (omega3LayerFibre (omega3CofactorLabels N δ s t W) e).card ≤ B)
-    (hpos : ∀ c ∈ omega3CofactorLabels N δ s t W, 0 < omega3CofactorValue c) :
-    let L := omega3CofactorLabels N δ s t W
-    omega3SieveAPResidual N δ s t W q =
-      ∑ j ∈ range B, ∑ e ∈ (omega3LayerSupport L j).filter (fun e => e.Coprime q),
-        omega3LayerCoefficient W L j e *
-          omega3ProfileError N q e (omega3LayerLower L j e) (omega3LayerUpper N δ s L j e) := by
-  dsimp only
-  rw [omega3SieveAPResidual_eq_common_layers N δ s t W B hB q]
-  apply sum_congr rfl
-  intro j _
-  unfold omega3LayerAPResidual
-  apply sum_congr rfl
-  intro e he
-  have he' := (mem_filter.mp he).1
-  have hlabel := omega3LayerLabel_mem he'
-  rw [omega3Layer_prime_error_eq_profile he' (hlabel.2 ▸ hpos _ hlabel.1)]
 
 theorem omega3SieveR1_le_layers {i N D B : ℕ} {δ s t Z : ℝ}
     (W : Fin i → Finset ℕ)

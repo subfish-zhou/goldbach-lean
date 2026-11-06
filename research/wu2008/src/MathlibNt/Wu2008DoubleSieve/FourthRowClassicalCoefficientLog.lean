@@ -117,9 +117,6 @@ theorem fourthRowClassical_J_integrable {A B : ℝ} (hAB : B ≤ A) (hB : 2 < B)
     have hp := fourthRowClassical_J_positive_arguments hAB hB hu
     exact mul_ne_zero hp.1.ne' hp.2.1.ne'
 
-theorem fourthRowClassical_equal_endpoints (A : ℝ) :
-    fourthRowClassicalTriangle A A = 0 ∧ fourthRowClassicalJ A A = 0 := by
-  simp [fourthRowClassicalTriangle, fourthRowClassicalJ]
 
 theorem fourthRowClassical_triangle_eq_log {A B : ℝ}
     (hAB : B ≤ A) (hB : 2 < B) :

@@ -29,23 +29,6 @@ theorem betaClean_highOmega_comm (β : ℕ → ℝ) (a : ℤ) (ξ : ℝ) :
   simp only [betaClean, betaHighOmega]
   split_ifs <;> rfl
 
-theorem BetaCoprimeSWFamily.betaLowOmega_clean
-    {ι : Type*} {κ k : ℕ} {T : ι → ℝ}
-    {N : ι → Finset ℕ} {β : ι → ℕ → ℝ}
-    (hSW : BetaCoprimeSWFamily κ T N β)
-    (hT : ∀ z, 1 ≤ T z)
-    (hN : ∀ z, N z ⊆ Ioc 0 ⌊2 * T z⌋₊)
-    (hβ : ∀ z, ∀ n ∈ N z, |β z n| ≤ (fouvryTau k n : ℝ))
-    {ε : ℝ} (hε : 0 < ε) :
-    BetaCoprimeSWFamily (κ + 1 + 1)
-      (fun z : BetaCleanIndex (fun w : BetaLowOmegaIndex T => T w.index) ε =>
-        T z.index.index)
-      (fun z => N z.index.index)
-      (fun z => MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaClean
-        (MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry.betaLowOmega
-          (β z.index.index) (highOmegaCutoff z.index.scale)) z.residue) :=
-  (hSW.betaLowOmega hT hN hβ).betaClean
-    (fun z n hn => (abs_betaLowOmega_le _ _ _).trans (hβ z.index n hn)) hε
 
 /-- Original beta needs neither a nondivisibility condition nor a high-omega
 vanishing condition. Every changing datum follows the common threshold. -/

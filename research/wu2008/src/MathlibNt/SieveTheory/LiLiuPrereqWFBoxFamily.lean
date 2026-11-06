@@ -91,20 +91,5 @@ theorem list_boxProduct_factors {ι : Type*} [DecidableEq ι]
     rw [prod_pow_list_count_of_subset _ right U hrightsub]
     exact hright
 
-theorem list_boxProduct_wellFactorable {ι : Type*} [DecidableEq ι]
-    (input : List ι) (B : ι → Finset ℕ) (U : ι → ℝ) {Q : ℝ} (hQ : 1 ≤ Q)
-    (hU : ∀ i ∈ input.toFinset, 0 ≤ U i)
-    (hB : ∀ i ∈ input.toFinset, ∀ p ∈ B i, p.Prime → (p : ℝ) ≤ U i)
-    (hdisj : ∀ ⦃i⦄, i ∈ input.toFinset → ∀ ⦃j⦄, j ∈ input.toFinset →
-      i ≠ j → Disjoint (B i) (B j))
-    (hprefix : PrefixSquareBound U Q input) :
-    WellFactorable (boxProduct input.toFinset B input.count) Q := by
-  have hfactors := fun Q₁ Q₂ hQ₁ hQ₂ hsplit =>
-    list_boxProduct_factors input B U hU hB hdisj hprefix
-      (Q₁ := Q₁) (Q₂ := Q₂) hQ₁ hQ₂ hsplit
-  refine ⟨hQ, boxProduct_boundedOne _ _ _ hdisj, ?_, hfactors⟩
-  obtain ⟨f, g, _, hf, _, hg, heq⟩ := hfactors Q 1 hQ le_rfl (mul_one Q)
-  rw [heq]
-  simpa only [mul_one] using supportedAt_mul hf hg (le_trans zero_le_one hQ)
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

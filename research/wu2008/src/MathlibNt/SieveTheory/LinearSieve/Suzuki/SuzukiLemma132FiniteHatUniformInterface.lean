@@ -77,20 +77,6 @@ theorem finiteSourceLayer_pred_le_uniform_oppositeHat
   rw [ErrorSign.ofDepth_pred_eq_opposite (by omega : 1 ≤ N)] at h
   exact h
 
-/-- Explicit moving-window packaging.  The bound does not acquire a new
-coefficient when `s` or the outer endpoint `σ` moves. -/
-theorem finiteSourceLayer_pred_le_uniform_oppositeHat_on_window
-    {H : Section13HatLayers}
-    (hbridge : Section13FiniteLayerHatUniform H) :
-    ∃ C : ℝ, 1 ≤ C ∧ ∀ (N : ℕ) (s σ : ℝ),
-      2 ≤ N →
-      2 ≤ s →
-      s ≤ σ →
-      s - 1 ∈ KappaOneModel.parityDomain 2 (N - 1) →
-      finiteSourceLayer 1 2 (N - 1) (s - 1) ≤
-        C * ((s - 1) * H.T (ErrorSign.ofDepth N).opposite (s - 1)) := by
-  obtain ⟨C, hC, h⟩ := finiteSourceLayer_pred_le_uniform_oppositeHat hbridge
-  exact ⟨C, hC, fun N s _σ hN hs _hsσ hdom => h N s hN hs hdom⟩
 
 
 end MathlibNt.SieveTheory

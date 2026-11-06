@@ -16,12 +16,6 @@ theorem effective_argument_antitone {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/
     apply div_le_div_of_nonneg_right (by linarith) (by norm_num [truncatedSixthLowerAlpha])
   exact wu_effective_upper_limit_mono hδ (by linarith) hs.1 harg ht.2
 
-/-- The whole original low interval is outside the imported positive seed domain. -/
-theorem low_argument_gt_three {δ t : ℝ} (hδhi : δ ≤ 1/100)
-    (ht : t ≤ (1/2-δ)/2) : 3 < argument δ t := by
-  apply (lt_div_iff₀ (by norm_num [truncatedSixthLowerAlpha])).mpr
-  norm_num [truncatedSixthLowerAlpha] at *
-  linarith
 
 noncomputable def kernel (δ t : ℝ) : ℝ :=
   wuImprovementLimit true δ (argument δ t) / (t*((1/2-δ)-t))
@@ -92,12 +86,6 @@ noncomputable def windowGain (δ : ℝ) : ℝ :=
 
 noncomputable def gainH34 (δ : ℝ) : ℝ := windowGain δ + windowGain δ
 
-theorem gainH34_eq (δ : ℝ) : gainH34 δ =
-    8 * ∫ t in truncatedSixthLowerAlpha..((1/2-δ)/2),
-      wuImprovementLimit true δ (((1/2-δ)-t)/truncatedSixthLowerAlpha) /
-        (t*((1/2-δ)-t)) := by
-  dsimp [gainH34,windowGain,kernel,argument]
-  ring
 
 theorem windowGain_nonneg {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) :
     0 ≤ windowGain δ := by
@@ -111,8 +99,6 @@ theorem windowGain_nonneg {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) :
       ((by norm_num [truncatedSixthLowerAlpha] : truncatedSixthLowerAlpha/2 ≤ truncatedSixthLowerAlpha).trans ht.1) ht.2
   exact mul_nonneg (by norm_num) hi
 
-theorem gainH34_nonneg {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) :
-    0 ≤ gainH34 δ := add_nonneg (windowGain_nonneg hδ hδhi) (windowGain_nonneg hδ hδhi)
 
 /-- This is the exact integral identity, not a count estimate. -/
 theorem low_integral_split {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) :

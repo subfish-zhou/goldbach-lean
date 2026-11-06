@@ -19,9 +19,6 @@ theorem coefficient_exact : Qoriginal = Qtwo+restoredDebit/4 := by
   unfold Qoriginal restoredDebit
   ring
 
-theorem Qtwo_le_original : Qtwo ≤ Qoriginal := by
-  rw [coefficient_exact]
-  linarith only [restoredDebit_nonneg]
 
 /-- Uniform small-delta payment, using only the existing classical/Psi limit
 and the paid H linear error. No continuity or monotonicity of H/h is asserted. -/

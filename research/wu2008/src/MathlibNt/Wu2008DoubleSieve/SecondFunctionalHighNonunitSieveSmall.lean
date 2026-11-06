@@ -53,20 +53,6 @@ theorem closedSmall_le_of_output_bound {i N : ℕ} {δ C Z : ℝ}
     _ = C*(⌊Z⌋₊ : ℝ) := by simp [mul_comm]
     _ ≤ C*Z := mul_le_mul_of_nonneg_left (Nat.floor_le hZ) hC
 
-/-- Explicit emptiness beyond N follows from the positive original product. -/
-theorem actual_output_fibre_empty {k i N ell : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V) (p : SecondFunctionalParameters)
-    (hp : p.MotherAdmissible) (high : Bool) {x : Profile}
-    (hx : x ∈ actualProfiles N δ p (convolutionWuWindows N Δ V) high) (hell : N ≤ ell) :
-    (actualFibre N δ p x).filter (fun q => N-cofactor x*q = ell) = ∅ := by
-  apply eq_empty_iff_forall_notMem.mpr
-  intro q hq
-  obtain ⟨hq,he⟩ := mem_filter.mp hq
-  have hpr : q.Prime := (mem_filter.mp hq).2.1
-  have hg := actual_profile_data hN hδ hδhi hb p hp high hx
-  have hpos : 0 < cofactor x*q := Nat.mul_pos hg.2.2.2.2.1 hpr.pos
-  omega
 
 /-- Joint actual endpoint: full fixed-e sigma, fixed outputs, closed Small, and both words.
 All source-box and mother-window conditions are supplied before the counting theorems.

@@ -151,22 +151,5 @@ theorem sourceFamily_pair_le_good_primeMass (k : ℕ) {δ ε : ℝ}
     (sourceFamily N δ Δ V p true).primeMass_coprime_split]
   linarith
 
-/-- The actual two nonunit sources reach the two good prime masses with one epsilon. -/
-theorem mother_source_pair_le_good_primeMass (k : ℕ) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → 4 ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s →
-        actualSource N δ p (convolutionWuWindows N Δ V) false +
-        actualSource N δ p (convolutionWuWindows N Δ V) true ≤
-          (sourceFamily N δ Δ V p false).coprimePart.primeMass +
-          (sourceFamily N δ Δ V p true).coprimePart.primeMass +
-          ε * boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  obtain ⟨T,hT,hm⟩ := sourceFamily_pair_le_good_primeMass k hδ hδhi hε
-  refine ⟨T,hT,?_⟩
-  intro N hN hN4 he i Δ V hb p hp hs
-  exact (add_le_add (mother_source_le_family p hp hs hN4 he hδ hδhi hb false)
-    (mother_source_le_family p hp hs hN4 he hδ hδhi hb true)).trans
-      (hm N hN i Δ V hb p hp)
 
 end Wu2008DoubleSieve.HighNonunit

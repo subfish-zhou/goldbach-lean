@@ -38,20 +38,6 @@ def actualVaughanRowsSquareLedger (N Q C u v : ℕ) : ℝ :=
       (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
       (highConductorSet N Q C)
 
-lemma actualVaughanRowsSquareLedger_nonneg (N Q C u v : ℕ) :
-    0 ≤ actualVaughanRowsSquareLedger N Q C u v := by
-  unfold actualVaughanRowsSquareLedger primitivePrefixSquareLedgerOn
-  have hledger (a : ℤ → ℂ) :
-      0 ≤ ∑ d ∈ highConductorSet N Q C,
-        ((d : ℝ) / (d.totient : ℝ)) *
-          ∑ ψ : PrimitiveCharacter d,
-            primitiveCharacterPrefixMaxSquare a 0 N d ψ := by
-    apply Finset.sum_nonneg
-    intro d hd
-    exact mul_nonneg (div_nonneg (by positivity) (by positivity))
-      (Finset.sum_nonneg fun ψ hψ =>
-        primitiveCharacterPrefixMaxSquare_nonneg a 0 N d ψ)
-  exact add_nonneg (add_nonneg (hledger _) (hledger _)) (hledger _)
 
 /-- The fixed polylogarithmic reserve attached to the actual shell aggregation.
 The inequality is deliberately frozen at square-ledger level.  Its left side
@@ -113,55 +99,8 @@ def ActualVaughanRowsComponentwiseChosenSquareLedgerSource (κ : ℕ) : Prop :=
                 (v N)) N
               (highConductorSet N Q C)) ≤ (K₂ * X) ^ 2
 
-/-- Adding the two analytic ledgers and the internally paid exact small ledger
-yields the canonical chosen total source. -/
-theorem actualVaughanRowsChosenSquareLedgerSource_of_componentwise
-    {κ : ℕ} (hrows : ActualVaughanRowsComponentwiseChosenSquareLedgerSource κ) :
-    ActualVaughanRowsChosenSquareLedgerSource κ := by
-  intro A
-  obtain ⟨B, C, hAB, u, v, hv, K₁, K₂, hK₁, hK₂, hrowsN⟩ := hrows A
-  obtain ⟨K₀, hK₀, hsmallN⟩ := standardBVChosenSmall_squareLedger_payable A κ B C
-  refine ⟨B, C, hAB, u, v, K₁ + K₂ + K₀, by positivity, ?_⟩
-  filter_upwards [hrowsN, hsmallN] with N hN hsmall
-  dsimp only at hN hsmall ⊢
-  rcases hN with ⟨hI, hII⟩
-  have hKsq : K₁ ^ 2 + K₂ ^ 2 + K₀ ^ 2 ≤ (K₁ + K₂ + K₀) ^ 2 := by
-    nlinarith [mul_pos hK₁ hK₂, mul_pos hK₁ hK₀, mul_pos hK₂ hK₀]
-  let Q := MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ)
-  let P := 4 * discreteAbelAmplifierPrefixMax N * conductorHarmonicFactor Q ^ 2
-  let X := (N : ℝ) / Real.log N ^ (A + κ)
-  let L (a : ℤ → ℂ) := P ^ 2 *
-    (3 * highConductorHarmonicFactor Q (logConductorThreshold N C) *
-      primitivePrefixSquareLedgerOn a N (highConductorSet N Q C))
-  have hlanes :
-      L (vaughanTypeICoeff vaughanUnitIntegerCoeff (u N) (v N)) +
-        L (vaughanTypeIICoeff vaughanUnitIntegerCoeff (u N) (v N)) +
-        L (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) ≤
-      (K₁ * X) ^ 2 + (K₂ * X) ^ 2 + (K₀ * X) ^ 2 := by
-    simpa only [L, P, Q, X, hv] using add_le_add (add_le_add hI hII) hsmall
-  calc
-    _ = L (vaughanTypeICoeff vaughanUnitIntegerCoeff (u N) (v N)) +
-          L (vaughanTypeIICoeff vaughanUnitIntegerCoeff (u N) (v N)) +
-          L (vaughanSmallCoeff vaughanUnitIntegerCoeff (v N)) := by
-      dsimp [L, P, Q, actualVaughanRowsSquareLedger]
-      ring
-    _ ≤ (K₁ * X) ^ 2 + (K₂ * X) ^ 2 + (K₀ * X) ^ 2 := hlanes
-    _ = (K₁ ^ 2 + K₂ ^ 2 + K₀ ^ 2) * X ^ 2 := by ring
-    _ ≤ (K₁ + K₂ + K₀) ^ 2 * X ^ 2 :=
-      mul_le_mul_of_nonneg_right hKsq (sq_nonneg X)
-    _ = ((K₁ + K₂ + K₀) * (N : ℝ) / Real.log N ^ (A + κ)) ^ 2 := by
-      dsimp [X]
-      ring
 
 
-/-- Compatibility adapter: the old uniformly quantified square source is
-strictly stronger than the canonical chosen-cutoff source. -/
-theorem actualVaughanRowsChosenSquareLedgerSource_of_legacy
-    {κ : ℕ} (hrows : ActualVaughanRowsSquareLedgerSource κ) :
-    ActualVaughanRowsChosenSquareLedgerSource κ := by
-  intro A
-  refine ⟨A + 3, 1, le_rfl, ?_⟩
-  exact hrows A 1 (A + 3)
 
 lemma highConductorSet_eq_interval (N Q C : ℕ)
     (hR : 1 ≤ logConductorThreshold N C) :
@@ -303,32 +242,7 @@ private lemma actualVaughanRows_highMean_le_of_squareLedger
       (pow_pos (by positivity) A) hpow
   exact hroot.trans hweaken
 
-/-- A chosen-cutoff square-ledger theorem for the actual Vaughan rows, with one
-fixed polylogarithmic reserve `κ`, inhabits the canonical chosen high source. -/
-theorem standardBVHighTypeITypeIIHybridChosenSource_of_actualRows
-    {κ : ℕ} (hrows : ActualVaughanRowsChosenSquareLedgerSource κ) :
-    StandardBVHighTypeITypeIIHybridChosenSource := by
-  intro A
-  obtain ⟨B, C, hAB, u, v, K, hK, hrowsN⟩ := hrows A
-  refine ⟨B, C, hAB, u, v, K, hK, ?_⟩
-  filter_upwards [hrowsN, eventually_ge_atTop (3 : ℕ)] with N hledger hN
-  exact actualVaughanRows_highMean_le_of_squareLedger N
-    (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ))
-    C (u N) (v N) A κ K hK hN hledger
 
-/-- Legacy compatibility endpoint.  New production code should use
-`standardBVHighTypeITypeIIHybridChosenSource_of_actualRows`; this wrapper keeps
-the old all-`B,C` API callable without making it canonical. -/
-theorem standardBVHighTypeITypeIIHybridMovingSource_of_actualRowsSquareLedger
-    {κ : ℕ} (hrows : ActualVaughanRowsSquareLedgerSource κ) :
-    StandardBVHighTypeITypeIIHybridMovingSource := by
-  intro A C B
-  obtain ⟨u, v, K, hK, hrowsN⟩ := hrows A C B
-  refine ⟨u, v, K, hK, ?_⟩
-  filter_upwards [hrowsN, eventually_ge_atTop (3 : ℕ)] with N hledger hN
-  exact actualVaughanRows_highMean_le_of_squareLedger N
-    (MathlibNt.SieveTheory.LiuWeight.panModulusCutoff N (B : ℝ))
-    C (u N) (v N) A κ K hK hN hledger
 
 end
 end AnalyticNumberTheory.LargeSieve

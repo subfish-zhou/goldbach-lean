@@ -64,10 +64,6 @@ theorem vaughanTypeII_sq_le_divisorEnergy (n u v : ℕ) :
     vaughanTypeII n u v ^ 2 ≤ vaughanTypeIIDivisorEnergy n u v := by
   simpa [vaughanTypeII] using vaughanThird_sq_le_divisorEnergy n u v
 
-lemma vaughanTypeIIDivisorEnergy_nonneg (n u v : ℕ) :
-    0 ≤ vaughanTypeIIDivisorEnergy n u v := by
-  unfold vaughanTypeIIDivisorEnergy
-  positivity
 
 /-- Pointwise coefficient estimate with the scalar coefficient `b n` separate
 from the expanded large--large divisor energy. -/

@@ -1,0 +1,764 @@
+{
+  "status": "NONEXECUTABLE_COMMENT_MENTIONS_REVIEWED_AND_INDEXED_NOT_PROOF_ACCEPTANCE",
+  "lines": 43,
+  "ordinary_word_lines": 1,
+  "retired_name_lines": 42,
+  "retired_names": 29,
+  "all_mentions_lexically_in_comments": true,
+  "proof_source_edits": false,
+  "current_api_documentation_freshness_claimed": false,
+  "documentation_action": "Include this retired-name-to-original-declaration index in the retirement audit; preserved development commentary is not a list of current exports.",
+  "rows": [
+    {
+      "module": "MathlibNt.Wu2008DoubleSieve.SecondFunctionalUnitGraphSymmetry",
+      "line": 84,
+      "names": [
+        "determinant"
+      ],
+      "text": "/-- Finite-order linear actions have unit absolute determinant. No permutation enumeration is used. -/",
+      "classification": "ordinary_mathematical_word_collision",
+      "original_declarations": []
+    },
+    {
+      "module": "MathlibNt.SieveTheory.Switching.CorrectedSievePanBridge",
+      "line": 640,
+      "names": [
+        "panDistributionError_one"
+      ],
+      "text": "via `primesInAPBelow_one`/`panDistributionError_one`. -/",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panDistributionError_one",
+          "module": "AnalyticNumberTheory.Sieve.WeightedPan",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panDistributionError_one",
+          "fragment_sha256": "35caccd5719496bed144958aa0a8d37f5961d3ad7f89190efaac9d673e36c3e7"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.Switching.EndpointAssembly",
+      "line": 756,
+      "names": [
+        "chens_theorem_of_good_representation_lower_bound"
+      ],
+      "text": "  chens_theorem_of_good_representation_lower_bound",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "chens_theorem_of_good_representation_lower_bound",
+          "module": "MathlibNt.SieveTheory.Switching.EndpointAssembly",
+          "runtime_name": "MathlibNt.SieveTheory.SwitchingPrinciple.chens_theorem_of_good_representation_lower_bound",
+          "fragment_sha256": "f92516d57875017f674b4927739d6a0545dfa7b376e0b5145f0f9fbf6a3f13f7"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.Switching.PrimePenaltyAsymptotics",
+      "line": 1075,
+      "names": [
+        "hPrimePower_of_q1Count_bound"
+      ],
+      "text": "the `hneg` input of `hPrimePower_of_q1Count_bound`, leaving only the q\u00b9 distribution bound. -/",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "hPrimePower_of_q1Count_bound",
+          "module": "MathlibNt.SieveTheory.Switching.PrimePenaltyAsymptotics",
+          "runtime_name": "MathlibNt.SieveTheory.SwitchingPrinciple.hPrimePower_of_q1Count_bound",
+          "fragment_sha256": "e05d78109d482301ab1ade8ac85d4b9d20f0c3a98155631fcab16bb5fef8b935"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.Switching.PrimePenaltyAsymptotics",
+      "line": 1880,
+      "names": [
+        "corrected_chens_theorem_of_q1Count_and_triple"
+      ],
+      "text": "exactly the `hq1` input of `corrected_chens_theorem_of_q1Count_and_triple`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "corrected_chens_theorem_of_q1Count_and_triple",
+          "module": "MathlibNt.SieveTheory.Switching.EndpointAssembly",
+          "runtime_name": "MathlibNt.SieveTheory.SwitchingPrinciple.corrected_chens_theorem_of_q1Count_and_triple",
+          "fragment_sha256": "2a9802e142d591e570b684e758725a5bc66c35c983c7c79b088675bef533d166"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.BoundaryMass",
+      "line": 441,
+      "names": [
+        "upperRosserBoundaryLogKernel_eq_piecewise"
+      ],
+      "text": "`upperRosserBoundaryLogKernel_eq_piecewise` require no exceptional strips. -/",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "upperRosserBoundaryLogKernel_eq_piecewise",
+          "module": "MathlibNt.SieveTheory.LinearSieve.BoundaryMass",
+          "runtime_name": "MathlibNt.SieveTheory.LinearSieve.upperRosserBoundaryLogKernel_eq_piecewise",
+          "fragment_sha256": "0296d3a335d115758c791145d8db1fd9988cfdb8150760ce9793d0a5b79b9241"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.SieveApplications",
+      "line": 421,
+      "names": [
+        "chens_theorem_of_good_representation_lower_bound"
+      ],
+      "text": "   chens_theorem_of_good_representation_lower_bound",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "chens_theorem_of_good_representation_lower_bound",
+          "module": "MathlibNt.SieveTheory.Switching.EndpointAssembly",
+          "runtime_name": "MathlibNt.SieveTheory.SwitchingPrinciple.chens_theorem_of_good_representation_lower_bound",
+          "fragment_sha256": "f92516d57875017f674b4927739d6a0545dfa7b376e0b5145f0f9fbf6a3f13f7"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIOddFinalProducer",
+      "line": 35,
+      "names": [
+        "caseII_total_le_doubleRounded_direct_concrete_relative_natCeil"
+      ],
+      "text": "`caseII_total_le_doubleRounded_direct_concrete_relative_natCeil` after its",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "caseII_total_le_doubleRounded_direct_concrete_relative_natCeil",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDoubleRoundedDirectAssembly",
+          "runtime_name": "MathlibNt.SieveTheory.caseII_total_le_doubleRounded_direct_concrete_relative_natCeil",
+          "fragment_sha256": "037e141358a412b305731af559cfd69c9ce29c4e6c44140c7d581cf362f504fe"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIFinalProducer",
+      "line": 64,
+      "names": [
+        "lemma14_4_full_finiteDepth_final"
+      ],
+      "text": "/-- Exact `hcaseII` packet expected by `lemma14_4_full_finiteDepth_final`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "lemma14_4_full_finiteDepth_final",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144FullFiniteDepthFinal",
+          "runtime_name": "MathlibNt.SieveTheory.lemma14_4_full_finiteDepth_final",
+          "fragment_sha256": "da6dba89a493e2149efde271aad3726caea395b34757589bae2f4e4fd519137b"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIDispatcher",
+      "line": 37,
+      "names": [
+        "caseII_total_le_doubleRounded_direct_concrete_relative_natCeil"
+      ],
+      "text": "`caseII_total_le_doubleRounded_direct_concrete_relative_natCeil`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "caseII_total_le_doubleRounded_direct_concrete_relative_natCeil",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDoubleRoundedDirectAssembly",
+          "runtime_name": "MathlibNt.SieveTheory.caseII_total_le_doubleRounded_direct_concrete_relative_natCeil",
+          "fragment_sha256": "037e141358a412b305731af559cfd69c9ce29c4e6c44140c7d581cf362f504fe"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIIDispatcher",
+      "line": 67,
+      "names": [
+        "caseII_total_le_doubleRounded_direct_concrete_relative_natCeil"
+      ],
+      "text": "-- `caseII_total_le_doubleRounded_direct_concrete_relative_natCeil` consumes",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "caseII_total_le_doubleRounded_direct_concrete_relative_natCeil",
+          "module": "MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDoubleRoundedDirectAssembly",
+          "runtime_name": "MathlibNt.SieveTheory.caseII_total_le_doubleRounded_direct_concrete_relative_natCeil",
+          "fragment_sha256": "037e141358a412b305731af559cfd69c9ce29c4e6c44140c7d581cf362f504fe"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVSufficientAssembly",
+      "line": 37,
+      "names": [
+        "highConductorVaughanSmallMean_le_explicit"
+      ],
+      "text": "and may be bounded independently by `highConductorVaughanSmallMean_le_explicit`;",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "highConductorVaughanSmallMean_le_explicit",
+          "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVPayload",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.highConductorVaughanSmallMean_le_explicit",
+          "fragment_sha256": "d3e7bb81382edb006e24004a08de25957be1880716aa389398db35993471d780"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma5SwitchedTripleSource",
+      "line": 213,
+      "names": [
+        "chen1973Lemma5SmoothedWeight_nonneg"
+      ],
+      "text": "is supplied by `chen1973Lemma5SmoothedWeight_nonneg` from the genuine",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "chen1973Lemma5SmoothedWeight_nonneg",
+          "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma5SwitchedTripleSource",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.chen1973Lemma5SmoothedWeight_nonneg",
+          "fragment_sha256": "85328aa2b918608e51d91f7387255814df3197744b7d639229fbc8bb9ccd600d"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation20UnconditionalFinal",
+      "line": 354,
+      "names": [
+        "chen1973Lemma6_equation20_corrected_actual_budget"
+      ],
+      "text": "discharged in `chen1973Lemma6_equation20_corrected_actual_budget` below. -/",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "chen1973Lemma6_equation20_corrected_actual_budget",
+          "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation20UnconditionalFinal",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.chen1973Lemma6_equation20_corrected_actual_budget",
+          "fragment_sha256": "43b4f0c9b12910d4d5558f4a8687c39eb72bf6bf7cc98a0e2a96af11813b4177"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+      "line": 27,
+      "names": [
+        "panTypeICharSqrtMeanMaxY_le_sieveSqrtSum"
+      ],
+      "text": "- `panTypeICharSqrtMeanMaxY_le_sieveSqrtSum`:",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeICharSqrtMeanMaxY_le_sieveSqrtSum",
+          "module": "AnalyticNumberTheory.Sieve.PanV1SquareMean",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panTypeICharSqrtMeanMaxY_le_sieveSqrtSum",
+          "fragment_sha256": "62611570f194dedc8c724bc011e1ec471a3d62ab65263cd22a2cb6351de7bfb5"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+      "line": 85,
+      "names": [
+        "panTypeI_char_induced_by_primitive"
+      ],
+      "text": "- S2a `panTypeI_char_induced_by_primitive`: pointwise induction.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeI_char_induced_by_primitive",
+          "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.panTypeI_char_induced_by_primitive",
+          "fragment_sha256": "48524548177d5b994933d99e93cc2c5fd4c77402aa4ff16f89334eeb7d556f14"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+      "line": 86,
+      "names": [
+        "panTypeI_sqSum_primitiveDecomposition"
+      ],
+      "text": "- S2b `panTypeI_sqSum_primitiveDecomposition`: square-sum decomposition",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeI_sqSum_primitiveDecomposition",
+          "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.panTypeI_sqSum_primitiveDecomposition",
+          "fragment_sha256": "5f417b3691a371c0920254404c39100fb7f36ffb810d8315c869e8419a738f34"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+      "line": 88,
+      "names": [
+        "panTypeI_nonCoprimeDensity_le_primePartition"
+      ],
+      "text": "- S2c `panTypeI_nonCoprimeDensity_le_primePartition`: structural bound",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeI_nonCoprimeDensity_le_primePartition",
+          "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.panTypeI_nonCoprimeDensity_le_primePartition",
+          "fragment_sha256": "f5d7edb1b9a60279230a1828937af1a33fc939c3133b23e0634d3393ca660882"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+      "line": 115,
+      "names": [
+        "panTypeI_totientWeightSum_polylog"
+      ],
+      "text": "`panTypeI_totientWeightSum_polylog`. The definition",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeI_totientWeightSum_polylog",
+          "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.panTypeI_totientWeightSum_polylog",
+          "fragment_sha256": "04f241041788d6cd98bd1975f19de7e79b61c1b0cd474c6ec1bf9725268a5406"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+      "line": 121,
+      "names": [
+        "csSqrtSum_le_card_mul_sum"
+      ],
+      "text": "(1) **Cauchy--Schwarz algebra**: `csSqrtSum_le_card_mul_sum` proves",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "csSqrtSum_le_card_mul_sum",
+          "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.csSqrtSum_le_card_mul_sum",
+          "fragment_sha256": "77317cef4ce825b19eea8aa98cde86ead1d954926a09c5bcecd45047576bd2b9"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+      "line": 146,
+      "names": [
+        "panTypeICharSqrtMeanMaxY_le_sieveSqrtSum"
+      ],
+      "text": "`panTypeICharSqrtMeanMaxY_le_sieveSqrtSum`, the remaining expression has",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeICharSqrtMeanMaxY_le_sieveSqrtSum",
+          "module": "AnalyticNumberTheory.Sieve.PanV1SquareMean",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panTypeICharSqrtMeanMaxY_le_sieveSqrtSum",
+          "fragment_sha256": "62611570f194dedc8c724bc011e1ec471a3d62ab65263cd22a2cb6351de7bfb5"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+      "line": 383,
+      "names": [
+        "panTypeI_totientWeightSum_polylog"
+      ],
+      "text": "supplied by `panTypeI_totientWeightSum_polylog`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeI_totientWeightSum_polylog",
+          "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.panTypeI_totientWeightSum_polylog",
+          "fragment_sha256": "04f241041788d6cd98bd1975f19de7e79b61c1b0cd474c6ec1bf9725268a5406"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.LargeSieve.NonCoprimeDensity",
+      "line": 14,
+      "names": [
+        "panTypeI_nonCoprimeDensity_le_primePartition"
+      ],
+      "text": "(i) `panTypeI_nonCoprimeDensity_le_primePartition` reduces `D_q` to prime",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeI_nonCoprimeDensity_le_primePartition",
+          "module": "AnalyticNumberTheory.LargeSieve.PanTypeIAssembly",
+          "runtime_name": "AnalyticNumberTheory.LargeSieve.panTypeI_nonCoprimeDensity_le_primePartition",
+          "fragment_sha256": "f5d7edb1b9a60279230a1828937af1a33fc939c3133b23e0634d3393ca660882"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanV3SquareMean",
+      "line": 29,
+      "names": [
+        "panTypeIICharSqrtMeanMaxY_le_sieveSqrtSum"
+      ],
+      "text": "   a sum to obtain `panTypeIICharSqrtMeanMaxY_le_sieveSqrtSum`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeIICharSqrtMeanMaxY_le_sieveSqrtSum",
+          "module": "AnalyticNumberTheory.Sieve.PanV3SquareMean",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panTypeIICharSqrtMeanMaxY_le_sieveSqrtSum",
+          "fragment_sha256": "4eba4a0ad1ba2f26b6fcc2f52a3309bbeed91870ba2f6507067be86c64970d07"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+      "line": 12,
+      "names": [
+        "of_vaughanSplit"
+      ],
+      "text": "`PanMeanValueUniformCrude.of_vaughanSplit`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "of_vaughanSplit",
+          "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+          "runtime_name": "AnalyticNumberTheory.Sieve.PanMeanValueUniformCrude.of_vaughanSplit",
+          "fragment_sha256": "dc77ea5ed0242fb0cbe6647dc53c9092427de7c3bd180bba3cbdad52ffd8e94e"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+      "line": 14,
+      "names": [
+        "of_signedAnalyticInputs"
+      ],
+      "text": "`PanMeanValueUniform.of_signedAnalyticInputs`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "of_signedAnalyticInputs",
+          "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+          "runtime_name": "AnalyticNumberTheory.Sieve.PanMeanValueUniform.of_signedAnalyticInputs",
+          "fragment_sha256": "1eb3af596c8660936aa24b4682e5817eab74b02fb045bafb3e1d701d2ce0a27e"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+      "line": 73,
+      "names": [
+        "of_analyticInputs"
+      ],
+      "text": "`PanVaughanSplitCrude.of_analyticInputs` derives it from the",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "of_analyticInputs",
+          "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+          "runtime_name": "AnalyticNumberTheory.Sieve.PanVaughanSplitCrude.of_analyticInputs",
+          "fragment_sha256": "f31f6dea41c1a86ee96214692fb5518ad1d6feb25aa8c38ff4fecc37922f905d"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+      "line": 107,
+      "names": [
+        "vaughanIdentity_threeTerm"
+      ],
+      "text": "Vaughan's identity (`vaughanIdentity_threeTerm`, `VaughanIdentity.lean`)",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "vaughanIdentity_threeTerm",
+          "module": "AnalyticNumberTheory.Sieve.VaughanIdentity",
+          "runtime_name": "AnalyticNumberTheory.Sieve.vaughanIdentity_threeTerm",
+          "fragment_sha256": "48eb79f78b098b8f60539356ec45aaec3fb13ede00149aebc445801cc3a7360c"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+      "line": 228,
+      "names": [
+        "of_vaughanSplit"
+      ],
+      "text": "theorem PanMeanValueUniform.of_vaughanSplit",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "of_vaughanSplit",
+          "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+          "runtime_name": "AnalyticNumberTheory.Sieve.PanMeanValueUniformCrude.of_vaughanSplit",
+          "fragment_sha256": "dc77ea5ed0242fb0cbe6647dc53c9092427de7c3bd180bba3cbdad52ffd8e94e"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.W2Transfer",
+      "line": 18,
+      "names": [
+        "q_div_totient_mul_totient_div_q_eq_one"
+      ],
+      "text": "* `q_div_totient_mul_totient_div_q_eq_one` (W2b):",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "q_div_totient_mul_totient_div_q_eq_one",
+          "module": "AnalyticNumberTheory.Sieve.W2Transfer",
+          "runtime_name": "AnalyticNumberTheory.Sieve.q_div_totient_mul_totient_div_q_eq_one",
+          "fragment_sha256": "63b8134831022b0d7c68dacbfedd2fe774f89fc1e0577eb887486ee302716bb9"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.W2Transfer",
+      "line": 20,
+      "names": [
+        "mul_totient_div_q_mul_q_div_totient"
+      ],
+      "text": "* `mul_totient_div_q_mul_q_div_totient` (W2c):",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "mul_totient_div_q_mul_q_div_totient",
+          "module": "AnalyticNumberTheory.Sieve.W2Transfer",
+          "runtime_name": "AnalyticNumberTheory.Sieve.mul_totient_div_q_mul_q_div_totient",
+          "fragment_sha256": "2181cb5ab274f37acbeebb09630f54f05ca057acdd38bbc7583adbcc5c6a8abd"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 41,
+      "names": [
+        "of_mainStep"
+      ],
+      "text": "conditional reduction `PanChebyshevApprox.of_mainStep`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "of_mainStep",
+          "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+          "runtime_name": "AnalyticNumberTheory.Sieve.PanChebyshevApprox.of_mainStep",
+          "fragment_sha256": "08c3a9b93e2515525b3366d191e41ecd07f4c20b41bb11d634d5488e75358ea4"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 58,
+      "names": [
+        "of_signedAnalyticInputs"
+      ],
+      "text": "`PanMeanValueUniform.of_signedAnalyticInputs`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "of_signedAnalyticInputs",
+          "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+          "runtime_name": "AnalyticNumberTheory.Sieve.PanMeanValueUniform.of_signedAnalyticInputs",
+          "fragment_sha256": "1eb3af596c8660936aa24b4682e5817eab74b02fb045bafb3e1d701d2ce0a27e"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 90,
+      "names": [
+        "vaughanIdentity_threeTerm"
+      ],
+      "text": "The existing `vaughanIdentity_threeTerm` covers `v < n`;",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "vaughanIdentity_threeTerm",
+          "module": "AnalyticNumberTheory.Sieve.VaughanIdentity",
+          "runtime_name": "AnalyticNumberTheory.Sieve.vaughanIdentity_threeTerm",
+          "fragment_sha256": "48eb79f78b098b8f60539356ec45aaec3fb13ede00149aebc445801cc3a7360c"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 295,
+      "names": [
+        "not_PanChebyshevApprox_of_f0"
+      ],
+      "text": "`not_PanChebyshevApprox_of_f0` disproves its unrestricted form.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "not_PanChebyshevApprox_of_f0",
+          "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+          "runtime_name": "AnalyticNumberTheory.Sieve.not_PanChebyshevApprox_of_f0",
+          "fragment_sha256": "b2b0e6e6af2390f763957101f836f5901600e0a87fe6014a2bfbcf80b5161431"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 305,
+      "names": [
+        "panDistributionSum_abs_le_logPieces_mainBlock"
+      ],
+      "text": "`panDistributionSum_abs_le_logPieces_mainBlock`. -/",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panDistributionSum_abs_le_logPieces_mainBlock",
+          "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panDistributionSum_abs_le_logPieces_mainBlock",
+          "fragment_sha256": "1b784b99256ca8cbff5197d03dc413ccfdc49677750abf5234e8da387a42e86d"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 638,
+      "names": [
+        "not_PanChebyshevMainStep"
+      ],
+      "text": "`not_PanChebyshevMainStep` supplies a counterexample.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "not_PanChebyshevMainStep",
+          "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+          "runtime_name": "AnalyticNumberTheory.Sieve.not_PanChebyshevMainStep",
+          "fragment_sha256": "913aa966baf3911e18f69c89e6f7f11760e0fd4dc6b633129be31cc238c557c8"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 666,
+      "names": [
+        "panDistributionSum_abs_le_logPieces_mainBlock"
+      ],
+      "text": "`panDistributionSum_abs_le_logPieces_mainBlock` proves the exact",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panDistributionSum_abs_le_logPieces_mainBlock",
+          "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panDistributionSum_abs_le_logPieces_mainBlock",
+          "fragment_sha256": "1b784b99256ca8cbff5197d03dc413ccfdc49677750abf5234e8da387a42e86d"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 735,
+      "names": [
+        "panDistributionSum_abs_le_logPieces_mainBlock"
+      ],
+      "text": "`panDistributionSum_abs_le_logPieces_mainBlock`;",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panDistributionSum_abs_le_logPieces_mainBlock",
+          "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panDistributionSum_abs_le_logPieces_mainBlock",
+          "fragment_sha256": "1b784b99256ca8cbff5197d03dc413ccfdc49677750abf5234e8da387a42e86d"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 736,
+      "names": [
+        "panChebyshevMainStepLHS_abs_le_corrected"
+      ],
+      "text": "`panChebyshevMainStepLHS_abs_le_corrected` gives the matching",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panChebyshevMainStepLHS_abs_le_corrected",
+          "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panChebyshevMainStepLHS_abs_le_corrected",
+          "fragment_sha256": "9fd44540f37c7481e2aab3bf2e4af15f949ff9556d1ca0f1f9c6da3610db3b1a"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanVaughanPointwise",
+      "line": 1308,
+      "names": [
+        "of_signedAnalyticInputs"
+      ],
+      "text": "Unlike `PanMeanValueUniform.of_signedAnalyticInputs`, this theorem constructs",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "of_signedAnalyticInputs",
+          "module": "AnalyticNumberTheory.Sieve.PanAssembly",
+          "runtime_name": "AnalyticNumberTheory.Sieve.PanMeanValueUniform.of_signedAnalyticInputs",
+          "fragment_sha256": "1eb3af596c8660936aa24b4682e5817eab74b02fb045bafb3e1d701d2ce0a27e"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.PanV1SquareMean",
+      "line": 29,
+      "names": [
+        "panTypeICharSqrtMeanMaxY_le_sieveSqrtSum"
+      ],
+      "text": "   `panTypeICharSqrtMeanMaxY_le_sieveSqrtSum`.",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "panTypeICharSqrtMeanMaxY_le_sieveSqrtSum",
+          "module": "AnalyticNumberTheory.Sieve.PanV1SquareMean",
+          "runtime_name": "AnalyticNumberTheory.Sieve.panTypeICharSqrtMeanMaxY_le_sieveSqrtSum",
+          "fragment_sha256": "62611570f194dedc8c724bc011e1ec471a3d62ab65263cd22a2cb6351de7bfb5"
+        }
+      ]
+    },
+    {
+      "module": "AnalyticNumberTheory.Sieve.LinearSieve",
+      "line": 529,
+      "names": [
+        "UniformJurkatRichertLowerBound_of_uniformMainTerm"
+      ],
+      "text": "`UniformJurkatRichertLowerBound_of_uniformMainTerm`. -/",
+      "classification": "retired_internal_name_in_development_commentary",
+      "original_declarations": [
+        {
+          "basename": "UniformJurkatRichertLowerBound_of_uniformMainTerm",
+          "module": "AnalyticNumberTheory.Sieve.LinearSieve",
+          "runtime_name": "AnalyticNumberTheory.Sieve.UniformJurkatRichertLowerBound_of_uniformMainTerm",
+          "fragment_sha256": "e6ebddc7020e3e1308edeb7ba303fb8d67c160f6e03c9744b5d6bb5724ae9bdc"
+        }
+      ]
+    }
+  ],
+  "bindings": {
+    "/tmp/wu-unused-proof-post-hf4-v2/review-comment-references.py": "b95c70ec549e223239f9dcbb4e8135691e70841c19f506081ccec063d24c4159",
+    "/home/azureuser/goldbach-lean/scripts/check.py": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+    "/tmp/wu-unused-proof-post-hf4-v2/remaining-comment-references.json": "69048a06d2c6bdb5ac5cdb74273c48fd51a189c3c5bc6bb7086db49068134072",
+    "/tmp/wu-unused-proof-post-hf4-v2/deletions/manifest.json": "0cf8e3a3bd56780bf84afc664b746cfecf4ad7008c70a289e3bcacf2753f7a52",
+    "/tmp/wu-unused-proof-post-hf4-v2/prune-plan.json": "71bacea034124cff9b5323af7e65b58eb45ae93c396327d6c65db7d9c741b16b",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/Wu2008DoubleSieve/SecondFunctionalUnitGraphSymmetry.lean": "1c44cd047c61c9dd27375f9f5700ba8d6b8e84a7e43af24370259bab85a679da",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/SieveTheory/Switching/CorrectedSievePanBridge.lean": "25c6bb02075324e18191430153b80069d481e1e0d44c91ba9f71a7ec49bbeca1",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/SieveTheory/Switching/EndpointAssembly.lean": "43b39234d6bc0c854426badfa8c64ef7a1df60f1ac118cd75fdba4f948165e6f",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/SieveTheory/Switching/PrimePenaltyAsymptotics.lean": "ba3361a66c28cd1ded0550fcbdf4dabe00de539cba41fe6b5acf02e3e39a55e4",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/SieveTheory/LinearSieve/BoundaryMass.lean": "38850bf714ff18715865b1f5919cd35b8a19756bb7b9a7747ef985686d5f7ff5",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/SieveTheory/LinearSieve/SieveApplications.lean": "13624c70d7f4170e11a26eb56bfe0f7aa3750d08ffdd6094fd3b1fbeac08460a",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma144CaseIIOddFinalProducer.lean": "cd2859fa8056095d0b4fa621ddae1ce568abad91e9c89ed9978334a3b6e19951",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma144CaseIIFinalProducer.lean": "3cc04dce17b7e2439ab87e750a5834291b1edc33e6e523d4f9b96f1a1b67c44f",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/SieveTheory/LinearSieve/Suzuki/SuzukiLemma144CaseIIDispatcher.lean": "2594a88186a987a46b73f8572cfda9a9468f9d9a22f3545d136fc2ded52301a3",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/AnalyticNumberTheory/LargeSieve/StandardBVSufficientAssembly.lean": "aa752a65ec9764d8f605f2bfcef05e336e3d82a8b7b3c2a07ae40591ebbd21e8",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/AnalyticNumberTheory/Chen1973/Chen1973Lemma5SwitchedTripleSource.lean": "47df8e85aa462028aa74b5d2ea9833ad21167d9ce3652ffe9fee1de429065701",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/MathlibNt/AnalyticNumberTheory/Chen1973/Chen1973Lemma6Equation20UnconditionalFinal.lean": "c679b93f9184daf3c51567244f4e09be599a222163669017a8e7269b140f5b82",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/AnalyticNumberTheory/LargeSieve/PanTypeIAssembly.lean": "edbe9becd32887e256cde268d5a18a0209e74bb7333982b2738024a99994846d",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/AnalyticNumberTheory/LargeSieve/NonCoprimeDensity.lean": "54f843d2c2cabc838ec65efb3c14b0b4a790252578a1164deb6e1a4ac80ff1b7",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/AnalyticNumberTheory/Sieve/PanV3SquareMean.lean": "b1ea6d3d83bca58d365b198e056b7b7c9b87e6c56b69d58b14a92e74d6ac151c",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/AnalyticNumberTheory/Sieve/PanAssembly.lean": "b57920a7097a257f7fd655b939d69a558be4b66dfa5b25926d7b50db42b0ca55",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/AnalyticNumberTheory/Sieve/W2Transfer.lean": "db03d2a26df1e3a8f7e673ae1db90e3a348d31a752d43569205397b13d011390",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/AnalyticNumberTheory/Sieve/PanVaughanPointwise.lean": "ce65bba6f11d25fae5897650c743e9ed893a0304b408294a4c00e40c0c19b8f3",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/AnalyticNumberTheory/Sieve/PanV1SquareMean.lean": "dc6d297a6655176cf88223fd512053a8a4e17fa2072c96ded583d264e1615ee2",
+    "/tmp/wu-unused-proof-post-hf4-v2/run-1793192149776467915/sources/AnalyticNumberTheory/Sieve/LinearSieve.lean": "6b57cf79ea01da1db2d7e7e822a355a2dba2e975f25b5030da0ec41788defd56"
+  }
+}

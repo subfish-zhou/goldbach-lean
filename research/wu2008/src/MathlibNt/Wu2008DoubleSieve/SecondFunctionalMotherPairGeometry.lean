@@ -136,44 +136,8 @@ theorem fullH_region_bounds {p : SecondFunctionalParameters} (h : FullHParameter
   | gammaSeven => exact ⟨hv.1,hv.2.1,hv.2.2.1,(hv.2.2.2.trans hbc.le).trans hce.le⟩
   | gammaEight => exact ⟨hv.1,hv.2.1,hv.2.1.trans hv.2.2.1,hv.2.2.2.trans hce.le⟩
 
-/-- The actual fixed Gamma6 ratio and selected Gamma7/8 ratio, together with
-all four sorted insertion premises, including the closed endpoint 3. -/
-theorem fullH_term_admission {p : SecondFunctionalParameters} (h : FullHParameters p)
-    (j : Term) (hj : j ≠ .gammaFive) {R t u : ℝ} (hR : 1 < R)
-    (hv : PairRegion p j t u) :
-    2*u < 1 ∧ u+2*t < 1 ∧ 0 < 1-t-u ∧ Hratio p j t u ∈ Set.Icc 1 3 ∧
-    R^(1/10:ℝ) ≤ R^u ∧ R^u ≤ R^(1/2:ℝ) ∧
-    (R/R^u)^(1/10:ℝ) ≤ R^t ∧ R^t ≤ (R/R^u)^(1/2:ℝ) := by
-  obtain ⟨ht,htb,htu,hue⟩ := fullH_region_bounds h j hj hv
-  have hg := fullH_domain h ht htb htu hue
-  refine ⟨hg.2.2.1,hg.2.2.2.1,hg.2.2.2.2.1,?_,fullH_sorted_rpow h hR ht htb htu hue⟩
-  cases j with
-  | gammaFive => exact False.elim (hj rfl)
-  | gammaSix => exact hg.2.2.2.2.2.1
-  | gammaSeven => exact hg.2.2.2.2.2.2
-  | gammaEight => exact hg.2.2.2.2.2.2
 
-theorem gammaFive_term_admission {p : SecondFunctionalParameters} (h : AnalyticParameters p)
-    {R t u : ℝ} (hR : 1 < R) (hv : PairRegion p .gammaFive t u)
-    (hu : 2*u ≤ 1) (hut : u+2*t ≤ 1) :
-    0 < 1-t-u ∧ Hratio p .gammaFive t u ∈ Set.Icc 1 3 ∧
-    R^(1/10:ℝ) ≤ R^u ∧ R^u ≤ R^(1/2:ℝ) ∧
-    (R/R^u)^(1/10:ℝ) ≤ R^t ∧ R^t ≤ (R/R^u)^(1/2:ℝ) := by
-  have hg := legal_domain h.three_le_S h.S_le_five hv.1 hv.2.2.1 hu hut
-  exact ⟨hg.2.2.1,hg.2.2.2.1,sorted_rpow_admission hR
-    (by linarith [h.three_le_S]) h.S_le_five hv.1 hv.2.2.1 hu hut⟩
 
-/-- Analytic admissibility alone does not supply the genuine insertion gap. -/
-theorem analytic_not_fullH : ∃ p : SecondFunctionalParameters,
-    AnalyticParameters p ∧ ¬ FullHParameters p := by
-  let p : SecondFunctionalParameters := ⟨5/2,5,3,14/5,13/5⟩
-  refine ⟨p,?_,?_⟩
-  · refine ⟨?_,?_,?_,?_,?_⟩
-    · constructor <;> norm_num [p]
-    all_goals norm_num [p]
-  · intro h
-    have hh := h.insertion_gap
-    norm_num [p] at hh
 
 open SecondFunctionalParameters
  theorem row1_fullH : FullHParameters row1 := by

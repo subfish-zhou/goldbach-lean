@@ -33,13 +33,6 @@ def typeIIBlockWeightedPrimitiveMean
   ∑ d ∈ S, ((d : ℝ) / (d.totient : ℝ)) *
     ∑ ψ : PrimitiveCharacter d, primitivePrefixAmplitude a N d ψ
 
-lemma typeIIBlockWeightedPrimitiveMean_nonneg
-    (a : ℤ → ℂ) (N : ℕ) (S : Finset ℕ) :
-    0 ≤ typeIIBlockWeightedPrimitiveMean a N S := by
-  unfold typeIIBlockWeightedPrimitiveMean
-  exact Finset.sum_nonneg fun d hd =>
-    mul_nonneg (by positivity)
-      (Finset.sum_nonneg fun ψ hψ => primitivePrefixAmplitude_nonneg _ _ _ _)
 
 /-- Square ledger on an arbitrary finite conductor block. -/
 def blockWeightedPrimitiveSquareLedger
@@ -153,26 +146,7 @@ private theorem blockWeightedPrimitiveMean_le_cap_mul_sqrt_squareLedger
   rw [mul_pow, Real.sq_sqrt (blockWeightedPrimitiveSquareLedger_nonneg F S)]
   exact blockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger F Q S hS
 
-/-- Honest block Cauchy.  The `Q²` is conductor/character mass; there is no
-conductor-local diagonal saving in this statement. -/
-theorem typeIIBlockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
-    (a : ℤ → ℂ) (N Q : ℕ) (S : Finset ℕ)
-    (hS : S ⊆ Finset.Icc 1 Q) :
-    typeIIBlockWeightedPrimitiveMean a N S ^ 2 ≤
-      (Q : ℝ) ^ 2 * blockWeightedPrimitiveSquareLedger
-        (fun q χ => primitivePrefixAmplitude a N q χ) S := by
-  exact blockWeightedPrimitiveMean_sq_le_cap_sq_mul_squareLedger
-    (fun q χ => primitivePrefixAmplitude a N q χ) Q S hS
 
-/-- Unsquared form of block Cauchy. -/
-theorem typeIIBlockWeightedPrimitiveMean_le_cap_mul_sqrt_squareLedger
-    (a : ℤ → ℂ) (N Q : ℕ) (S : Finset ℕ)
-    (hS : S ⊆ Finset.Icc 1 Q) :
-    typeIIBlockWeightedPrimitiveMean a N S ≤
-      (Q : ℝ) * Real.sqrt (blockWeightedPrimitiveSquareLedger
-        (fun q χ => primitivePrefixAmplitude a N q χ) S) := by
-  exact blockWeightedPrimitiveMean_le_cap_mul_sqrt_squareLedger
-    (fun q χ => primitivePrefixAmplitude a N q χ) Q S hS
 
 /-- Exact production collected-shell weighted first moment on a finite conductor
 block. -/
@@ -229,12 +203,6 @@ def vaughanTypeIIOrdinaryShellSquareBound
     vaughanCanonicalShortTensorEnergy vaughanMangoldtCoeff (fun _ => 1)
       N N u v k l
 
-lemma vaughanTypeIIOrdinaryShellSquareBound_nonneg
-    (N u v k l R : ℕ) :
-    0 ≤ vaughanTypeIIOrdinaryShellSquareBound N u v k l R := by
-  unfold vaughanTypeIIOrdinaryShellSquareBound primitiveLargeSieveConstant
-    vaughanBilinearCoeffEnergy vaughanCanonicalShortTensorEnergy
-  positivity
 
 /-- Restriction of the prefix-maximal tensor LS to any finite conductor block
 inside `(R,2R]`. -/
@@ -399,26 +367,6 @@ theorem vaughanTypeIIBlockOrdinaryLSBound_le_crossRowExcess_add_payable
           (((2 * R : ℕ) : ℝ) ^ 2)) * E))]
   · positivity
 
-/-- Target comparison in its sharp logical form: once dispersion pays the sole
-cross-row residual by `N`, the already-separated modulus term gives the desired
-`N + R²√N` shape (up to the explicit shell/log/energy factor `K`). -/
-theorem exactVaughanTypeII_blockWeighted_mean_le_target_of_dispersion
-    (N u v R : ℕ) (hR : 0 < R) (S : Finset ℕ)
-    (hS : S ⊆ Finset.Ioc R (2 * R)) (K : ℝ)
-    (hdisp : vaughanTypeIIBlockCrossRowExcess N u v R ≤ K * N)
-    (hmod : vaughanTypeIIBlockPayableModulusPart N u v R ≤
-      K * (R : ℝ) ^ 2 * Real.sqrt N) :
-    typeIIBlockWeightedPrimitiveMean
-        (vaughanTypeIICoeff vaughanUnitIntegerCoeff u v) N S ≤
-      K * ((N : ℝ) + (R : ℝ) ^ 2 * Real.sqrt N) := by
-  calc
-    _ ≤ vaughanTypeIIBlockOrdinaryLSBound N u v R :=
-      exactVaughanTypeII_blockWeighted_mean_le_ordinaryLS N u v R hR S hS
-    _ ≤ vaughanTypeIIBlockCrossRowExcess N u v R +
-        vaughanTypeIIBlockPayableModulusPart N u v R :=
-      vaughanTypeIIBlockOrdinaryLSBound_le_crossRowExcess_add_payable N u v R
-    _ ≤ K * N + K * (R : ℝ) ^ 2 * Real.sqrt N := add_le_add hdisp hmod
-    _ = K * ((N : ℝ) + (R : ℝ) ^ 2 * Real.sqrt N) := by ring
 
 end
 end AnalyticNumberTheory.LargeSieve

@@ -247,15 +247,6 @@ noncomputable def liuPanSignedResidualMaxY
     |liuPanSignedMainSum distMain y X q l f u v| +
       liuPanSignedCorrectionBound y X q l f)
 
-theorem liuPanSignedResidualMaxY_one
-    (distMain : ℝ → ℝ) (X x : ℕ) (f : ℕ → ℝ) (u v : ℕ) :
-    liuPanSignedResidualMaxY distMain X 1 x f u v =
-      ((range (x + 1)).image (fun y =>
-        |liuPanSignedMainSum distMain y X 1 0 f u v| +
-          liuPanSignedCorrectionBound y X 1 0 f)).max'
-        (Finset.image_nonempty.mpr ⟨0, by simp⟩) := by
-  unfold liuPanSignedResidualMaxY liuPanScoreMaxY
-  simp only [liuPanScoreMaxL_one]
 
 theorem liuPanSignedResidualMaxY_nonneg
     (distMain : ℝ → ℝ) (X q x : ℕ) (f : ℕ → ℝ) (u v : ℕ) :

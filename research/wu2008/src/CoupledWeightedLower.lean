@@ -119,11 +119,6 @@ theorem originalH_nonneg (k : Fin 9) : 0 ≤ NineFeedbackStrength.originalH k :=
     norm_num
   exact h k
 
-/-- Unconditional weighted lower bound for all four original H rows, with no new numerical inputs. -/
-theorem original_four_weighted_lower (i : Fin 4) :
-    coupledLower (coupledRow i) NineFeedbackStrength.originalH ≤
-      coupledFeedback (coupledRow i) NineFeedbackStrength.originalH :=
-  coupledLower_le _ (coupledRow_geometry i) _ originalH_nonneg
 
 end
 end CoupledIntegralRecovery

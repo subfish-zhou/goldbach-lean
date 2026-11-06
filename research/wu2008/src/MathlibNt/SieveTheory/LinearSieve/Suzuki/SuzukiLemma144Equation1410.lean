@@ -163,26 +163,8 @@ theorem coordinate_bounds_sharp {D p : ℕ} (hp : 2 ≤ p) (hDp : 2 * p ≤ D) :
       _ = Real.log ((D : ℝ) / p) / Real.log p +
           Real.log (1 + ((p : ℝ) - 1) / D) / Real.log p := by ring
 
-theorem coordinatePerturbation_bounds {D p : ℕ} (hp : 2 ≤ p) (hDp : 2 * p ≤ D) :
-    0 ≤ coordinatePerturbation D p ∧
-      coordinatePerturbation D p ≤ Real.log (3 / 2 : ℝ) / Real.log (p : ℝ) := by
-  rcases coordinate_bounds hp hDp with ⟨hlower, hupper⟩
-  unfold coordinatePerturbation
-  constructor <;> linarith
 
-theorem coordinatePerturbation_bounds_sharp
-    {D p : ℕ} (hp : 2 ≤ p) (hDp : 2 * p ≤ D) :
-    0 ≤ coordinatePerturbation D p ∧
-      coordinatePerturbation D p ≤
-        Real.log (1 + ((p : ℝ) - 1) / D) / Real.log (p : ℝ) := by
-  rcases coordinate_bounds_sharp hp hDp with ⟨hlower, hupper⟩
-  unfold coordinatePerturbation
-  constructor <;> linarith
 
-theorem recursiveCoordinate_eq_inherited_add_perturbation (D p : ℕ) :
-    recursiveCoordinate D p = inheritedCoordinate D p + coordinatePerturbation D p := by
-  unfold coordinatePerturbation
-  ring
 
 /-- Proposition 9.3 has exactly the useful direction: since ceiling division
 increases the coordinate, antitonicity makes the literal recursive main term no
@@ -354,47 +336,6 @@ theorem naturalCeil_error_le_claim14_13
       rw [← hsourceCoord]
       exact h1413
 
-/-- The normalized form of `naturalCeil_error_le_claim14_13`.  Its conclusion is
-exactly a `R(log D / log p) ≤ qD(..., log D / log p)` premise of the shape
-consumed by `sigma12_middle_le_qD_lemma8_7`: the global
-`(log D)^{-Δ}` has been cancelled, but the literal induction factor at
-`⌈D/p⌉` remains visible inside `R`. -/
-theorem naturalCeil_error_normalized_le_qD
-    (H : Section13HatLayers) {N D p : ℕ} {d Δ : ℝ}
-    (hp : 2 ≤ p) (hDp : 2 * p ≤ D) (hΔ : 0 ≤ Δ)
-    (S : Set ℝ)
-    (hinherited : inheritedCoordinate D p ∈ S)
-    (hrecursive : recursiveCoordinate D p ∈ S)
-    (hanti : AntitoneOn
-      (errorEnvelope H (N - 1) ((D ⌈/⌉ p : ℕ) : ℝ) d) S)
-    (hT : 0 ≤ H.T (ErrorSign.ofDepth (N - 1)) (inheritedCoordinate D p))
-    (h1413 : Claim14_13PointwisePremise H N (D : ℝ) d Δ
-      (Real.log (D : ℝ) / Real.log (p : ℝ)) ((D : ℝ) / (p : ℝ))) :
-    (Real.log (D : ℝ)) ^ Δ *
-        (errorEnvelope H (N - 1) ((D ⌈/⌉ p : ℕ) : ℝ) d
-            (recursiveCoordinate D p) *
-          (Real.log ((D ⌈/⌉ p : ℕ) : ℝ)) ^ (-Δ)) ≤
-      qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ
-        (Real.log (D : ℝ) / Real.log (p : ℝ)) := by
-  have hmain := naturalCeil_error_le_claim14_13 H hp hDp hΔ S
-    hinherited hrecursive hanti hT h1413
-  have hlogD : 0 < Real.log (D : ℝ) := Real.log_pos (by
-    exact_mod_cast (show 1 < D by omega))
-  have hscale : 0 ≤ (Real.log (D : ℝ)) ^ Δ := Real.rpow_nonneg hlogD.le _
-  calc
-    (Real.log (D : ℝ)) ^ Δ *
-        (errorEnvelope H (N - 1) ((D ⌈/⌉ p : ℕ) : ℝ) d
-            (recursiveCoordinate D p) *
-          (Real.log ((D ⌈/⌉ p : ℕ) : ℝ)) ^ (-Δ)) ≤
-      (Real.log (D : ℝ)) ^ Δ *
-        ((Real.log (D : ℝ)) ^ (-Δ) *
-          qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ
-            (Real.log (D : ℝ) / Real.log (p : ℝ))) :=
-      mul_le_mul_of_nonneg_left hmain hscale
-    _ = qD H (ErrorSign.ofDepth N).opposite (D : ℝ) d Δ
-          (Real.log (D : ℝ) / Real.log (p : ℝ)) := by
-      rw [← mul_assoc, ← Real.rpow_add hlogD]
-      simp
 
 /-- The induction theorem applied literally at the natural recursive argument.
 Unlike `PointwiseInductionContract`, this contract does not silently replace

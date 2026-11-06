@@ -110,22 +110,5 @@ theorem exists_slot_split {U Q₁ Q₂ : ℝ} (hU : 1 ≤ U)
   · simpa only [prod_map_constant] using hleft
   · simpa only [prod_map_constant] using hright
 
-/-- A concrete common WF weight. B and k are fixed before every level split;
-the only split-dependent objects are the two explicitly normalized factors. -/
-theorem boxWeight_wellFactorable (B : Finset ℕ) {U : ℝ} (hU : 1 ≤ U)
-    (hB : ∀ p ∈ B, p.Prime → (p : ℝ) ≤ U) (k : ℕ) :
-    WellFactorable (boxWeight B k) (U ^ (k + 1)) := by
-  have hU₀ : 0 ≤ U := le_trans zero_le_one hU
-  refine ⟨one_le_pow₀ hU, boxWeight_abs_le_one B k, ?_, ?_⟩
-  · exact supportedAt_mono (boxWeight_supportedAt B hU₀ hB k)
-      (pow_le_pow_right₀ hU (Nat.le_succ k))
-  · intro Q₁ Q₂ hQ₁ hQ₂ hsplit
-    obtain ⟨a, b, hab, ha, hb⟩ := exists_slot_split hU hQ₁ hQ₂ k hsplit
-    subst k
-    obtain ⟨heq, hleft, hright⟩ := boxWeight_bounded_split B a b
-    refine ⟨_, _, hleft, ?_, hright, ?_, heq⟩
-    · exact supportedAt_smul _
-        (supportedAt_mono (boxWeight_supportedAt B hU₀ hB a) ha)
-    · exact supportedAt_mono (boxWeight_supportedAt B hU₀ hB b) hb
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

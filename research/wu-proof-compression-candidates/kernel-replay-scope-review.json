@@ -1,0 +1,38 @@
+{
+  "status": "LOCAL_TOOLCHAIN_KERNEL_REPLAY_SCOPE_REVIEW_NOT_NEW_KERNEL_ACCEPTANCE",
+  "toolchain_source": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/src/lean/LeanChecker.lean",
+  "toolchain_source_sha256": "eb5dee411837629f09c5c18d63cc833d30335a46048bc586642742e90aa65d5f",
+  "default_semantics": "replayFromImports replays only the target module constants against an imported environment",
+  "fresh_semantics": "replayFromFresh replays the imported environment constants map into mkEmptyEnvironment",
+  "historical_execution_records_modified": false,
+  "historical_documentation_corrected": "docs/WU_UNUSED_PROOF_PRUNING.md",
+  "old_unexecuted_plan": "/tmp/wu-shared-proof-batch-v1/validation-inputs-01/validation-plan.json",
+  "new_unexecuted_plan": "/tmp/wu-shared-proof-batch-v1/validation-inputs-02/validation-plan.json",
+  "new_gates": 34,
+  "root_module_replays_preserved": 21,
+  "fresh_union_replay_executed": false,
+  "new_plan_readiness": "Staged hashes, Python syntax, 21 exact union imports, compiler/checker pins and 10 package revisions verified",
+  "pipeline_process": {
+    "status": "WAITING_EXISTING_BUILD_NOT_ACCEPTED",
+    "pid": 2011704,
+    "start_ticks": "2015441415",
+    "run": "/tmp/wu-shared-proof-batch-v1/run-20261028-01",
+    "validation_plan": "/tmp/wu-shared-proof-batch-v1/validation-inputs-02/validation-plan.json",
+    "census_plan": "/tmp/wu-next-dead-family-census-v1/plan.json",
+    "started_unix": 1793233162.477814,
+    "current_child": null,
+    "last_observation": {
+      "unix": 1793233182.4803188,
+      "build_pid": 1997457,
+      "build_identity_live": true,
+      "verified_modules": 2479,
+      "planned_modules": 4151
+    }
+  },
+  "source_builder_not_signalled": true,
+  "bindings": {
+    "/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/prepare_validation_inputs.py": "dc34ea14898529ef6a4e46e0ef1c638169d859ae336c5219db220c9328ab5563",
+    "/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/validate_completed_batch.py": "77613585a9b73278c0748eede973ba413387b607f818b5dd1e2db52a840750f3",
+    "/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/continue_batch_pipeline.py": "a57f12896f36cdf8d1b5dea6e584e844a29065f5005531ca321687e176ec017d"
+  }
+}

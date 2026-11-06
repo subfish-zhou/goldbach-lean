@@ -135,10 +135,6 @@ theorem full_fixed_count : CorrelationPayment.CountBound lowerCoefficient :=
 theorem full_residual_count : CorrelationPayment.CountBound residualCoefficient :=
   CorrelationPayment.pay joint_actual_residual_lower
 
-theorem fixed_strict_improvement : FifthShapePayment.lowerCoefficient < lowerCoefficient := by
-  have h := SharedRationalEnvelope.fixedGain_pos
-  unfold lowerCoefficient
-  linarith only [h]
 
 theorem residual_strict_improvement : FifthShapePayment.residualCoefficient < residualCoefficient := by
   have h := SharedRationalEnvelope.deltaShared_pos

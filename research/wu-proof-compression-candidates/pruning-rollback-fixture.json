@@ -1,0 +1,16 @@
+{
+  "status": "FORCED_POST_INSTALL_FAILURE_ROLLBACK_PASS_FIXTURE_ONLY",
+  "checks": [
+    "Existing source/artifact/status restored",
+    "New log removed",
+    "Candidate hard-linked artifact unchanged",
+    "Later source edits leave backup unchanged",
+    "Artifact rollback reused existing bytes via atomic link replacement"
+  ],
+  "engine_pins": {
+    "accepted_engine": "/home/azureuser/goldbach-lean/research/wu-hf4-constructive-audit/tools/core.py",
+    "accepted_engine_sha256": "5d8742f7b2cb68fb9469b0cd9726fe710ef1df2445b4fa7a3ea071a66440eddc",
+    "adapter_sha256": "6d8d7e20f45b6596e31cf8359370f626149f7dfbf3082474456c0da58bc21619"
+  },
+  "production_installation_executed": false
+}

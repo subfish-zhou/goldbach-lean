@@ -141,15 +141,5 @@ theorem M_blocks_exact (p : SecondFunctionalParameters) (hp : p.MotherAdmissible
     fourMass_two_blocks p hp hs, fourMass_three_blocks p hp hs]
   ring
 
-/-- Every original integral in the exact total is absolutely integrable. -/
-theorem original_masses_integrable (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
-    (hs : 2 ≤ p.s) :
-    (∀ j : Fin 6, IntegrableOn (geometricWeight 1)
-      (LowerTripleContinuous.D (1/p.S) (1/p.kappa1) (1/p.kappa2) (1/p.kappa3) (1/p.s) j)) ∧
-    IntegrableOn (geometricWeight 3) (massDomain20 (1/p.kappa2) (1/p.kappa3) (1/p.s)) ∧
-    IntegrableOn (geometricWeight 4) (massDomain21 (1/p.kappa3) (1/p.s)) ∧
-    (∀ j : Fin 4, IntegrableOn (geometricWeight 2)
-      (massDomainFour (1/p.kappa1) (1/p.kappa2) (1/p.kappa3) (1/p.s) j)) :=
-  mother_mass_integrable p hp hs
 
 end Wu2008DoubleSieve.SecondFunctionalGeometricMass.OriginalBlocks

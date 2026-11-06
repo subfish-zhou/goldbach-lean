@@ -216,23 +216,6 @@ theorem J20_log_bounds {a2 a b : ℝ} (ha : 1/10 ≤ a2) (haa : a2 ≤ a)
     0 ≤ J20 a2 a b phi ∧ J20 a2 a b phi ≤ Real.log (a/a2) * Real.log (b/a)^3 / (24*a) :=
   ⟨J20_nonneg ha haa hab hb phi, J20_log_cap ha haa hab hb phi⟩
 
-/-- Zero high width follows from the same logarithmic endpoint, without dividing by width. -/
-theorem J21_log_zero_width {a : ℝ} (ha : 1/10 ≤ a) (hb : a ≤ 1/2) (phi : ℝ) :
-    J21 a a phi = 0 := by
-  have ha0 : a ≠ 0 := ne_of_gt (by linarith)
-  have h := J21_log_bounds ha (le_refl a) hb phi
-  apply le_antisymm _ h.1
-  simpa [div_self ha0] using h.2
 
-/-- Both possible zero widths are included in the actual J20 log cap. -/
-theorem J20_log_zero_width {a2 a b : ℝ} (ha : 1/10 ≤ a2) (haa : a2 ≤ a)
-    (hab : a ≤ b) (hb : b ≤ 1/2) (phi : ℝ) (hz : a2 = a ∨ a = b) :
-    J20 a2 a b phi = 0 := by
-  have ha0 : a ≠ 0 := ne_of_gt (by linarith)
-  have h := J20_log_bounds ha haa hab hb phi
-  apply le_antisymm _ h.1
-  rcases hz with hz | hz
-  · simpa [hz, div_self ha0] using h.2
-  · simpa [← hz, div_self ha0] using h.2
 
 end Wu2008DoubleSieve.HighUnit

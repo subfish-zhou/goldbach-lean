@@ -370,11 +370,6 @@ theorem recovered_deficit_bounds : (1/250:ℝ) < AnalyticTotalThreshold.target-r
   rw [recovered_exact_difference]
   constructor <;> linarith only [hD.1,hD.2,hP.1,hP.2,hL.1,hL.2,hJ.1,hJ.2,hT.1,hT.2,hS.1,hS.2,h6.1,h6.2]
 
-/-- This concrete certificate is insufficient. No upper bound on actual Q is asserted. -/
-theorem recovered_strict_upper : recoveredCoefficient < 8*log (5000/4469)-1/250 := by
-  have h := recovered_deficit_bounds.1
-  unfold AnalyticTotalThreshold.target at h
-  linarith only [h]
 
 end
 end Wu2008DoubleSieve.SixthLogTotalMagnitude

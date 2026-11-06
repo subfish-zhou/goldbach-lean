@@ -49,15 +49,6 @@ theorem actual_coefficient_pos {i N : ℕ} {δ : ℝ} {p : SecondFunctionalParam
     (hx : x ∈ actualProfiles N δ p W high) : 0 < convolutionCoeff W x.1 :=
   mem_boxConvolutionSupport.mp (mem_sigma.mp hx).1
 
-/-- Unweight only after proving that every retained original coefficient is positive. -/
-theorem actual_card_fibre_le_weight {i N e : ℕ} (δ : ℝ) (p : SecondFunctionalParameters)
-    (W : Fin i → Finset ℕ) (high : Bool) :
-    (((actualProfiles N δ p W high).filter (fun x => cofactor x = e)).card : ℝ) ≤
-      ∑ x ∈ (actualProfiles N δ p W high).filter (fun x => cofactor x = e),
-        (convolutionCoeff W x.1 : ℝ) := by
-  calc
-    _ = ∑ _x ∈ (actualProfiles N δ p W high).filter (fun x => cofactor x = e), (1 : ℝ) := by simp
-    _ ≤ _ := sum_le_sum fun x hx => by exact_mod_cast actual_coefficient_pos (mem_filter.mp hx).1
 
 /-- Number of retained primePrefix primes, excluding the last fibre prime. -/
 def arity (high : Bool) : ℕ := if high then 5 else 4

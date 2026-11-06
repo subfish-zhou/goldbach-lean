@@ -52,9 +52,6 @@ theorem residual_identity :
     (classicalNumerator row1-239103/1000000)+
       2*(80370/1000000-coupledCostMass row1)-153757/200000000 := by ring
 
-theorem remaining_slacks_nonnegative :
-    0≤classicalNumerator row1-239103/1000000 ∧ 0≤80370/1000000-coupledCostMass row1 :=
-  ⟨sub_nonneg.mpr first_classical,sub_nonneg.mpr first_cost⟩
 
 #print axioms first_joint_paid
 #print axioms first_parent_slack_paid

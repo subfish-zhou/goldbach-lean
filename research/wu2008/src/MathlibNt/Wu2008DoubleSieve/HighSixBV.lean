@@ -143,16 +143,5 @@ theorem omega2_lower_paid {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
   have hb := (abs_le.mp (hT N hN)).1
   linarith
 
-/-- Nonconditional count consumption of the paid lower Rosser main. -/
-theorem count_lower_main_paid {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
-    (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      2*C6 N ≤ O1 N δ - pairMain N δ + O3 N δ + ε * truncatedSixthMassScale N := by
-  obtain ⟨T, hT4, hT⟩ := omega2_lower_paid hδ hδhi hε
-  refine ⟨T, hT4, ?_⟩
-  intro N hN
-  have hf := count_finite (show 2 ≤ N by omega) hδ hδhi
-  have hb := hT N hN
-  linarith
 
 end Wu2008DoubleSieve.HighSix

@@ -92,33 +92,5 @@ theorem omega3X_argument_bounds {φ a b c : ℝ}
   apply (div_le_iff₀ hb0).mpr
   nlinarith [ha.1, hb.1, hc.1]
 
-/-- A single finite Buchstab cap and positive delta gap cover every real
-point, not merely the prime atoms. The quantifiers over boxes follow k,delta. -/
-theorem omega3X_continuous_source_geometry (k : ℕ) {δ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    0 < wuLocalExponent k δ ∧
-    ∀ (N i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), 2 ≤ N →
-      wuSourceBox k δ N i Δ V →
-      ∀ d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V),
-      ∀ s t : ℝ, 2 ≤ s → s ≤ t → t ≤ 10 →
-      ∀ p ∈ omega3XExponentRegion s t,
-        2 < omega3XPhi N d δ ∧
-        omega3XPhi N d δ ≤ 1 / wuLocalExponent k δ ∧
-        1 + 2 * δ / (1 / 2 - δ) <
-          (omega3XPhi N d δ - p.1 - p.2.1 - p.2.2) / p.2.1 ∧
-        (omega3XPhi N d δ - p.1 - p.2.1 - p.2.2) / p.2.1 ≤
-          10 / wuLocalExponent k δ := by
-  refine ⟨wuLocalExponent_pos k hδ hδhi, ?_⟩
-  intro N i Δ V hN hb d hd s t hs hst ht p hp
-  obtain ⟨_, _, hφ, hφhi⟩ := omega3XPhi_source_bounds hN hδ hδhi hb hd
-  have hgap : 0 < 2 * δ / (1 / 2 - δ) := by positivity
-  have hφ2 : 2 < omega3XPhi N d δ := by linarith
-  obtain ⟨ha, hb', hc⟩ := omega3XExponentRegion_bounds hs hst ht hp
-  obtain ⟨hlo, hhi, _⟩ := omega3X_argument_bounds hφ2.le ha hb' hc
-  refine ⟨hφ2, hφhi, by linarith, ?_⟩
-  calc
-    _ ≤ 10 * omega3XPhi N d δ := hhi
-    _ ≤ 10 * (1 / wuLocalExponent k δ) := by gcongr
-    _ = _ := by ring
 
 end Wu2008DoubleSieve

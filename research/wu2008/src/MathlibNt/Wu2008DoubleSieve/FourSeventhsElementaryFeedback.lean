@@ -32,10 +32,5 @@ theorem actual_elementary_global_with_tail {δ : ℝ} (hδ : 0 < δ) (hδhi : δ
     (original_mother i) (original_s_ge_two i) δ
   simpa only [he, add_assoc] using h
 
-/-- No compact cutoff or factorial depth is needed for this global-envelope branch. -/
-theorem actual_elementary_global {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/10) :
-    Q.mulVec (fun i => elementaryAnalyticSource (parameters i) δ) ≤ actualVector δ :=
-  (Q_mulVec_mono (le_add_of_nonneg_right (literalTail_nonnegative hδ hδhi))).trans
-    (actual_elementary_global_with_tail hδ hδhi)
 
 end Wu2008DoubleSieve.SecondFunctionalFourSevenths

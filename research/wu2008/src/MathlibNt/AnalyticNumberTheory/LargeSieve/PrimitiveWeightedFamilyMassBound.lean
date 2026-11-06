@@ -46,10 +46,5 @@ theorem weightedPrimitiveFamilyMass_le_triangular
       exact sum_le_sum_of_subset_of_nonneg hS (fun _ _ _ => Nat.cast_nonneg _)
     _ = (Q : ℝ) * ((Q : ℝ) + 1) / 2 := sum_Icc_one_cast Q
 
-/-- The full conductor interval version of `weightedPrimitiveFamilyMass_le_triangular`. -/
-theorem weightedPrimitiveFamilyMass_Icc_le_triangular (Q : ℕ) :
-    weightedPrimitiveFamilyMass (Icc 1 Q) ≤
-      (Q : ℝ) * ((Q : ℝ) + 1) / 2 := by
-  exact weightedPrimitiveFamilyMass_le_triangular Q (Icc 1 Q) (by rfl)
 
 end AnalyticNumberTheory.LargeSieve

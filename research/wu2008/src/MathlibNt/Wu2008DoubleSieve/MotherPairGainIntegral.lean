@@ -103,13 +103,5 @@ theorem gain_integral_eq {p : SecondFunctionalParameters} (h : AnalyticParameter
   intro t ht
   exact gain_inner_eq h j (by simpa only [uIcc_of_le (gain_endpoint_order h j).2.1] using ht)
 
-theorem gain_integral_literal_prod {p : SecondFunctionalParameters} (h : AnalyticParameters p)
-    (j : Term) {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1/2) :
-    (∫ v : ℝ × ℝ, gainKernel p j δ v) =
-    ∫ t in (1/p.S)..(upperP p j),
-      ∫ u in (min (upperQ p j) (max (lowerQ p j) t))..(upperQ p j),
-        if gamma5GainLegal t u then
-          wuImprovementLimit true δ (Hratio p j t u)/(t*u*(1-t-u)) else 0 :=
-  (gain_integral_eq h j hδ hδhi).symm
 
 end Wu2008DoubleSieve.MotherPair

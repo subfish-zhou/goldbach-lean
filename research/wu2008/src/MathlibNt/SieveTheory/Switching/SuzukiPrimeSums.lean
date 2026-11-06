@@ -256,19 +256,6 @@ theorem suzukiLemmaEightSixPrimeSum_eq_nat
     · intro q hq
       rfl
 
-/-- Thus the exact Suzuki prime sum at integral cutoffs has the Abel
-boundary-plus-increment expansion. -/
-theorem suzukiLemmaEightSixPrimeSum_abelIdentity
-    (S : BoundingSieve) (D : ℝ) (w z : ℕ) (hwz : w ≤ z) (H : ℝ → ℝ) :
-    suzukiLemmaEightSixPrimeSum S D (w : ℝ) (z : ℝ) H =
-      suzukiSuffixRatio S z w * H (Real.log D / Real.log w) -
-        suzukiSuffixRatio S z z * H (Real.log D / Real.log z) +
-        ∑ n ∈ Ico (w + 1) (z + 1), suzukiSuffixRatio S z n *
-          (H (Real.log D / Real.log n) -
-            H (Real.log D / Real.log ((n - 1 : ℕ) : ℝ))) := by
-  rw [suzukiLemmaEightSixPrimeSum_eq_nat]
-  exact suzukiPrimeSumNat_abelIdentity S w z hwz
-    (fun p => H (Real.log D / Real.log p))
 
 /-- The generic local-product input specializes exactly to the natural suffix
 ratio used by `suzukiFiniteAbel`. -/
@@ -282,33 +269,7 @@ theorem suzukiSuffixRatio_le
   simpa only [suzukiLocalRatio_nat_right S z (Nat.cast_nonneg x), Nat.ceil_natCast]
     using h
 
-/-- Equation (8.1) at natural endpoints, obtained without PNT or Mertens. -/
-theorem suzukiNatDimensionOneError_le
-    {S : BoundingSieve} {K : ℝ} (hlocal : HasDimensionOneLocalProductBound S K)
-    {x z : ℕ} (hx : 2 ≤ x) (hxz : x ≤ z) :
-    suzukiSuffixRatio S z x - Real.log z / Real.log x ≤
-      K / Real.log x * (Real.log z / Real.log x) := by
-  have h := suzukiSuffixRatio_le hlocal hx hxz
-  calc
-    suzukiSuffixRatio S z x - Real.log z / Real.log x ≤
-        Real.log z / Real.log x * (1 + K / Real.log x) -
-          Real.log z / Real.log x := sub_le_sub_right h _
-    _ = K / Real.log x * (Real.log z / Real.log x) := by ring
 
-/-- The source hypothesis that `t ↦ H(t)t` is antitone, together with
-nonnegativity and positive coordinates, implies that `H` itself is antitone. -/
-theorem antitoneOn_of_mul_id_antitoneOn
-    {H : ℝ → ℝ} {s σ : ℝ} (hs : 0 < s)
-    (hH0 : ∀ t ∈ Set.Icc s σ, 0 ≤ H t)
-    (hmono : AntitoneOn (fun t => H t * t) (Set.Icc s σ)) :
-    AntitoneOn H (Set.Icc s σ) := by
-  intro x hx y hy hxy
-  have hxpos : 0 < x := hs.trans_le hx.1
-  have hprod : H y * y ≤ H x * x := hmono hx hy hxy
-  have hscale : H y * x ≤ H y * y :=
-    mul_le_mul_of_nonneg_left hxy (hH0 y hy)
-  have : H y * x ≤ H x * x := hscale.trans hprod
-  nlinarith
 
 /-- The supported primes in `[w,z)`, sorted and cast to real nodes. -/
 noncomputable def suzukiSupportedPrimeNodes
@@ -727,25 +688,6 @@ theorem pairwise_imp_of_mem {α : Type*} {R T : α → α → Prop} {l : List α
       · intro x hx y hy hxy
         exact hT x (by simp [hx]) y (by simp [hy]) hxy
 
-/-- Every forward finite-node variation increment `g y - g x` is nonnegative.
-In particular this holds for each adjacent pair used by the Abel variation sum. -/
-theorem transformedH_suzukiFiniteNodes_increments_nonneg
-    {D w z s σ : ℝ} {H : ℝ → ℝ}
-    (S : BoundingSieve)
-    (hD : 1 < D) (hw : 1 < w) (hwz : w ≤ z)
-    (hcoord : ∀ x ∈ Set.Icc w z, Real.log D / Real.log x ∈ Set.Icc s σ)
-    (hH : ∀ t ∈ Set.Icc s σ, 0 ≤ H t)
-    (hHt : AntitoneOn (fun t => H t * t) (Set.Icc s σ)) :
-    (suzukiFiniteNodes S w z).Pairwise
-      (fun x y => 0 ≤ H (Real.log D / Real.log y) -
-        H (Real.log D / Real.log x)) := by
-  apply pairwise_imp_of_mem (suzukiFiniteNodes_pairwise S hwz)
-  intro x hx y hy hxy
-  apply sub_nonneg.mpr
-  apply transformedH_monotoneOn hD hw hwz hcoord hH hHt
-  · exact mem_suzukiFiniteNodes_Icc hwz hx
-  · exact mem_suzukiFiniteNodes_Icc hwz hy
-  · exact hxy
 
 @[simp] theorem suzukiDimensionOneError_self
     (S : BoundingSieve) {z : ℝ} (hz : Real.log z ≠ 0) :

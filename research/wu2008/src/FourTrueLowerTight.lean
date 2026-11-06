@@ -246,15 +246,6 @@ theorem actual_remaining_magnitude :
     JFourRemainingMagnitude.fourRemaining < 558/10000 :=
   ⟨four_remaining_interval.1,four_remaining_interval.2.trans_lt remaining_cap_size⟩
 
-/-- More than half of the previous unspent Four uncertainty is eliminated. -/
-theorem cap_reduction : remainingCap < JFourRemainingMagnitude.fourCap/2 := by
-  rw [remainingCap,actual_lower_exact]
-  norm_num [JFourRemainingMagnitude.fourCap,FourActualCapRecovery.actualUpper,
-    FourActualCapRecovery.cap,Phase24.exactMass,Phase24.A,Phase24.c,
-    JFourRemainingMagnitude.FourLower.rationalLower,A,c,
-    FourLogAffine.l,FourLogAffine.u,FourLogAffine.w,
-    SharpLogRecurrence.lowerLog,SharpLogRecurrence.upperLog,alpha,beta,lam,
-    truncatedSixthLowerAlpha,truncatedSixthLowerBeta,truncatedSixthLowerLambda]
 
 /-- The contribution to the mother's uncertainty retains the original division by four. -/
 theorem mother_four_uncertainty :

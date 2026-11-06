@@ -88,14 +88,6 @@ theorem omega3SieveOutputWeight_test {i : ℕ} (N : ℕ) (δ s t : ℝ)
     simp [Ne.symm hne]
   · exact fun hn => (hn hb).elim
 
-theorem omega3GoldbachBoundingSieve_mass {i : ℕ} (N : ℕ) (he : Even N)
-    (δ s t Z : ℝ) (W : Fin i → Finset ℕ) :
-    (∑ b ∈ (omega3GoldbachBoundingSieve N he δ s t Z W).support,
-      (omega3GoldbachBoundingSieve N he δ s t Z W).weights b) =
-        omega3SieveX N δ s t W := by
-  simpa only [omega3GoldbachBoundingSieve, omega3SieveX,
-    mul_one, sum_const, nsmul_eq_mul] using
-    omega3SieveOutputWeight_test N δ s t W (fun _ => 1)
 
 theorem omega3GoldbachBoundingSieve_multSum {i : ℕ} (N : ℕ) (he : Even N)
     (δ s t Z : ℝ) (W : Fin i → Finset ℕ) (q : ℕ) :
@@ -134,18 +126,6 @@ theorem omega3GoldbachBoundingSieve_nu {i N q : ℕ} (he : Even N)
   goldbachNu_squarefree_eq_inv_totient
     ((ordinarySievePrimeProduct_squarefree N Z).squarefree_of_dvd hq)
 
-theorem omega3GoldbachBoundingSieve_localWeight {i N q : ℕ} (he : Even N)
-    (δ s t Z : ℝ) (W : Fin i → Finset ℕ)
-    (hq : q ∣ ordinarySievePrimeProduct N Z) :
-    (omega3GoldbachBoundingSieve N he δ s t Z W).nu q =
-      omega3SieveLocalWeight N q / (q : ℝ) := by
-  have hqpos := Nat.pos_of_dvd_of_pos hq (ordinarySievePrimeProduct_pos N Z)
-  have hqr : (q : ℝ) ≠ 0 := by positivity
-  rw [omega3GoldbachBoundingSieve_nu he δ s t Z W hq,
-    omega3SieveLocalWeight, if_pos ⟨
-      (ordinarySievePrimeProduct_squarefree N Z).squarefree_of_dvd hq,
-      (ordinarySievePrimeProduct_coprime N Z).of_dvd_left hq⟩]
-  field_simp
 
 theorem omega3GoldbachBoundingSieve_rem {i N q : ℕ} (he : Even N)
     (δ s t Z : ℝ) (W : Fin i → Finset ℕ)
@@ -175,28 +155,8 @@ theorem omega3GoldbachBoundingSieve_mainSum {i : ℕ} (N D : ℕ) (he : Even N)
       (Nat.mem_divisors.mp hq).1)]
   simp only [ordinaryRosserWeight, if_true, one_mul, div_eq_mul_inv]
 
-theorem omega3SieveAPResidual_one {i : ℕ} (N : ℕ) (δ s t : ℝ)
-    (W : Fin i → Finset ℕ) :
-    omega3SieveAPResidual N δ s t W 1 = 0 := by
-  simp [omega3SieveAPResidual, omega3SieveAPCount, Nat.modEq_iff_dvd]
 
-theorem omega3SieveMissingMass_one {i : ℕ} (N : ℕ) (δ s t : ℝ)
-    (W : Fin i → Finset ℕ) :
-    omega3SieveMissingMass N δ s t W 1 = 0 := by
-  simp [omega3SieveMissingMass]
 
-theorem omega3SieveAPCount_empty {N q : ℕ} {δ s : ℝ} {c : Omega3CofactorIndex}
-    (hc : omega3CofactorPrimeFibreLE N δ s c = ∅) :
-    omega3SieveAPCount N δ s c q = 0 := by
-  simp [omega3SieveAPCount, hc]
 
-theorem omega3Sieve_empty_labels {i N D : ℕ} {δ s t Z : ℝ}
-    {W : Fin i → Finset ℕ} (h : omega3CofactorLabels N δ s t W = ∅) :
-    omega3SieveX N δ s t W = 0 ∧
-      omega3SieveR1 N D δ s t Z W = 0 ∧
-      omega3SieveR2 N D δ s t Z W = 0 ∧
-      omega3SwitchedSiftedCountLE N δ s t Z W = 0 := by
-  simp [omega3SieveX, omega3SieveR1, omega3SieveR2, omega3SieveAPResidual,
-    omega3SieveMissingMass, omega3SwitchedSiftedCountLE, h]
 
 end Wu2008DoubleSieve

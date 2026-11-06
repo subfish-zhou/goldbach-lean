@@ -77,35 +77,6 @@ theorem claim14_5_exact_case_split
     · right
       exact ⟨hN, hleft, le_of_not_ge hhigh⟩
 
-/-- Full range partition used before the induction step: either Claim 14.5
-already applies, or one is in exactly Case I/II. -/
-theorem claim14_5_regime_or_caseI_or_caseII
-    {β D σ C1 K ΘK s : ℝ} {N : ℕ}
-    (hdom : s ∈ SuzukiFiniteContinuousLayers.suzukiParityDomainOne β N)
-    (hsσor : s ≤ σ ∨ σ ≤ s) :
-    Claim14_5Regime β D σ C1 K ΘK s ∨
-      Claim14_5CaseI β N s σ ∨ Claim14_5CaseII β N s := by
-  by_cases hβs : β ≤ s
-  · by_cases hsmall : Real.log D ≤ C1 * K ^ ΘK
-    · exact Or.inl ⟨hβs, Or.inl hsmall⟩
-    · rcases hsσor with hsσ | hσs
-      · exact Or.inr (claim14_5_exact_case_split hdom hsσ (lt_of_not_ge hsmall))
-      · exact Or.inl ⟨hβs, Or.inr hσs⟩
-  · right
-    right
-    have hodd : Odd N := by
-      rcases Nat.even_or_odd N with heven | hodd
-      · have hmod : N % 2 = 0 := Nat.even_iff.mp heven
-        have : β ≤ s := by
-          simpa [SuzukiFiniteContinuousLayers.suzukiParityDomainOne,
-            SuzukiFiniteContinuousLayers.KappaOneModel.parityDomain, hmod] using hdom
-        exact False.elim (hβs this)
-      · exact hodd
-    have hmod : N % 2 = 1 := Nat.odd_iff.mp hodd
-    have hleft : β - 1 < s := by
-      simpa [SuzukiFiniteContinuousLayers.suzukiParityDomainOne,
-        SuzukiFiniteContinuousLayers.KappaOneModel.parityDomain, hmod] using hdom
-    exact ⟨hodd, hleft, by linarith⟩
 
 /-! ## Lemma 8.7 connected to Claim 14.6 -/
 

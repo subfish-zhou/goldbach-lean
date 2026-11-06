@@ -71,20 +71,5 @@ theorem terminal_le_actual : terminal ≤ firstFeedback NineFeedbackStrength.ori
 theorem old_terminal_lt : Hf4Next.terminal < terminal :=
   add_lt_add_left (mul_lt_mul_of_pos_left old_profile_lt (log_pos (by norm_num : (1:ℝ) < 2))) _
 
-/-- Exact increment is paid against the original unpaid ledger, with E once. -/
-theorem payment_le_original_unpaid :
-    RemainingHf.splitLower 2*finiteVariation NineFeedbackStrength.originalH/
-      (1-D0FullDensity.finiteD) ≤ CorrectionD0Joint.allUnpaid := by
-  have hl := mul_le_mul_of_nonneg_right
-    (RemainingHf.splitLower_le (by norm_num : (1:ℝ) ≤ 2)) finiteProfile_pos.le
-  have ht := terminal_le_actual
-  rw [CorrectionD0Joint.actual_terminal_balance] at ht
-  unfold terminal at ht
-  have hbal : RemainingHf.splitLower 2*finiteProfile+
-      TerminalESigned.massPaid NineFeedbackStrength.originalH = CorrectionD0Joint.terminal+
-      RemainingHf.splitLower 2*finiteVariation NineFeedbackStrength.originalH/(1-D0FullDensity.finiteD) := by
-    unfold finiteProfile CorrectionD0Joint.terminal CorrectionD0Joint.profile
-    ring
-  linarith only [hl,ht,hbal]
 
 end Hf4Refine

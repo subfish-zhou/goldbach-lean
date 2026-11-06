@@ -1,0 +1,12 @@
+{
+  "status": "COMPLETED_SERIAL_RECEIPTS_UNCHANGED_AFTER_PARALLEL_RESUME_NOT_FULL_ACCEPTANCE",
+  "preserved_fresh_source_receipts": 995,
+  "prior_completed_sources_recompiled": 0,
+  "source_manifest_sha256": "2f4b834f8e1c357b502218784e3e926d142e439a443817a143f821a53406ffc6",
+  "jobs": 2,
+  "lean_threads": 1,
+  "checkpoint_sha256": "aa0873dabbdf9e92cb05ffb150b07692cfd394c4b4bb52497a3d5007e2ad4be6",
+  "build_pid": 1997457,
+  "pipeline_pid": 1997511,
+  "observed_unix": 1793230904.5471299
+}

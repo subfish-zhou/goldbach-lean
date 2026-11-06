@@ -168,25 +168,6 @@ theorem correctedChenNu_inv_prime_localFactor {N p : ℕ} (hp : p.Prime)
   rw [hrhs]
   exact correctedChenNu_inv_prime (_N := N) hp hp2
 
-/-- The corrected Selberg divisor sum splits into the Mertens-type prime
-product over the sieved primes and the reciprocal of their singular-series
-local-factor product.  This is the finite seam at which the exact Mertens
-product formula and the singular series enter the main term. -/
-theorem correctedChenSelbergSum_eq_mertens_mul_localFactor_inv (N : ℕ) :
-    ∑ d ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
-      (correctedChenBoundingSieve N).selbergTerms d =
-      (∏ p ∈ (correctedChenSiftingProduct N).primeFactors, (p : ℝ) / (p - 1)) *
-      (∏ p ∈ (correctedChenSiftingProduct N).primeFactors,
-          AnalyticNumberTheory.Sieve.localFactor p N)⁻¹ := by
-  rw [AnalyticNumberTheory.Sieve.selbergSum_eq_prod_inv]
-  rw [← Finset.prod_inv_distrib]
-  rw [← Finset.prod_mul_distrib]
-  apply Finset.prod_congr rfl
-  intro p hp
-  have hp_prime : p.Prime := Nat.prime_of_mem_primeFactors hp
-  have hpcond := (prime_dvd_correctedChenSiftingProduct hp_prime).mp
-    (Nat.dvd_of_mem_primeFactors hp)
-  exact correctedChenNu_inv_prime_localFactor hp_prime hpcond.2.1 hpcond.2.2
 
 /-! ## Main-term asymptotics: Mertens products and the singular series -/
 
@@ -1046,84 +1027,6 @@ theorem singularSeriesTruncatedLowerBound_ge_half : SingularSeriesTruncatedLower
   intro N z hz
   exact singularSeriesTruncated_ge_half hz
 
-/-- The uniform singular-series lower bound gives the uniform main-term lower bound without further analytic inputs. -/
-theorem CorrectedChenMainTermLower_of_singularSeries_lower_bound :
-    CorrectedChenMainTermLower := by
-  exact CorrectedChenMainTermLower_of_singularSeries_lower singularSeriesTruncatedLowerBound_ge_half
 
-/-- **Asymptotic order of the main term**: the corrected Selberg divisor sum for the corrected sieve
-is `Θ(log (z-1) / 𝔖(N, z-1))`.
-
-This applies the exact Mertens product formula
-(`primeProduct_asymptotic_order`) to the seam
-`SelbergSum · 𝔖 = 1 / primeProduct (z-1)`. -/
-theorem correctedChenSelbergSum_asymptotic_order :
-    ∃ c₁ c₂ : ℝ, 0 < c₁ ∧ ∀ N : ℕ, Even N → 4 ≤ N → 3 ≤ correctedChenZ N →
-      c₁ * log ((correctedChenZ N - 1 : ℕ) : ℝ) /
-        AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1) ≤
-        (∑ d ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
-          (correctedChenBoundingSieve N).selbergTerms d) ∧
-      (∑ d ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
-          (correctedChenBoundingSieve N).selbergTerms d) ≤
-        c₂ * log ((correctedChenZ N - 1 : ℕ) : ℝ) /
-        AnalyticNumberTheory.Sieve.singularSeriesTruncated N (correctedChenZ N - 1) := by
-  obtain ⟨c₁₀, c₂₀, hc₁₀, hPP⟩ := MertensTheorem.primeProduct_asymptotic_order
-  have hc₂₀ : 0 < c₂₀ := by
-    have hlog2 : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-    have hpos : 0 < c₂₀ / log 2 :=
-      (primeProduct_pos 2).trans_le (hPP 2 (by norm_num)).2
-    exact (div_pos_iff_of_pos_right hlog2).mp hpos
-  refine ⟨1 / c₂₀, 1 / c₁₀, one_div_pos.mpr hc₂₀, ?_⟩
-  intro N hN _hN4 hz3
-  let z := correctedChenZ N
-  let x := z - 1
-  have hz1 : 1 ≤ z := by omega
-  have hx1 : 1 ≤ x := by omega
-  have hx2 : 2 ≤ x := by omega
-  have hlog : 0 < log (x : ℝ) := by
-    have : (1 : ℝ) < x := by exact_mod_cast (show 1 < x by omega)
-    exact Real.log_pos this
-  have hSpos : 0 < AnalyticNumberTheory.Sieve.singularSeriesTruncated N x :=
-    AnalyticNumberTheory.Sieve.singularSeriesTruncated_pos N x hx1
-  have hSne : AnalyticNumberTheory.Sieve.singularSeriesTruncated N x ≠ 0 := ne_of_gt hSpos
-  have hP := hPP x hx2
-  have hPpos : 0 < MertensTheorem.primeProduct x := primeProduct_pos x
-  have hid := correctedChenSelbergSum_mul_singularSeriesTruncated N hN
-  have hSel : (∑ d ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
-        (correctedChenBoundingSieve N).selbergTerms d) =
-      (MertensTheorem.primeProduct x)⁻¹ *
-        (AnalyticNumberTheory.Sieve.singularSeriesTruncated N x)⁻¹ := by
-    have h := congrArg (fun t : ℝ => t * (AnalyticNumberTheory.Sieve.singularSeriesTruncated N x)⁻¹) hid
-    rw [mul_assoc, mul_inv_cancel₀ hSne, mul_one] at h
-    exact h
-  have hrec_lo : log (x : ℝ) / c₂₀ ≤ (MertensTheorem.primeProduct x)⁻¹ := by
-    have h1 : (c₂₀ / log (x : ℝ))⁻¹ ≤ (MertensTheorem.primeProduct x)⁻¹ :=
-      (inv_le_inv₀ (div_pos hc₂₀ hlog) hPpos).mpr hP.2
-    simpa only [inv_div] using h1
-  have hrec_up : (MertensTheorem.primeProduct x)⁻¹ ≤ log (x : ℝ) / c₁₀ := by
-    have h1 : (MertensTheorem.primeProduct x)⁻¹ ≤ (c₁₀ / log (x : ℝ))⁻¹ :=
-      (inv_le_inv₀ hPpos (div_pos hc₁₀ hlog)).mpr hP.1
-    simpa only [inv_div] using h1
-  have hA : log (x : ℝ) / c₂₀ * (AnalyticNumberTheory.Sieve.singularSeriesTruncated N x)⁻¹ ≤
-      (∑ d ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
-        (correctedChenBoundingSieve N).selbergTerms d) := by
-    rw [hSel]
-    exact mul_le_mul_of_nonneg_right hrec_lo (inv_nonneg.mpr (le_of_lt hSpos))
-  have hB : (∑ d ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
-        (correctedChenBoundingSieve N).selbergTerms d) ≤
-      log (x : ℝ) / c₁₀ * (AnalyticNumberTheory.Sieve.singularSeriesTruncated N x)⁻¹ := by
-    rw [hSel]
-    exact mul_le_mul_of_nonneg_right hrec_up (inv_nonneg.mpr (le_of_lt hSpos))
-  have hnormA : log (x : ℝ) / c₂₀ * (AnalyticNumberTheory.Sieve.singularSeriesTruncated N x)⁻¹ =
-      (1 / c₂₀) * log (x : ℝ) / AnalyticNumberTheory.Sieve.singularSeriesTruncated N x := by
-    field_simp [hSne, hc₂₀.ne']
-  have hnormB : log (x : ℝ) / c₁₀ * (AnalyticNumberTheory.Sieve.singularSeriesTruncated N x)⁻¹ =
-      (1 / c₁₀) * log (x : ℝ) / AnalyticNumberTheory.Sieve.singularSeriesTruncated N x := by
-    field_simp [hSne, hc₁₀.ne']
-  constructor
-  · rw [← hnormA]
-    exact hA
-  · rw [← hnormB]
-    exact hB
 
 end MathlibNt.SieveTheory.SwitchingPrinciple

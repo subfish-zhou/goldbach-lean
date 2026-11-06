@@ -88,31 +88,5 @@ theorem physicalSmall_external (A : ℕ) {e ε δ η : ℝ}
   simp only [← sifted_eq, sum_sub_distrib, sum_add_distrib] at hb
   exact hs.trans (add_le_add (add_le_add hb le_rfl) le_rfl)
 
-open scoped Classical in
-/-- The same result with the literal original physicalT8 filter displayed in its type. -/
-theorem physicalT8_small_external (A : ℕ) {e ε δ η : ℝ}
-    (he : 0 < e) (he1 : e ≤ 1) (hε : 0 < ε) (hεa : ε < 100/1327)
-    (hεδ : ε < δ) (hδ : δ < 1/2) (hη : 0 < η) (hηu : η < 1/8) :
-    ∃ N₀ : ℝ, ∀ N : ℕ, N₀ ≤ (N : ℝ) →
-      ∀ ρ : ℝ, 1 < ρ → ρ ≤ 5/4 → ∀ P : Finset ℕ,
-      (∀ p ∈ P, p.Prime) → (∀ p ∈ P, p.Coprime N) →
-      ∀ z : ℝ, (∀ p ∈ P, (p : ℝ) < z) →
-      (((Wu2008DoubleSieve.SeventhEighth.physicalT8 N).filter
-        (fun x => (x.1.1 : ℝ) < (N : ℝ)^(1/10 : ℝ))).card : ℝ) ≤
-        (∑ k ∈ occupied N e ρ,
-          ∑ t ∈ externalTags true P (externalInternalLevel (OriginalU8.level N ρ δ k) η) η z,
-            ∑ d ∈ (P.prod id).divisors,
-              externalTerm true P (externalInternalLevel (OriginalU8.level N ρ δ k) η) η z t d *
-                OriginalU8.center N ρ k d) +
-        (∑ k ∈ occupied N e ρ,
-          ((externalTags true P (externalInternalLevel (OriginalU8.level N ρ δ k) η) η z).card : ℝ) *
-            ((4*ρ^(k.2.1+k.2.2)*((2/3 : ℝ)*ρ^k.1)) /
-              Real.log (4*ρ^(k.2.1+k.2.2)*((2/3 : ℝ)*ρ^k.1))^A)) -
-        (∑ k ∈ occupied N e ρ,
-          ∑ t ∈ externalTags true P (externalInternalLevel (OriginalU8.level N ρ δ k) η) η z,
-            OriginalU8.exceptional N ρ δ k P η z t) +
-        (outputBad N e P).card + (smallPrefix N e).card := by
-  simpa only [physicalSmall] using
-    physicalSmall_external A he he1 hε hεa hεδ hδ hη hηu
 
 end U8Literal.Join

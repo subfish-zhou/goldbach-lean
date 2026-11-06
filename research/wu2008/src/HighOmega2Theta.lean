@@ -96,57 +96,6 @@ theorem original_base_gap {N : ℕ} {δ : ℝ} {V : Fin 2 → ℝ}
   · apply (div_le_self (by positivity) hprod1).trans
     simpa only [rpow_one] using rpow_le_rpow_of_exponent_le hN1 (show 1/2-δ ≤ (1 : ℝ) by linarith)
 
-/-- All r complete source cells have bounded total inserted Theta; therefore
-so do the inner cells. This is an actual original-high-box bound. -/
-theorem original_grid_theta {N r : ℕ} {δ Δ s t : ℝ} {V : Fin 2 → ℝ}
-    (hN : 4 ≤ N) (hδ : 0 ≤ δ) (hδhi : δ ≤ 50*highEta) (hΔ : 1 < Δ)
-    (hV : ∀ j, (N : ℝ)^(100/1327 : ℝ) ≤ V j) (hrect : OriginalRectangles N V)
-    (hlarge : 4 ≤ (N : ℝ)^highEta)
-    (hstart : LiLiuPrereqBuchstab.primeErrorStart ≤ (N : ℝ)^highEta)
-    (hs : 2 ≤ s) (hst : s ≤ t) (ht : t ≤ 5)
-    (hr : reboxingAlpha ((N : ℝ)^(1/2-δ)/(∏ j, V j)) Δ t r ≤
-      ((N : ℝ)^(1/2-δ)/(∏ j, V j))^(1/s)) :
-    (∑ j ∈ range r, boxTheta N ((N : ℝ)^(1/2-δ))
-      (Fin.cons (cell N ((N : ℝ)^(1/2-δ)/(∏ l, V l)) Δ t j) (convolutionWuWindows N Δ V))) ≤
-        (20/highEta)*boxTheta N ((N : ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  let q := (N : ℝ)^(1/2-δ)/(∏ j, V j)
-  have hN1 : (1 : ℝ) < N := by exact_mod_cast (show 1 < N by omega)
-  have hVp : ∀ j, 0 < V j := fun j => (rpow_pos_of_pos (by linarith : (0 : ℝ) < N) _).trans_le (hV j)
-  have he : 0 < highEta := by norm_num [highEta]
-  have hb := original_base_gap (show 2 ≤ N by omega) hδ hδhi hV hrect
-  have hq : 1 < q := (one_lt_rpow hN1 (by positivity : 0 < 10*highEta)).trans_le hb.1
-  have hQ : 0 < (N : ℝ)^(1/2-δ) := rpow_pos_of_pos (by linarith) _
-  have hsp := fun (d : ℕ) (hd : d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V)) =>
-    reboxing_support_level_bounds hQ.le (show 0 < Δ by linarith) hVp hd
-  rw [theta_grid_exact _ (by linarith : 0 < q) hΔ]
-  apply inserted_theta_bound _ _ hN he hlarge hstart
-  · intro d hd
-    exact ⟨(reboxing_support_product_bounds (show 0 < Δ by linarith) (fun j => (hVp j).le) hd).1,
-      hq.trans_le (hsp d hd).1⟩
-  · intro p hp
-    have hh := mem_primeWindow.mp hp
-    refine ⟨hh.1,hh.2.1,?_,?_⟩
-    · apply le_trans _ hh.2.2.1
-      rw [reboxingAlpha_zero]
-      calc
-        _ ≤ (N : ℝ)^((10*highEta)*(1/t)) := by
-          apply rpow_le_rpow_of_exponent_le hN1.le
-          rw [mul_one_div]
-          apply (le_div_iff₀ (show 0 < t by linarith)).mpr
-          nlinarith
-        _ = ((N : ℝ)^(10*highEta))^(1/t) := rpow_mul (by positivity) _ _
-        _ ≤ _ := rpow_le_rpow (by positivity) hb.1 (one_div_nonneg.mpr (by linarith))
-    · apply (hh.2.2.2.le.trans hr).trans
-      have hexp : 1/s ≤ 1 := (div_le_one (by linarith)).mpr (by linarith)
-      have hqq : q^(1/s) ≤ q := by
-        simpa only [rpow_one] using rpow_le_rpow_of_exponent_le hq.le hexp
-      exact hqq.trans hb.2
-  · intro d hd p hp
-    have hpq := (mem_primeWindow.mp hp).2.2.2.le.trans hr
-    apply hpq.trans
-    calc
-      _ ≤ q^(1/2 : ℝ) := rpow_le_rpow_of_exponent_le hq.le (one_div_le_one_div_of_le (by norm_num) hs)
-      _ ≤ _ := rpow_le_rpow (by linarith : 0 ≤ q) (hsp d hd).1 (by norm_num)
 
 end
 end HighOmega2

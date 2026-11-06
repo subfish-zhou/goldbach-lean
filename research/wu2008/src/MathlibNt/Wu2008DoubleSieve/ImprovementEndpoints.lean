@@ -128,75 +128,13 @@ theorem wuClosedImprovementAtInfinity_eq (upper : Bool) (k : ℕ) (hk : 1 ≤ k)
     change h - ε ≤ wuClosedImprovementAtInfinity upper k δ s at hbound
     linarith
 
-theorem wuClosedImprovementLimit_eq (upper : Bool) {δ s : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 1 ≤ s) (hs10 : s ≤ 10) :
-    wuClosedImprovementLimit upper δ s = wuImprovementLimit upper δ s := by
-  unfold wuClosedImprovementLimit wuImprovementLimit
-  congr 1
-  funext k
-  exact wuClosedImprovementAtInfinity_eq upper (k + 1) (by omega) hδ hδhi hs hs10
 
-/-- The common limiting gain is usable for the printed closed carrier on
-each fixed-depth family, after paying a strict positive epsilon. -/
-theorem wuImprovementLimit_sub_mem_closed (upper : Bool) (k : ℕ) {δ s ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 1 ≤ s) (hs10 : s ≤ 10) (hε : 0 < ε) :
-    wuImprovementLimit upper δ s - ε ∈
-      wuClosedEventualImprovements upper (k + 1) δ s := by
-  have hhalf : 0 < ε / 2 := by positivity
-  have hmem := wuEventualImprovements_to_closed upper (k + 1) hδ hδhi hs
-    (by linarith) hhalf (wuImprovementLimit_sub_mem upper k hδ hδhi hs hs10 hhalf)
-  convert hmem using 1
-  ring
 
 theorem wuClosedAdmissibleImprovements_mono_threshold (upper : Bool) (k : ℕ) (δ s : ℝ) :
     Monotone (wuClosedAdmissibleImprovements upper k δ s) := by
   intro M N hMN h hh n hn
   exact hh n (hMN.trans hn)
 
-/-- The printed closed-sifting inner limit is also an actual threshold
-limit, not merely a definition by the eventual supremum. -/
-theorem wuClosedImprovementAt_tendsto (upper : Bool) (k : ℕ) (hk : 1 ≤ k)
-    {δ s : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 1 ≤ s) (hs10 : s ≤ 10) :
-    Tendsto (wuClosedImprovementAt upper k δ s) atTop
-      (𝓝 (wuImprovementAtInfinity upper k δ s)) := by
-  obtain ⟨h, T, hT⟩ := wuClosedEventualImprovements_nonempty upper k hk hδ hδhi hs hs10
-  have hne : ∀ n : ℕ, (wuClosedAdmissibleImprovements upper k δ s (max T n)).Nonempty :=
-    fun n => ⟨h, wuClosedAdmissibleImprovements_mono_threshold upper k δ s
-      (le_max_left _ _) hT⟩
-  have hE := wuClosedEventualImprovements_bddAbove upper k hδ hδhi hs hs10
-  have hsub : ∀ n : ℕ, wuClosedAdmissibleImprovements upper k δ s n ⊆
-      wuClosedEventualImprovements upper k δ s :=
-    fun n _ hh => ⟨n, hh⟩
-  have hmono : Monotone (fun n => wuClosedImprovementAt upper k δ s (max T n)) := by
-    intro m n hmn
-    exact csSup_le_csSup (hE.mono (hsub _)) (hne m)
-      (wuClosedAdmissibleImprovements_mono_threshold upper k δ s (max_le_max_left T hmn))
-  have hlub : IsLUB (Set.range (fun n => wuClosedImprovementAt upper k δ s (max T n)))
-      (wuClosedImprovementAtInfinity upper k δ s) := by
-    constructor
-    · rintro _ ⟨n, rfl⟩
-      exact csSup_le_csSup hE (hne n) (hsub _)
-    · intro b hb
-      apply csSup_le (wuClosedEventualImprovements_nonempty upper k hk hδ hδhi hs hs10)
-      intro h' ⟨n, hn⟩
-      have hmem := wuClosedAdmissibleImprovements_mono_threshold upper k δ s
-        (le_max_right T n) hn
-      exact (le_csSup (hE.mono (hsub _)) hmem).trans (hb ⟨n, rfl⟩)
-  have ht := tendsto_atTop_isLUB hmono hlub
-  rw [wuClosedImprovementAtInfinity_eq upper k hk hδ hδhi hs hs10] at ht
-  apply ht.congr'
-  filter_upwards [eventually_ge_atTop T] with n hn
-  rw [max_eq_right hn]
 
-theorem wuClosedImprovementAtInfinity_tendsto (upper : Bool) {δ s : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 1 ≤ s) (hs10 : s ≤ 10) :
-    Tendsto (fun k : ℕ => wuClosedImprovementAtInfinity upper (k + 1) δ s) atTop
-      (𝓝 (wuImprovementLimit upper δ s)) := by
-  have heq : (fun k : ℕ => wuClosedImprovementAtInfinity upper (k + 1) δ s) =
-      (fun k : ℕ => wuImprovementAtInfinity upper (k + 1) δ s) := by
-    funext k
-    exact wuClosedImprovementAtInfinity_eq upper (k + 1) (by omega) hδ hδhi hs hs10
-  rw [heq]
-  exact wuImprovementAtInfinity_tendsto upper hδ hδhi hs hs10
 
 end Wu2008DoubleSieve

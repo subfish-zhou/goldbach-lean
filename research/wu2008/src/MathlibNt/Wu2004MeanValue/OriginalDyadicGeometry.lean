@@ -122,35 +122,7 @@ theorem dyadic_cover_iff {η x t : ℝ} (hη : 0 < η) (hx : 0 < x) (J : ℕ) :
             subst j
             exact Or.inl ⟨lt_trans hp ht.1, by linarith⟩
 
-theorem dyadic_blocks_disjoint {η x : ℝ} (hη : 0 < η) (hx : 0 < x)
-    {i j : ℕ} (hij : i ≠ j) :
-    Disjoint (Set.Ioc (dyadicScale η x i) (2 * dyadicScale η x i))
-      (Set.Ioc (dyadicScale η x j) (2 * dyadicScale η x j)) := by
-  suffices h : ∀ i j : ℕ, i < j →
-      Disjoint (Set.Ioc (dyadicScale η x i) (2 * dyadicScale η x i))
-        (Set.Ioc (dyadicScale η x j) (2 * dyadicScale η x j)) by
-    rcases lt_or_gt_of_ne hij with hij | hij
-    · exact h i j hij
-    · exact (h j i hij).symm
-  intro i j hij
-  have ha := dyadicScale_antitone hη hx (show i + 1 ≤ j by omega)
-  have hs := dyadicScale_succ η x i
-  apply Set.disjoint_left.mpr
-  intro t hi hj
-  rcases hi with ⟨hi, _⟩
-  rcases hj with ⟨_, hj⟩
-  linarith
 
-theorem dyadic_low_block_disjoint {η x : ℝ} (hη : 0 < η) (hx : 0 < x)
-    {j J : ℕ} (hj : j ≤ J) :
-    Disjoint (Set.Ioc 0 (dyadicScale η x J))
-      (Set.Ioc (dyadicScale η x j) (2 * dyadicScale η x j)) := by
-  have ha := dyadicScale_antitone hη hx hj
-  apply Set.disjoint_left.mpr
-  intro t ht hu
-  rcases ht with ⟨_, ht⟩
-  rcases hu with ⟨hu, _⟩
-  linarith
 
 theorem sum_dyadicScale (η x : ℝ) (J : ℕ) :
     (∑ j ∈ Finset.range (J + 1), dyadicScale η x j) =

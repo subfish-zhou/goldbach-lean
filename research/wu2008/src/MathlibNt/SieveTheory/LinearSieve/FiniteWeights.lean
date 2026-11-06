@@ -192,14 +192,6 @@ theorem hasUpperLevelSupport {P D : ℕ} (W : UpperSelbergWeightsAtLevel P D) :
 
 end UpperSelbergWeightsAtLevel
 
-/-- Finite upper Selberg inequality with the main sum and the exact
-level-restricted remainder sum kept separate. -/
-theorem siftedSum_le_mainSum_add_upperErrSum {S : BoundingSieve} {D : ℕ}
-    (W : UpperSelbergWeightsAtLevel S.prodPrimes D) :
-    S.siftedSum ≤
-      S.totalMass * S.mainSum W.muPlus + upperErrSum S D W.muPlus := by
-  rw [← errSum_eq_upperErrSum W.hasUpperLevelSupport]
-  exact S.siftedSum_le_mainSum_errSum_of_upperMoebius W.muPlus W.isUpperMoebius
 
 /-! ## 0.2. Finite lower Rosser weights -/
 
@@ -775,25 +767,6 @@ theorem lowerRosserBoundaryRelativeDensity_nonneg
     intro p hp
     exact sub_nonneg.mpr (hnuOne p hp).le
 
-/-- Monotone normalized successor interface: adjoining a least prime can only
-decrease the relative lower density when `0 ≤ nu < 1`. -/
-theorem lowerRosserSetRelativeDensity_insert_min_le
-    (nu : ℕ → ℝ) {D q : ℕ} {P : Finset ℕ}
-    (hqP : q ∉ P) (hqprime : q.Prime) (hqD : q < D)
-    (hqmin : ∀ p ∈ P, q ≤ p) (hnuq : 0 ≤ nu q) (hnuqOne : nu q < 1)
-    (hnu : ∀ p ∈ P, 0 ≤ nu p) (hnuOne : ∀ p ∈ P, nu p < 1) :
-    lowerRosserSetRelativeDensity nu D (insert q P) ≤
-      lowerRosserSetRelativeDensity nu D P := by
-  have hqFactor : 1 - nu q ≠ 0 :=
-    sub_ne_zero.mpr (ne_of_gt hnuqOne)
-  have hPFactor : (∏ p ∈ P, (1 - nu p)) ≠ 0 :=
-    Finset.prod_ne_zero_iff.mpr fun p hp =>
-      sub_ne_zero.mpr (ne_of_gt (hnuOne p hp))
-  rw [lowerRosserSetRelativeDensity_insert_min nu hqP hqprime hqD hqmin
-    hqFactor hPFactor]
-  exact sub_le_self _ (mul_nonneg
-    (div_nonneg hnuq (sub_nonneg.mpr hnuqOne.le))
-    (lowerRosserBoundaryRelativeDensity_nonneg nu hnu hnuOne))
 
 /-- Terminal base for the finite normalized lower recursion. -/
 theorem lowerRosserSetRelativeDensity_empty

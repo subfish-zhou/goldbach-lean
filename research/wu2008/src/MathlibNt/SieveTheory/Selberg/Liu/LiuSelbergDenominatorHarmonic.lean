@@ -97,14 +97,6 @@ theorem summable_abs_liuSelbergCorrection_mul_log_nat
   rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) (by exact_mod_cast hd)]
   ring
 
-theorem summable_liuSelbergCorrectionTail
-    {N x : ℕ} (hNeven : Even N) (hN : 0 < N) :
-    Summable (liuSelbergCorrectionTail N x) := by
-  have hs : Summable (liuSelbergCorrection N) := by
-    apply Summable.of_norm
-    simpa only [Real.norm_eq_abs] using
-      summable_abs_liuSelbergCorrection hNeven hN
-  exact hs.indicator _
 
 theorem summable_liuSelbergCorrectionAbsTail
     {N x : ℕ} (hNeven : Even N) (hN : 0 < N) :

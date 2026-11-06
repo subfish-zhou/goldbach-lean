@@ -135,21 +135,5 @@ theorem actual_low_high_upper {δ ρ ε : ℝ} (hδ : 0 < δ)
     ordinaryRosserRemainder true N p (wuVariableRosserLevel N δ p)
       ((N : ℝ)^truncatedSixthLowerAlpha))]
 
-/-- One threshold for the original two summands; their overlap still occurs twice. -/
-theorem both_low_high_upper {δ ρ ε : ℝ} (hδ : 0 < δ)
-    (hδhi : δ ≤ 1/100) (hρ : 0 < ρ) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      (U N (1/3) : ℝ) + (U N truncatedSixthLowerSigma : ℝ) ≤
-        lowCount N δ (1/3) + lowCount N δ truncatedSixthLowerSigma +
-        highDensityMass N δ ρ (1/3) + highDensityMass N δ ρ truncatedSixthLowerSigma +
-        ε * truncatedSixthMassScale N := by
-  obtain ⟨T, hT4, hT⟩ := actual_low_high_upper hδ hδhi hρ (half_pos hε)
-  refine ⟨T, hT4, ?_⟩
-  intro N hN he
-  have hσ : truncatedSixthLowerSigma ≤ (1/3 : ℝ) := by
-    norm_num [truncatedSixthLowerSigma, truncatedSixthLowerAlpha]
-  have h1 := hT N hN he (1/3) le_rfl
-  have h2 := hT N hN he truncatedSixthLowerSigma hσ
-  linarith
 
 end Wu2008DoubleSieve.SingleUpperSplice

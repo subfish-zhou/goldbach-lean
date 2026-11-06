@@ -31,14 +31,6 @@ theorem terminal_lower_error {x : ℝ} (hx : 1≤x) (hx2 : x≤2) :
 /-- The full E recovery on the unchanged terminal interval, using the parent's error comparison. -/
 def errorWeight (t : ℝ) : ℝ := (4/7)*(upperLog ((t+1)/2)-lowerLog ((t+1)/2))/t
 
-theorem errorWeight_le {t : ℝ} (ht : 1≤t) (ht3 : t≤3) :
-    lowerLog ((t+1)/2)/t+errorWeight t ≤ log ((t+1)/2)/t := by
-  have ht0 : 0<t := by linarith
-  have h := terminal_lower_error (x := (t+1)/2) (by linarith) (by linarith)
-  have hdiv := div_le_div_of_nonneg_right h ht0.le
-  unfold errorWeight
-  rw [sub_div] at hdiv
-  linarith only [hdiv]
 
 end
 end OriginalFirstErrorRecovery

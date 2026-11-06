@@ -56,22 +56,6 @@ theorem wuAdmissibleImprovements_lower_shift {k N0 : ℕ} {δ s t h : ℝ}
   convert hcmp using 1
   ring
 
-/-- The finite-threshold effective upper coefficient used in the source's
-reboxing comparison, for each pair of parameters after a common threshold. -/
-theorem wu_effective_upper_threshold_eventually_mono (k : ℕ) (hk : 1 ≤ k) {δ s t : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 1 ≤ s) (hst : s ≤ t) (ht10 : t ≤ 10) :
-    ∀ᶠ N0 : ℕ in atTop,
-      wuUpperCoefficient s - wuImprovementAt true k δ s N0 ≤
-        wuUpperCoefficient t - wuImprovementAt true k δ t N0 := by
-  filter_upwards [wuImprovementAt_eventually_attained true k hk hδ hδhi
-    (hs.trans hst) ht10] with N0 hN0
-  have hEs := wuEventualImprovements_bddAbove true k hδ hδhi hs (hst.trans ht10)
-  have hsub : wuAdmissibleImprovements true k δ s N0 ⊆ wuEventualImprovements true k δ s :=
-    fun _ hh => ⟨N0, hh⟩
-  have hmem := wuAdmissibleImprovements_upper_shift hδ hδhi hs hst hN0.2
-  have hbound := le_csSup (hEs.mono hsub) hmem
-  change _ ≤ wuImprovementAt true k δ s N0 at hbound
-  linarith
 
 theorem wu_effective_upper_fixed_depth_mono (k : ℕ) (hk : 1 ≤ k) {δ s t : ℝ}
     (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 1 ≤ s) (hst : s ≤ t) (ht10 : t ≤ 10) :

@@ -55,19 +55,6 @@ theorem B_eq_rest_low {N n : ℕ} {δ : ℝ} (hN : 1 < N) (hδ : 0 ≤ δ) :
   rw [sum_union hd]
   ring
 
-/-- Full classical mother plus the actual low replacement debit, not a count sum. -/
-theorem B_eq_classical_low_gain {N n : ℕ} {δ : ℝ} (hN : 1 < N) (hδ : 0 ≤ δ) :
-    B N n δ = truncatedSixthLowerNormalizedMain N δ 0 (truncatedSixthLowerPairs N δ) +
-      (lowMain N n δ -
-        truncatedSixthLowerNormalizedMain N δ 0 (MixedEta.selected N n (lowCells δ n))) := by
-  have hl := (MixedEta.actual_selected_geometry hN hδ n).1
-  have he : truncatedSixthLowerNormalizedMain N δ 0 (rest N n δ) +
-      truncatedSixthLowerNormalizedMain N δ 0 (MixedEta.selected N n (lowCells δ n)) =
-      truncatedSixthLowerNormalizedMain N δ 0 (truncatedSixthLowerPairs N δ) := by
-    unfold truncatedSixthLowerNormalizedMain rest
-    rw [← sum_union sdiff_disjoint,sdiff_union_of_subset hl]
-  rw [B_eq_rest_low hN hδ]
-  linarith only [he]
 
 end
 end LowComplement

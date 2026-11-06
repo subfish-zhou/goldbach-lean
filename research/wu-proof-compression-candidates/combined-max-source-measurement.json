@@ -1,0 +1,50 @@
+{
+  "status": "ACTUAL_FROZEN_CANDIDATE_SOURCE_MEASUREMENT_NOT_BUILD_OR_INSTALLATION_ACCEPTANCE",
+  "baseline": "/tmp/wu-mixed-pruning-baseline-snapshot-v1",
+  "candidate": "/tmp/wu-mixed-pruning-batch-v1",
+  "before": {
+    "manifest_sha256": "c7950a5796a848c7c0fc0f58f68c41746a570d137f54ab298c64a31d14f71e39",
+    "whole_tree": {
+      "modules": 4151,
+      "code_lines": 509776,
+      "physical_lines": 595256,
+      "utf8_bytes": 29834960
+    },
+    "theorem_closure": {
+      "modules": 3764,
+      "code_lines": 469022,
+      "physical_lines": 548778,
+      "utf8_bytes": 25626311
+    }
+  },
+  "after": {
+    "manifest_sha256": "541e837ffee9ef8ea26be4370323d653b788b518ac3040a3113c8a2aea013ec1",
+    "whole_tree": {
+      "modules": 4151,
+      "code_lines": 431818,
+      "physical_lines": 512538,
+      "utf8_bytes": 25602495
+    },
+    "theorem_closure": {
+      "modules": 3762,
+      "code_lines": 391332,
+      "physical_lines": 466310,
+      "utf8_bytes": 21399204
+    }
+  },
+  "candidate_source_savings": {
+    "whole_tree": {
+      "code_lines": 77958,
+      "physical_lines": 82718,
+      "utf8_bytes": 4232465
+    },
+    "theorem_closure": {
+      "code_lines": 77690,
+      "physical_lines": 82468,
+      "utf8_bytes": 4227107
+    }
+  },
+  "counter_sha256": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+  "measurement_tool_sha256": "e352407bdaefa04e5805aabd206dc36450cfc580497e387a6c1746293ed20204",
+  "metric": "Whole local imported modules; published count_code_lines; strings retained; external packages excluded"
+}

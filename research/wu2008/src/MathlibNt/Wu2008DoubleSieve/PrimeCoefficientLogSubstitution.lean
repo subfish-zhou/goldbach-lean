@@ -245,33 +245,5 @@ theorem wuPrimeRealWeight_log_error {f : ℝ → ℝ} {q a b B : ℝ}
 
 open AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418
 
-/-- The true-li RIGHT-sampled sum is now compared with the source `/u`
-integral, consuming the actual continuous quadrature and its kernel payment. -/
-theorem primeCoefficient_trueLi_to_log_integral
-    {f : ℝ → ℝ} {q B : ℝ} (hf : MonotoneOn f (Icc 1 10))
-    (hB : 0 ≤ B) (hfb : ∀ u ∈ Icc (1 : ℝ) 10, |f u| ≤ B)
-    {a b : ℕ} (ha : 4 ≤ a) (hab : a ≤ b) (hq : 1 < q) (hlq : 2 ≤ log q)
-    (hb : (b : ℝ) ≤ q ^ (1 / 2 : ℝ))
-    (haq : log q / log (a : ℝ) - 1 ≤ 10) :
-    |(∑ n ∈ Finset.Ico a b,
-        (logarithmicIntegral (n + 1) - logarithmicIntegral n) *
-          wuPrimeCoefficientWeight f q (n + 1)) -
-      ∫ u in (log q / log b - 1)..(log q / log a - 1), f u / u| ≤
-        20 * B / (a : ℝ) / log a := by
-  have hsample := primeCoefficient_trueLi_to_continuous hf hB hfb ha hab hq hlq hb haq
-  have hkernel := wuPrimeRealWeight_log_error hf hq
-    (by exact_mod_cast ha : (4 : ℝ) ≤ a) (by exact_mod_cast hab : (a : ℝ) ≤ b)
-    hb haq hB hfb
-  calc
-    _ ≤ |(∑ n ∈ Finset.Ico a b,
-          (logarithmicIntegral (n + 1) - logarithmicIntegral n) *
-            wuPrimeCoefficientWeight f q (n + 1)) -
-          ∫ x in (a : ℝ)..b, wuPrimeRealWeight f q x / log x| +
-        |(∫ x in (a : ℝ)..b, wuPrimeRealWeight f q x / log x) -
-          ∫ u in (log q / log b - 1)..(log q / log a - 1), f u / u| :=
-      abs_sub_le _ _ _
-    _ ≤ 12 * B / (a : ℝ) / log a + 8 * B / (a : ℝ) / log a :=
-      add_le_add hsample hkernel
-    _ = _ := by ring
 
 end Wu2008DoubleSieve

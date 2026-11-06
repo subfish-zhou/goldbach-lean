@@ -1,0 +1,215 @@
+{
+  "status": "LOCAL_COMPILE_AND_MERGE_EVIDENCE_NOT_FULL_ACCEPTANCE",
+  "archive": "w08-max-envelope-local-compile-evidence.tar.gz",
+  "archive_sha256": "f62eef5343d49bd75b1a5c24ebac767752247f10f66c9f7e78bc8c97eb719960",
+  "files": [
+    {
+      "path": "wu-w08-max-pilot-v1/W08Audit.invocation.json",
+      "sha256": "e77587174e0dd731ecf6928cfecc40cb79a43ec6d228bfd17d680ea8ad3346e8"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Audit.log",
+      "sha256": "63b8a103df3caae72c8a44028c1db60696dba1c23ed569be194b8b5f6e4f67b1"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Audit.resources",
+      "sha256": "df9f25e73f9299539b91593606a78dc3aee91e27e81c01d28b496242ce90dbea"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Entries0.invocation.json",
+      "sha256": "b1901f1799d365320b602ed7f4427d03700391ed3b6e3e50f57af4edf109dc80"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Entries0.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Entries0.resources",
+      "sha256": "20466293b99a8c36d2e7db3b57e404b7eaf9a4695a1b02be855946f7707afbbe"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08EntriesRest.invocation.json",
+      "sha256": "fb37ac5846c20a00805c061eae9a1e46fb1e2bbdf5758c52825cf4cdfc7d77a4"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08EntriesRest.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08EntriesRest.resources",
+      "sha256": "3e75b1046a220c02574a596ef4934ffe1610fe30959a6ea07d4f4e27554aa59e"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Envelope.invocation.json",
+      "sha256": "9b0844fc7dfa74e20cb8fda0a6b17ff524622f45061d3b74e4f9140a1dcba9cc"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Envelope.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Envelope.resources",
+      "sha256": "e3ba24d0f367a00952bf3a4320b1d5d7b46dbd1277aa600b9b8abf9fdb2d8806"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08FrozenConsumer.invocation.json",
+      "sha256": "6810d2374405e79a4769db6e9bbb8b599113b9d68ccb20c176dd6fbf1bf11325"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08FrozenConsumer.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08FrozenConsumer.resources",
+      "sha256": "18a425ba073d537be17e4c8086b5711256dafa22777549953176e62118e9da4f"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08KernelMatrix.invocation.json",
+      "sha256": "85a7c95943ea7570563a100af272c9d4e3014d47b8ed0920609797f9f26abec9"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08KernelMatrix.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08KernelMatrix.resources",
+      "sha256": "3290b0613a9ca63062674fc61bc0e40e616e909acc6e00cd18802c8b19508c76"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Root.invocation.json",
+      "sha256": "cb4f58f3a17eb663a0fe3ec655b66edcabb7b2ec9e28853ed45f08a807e1d8b1"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Root.log",
+      "sha256": "61e18b10579273b0b5fa6ab6e5733822ef84c9ec3fd8c512b67a9b834f30dc21"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W08Root.resources",
+      "sha256": "b187ef87eb537287eeb81786ab796ff4255209cc1f6a96053606deb2079c4b25"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W17JointSplit.invocation.json",
+      "sha256": "4431d4810b0cfc826eb35cd4280fc972a635887981a0b1e8b535d335e4f91b82"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W17JointSplit.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W17JointSplit.resources",
+      "sha256": "1bee153644a468093b5755e3773204745b4c85c61d6158671e2c69703506d32f"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W17ParentFullTypes.invocation.json",
+      "sha256": "eee31ce1eb9130a78ed0430d5b802020d51846102f774b1c8cc05626e27d499c"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W17ParentFullTypes.log",
+      "sha256": "f6e62f159be8397d60a23603b8820f6d9090b8ba51807b284f97a9ed32feabbf"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/W17ParentFullTypes.resources",
+      "sha256": "584bdb3862d98a61910646e87b5a6dd08a34e732afbcf60b2bd49ab522f65c92"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/context-before.json",
+      "sha256": "253cf3ab2c2e8190265c6faf805cf6585123c0228a125f5f3107f0b4fa5710b9"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/pins.json",
+      "sha256": "884ddbae4d81e900c2de47f357ba3e06fd2885062e93f11ebd1457b115b9a3c5"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/process.json",
+      "sha256": "8f305cb583cfcb8fef6bed8ccce80fa68bdfa965c066510f14081498b2f2703d"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/result.json",
+      "sha256": "8f305cb583cfcb8fef6bed8ccce80fa68bdfa965c066510f14081498b2f2703d"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W08Audit.lean",
+      "sha256": "3b339715387a52b2e52e7a431388ff03a269da7ba226356793d0840031dc46f3"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W08Entries0.lean",
+      "sha256": "5e0a29ea6063c8c0f966e00db18e6f5911dd8bab315c5ad3049fec52eb081dcc"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W08EntriesRest.lean",
+      "sha256": "747730d6087b5f91d2c72d6689490cf2d8027fb25f349d25f8c14d0bb6593364"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W08Envelope.lean",
+      "sha256": "d88743ef53cea192eec0a90a2528c962e4dfa4558d8ec66f111c99908196dc49"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W08FrozenConsumer.lean",
+      "sha256": "365b60af400508f6ad780c78e133f1113f924bd0b201b9d81b25cf857b00a76a"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W08KernelMatrix.lean",
+      "sha256": "4109804b8f83f121942b917ffc431d25cf07b6a2e0d9941905b64f48607aac52"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W08Root.lean",
+      "sha256": "8f50da362fd4673dc27d3a6348962eb843368f6012ff8bf3163d41dfef067c0a"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W17JointSplit.lean",
+      "sha256": "91d2b9c9ca8f270ab48b2f125340c48a9c5fa5d3a91809ed669ae699a95552ba"
+    },
+    {
+      "path": "wu-w08-max-pilot-v1/src/W17ParentFullTypes.lean",
+      "sha256": "0c2e375d74c6fe0ea1bcb149945da10d3afd831ab1111efe650fa52c8422cd95"
+    },
+    {
+      "path": "wu-w08-retirement-census-v1/Probe.lean",
+      "sha256": "3973cb3406d4b2e2b450cdaf3e1c207f4a3db84d2b854374a5fa85cb3dd38ce6"
+    },
+    {
+      "path": "wu-w08-retirement-census-v1/census.json",
+      "sha256": "8bfc5f229ce7b50b182488f31c47df51ef5ee02be25c11db80d9c5d7c5ce6266"
+    },
+    {
+      "path": "wu-w08-retirement-census-v1/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "wu-w08-retirement-census-v1/modules.txt",
+      "sha256": "3a850417202d94dd2d72fa93e087adfb3207ede1a1d6022bcdad1d3e5c8c6384"
+    },
+    {
+      "path": "wu-w08-retirement-census-v1/requested.tsv",
+      "sha256": "9249d443ace96e57e6bfa586a89639ed11dffd6603413afbf26c7b0c6a0f58b6"
+    },
+    {
+      "path": "wu-w08-retirement-census-v1/result.json",
+      "sha256": "eec901f691009c669eaf00f3c6072feec0d519acf3ace2baf5d28b699badce1e"
+    },
+    {
+      "path": "wu-w08-retirement-census-v1/run.py",
+      "sha256": "795ae57329a2f206664e9e21ea76301674c2ef090df0bc18bf6ca3009fcd26b8"
+    },
+    {
+      "path": "merge/max-envelope-merge.json",
+      "sha256": "9a7a767dc414e662bb3df8af92b7420cd4e945a70c0290e08f58c60e3b394dab"
+    },
+    {
+      "path": "merge/max-envelope-cache-review.json",
+      "sha256": "bbeac8593a079b79dd5b6a0ea9ceb511b18779354b70721ef0e119613c626f50"
+    },
+    {
+      "path": "merge/w08-pilot-cache-review.json",
+      "sha256": "9ba0fd8f0c51b9223ea409a44238797928ea0cc5c600cd6ae2d24eb74bbeed32"
+    },
+    {
+      "path": "merge/w08-pilot-interrupted-process.json",
+      "sha256": "281ae21539c8a6417362f5486b80fe07014614181312d865056fcec158178c1b"
+    },
+    {
+      "path": "merge/resume2-preflight-correction.json",
+      "sha256": "f590499c84e42572ccc9b52a9e74ea171a1c26887807cf342197fd9143427a57"
+    }
+  ]
+}

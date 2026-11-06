@@ -24,25 +24,8 @@ theorem standardBVAdaptiveSmallCutoff_le_balanced (Q N : ℕ) :
   · simp only [standardBVAdaptiveSmallCutoff, hQ, if_false]
     exact (min_le_right _ _).trans (min_le_left _ _)
 
-theorem standardBVAdaptiveSmallCutoff_le (Q N : ℕ) :
-    standardBVAdaptiveSmallCutoff Q N ≤ N := by
-  exact (standardBVAdaptiveSmallCutoff_le_balanced Q N).trans
-    (standardBVBalancedSmallCutoff_le N)
 
-private lemma highConductorSet_subset_Icc_one_adaptive (N Q C : ℕ) :
-    highConductorSet N Q C ⊆ Finset.Icc 1 Q := by
-  exact highConductorSet_subset_Icc_one N Q C
 
-/-- Ordinary primitive prefix-maximal large sieve for an arbitrary small cutoff.
-No comparison of coefficient values is used: the dependence on `v` enters only
-through the established small-coefficient energy bound. -/
-theorem standardBVSmall_squareLedger_le (N Q C v : ℕ) (hQ : 0 < Q) :
-    primitivePrefixSquareLedgerOn
-        (vaughanSmallCoeff vaughanUnitIntegerCoeff v) N
-        (highConductorSet N Q C) ≤
-      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-        ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ) ^ 2) := by
-  exact standardBVSmall_squareLedger_energy_le N Q C v hQ
 
 /-- The prefix maximum contains the nonnegative amplifier at zero. -/
 private lemma discreteAbelAmplifierPrefixMax_nonneg_adaptive (N : ℕ) :
@@ -274,12 +257,6 @@ theorem standardBVHighTypeITypeIIHybridChosenSource_of_adaptiveBlockL1Weighted
         Real.log (N : ℝ) ^ A := by ring
 
 
-/-- Five-log envelope payment followed by the generalized small-lane payment. -/
-theorem standardBVHighTypeITypeIIHybridChosenSource_of_adaptiveBlockL1Bare
-    {loss : ℕ} (hbare : StandardBVProductionAdaptiveBlockL1BareSource loss) :
-    StandardBVHighTypeITypeIIHybridChosenSource :=
-  standardBVHighTypeITypeIIHybridChosenSource_of_adaptiveBlockL1Weighted
-    (standardBVProductionAdaptiveBlockL1WeightedSource_of_bare hbare)
 
 end
 end AnalyticNumberTheory.LargeSieve

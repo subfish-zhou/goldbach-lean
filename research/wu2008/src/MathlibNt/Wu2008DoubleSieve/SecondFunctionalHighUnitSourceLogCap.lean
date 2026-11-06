@@ -57,39 +57,6 @@ theorem parameter_log_cap_bounds {p : SecondFunctionalParameters}
     one_div_le_one_div_of_le (by linarith) hp.s_le_kappa3,
     (parameter_outer_bounds hp hs).2.2⟩
 
-/-- The correction in the original five-parameter notation, with exact algebra. -/
-theorem unitLogCap_parameters (p : SecondFunctionalParameters) :
-    unitLogCap20 (1/p.kappa2) (1/p.kappa3) (1/p.s) =
-      p.kappa3 / 24 * Real.log (p.kappa2/p.kappa3) * Real.log (p.kappa3/p.s)^3 ∧
-    unitLogCap21 (1/p.kappa3) (1/p.s) =
-      p.kappa3 / 720 * Real.log (p.kappa3/p.s)^5 := by
-  simp [unitLogCap20, unitLogCap21, div_eq_mul_inv, mul_comm, mul_left_comm, mul_assoc]
 
-/-- Literal unit sources with explicit corrections, retaining the original common threshold.
-The error is on N/log N reciprocal mass, not Theta; no sieve density is asserted. -/
-theorem mother_unit_pair_log_cap (k : ℕ) {δ epsilon : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (he : 0 < epsilon) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → 2 ≤ p.s →
-      let W := convolutionWuWindows N Δ V
-      let a0 := fun d => wuLocalCutoff N δ d p.S
-      let a1 := fun d => wuLocalCutoff N δ d p.kappa1
-      let a2 := fun d => wuLocalCutoff N δ d p.kappa2
-      let a3 := fun d => wuLocalCutoff N δ d p.kappa3
-      let b := fun d => wuLocalCutoff N δ d p.s
-      FourPrimeUnit.source N W a0 a1 a2 a3 b word20 +
-        FourPrimeUnit.source N W a0 a1 a2 a3 b word21 ≤
-      (unitLogCap20 (1/p.kappa2) (1/p.kappa3) (1/p.s) +
-        unitLogCap21 (1/p.kappa3) (1/p.s)) * unitLogMass N δ W +
-        epsilon * ((N : ℝ) / Real.log N) * boxConvolutionReciprocalMass W := by
-  obtain ⟨T,hT4,hT⟩ := mother_unit_pair_integral k hδ hδhi he
-  refine ⟨T,hT4,?_⟩
-  intro N hN i Δ V hbox p hp hs
-  obtain ⟨ha,haa,hab,hb⟩ := parameter_log_cap_bounds hp hs
-  have hc := boxed_integral_pair_log_cap (by omega) hδ hδhi hbox ha haa hab hb
-  have hu := hT N hN i Δ V hbox p hp hs
-  dsimp only at hc hu ⊢
-  exact hu.trans (by linarith [hc])
 
 end Wu2008DoubleSieve.HighUnitSource

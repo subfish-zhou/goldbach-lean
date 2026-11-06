@@ -31,13 +31,6 @@ theorem omega3_cofactor_label_coefficient_pos {i N : ℕ} {δ s t : ℝ}
   rcases c with ⟨d, p2, p1, n⟩
   exact mem_boxConvolutionSupport.mp (mem_omega3CofactorLabels.mp hc).1
 
-/-- The coefficient really is a positive integer, before any cardinality
-comparison is made. It is not the cardinality of the varying-prime fibre. -/
-theorem omega3_cofactor_label_coefficient_integer {i N : ℕ} {δ s t : ℝ}
-    {W : Fin i → Finset ℕ} {c : Omega3CofactorIndex}
-    (hc : c ∈ omega3CofactorLabels N δ s t W) :
-    ∃ m : ℕ, 0 < m ∧ (convolutionCoeff W c.1 : ℝ) = m :=
-  ⟨convolutionCoeff W c.1, omega3_cofactor_label_coefficient_pos hc, rfl⟩
 
 theorem omega3_cofactor_fibre_card_le_weight {i : ℕ} (N : ℕ) (δ s t : ℝ)
     (W : Fin i → Finset ℕ) (e : ℕ) :

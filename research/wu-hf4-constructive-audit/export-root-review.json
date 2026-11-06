@@ -1,0 +1,25 @@
+{
+  "status": "ACTUAL_EXPORT_SOURCES_COMMANDS_PAYLOADS_INDEPENDENTLY_REVIEWED_NOT_FINAL_KERNEL_OR_ADOPTION_ACCEPTANCE",
+  "types": 696,
+  "raw_data_values": 183,
+  "bindings": {
+    "/tmp/wu-public-interface-audit-v2/InterfaceTemplate.lean": "26acc89d938f60a51338ad2b9ef5949531a07e2646171b6e4aedab0cd4b243fa",
+    "/tmp/wu-structural-interface-selection-v2/types-unicode-names.json": "b6b07905d52f0c794850a774762c340ca4195cab09b4b2e897950f9a801d28b1",
+    "/tmp/wu-structural-interface-selection-v2/types-unicode-modules.json": "90fdbd62ef78f71b7d03407b8caae062f3aebdc439eeded267173403b4bc4c1b",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-types.lean": "e069f61c1fe567eb2a1ea2ad183b980484a8ae9a723b977785e89902a506ee5f",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-types.olean": "d6c580a406db0ab380d29521393e3480d527beb9f6f0b1a171d69f18e3a5e28e",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-types.json": "438327bfea4259e8e55946910dca58aa0f157830563a5aa09fc5a8ebd56564d9",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-types.lean": "d9e4759a22add7a16ebd4ee64038a3784abefc5491dab9702fecdac17d5eaa1f",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-types.olean": "449ecc9d0c0f5ea4755cd429048e238eb3fe668408bed91a4020b58cb28f43a6",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-types.json": "438327bfea4259e8e55946910dca58aa0f157830563a5aa09fc5a8ebd56564d9",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-values.lean": "759759f68be160ac9b40058addc8560a89e7a2fe3e2e5c135340e9babcba82f7",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-values.olean": "5186eeff42ba8d15058b2ab9f1e120d725e67576a07c913e473bd1f80d02b1e6",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-values.json": "adef6d4ac87f7f7967db4b11f9ed5f5f8a5336678e8169f52bf840ccfb5da3b0",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-values.lean": "a88b36cb9497284599136eeaa05c8f4787e096be9a354d872c2a1ea8e0d9b8db",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-values.olean": "d541cd1828a1095027e3d4a896f2b8eb58455988998ced0a65e174b1a895493a",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-values.json": "adef6d4ac87f7f7967db4b11f9ed5f5f8a5336678e8169f52bf840ccfb5da3b0"
+  },
+  "reviewer_sha256": "73c09d218fb78c27059448a6476430d23e2b56c4db50744d78320f472b45d282",
+  "validation_directory": "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335",
+  "observed_unix": 1793187098.7532244
+}

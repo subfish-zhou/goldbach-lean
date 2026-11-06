@@ -86,55 +86,6 @@ theorem signed_mixed {δ η ε σ : ℝ} (pair : Wu08FourMother.PairUpper σ)
   ring_nf at hrN h6N hsM ⊢
   linarith only [hrN,h6N,hsM]
 
-/-- Original Qoriginal consumer with a displayed mixed-sixth excess. Its sign
-is NOT asserted: the missing normalization is precisely the sign of this excess.
-All original Q10/Q11, classical and small errors are paid at the same delta. -/
-theorem ordinary_P2_mixed_excess {ζ dmax η : ℝ} (hζ : 0 < ζ) (hdmax : 0 < dmax)
-    (hη : 0 < η) (hηhi : η ≤ 1)
-    (G : Finset ℝ) (hG : ∀ s ∈ G, 2 ≤ s ∧ s ≤ 5) :
-    ∃ δ : ℝ, 0 < δ ∧ δ < dmax ∧ δ < 1/100 ∧ δ ≤ 50*highEta ∧
-      ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N → ∀ Δ : ℝ,
-      1+log (N : ℝ)^(-4 : ℝ) ≤ Δ → Δ < 1+2*log (N : ℝ)^(-4 : ℝ) →
-      ∀ (I J : Finset ℕ) (x y s X Y t : ℕ → ℝ),
-      PackingGeometry N δ Δ I J x y s X Y t G →
-      (Wu08FourMother.Qoriginal-ζ)*U8CanonicalMother.M N+
-        (mixedMain N δ Δ η I J x y s X Y t-
-          (truncatedSixthLowerF6lin+FeedbackLimit.Cinf)*U8CanonicalMother.M N)/4 ≤
-      ((Finset.filter (fun p => Nat.Prime p ∧ 0 < N-p ∧
-        ArithmeticFunction.cardFactors (N-p) ≤ 2) (Finset.range (N+1))).card : ℝ) := by
-  obtain ⟨a,ha,ha1,hcoef⟩ := Wu08FourMother.coefficient_cap hζ
-  obtain ⟨ξ,_,_,hpair⟩ := Wu08FirstPrimeFour.SmallBoundaryRecovery.original_pair_integral_parameters
-    (half_pos hζ) (show (0 : ℝ) < 1/2 by norm_num)
-  let cap := min dmax (min a (min (1/100) (50*highEta)))
-  have hcap : 0 < cap := by
-    dsimp [cap]
-    exact lt_min hdmax (lt_min ha (lt_min (by norm_num) (by norm_num [highEta])))
-  obtain ⟨δ,_,_,_,hδ,hδcap,_,_,_,_,_,_,_,_,hraw⟩ := hpair cap hcap
-  have hdmax' : δ < dmax := hδcap.trans_le (min_le_left _ _)
-  have hda : δ < a := hδcap.trans_le ((min_le_right _ _).trans (min_le_left _ _))
-  have hd : δ < 1/100 := hδcap.trans_le ((min_le_right _ _).trans ((min_le_right _ _).trans (min_le_left _ _)))
-  have hdhi : δ ≤ 50*highEta := hδcap.le.trans ((min_le_right _ _).trans ((min_le_right _ _).trans (min_le_right _ _)))
-  have pair : Wu08FourMother.PairUpper ζ := by
-    obtain ⟨Tq,_,hq⟩ := hraw 3
-    obtain ⟨Tr,_,hr⟩ := Wu08FourMother.raw_error_paid (half_pos hζ)
-    obtain ⟨Tn,hTn⟩ := exists_nat_ge Tq
-    refine ⟨max 4 (max Tn Tr),le_max_left _ _,?_⟩
-    intro N hN he
-    have hqN := hq N (hTn.trans (by exact_mod_cast (show Tn ≤ N by omega))) he
-    have hrN := hr N (by omega)
-    change _ ≤ _*U8CanonicalMother.M N+_ at hqN
-    linarith only [hqN,hrN]
-  obtain ⟨T,hT,hcount⟩ := signed_mixed pair hδ hdhi hd hη hηhi hζ G hG
-  refine ⟨δ,hδ,hdmax',hd,hdhi,T,hT,?_⟩
-  intro N hN he Δ hlo hhi I J x y s X Y t hg
-  have hc := hcount N hN he Δ hlo hhi I J x y s X Y t hg
-  have hco := hcoef δ hδ hda
-  have hM := (HighSixPhase6.original_scale_positive (hT.trans hN)).le
-  change 0 ≤ U8CanonicalMother.M N at hM
-  have hscaled := mul_le_mul_of_nonneg_right hco hM
-  change _ ≤ 4*((Finset.filter (fun p => Nat.Prime p ∧ 0 < N-p ∧
-    ArithmeticFunction.cardFactors (N-p) ≤ 2) (Finset.range (N+1))).card : ℝ) at hc
-  nlinarith only [hc,hscaled,mul_nonneg hζ.le hM]
 
 end
 end HighConsumer

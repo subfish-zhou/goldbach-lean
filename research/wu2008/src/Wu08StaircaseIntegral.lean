@@ -24,31 +24,6 @@ theorem inner_integrable (x : ℝ) (hx : x ∈ Icc alpha (alpha + d)) :
   rw [Real.norm_eq_abs, abs_of_nonneg (kernel_bounds ⟨hx, hy⟩ (profile_bounds _)).1]
   exact (kernel_bounds ⟨hx, hy⟩ (profile_bounds _)).2
 
-/-- The two-variable kernel itself is integrable on the actual closed triangle. -/
-theorem triangle_integrable : IntegrableOn
-    (fun v : ℝ × ℝ => kernel profile v.1 v.2) {v | triangle v.1 v.2} volume := by
-  have hs : MeasurableSet {v : ℝ × ℝ | triangle v.1 v.2} := by
-    unfold triangle top
-    apply MeasurableSet.inter
-    · exact measurableSet_Icc.preimage measurable_fst
-    · apply MeasurableSet.inter
-      · exact measurableSet_le measurable_const measurable_snd
-      · apply measurableSet_le measurable_snd
-        fun_prop
-  have hsub : {v : ℝ × ℝ | triangle v.1 v.2} ⊆
-      Icc alpha (alpha + d) ×ˢ Icc (1 / 4) (top alpha) := by
-    intro v hv
-    refine ⟨hv.1, hv.2.1, ?_⟩
-    have hyt := hv.2.2
-    dsimp [top] at hyt ⊢
-    linarith [hv.1.1]
-  apply Measure.integrableOn_of_bounded (M := 2 * q / alpha ^ 2)
-    (ne_of_lt (lt_of_le_of_lt (measure_mono hsub)
-      (isCompact_Icc.prod isCompact_Icc).measure_lt_top))
-    measurable_kernel.aestronglyMeasurable
-  filter_upwards [ae_restrict_mem hs] with v hv
-  rw [Real.norm_eq_abs, abs_of_nonneg (kernel_bounds hv (profile_bounds _)).1]
-  exact (kernel_bounds hv (profile_bounds _)).2
 
 /-- Globally measurable extension of the actual inner integral on the excess triangle. -/
 noncomputable def sectionIntegral (x : ℝ) : ℝ :=
@@ -120,10 +95,5 @@ theorem conditional_coefficient (base : ℝ) (hb : printedSum ≤ base) :
   conditional_coefficient_of_integral profile base hb
     triangle_profile_bounds inner_integrable outer_integrable
 
-theorem printed_margin_lower_bound :
-    9604119711 / 1600000000000 ≤ printedSum - loss profile / 4 - 899 / 1000 := by
-  have hb := coefficient_loss_bounds
-  norm_num [printedSum] at *
-  linarith
 
 end Wu08Staircase

@@ -95,13 +95,6 @@ lemma decomp_j_lt (y N k : ℕ) (hy : y ≤ N) : 2 * (y / 2^(k+1)) < N + 1 := by
   have hquotient := Nat.div_le_self y (2^k)
   omega
 
-lemma Ioc_disjoint (a b c d : ℤ) (h : b ≤ c) : Disjoint (Finset.Ioc a b) (Finset.Ioc c d) := by
-  rw [Finset.disjoint_left]
-  intro x hx
-  have h1 : x ≤ b := Finset.mem_Ioc.mp hx |>.2
-  intro hx2
-  have h2 : c < x := Finset.mem_Ioc.mp hx2 |>.1
-  omega
 
 lemma sum_biUnion_le {ι : Type*} [DecidableEq ι] (s : Finset ι) (S : ι → Finset ℤ) (h_disj : ∀ i ∈ s, ∀ j ∈ s, i ≠ j → Disjoint (S i) (S j))
     (T : Finset ℤ) (h_sub : ∀ i ∈ s, S i ⊆ T) (c : ℤ → ℝ) (hc : ∀ n ∈ T, 0 ≤ c n) :

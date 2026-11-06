@@ -171,18 +171,6 @@ theorem correctedChenTotalMass_eq (N : ℕ) :
 
 /-! ## Optimal Selberg upper bound and the main-term identities -/
 
-/-- Apply `AnalyticNumberTheory.Sieve.selberg_upper_bound_optimal`:
-the sifted sum of the corrected sieve is bounded by `totalMass·(Σ selbergTerms)⁻¹ + errSum(Λ²w*)`.
-This is an unconditional instance of the classical Selberg upper-bound sieve
-`S ≤ X/G(z) + R` for `correctedChenBoundingSieve`. -/
-theorem correctedChenSelbergUpperBound (N : ℕ) :
-    ∃ w : ℕ → ℝ, w 1 = 1 ∧
-      (correctedChenBoundingSieve N).siftedSum ≤
-        (correctedChenBoundingSieve N).totalMass *
-          (∑ l ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
-            (correctedChenBoundingSieve N).selbergTerms l)⁻¹ +
-        (correctedChenBoundingSieve N).errSum (BoundingSieve.lambdaSquared w) :=
-  AnalyticNumberTheory.Sieve.selberg_upper_bound_optimal (correctedChenBoundingSieve N)
 
 /-- Apply `selbergMainTerm_eq_prod_one_sub_nu`: the Selberg main term equals the sieve product
 `∏_{p | P(N)} (1 − ν(p))`. -/
@@ -237,23 +225,6 @@ theorem correctedChenSelbergMainTerm_eq_goldbachSieveProduct (N : ℕ) (hN : Eve
     exact AnalyticNumberTheory.Sieve.goldbachNu_apply_prime hp'
   rw [hnu]
 
-/-- Main-term identity: `totalMass·(Σ selbergTerms)⁻¹ =
-(N/log N)·primeProduct(z−1)·𝔖_trunc(N, z−1)`, the exact application
-of `sieveProduct_identity` to the Selberg main term. -/
-theorem correctedChenSelbergMainTerm_eq_primeProduct_mul_singularSeries (N : ℕ)
-    (hN : Even N) :
-    (correctedChenBoundingSieve N).totalMass *
-      (∑ l ∈ (correctedChenBoundingSieve N).prodPrimes.divisors,
-        (correctedChenBoundingSieve N).selbergTerms l)⁻¹ =
-    ((N : ℝ) / log (N : ℝ)) * MertensTheorem.primeProduct (correctedChenZ N - 1) *
-      SingularSeries.singularSeriesTruncated N (correctedChenZ N - 1) := by
-  rw [correctedChenTotalMass_eq N,
-    correctedChenSelbergMainTerm_eq_goldbachSieveProduct N hN]
-  have hz2 : 2 ≤ correctedChenZ N := by
-    unfold correctedChenZ
-    exact le_max_left _ _
-  rw [MertensTheorem.sieveProduct_identity N (correctedChenZ N) hz2 hN]
-  ring
 
 /-- An element is coprime to the corrected sifting product exactly when no
 sieved prime (that is, no prime `2 < r < z` with `r ∤ N`) divides it. -/
@@ -791,19 +762,6 @@ theorem correctedChenErrSum_le_panWeighted (N : ℕ) :
     exact one_le_pow₀ (by norm_num : (1 : ℝ) ≤ 3)
   simpa using le_mul_of_one_le_left (abs_nonneg _) hw
 
-/-- Given the averaged Pan-type distribution condition, the counting-sieve
-`errSum` of the corrected sieve is uniformly `O(N / log^A N)`.  This closes
-the `errSum` line conditionally on the single analytic input
-`CorrectedChenDistributionCondition`. -/
-theorem correctedChenErrSum_uniform_of_distribution {A : ℝ} (hA : 0 < A)
-    (N : ℕ) (hN : 1000 ≤ N) (hEven : Even N)
-    (hdist : CorrectedChenDistributionCondition) :
-    ∃ C : ℝ, 0 < C ∧
-      (correctedChenBoundingSieve N).errSum (fun _ => 1) ≤
-        C * (N : ℝ) / (log (N : ℝ)) ^ A := by
-  rcases hdist A hA with ⟨C, hC, hbound⟩
-  refine ⟨C, hC, ?_⟩
-  exact le_trans (correctedChenErrSum_le_panWeighted N) (hbound N hN hEven)
 
 /-! ## Applying the weighted Pan--Bombieri--Vinogradov input -/
 
@@ -836,24 +794,6 @@ theorem correctedChenPanSum_eq_weightedPanRemainder (N : ℕ) :
     rfl
   rw [hrem]
 
-/-- Applying the weighted Pan-BV input: the corrected sieve's
-distribution condition is **exactly** `WeightedPanCondition`
-instance. -/
-theorem correctedChenDistributionCondition_iff_chenWeightedPanInput :
-    CorrectedChenDistributionCondition ↔ ChenWeightedPanInput := by
-  constructor
-  · intro h A hA
-    rcases h A hA with ⟨C, hC, hbound⟩
-    refine ⟨C, hC, ?_⟩
-    intro N hN hEven
-    rw [← correctedChenPanSum_eq_weightedPanRemainder N]
-    exact hbound N hN hEven
-  · intro h A hA
-    rcases h A hA with ⟨C, hC, hbound⟩
-    refine ⟨C, hC, ?_⟩
-    intro N hN hEven
-    rw [correctedChenPanSum_eq_weightedPanRemainder N]
-    exact hbound N hN hEven
 
 /-- The counting-sieve `errSum` is bounded by the weighted Pan remainder:
 apply the reusable `errSum_le_threeOmegaWeightedPanRemainder` at the
@@ -864,18 +804,6 @@ theorem correctedChenErrSum_le_weightedPanInput (N : ℕ) :
         (fun d => (3 : ℝ) ^ d.primeFactors.card) :=
   AnalyticNumberTheory.Sieve.errSum_le_threeOmegaWeightedPanRemainder
 
-/-- Given the weighted Pan-BV input, the corrected sieve's `errSum` is
-uniformly `O(N / log^A N)`, the remainder bound formulated in
-analytic-number-theory-lean, issue #7. -/
-theorem correctedChenErrSum_uniform_of_weightedPanInput {A : ℝ} (hA : 0 < A)
-    (N : ℕ) (hN : 1000 ≤ N) (hEven : Even N)
-    (hinput : ChenWeightedPanInput) :
-    ∃ C : ℝ, 0 < C ∧
-      (correctedChenBoundingSieve N).errSum (fun _ => 1) ≤
-        C * (N : ℝ) / (log (N : ℝ)) ^ A := by
-  rcases hinput A hA with ⟨C, hC, hbound⟩
-  refine ⟨C, hC, ?_⟩
-  exact le_trans (correctedChenErrSum_le_weightedPanInput N) (hbound N hN hEven)
 
 /-! ## Completing the Pan bridge: PanMeanValueUniform ⇒ ChenWeightedPanInput
 
@@ -915,40 +843,7 @@ theorem supportAPBaseCount_eq_primesInAPBelow (N q : ℕ) (hN : 2 ≤ N) :
     · rw [Nat.ModEq] at hcong ⊢
       simpa [Nat.mod_mod] using hcong
 
-/-- The distribution error of the base count equals the a=1 Pan distribution error:
-`(baseCount q) − li(N−2)/φ(q) = panDistributionError (N−2) 1 q (N % q)`,
-namely `Δ(N-2; 1, q, N mod q) = π(N-2; q, N mod q) - li(N-2)/φ(q)`. -/
-theorem supportAPBaseCount_distributionError (N q : ℕ) (hN : 2 ≤ N) :
-    ((((Finset.range N).filter (fun p =>
-      p.Prime ∧ 2 ≤ N - p ∧ p ≡ N [MOD q])).card : ℝ)) -
-      AnalyticNumberTheory.Sieve.logarithmicIntegral (N - 2 : ℝ) / Nat.totient q =
-      AnalyticNumberTheory.Sieve.panDistributionError (N - 2) 1 q (N % q) := by
-  unfold AnalyticNumberTheory.Sieve.panDistributionError
-  rw [AnalyticNumberTheory.Sieve.primesInAPBelow_one (N - 2) q (N % q)]
-  congr 1
-  · rw [← AnalyticNumberTheory.Sieve.primesInAPBelow_one (N - 2) q (N % q)]
-    exact_mod_cast (supportAPBaseCount_eq_primesInAPBelow N q hN)
-  · simp [Nat.cast_sub hN]
 
-/-- **Exact remainder under Möbius decomposition** (factor-by-factor decomposition): for `d | P(N)`,
-`rem d = Σ_{e | F(N)} μ(e)·baseCount(lcm(d,e)) − li(N)/φ(d)`,
-where `baseCount(q) = #{p < N : p prime, 2 ≤ N-p, p ≡ N [MOD q]}` is the prime-AP base count.
-On the main-term side, `ν(d) = 1/φ(d)` for squarefree `d | P`, and `totalMass = N/log N = li(N)`. -/
-theorem correctedChenRem_eq_moebiusBaseCount (N d : ℕ)
-    (hd : d ∣ correctedChenSiftingProduct N) :
-    (correctedChenBoundingSieve N).rem d =
-      (∑ e ∈ (correctedChenForbiddenProduct N).divisors,
-        (μ e : ℝ) * (((Finset.range N).filter (fun p =>
-          p.Prime ∧ 2 ≤ N - p ∧ p ≡ N [MOD Nat.lcm d e])).card : ℝ)) -
-      (1 : ℝ) / (Nat.totient d : ℝ) * ((N : ℝ) / log (N : ℝ)) := by
-  rw [correctedChenRem_eq_modEq_count N d]
-  rw [unsiftedPrimeSupport_AP_count_eq_moebiusSum_lcm N d]
-  rw [correctedChenTotalMass_eq N]
-  have hnu : correctedChenNu d = (1 : ℝ) / (Nat.totient d : ℝ) := by
-    unfold correctedChenNu
-    exact AnalyticNumberTheory.Sieve.goldbachNu_squarefree_eq_inv_totient
-      (BoundingSieve.squarefree_of_dvd_prodPrimes (s := correctedChenBoundingSieve N) hd)
-  rw [hnu]
 
 /-- For the a=1 weight, `panDistributionSum` reduces to `panDistributionError`. -/
 theorem panDistributionSum_one_eq_distributionError (y X q l : ℕ) (hX : 1 ≤ X) :
@@ -978,36 +873,7 @@ theorem chenPanWeightOne_eq_zero_of_not_coprime {a q : ℕ}
     exact (hcop (by simp)).elim
   · simp [chenPanWeightOne, ha]
 
-/-- The entire finite non-coprime lane vanishes for `chenPanWeightOne`. -/
-theorem chenPanWeightOne_noncoprimeSum_eq_zero (y X q l : ℕ) :
-    (∑ a ∈ Finset.range (X + 1),
-      if ¬a.Coprime q then
-        chenPanWeightOne a *
-          AnalyticNumberTheory.Sieve.panDistributionError y a q l
-      else 0) = 0 := by
-  classical
-  apply Finset.sum_eq_zero
-  intro a ha
-  by_cases hcop : a.Coprime q
-  · simp [hcop]
-  · simp [hcop, chenPanWeightOne_eq_zero_of_not_coprime hcop]
 
-/-- The unrestricted finite sum also collapses to the `a = 1` base-count
-error. Together with the preceding theorem, this is the exact scope of the
-delta-weight bridge. -/
-theorem chenPanWeightOne_fullSum_eq_distributionError
-    (y X q l : ℕ) (hX : 1 ≤ X) :
-    (∑ a ∈ Finset.range (X + 1),
-      chenPanWeightOne a *
-        AnalyticNumberTheory.Sieve.panDistributionError y a q l) =
-      AnalyticNumberTheory.Sieve.panDistributionError y 1 q l := by
-  classical
-  rw [Finset.sum_eq_single 1]
-  · simp [chenPanWeightOne]
-  · intro b hb hbne
-    simp [chenPanWeightOne, hbne]
-  · intro hnot
-    exact (hnot (Finset.mem_range.mpr (by omega))).elim
 
 /-- The sifting product is coprime to `N`: each prime factor of `P(N)` satisfies `r ∤ N`. -/
 theorem coprime_siftingProduct_N (N : ℕ) :
@@ -1608,27 +1474,6 @@ theorem correctedChenPanInput_of_panMeanValueUniform
           _ ≤ C * (N : ℝ) / (log (N : ℝ)) ^ A := hmain
       exact hbound
 
-/-- **Source-faithful Pan wrapper**:
-`PanMeanValueUniform.of_sourceFaithfulSignedInputs` combines two character mean-value bounds,
-the signed-main inverse-log bound with explicit `u,v`, the proved logarithmic growth estimate,
-and `δ₁(0)=0` into `PanMeanValueUniform`. Adding support truncation yields `ChenWeightedPanInput`.
-The exact signed pointwise decomposition is an internal theorem of AnalyticNumberTheory, not a hypothesis;
-the paper's `R₁` and `PanSourceFaithfulSignedMainBound` remain open inputs. -/
-theorem chenPanInput_of_sourceFaithfulSignedInputs
-    {u v : ℕ}
-    (hI : AnalyticNumberTheory.Sieve.PanTypeICharacterMeanValue
-      (fun N : ℕ => (N : ℝ)) chenPanWeightOne u)
-    (hII : AnalyticNumberTheory.Sieve.PanTypeIICharacterMeanValue
-      (fun N : ℕ => (N : ℝ)) chenPanWeightOne u v)
-    (hM : AnalyticNumberTheory.Sieve.PanSourceFaithfulSignedMainBound
-      (fun N : ℕ => (N : ℝ)) chenPanWeightOne u v)
-    (htrunc : CorrectedChenPanTruncationInput) :
-    ChenWeightedPanInput := by
-  exact correctedChenPanInput_of_panMeanValueUniform
-    (AnalyticNumberTheory.Sieve.PanMeanValueUniform.of_sourceFaithfulSignedInputs
-      hI hII hM AnalyticNumberTheory.Sieve.panLogEventuallyLarge_natCast
-      (by simp [chenPanWeightOne]))
-    htrunc
 
 /-- The corrected candidate count is at least the lower-sieve main term minus
 the explicit `errSum`: the finite seam through which a uniform

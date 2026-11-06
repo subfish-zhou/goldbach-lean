@@ -35,15 +35,6 @@ theorem sigmaTwelve_filter_lt_eq
   unfold sigmaTwelve
   rw [sigmaOneCarrier_filter_lt_eq support hvz]
 
-/-- Bounding-sieve specialization: this is the exact carrier represented by
-`suzukiSupportedBelow S z` after unfolding that definition. -/
-theorem sigmaOneCarrier_supportedBelow_eq_full
-    (S : BoundingSieve) {D z : ℕ} {σ τ : ℝ}
-    (hvz : (D : ℝ) ^ (1 / τ) ≤ (z : ℝ)) :
-    sigmaOneCarrier
-        (S.prodPrimes.primeFactors.filter fun p => p < z) D σ τ =
-      sigmaOneCarrier S.prodPrimes.primeFactors D σ τ :=
-  sigmaOneCarrier_filter_lt_eq S.prodPrimes.primeFactors hvz
 
 /-- Exact supported/full `sigmaTwelve` equality for a bounding sieve.  The
 left support is definitionally the finite set used by `suzukiSupportedBelow`. -/

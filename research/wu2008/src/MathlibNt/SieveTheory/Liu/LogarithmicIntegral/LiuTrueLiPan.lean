@@ -161,23 +161,7 @@ def LiuMainPanMeanValueAt
 
 /-! ## Proxy compatibility -/
 
-/-- **Proxy compatibility.** The unrestricted object specializes to ANT's
-historical `x / log x` finite sum. This is not a true-`li` statement. -/
-theorem liuMainPanInnerSum_proxy
-    (Y X q l : ℕ) (f : ℕ → ℝ) :
-    liuMainPanInnerSum AnalyticNumberTheory.Sieve.logarithmicIntegral
-        Y X q l f =
-      AnalyticNumberTheory.Sieve.panDistributionFullSum Y X q l f := by
-  rfl
 
-/-- **Proxy compatibility.** The coprime object specializes to ANT's historical
-`x / log x` finite sum. This is not a true-`li` statement. -/
-theorem liuMainPanCoprimeSum_proxy
-    (Y X q l : ℕ) (f : ℕ → ℝ) :
-    liuMainPanCoprimeSum AnalyticNumberTheory.Sieve.logarithmicIntegral
-        Y X q l f =
-      AnalyticNumberTheory.Sieve.panDistributionSum Y X q l f := by
-  rfl
 
 /-- The new coprime sum is definitionally the coprime sum used by the Liu
 source-Q majorant. -/
@@ -187,21 +171,7 @@ theorem liuMainPanCoprimeSum_eq_liuMainCoprimeSum
       liuMainCoprimeSum main Y X q l f := by
   rfl
 
-/-- **Proxy compatibility.** The canonical-residue maximum specializes
-definitionally to ANT's live `panMaxL`. -/
-theorem liuMainPanMaxL_proxy
-    (Y X q : ℕ) (f : ℕ → ℝ) :
-    liuMainPanMaxL AnalyticNumberTheory.Sieve.logarithmicIntegral Y X q f =
-      AnalyticNumberTheory.Sieve.panMaxL Y X q f := by
-  rfl
 
-/-- **Proxy compatibility.** The source-parameter maximum specializes
-definitionally to ANT's live `panMaxY`. -/
-theorem liuMainPanMaxY_proxy
-    (X q N : ℕ) (f : ℕ → ℝ) :
-    liuMainPanMaxY AnalyticNumberTheory.Sieve.logarithmicIntegral X q N f =
-      AnalyticNumberTheory.Sieve.panMaxY X q N f := by
-  rfl
 
 /-- In particular, the modulus-one maximum uses the canonical residue `0`. -/
 @[simp] theorem liuMainPanMaxL_one
@@ -222,18 +192,6 @@ theorem liuMainPanWeightedSum_proxy
             AnalyticNumberTheory.Sieve.panMaxY N q N f := by
   rfl
 
-/-- **Proxy compatibility.** This is only a fixed-`N` restatement of ANT's
-historical proxy finite inequality, not an analytic theorem. -/
-theorem LiuMainPanMeanValueAt_proxy
-    (N : ℕ) (f : ℕ → ℝ) (A B C : ℝ) :
-    LiuMainPanMeanValueAt
-        AnalyticNumberTheory.Sieve.logarithmicIntegral N f A B C ↔
-      (∑ q ∈ range (panModulusCutoff N B + 1),
-        (((ArithmeticFunction.moebius q : ℤ) : ℝ) ^ 2) *
-          (3 : ℝ) ^ q.primeFactors.card *
-            AnalyticNumberTheory.Sieve.panMaxY N q N f) ≤
-        C * N / Real.log N ^ A := by
-  rfl
 
 /-! ## Finite consumption bridge -/
 
@@ -250,16 +208,6 @@ theorem liuMainPanMaxL_nonneg
     exact Finset.mem_image.mpr ⟨l, hl, rfl⟩
   · rw [dif_neg hS]
 
-theorem liuMainPanMaxY_nonneg
-    (main : ℝ → ℝ) (X q N : ℕ) (f : ℕ → ℝ) :
-    0 ≤ liuMainPanMaxY main X q N f := by
-  unfold liuMainPanMaxY
-  have hmem :
-      liuMainPanMaxL main 0 X q f ∈
-        (range (N + 1)).image (fun Y => liuMainPanMaxL main Y X q f) :=
-    Finset.mem_image.mpr ⟨0, by simp, rfl⟩
-  exact (liuMainPanMaxL_nonneg main 0 X q f).trans
-    (Finset.le_max' _ _ hmem)
 
 /-- A canonical reduced residue is bounded by the residue maximum at the same
 endpoint. -/
@@ -284,16 +232,6 @@ private theorem liuMainPanMaxL_le_maxY
   exact Finset.mem_image.mpr
     ⟨Y, Finset.mem_range.mpr (Nat.lt_succ_of_le hY), rfl⟩
 
-/-- A canonical reduced residue and a source parameter in range are bounded by
-the two nested Pan maxima. -/
-theorem abs_liuMainPanCoprimeSum_le_maxY
-    (main : ℝ → ℝ) (Y X q N l : ℕ) (f : ℕ → ℝ)
-    (hY : Y ≤ N)
-    (hl : l ∈ AnalyticNumberTheory.Sieve.unitResidues q) :
-    |liuMainPanCoprimeSum main Y X q l f| ≤
-      liuMainPanMaxY main X q N f := by
-  exact (abs_liuMainPanCoprimeSum_le_maxL main Y X q l f hl).trans
-    (liuMainPanMaxL_le_maxY main Y X q N f hY)
 
 /-- The source-faithful endpoint structural bridge: Pan's weighted estimate at
 `Y = N` already controls the only prefix used by Liu's source-`Q` coprime
@@ -423,19 +361,6 @@ theorem liuLogarithmicIntegral_liuPaperQCoprimeRBound_of_panMeanValueAt
   liuPaperQCoprimeRBound_of_liuMainPanMeanValueAt
     (liuLogarithmicIntegral κ) N ε A B C hcut hpan
 
-/-- Beyond a threshold depending only on `ε` and `B`, the true logarithmic-
-integral coprime bound requires only the fixed-`N` Pan mean-value input. -/
-theorem exists_liuLogarithmicIntegral_liuPaperQCoprimeRBound_of_panMeanValueAt
-    (ε B : ℝ) (hε : 0 < ε) (hB : 0 ≤ B) :
-    ∃ N₀ : ℕ, ∀ (N : ℕ) (κ A C : ℝ), N₀ ≤ N →
-      LiuMainPanMeanValueAt (liuLogarithmicIntegral κ) N
-        (liuWeight N (liuSourceZ10 N) (liuSourceY3 N)) A B C →
-      LiuPaperQCoprimeRBound (liuLogarithmicIntegral κ) N ε A C := by
-  rcases exists_liuSourceDEpsilon_le_panModulusCutoff ε B hε hB with
-    ⟨N₀, hcut⟩
-  refine ⟨N₀, fun N κ A C hN hpan ↦ ?_⟩
-  exact liuLogarithmicIntegral_liuPaperQCoprimeRBound_of_panMeanValueAt
-    κ N ε A B C (hcut N hN) hpan
 
 private theorem abs_liuMainCoprimeSum_li_normalization_sub_le
     (κ₂ κ₁ : ℝ) (N d l : ℕ) (hd : 0 < d) :

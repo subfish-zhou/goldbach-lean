@@ -216,24 +216,6 @@ theorem apNormalizedVaughanTypeIFirstShellMean_sq_le_budget
       (vaughanTypeIFirstRowCoeff fun _ => 1)
       (vaughanTypeIFirstRowLength N) Q hQ hcard
 
-theorem apNormalizedVaughanTypeIMiddleShellMean_sq_le_budget
-    (DS ES : Finset ℕ) (N Q : ℕ) (hQ : 0 < Q)
-    (hcard : ∀ q ∈ Finset.Icc 1 Q,
-      Fintype.card (PrimitiveCharacter q) ≤ q.totient) :
-    apNormalizedVaughanTypeIMiddleShellMean DS ES N Q ^ 2 ≤
-      conductorHarmonicFactor Q *
-        rowShellShortEnergy (DS ×ˢ ES)
-          (fun de => ((ArithmeticFunction.moebius de.1 : ℤ) : ℂ) *
-            (ArithmeticFunction.vonMangoldt de.2 : ℂ)) *
-        variableLengthPrimitivePrefixBudget (DS ×ˢ ES)
-          (vaughanTypeIMiddlePairRowCoeff fun _ => 1)
-          (vaughanTypeIMiddlePairRowLength N) Q := by
-  simpa [apNormalizedVaughanTypeIMiddleShellMean] using
-    apNormalizedWeightedRowShellMean_sq_le_budget (DS ×ˢ ES)
-      (fun de => ((ArithmeticFunction.moebius de.1 : ℤ) : ℂ) *
-        (ArithmeticFunction.vonMangoldt de.2 : ℂ))
-      (vaughanTypeIMiddlePairRowCoeff fun _ => 1)
-      (vaughanTypeIMiddlePairRowLength N) Q hQ hcard
 
 /-- Scalar optimization used on each dyadic short-variable shell.  Reopening
 the square ledger gives the exact short-scale term `Q * sqrt (N*D)`.  The older

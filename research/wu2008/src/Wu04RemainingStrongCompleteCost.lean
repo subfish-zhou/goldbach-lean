@@ -57,9 +57,6 @@ theorem complete_paid (i : Fin 3) : coupledCostMass (row i)≤costCap i := by
   unfold costCap Wu04RemainingStrongPrefixCost.costCap
   linarith only [hc,he,hb]
 
-theorem strictly_better (i : Fin 3) : costCap i<Wu04RemainingStrongPrefixCost.costCap (row i) := by
-  unfold costCap
-  linarith only [Wu04RemainingStrongGammaMass.gain_pos i,Wu04RemainingStrongFourthMass.gain_pos i]
 
 /-- New actual consumer includes Gamma9 and the clipped original fourth-domain gain. -/
 theorem actual_remaining (i : Fin 3) {δ : ℝ} (hd : 0<δ) (hh : δ≤1/10) :

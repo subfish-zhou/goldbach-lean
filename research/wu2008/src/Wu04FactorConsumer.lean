@@ -27,14 +27,6 @@ theorem classical_lower : classicalCertificate≤classicalNumerator row1 := by
   unfold classicalCertificate classicalNumerator
   linarith only [hj,hk,hl,hm,hn]
 
-/-- Complete actual cost: Γ9 and six lower triples at the proved cap; every fourprime
-and U20 retained, with the two true suprema bounded independently upstream. -/
-theorem first_joint_exact :
-    classicalCertificate-2*Wu04MainProducer.completeCap≤
-      classicalNumerator row1-2*coupledCostMass row1 := by
-  have hb := classical_lower
-  have hc := Wu04MainProducer.first_complete_cost
-  linarith only [hb,hc]
 
 /-- Actual positive-delta source, not a delta-zero limit assumption.
 This theorem does not assert the unresolved publication comparison. -/

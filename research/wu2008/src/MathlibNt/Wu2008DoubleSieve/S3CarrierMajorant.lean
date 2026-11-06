@@ -73,9 +73,6 @@ theorem s3_sieveCount_le_mul_modulus (N d M b : ℕ) (z : ℝ) :
     sieveCount N d M z ≤ sieveCount N d (M * b) z :=
   Int.ofNat_le.mpr (card_le_card (sieveCarrier_subset_mul_modulus N d M b z))
 
-theorem sieveCountLE_le_mul_modulus (N d M b : ℕ) (z : ℝ) :
-    sieveCountLE N d M z ≤ sieveCountLE N d (M * b) z :=
-  Int.ofNat_le.mpr (card_le_card (sieveCarrierLE_subset_mul_modulus N d M b z))
 
 theorem sieveCarrier_mul_modulus_difference (N d M b : ℕ) (z : ℝ)
     (hb : b.Prime) (hbM : b.Coprime M) :
@@ -109,41 +106,8 @@ theorem sieveCount_mul_modulus_eq_add_loss (N d M b : ℕ) (z : ℝ)
   unfold sieveCount
   exact_mod_cast h.symm.trans (Nat.add_comm _ _)
 
-theorem sieveCountLE_mul_modulus_eq_add_loss (N d M b : ℕ) (z : ℝ)
-    (hb : b.Prime) (hbM : b.Coprime M) :
-    sieveCountLE N d (M * b) z = sieveCountLE N d M z +
-      (((sieveCarrierLE N d (M * b) z).filter
-        (fun p => (b : ℝ) ≤ z ∧ b ∣ (N - p) / d)).card : ℤ) := by
-  have h := card_sdiff_add_card_eq_card (sieveCarrierLE_subset_mul_modulus N d M b z)
-  rw [sieveCarrierLE_mul_modulus_difference N d M b z hb hbM] at h
-  unfold sieveCountLE
-  exact_mod_cast h.symm.trans (Nat.add_comm _ _)
 
-theorem selected_pair_loss_square {N a b p : ℕ} {z : ℝ}
-    (hb : b.Prime) (hbNa : b.Coprime (N * a))
-    (hp : p ∈ sieveCarrier N (a * b) (N * a * b) z \
-      sieveCarrier N (a * b) (N * a) z) :
-    (b : ℝ) < z ∧ a * b ^ 2 ∣ N - p := by
-  rw [sieveCarrier_mul_modulus_difference N (a * b) (N * a) b z hb hbNa] at hp
-  obtain ⟨hp, hbz, hbd⟩ := mem_filter.mp hp
-  have hd := (mem_filter.mp hp).2.2.1
-  refine ⟨hbz, ?_⟩
-  have h := Nat.mul_dvd_mul_left (a * b) hbd
-  rw [Nat.mul_div_cancel' hd] at h
-  simpa only [pow_two, mul_assoc] using h
 
-theorem selected_pair_closed_loss_square {N a b p : ℕ} {z : ℝ}
-    (hb : b.Prime) (hbNa : b.Coprime (N * a))
-    (hp : p ∈ sieveCarrierLE N (a * b) (N * a * b) z \
-      sieveCarrierLE N (a * b) (N * a) z) :
-    (b : ℝ) ≤ z ∧ a * b ^ 2 ∣ N - p := by
-  rw [sieveCarrierLE_mul_modulus_difference N (a * b) (N * a) b z hb hbNa] at hp
-  obtain ⟨hp, hbz, hbd⟩ := mem_filter.mp hp
-  have hd := (mem_filter.mp hp).2.2.1
-  refine ⟨hbz, ?_⟩
-  have h := Nat.mul_dvd_mul_left (a * b) hbd
-  rw [Nat.mul_div_cancel' hd] at h
-  simpa only [pow_two, mul_assoc] using h
 
 theorem sifted_mul_modulus_of_le {M n b : ℕ} {z : ℝ}
     (hb : b.Prime) (hz : z ≤ (b : ℝ)) :
@@ -157,49 +121,8 @@ theorem sifted_mul_modulus_of_le {M n b : ℕ} {z : ℝ}
     exact (not_lt_of_ge hz) hqz
   · exact sifted_modulus_mul
 
-theorem source_pair_majorant_eq_add_loss (N a b : ℕ) (z : ℝ)
-    (hb : b.Prime) (hbNa : b.Coprime (N * a)) :
-    sourceSieveCount N (a * b) ((a * b) * N) z =
-      sieveCount N (a * b) (N * a) z +
-        (((sieveCarrier N (a * b) (N * a * b) z).filter
-          (fun p => (b : ℝ) < z ∧ b ∣ (N - p) / (a * b))).card : ℤ) := by
-  unfold sourceSieveCount
-  rw [sourceSieveCarrier_of_dvd_modulus N (dvd_mul_right (a * b) N)]
-  have he : (a * b) * N = N * a * b := by ring
-  rw [he]
-  exact sieveCount_mul_modulus_eq_add_loss N (a * b) (N * a) b z hb hbNa
 
-/-- At the strict triple cutoff `c`, removing `c` makes no difference.
-Removing the earlier selected prime `b` loses exactly a repeated `b` in
-the quotient, not the whole triple carrier. -/
-theorem source_triple_majorant_eq_add_loss (N a b c : ℕ)
-    (hb : b.Prime) (hc : c.Prime) (hbNa : b.Coprime (N * a)) :
-    sourceSieveCount N (a * b * c) ((a * b * c) * N) (c : ℝ) =
-      sieveCount N (a * b * c) (N * a) (c : ℝ) +
-        (((sieveCarrier N (a * b * c) (N * a * b) (c : ℝ)).filter
-          (fun p => (b : ℝ) < c ∧ b ∣ (N - p) / (a * b * c))).card : ℤ) := by
-  unfold sourceSieveCount
-  rw [sourceSieveCarrier_of_dvd_modulus N (dvd_mul_right (a * b * c) N)]
-  have he : (a * b * c) * N = (N * a * b) * c := by ring
-  have hcarrier : sieveCarrier N (a * b * c) ((N * a * b) * c) (c : ℝ) =
-      sieveCarrier N (a * b * c) (N * a * b) (c : ℝ) := by
-    ext p
-    simp only [sieveCarrier, mem_filter, sifted_mul_modulus_of_le hc le_rfl]
-  rw [he, hcarrier]
-  exact sieveCount_mul_modulus_eq_add_loss N (a * b * c) (N * a) b c hb hbNa
 
-theorem selected_triple_loss_square {N a b c p : ℕ} {z : ℝ}
-    (hb : b.Prime) (hbNa : b.Coprime (N * a))
-    (hp : p ∈ sieveCarrier N (a * b * c) (N * a * b) z \
-      sieveCarrier N (a * b * c) (N * a) z) :
-    (b : ℝ) < z ∧ a * b ^ 2 * c ∣ N - p := by
-  rw [sieveCarrier_mul_modulus_difference N (a * b * c) (N * a) b z hb hbNa] at hp
-  obtain ⟨hp, hbz, hbd⟩ := mem_filter.mp hp
-  have hd := (mem_filter.mp hp).2.2.1
-  refine ⟨hbz, ?_⟩
-  have h := Nat.mul_dvd_mul_left (a * b * c) hbd
-  rw [Nat.mul_div_cancel' hd] at h
-  simpa only [pow_two, mul_assoc, mul_comm, mul_left_comm] using h
 
 theorem sieveCount_le_source_selected_modulus (N d M : ℕ) (z : ℝ) :
     sieveCount N d M z ≤ sourceSieveCount N d (d * M) z := by
@@ -241,23 +164,6 @@ theorem variableS3Triples_le_source_majorant (N : ℕ) (z w : ℝ) :
   have h := s3_sieveCount_le_mul_modulus N (t.1 * t.2 * c) (N * t.1) (t.2 * c) c
   simpa only [sieveCount, mul_assoc, mul_comm, mul_left_comm] using h
 
-/-- Both terms, including every triple, have the genuine unscaled
-`P(d*N)` carrier. The only paid error here is the old repeated-pair error. -/
-theorem lowerS3_le_source_majorants {N : ℕ} (hN : 4 ≤ N) (he : Even N)
-    {κ w : ℝ} (hκ : 0 < κ) (hz : 2 ≤ (N : ℝ) ^ κ)
-    (hzw : (N : ℝ) ^ κ ≤ w) :
-    (lowerS3 N ((N : ℝ) ^ κ) w : ℝ) ≤
-      (s3SourceMajorantMain N ((N : ℝ) ^ κ) w : ℝ) +
-        (s3SourceMajorantTriples N ((N : ℝ) ^ κ) w : ℝ) +
-        2 * (1 / κ) ^ 2 * (N : ℝ) ^ (1 - κ) := by
-  have h := lowerS3_le_variable_add_paid_error hN he hκ hz hzw
-  have hm : (variableS3Main N ((N : ℝ) ^ κ) w : ℝ) ≤
-      (s3SourceMajorantMain N ((N : ℝ) ^ κ) w : ℝ) := by
-    exact_mod_cast variableS3Main_le_source_majorant N ((N : ℝ) ^ κ) w
-  have ht : (variableS3Triples N ((N : ℝ) ^ κ) w : ℝ) ≤
-      (s3SourceMajorantTriples N ((N : ℝ) ^ κ) w : ℝ) := by
-    exact_mod_cast variableS3Triples_le_source_majorant N ((N : ℝ) ^ κ) w
-  linarith
 
 /-- The actual third-range square-root bound in Wu08 Lemma 2.2.
 The non-strict conclusion already follows at the closed parameter edge. -/

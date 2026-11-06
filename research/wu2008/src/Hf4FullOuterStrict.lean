@@ -73,9 +73,5 @@ theorem endpointNumerator_lt_full : endpointNumerator < numerator := by
 theorem endpointProfile_lt_full : endpointProfile < profile :=
   div_lt_div_of_pos_right endpointNumerator_lt_full (sub_pos.mpr D0FullDensity.dPaid_lt_one)
 
-theorem endpointTerminal_lt_full : endpointTerminal < terminal := by
-  unfold endpointTerminal terminal
-  exact add_lt_add_of_lt_of_le (mul_lt_mul_of_pos_left endpointProfile_lt_full
-    (log_pos (by norm_num : (1:ℝ)<2))) le_rfl
 
 end Hf4Full

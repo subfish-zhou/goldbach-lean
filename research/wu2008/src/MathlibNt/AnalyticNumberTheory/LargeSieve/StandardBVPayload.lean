@@ -65,24 +65,6 @@ theorem apNormalizedPrimitiveMeanOn_vaughanSmall_le_explicit
         _ = _ := by ring
     _ = (S.card : ℝ) * ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ)) := by simp
 
-/-- In particular a conductor interval contained in `[1,Q]` costs at most
-`Q v log(v+1)`. -/
-theorem highConductorVaughanSmallMean_le_explicit (N Q C v : ℕ) :
-    highConductorVaughanSmallMean N Q C v ≤
-      (Q : ℝ) * ((v : ℝ) * Real.log ((v + 1 : ℕ) : ℝ)) := by
-  unfold highConductorVaughanSmallMean
-  refine (apNormalizedPrimitiveMeanOn_vaughanSmall_le_explicit N v
-    (highConductorSet N Q C) (fun q hq => by
-      have hqI : q ∈ Finset.Icc 2 Q := (Finset.mem_filter.mp hq).1
-      have hq2 : 2 ≤ q := (Finset.mem_Icc.mp hqI).1
-      omega)).trans ?_
-  apply mul_le_mul_of_nonneg_right
-  · norm_cast
-    exact (Finset.card_le_card (by
-      intro d hd
-      exact (Finset.mem_filter.mp hd).1 :
-        highConductorSet N Q C ⊆ Finset.Icc 2 Q)).trans (by simp)
-  · positivity
 
 /-- A convenient closed packet for exactly the elementary Standard-BV lanes. -/
 def StandardBVPayload (N Q : ℕ) : ℝ :=

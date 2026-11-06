@@ -121,10 +121,6 @@ theorem roundedSetAdmissible_iff_admissible
   ⟨roundedSetAdmissible_to_admissible hone hmono hsq,
     fun h => (roundedSetAdmissible_iff_cubicPrefixBound upper b D s).mpr h.cubic⟩
 
-/-- Mapping endpoints does not remove equal entries. -/
-theorem rounded_sorted_map_length (b : ℕ → ℝ) (s : Finset ℕ) :
-    ((s.sort (· ≥ ·)).map b).length = s.card := by
-  simp
 
 theorem roundedSetAdmissible_cast_lower_iff (D : ℝ) (s : Finset ℕ) :
     RoundedSetAdmissible false (fun p : ℕ => (p : ℝ)) D s ↔

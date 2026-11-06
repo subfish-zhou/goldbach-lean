@@ -117,14 +117,6 @@ structure Section13QhatCore (Q : ℝ → ℝ) : Prop where
   initial : ∀ s, 0 < s → s ≤ 2 → Q s = 3 / s ^ 2
   weighted_tendsto_zero : Tendsto (fun s => s ^ 2 * Q s) atTop (𝓝 0)
 
-theorem section13Qhat_core
-    {H : Section13HatLayers} (hH : Section13HatContract H 2) :
-    Section13QhatCore (section13Qhat H) where
-  dde := fun _ hs => section13Qhat_dde hH hs
-  continuous := section13Qhat_continuousOn hH
-  positive := fun _ hs => section13Qhat_pos hH hs
-  initial := fun _ hs hs2 => section13Qhat_initial hH hs hs2
-  weighted_tendsto_zero := section13Qhat_weighted_tendsto_zero hH
 
 /-- The Section 10 bilinear concomitant.  This is a definition, not an assumed
 vanishing condition. -/
@@ -141,12 +133,6 @@ structure Section10StandardAdjoint (q : ℝ → ℝ) : Prop where
   dde : ∀ s, 0 < s →
     HasDerivAt (fun u => u * q u) (2 * q s + q (s + 1)) s
 
-/-- Algebraic reconstruction of the two hat layers from `P̂,Q̂`. -/
-theorem section13_T_eq_Q_add_sign_P
-    (H : Section13HatLayers) (sign : ErrorSign) (s : ℝ) :
-    H.T sign s =
-      (section13Qhat H s + (if sign = .plus then section13Phat H s else -section13Phat H s)) / 2 := by
-  cases sign <;> simp [section13Qhat, section13Phat]; ring
 
 /-- The exact order-theoretic last step in the Lemma 10.17 bridge.  The hard
 input is only a strict contraction of `P̂` relative to `Q̂`; no final

@@ -401,13 +401,6 @@ theorem equation1056_eventually_strict (c : ℝ) (hc : 1152 ≤ c) :
   rcases hS s hs with ⟨hs3, hm, hA, hgap⟩
   exact scalar_absorption_of_elementary_bounds hs3 hm hA hgap
 
-/-- The literal final contradiction in (10.56): the source-side lower bound
-`1 ≤ ratio` is incompatible with the eventual strict absorption. -/
-theorem equation1056_eventually_contradiction (c : ℝ) (hc : 1152 ≤ c) :
-    ∃ S : ℝ, ∀ s, S ≤ s →
-      1 ≤ equation1056ScalarRatio xi c s → False := by
-  obtain ⟨S, hS⟩ := equation1056_eventually_strict c hc
-  exact ⟨S, fun s hs hsource => (not_lt_of_ge hsource) (hS s hs)⟩
 
 
 end Section10Equation1056ScalarAbsorption

@@ -1124,65 +1124,6 @@ theorem zmod_sum_range {q : ℕ} [NeZero q] {M : Type*} [AddCommMonoid M] (f : Z
   · intro a ha
     rfl
 
-/-- For `0 ≤ a,b < q`, `q | a+b` if and only if `b = (q−a) mod q`. -/
-theorem zmod_dvd_add_iff {q a b : ℕ} (hq : 0 < q) (ha : a < q) (hb : b < q) :
-    ((q : ℤ) ∣ ((a : ℤ) + (b : ℤ))) ↔ b = (q - a) % q := by
-  constructor
-  · intro hd
-    rcases hd with ⟨m, hm⟩
-    have hmz : (a : ℤ) + (b : ℤ) = m * (q : ℤ) := by simpa [mul_comm] using hm
-    have hnonneg : 0 ≤ (a : ℤ) + (b : ℤ) := by positivity
-    have hlt : (a : ℤ) + (b : ℤ) < 2 * (q : ℤ) := by
-      have ha' : (a : ℤ) < (q : ℤ) := by exact_mod_cast ha
-      have hb' : (b : ℤ) < (q : ℤ) := by exact_mod_cast hb
-      linarith
-    have hm0 : 0 ≤ m := by
-      have hqpos : 0 < (q : ℤ) := by exact_mod_cast hq
-      have hmq : m * (q : ℤ) ≥ 0 := by rwa [← hmz]
-      nlinarith
-    have hm2 : m < 2 := by
-      have hmq : m * (q : ℤ) < 2 * (q : ℤ) := by
-        rw [← hmz]
-        exact hlt
-      nlinarith
-    have hm01 : m = 0 ∨ m = 1 := by omega
-    rcases hm01 with hm0 | hm1
-    · have hab0 : (a : ℤ) + (b : ℤ) = 0 := by
-        rw [hmz, hm0]
-        norm_num
-      have habn : a + b = 0 := by exact_mod_cast hab0
-      have ha0 : a = 0 := by omega
-      have hb0 : b = 0 := by omega
-      rw [ha0, hb0]
-      simp
-    · have habq : (a : ℤ) + (b : ℤ) = (q : ℤ) := by
-        rw [hmz, hm1]
-        norm_num
-      have habn : a + b = q := by exact_mod_cast habq
-      by_cases ha0 : a = 0
-      · have : b = q := by omega
-        omega
-      · have hqapos : 0 < q - a := by omega
-        have hqalt : q - a < q := by omega
-        have hmod : (q - a) % q = q - a := Nat.mod_eq_of_lt hqalt
-        have hbqa : b = q - a := by omega
-        rw [hbqa, hmod]
-  · intro hb'
-    by_cases ha0 : a = 0
-    · have hb0 : b = 0 := by
-        rw [ha0] at hb'
-        simpa using hb'
-      rw [ha0, hb0]
-      exact dvd_zero (q : ℤ)
-    · have hqapos : 0 < q - a := by omega
-      have hqalt : q - a < q := by omega
-      have hmod : (q - a) % q = q - a := Nat.mod_eq_of_lt hqalt
-      have hbqa : b = q - a := by
-        rw [hmod] at hb'
-        exact hb'
-      have habq : a + b = q := by omega
-      have habq' : (a : ℤ) + (b : ℤ) = (q : ℤ) := by exact_mod_cast habq
-      rw [habq']
 
 /-- For `0 ≤ a,b < q`, `q | a−b` if and only if `a = b`. -/
 theorem zmod_dvd_sub_iff {q a b : ℕ} (_hq : 0 < q) (ha : a < q) (hb : b < q) :

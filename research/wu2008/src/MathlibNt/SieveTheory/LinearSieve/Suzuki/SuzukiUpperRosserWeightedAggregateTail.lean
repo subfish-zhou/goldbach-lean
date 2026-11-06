@@ -232,65 +232,7 @@ theorem exists_upperRosserBoundaryChains_weightedSubaggregate_geometric
     _ ≤ 90 * C * (9 / 10 : ℝ) ^ L := by
       simpa [P, F] using hfull S L n z Δ s hz hΔ hs hlocal hcut
 
-/-- The existing ordered-mass telescoping estimate, rewritten in the literal
-fixed-depth prefix coordinates: normalized outer atom times relative boundary
-density.  The cutoff `N` and tail `τ` are selected before the sieve, depth block,
-and source parameters. -/
-theorem exists_upperRosserBoundaryChains_weightedAggregate_uniform_tail
-    (K : ℝ) (hK : 1 ≤ K) :
-    ∃ N : ℕ, ∃ τ : ℕ → ℝ,
-      Tendsto τ atTop (nhds 0) ∧
-      (∀ L, 0 ≤ τ L) ∧
-      ∀ (S : BoundingSieve) (L n : ℕ) (z Δ s : ℝ),
-        2 ≤ z → 0 < Δ → s = Real.log Δ / Real.log z →
-        HasDimensionOneLocalProductBound S K →
-        (∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z) →
-        ((∑ q ∈ S.prodPrimes.primeFactors,
-            (S.nu q / (1 - S.nu q)) *
-              ∑ j ∈ Finset.range n,
-                LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity
-                  S.nu (Nat.floor Δ + 1) q
-                  (S.prodPrimes.primeFactors.filter (fun p => q < p))
-                  (L + j + N)) *
-          ∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p) ≤ τ L) := by
-  obtain ⟨N, τ, hτ, hτnonneg, htail⟩ :=
-    exists_upperRosserBoundaryChains_global_uniform_absolute_tail K hK
-  refine ⟨N, τ, hτ, hτnonneg, ?_⟩
-  intro S L n z Δ s hz hΔ hs hlocal hcut
-  simpa only [LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity,
-    Finset.sum_div] using htail S L n z Δ s hz hΔ hs hlocal hcut
 
-/-- The same weighted tail over an arbitrary terminal subcarrier.  In
-particular this applies directly to either side of the square-root terminal
-split.  It is strictly stronger than paying `card T * τ L`: after Euler
-restoration the bound is just `τ L`, independently of `T.card`. -/
-theorem exists_upperRosserBoundaryChains_weightedSubaggregate_uniform_tail
-    (K : ℝ) (hK : 1 ≤ K) :
-    ∃ N : ℕ, ∃ τ : ℕ → ℝ,
-      Tendsto τ atTop (nhds 0) ∧
-      (∀ L, 0 ≤ τ L) ∧
-      ∀ (S : BoundingSieve) (T : Finset ℕ) (L n : ℕ) (z Δ s : ℝ),
-        T ⊆ S.prodPrimes.primeFactors →
-        2 ≤ z → 0 < Δ → s = Real.log Δ / Real.log z →
-        HasDimensionOneLocalProductBound S K →
-        (∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z) →
-        ((∑ q ∈ T,
-            (S.nu q / (1 - S.nu q)) *
-              ∑ j ∈ Finset.range n,
-                LinearSieve.upperRosserBoundaryChainsFixedDepthRelativeDensity
-                  S.nu (Nat.floor Δ + 1) q
-                  (S.prodPrimes.primeFactors.filter (fun p => q < p))
-                  (L + j + N)) *
-          ∏ p ∈ S.prodPrimes.primeFactors, (1 - S.nu p) ≤ τ L) := by
-  obtain ⟨N, C, hC, hgeom⟩ :=
-    exists_upperRosserBoundaryChains_weightedSubaggregate_geometric K hK
-  refine ⟨N, (fun L => 90 * C * (9 / 10 : ℝ) ^ L), ?_, ?_, ?_⟩
-  · simpa only [mul_zero] using
-      (tendsto_pow_atTop_nhds_zero_of_lt_one
-        (r := (9 / 10 : ℝ)) (by norm_num) (by norm_num)).const_mul (90 * C)
-  · intro L
-    positivity
-  · exact hgeom
 
 
 end

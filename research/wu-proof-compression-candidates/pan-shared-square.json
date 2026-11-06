@@ -1,0 +1,69 @@
+{
+  "status": "LOCAL_COMPILE_PUBLIC_TYPES_AXIOMS_AND_OLD_PRIVATE_USE_CHECK_PASS_NOT_INSTALLED",
+  "module": "AnalyticNumberTheory.Sieve.PanV3SquareMean",
+  "before_sha256": "b1ea6d3d83bca58d365b198e056b7b7c9b87e6c56b69d58b14a92e74d6ac151c",
+  "after_sha256": "1cb15af8779264534e03a44469681bd7416f8f1b6a1247175354e153e4a616bb",
+  "physical_lines_saved": 460,
+  "bytes_saved": 25271,
+  "shared_proofs": {
+    "v3_moebius_abs_le_one": "moebius_abs_le_one d",
+    "v3_harmonic_Icc_le": "harmonic_Icc_le M",
+    "v3_card_multiples_Icc": "card_multiples_Icc N m hm",
+    "v3_lcm_inv_sum_le": "lcm_inv_sum_le N",
+    "v3_divisorCountSq_sum_le": "divisorCountSq_sum_le N"
+  },
+  "effective_lines_saved": 445,
+  "compile": {
+    "exit_code": 0,
+    "seconds": 4.292555991560221,
+    "source_sha256": "1cb15af8779264534e03a44469681bd7416f8f1b6a1247175354e153e4a616bb"
+  },
+  "type_comparison": {
+    "types_exact": true,
+    "public_declarations": 10,
+    "before_sha256": "d4a4cc457ad9eba224a6c065c6ff8977560f0fd1909aca902b8e54999fa25142",
+    "after_sha256": "d4a4cc457ad9eba224a6c065c6ff8977560f0fd1909aca902b8e54999fa25142",
+    "status": "LOCAL_MODULE_ONLY_NOT_INSTALLED"
+  },
+  "axioms": {
+    "before": {
+      "checked": 10,
+      "allowed": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "after": {
+      "checked": 10,
+      "allowed": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    }
+  },
+  "downstream_compiled": false,
+  "accepted_sources_modified": false,
+  "private_retirement": {
+    "constants_scanned": 862970,
+    "incoming": [
+      {
+        "module": "AnalyticNumberTheory.Sieve.PanV3SquareMean",
+        "name": "AnalyticNumberTheory.Sieve.v3_lcm_inv_sum_le"
+      }
+    ],
+    "target": "_private.AnalyticNumberTheory.Sieve.PanV3SquareMean.0.AnalyticNumberTheory.Sieve.lcm_inv_eq_gcd_div"
+  },
+  "after_type_check": {
+    "exit_code": 0,
+    "command": [
+      "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+      "-j1",
+      "-DwarningAsError=true",
+      "-DautoImplicit=false",
+      "/tmp/wu-pan-shared-square-v1/after-types.lean"
+    ],
+    "LEAN_PATH": "/tmp/wu-pan-shared-square-v1/lib:/home/azureuser/goldbach-lean/research/wu2008/build/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean"
+  }
+}

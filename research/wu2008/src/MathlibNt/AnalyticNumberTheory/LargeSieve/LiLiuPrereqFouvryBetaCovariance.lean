@@ -321,35 +321,6 @@ theorem betaCovariance_abs_le_of_coprimeAP
       (Nat.gcd_dvd_right q r) (Finset.mem_filter.mp hb).2]
     exact hEr b hb
 
-/-- A conditional aggregate consequence of independent beta-AP input at
-each positive divisor of each sieving modulus. This is not a logarithmic
-saving: no estimate for the resulting modulus sum is asserted. -/
-theorem smoothWMain_sub_smoothUMain_abs_le_of_coprimeAP
-    (M : ℝ) (N Q : Finset ℕ) (β c : ℕ → ℝ) (a : ℤ)
-    (hQ : ∀ q ∈ Q, q ≠ 0) (E : ℕ → ℕ → ℝ)
-    (hE : ∀ q ∈ Q, ∀ d : ℕ, d ∣ q → 0 < d →
-      ∀ b ∈ betaReducedResidues d,
-        |betaCoprimeAPDiscrepancy N β d (q / d) b| ≤ E q d) :
-    |smoothWMain M N Q β c a - smoothUMain M N Q β c a| ≤
-      |M * dyadicCutoffMass| *
-        ∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-          |c q * c r / (q.lcm r : ℝ)| *
-            (((q.gcd r).totient : ℝ) * E q (q.gcd r) * E r (q.gcd r)) := by
-  rw [smoothWMain_sub_smoothUMain_eq_betaCovariance M N Q β c a hQ, abs_mul]
-  apply mul_le_mul_of_nonneg_left _ (abs_nonneg _)
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro q hq
-  apply (Finset.abs_sum_le_sum_abs _ _).trans
-  apply Finset.sum_le_sum
-  intro r hr
-  rw [abs_mul]
-  apply mul_le_mul_of_nonneg_left _ (abs_nonneg _)
-  have hδ := Nat.gcd_pos_of_pos_left r
-    (Nat.pos_of_ne_zero (hQ q (Finset.mem_filter.mp hq).1))
-  exact betaCovariance_abs_le_of_coprimeAP N β q r _ _
-    (hE q (Finset.mem_filter.mp hq).1 _ (Nat.gcd_dvd_left q r) hδ)
-    (hE r (Finset.mem_filter.mp hr).1 _ (Nat.gcd_dvd_right q r) hδ)
 
 end
 

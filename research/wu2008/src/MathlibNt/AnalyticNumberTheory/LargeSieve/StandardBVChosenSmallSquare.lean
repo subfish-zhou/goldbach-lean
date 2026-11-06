@@ -83,16 +83,6 @@ theorem standardBVSmall_squareLedger_energy_le (N Q C v : ℕ) (hQ : 0 < Q) :
   · unfold primitiveLargeSieveConstant
     positivity
 
-/-- Ordinary primitive prefix-maximal large sieve, specialized to the exact
-production small coefficient. -/
-theorem standardBVChosenSmall_squareLedger_le (N Q C : ℕ) (hQ : 0 < Q) :
-    primitivePrefixSquareLedgerOn
-        (vaughanSmallCoeff vaughanUnitIntegerCoeff (standardBVBalancedSmallCutoff N)) N
-        (highConductorSet N Q C) ≤
-      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) * primitiveLargeSieveConstant N Q *
-        ((standardBVBalancedSmallCutoff N : ℝ) *
-          Real.log ((standardBVBalancedSmallCutoff N + 1 : ℕ) : ℝ) ^ 2) := by
-  exact standardBVSmall_squareLedger_energy_le N Q C (standardBVBalancedSmallCutoff N) hQ
 
 /-- At the chosen endpoint, the exact production small coefficient is zero. -/
 theorem standardBVChosenSmallCoeff_eq_zero (N : ℕ) :

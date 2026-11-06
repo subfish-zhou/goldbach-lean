@@ -114,17 +114,5 @@ theorem O3_integral_paid {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) (h�
   have hp := mul_le_mul_of_nonneg_left hm.2 (show 0 ≤ ε/960 by positivity)
   nlinarith
 
-/-- Consume the proved negative integral on the same threshold, leaving O1. -/
-theorem count_integral_upper_paid {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      2*C6 N ≤ O1 N δ-J*B6 N δ+
-        (2/(1-2*δ))*omega3XIntegralEnvelope s S*B6 N δ+ε*truncatedSixthMassScale N := by
-  obtain ⟨T1,hT14,hT1⟩ := count_integral_paid hδ hδhi (half_pos hε)
-  obtain ⟨T2,_,hT2⟩ := O3_integral_paid hδ hδhi (half_pos hε)
-  refine ⟨max T1 T2,hT14.trans (le_max_left _ _),?_⟩
-  intro N hN he
-  have h1 := hT1 N (by omega) he
-  have h2 := hT2 N (by omega) he
-  linarith
 
 end Wu2008DoubleSieve.HighSix.Omega3Upper

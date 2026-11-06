@@ -203,20 +203,7 @@ theorem remaining_debit_bounds :
       JointLogTotalComparison.rationalDeficit-3/10000 := by
   constructor <;> linarith only [two_recoveries_bounds.1,two_recoveries_bounds.2]
 
-theorem remaining_debit_positive : (19/200 : ℝ) <
-    JointLogTotalComparison.rationalDeficit-Phase18.g18-Phase20.psiPaymentLoss := by
-  linarith only [remaining_debit_bounds.1,JointLogTotalComparison.rational_magnitude.2]
 
-/-- A quantitative interval for the latest complete target difference. -/
-theorem full_difference_bounds :
-    JointLogTotalComparison.rationalDeficit-1/200-JointLogTotalComparison.logRemainder-
-      (JointJLossStrength.recovery-JointJLossStrength.fixedRecovery)/4-JointLogTotalComparison.targetSlack <
-      AnalyticTotalThreshold.target-JointEndpointPayment.analyticLower ∧
-    AnalyticTotalThreshold.target-JointEndpointPayment.analyticLower <
-      JointLogTotalComparison.rationalDeficit-3/10000-JointLogTotalComparison.logRemainder-
-      (JointJLossStrength.recovery-JointJLossStrength.fixedRecovery)/4-JointLogTotalComparison.targetSlack := by
-  rw [JointLogTotalComparison.exact_target_parent_difference]
-  constructor <;> linarith only [remaining_debit_bounds.1,remaining_debit_bounds.2]
 
 end
 end Wu2008DoubleSieve.PsiG18Strength

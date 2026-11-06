@@ -129,21 +129,6 @@ theorem gamma_sub_eq {t : ℝ} (ht : 0 ≤ t) (ht' : t ≤ 1 / 1000) :
   apply fibre_sub_eq_strip ht ht'
   simpa only [uIcc_of_le fixed_bounds.2.1.le] using hx
 
-/-- Fully instantiated O(t) loss for the original rational staircase. -/
-theorem gamma_loss_bounds {t : ℝ} (ht : 0 < t) (ht' : t ≤ 1 / 1000) :
-    0 ≤ gamma 0 - gamma t ∧
-    gamma 0 - gamma t ≤ (2 * q * (beta - alpha) / (alpha ^ 2 * beta)) * t := by
-  rw [gamma_sub_eq ht.le ht']
-  constructor
-  · exact mul_nonneg (by norm_num) (intervalIntegral.integral_nonneg fixed_bounds.2.1.le
-      (fun x hx => (strip_bounds ht.le ht' hx).1))
-  · have hm := intervalIntegral.integral_mono_on fixed_bounds.2.1.le
-      (outer_strip_integrable ht.le ht') (intervalIntegrable_const (c := bound * t))
-      (fun x hx => (strip_bounds ht.le ht' hx).2)
-    simp only [intervalIntegral.integral_const, smul_eq_mul] at hm
-    calc
-      4 * (∫ x in alpha..beta, strip t x) ≤ 4 * ((beta - alpha) * (bound * t)) := by linarith
-      _ = (2 * q * (beta - alpha) / (alpha ^ 2 * beta)) * t := by unfold bound; ring
 
 /-- Literal closed-domain fibre identification; only Lebesgue endpoints are omitted. -/
 theorem domain_fibre {t x : ℝ} (hx : x ∈ Icc alpha beta) :
@@ -152,18 +137,6 @@ theorem domain_fibre {t x : ℝ} (hx : x ∈ Icc alpha beta) :
   simp only [domain, mem_ofPred_eq]
   exact and_iff_right hx
 
-theorem gamma_as_domain_fibres {t : ℝ} (ht' : t ≤ 1 / 1000) :
-    gamma t = 4 * ∫ x in Icc alpha beta,
-      ∫ y in {y : ℝ | (x,y) ∈ domain t}, kernel Wu08Staircase.profile x y := by
-  unfold gamma
-  congr 1
-  rw [intervalIntegral.integral_of_le fixed_bounds.2.1.le, integral_Icc_eq_integral_Ioc]
-  apply setIntegral_congr_fun measurableSet_Ioc
-  intro x hx
-  have hxc : x ∈ Icc alpha beta := ⟨hx.1.le,hx.2⟩
-  dsimp only
-  rw [domain_fibre (t := t) hxc, integral_Icc_eq_integral_Ioc]
-  exact intervalIntegral.integral_of_le (upper_ge ht' hxc.2)
 
 theorem removed_fibre {t x : ℝ} (ht' : t ≤ 1 / 1000)
     (hx : x ∈ Icc alpha beta) :
@@ -178,17 +151,5 @@ theorem removed_fibre {t x : ℝ} (ht' : t ≤ 1 / 1000)
   · rintro ⟨hy,hy'⟩
     exact ⟨⟨(upper_ge ht' hx.2).trans hy.le,hy'⟩,fun hle => (not_lt_of_ge hle.2) hy⟩
 
-theorem gamma_sub_as_removed {t : ℝ} (ht : 0 ≤ t) (ht' : t ≤ 1 / 1000) :
-    gamma 0 - gamma t = 4 * ∫ x in Icc alpha beta,
-      ∫ y in {y : ℝ | (x,y) ∈ domain 0 ∧ (x,y) ∉ domain t},
-        kernel Wu08Staircase.profile x y := by
-  rw [gamma_sub_eq ht ht']
-  congr 1
-  rw [intervalIntegral.integral_of_le fixed_bounds.2.1.le, integral_Icc_eq_integral_Ioc]
-  apply setIntegral_congr_fun measurableSet_Ioc
-  intro x hx
-  dsimp only
-  rw [removed_fibre ht' ⟨hx.1.le,hx.2⟩]
-  exact intervalIntegral.integral_of_le (upper_mono ht)
 
 end StaircaseShrink

@@ -142,9 +142,5 @@ theorem pureOrderedMass_eq_log (n : ℕ) {a b : ℝ} (ha : 0 < a) (hab : a ≤ b
         rw [integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le hab]
         exact factorial_fibre_step n ha hab
 
-theorem pureOrderedMass_same (n : ℕ) {a : ℝ} (ha : 0 < a) :
-    pureOrderedMass (n+1) a a = 0 := by
-  rw [pureOrderedMass_eq_log (n+1) ha le_rfl]
-  simp [ha.ne']
 
 end Wu2008DoubleSieve.SecondFunctionalGeometricMass.OrderedPure

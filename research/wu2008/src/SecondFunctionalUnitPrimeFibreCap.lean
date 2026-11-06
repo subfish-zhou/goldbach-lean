@@ -10,13 +10,6 @@ noncomputable def strictPhysical (B X q H : ℝ) : Finset ℕ :=
 noncomputable def capAtom (B X q H : ℝ) : Finset ℕ :=
   (physical B X q H).filter (fun p => (p : ℝ) = H)
 
-theorem mem_strictPhysical {B X q H : ℝ} (hH : 0 ≤ H) {p : ℕ} :
-    p ∈ strictPhysical B X q H ↔
-      p.Prime ∧ q < (p : ℝ) ∧ (p : ℝ) < H ∧ B * (p : ℝ) ≤ X := by
-  simp only [strictPhysical, physical, mem_filter, mem_primesIcc hH]
-  constructor
-  · rintro ⟨⟨⟨hp, _, _⟩, hq, hx⟩, hh⟩; exact ⟨hp,hq,hh,hx⟩
-  · rintro ⟨hp,hq,hh,hx⟩; exact ⟨⟨⟨hp,Nat.cast_nonneg _,hh.le⟩,hq,hx⟩,hh⟩
 
 theorem mem_capAtom {B X q H : ℝ} (hH : 0 ≤ H) {p : ℕ} :
     p ∈ capAtom B X q H ↔
@@ -132,48 +125,7 @@ theorem cap_sum_bound {m : ℕ} {R : ℝ} (hR : 1 < R)
       (cap_weight_bound hR f j phi b a (hS f hf).1 (hS f hf).2).2
       (show 0 ≤ primeSlabWeight R f by unfold primeSlabWeight; positivity)
 
-/-- The literal closed-minus-strict count is nonnegative and at most one. -/
-theorem cap_count_bounds {B X q H : ℝ} (hH : 0 ≤ H) :
-    0 ≤ ((physical B X q H).card : ℝ) - ((strictPhysical B X q H).card : ℝ) ∧
-    ((physical B X q H).card : ℝ) - ((strictPhysical B X q H).card : ℝ) ≤ 1 := by
-  rw [cap_card_difference hH]
-  exact ⟨Nat.cast_nonneg _, by exact_mod_cast cap_card_le_one B X q H⟩
 
-/-- Actual cube mass is bounded internally; no caller-supplied mass hypothesis. -/
-theorem cap_sum_eventually :
-    ∀ᶠ R : ℝ in atTop, ∀ (m : ℕ) (S : Finset (Fin m → primeSlabPrimes R))
-      (j : Fin m) (phi b a : ℝ),
-      (∀ f ∈ S, a ≤ coordinate f j ∧ coordinate f j ≤ b) →
-      log R / R ^ phi *
-        (∑ f ∈ S, (((physical (prefixProduct f) (R ^ phi) (f j).val (R ^ b)).card : ℝ) -
-          ((strictPhysical (prefixProduct f) (R ^ phi) (f j).val (R ^ b)).card : ℝ))) ≤
-        5 ^ m * (log R * R ^ (-a)) := by
-  filter_upwards [eventually_gt_atTop (1 : ℝ),
-    (tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1/10)).eventually
-      (eventually_ge_atTop primeOrderedMertensStart),
-    primeOrderedDiscrepancy_tendsto.eventually (gt_mem_nhds (by norm_num : (0 : ℝ) < 1))]
-    with R hR hs he
-  intro m S j phi b a hS
-  have hm := primeSlab_interval_mass hR hs
-    (by norm_num : (1/10 : ℝ) ≤ 1/10) (by norm_num : (1/10 : ℝ) ≤ 1/2)
-    (by norm_num : (1/2 : ℝ) ≤ 1/2)
-  have hm5 : (∑ p ∈ primeSlabPrimes R, 1/(p : ℝ)) ≤ 5 := by
-    unfold primeSlabPrimes
-    linarith
-  have hsubset : (∑ f ∈ S, primeSlabWeight R f) ≤
-      ∑ f : Fin m → primeSlabPrimes R, primeSlabWeight R f :=
-    sum_le_sum_of_subset_of_nonneg (subset_univ S) (by
-      intro f _ _; unfold primeSlabWeight; positivity)
-  have hprod : (∑ f : Fin m → primeSlabPrimes R, primeSlabWeight R f) =
-      (∑ p ∈ primeSlabPrimes R, 1/(p : ℝ)) ^ m := by
-    simpa only [primeSlabWeight, Fintype.card_fin] using primeSlab_product_mass (α := Fin m) R
-  rw [hprod] at hsubset
-  have hmass := hsubset.trans (pow_le_pow_left₀ (sum_nonneg (fun p _ => by positivity)) hm5 m)
-  calc
-    _ ≤ (log R * R ^ (-a)) * (∑ f ∈ S, primeSlabWeight R f) := (cap_sum_bound hR S j phi b a hS).2
-    _ ≤ (log R * R ^ (-a)) * 5 ^ m := mul_le_mul_of_nonneg_left hmass
-      (mul_nonneg (log_pos hR).le (rpow_nonneg (by linarith) _))
-    _ = _ := mul_comm _ _
 
  theorem cap_decay (a : ℝ) (ha : 0 < a) :
     Tendsto (fun R : ℝ => log R * R ^ (-a)) atTop (nhds 0) := by

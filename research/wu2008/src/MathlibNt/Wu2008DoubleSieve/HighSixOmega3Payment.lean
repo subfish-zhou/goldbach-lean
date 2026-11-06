@@ -168,24 +168,5 @@ theorem O3_actualX_paid {δ ρ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
   have hd := hT2 N (by omega) he
   linarith
 
-/-- Consume the proved negative integral and the actual high-prime producer.
-O1, actual X, full-cofactor R1 and Euler R2 are deliberately still visible. -/
-theorem count_actualX_paid {δ ρ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
-    (hρ : 0 < ρ) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      2*C6 N ≤ O1 N δ-J*B6 N δ + omega3SieveX N δ s S (W N) *
-        (((1+ρ)*(1+ρ*exp (-eulerMascheroniConstant))*(8/(1-2*δ))) *
-          wuSingularSeries N/log N) +
-      omega3SieveR1 N (⌊(N : ℝ)^(1/2-δ)⌋₊+1) δ s S
-        (sqrt ((N : ℝ)^(1/2-δ))) (W N) +
-      omega3SieveR2 N (⌊(N : ℝ)^(1/2-δ)⌋₊+1) δ s S
-        (sqrt ((N : ℝ)^(1/2-δ))) (W N) + ε*truncatedSixthMassScale N := by
-  obtain ⟨T1,hT14,hT1⟩ := count_integral_paid hδ hδhi (half_pos hε)
-  obtain ⟨T2,_,hT2⟩ := O3_actualX_paid hδ hδhi hρ (half_pos hε)
-  refine ⟨max T1 T2,hT14.trans (le_max_left _ _),?_⟩
-  intro N hN he
-  have hc := hT1 N (by omega) he
-  have ho := hT2 N (by omega) he
-  linarith
 
 end Wu2008DoubleSieve.HighSix.Omega3Upper

@@ -134,14 +134,6 @@ theorem suzukiActualT_four_eq_two_add_lowerRosserDepthFourSourceMass
     suzukiSourceV_four_eq_lowerRosserDepthFourSourceMass]
   ring
 
-/-- Equivalently, the literal finite parity sum at truncation depth four splits
-into its depth-two layer and the lower-Rosser depth-four boundary mass. -/
-theorem suzukiEvenParitySum_four_eq_two_add_lowerRosserDepthFourSourceMass
-    (S : BoundingSieve) (D z : ℕ) :
-    (∑ n ∈ suzukiActualParityCarrier 4, suzukiSourceV S n D z) =
-      suzukiSourceV S 2 D z + lowerRosserDepthFourSourceMass S D z := by
-  rw [← suzukiActualT_eq_parity_sum]
-  exact suzukiActualT_four_eq_two_add_lowerRosserDepthFourSourceMass S D z
 
 /-- The depth-six lower-Rosser boundary mass.  Its two interior tests occur
 at the odd prefixes, followed by the terminal boundary crossing. -/
@@ -233,17 +225,6 @@ theorem suzukiSourceV_six_eq_lowerRosserDepthSixSourceMass
       · intro q hq
         rfl
 
-/-- The finite even Suzuki aggregate truncated at depth six is its depth-four
-aggregate plus the newly identified depth-six boundary mass. -/
-theorem suzukiActualT_six_eq_four_add_lowerRosserDepthSixSourceMass
-    (S : BoundingSieve) (D z : ℕ) :
-    suzukiActualT S 6 D z =
-      suzukiActualT S 4 D z + lowerRosserDepthSixSourceMass S D z := by
-  rw [show suzukiActualT S 6 D z =
-      suzukiSourceV S 6 D z + suzukiActualT S 4 D z by
-        simp [suzukiActualT],
-    suzukiSourceV_six_eq_lowerRosserDepthSixSourceMass]
-  ring
 
 /-- The boundary layer at arbitrary recursion depth.  Depth one is the terminal
 odd crossing.  Every later odd layer records the active cubic upper test, while
@@ -301,23 +282,7 @@ theorem suzukiSourceV_even_eq_lowerRosserEvenBoundaryLayerMass
   unfold lowerRosserEvenBoundaryLayerMass
   exact suzukiSourceV_eq_lowerRosserBoundaryLayerMass S _ D z (by omega)
 
-/-- The general layer specializes to the previously expanded depth-four mass. -/
-theorem lowerRosserBoundaryLayerMass_four_eq_depthFour
-    (S : BoundingSieve) (D z : ℕ) :
-    lowerRosserBoundaryLayerMass S 4 D z =
-      lowerRosserDepthFourSourceMass S D z := by
-  rw [← suzukiSourceV_four_eq_lowerRosserDepthFourSourceMass]
-  symm
-  exact suzukiSourceV_eq_lowerRosserBoundaryLayerMass S 4 D z (by omega)
 
-/-- The general layer specializes to the previously expanded depth-six mass. -/
-theorem lowerRosserBoundaryLayerMass_six_eq_depthSix
-    (S : BoundingSieve) (D z : ℕ) :
-    lowerRosserBoundaryLayerMass S 6 D z =
-      lowerRosserDepthSixSourceMass S D z := by
-  rw [← suzukiSourceV_six_eq_lowerRosserDepthSixSourceMass]
-  symm
-  exact suzukiSourceV_eq_lowerRosserBoundaryLayerMass S 6 D z (by omega)
 
 /-- At arbitrary even truncation, `suzukiActualT` is exactly the finite sum of
 all lower-Rosser boundary layers through depth `2m`. -/
@@ -355,16 +320,6 @@ theorem lowerRosserBoundaryAccum_eq_suzukiActualT_even_add_remainder
   unfold lowerRosserBoundaryAfterEvenDepth
   ring
 
-/-- Consequently, identifying the finite Suzuki truncation with the complete
-boundary accumulator is exactly the assertion that the explicit remainder
-vanishes. -/
-theorem suzukiActualT_even_eq_lowerRosserBoundaryAccum_iff
-    (S : BoundingSieve) (D z : ℕ) (P : Finset ℕ) (qs : List ℕ) (m : ℕ) :
-    suzukiActualT S (2 * m) D z =
-        LinearSieve.lowerRosserBoundaryAccum S.nu D P qs ↔
-      lowerRosserBoundaryAfterEvenDepth S D z P qs m = 0 := by
-  rw [lowerRosserBoundaryAccum_eq_suzukiActualT_even_add_remainder]
-  constructor <;> intro h <;> linarith
 
 
 end MathlibNt.SieveTheory

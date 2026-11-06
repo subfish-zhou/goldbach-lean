@@ -124,25 +124,6 @@ theorem wExtractedKeyFiber_kSection_reconstruct
   refine Prod.ext ?_ (Prod.ext hq.symm (Prod.ext hn₁.symm hn₂.symm))
   exact Prod.ext (Prod.ext hΔ.symm hΔ'.symm) rfl
 
-/-- Equal fixed section coordinates and equal `k₁` force equality of
-original tuples. There is no loss of multiplicity in the subsequent sum. -/
-theorem wExtractedKeyFiber_kSection_injective
-    {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}
-    (hN : ∀ n ∈ N, 0 < n) (hQ : ∀ q ∈ Q, 0 < q)
-    {a : ℤ} {P : WOriginalTuple → Prop} {R S ξ : ℝ} {b : ℕ}
-    {K : WExtractedKey} {t u : WExtractedTuple × ℤ}
-    (ht : t ∈ wExtractedKeyFiber H N Q a P R S ξ b K)
-    (hu : u ∈ wExtractedKeyFiber H N Q a P R S ξ b K)
-    (hr : t.1.1.2.1 = u.1.1.2.1)
-    (hn₁ : (wGCDTuple (wExtractedOriginal t.1)).n₁ =
-      (wGCDTuple (wExtractedOriginal u.1)).n₁)
-    (hn₂ : (wGCDTuple (wExtractedOriginal t.1)).n₂ =
-      (wGCDTuple (wExtractedOriginal u.1)).n₂)
-    (hs : t.1.1.2.2 = u.1.1.2.2) (hh : t.2 = u.2)
-    (hk : (wGCDTuple (wExtractedOriginal t.1)).k₁ =
-      (wGCDTuple (wExtractedOriginal u.1)).k₁) : t = u := by
-  rw [← wExtractedKeyFiber_kSection_reconstruct hN hQ ht,
-    ← wExtractedKeyFiber_kSection_reconstruct hN hQ hu, hr, hn₁, hn₂, hs, hh, hk]
 
 theorem wExtractedKeyFiber_kSection_data
     {H : ℕ → ℕ → ℕ} {N Q : Finset ℕ}

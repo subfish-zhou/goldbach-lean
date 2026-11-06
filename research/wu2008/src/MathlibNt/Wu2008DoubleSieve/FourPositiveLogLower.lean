@@ -47,24 +47,7 @@ theorem density_le_regular {x y z t : ℝ}
     _ = (1/2)/(x*y^2*z*t) := by field_simp
     _ ≤ _ := div_le_div_of_nonneg_right h (by positivity)
 
-/-- Literal original kernel comparison on the original ten window. -/
-theorem density_le_kernel_ten {x y z t : ℝ}
-    (hx : alpha ≤ x) (hxy : x ≤ y) (hyz : y ≤ z) (hzt : z ≤ t) (ht : t ≤ beta) :
-    1/(2*beta*x*y*z*t) ≤ kernel x y z t := by
-  rw [← regularKernel_eq_ten hx hxy hyz hzt ht]
-  have h := density_le_regular hx (hx.trans hxy) (hyz.trans (hzt.trans ht))
-    (hx.trans (hxy.trans hyz)) (hx.trans (hxy.trans (hyz.trans hzt)))
-  simpa only [densityLower, div_div, mul_assoc] using h
 
-/-- Literal original kernel comparison on the original eleven window. -/
-theorem density_le_kernel_eleven {x y z t : ℝ}
-    (hx : alpha ≤ x) (hxy : x ≤ y) (hyz : y ≤ z) (hz : z ≤ beta)
-    (hbt : beta ≤ t) (ht : t ≤ lam-z) :
-    1/(2*beta*x*y*z*t) ≤ kernel x y z t := by
-  rw [← regularKernel_eq_eleven hx hxy hyz hz hbt ht]
-  have h := density_le_regular hx (hx.trans hxy) (hyz.trans hz)
-    (hx.trans (hxy.trans hyz)) (fixed_geometry.2.2.1.trans hbt)
-  simpa only [densityLower, div_div, mul_assoc] using h
 
 theorem inner10_lower {x y z : ℝ} (hx : alpha ≤ x) (hy : alpha ≤ y)
     (hyb : y ≤ beta) (hz : alpha ≤ z) (hzb : z ≤ beta) :

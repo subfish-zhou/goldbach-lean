@@ -79,8 +79,6 @@ theorem labels_mem (N : ℕ) (ρ : ℝ) (k : ℕ × ℕ × ℕ) (p r : ℕ) :
         ρ^k.2.2 ≤ r ∧ (r : ℝ) < ρ^(k.2.2+1) ∧ p ≤ r := by
   simp [labels,fouvryG9LongLabels,and_assoc,and_left_comm,and_comm]
 
-theorem alpha_firstIndex (N : ℕ) (ρ : ℝ) (i i' j l m : ℕ) :
-    alpha (labels N ρ (i,j,l)) m = alpha (labels N ρ (i',j,l)) m := rfl
 
 def shortLower (N : ℕ) (ρ : ℝ) (k : ℕ × ℕ × ℕ) : ℝ :=
   max (ρ^k.1) ((N : ℝ)^(100/1327 : ℝ))

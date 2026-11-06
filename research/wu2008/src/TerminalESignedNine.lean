@@ -73,6 +73,4 @@ theorem finiteLower_le : finiteLower≤TerminalECells.lower := by
   unfold finiteLower TerminalECells.lower
   linarith only [h,he]
 
-theorem finiteLower_le_actual : finiteLower≤firstFeedback NineFeedbackStrength.originalH 3 3 :=
-  finiteLower_le.trans TerminalECells.lower_le
 end TerminalESigned

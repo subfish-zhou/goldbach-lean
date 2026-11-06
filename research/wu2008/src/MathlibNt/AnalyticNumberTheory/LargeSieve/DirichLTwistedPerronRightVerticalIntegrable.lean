@@ -112,22 +112,5 @@ theorem twistedSmoothedPerronIntegrand_integrable_right
   · rw [← tsum_mul_right, ← tsum_mul_right]
   · simpa only [right_re] using σ_gt
 
-/-- The right vertical integral is the sum of its lower tail, the finite
-vertical segment from `-T` to `T`, and its upper tail. -/
-theorem twistedSmoothedPerron_verticalIntegral_split_three
-    (χ : DirichletCharacter ℂ q) {ν : ℝ → ℝ}
-    (diffν : ContDiff ℝ 1 ν)
-    (νpos : ∀ x > 0, 0 ≤ ν x)
-    (suppν : support ν ⊆ Icc (1 / 2) 2)
-    (mass_one : ∫ x in Ioi (0 : ℝ), ν x / x = 1)
-    {X : ℝ} (X_pos : 0 < X) {ε : ℝ} (εpos : 0 < ε) (ε_lt_one : ε < 1)
-    {σ : ℝ} (σ_gt : 1 < σ) (σ_le : σ ≤ 2) (T : ℝ) :
-    VerticalIntegral (twistedSmoothedPerronIntegrand χ ν ε X) σ =
-      I • (∫ t in Iic (-T), twistedSmoothedPerronIntegrand χ ν ε X (σ + t * I)) +
-      VIntegral (twistedSmoothedPerronIntegrand χ ν ε X) σ (-T) T +
-      I • ∫ t in Ici T, twistedSmoothedPerronIntegrand χ ν ε X (σ + t * I) := by
-  exact verticalIntegral_split_three (-T) T
-    (twistedSmoothedPerronIntegrand_integrable_right χ diffν νpos suppν mass_one
-      X_pos εpos ε_lt_one σ_gt σ_le)
 
 end DirichletCharacter

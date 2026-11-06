@@ -179,12 +179,6 @@ theorem shared_exact : AnalyticTotalThreshold.sharedLoss = highKernel+middleKern
   linarith
 
 
-/-- No discarded residual is silently paid a second time. -/
-theorem three_exact : AnalyticTotalThreshold.baseLoss+AnalyticTotalThreshold.gLoss+
-    AnalyticTotalThreshold.sharedLoss =
-    AnalyticTotalThreshold.baseLoss+AnalyticTotalThreshold.gLoss+
-      highKernel+middleKernel+lowKernel := by
-  rw [shared_exact]; ring
 
 /-- Integrability of the full signed discrepancy, not an absolute-error bound. -/
 theorem kernel_integrable (p : ℝ → ℝ) {l r : ℝ}
@@ -388,11 +382,6 @@ theorem coefficient_le_actual : coefficient ≤ JointHMotherPayment.unroundedCoe
   unfold AnalyticTotalThreshold.sixthLoss at hgap h6
   linarith only [hgap,hs.1,hs.2.1,hl.2.1,hj,h6,h4,hb]
 
-theorem coefficient_gain_exact : coefficient-JointSixthFourDiagnostic.coefficient =
-    (68650/47545083 : ℝ) := by
-  unfold coefficient
-  rw [recovery_exact]
-  ring
 
 /-- The exact first upper recurrence, containing logarithms only. -/
 def initialUpper (v : ℝ) : ℝ := 1+∫ x in (2:ℝ)..(v-1), log (x-1)/x
@@ -498,32 +487,6 @@ theorem kernel_explicit (p : ℝ → ℝ) {l r : ℝ}
   unfold SharedRationalEnvelope.weight
   ring
 
-/-- Literal whole-triple log-integral identity, keeping the old payment exactly once. -/
-theorem complete_log_kernel :
-    AnalyticTotalThreshold.baseLoss+AnalyticTotalThreshold.gLoss+AnalyticTotalThreshold.sharedLoss =
-    baseLogRemainder+gLogRemainder+
-    8*(∫ v in (3:ℝ)..(78/25:ℝ), (initialUpper v-(1+(v-3)^2/9))/v)+
-    explicitKernel (fun v => (42823/151875)*v) a (c 5)+
-    explicitKernel (fun v => GConvexChord.C+GConvexChord.m*v) (c 5) (c 4)+
-    explicitKernel VariableUpperEnvelope.cubic (c 4) s-SharedRationalEnvelope.deltaShared := by
-  rw [complete_three_kernel]
-  have hg := GConvexChord.geometry
-  have he : betaKernel = ∫ v in (3:ℝ)..(78/25:ℝ), (initialUpper v-(1+(v-3)^2/9))/v := by
-    unfold betaKernel
-    apply intervalIntegral.integral_congr
-    intro v hv
-    dsimp only
-    rw [uIcc_of_le (by norm_num : (3:ℝ)≤78/25)] at hv
-    rw [upper_initial_exact hv.1 (by linarith [hv.2])]
-  rw [he]
-  unfold highKernel middleKernel lowKernel
-  rw [kernel_explicit _ le_rfl (by norm_num [c,s,a,truncatedSixthLowerAlpha,truncatedSixthLowerSigma])
-    (by norm_num [c,a,truncatedSixthLowerAlpha]),
-    kernel_explicit _ (by norm_num [c,a,truncatedSixthLowerAlpha])
-      (by norm_num [c,s,a,truncatedSixthLowerAlpha,truncatedSixthLowerSigma])
-      (by norm_num [c,a,truncatedSixthLowerAlpha]),
-    kernel_explicit _ SharedRationalEnvelope.window_order.1 le_rfl SharedRationalEnvelope.window_order.2.1]
-  ring
 
 /-- All unpaid mass remains visible after the new signed curvature payment. -/
 def unpaidTriple : ℝ := baseLogRemainder+gLogRemainder+8*betaKernel+
@@ -536,10 +499,6 @@ theorem unpaid_triple_exact : unpaidTriple =
   unfold unpaidTriple
   ring
 
-theorem unpaid_triple_nonnegative : 0 ≤ unpaidTriple := by
-  rw [unpaid_triple_exact]
-  have h := AnalyticTotalThreshold.signed_losses_nonnegative
-  linarith only [h.1,h.2.1,shared_recovery]
 
 /-- Same Q, same seven errors, now with the full B/G/shared kernel retained. -/
 theorem seven_error_exact : JointHMotherPayment.unroundedCoefficient-coefficient =

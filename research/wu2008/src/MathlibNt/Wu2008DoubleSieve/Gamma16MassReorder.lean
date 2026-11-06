@@ -98,19 +98,5 @@ noncomputable def gamma16RepeatedMajorant {i : ℕ} (N : ℕ) (δ : ℝ) (W : Fi
     ∑ p ∈ gamma16MassPrimes ((N : ℝ) ^ (1 / 2 - δ) / d),
       ((⌊gamma16MassScale N d p / p.2.1⌋₊ : ℝ) + ⌊gamma16MassScale N d p / p.2.2.1⌋₊)
 
-theorem gamma16_X_le_rough_repeated {i : ℕ} (N : ℕ) (δ : ℝ) (W : Fin i → Finset ℕ)
-    (hd : ∀ d ∈ boxConvolutionSupport W, 0 < d) :
-    gamma16X N δ W ≤ gamma16RoughMajorant N δ W + gamma16RepeatedMajorant N δ W := by
-  apply (gamma16_X_le_mass_count N δ W).trans
-  unfold gamma16MassCount gamma16RoughMajorant gamma16RepeatedMajorant
-  rw [← sum_add_distrib]
-  apply sum_le_sum
-  intro d hdW
-  rw [← mul_add, ← sum_add_distrib]
-  apply mul_le_mul_of_nonneg_left _ (Nat.cast_nonneg _)
-  apply sum_le_sum
-  intro p hp
-  have h := gamma16_mass_fibre_rough (N := N) (hd d hdW) (by positivity) hp
-  exact_mod_cast (by simpa only [Nat.add_assoc] using h)
 
 end Wu2008DoubleSieve

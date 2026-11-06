@@ -56,9 +56,6 @@ lemma xi_hasDerivAt_deriv {s : ℝ} (hs : 1 < s) :
     exact xi_deriv hu
   exact hi.congr_of_eventuallyEq hevent
 
-lemma xi_twiceDifferentiableAt {s : ℝ} (hs : 1 < s) :
-    DifferentiableAt ℝ (deriv xi) s :=
-  (xi_hasDerivAt_deriv hs).differentiableAt
 
 lemma xi_secondDeriv {s : ℝ} (hs : 1 < s) :
     deriv (deriv xi) s =
@@ -148,9 +145,6 @@ lemma xiSlope_ge_half {s : ℝ} (hs : Real.exp 2 ≤ s) : s / 2 ≤ xiSlope s :=
   apply (le_div_iff₀ (by linarith : 0 < xi s)).2
   nlinarith
 
-lemma xi_deriv_nonneg {s : ℝ} (hs : 1 < s) : 0 ≤ deriv xi s := by
-  rw [xi_deriv hs]
-  exact inv_nonneg.mpr (xiSlope_pos hs).le
 
 lemma xi_deriv_le_two_div {s : ℝ} (hs : Real.exp 2 ≤ s) :
     deriv xi s ≤ 2 / s := by
@@ -220,32 +214,6 @@ theorem xi_secondDeriv_asymptotic {s : ℝ} (hs : Real.exp 2 ≤ s) :
   apply (div_le_div_iff₀ (sq_pos_of_pos hDpos) (sq_pos_of_pos hspos)).2
   nlinarith [hcross]
 
-/-- First-derivative estimate uniformly on the unit window `[s,s+1]`. -/
-theorem xi_deriv_asymptotic_unitWindow {s t : ℝ} (hs : Real.exp 2 ≤ s)
-    (ht : t ∈ Icc s (s + 1)) :
-    |deriv xi t - 1 / t| ≤ 2 / (s * Real.log s) := by
-  have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
-  have htpos : 0 < t := lt_of_lt_of_le hspos ht.1
-  have hlogs : 0 < Real.log s := lt_of_lt_of_le (by norm_num) (two_le_log hs)
-  have hlogmono : Real.log s ≤ Real.log t := Real.log_le_log hspos ht.1
-  have hprod : s * Real.log s ≤ t * Real.log t :=
-    mul_le_mul ht.1 hlogmono hlogs.le htpos.le
-  calc
-    |deriv xi t - 1 / t| ≤ 2 / (t * Real.log t) :=
-      xi_deriv_asymptotic (hs.trans ht.1)
-    _ ≤ 2 / (s * Real.log s) :=
-      div_le_div_of_nonneg_left (by norm_num) (mul_pos hspos hlogs) hprod
 
-/-- Second-derivative estimate uniformly on the unit window `[s,s+1]`. -/
-theorem xi_secondDeriv_asymptotic_unitWindow {s t : ℝ} (hs : Real.exp 2 ≤ s)
-    (ht : t ∈ Icc s (s + 1)) :
-    |deriv (deriv xi) t| ≤ 6 / s ^ 2 := by
-  have hspos : 0 < s := lt_of_lt_of_le (Real.exp_pos 2) hs
-  have htpos : 0 < t := lt_of_lt_of_le hspos ht.1
-  have hsq : s ^ 2 ≤ t ^ 2 := (sq_le_sq₀ hspos.le htpos.le).2 ht.1
-  calc
-    |deriv (deriv xi) t| ≤ 6 / t ^ 2 := xi_secondDeriv_asymptotic (hs.trans ht.1)
-    _ ≤ 6 / s ^ 2 :=
-      div_le_div_of_nonneg_left (by norm_num) (sq_pos_of_pos hspos) hsq
 
 end Section10CanonicalXi

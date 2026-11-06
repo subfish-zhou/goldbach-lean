@@ -261,17 +261,6 @@ theorem panMaxY_le_sum (X q x : ℕ) (f : ℕ → ℝ) :
   rcases Finset.mem_image.mp hz with ⟨y, hy, rfl⟩
   exact Finset.single_le_sum (fun y' hy' => panMaxL_nonneg y' X q f) hy
 
-/-- Combined bound:
-`panMaxY ≤ Σ_{y≤x} Σ_{(l,q)=1} |panDistributionSum y X q l f|`.
-It replaces both maxima by finite sums for termwise Type I/II estimates. -/
-theorem panMaxY_le_sum_abs (X q x : ℕ) (f : ℕ → ℝ)
-    (hS : (unitResidues q).Nonempty) :
-    panMaxY X q x f ≤
-      ∑ y ∈ Finset.range (x + 1),
-        ∑ l ∈ unitResidues q,
-          |panDistributionSum y X q l f| := by
-  exact le_trans (panMaxY_le_sum X q x f)
-    (Finset.sum_le_sum (fun y hy => panMaxL_le_sum_abs y X q f hS))
 
 
 /-! ## 4. Type I, Type II, and main-term input propositions
@@ -1336,37 +1325,6 @@ private lemma panTypeII_weighted_maxY_le_weighted_sqrtMean (X q x : ℕ) (f : �
             Real.sqrt (Nat.totient q : ℝ) * panTypeIICharSqrtMeanMaxY X q x f u v := by
             ring
 
-/-- Under `|f(a)| ≤ 1`, the maximum weighted square-mean expression
-is bounded by its version with `f ≡ 1`. -/
-theorem panTypeIICharSqrtMeanMaxY_le_of_abs_le_one (X q x : ℕ) (u v : ℕ) {f : ℕ → ℝ}
-    (hfb : ∀ a : ℕ, |f a| ≤ 1) :
-    panTypeIICharSqrtMeanMaxY X q x f u v ≤ panTypeIICharSqrtMeanMaxY X q x (fun _ : ℕ => 1) u v := by
-  unfold panTypeIICharSqrtMeanMaxY
-  apply Finset.max'_le
-  intro z hz
-  rcases Finset.mem_image.mp hz with ⟨y, hy, rfl⟩
-  calc
-    panTypeIICharSqrtMean y X q f u v
-        ≤ panTypeIICharSqrtMean y X q (fun _ : ℕ => 1) u v := by
-          unfold panTypeIICharSqrtMean
-          apply Finset.sum_le_sum
-          intro a ha
-          have hdiv : |f a| / |Real.log ((y / a : ℕ) : ℝ)| ≤
-              (1 : ℝ) / |Real.log ((y / a : ℕ) : ℝ)| :=
-            div_le_div_of_nonneg_right (hfb a) (abs_nonneg _)
-          have hsqrt : 0 ≤ Real.sqrt (panTypeIICharSqSum q (y / a) u v) := Real.sqrt_nonneg _
-          calc
-            |f a| / |Real.log ((y / a : ℕ) : ℝ)| * Real.sqrt (panTypeIICharSqSum q (y / a) u v)
-                ≤ (1 : ℝ) / |Real.log ((y / a : ℕ) : ℝ)| *
-                    Real.sqrt (panTypeIICharSqSum q (y / a) u v) :=
-                  mul_le_mul_of_nonneg_right hdiv hsqrt
-            _ = |(1 : ℝ)| / |Real.log ((y / a : ℕ) : ℝ)| *
-                  Real.sqrt (panTypeIICharSqSum q (y / a) u v) := by norm_num
-    _ ≤ panTypeIICharSqrtMeanMaxY X q x (fun _ : ℕ => 1) u v := by
-          exact Finset.le_max'
-            (s := (Finset.range (x + 1)).image (fun y => panTypeIICharSqrtMean y X q (fun _ : ℕ => 1) u v))
-            (x := panTypeIICharSqrtMean y X q (fun _ : ℕ => 1) u v)
-            (Finset.mem_image.mpr ⟨y, hy, rfl⟩)
 
 /-- **Type II square-mean assembly input**: under `|f| ≤ 1`, for
 each `A > 0` there are `C > 0`, `B`, and `x₀` such that for

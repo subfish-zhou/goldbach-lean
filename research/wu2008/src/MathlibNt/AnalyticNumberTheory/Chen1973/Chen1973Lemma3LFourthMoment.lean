@@ -198,22 +198,6 @@ theorem chen1973DirichletPolynomial_eq_sum_range
         rw [hzero]
         simp
 
-/-- The exact, already closed Abel-truncation inequality in the order used on
-p. 115.  This proves the finite truncation mechanism and its `|s|/σ` decay,
-but has the elementary prefix constant `q`, not yet Chen's sharper
-`q^(1/2) log q` constant. -/
-theorem chen1973_LFunction_sub_polynomial_coarse
-    {q : ℕ} [NeZero q] (hq : 1 < q) (χ : PrimitiveCharacter q)
-    (N : ℕ) (s : ℂ) (hs : 0 < s.re) :
-    ‖χ.1.LFunction s - chen1973DirichletPolynomial N s χ‖ ≤
-      q * (((N + 1 : ℕ) : ℝ) ^ (-s.re) +
-        (‖s‖ / s.re) * ((N + 1 : ℕ) : ℝ) ^ (-s.re)) := by
-  have hχ : χ.1 ≠ 1 := chen1973_primitive_ne_one hq χ
-  have htail := norm_orderedValueSeries_sub_sum_range_le
-    χ.1 hχ s hs (m := N + 1) (by omega)
-  rw [orderedValueSeries_eq_LFunction_of_re_pos χ.1 hχ s hs,
-    ← chen1973DirichletPolynomial_eq_sum_range hq χ N s] at htail
-  exact htail
 
 /-- Chen p. 115, first printed estimate before suppressing constants: combine
 primitive Pólya--Vinogradov with the general-`s` Abel tail.  The same numerical
@@ -521,21 +505,6 @@ theorem chen1973Lemma2_source_call_on_pairCoefficient
       ring
     _ = _ := by rfl
 
-/-- The actual large-sieve inequality obtained by applying Chen's Lemma 2 to
-the collected coefficient sequence from the fourfold expansion.  No asymptotic
-or divisor-square energy estimate is assumed here. -/
-theorem chen1973Lemma2_call_on_pairCoefficient
-    (N Q : ℕ) (s : ℂ) (hQ : 0 < Q) :
-    (∑ q ∈ Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
-      ∑ χ : PrimitiveCharacter q,
-        ‖chen1973DirichletPolynomial N s χ‖ ^ 4) ≤
-      primitiveLargeSieveConstant (N * N) Q *
-        ∑ m ∈ Icc (1 : ℤ) (N * N : ℕ),
-          ‖chen1973PairCoefficient N s m‖ ^ 2 := by
-  have hLS := weighted_primitive_bombieri_davenport_explicit'
-    (chen1973PairCoefficient N s) 0 (N * N) Q hQ
-  simpa only [Int.zero_add, chen1973DirichletPolynomial_norm_four_eq_pair_norm_sq]
-    using hLS
 
 /-! ## Modulus one and the final finite fourth-moment assembly -/
 

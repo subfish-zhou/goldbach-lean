@@ -91,29 +91,6 @@ theorem terminal_le_actual :
       (mul_le_mul_of_nonneg_left finiteProfile_le_full (log_nonneg (by norm_num : (1:ℝ) ≤ 2))) le_rfl
   · exact SigmaVariableFull.terminal_le_actual
 
-/-- Strict improvement over the old finite-variation terminal, not a max wrapper. -/
-theorem old_finiteTerminal_lt : SigmaEndpointPayment.finiteTerminal < terminal := by
-  have hl := mul_le_mul_of_nonneg_right
-    (RemainingHf.splitLower_le (by norm_num : (1:ℝ) ≤ 2)) SigmaEndpointPayment.finiteProfile_pos.le
-  have hp := mul_lt_mul_of_pos_left old_profile_lt (log_pos (by norm_num : (1:ℝ) < 2))
-  unfold SigmaEndpointPayment.finiteTerminal terminal
-  exact add_lt_add_left (hl.trans_lt hp) _
 
-/-- Keep a wholly algebraic payment in the original unpaid ledger as well. -/
-theorem rational_payment_le_original_unpaid :
-    RemainingHf.splitLower 2 * finiteVariation NineFeedbackStrength.originalH /
-      (1-D0FullDensity.finiteD) ≤ CorrectionD0Joint.allUnpaid := by
-  have hl := mul_le_mul_of_nonneg_right
-    (RemainingHf.splitLower_le (by norm_num : (1:ℝ) ≤ 2)) finiteProfile_pos.le
-  have ht := terminal_le_actual
-  rw [CorrectionD0Joint.actual_terminal_balance] at ht
-  unfold terminal at ht
-  have hbal : RemainingHf.splitLower 2*finiteProfile+
-      TerminalESigned.massPaid NineFeedbackStrength.originalH =
-      CorrectionD0Joint.terminal + RemainingHf.splitLower 2 *
-        finiteVariation NineFeedbackStrength.originalH/(1-D0FullDensity.finiteD) := by
-    unfold finiteProfile CorrectionD0Joint.terminal CorrectionD0Joint.profile
-    ring
-  linarith only [hl,ht,hbal]
 
 end Hf4Next

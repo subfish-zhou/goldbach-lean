@@ -59,10 +59,6 @@ theorem wuBoxPhi_permute {i : ℕ} (N : ℕ) (δ s : ℝ) (W : Fin i → Finset 
       (sourceSieveCount N d (d * N) (wuLocalCutoff N δ d s) : ℝ)
   simp only [boxConvolutionSupport_permute, convolutionCoeff_permute]
 
-theorem wuBoxPhiLE_permute {i : ℕ} (N : ℕ) (δ s : ℝ) (W : Fin i → Finset ℕ)
-    (e : Equiv.Perm (Fin i)) :
-    wuBoxPhiLE N δ (W ∘ e) s = wuBoxPhiLE N δ W s := by
-  simp only [wuBoxPhiLE, boxConvolutionSupport_permute, convolutionCoeff_permute]
 
 theorem convolutionWuWindows_permute {i : ℕ} (N : ℕ) (Δ : ℝ) (V : Fin i → ℝ)
     (e : Equiv.Perm (Fin i)) :

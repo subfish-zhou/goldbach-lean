@@ -107,9 +107,5 @@ theorem full_G_rational :
   norm_num [GConvexChord.m,GConvexChord.C,GConvexChord.r4,GConvexChord.r5,logCoefficient,linearCoefficient,a,truncatedSixthLowerAlpha] at h h1 h5 ⊢
   linarith
 
-theorem full_G_strict :
-    SingleUpperClassicalLimit.Glin (1/3)+SingleUpperClassicalLimit.Glin s <
-      GConvexChord.rationalG := by
-  linarith only [full_G_rational,deltaG_pos]
 
 end Wu2008DoubleSieve.GCurvatureChord

@@ -98,16 +98,6 @@ theorem harcos_norm_le_of_finset_power_sum_bound {ι : Type*} (s : Finset ι)
     Finset.card_pos.mpr ⟨j, by simp [hj, hj0]⟩
   exact (Nat.ne_of_gt hcard) (by exact_mod_cast heq.symm)
 
-/-- Existential growth formulation for an arbitrary finite indexed family,
-with no injectivity or distinctness hypothesis. -/
-theorem harcos_norm_le_of_power_sum_growth {ι : Type*} [Fintype ι]
-    (z : ι → ℂ) {R : ℝ} (hR : 0 < R)
-    (hgrowth : ∃ C : ℝ, 0 < C ∧
-      ∀ᶠ n : ℕ in atTop, ‖∑ i, z i ^ n‖ ≤ C * R ^ n) :
-    ∀ i, ‖z i‖ ≤ R := by
-  obtain ⟨C, _, hC⟩ := hgrowth
-  intro i
-  exact harcos_norm_le_of_finset_power_sum_bound univ z hR hC i (mem_univ i)
 
 /-- The Harcos application only needs powers of degree at least four. -/
 theorem harcos_norm_le_of_power_sum_bound_from_four {ι : Type*} [Fintype ι]
@@ -135,26 +125,6 @@ theorem harcos_pair_norm_le_of_power_sum_bound_from_four {ι : Type*} [Fintype �
   intro i
   exact ⟨hz (i, true), hz (i, false)⟩
 
-/-- A reciprocal product upgrades the individual upper bounds to equality. -/
-theorem harcos_pair_norm_eq_of_power_sum_bound_from_four {ι : Type*} [Fintype ι]
-    (α β : ι → ℂ) {R C : ℝ} (hR : 0 < R)
-    (hprod : ∀ i, α i * β i = ((R ^ 2 : ℝ) : ℂ))
-    (hbound : ∀ n : ℕ, 4 ≤ n → ‖∑ i, (α i ^ n + β i ^ n)‖ ≤ C * R ^ n) :
-    ∀ i, ‖α i‖ = R ∧ ‖β i‖ = R := by
-  have hle := harcos_pair_norm_le_of_power_sum_bound_from_four α β hR hbound
-  intro i
-  have hmul : ‖α i‖ * ‖β i‖ = R ^ 2 := by
-    simpa only [norm_mul, Complex.norm_real, Real.norm_of_nonneg (sq_nonneg R)]
-      using congrArg norm (hprod i)
-  have ha := mul_le_mul_of_nonneg_left (hle i).2 (norm_nonneg (α i))
-  have hb := mul_le_mul_of_nonneg_right (hle i).1 (norm_nonneg (β i))
-  constructor <;> nlinarith [(hle i).1, (hle i).2]
 
-/-- Exactly `2 * (p - 1)` indexed roots, retaining the `n ≥ 4` hypothesis. -/
-theorem harcos_two_mul_sub_one_roots_norm_le (p : ℕ)
-    (z : Fin (2 * (p - 1)) → ℂ) {R C : ℝ} (hR : 0 < R)
-    (hbound : ∀ n : ℕ, 4 ≤ n → ‖∑ i, z i ^ n‖ ≤ C * R ^ n) :
-    ∀ i, ‖z i‖ ≤ R :=
-  harcos_norm_le_of_power_sum_bound_from_four z hR hbound
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

@@ -510,60 +510,7 @@ theorem upperRosserBoundaryMassAux_ne_zero_outer_log_lower
   exact LinearSieve.upperRosserBoundaryMassAux_ne_zero_outer_lower
     k hslo hx₀ hx₁ hmass
 
-/-- Every nonzero term in the continuous depth-zero majorant left after peeling
-the first Rosser pair has its distinguished-prime coordinate above `1 / 6`.
-Unlike fixed-chain support, this applies after the discrete residual has already
-been enlarged to the continuous indicator. -/
-theorem upperRosserBoundaryMassAux_zero_ne_zero_outer_log_lower
-    {z Δ s : ℝ} {q p₀ p₁ : ℕ}
-    (hz : 1 < z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log z)
-    (hslo : 3 / 2 ≤ s) (hp₀prime : p₀.Prime) (hp₁prime : p₁.Prime)
-    (hp₁₀ : p₁ < p₀) (hp₀cube : p₀ ^ 3 < Nat.floor Δ + 1)
-    (hmass : LinearSieve.upperRosserBoundaryMassAux 0
-      (s - Real.log p₀ / Real.log z - Real.log p₁ / Real.log z)
-      (Real.log q / Real.log z) (Real.log p₁ / Real.log z) ≠ 0) :
-    1 / 6 < Real.log q / Real.log z := by
-  have h := upperRosserBoundaryMassAux_ne_zero_outer_log_lower
-    0 hz hΔ hs hslo hp₀prime hp₁prime hp₁₀ hp₀cube hmass
-  norm_num at h
-  exact h
 
-/-- The recursive support screen gives a uniform bound for every residual mass
-at a fixed depth.  This supplies the boundedness input for finite Darboux
-majorants independently of the sieve and of all prime coordinates. -/
-theorem upperRosserBoundaryMassAux_le_fixedDepthScreen
-    (k : ℕ) {z Δ s : ℝ} {q p₀ p₁ : ℕ}
-    (hz : 2 ≤ z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log z)
-    (hslo : 3 / 2 ≤ s) (hp₀prime : p₀.Prime) (hp₁prime : p₁.Prime)
-    (hp₁₀ : p₁ < p₀) (hp₀cube : p₀ ^ 3 < Nat.floor Δ + 1)
-    (hp₁cut : (p₁ : ℝ) ≤ z) :
-    LinearSieve.upperRosserBoundaryMassAux k
-        (s - Real.log p₀ / Real.log z - Real.log p₁ / Real.log z)
-        (Real.log q / Real.log z) (Real.log p₁ / Real.log z) ≤
-      ((((1 : ℝ) / (2 * 3 ^ (k + 1)))⁻¹) *
-        (((1 : ℝ) / (2 * 3 ^ (k + 1)))⁻¹)) ^ k := by
-  let c : ℝ := 1 / (2 * 3 ^ (k + 1))
-  have hc : 0 < c := by
-    dsimp [c]
-    positivity
-  have hlogz : 0 < Real.log z := Real.log_pos (by linarith)
-  have hp₁pos : (0 : ℝ) < p₁ := by
-    exact_mod_cast hp₁prime.pos
-  have hp₁coord : Real.log p₁ / Real.log z ≤ 1 := by
-    apply (div_le_iff₀ hlogz).2
-    simpa using Real.strictMonoOn_log.monotoneOn hp₁pos
-      (hp₁pos.trans_le hp₁cut) hp₁cut
-  by_cases hmass : LinearSieve.upperRosserBoundaryMassAux k
-      (s - Real.log p₀ / Real.log z - Real.log p₁ / Real.log z)
-      (Real.log q / Real.log z) (Real.log p₁ / Real.log z) = 0
-  · rw [hmass]
-    positivity
-  · have hqcoord : c < Real.log q / Real.log z := by
-      simpa [c] using upperRosserBoundaryMassAux_ne_zero_outer_log_lower
-        k (by linarith) hΔ hs hslo hp₀prime hp₁prime hp₁₀ hp₀cube hmass
-    simpa [c] using
-      LinearSieve.upperRosserBoundaryMassAux_le_of_lower_bound
-        k hc hqcoord.le hp₁coord
 
 /-- All three exposed logarithmic coordinates of a nonzero fixed-depth residual
 lie above the same depth-dependent screen. -/
@@ -720,54 +667,6 @@ theorem
           (Finset.mem_filter.mpr ⟨hp₁, hp₁₀, hp₀cube⟩)
   · exact nu_div_one_sub_nonneg_of_mem (Finset.mem_filter.mp hq).1
 
-/-- Error-free specialization of the fixed-depth recursion lift.  It isolates
-the exact induction obligation: dominate every inherited residual carrier by
-`upperRosserBoundaryMassAux k` with its actual upper endpoint. -/
-theorem
-    sum_mul_upperRosserBoundaryChainsFixedDepthDensity_succ_le_screenedResidualBoundaryMassAux
-    (k : ℕ) {S : BoundingSieve} {z Δ s : ℝ}
-    (hz : 2 ≤ z) (hΔ : 0 < Δ) (hs : s = Real.log Δ / Real.log z)
-    (hslo : 3 / 2 ≤ s)
-    (hcut : ∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z)
-    (hmajorant :
-      ∀ q ∈ S.prodPrimes.primeFactors.filter
-          (fun q : ℕ =>
-            1 / (2 * 3 ^ (k + 1)) < Real.log q / Real.log z),
-        ∀ p₀ ∈ S.prodPrimes.primeFactors.filter (fun p => q < p),
-          ∀ p₁ ∈
-              (S.prodPrimes.primeFactors.filter (fun p => q < p)).filter
-                (fun p₁ => p₁ < p₀ ∧ p₀ ^ 3 < Nat.floor Δ + 1),
-            LinearSieve.upperRosserBoundaryChainsFixedDepthDensity
-                (fun p => S.nu p / (1 - S.nu p))
-                ((Nat.floor Δ + 1) ⌈/⌉ (p₀ * p₁)) q
-                ((S.prodPrimes.primeFactors.filter (fun p => q < p)).filter
-                  (fun p => p < p₁)) k ≤
-              LinearSieve.upperRosserBoundaryMassAux k
-                (s - Real.log p₀ / Real.log z - Real.log p₁ / Real.log z)
-                (Real.log q / Real.log z) (Real.log p₁ / Real.log z)) :
-    ∑ q ∈ S.prodPrimes.primeFactors,
-        (S.nu q / (1 - S.nu q)) *
-          LinearSieve.upperRosserBoundaryChainsFixedDepthDensity
-            (fun p => S.nu p / (1 - S.nu p)) (Nat.floor Δ + 1) q
-            (S.prodPrimes.primeFactors.filter (fun p => q < p)) (k + 1) ≤
-      ∑ q ∈ S.prodPrimes.primeFactors.filter
-          (fun q : ℕ =>
-            1 / (2 * 3 ^ (k + 1)) < Real.log q / Real.log z),
-        (S.nu q / (1 - S.nu q)) *
-          ∑ p₀ ∈ S.prodPrimes.primeFactors.filter (fun p => q < p),
-            ∑ p₁ ∈ (S.prodPrimes.primeFactors.filter (fun p => q < p)).filter
-                (fun p₁ => p₁ < p₀ ∧ p₀ ^ 3 < Nat.floor Δ + 1),
-              (S.nu p₀ / (1 - S.nu p₀)) * (S.nu p₁ / (1 - S.nu p₁)) *
-                LinearSieve.upperRosserBoundaryMassAux k
-                  (s - Real.log p₀ / Real.log z - Real.log p₁ / Real.log z)
-                  (Real.log q / Real.log z)
-                  (Real.log p₁ / Real.log z) := by
-  simpa using
-    sum_mul_upperRosserBoundaryChainsFixedDepthDensity_succ_le_screenedResidualBoundaryMassAux_add
-      k (fun _ _ _ => 0) hz hΔ hs hslo hcut
-      (by
-        intro q hq p₀ hp₀ p₁ hp₁
-        simpa using hmajorant q hq p₀ hp₀ p₁ hp₁)
 
 /-- The exact depth-two residual majorant may be restricted to the compact
 box where all three logarithmic coordinates exceed `1 / 6`.  This is the
@@ -914,86 +813,7 @@ theorem
           exact ⟨h.1, h.2, hqscreen.trans hqp₁⟩
       rw [hp₁filter]
 
-/-- One logarithmic cell of the inner `p₁`-sum in the depth-two residual
-majorant.  The residual depth-zero mass is an indicator and hence is bounded by
-one.  A possible prime on the closed right face is retained and paid for by the
-fixed-depth atom bound `η`. -/
-theorem
-    sum_nu_div_one_sub_mul_upperRosserBoundaryMassAux_zero_le_rpow_Icc_add_atom
-    {S : BoundingSieve} {K z s x₀ a u v η : ℝ} {T : Finset ℕ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hz : 1 < z) (hu : 0 < u) (huv : u ≤ v)
-    (hzu : 2 ≤ z ^ u)
-    (hT : T ⊆ S.prodPrimes.primeFactors)
-    (hinterval : ∀ p ∈ T, z ^ u ≤ (p : ℝ) ∧ (p : ℝ) ≤ z ^ v)
-    (hη : 0 ≤ η)
-    (hatom : ∀ p ∈ T, S.nu p / (1 - S.nu p) ≤ η) :
-    ∑ p ∈ T, (S.nu p / (1 - S.nu p)) *
-        LinearSieve.upperRosserBoundaryMassAux 0
-          (s - x₀ - Real.log p / Real.log z) a
-          (Real.log p / Real.log z) ≤
-      v / u * (1 + K / (u * Real.log z)) - 1 + η := by
-  have h := weighted_sum_nu_div_one_sub_le_of_rpow_Icc_add_atom
-    hlocal hz hu huv hzu hT hinterval
-    (M := 1) (η := η)
-    (w := fun p => LinearSieve.upperRosserBoundaryMassAux 0
-      (s - x₀ - Real.log p / Real.log z) a
-      (Real.log p / Real.log z))
-    (by norm_num)
-    (by
-      intro p hp
-      rw [LinearSieve.upperRosserBoundaryMassAux_zero]
-      split_ifs <;> norm_num)
-    hη
-    (by
-      intro p hp
-      rw [LinearSieve.upperRosserBoundaryMassAux_zero]
-      split_ifs
-      · simpa using hatom p hp
-      · simpa using hη)
-  simpa [mul_comm] using h
 
-/-- Partitioned form of the inner `p₁` residual estimate.  It is the finite
-upper Darboux sum used for the inner integral in
-`upperRosserBoundaryMass 1`; every closed cell contributes its local-product
-increment and one fixed-depth atom error. -/
-theorem
-    sum_nu_div_one_sub_mul_upperRosserBoundaryMassAux_zero_le_rpow_partition_Icc_add_atoms
-    {ι : Type*} [Fintype ι] [DecidableEq ι]
-    {S : BoundingSieve} {K z s x₀ a : ℝ} {T : Finset ℕ}
-    {cell : ℕ → ι} {u v η : ι → ℝ}
-    (hlocal : HasDimensionOneLocalProductBound S K)
-    (hz : 1 < z) (hu : ∀ i, 0 < u i) (huv : ∀ i, u i ≤ v i)
-    (hzu : ∀ i, 2 ≤ z ^ (u i))
-    (hT : T ⊆ S.prodPrimes.primeFactors)
-    (hinterval : ∀ p ∈ T,
-      z ^ (u (cell p)) ≤ (p : ℝ) ∧ (p : ℝ) ≤ z ^ (v (cell p)))
-    (hη : ∀ i, 0 ≤ η i)
-    (hatom : ∀ p ∈ T, S.nu p / (1 - S.nu p) ≤ η (cell p)) :
-    ∑ p ∈ T, (S.nu p / (1 - S.nu p)) *
-        LinearSieve.upperRosserBoundaryMassAux 0
-          (s - x₀ - Real.log p / Real.log z) a
-          (Real.log p / Real.log z) ≤
-      ∑ i, (v i / u i * (1 + K / (u i * Real.log z)) - 1 + η i) := by
-  have h := weighted_sum_nu_div_one_sub_le_rpow_partition_Icc_add_atoms
-    hlocal hz hu huv hzu hT hinterval
-    (M := fun _ => 1) (η := η)
-    (w := fun p => LinearSieve.upperRosserBoundaryMassAux 0
-      (s - x₀ - Real.log p / Real.log z) a
-      (Real.log p / Real.log z))
-    (fun _ => by norm_num)
-    (by
-      intro p hp
-      rw [LinearSieve.upperRosserBoundaryMassAux_zero]
-      split_ifs <;> norm_num)
-    hη
-    (by
-      intro p hp
-      rw [LinearSieve.upperRosserBoundaryMassAux_zero]
-      split_ifs
-      · simpa using hatom p hp
-      · simpa using hη (cell p))
-  simpa [mul_comm] using h
 
 /-- Partitioned inner residual estimate with one global budget for every closed
 right-face atom.  Since the depth-zero residual mass is an indicator, the

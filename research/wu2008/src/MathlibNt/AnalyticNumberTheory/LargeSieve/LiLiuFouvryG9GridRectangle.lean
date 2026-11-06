@@ -57,15 +57,6 @@ theorem fouvryG9GridCell_rectangle {N : ℕ} {eps ρ : ℝ} (hρ : 1 < ρ)
       (mul_nonneg hr.le (pow_nonneg hr.le k.2.1))
     nlinarith only [hh]
 
-/-- With the small mesh, the long-coordinate interval lies in `[M,2M]`. -/
-theorem fouvryG9GridCell_long_le_two {N : ℕ} {eps ρ : ℝ}
-    (hρ : 1 < ρ) (hρu : ρ ≤ 5 / 4) {k y : ℕ × ℕ × ℕ}
-    (hy : y ∈ fouvryG9GridCell N eps ρ k) :
-    (y.1 : ℝ) ≤ 2 * ρ ^ (k.2.1 + k.2.2) := by
-  have hr : 0 < ρ := lt_trans zero_lt_one hρ
-  have hs : ρ ^ 2 ≤ 2 := by nlinarith
-  exact (fouvryG9GridCell_rectangle hρ hy).2.2.2.le.trans
-    (mul_le_mul_of_nonneg_right hs (pow_nonneg hr.le _))
 
 /-- A genuine occupied-cell witness supplies the scale window; no error estimate is claimed. -/
 theorem fouvryG9GridCell_scale_window {N : ℕ} {eps ρ : ℝ}
@@ -99,15 +90,6 @@ theorem fouvryG9GridCell_sum (N : ℕ) (eps ρ : ℝ) (F : (ℕ × ℕ × ℕ) �
   intro y hy
   exact mem_image_of_mem (fouvryG9GridKey ρ) hy
 
-/-- Exact positive counting partition; no carrier point is lost or merged. -/
-theorem fouvryG9GridCell_card_sum (N : ℕ) (eps ρ : ℝ) :
-    (∑ k ∈ fouvryG9GridUsed N eps ρ, (fouvryG9GridCell N eps ρ k).card) =
-      (fouvryG9Carrier N eps).card := by
-  have h := sum_fiberwise_of_maps_to
-    (s := fouvryG9Carrier N eps) (t := fouvryG9GridUsed N eps ρ)
-    (g := fouvryG9GridKey ρ)
-    (fun y hy => mem_image_of_mem (fouvryG9GridKey ρ) hy) (fun _ => (1 : ℕ))
-  simpa only [sum_const, smul_eq_mul, mul_one, fouvryG9GridCell] using h
 
 end
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

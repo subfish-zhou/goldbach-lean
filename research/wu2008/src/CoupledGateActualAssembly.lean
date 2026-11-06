@@ -55,23 +55,7 @@ theorem restoredLower_le (i : Fin 4) {z : Fin 9 → ℝ} (hz : ∀ k,0 ≤ z k) 
   unfold restoredLower CoupledFullyFinite.lower
   linarith only [hd,hc]
 
-theorem original_four_restored (i : Fin 4) :
-    restoredLower (coupledRow i) NineFeedbackStrength.originalH ≤
-      coupledFeedback (coupledRow i) NineFeedbackStrength.originalH :=
-  restoredLower_le i CoupledIntegralRecovery.originalH_nonneg
 
-theorem original_four_strict_gain (i : Fin 4) :
-    CoupledFullyFinite.lower (coupledRow i) NineFeedbackStrength.originalH <
-      restoredLower (coupledRow i) NineFeedbackStrength.originalH := by
-  obtain ⟨ha,hab,_,_,_,_⟩ := original_gate_geometry i
-  have hk : 0 < (coupledRow i).kappa2 := by
-    have hg := (coupledRow_geometry i).1
-    linarith [hg.two_lt_s,hg.mother.s_le_kappa3,hg.mother.kappa3_lt_kappa2]
-  have hg := gatePayment_pos hk (by linarith : 0 < gateStart (coupledRow i)) hab
-  have hz : 0 < NineFeedbackStrength.originalH 0 := by norm_num [NineFeedbackStrength.originalH]
-  have hgain : 0 < NineFeedbackStrength.originalH 0*gatePayment (coupledRow i)/5 := by positivity
-  unfold restoredLower
-  linarith only [hgain]
 
 end
 end CoupledHGateRecovery

@@ -28,11 +28,6 @@ theorem correctionNumerator_endpoints : correctionNumerator=correctionEndpoints 
   intro k _
   rw [original_nine_correction_ftc k]
 
-/-- Literal identity for the parent's same corrected profile and unchanged denominator. -/
-theorem correctedProfile_endpoints : correctedProfile=
-    max (SigmaRemaining.finiteLower NineFeedbackStrength.originalH)
-      (SigmaSignedCells.finiteLower+correctionEndpoints/(1-SigmaRemaining.d0Paid)) := by
-  rw [correctedProfile,correctionNumerator_endpoints]
 
 theorem fullCell_identity {a b : ℝ} (ha : 1≤a) (hab : a≤b) :
     fullPrimitive b-fullPrimitive a=
@@ -90,19 +85,7 @@ def coupledLower (p : Wu2008DoubleSieve.SecondFunctionalParameters) : ℝ :=
   SigmaSignedCells.coupledLower p+CoupledFiniteAssembly.aCoefficient p*
     (finiteProfile-SigmaSignedCells.profileLower)
 
-theorem coupledLower_le_actual (i : Fin 4) : coupledLower (ActualNineFeedback.coupledRow i)≤
-    ActualNineFeedback.coupledFeedback (ActualNineFeedback.coupledRow i) NineFeedbackStrength.originalH := by
-  have h := mul_le_mul_of_nonneg_left finiteProfile_le_inner
-    (CoupledFiniteAssembly.aCoefficient_nonneg (ActualNineFeedback.coupledRow_geometry i))
-  have hc := SigmaInnerProfile.coupledLower_le_original i
-  unfold coupledLower SigmaSignedCells.coupledLower SigmaInnerProfile.coupledLower at *
-  linarith only [h,hc]
 
-theorem old_coupled_le_finite (i : Fin 4) : SigmaSignedCells.coupledLower (ActualNineFeedback.coupledRow i)≤
-    coupledLower (ActualNineFeedback.coupledRow i) := by
-  apply le_add_of_nonneg_right
-  exact mul_nonneg (CoupledFiniteAssembly.aCoefficient_nonneg (ActualNineFeedback.coupledRow_geometry i))
-    (sub_nonneg.mpr old_profile_le_finite)
 
 /-- The literal complete four-row expression with all inherited E/J/middle/density terms. -/
 theorem coupledLower_collected (p : Wu2008DoubleSieve.SecondFunctionalParameters) : coupledLower p=

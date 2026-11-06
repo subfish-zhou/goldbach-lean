@@ -1,0 +1,182 @@
+{
+  "status": "SOURCE_DIRECTIVE_ATTACHMENT_REVIEW_NOT_COMPILER_RANGES_OR_DELETION_ACCEPTANCE",
+  "model_sha256": "3ca43c41c4e0369a1d69c09ea54a1066f1b4c76112dc611ee9235c22087f67ef",
+  "source_manifest_sha256": "2f4b834f8e1c357b502218784e3e926d142e439a443817a143f821a53406ffc6",
+  "declarations": 11,
+  "review": [
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripValueBound",
+      "written_name": "canonical_value_tail_le_fixed_log",
+      "source_sha256": "a3ced96b4466bd2c7634b69d360d021dce8864deb538b9b201f882cc8c68697c",
+      "theorem_line": 70,
+      "directive_line": 67,
+      "directive": "omit [NeZero q] in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 67,
+          "directive": "omit [NeZero q] in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvryHarcosCharacter",
+      "written_name": "harcos_trace_eq_frobenius_sum",
+      "source_sha256": "58bff403c1f8b5a8d215453e481fc0e105f22fdc4532dfee991450b276e09a4a",
+      "theorem_line": 27,
+      "directive_line": 26,
+      "directive": "omit [DecidableEq F] in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 26,
+          "directive": "omit [DecidableEq F] in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripValueBound",
+      "written_name": "norm_value_truncation_le",
+      "source_sha256": "a3ced96b4466bd2c7634b69d360d021dce8864deb538b9b201f882cc8c68697c",
+      "theorem_line": 24,
+      "directive_line": 22,
+      "directive": "omit [NeZero q] in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 22,
+          "directive": "omit [NeZero q] in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDerivativeBound",
+      "written_name": "canonical_tail_le_fixed_log_sq",
+      "source_sha256": "777726ce1194a845295ddf32558aba940faaa81adcd1f99b32f69b5f3c357fce",
+      "theorem_line": 167,
+      "directive_line": 164,
+      "directive": "omit [NeZero q] in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 164,
+          "directive": "omit [NeZero q] in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.LargeSieve.StandardBVChosenSmallSquare",
+      "written_name": "standardBVChosenSmall_squareLedger_payable",
+      "source_sha256": "8a04cbfdedb866731052033f7f72e50ec463f8a3d2a45953245a1331df4002fd",
+      "theorem_line": 314,
+      "directive_line": 311,
+      "directive": "set_option maxHeartbeats 1000000 in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 311,
+          "directive": "set_option maxHeartbeats 1000000 in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLWeakStripDerivativeBound",
+      "written_name": "sum_logCpowWeight_eq_derivative_truncation",
+      "source_sha256": "777726ce1194a845295ddf32558aba940faaa81adcd1f99b32f69b5f3c357fce",
+      "theorem_line": 112,
+      "directive_line": 108,
+      "directive": "omit [NeZero q] in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 108,
+          "directive": "omit [NeZero q] in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticSiegelConvolution",
+      "written_name": "one_le_zetaMul_prime_even_pow",
+      "source_sha256": "6d48073b98dbe6c0afb8fb3a3a8aaf642de7b3ee039d40672fa6a6da08dc60f1",
+      "theorem_line": 66,
+      "directive_line": 63,
+      "directive": "set_option backward.isDefEq.respectTransparency.types false in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 63,
+          "directive": "set_option backward.isDefEq.respectTransparency.types false in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17CorrectedAssembly",
+      "written_name": "chen1973Lemma6Eq17CorrectedRadialFirstFullIntegral_eq_two_mul_half",
+      "source_sha256": "d819ecf9ef97c8f878a2e37f9170a66d72a7b02e9d7c649f1fb8bd2335aa74c1",
+      "theorem_line": 192,
+      "directive_line": 191,
+      "directive": "set_option maxHeartbeats 800000 in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 191,
+          "directive": "set_option maxHeartbeats 800000 in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17CorrectedAssembly",
+      "written_name": "chen1973Lemma6Eq17CorrectedRadialSecondFullIntegral_eq_two_mul_half",
+      "source_sha256": "d819ecf9ef97c8f878a2e37f9170a66d72a7b02e9d7c649f1fb8bd2335aa74c1",
+      "theorem_line": 207,
+      "directive_line": 206,
+      "directive": "set_option maxHeartbeats 800000 in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 206,
+          "directive": "set_option maxHeartbeats 800000 in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.Chen1973.Chen1973Lemma6Equation17CorrectedAssembly",
+      "written_name": "integrable_one_add_abs_rpow",
+      "source_sha256": "d819ecf9ef97c8f878a2e37f9170a66d72a7b02e9d7c649f1fb8bd2335aa74c1",
+      "theorem_line": 1344,
+      "directive_line": 1343,
+      "directive": "set_option maxHeartbeats 3000000 in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 1343,
+          "directive": "set_option maxHeartbeats 3000000 in"
+        }
+      ]
+    },
+    {
+      "module": "MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLPrefixBoundedHarmonicTail",
+      "written_name": "norm_sum_Ico_cpowWeight_character_le_of_prefix_bound",
+      "source_sha256": "0396b93b7f50ac8d7c9f0cb84954516c055defba0a273c591aa94e3d2525aa4a",
+      "theorem_line": 23,
+      "directive_line": 22,
+      "directive": "omit [NeZero q] in",
+      "must_remove_with_theorem_if_selected": true,
+      "complete_consecutive_prefix_chain": [
+        {
+          "line": 22,
+          "directive": "omit [NeZero q] in"
+        }
+      ]
+    }
+  ],
+  "remaining_requirements": [
+    "Actual compiled family selection",
+    "Compiler declaration and documentation ranges",
+    "No incoming retained references or registrations",
+    "Incremental source compilation and kernel validation"
+  ],
+  "consecutive_prefix_chains_reviewed": 11,
+  "nested_prefix_chain_count": 0,
+  "nested_prefix_chains": []
+}

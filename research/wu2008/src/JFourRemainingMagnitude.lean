@@ -271,12 +271,6 @@ theorem four_remaining_identity : fourRemaining =
   unfold fourRemaining AnalyticTotalThreshold.fourLoss FourActualCapRecovery.recovery
   ring
 
-theorem four_remaining_real_interval : 0 ≤ fourRemaining ∧ fourRemaining ≤ fourCapReal := by
-  have hl := FourLower.complete_real_lower
-  have hu := FourActualCapRecovery.actual_four_upper
-  rw [four_remaining_identity]
-  unfold fourCapReal
-  constructor <;> linarith only [hl,hu]
 
 theorem four_remaining_interval : 0 ≤ fourRemaining ∧ fourRemaining ≤ fourCap := by
   have hl := FourLower.actual_four_lower
@@ -314,14 +308,6 @@ theorem four_cap_size : fourCap < (1247/10000:ℝ) := by
     SharpLogRecurrence.lowerLog,SharpLogRecurrence.upperLog,alpha,beta,lam,
     truncatedSixthLowerAlpha,truncatedSixthLowerBeta,truncatedSixthLowerLambda]
 
-/-- Original parameters lie beyond the initial Buchstab segment; no clipping at two. -/
-theorem actual_four_parameter_range {x y z t : ℝ}
-    (hx : alpha ≤ x) (hxb : x ≤ beta) (hy : alpha ≤ y) (hyb : y ≤ beta)
-    (hz : alpha ≤ z) (ht : alpha ≤ t) (htu : t ≤ lam-z) :
-    10/3 < parameter x y z t ∧ parameter x y z t ≤ 927/100 ∧
-    max 2 (parameter x y z t) = parameter x y z t := by
-  have h := ClassicalLossBottleneck.four_parameter_range hxb hy hyb htu
-  exact ⟨h.1,FourActualCapRecovery.parameter_upper hx hy hz ht,h.2⟩
 
 def recoveredCoefficient : ℝ := AnalyticTotalThreshold.coefficient+
   (JointJLossStrength.recovery+FourActualCapRecovery.recovery)/4
@@ -340,15 +326,6 @@ theorem original_mother_identity :
   unfold recoveredCoefficient otherLosses jRemaining fourRemaining
   linarith only [h]
 
-/-- Unconditional interval for the two remaining actual errors, with all other errors labeled. -/
-theorem original_mother_residual_interval :
-    0 ≤ JointHMotherPayment.unroundedCoefficient-recoveredCoefficient-otherLosses/4 ∧
-    JointHMotherPayment.unroundedCoefficient-recoveredCoefficient-otherLosses/4 ≤ residualCap := by
-  have he := original_mother_identity
-  have hj := j_remaining_interval
-  have hf := four_remaining_interval
-  unfold residualCap
-  constructor <;> linarith only [he,hj.1,hj.2,hf.1,hf.2]
 
 theorem residual_cap_size : residualCap < (573/10000:ℝ) := by
   have hj := j_cap_size

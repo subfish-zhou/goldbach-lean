@@ -236,11 +236,5 @@ theorem factorial_mul_boxProduct {ι : Type*} [DecidableEq ι]
   intro i _
   exact factorial_mul_dividedPower _ _
 
-theorem sum_copies_boxProduct {ι : Type*} [DecidableEq ι]
-    (s : Finset ι) (B : ι → Finset ℕ) (k : ι → ℕ) (n : ℕ) :
-    (∑ _j ∈ Finset.range (∏ i ∈ s, (k i).factorial), boxProduct s B k n) =
-      (∏ i ∈ s, (primeBox (B i) : ArithmeticFunction ℝ) ^ k i) n := by
-  have h := congrArg (fun f : ArithmeticFunction ℝ => f n) (factorial_mul_boxProduct s B k)
-  simpa only [Finset.sum_const, Finset.card_range, nsmul_eq_mul, smul_map, smul_eq_mul] using h
 
 end MathlibNt.SieveTheory.LiLiuPrereqWF

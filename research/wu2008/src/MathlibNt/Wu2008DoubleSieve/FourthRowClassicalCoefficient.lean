@@ -100,27 +100,5 @@ theorem fourthRowClassical_C678_log :
     fourthRowClassical_triangle_eq_log (by norm_num : (5 / 2 : ℝ) ≤ 89 / 25) (by norm_num)]
   ring
 
-/-- The exact fourth-row classical coefficient with the original four masses. -/
-theorem fourthRowClassical_coefficient_eq_log :
-    (5 * wuUpperCoefficient (5 / 2) - 4 * wuUpperCoefficient (103 / 25) -
-      wuUpperCoefficient (89 / 25) + 2 * fourthRowClassicalJ (5 / 2) (103 / 25) +
-      fourthRowClassicalJ (291 / 100) (103 / 25) - gamma5MassC5 - gamma6BaseC6 -
-      gamma78GainC true - gamma78GainC false) / 5 =
-      -(2 / 5) * fourthRowClassicalL (103 / 25) - (2 / 5) * fourthRowClassicalL (89 / 25) -
-      (1 / 5) * fourthRowClassicalL (291 / 100) + (1 / 5) * fourthRowClassicalJ (5 / 2) (103 / 25) +
-      (1 / 5) * fourthRowClassicalJ (5 / 2) (89 / 25) := by
-  have hS := firstFunctionalGain_coefficient_eq_log
-    (by norm_num : (2 : ℝ) ≤ 5 / 2) (by norm_num : (5 / 2 : ℝ) ≤ 3)
-    (by norm_num : (3 : ℝ) ≤ 103 / 25) (by norm_num : (103 / 25 : ℝ) ≤ 5)
-  have hB := firstFunctionalGain_coefficient_eq_log
-    (by norm_num : (2 : ℝ) ≤ 5 / 2) (by norm_num : (5 / 2 : ℝ) ≤ 3)
-    (by norm_num : (3 : ℝ) ≤ 89 / 25) (by norm_num : (89 / 25 : ℝ) ≤ 5)
-  change wuUpperCoefficient (5 / 2) - wuUpperCoefficient (103 / 25) =
-    -fourthRowClassicalL (103 / 25) at hS
-  change wuUpperCoefficient (5 / 2) - wuUpperCoefficient (89 / 25) =
-    -fourthRowClassicalL (89 / 25) at hB
-  have h5 := fourthRowClassical_C5_log
-  have h678 := fourthRowClassical_C678_log
-  linarith
 
 end Wu2008DoubleSieve

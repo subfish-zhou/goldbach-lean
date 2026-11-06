@@ -206,18 +206,5 @@ theorem realPrimeDirichletSum_eq_mul_integral_of_pos
       · rfl
     _ = _ := primeDirichletSum_eq_mul_integral_of_pos ε hε
 
-/--
-An unconditional specialization of the Abel/Mellin bridge.  Its coarse growth
-proof only gives `1 < re s`; sharper Mertens bounds can instead be supplied to
-`primeReciprocalLSeries_eq_mul_integral` to reach every positive real part.
--/
-theorem primeReciprocalLSeries_eq_mul_integral_of_one_lt_re
-    {s : ℂ} (hs : 1 < s.re) :
-    LSeries (fun n => primeReciprocalCoeff n) s =
-      s * ∫ t in Set.Ioi (1 : ℝ),
-        (primeReciprocalSum ⌊t⌋₊ : ℂ) * (t : ℂ) ^ (-(s + 1)) := by
-  have hO : primeReciprocalSum =O[atTop] fun n : ℕ => (n : ℝ) ^ (1 : ℝ) := by
-    simpa only [Real.rpow_one] using primeReciprocalSum_isBigO_natCast
-  exact primeReciprocalLSeries_eq_mul_integral zero_le_one hs hO
 
 end AnalyticNumberTheory.Mertens

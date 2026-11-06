@@ -70,14 +70,6 @@ noncomputable def secondFunctionalMotherLocal (N d M : ℕ) (a b c e f : ℝ) : 
     secondFunctionalMotherGamma N d M a b c e f 4 +
     ∑ i ∈ Finset.Icc 5 21, secondFunctionalMotherGamma N d M a b c e f i
 
-theorem secondFunctionalMother_prefix_arity_five (N d : ℕ) (p q r s t : ℕ) :
-    secondFunctionalMotherPrefixCarrier N d [p,q,r,s,t] =
-      sourceSieveCarrier N (d*(p*q*r*s*t)) (d*(p*q*r)*N) s := by
-  simp [fourthRowMotherPrefixCarrier, mul_assoc]
 
-theorem secondFunctionalMother_prefix_arity_six (N d : ℕ) (p q r s t u : ℕ) :
-    secondFunctionalMotherPrefixCarrier N d [p,q,r,s,t,u] =
-      sourceSieveCarrier N (d*(p*q*r*s*t*u)) (d*(p*q*r*s)*N) t := by
-  simp [fourthRowMotherPrefixCarrier, mul_assoc]
 
 end Wu2008DoubleSieve

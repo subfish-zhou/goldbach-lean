@@ -116,18 +116,6 @@ theorem highConductorPrimitiveMean_sq_le_harmonic_mul_squareLedger
     _ = highConductorHarmonicTail R Q *
         highConductorPrimitiveSquareLedger R Q A := rfl
 
-/-- If the high block is nonempty, its genuine Cauchy factor contains the top
-term `1/Q`.  This records that the lower cutoff does not turn the harmonic
-factor into `1/R`. -/
-theorem one_div_top_le_highConductorHarmonicTail
-    {R Q : ℕ} (hRQ : R < Q) :
-    (1 : ℝ) / Q ≤ highConductorHarmonicTail R Q := by
-  unfold highConductorHarmonicTail
-  apply Finset.single_le_sum (s := Finset.Ioc R Q)
-    (f := fun d : ℕ => (1 : ℝ) / d)
-  · intro d hd
-    positivity
-  · exact Finset.mem_Ioc.mpr ⟨hRQ, le_rfl⟩
 
 /-- Schematic square majorant delivered by both physical row arguments after
 inserting the true coefficient energy: the large-sieve length term times the
@@ -148,15 +136,6 @@ theorem diagonal_le_highConductorPhysicalSquareMajorant
   exact le_add_of_nonneg_right
     (mul_nonneg (mul_nonneg (mul_nonneg hC (sq_nonneg Q)) hN) hD)
 
-/-- Formal non-payment certificate: whenever a desired squared budget lies
-strictly below the surviving `H N²` diagonal, the available physical majorant
-cannot imply that budget, regardless of the modulus-dependent row. -/
-theorem highConductorPhysicalSquareMajorant_not_le_of_target_lt_diagonal
-    {H C N Q D target : ℝ} (hH : 0 ≤ H) (hC : 0 ≤ C)
-    (hN : 0 ≤ N) (hD : 0 ≤ D) (htarget : target < H * N ^ 2) :
-    ¬ highConductorPhysicalSquareMajorant H C N Q D ≤ target := by
-  exact not_le_of_gt (htarget.trans_le
-    (diagonal_le_highConductorPhysicalSquareMajorant hH hC hN hD))
 
 /-- The narrow square-ledger strengthening that really yields an `N/√R`
 Type-I scale.  It is intentionally a statement about coefficient energy after
@@ -210,30 +189,6 @@ theorem highConductorTypeII_le
   have ht : 0 ≤ K * Q * Real.sqrt N := by positivity
   exact (sq_le_sq₀ hm ht).1 hs
 
-/-- A narrow conditional consumer combining two nonnegative rows.  It assumes
-the two retained square-ledger savings explicitly; in particular it does not
-construct or inhabit a high-source input. -/
-theorem highConductorHybrid_of_typeI_typeII_squareLedgers
-    {R Q N : ℕ} {KI KII : ℝ}
-    (typeIRow typeIIRow : (d : ℕ) → PrimitiveCharacter d → ℝ)
-    (hI0 : ∀ d χ, 0 ≤ typeIRow d χ)
-    (hII0 : ∀ d χ, 0 ≤ typeIIRow d χ)
-    (hKI : 0 ≤ KI) (hKII : 0 ≤ KII)
-    (hI : HighConductorTypeISquareSaving R Q N KI typeIRow)
-    (hII : HighConductorTypeIISquareSaving R Q N KII typeIIRow) :
-    highConductorPrimitiveMean R Q (fun d χ => typeIRow d χ + typeIIRow d χ) ≤
-      KI * N / Real.sqrt R + KII * Q * Real.sqrt N := by
-  have hsplit :
-      highConductorPrimitiveMean R Q (fun d χ => typeIRow d χ + typeIIRow d χ) =
-        highConductorPrimitiveMean R Q typeIRow +
-          highConductorPrimitiveMean R Q typeIIRow := by
-    unfold highConductorPrimitiveMean
-    simp_rw [Finset.sum_add_distrib, mul_add]
-    rw [Finset.sum_add_distrib]
-  rw [hsplit]
-  exact add_le_add
-    (highConductorTypeI_le typeIRow hI0 hKI hI)
-    (highConductorTypeII_le typeIIRow hII0 hKII hII)
 
 end
 

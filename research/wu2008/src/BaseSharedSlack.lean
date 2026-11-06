@@ -245,7 +245,6 @@ theorem gain_positive : 0 < gain := by norm_num [gain]
 
 theorem gain_bounds : (339/1000000:ℝ) < gain ∧ gain < 340/1000000 := by norm_num [gain]
 
-theorem gain_nonnegative : 0 ≤ gain := gain_positive.le
 
 /-- This block excludes G, the collected log payment, fifth, sixth, and retained payments. -/
 def block : ℝ := (AnalyticTotalThreshold.baseLoss+GlobalLowerSlack.highSlack+

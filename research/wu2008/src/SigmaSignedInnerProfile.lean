@@ -64,11 +64,6 @@ theorem correctedCoupledLower_le (i : Fin 4) : correctedCoupledLower (ActualNine
   unfold correctedCoupledLower coupledLower SigmaInnerProfile.coupledLower at *
   linarith only [hm,hc]
 
-theorem coupledLower_le_corrected (i : Fin 4) : coupledLower (ActualNineFeedback.coupledRow i) ≤
-    correctedCoupledLower (ActualNineFeedback.coupledRow i) := by
-  apply le_add_of_nonneg_right
-  exact mul_nonneg (CoupledFiniteAssembly.aCoefficient_nonneg (ActualNineFeedback.coupledRow_geometry i))
-    (sub_nonneg.mpr profileLower_le_corrected)
 
 end
 end SigmaSignedCells

@@ -276,13 +276,6 @@ theorem harcosCurvePointCount_eq_card_mul_traceZero
       intro t _
       split_ifs <;> simp
 
-/-- Artin--Schreier fibers over the prime field have size `p` precisely at
-trace-zero elements. This uses `Algebra.trace`, not a fiber-count surrogate. -/
-theorem harcos_artinSchreier_prime_fiber_card (p : ℕ) [Fact p.Prime]
-    [Algebra (ZMod p) F] (c : F) :
-    (univ.filter fun x : F => x ^ p - x = c).card =
-      if Algebra.trace (ZMod p) F c = 0 then p else 0 := by
-  simpa only [ZMod.card] using harcos_artinSchreier_fiber_card (ZMod p) F c
 
 /-- The last six counting lines of Harcos, Corollary 3, page 8. -/
 theorem harcosCurvePointCount_eq_prime_mul_traceZero (p : ℕ) [Fact p.Prime]

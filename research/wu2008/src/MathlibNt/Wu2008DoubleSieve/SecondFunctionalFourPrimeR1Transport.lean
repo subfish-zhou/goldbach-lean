@@ -66,18 +66,5 @@ theorem source_restrict_true {N : ℕ} (L : LabelledPhysical.Family Gamma16Profi
   cases L
   simp [LabelledPhysical.Family.restrictLabels]
 
-/-- The original four families, without any coprimality or roughness restriction. -/
-theorem source_R1_four_theta (k : ℕ) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1/2) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-      ∀ p : SecondFunctionalParameters, p.MotherAdmissible → ∀ Z : ℝ,
-      (∑ j : Fin 4, (sourceFamily N δ Δ V p j).R1
-        (⌊(N:ℝ)^(1/2-δ)⌋₊+1) Z) ≤
-        ε * boxTheta N ((N:ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  obtain ⟨T,hT,hr⟩ := source_restricted_R1_four_theta k hδ hδhi hε
-  refine ⟨T,hT,?_⟩
-  intro N hN i Δ V hb p hp Z
-  simpa only [source_restrict_true] using hr N hN i Δ V hb p hp (fun _ _ => True) Z
 
 end Wu2008DoubleSieve.FourPrimeNonunit

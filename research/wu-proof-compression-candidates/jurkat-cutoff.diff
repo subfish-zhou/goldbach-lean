@@ -1,0 +1,89 @@
+--- a/research/wu2008/src/MathlibNt/SieveTheory/JurkatRichert1965ChenGammaOneQOne.lean
++++ b/research/wu2008/src/MathlibNt/SieveTheory/JurkatRichert1965ChenGammaOneQOne.lean
+@@ -66,6 +66,19 @@
+     exact ⟨hp, hpz, hpk⟩
+   · rintro ⟨hp, hpz, hpk⟩
+     exact ⟨Nat.lt_ceil.mpr hpz, hp, hpz, hpk⟩
++
++/-- Restricting a strict prime cutoff twice retains the smaller cutoff. -/
++private theorem siftingPrimes_filter_real (k : ℕ) {x z : ℝ} (hxz : x ≤ z) :
++    (siftingPrimes k z).filter (fun p : ℕ => (p : ℝ) < x) = siftingPrimes k x := by
++  ext p
++  simp only [Finset.mem_filter, mem_siftingPrimes]
++  exact ⟨fun ⟨⟨hp, _, hk⟩, hx⟩ => ⟨hp, hx, hk⟩,
++    fun ⟨hp, hx, hk⟩ => ⟨⟨hp, hx.trans_le hxz, hk⟩, hx⟩⟩
++
++private theorem siftingPrimes_filter_nat (k : ℕ) {p : ℕ} {z : ℝ}
++    (hpz : (p : ℝ) ≤ z) :
++    (siftingPrimes k z).filter (fun q => q < p) = siftingPrimes k p := by
++  simpa only [Nat.cast_lt] using siftingPrimes_filter_real k hpz
+ 
+ /-- At `k = 1`, the source's strict real cutoff is exactly Mathlib's
+ natural prime cutoff at `ceil z`. -/
+@@ -346,14 +359,7 @@
+   congr 1
+   have hpz : (p : ℝ) < z := (mem_siftingPrimes.mp hp).2.1
+   congr 1
+-  ext q
+-  rw [Finset.mem_filter, mem_siftingPrimes, mem_siftingPrimes]
+-  constructor
+-  · rintro ⟨⟨hqPrime, hqz, hqk⟩, hqp⟩
+-    exact ⟨hqPrime, by exact_mod_cast hqp, hqk⟩
+-  · rintro ⟨hqPrime, hqp, hqk⟩
+-    refine ⟨⟨hqPrime, ?_, hqk⟩, by exact_mod_cast hqp⟩
+-    exact hqp.trans hpz
++  exact siftingPrimes_filter_nat k hpz.le
+ 
+ /-- The paper's sifted cardinality `A_k(M; z)`. -/
+ noncomputable def siftedCount (M : Finset ℕ) (k : ℕ) (z : ℝ) : ℝ :=
+@@ -492,27 +498,13 @@
+       siftedCount M k z₁ -
+         ∑ p ∈ (siftingPrimes k z).filter (fun p : ℕ => z₁ ≤ (p : ℝ)),
+           conditionedSiftedCountOn M (siftingPrimes k z) p := by
+-  have hlow :
+-      (siftingPrimes k z).filter (fun p : ℕ => (p : ℝ) < z₁) =
+-        siftingPrimes k z₁ := by
+-    ext p
+-    simp only [Finset.mem_filter, mem_siftingPrimes]
+-    constructor
+-    · rintro ⟨⟨hp, -, hpk⟩, hpz₁⟩
+-      exact ⟨hp, hpz₁, hpk⟩
+-    · rintro ⟨hp, hpz₁, hpk⟩
+-      exact ⟨⟨hp, hpz₁.trans_le hz, hpk⟩, hpz₁⟩
++  have hlow := siftingPrimes_filter_real k hz
+   have hbelow (p : ℕ) (hp : p ∈ siftingPrimes k z₁) :
+       (siftingPrimes k z).filter (fun q => q < p) =
+         (siftingPrimes k z₁).filter (fun q => q < p) := by
+-    have hpz₁ : (p : ℝ) < z₁ := (mem_siftingPrimes.mp hp).2.1
+-    ext q
+-    simp only [Finset.mem_filter, mem_siftingPrimes]
+-    constructor
+-    · rintro ⟨⟨hq, -, hqk⟩, hqp⟩
+-      exact ⟨⟨hq, (by exact_mod_cast hqp : (q : ℝ) < p).trans hpz₁, hqk⟩, hqp⟩
+-    · rintro ⟨⟨hq, hqz₁, hqk⟩, hqp⟩
+-      exact ⟨⟨hq, hqz₁.trans_le hz, hqk⟩, hqp⟩
++    have hpz₁ := (mem_siftingPrimes.mp hp).2.1
++    rw [siftingPrimes_filter_nat k (hpz₁.trans_le hz).le,
++      siftingPrimes_filter_nat k hpz₁.le]
+   have hold :
+       ∑ p ∈ siftingPrimes k z₁,
+           conditionedSiftedCountOn M (siftingPrimes k z) p =
+@@ -721,17 +713,7 @@
+     conditionedSiftedCountOn M (siftingPrimes k z) p =
+       siftedCount (M.filter fun n => p ∣ n) k p := by
+   have hpz : (p : ℝ) < z := (mem_siftingPrimes.mp hp).2.1
+-  have hbelow :
+-      (siftingPrimes k z).filter (fun q => q < p) =
+-        siftingPrimes k p := by
+-    ext q
+-    simp only [Finset.mem_filter, mem_siftingPrimes]
+-    constructor
+-    · rintro ⟨⟨hqPrime, -, hqk⟩, hqp⟩
+-      exact ⟨hqPrime, by exact_mod_cast hqp, hqk⟩
+-    · rintro ⟨hqPrime, hqp, hqk⟩
+-      refine ⟨⟨hqPrime, hqp.trans hpz, hqk⟩, ?_⟩
+-      exact_mod_cast hqp
++  have hbelow := siftingPrimes_filter_nat k hpz.le
+   rw [conditionedSiftedCountOn, siftedCount, hbelow]
+   congr 1
+   apply congrArg Finset.card

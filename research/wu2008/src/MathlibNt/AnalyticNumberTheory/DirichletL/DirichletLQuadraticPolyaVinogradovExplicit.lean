@@ -325,20 +325,6 @@ theorem IsPrimitive.norm_sum_range_le_four_mul_sqrt_q_mul_one_add_log
     _ = 4 * Real.sqrt q * (1 + Real.log q) := by
       field_simp [ne_of_gt hqpos]
 
-/-- Integrated harmonic-tail bound from the explicit primitive prefix estimate. -/
-theorem IsPrimitive.norm_LFunction_one_sub_harmonic_sum_le_eight_mul_sqrt_q_mul_one_add_log_div
-    {χ : DirichletCharacter ℂ q} (hχ : χ.IsPrimitive) (hχne : χ ≠ 1)
-    (hq : 1 < q) {m : ℕ} (hm : 1 ≤ m) :
-    ‖χ.LFunction 1 - ∑ k ∈ range m, cpowWeight (1 : ℂ) k * χ k‖ ≤
-      8 * Real.sqrt q * (1 + Real.log q) / (m : ℝ) := by
-  have hprefix : ∀ N : ℕ, ‖∑ k ∈ range N, χ k‖ ≤ 4 * Real.sqrt q * (1 + Real.log q) := by
-    intro N
-    simpa using hχ.norm_sum_range_le_four_mul_sqrt_q_mul_one_add_log hq N
-  have htail :=
-    norm_LFunction_one_sub_harmonic_sum_le_of_prefix_bound
-      χ hχne (4 * Real.sqrt q * (1 + Real.log q)) hprefix hm
-  convert htail using 1
-  ring
 
 /-- Real quadratic truncation form of the same explicit harmonic-tail bound. -/
 theorem IsPrimitive.abs_LFunction_one_re_sub_quadraticHarmonicTruncation_le_eight_mul_sqrt_q_mul_one_add_log_div

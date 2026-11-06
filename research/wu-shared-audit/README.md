@@ -21,3 +21,5 @@ uses exact fractions. Lean checks remain independently necessary.
 `validation.json` binds the evidence. Kernel logs cover named modules over
 accepted imports; source/dependency receipts can reuse unchanged objects.
 See [the report](../../docs/WU_SHARED_CERTIFICATES.md) for scope and timings.
+
+The later [constructive Hf4 acceptance](../wu-hf4-constructive-audit/README.md) records the current installed totals and generator. This directory remains evidence for its historical snapshot.

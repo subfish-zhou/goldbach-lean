@@ -44,10 +44,6 @@ def directPrimitiveMean (a : ℤ → ℂ) (N Q : ℕ) : ℝ :=
   ∑ q ∈ Finset.Icc 1 Q, ((q : ℝ) / (q.totient : ℝ)) *
     ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ
 
-lemma directPrimitiveMean_nonneg (a : ℤ → ℂ) (N Q : ℕ) :
-    0 ≤ directPrimitiveMean a N Q := by
-  unfold directPrimitiveMean primitivePrefixAmplitude
-  positivity
 
 /-- The three genuine Vaughan means. -/
 def directVaughanTypeIMean (N Q u v : ℕ) : ℝ :=
@@ -289,92 +285,8 @@ def vaughanDirectPhysicalMajorant (N Q u : ℕ) (K logPay : ℝ) : ℝ :=
   K * logPay * ((N : ℝ) + (Q : ℝ) ^ 2 * Real.sqrt N +
     (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ))
 
-/-- Finite substitution of the two minimal analytic inputs.  The small lane and
-change-level correction remain explicit, so this theorem cannot be mistaken
-for Bombieri--Vinogradov. -/
-theorem direct_L1_vaughan_physical_assembly
-    (E : ℕ → ℝ) (N Q u v : ℕ) (K logPay : ℝ)
-    (hK : 0 ≤ K) (hlogPay : 0 ≤ logPay)
-    (hE : ∀ q ∈ Finset.Icc 1 Q, E q ≤ ((q.totient : ℝ)⁻¹) *
-      ∑ χ ∈ nonprincipalCharacters q,
-        nonprincipalPrefixAmplitude vonMangoldtIntegerCoeff N q χ)
-    (hI : VaughanDirectTypeIInput N Q u v K logPay)
-    (hII : VaughanDirectTypeIIInput N Q u v K logPay) :
-    (∑ q ∈ Finset.Icc 1 Q, E q) ≤
-      4 * conductorHarmonicFactor Q ^ 2 *
-        (2 * vaughanDirectPhysicalMajorant N Q u K logPay +
-          directVaughanSmallMean N Q v) +
-      2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := by
-  have hstart := residue_errors_le_directAllCharacterMean E N Q hE
-  have hcond := directAllCharacterMean_le_conductor vonMangoldtIntegerCoeff N Q
-  have htransport := direct_conductor_sum_le_primitive
-    vonMangoldtIntegerCoeff N Q
-  have hv := directPrimitiveMean_vaughan_le N Q u v
-  have hlanes :
-      directVaughanTypeIMean N Q u v + directVaughanTypeIIMean N Q u v ≤
-        2 * vaughanDirectPhysicalMajorant N Q u K logPay := by
-    unfold VaughanDirectTypeIInput at hI
-    have hIphysical : directVaughanTypeIMean N Q u v ≤
-        vaughanDirectPhysicalMajorant N Q u K logPay := by
-      refine hI.trans ?_
-      unfold vaughanDirectPhysicalMajorant
-      exact mul_le_mul_of_nonneg_left (le_add_of_nonneg_right (by positivity))
-        (mul_nonneg hK hlogPay)
-    calc
-      _ ≤ vaughanDirectPhysicalMajorant N Q u K logPay +
-          vaughanDirectPhysicalMajorant N Q u K logPay := add_le_add hIphysical hII
-      _ = _ := by ring
-  calc
-    _ ≤ directAllCharacterMean vonMangoldtIntegerCoeff N Q := hstart
-    _ ≤ 2 * (∑ d ∈ Finset.Icc 2 Q, directConductorWeight Q d *
-          ∑ ψ : PrimitiveCharacter d,
-            primitivePrefixAmplitude vonMangoldtIntegerCoeff N d ψ) +
-        2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := hcond
-    _ ≤ 2 * (conductorHarmonicFactor Q ^ 2 *
-          directPrimitiveMean vonMangoldtIntegerCoeff N Q) +
-        2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := by gcongr
-    _ ≤ 2 * (conductorHarmonicFactor Q ^ 2 *
-          (2 * (directVaughanTypeIMean N Q u v +
-            directVaughanTypeIIMean N Q u v + directVaughanSmallMean N Q v))) +
-        2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := by gcongr
-    _ ≤ 2 * (conductorHarmonicFactor Q ^ 2 *
-          (2 * (2 * vaughanDirectPhysicalMajorant N Q u K logPay +
-            directVaughanSmallMean N Q v))) +
-        2 * directConductorCorrectionMean vonMangoldtIntegerCoeff N Q := by gcongr
-    _ = _ := by ring
 
-/-- Pure cutoff algebra.  If `u+1 ≥ R²` and `N ≤ R¹⁴`, then the Type-II tail is
-at most `Q R¹³`; choosing `R=N^(1/14)` means `u≈N^(1/7)`. -/
-theorem vaughan_cutoff_fourteen_payment
-    (N Q u : ℕ) (R : ℝ) (hR : 0 < R)
-    (hu : R ^ 2 ≤ (u + 1 : ℕ)) (hN : (N : ℝ) ≤ R ^ 14) :
-    (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ) ≤ (Q : ℝ) * R ^ 13 := by
-  have hs : R ≤ Real.sqrt (u + 1 : ℕ) := by
-    rw [Real.le_sqrt (by positivity) (by positivity)]
-    simpa [sq] using hu
-  have hspos : 0 < Real.sqrt (u + 1 : ℕ) := Real.sqrt_pos.2 (by positivity)
-  have hQR : 0 ≤ (Q : ℝ) := by positivity
-  calc
-    (Q : ℝ) * N / Real.sqrt (u + 1 : ℕ)
-        ≤ (Q : ℝ) * (R ^ 14) / Real.sqrt (u + 1 : ℕ) := by gcongr
-    _ ≤ (Q : ℝ) * (R ^ 14) / R := by
-      exact div_le_div_of_nonneg_left (mul_nonneg hQR (by positivity)) hR hs
-    _ = (Q : ℝ) * R ^ 13 := by
-      field_simp
 
-/-- Log ledger: conductor regrouping contributes two powers.  If the direct
-Type-I/II theorem costs `log^C`, choosing `B ≥ A+C+2` pays all displayed logs
-in the usual cutoff `Q≤√N/log^B`.  This is exponent bookkeeping only. -/
-theorem vaughan_log_exponent_payment
-    (A C B : ℕ) (L : ℝ) (hL : 1 ≤ L) (hB : A + C + 2 ≤ B) :
-    L ^ (C + 2) / L ^ B ≤ 1 / L ^ A := by
-  have hpos : 0 < L ^ B := pow_pos (lt_of_lt_of_le zero_lt_one hL) _
-  have hApos : 0 < L ^ A := pow_pos (lt_of_lt_of_le zero_lt_one hL) _
-  rw [div_le_div_iff₀ hpos hApos]
-  calc
-    L ^ (C + 2) * L ^ A = L ^ (A + C + 2) := by ring_nf
-    _ ≤ L ^ B := pow_le_pow_right₀ hL hB
-    _ = 1 * L ^ B := by ring
 
 end
 

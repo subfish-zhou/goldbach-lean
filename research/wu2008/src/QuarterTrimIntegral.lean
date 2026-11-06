@@ -34,14 +34,6 @@ theorem triangle_coordinates {x y : ℝ} (h : triangle x y) :
   dsimp [top] at hy
   exact ⟨hx.1, hy.1, by linarith [hy.2]⟩
 
-theorem triangle_u_range {x y : ℝ} (h : triangle x y) :
-    2 ≤ u x y ∧ u x y ≤ 927 / 400 := by
-  obtain ⟨hx, hy, hz⟩ := triangle_coordinates h
-  constructor
-  · exact (le_div_iff₀ alpha_pos).2 (by linarith)
-  · apply (div_le_iff₀ alpha_pos).2
-    dsimp [alpha] at hx ⊢
-    linarith
 
 theorem kernel_bounds {p : ℝ → ℝ} {x y : ℝ} (h : triangle x y)
     (hp : 0 ≤ p (u x y) ∧ p (u x y) ≤ q) :

@@ -169,9 +169,6 @@ theorem gamma6_magnitude : (1/1000:ℝ) < Gamma6 := by
   rw [polynomial_payment_exact] at h
   linarith
 
-theorem replacement_increment : (225/1000000:ℝ) < (Gamma6-47/481250)/4 := by
-  have h := gamma6_magnitude
-  linarith
 
 end
 end Wu2008DoubleSieve.FullAdmissibleStrength

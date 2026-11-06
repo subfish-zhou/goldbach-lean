@@ -91,21 +91,5 @@ theorem actual_count_lower_full_coefficient {ε : ℝ} (hε : 0 < ε) :
         4 * ((MathlibNt.Wu2008DoubleSieve.wuPrimeComplements N).card : ℝ) :=
   actual_count_lower hε
 
-/-- The equivalent lower bound for the cardinality itself, with the same tail. -/
-theorem actual_count_lower_div_four {ε : ℝ} (hε : 0 < ε) :
-    ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      (classicalCoefficient - ε) * wuSingularSeries N * N /
-        (4 * log N ^ (2 : ℕ)) ≤
-          ((MathlibNt.Wu2008DoubleSieve.wuPrimeComplements N).card : ℝ) := by
-  obtain ⟨T, hT, hcount⟩ := actual_count_lower hε
-  refine ⟨T, hT, ?_⟩
-  intro N hN he
-  have h := hcount N hN he
-  have hid : (classicalCoefficient - ε) * wuSingularSeries N * N /
-      (4 * log N ^ (2 : ℕ)) =
-      ((classicalCoefficient - ε) * wuSingularSeries N * N / log N ^ (2 : ℕ)) / 4 := by
-    ring
-  rw [hid]
-  exact (div_le_iff₀ (by norm_num : (0 : ℝ) < 4)).2 (by linarith only [h])
 
 end Wu2008DoubleSieve.TruncatedElevenClassicalCountLower

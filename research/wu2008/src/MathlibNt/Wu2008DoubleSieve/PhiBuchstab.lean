@@ -102,28 +102,5 @@ theorem buchstab_shifted_parameter {Q q s t : ℝ}
   rw [log_div hQ0.ne' hq0.ne', sub_div, div_self hlogq.ne']
   constructor <;> linarith
 
-/-- For the source range `s>=2`, the new prime obeys the next squared
-prefix inequality at the *actual* level Q, not a larger surrogate level. -/
-theorem buchstab_next_squared_prefix {N d q : ℕ} {δ s t : ℝ}
-    (hd : 0 < d) (hQ : 1 < (N : ℝ) ^ (1 / 2 - δ) / d)
-    (hs : 2 ≤ s)
-    (hq : q ∈ primeWindow (d * N) (wuLocalCutoff N δ d t) (wuLocalCutoff N δ d s)) :
-    (d : ℝ) * (q : ℝ) ^ 2 < (N : ℝ) ^ (1 / 2 - δ) := by
-  have hs0 : 0 < s := by linarith
-  have hd0 : (0 : ℝ) < d := by exact_mod_cast hd
-  have hq0 : (0 : ℝ) < q := by exact_mod_cast (mem_primeWindow.mp hq).1.pos
-  have hz0 : 0 ≤ wuLocalCutoff N δ d s := rpow_nonneg (by linarith) _
-  have hexp : (1 / s) * 2 ≤ 1 := by
-    have := (div_le_one hs0).mpr hs
-    simpa [div_eq_mul_inv, mul_comm] using this
-  have hzsq : (wuLocalCutoff N δ d s) ^ 2 ≤ (N : ℝ) ^ (1 / 2 - δ) / d := by
-    change (((N : ℝ) ^ (1 / 2 - δ) / d) ^ (1 / s)) ^ 2 ≤ _
-    rw [← rpow_two, ← rpow_mul (by linarith : 0 ≤ (N : ℝ) ^ (1 / 2 - δ) / d)]
-    simpa only [rpow_one] using rpow_le_rpow_of_exponent_le hQ.le hexp
-  have hqcut := (mem_primeWindow.mp hq).2.2.2
-  have hqsq : (q : ℝ) ^ 2 < (N : ℝ) ^ (1 / 2 - δ) / d := by
-    nlinarith
-  have := (lt_div_iff₀ hd0).mp hqsq
-  nlinarith
 
 end Wu2008DoubleSieve

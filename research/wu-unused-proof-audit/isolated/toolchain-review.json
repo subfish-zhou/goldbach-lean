@@ -1,0 +1,21 @@
+{
+  "status": "ACTUAL_COMPILER_CHECKER_INIT_HASHES_AND_TEN_PACKAGE_REVISIONS_MATCH_ACCEPTED_BASELINE",
+  "bindings": {
+    "/tmp/wu-structural-full-probe-v7/full/plan.json": "04d9a31438198668bfec595f9949f2e1e32e9aef7dc425f051c99d8419fa1410",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker": "ed46f21c763051c26f89481096cbaaf5db9665d674d602e3daf3391613ba0e6a",
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/lib/lean/Init.olean": "1e95ecbedde5d49a3e6550ec04f0d4176245196093254e26015c4b5f5a5844fd"
+  },
+  "package_revisions": {
+    "Qq": "ee41917ae11d38479fb8fb24745f7ca4bf0a784d",
+    "aesop": "57d3325be72a842920813bcb40f96a6f7393c185",
+    "proofwidgets": "b1436dc749e722c9920036b52cdc43b3451d0b69",
+    "importGraph": "18a90119a5d316358fde6c86e0ca24e59212e32c",
+    "LeanSearchClient": "0498c7c070c143a3bf7379f4d99a2c63bb9d9715",
+    "plausible": "b1c4a69a7e247ab7df20460212001673d74f08c0",
+    "batteries": "41bd267b3f6b7252f6676af46d4ffc6783b64de9",
+    "Cli": "da07ca808b6718cb2aed14dba154e5a08b8f8ecf",
+    "mathlib": "e4c91783ca8e6a7c693ae624ade32fd22d4e43c1",
+    "LeanArchitect": "78dd66840d3efe8c824c699fc03381cec817c271"
+  }
+}

@@ -5,14 +5,6 @@ namespace Wu2008DoubleSieve
 open Finset Real
 open scoped Classical
 
-/-- Literal term five of `finiteElevenExpression` specialized to the original sieve.
-The larger prime is the outer index, with multiplicity one and no symmetry factor. -/
-theorem fifthPair_count_literal (N : ℕ) :
-    fifthPairCount N =
-      ∑ q ∈ primeWindow N ((N : ℝ)^truncatedSixthLowerAlpha)
-        ((N : ℝ)^truncatedSixthLowerBeta),
-        ∑ p ∈ primeWindow N ((N : ℝ)^truncatedSixthLowerAlpha) (q : ℝ),
-          sieveCount N (p*q) N ((N : ℝ)^truncatedSixthLowerAlpha) := rfl
 
 /-- Actual positive terms 1, 2, 5 and the retained sixth, with weights 3, 1, 1, 1.
 Both existing producers receive epsilon/2 before one common maximum threshold.

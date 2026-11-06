@@ -52,29 +52,6 @@ private lemma log_e_mul_pos {s : ℝ} (hs : 3 ≤ s) :
   rw [Real.log_mul (Real.exp_ne_zero 1) hsne, Real.log_exp]
   linarith [Real.log_nonneg hs1]
 
-/-- Cutoff-aware Lemma 10.29, derived directly from the honest Lemma-10.28
-majorant.  No adjacent-value estimate is assumed. -/
-theorem unitShift_of_cutoffMajorant
-    {R : ℝ → ℝ} {β s : ℝ} (hDDE : Section10DDEApparatus R β)
-    (Q : Lemma1028CutoffMajorant R) (hβ : β ≤ 3)
-    (hs : Q.cutoff ≤ s) :
-    s * Real.log (Real.exp 1 * s) * R s ≤ Q.A * R (s - 1) := by
-  have hs4 : 4 ≤ s := Q.four_le_cutoff.trans hs
-  have hs0 : 0 < s := by linarith
-  have hR : 0 < R s := hDDE.positive s (by linarith)
-  have hmaj := Q.majorizes_log s hs
-  have henv := Q.envelope_slope_nonpos s hs
-  have hscaled :
-      s * ((1 / Q.A) * Real.log (Real.exp 1 * s)) * R s ≤ R (s - 1) := by
-    have hm := mul_le_mul_of_nonneg_left hmaj hs0.le
-    have hm' := mul_le_mul_of_nonneg_right hm hR.le
-    nlinarith
-  have hA : 0 < Q.A := zero_lt_one.trans_le Q.one_le_A
-  calc
-    s * Real.log (Real.exp 1 * s) * R s =
-        Q.A * (s * ((1 / Q.A) * Real.log (Real.exp 1 * s)) * R s) := by
-          field_simp [ne_of_gt hA]
-    _ ≤ Q.A * R (s - 1) := mul_le_mul_of_nonneg_left hscaled hA.le
 
 /-- The exact additional bridge/numerical fact required to turn the cutoff
 majorant into the source-range ratio.  It is kept visible rather than hidden in
@@ -88,17 +65,6 @@ structure CrossSignCutoffTransport
   ratioOnSource : ∃ M : ℝ,
     Proposition131MovingDelayedCurrentRatioOnSource H sign d M
 
-/-- Exact adapter to the existing certificate theorem.  The extra premise is
-displayed deliberately: it is precisely the erroneous global-in-`t` extension
-which cannot follow from a moving-source cutoff estimate. -/
-theorem movingCertificate_of_globalRatioExtension
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H)
-    (sign : ErrorSign) {d : ℝ}
-    (Q : Lemma1028CutoffMajorant (section13_bridgeAtThree hH sign).Qhat)
-    (hglobal : Proposition131MovingDelayedCurrentRatio H sign d Q.cutoff) :
-    MovingDDEAsymptoticCertificate H sign d Q.cutoff :=
-  movingDDEAsymptoticCertificate_of_proposition131_ratio
-    hH.toSection13HatContract sign hglobal
 
 /-- Exact status ledger.  The honest cutoff majorant closes the cutoff-aware
 unit shift.  The current APIs still require (i) repair of the moving-ratio

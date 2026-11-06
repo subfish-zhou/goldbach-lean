@@ -164,17 +164,5 @@ theorem classical_mask_upper {S U : ℝ} (hcap : CapAdmissible S U) (k : ℕ) (_
   exact hfinite.trans (add_le_add le_rfl
     ((le_abs_self _).trans (hrem N hNR i Δ V hbox X hX (classicalCutoff S N δ))))
 
-/-- Explicit full-mask consumer of the unconditional count producer. -/
-theorem classical_full_upper {S U : ℝ} (hcap : CapAdmissible S U) (k : ℕ) (hk : 1 ≤ k) {δ η ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) (hη : 0 < η) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ i : ℕ, ∀ Δ : ℝ, ∀ V : Fin i → ℝ, wuSourceBox k δ N i Δ V →
-        fixedCount S N δ (convolutionWuWindows N Δ V)
-            (capLabels S U N δ (convolutionWuWindows N Δ V)) ≤
-          (1 + η) ^ 2 * gamma5ClassicalMainMass N δ (convolutionWuWindows N Δ V)
-            (capLabels S U N δ (convolutionWuWindows N Δ V)) +
-          ε * boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
-  obtain ⟨T, hT, h⟩ := classical_mask_upper hcap k hk hδ hδhi hη hε
-  exact ⟨T, hT, fun N hN he i Δ V hb => h N hN he i Δ V hb _ (Subset.refl _)⟩
 
 end Wu2008DoubleSieve.MotherPair

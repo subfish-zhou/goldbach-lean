@@ -1,0 +1,17 @@
+{
+  "status": "ACTUAL_RUNNING_BUILD_CORRECTLY_REJECTED",
+  "actual_exit_code": 1,
+  "expected_exit_code": 1,
+  "command": [
+    "python3",
+    "/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/audit_completed_batch.py",
+    "--run",
+    "/tmp/wu-shared-proof-batch-v1/run-20261028-01",
+    "--output",
+    "/tmp/wu-shared-proof-batch-v1/run-20261028-01/must-not-exist-context-1793226009672264950.json"
+  ],
+  "checker_sha256": "cc5bb20a59bace44cae584e69c4bf9f19c24bfb87bc3c41a372d6eea50e35a08",
+  "stderr": "Traceback (most recent call last):\n  File \"/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/audit_completed_batch.py\", line 148, in <module>\n    main()\n  File \"/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/audit_completed_batch.py\", line 142, in main\n    result = audit(args.run.resolve(), baseline)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/azureuser/goldbach-lean/research/wu-proof-compression-candidates/audit_completed_batch.py\", line 30, in audit\n    raise ValueError(\"Build is not terminal and fully passed; no context acceptance\")\nValueError: Build is not terminal and fully passed; no context acceptance\n",
+  "no_success_output_written": true,
+  "build_pid_confirmed_live": 1964797
+}

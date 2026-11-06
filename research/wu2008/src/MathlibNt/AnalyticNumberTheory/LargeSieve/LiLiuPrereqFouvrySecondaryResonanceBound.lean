@@ -35,12 +35,6 @@ def wGramSecondaryDyadicMean (ε C : ℝ) (a : ℤ) (R S : ℝ)
       (iv3SecondaryNumerator K.1.2.1 v.2.1.1 v.2.2.1 a
         v.2.1.2.2).natAbs.divisors.card : ℕ) : ℝ))
 
-theorem wGramSecondaryDyadicMean_nonneg {C : ℝ} (hC : 0 ≤ C)
-    (ε : ℝ) (a : ℤ) (R S : ℝ) (K : WExtractedKey)
-    (j cap : Fin 5 → ℕ) (v : WGramSecondaryBase) :
-    0 ≤ wGramSecondaryDyadicMean ε C a R S K j cap v := by
-  unfold wGramSecondaryDyadicMean
-  positivity
 
 /-- Eligibility comes from an occupied label. No positivity or nonzero
 coefficient is imposed on unoccupied bases, and no mean in `n` is used. -/
@@ -71,25 +65,5 @@ theorem wGramSecondaryFiber_cost_le_mean
         wGramFouvryCost_secondary_sum hε hC a R S M Z K j cap hn hs hs' hsec hl
           (2 ^ j 3 - 1) (2 ^ (j 3 + 1) - 1)
 
-/-- The original secondary aggregate is replaced by a proved mean. Every
-remaining fixed-data multiplicity and the exact absolute signed weight remain
-visible in the outer sum; this is not a globally normalized C.2 estimate. -/
-theorem wGramSecondaryLabels_weighted_cost_le
-    {ε C : ℝ} (hε : 0 ≤ ε) (hC : 0 ≤ C)
-    {N : Finset ℕ} (hN : ∀ n ∈ N, 0 < n)
-    (a : ℤ) (x η R S M Z : ℝ) (K : WExtractedKey) (b : ℕ)
-    (j cap : Fin 5 → ℕ) (positive : Bool) (c : Finset (ℕ × ℕ)) (β ζ : ℕ → ℝ) :
-    (∑ L ∈ wGramSecondaryLabels K a (wCoprimeFiber x N S
-      (wGramPrefix N a x η R S M Z K b j cap positive) c),
-      |wGramWeight K β ζ L| * wGramFouvryCost ε C a R S M Z K j cap L) ≤
-    ∑ v ∈ wGramSecondaryBases (wGramSecondaryLabels K a (wCoprimeFiber x N S
-      (wGramPrefix N a x η R S M Z K b j cap positive) c)),
-      |wGramWeight K β ζ (wGramSecondaryJoin v 0)| *
-        wGramSecondaryDyadicMean ε C a R S K j cap v := by
-  rw [sum_wGramSecondaryFiber_weight]
-  apply sum_le_sum
-  intro v hv
-  exact mul_le_mul_of_nonneg_left (wGramSecondaryFiber_cost_le_mean hε hC hN hv)
-    (abs_nonneg _)
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

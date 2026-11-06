@@ -33,19 +33,7 @@ noncomputable def goldbachWeightUpperMiddle
           (fun s : ℕ => b < (s : ℝ)),
         literalH A (N * r) (r * s * t) s
 
-theorem goldbachWeightLowMiddle_nonneg
-    (A : Finset ℕ) (N : ℕ) (z b y : ℝ) :
-    0 ≤ goldbachWeightLowMiddle A N z b y := by
-  unfold goldbachWeightLowMiddle
-  exact Finset.sum_nonneg fun t _ => Finset.sum_nonneg fun r _ =>
-    Finset.sum_nonneg fun s _ => literalH_nonneg A (N * r) (r * s * t) s
 
-theorem goldbachWeightUpperMiddle_nonneg
-    (A : Finset ℕ) (N : ℕ) (z b y : ℝ) :
-    0 ≤ goldbachWeightUpperMiddle A N z b y := by
-  unfold goldbachWeightUpperMiddle
-  exact Finset.sum_nonneg fun t _ => Finset.sum_nonneg fun r _ =>
-    Finset.sum_nonneg fun s _ => literalH_nonneg A (N * r) (r * s * t) s
 
 private theorem goldbachWeightTriplePartition_closedPrimes_eq_filter_ge
     (N : ℕ) (z y : ℝ) {r : ℕ}

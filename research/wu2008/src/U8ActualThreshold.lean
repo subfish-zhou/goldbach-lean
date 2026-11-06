@@ -72,8 +72,6 @@ theorem weight_bounds : weightLower ≤ weightMass ∧ weightMass ≤ weightUppe
   dsimp [weightLower,weightMass,weightUpper,b]
   constructor <;> linarith only [hl,hu]
 
-theorem weightLower_pos : 0 < weightLower := by
-  norm_num [weightLower,ratio,a,b,lowerLog]
 
 theorem endpoint_log_bounds {t : ℝ} (ht : t ∈ Icc a b) :
     lowerLog (2-3*b) ≤ log (2-3*t) ∧ log (2-3*t) ≤ V (2-3*a) := by
@@ -115,10 +113,6 @@ theorem exact_weight_gain_bounds :
   unfold gainLower gainUpper
   constructor <;> linarith only [hl,hu,hwl,hwu]
 
-/-- This is a strict improvement of the prior certificate, not a target claim. -/
-theorem gain_strictly_tighter :
-    (70/17 : ℝ)*(b-a)^2 < gainLower := by
-  norm_num [gainLower,weightLower,ratio,a,b,lowerLog]
 
 /-- The sixth correction is present once and only once. -/
 theorem actual_identity : U8CanonicalMother.improvedCoefficient =
@@ -155,38 +149,13 @@ theorem actual_target_residual :
   rw [residual_identity]
   linarith only [ht,hl]
 
-/-- A symbolic upper on the actual coefficient retains Gamma6, not a fake cap. -/
-theorem actual_upper_retaining_gamma : U8CanonicalMother.improvedCoefficient <
-    FifthReciprocalAffineUpper.upperRational+
-      (FullAdmissibleSeed.Gamma6-47/481250)/4+gainUpper := by
-  have ho := FifthReciprocalAffineUpper.actual_upper
-  have hg := exact_weight_gain_bounds.2
-  rw [actual_identity]
-  linarith only [ho,hg]
 
-/-- Literal ordinary-P2 consequence of the sharper coefficient lower bound. -/
-theorem sharper_ordinary_P2 (η : ℝ) (hη : 0 < η) :
-    ∃ δ : ℝ, 0 < δ ∧ δ ≤ 1/100 ∧
-      ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-        (lowerCoefficient-η)*U8CanonicalMother.M N ≤
-          ((Finset.filter (fun p => Nat.Prime p ∧ 0 < N-p ∧
-            ArithmeticFunction.cardFactors (N-p) ≤ 2) (Finset.range (N+1))).card : ℝ) := by
-  obtain ⟨δ,hδ,hδhi,T,hT,h⟩ := U8CanonicalMother.improved_ordinary_P2 η hη
-  refine ⟨δ,hδ,hδhi,T,hT,?_⟩
-  intro N hN he
-  have hs : 0 ≤ U8CanonicalMother.M N :=
-    (HighSixPhase6.original_scale_positive (hT.trans hN)).le
-  exact (mul_le_mul_of_nonneg_right (sub_le_sub_right actual_lower.le η) hs).trans (h N hN he)
 
 /-- Exact fixed-rational arithmetic; no numerical evaluation of log or integrals. -/
 theorem gainLower_exact : gainLower =
     118807398821384/25822353100838967 := by
   norm_num [gainLower,weightLower,ratio,a,b,lowerLog]
 
-theorem gainLower_bounds : (4600/1000000 : ℝ) < gainLower ∧
-    gainLower < 4601/1000000 := by
-  rw [gainLower_exact]
-  norm_num
 
 theorem coefficient_certificate_bounds : (827883/1000000 : ℝ) < lowerCoefficient ∧
     lowerCoefficient < 827884/1000000 := by
@@ -208,14 +177,6 @@ theorem certificate_below_target : lowerCoefficient < 8*log (5000/4469) := by
   have hc : (827884/1000000 : ℝ) < 8*lowerLog (5000/4469) := by norm_num [lowerLog]
   exact coefficient_certificate_bounds.2.trans (hc.trans_le (by linarith only [hl]))
 
-/-- Precisely the remaining mathematical comparison; neither direction is asserted. -/
-theorem target_iff_old_gap :
-    8*log (5000/4469) < U8CanonicalMother.improvedCoefficient ↔
-    8*log (5000/4469)-JointHMotherPayment.unroundedCoefficient <
-      (FullAdmissibleSeed.Gamma6-47/481250)/4+
-      2*(U8CanonicalMother.L-U8CanonicalMother.I) := by
-  rw [actual_identity]
-  constructor <;> intro h <;> linarith only [h]
 
 /-- A strict, eta-free ordinary-P2 lower bound, still below the requested target. -/
 theorem strict_ordinary_P2 :

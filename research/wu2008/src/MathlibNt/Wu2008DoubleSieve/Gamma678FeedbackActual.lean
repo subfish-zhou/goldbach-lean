@@ -88,32 +88,11 @@ theorem actual8_eq {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
       wuImprovementLimit true δ ((1 - t - u) / t) / (t * u * (1 - t - u))) =
       ∫ v in (1 : ℝ)..3, wuImprovementLimit true δ v * K8 v := actual_eq .eight hδ hδhi
 
-theorem actual6_inner_integrable {δ t : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2)
-    (ht : t ∈ Icc a b) :
-    IntervalIntegrable (fun u => wuImprovementLimit true δ (S * (1 - t - u)) /
-      (t * u * (1 - t - u))) volume c f := actual_inner_integrable .six hδ hδhi ht
 
-theorem actual7_inner_integrable {δ t : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2)
-    (ht : t ∈ Icc a b) :
-    IntervalIntegrable (fun u => wuImprovementLimit true δ ((1 - t - u) / t) /
-      (t * u * (1 - t - u))) volume t b := actual_inner_integrable .seven hδ hδhi ht
 
-theorem actual8_inner_integrable {δ t : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2)
-    (ht : t ∈ Icc a b) :
-    IntervalIntegrable (fun u => wuImprovementLimit true δ ((1 - t - u) / t) /
-      (t * u * (1 - t - u))) volume b c := actual_inner_integrable .eight hδ hδhi ht
 
-theorem actual6_outer_integrable {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    IntervalIntegrable (fun t => ∫ u in c..f, wuImprovementLimit true δ (S * (1 - t - u)) /
-      (t * u * (1 - t - u))) volume a b := actual_outer_integrable .six hδ hδhi
 
-theorem actual7_outer_integrable {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    IntervalIntegrable (fun t => ∫ u in t..b, wuImprovementLimit true δ ((1 - t - u) / t) /
-      (t * u * (1 - t - u))) volume a b := actual_outer_integrable .seven hδ hδhi
 
-theorem actual8_outer_integrable {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    IntervalIntegrable (fun t => ∫ u in b..c, wuImprovementLimit true δ ((1 - t - u) / t) /
-      (t * u * (1 - t - u))) volume a b := actual_outer_integrable .eight hδ hδhi
 
 theorem actual6_rhs_integrable {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
     IntervalIntegrable (fun v => wuImprovementLimit true δ v * K6 v) volume 1 3 :=

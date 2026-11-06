@@ -7,8 +7,6 @@ noncomputable section
 /-- The literal first-functional inequality weights its integral by one half. -/
 def feedbackRho : ℝ := (289/5200)+(1/2)*(76979/393263)
 
-theorem feedbackRho_eq : feedbackRho = (24138339/157305200 : ℝ) := by
-  norm_num [feedbackRho]
 
 theorem feedbackRho_bounds : 0 < feedbackRho ∧ feedbackRho < 1 := by
   norm_num [feedbackRho]

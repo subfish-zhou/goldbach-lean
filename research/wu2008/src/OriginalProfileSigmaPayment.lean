@@ -110,13 +110,7 @@ theorem aFiniteLower_le_aProfile {z : Fin 9 → ℝ} (hz : ∀ k,0≤z k) :
     aFiniteLower z ≤ aProfile (nineProfile z) :=
   (aFiniteLower_le_aLower hz).trans (aLower_le_aProfile hz)
 
-theorem original_aLower_paid :
-    aLower NineFeedbackStrength.originalH ≤ aProfile (nineProfile NineFeedbackStrength.originalH) :=
-  aLower_le_aProfile CoupledIntegralRecovery.originalH_nonneg
 
-theorem original_aFiniteLower_paid :
-    aFiniteLower NineFeedbackStrength.originalH ≤ aProfile (nineProfile NineFeedbackStrength.originalH) :=
-  aFiniteLower_le_aProfile CoupledIntegralRecovery.originalH_nonneg
 
 end
 end OriginalProfileSigmaPayment

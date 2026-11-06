@@ -108,23 +108,5 @@ theorem truncatedSixthLower_normalized_masked {δ η A : ℝ}
   exact (sub_le_sub_right (hT1 N ((le_max_right _ _).trans hN) he S hS) _).trans
     (hT N ((le_max_left _ _).trans hN) he S hS)
 
-theorem truncatedSixthLower_normalized_actual_mass {δ η A : ℝ}
-    (hδ : 0 < δ) (hη : 0 < η) (hηhi : η ≤ 1) (hA : 0 < A) :
-    ∃ C : ℝ, 0 < C ∧ ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      truncatedSixthLowerNormalizedMain N δ η (truncatedSixthLowerPairs N δ) -
-        C * (N : ℝ) / log N ^ A ≤
-      (truncatedSixthMass N ((N : ℝ) ^ truncatedSixthLowerAlpha)
-        ((N : ℝ) ^ truncatedSixthLowerBeta) ((N : ℝ) ^ truncatedSixthLowerSigma)
-        ((N : ℝ) ^ truncatedSixthLowerLambda) : ℝ) := by
-  obtain ⟨C, hC, T, hT, h⟩ := truncatedSixthLower_normalized_masked hδ hη hηhi hA
-  refine ⟨C, hC, T, hT, ?_⟩
-  intro N hN he
-  apply (h N hN he _ subset_rfl).trans
-  unfold truncatedSixthMass
-  push_cast
-  apply sum_le_sum_of_subset_of_nonneg (truncatedSixthLower_pairs_subset (by omega) hδ)
-  intro t _ _
-  exact_mod_cast (show (0 : ℤ) ≤ sieveCount N (t.1 * t.2) N
-    ((N : ℝ) ^ truncatedSixthLowerAlpha) from Int.natCast_nonneg _)
 
 end Wu2008DoubleSieve

@@ -56,9 +56,6 @@ theorem newBalance_gt_two : (2 : ℝ) < newBalance := by
   rw [newBalance_eq_exact]
   norm_num [exactBalance]
 
-theorem complete_coefficient_gt_two :
-    (2 : ℝ) < TruncatedElevenClassicalCountLower.classicalCoefficient :=
-  newBalance_gt_two.trans complete_coefficient_gt_newBalance
 
 /-- This payment is not the classical benchmark. -/
 theorem newBalance_below_benchmark : newBalance < (899/250 : ℝ) := by

@@ -234,20 +234,6 @@ theorem weighted_primitive_vaughanTypeILong_unconditional
     b N Q u v (108 * B ^ 2) 5 hQ
       (vaughanTypeILongCoeffMomentBound_of_bounded b N u v B hB)
 
-/-- The same unconditional result with the left side written as the exact
-short-times-long rearranged Type-I prefixes. -/
-theorem weighted_primitive_vaughanTypeILong_rearranged_unconditional
-    (b : ℤ → ℂ) (N Q u v : ℕ) (B : ℝ) (hQ : 0 < Q)
-    (hB : ∀ n ∈ Finset.Icc (1 : ℤ) N, ‖b n‖ ≤ B) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q,
-          vaughanTypeILongPrefixMaxSquare b N u v q χ) ≤
-      (((Nat.log2 N + 1 : ℕ) : ℝ) ^ 2) *
-        primitiveLargeSieveConstant N Q *
-          ((108 * B ^ 2) * (N : ℝ) * Real.log (N + 1 : ℕ) ^ 5) := by
-  simpa only [← primitiveCharacterPrefixMaxSquare_typeI_eq_long] using
-    weighted_primitive_vaughanTypeILong_unconditional b N Q u v B hQ hB
 
 end
 

@@ -51,9 +51,6 @@ def lowerNumerator : ℕ → ℕ
 
 def lowerLower (j : ℕ) : ℝ := (lowerNumerator j:ℝ)/1000000000000
 
-theorem lowerLower_nonneg (j : ℕ) : 0 ≤ lowerLower j := by
-  unfold lowerLower
-  positivity
 
 theorem transferCell_paid {i : ℕ} (hi : 6 ≤ i) (hi29 : i ≤ 29) :
     (transferCellNumerator i:ℝ)/1000000000000 ≤

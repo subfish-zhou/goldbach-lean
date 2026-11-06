@@ -1,0 +1,25 @@
+{
+  "status": "UNCOMPILED_IMPORT_GRAPH_MODEL_ONLY_NOT_INSTALLED",
+  "module": "MathlibNt.SieveTheory.Arithmetic.MertensTheorem",
+  "base_manifest_sha256": "2f4b834f8e1c357b502218784e3e926d142e439a443817a143f821a53406ffc6",
+  "before_sha256": "5b682b058e02e7bb40631b5fb9d90b4727ae6ebfb2733c58011c73cec348ee5c",
+  "after_sha256": "f3a4df5f452cfe09485ba489dfea8d61b77345fc9992b76531dcabbbccdada15",
+  "narrow_imports": [
+    "AnalyticNumberTheory.Mertens.Theorems",
+    "AnalyticNumberTheory.PrimeDistribution.PrimeNumberTheorem"
+  ],
+  "mertens_module_closure_before": 63,
+  "mertens_module_closure_proposed": 32,
+  "pan_reverse_closure_before": 3297,
+  "pan_reverse_closure_proposed": 3042,
+  "final_theorem_module_closure_before": 3764,
+  "final_theorem_module_closure_proposed": 3764,
+  "mathematical_declarations_changed": false,
+  "claimed_proof_line_savings": 0,
+  "required_checks": [
+    "Compile Mertens with the narrow imports.",
+    "Check affected source consumers for implicit reexport dependencies.",
+    "Compare retained types and definition values, including global instance selection.",
+    "Validate actual imports and affected downstream compilation."
+  ]
+}

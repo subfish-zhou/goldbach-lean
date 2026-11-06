@@ -79,8 +79,5 @@ theorem endpointTerminal_le_actual :
   rw [endpointTerminal_eq_rational]
   exact rationalTerminal_le_actual
 
-theorem old_terminal_le_endpoint : CorrectionD0Joint.terminal ≤ endpointTerminal := by
-  rw [endpointTerminal_eq_rational]
-  exact old_terminal_le_rational
 
 end SigmaActualBlockSeparable

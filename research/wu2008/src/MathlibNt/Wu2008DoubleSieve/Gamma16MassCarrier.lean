@@ -50,29 +50,6 @@ theorem gamma16_mass_prime_bounds {R : ℝ} (hR : 0 ≤ R) {p : Gamma16MassTuple
     by exact_mod_cast h2'.2.1, by exact_mod_cast h3'.2.1,
     by exact_mod_cast h3'.2.2, h4'.2.2⟩
 
-theorem gamma16_mass_unit_iff {N d : ℕ} {p : Gamma16MassTuple} {R : ℝ}
-    (hd : 0 < d) (hR : 0 ≤ R) (hp : p ∈ gamma16MassPrimes R) :
-    1 ∈ gamma16MassNFibre N d p ↔ 1 ≤ gamma16MassScale N d p := by
-  have h := gamma16_mass_prime_bounds hR hp
-  have hprod : 0 < d * gamma16MassProduct p := by
-    dsimp [gamma16MassProduct]
-    exact Nat.mul_pos hd (Nat.mul_pos (Nat.mul_pos (Nat.mul_pos h.2.1.pos h.2.2.1.pos)
-      h.2.2.2.1.pos) h.1.pos)
-  have hprodR : (0 : ℝ) < (d : ℝ) * p.2.1 * p.2.2.1 * p.2.2.2 * p.1 := by
-    exact_mod_cast (show 0 < d * p.2.1 * p.2.2.1 * p.2.2.2 * p.1 by
-      simpa only [gamma16MassProduct, mul_assoc] using hprod)
-  have hsize : 1 ≤ gamma16MassScale N d p ↔ d * gamma16MassProduct p ≤ N := by
-    rw [gamma16MassScale, le_div_iff₀ hprodR, one_mul]
-    norm_cast
-    simp only [gamma16MassProduct, mul_assoc]
-  rw [hsize]
-  constructor
-  · intro h
-    simpa only [mul_one] using (mem_filter.mp h).2.2.1
-  · intro hs
-    refine mem_filter.mpr ⟨mem_range.mpr (by omega), by decide, by simpa only [mul_one] using hs, ?_⟩
-    intro q hq _ _ _ hq1
-    exact hq.not_dvd_one hq1
 
 theorem gamma16_mass_fibre_rough {N d : ℕ} {p : Gamma16MassTuple} {R : ℝ}
     (hd : 0 < d) (hR : 0 ≤ R) (hp : p ∈ gamma16MassPrimes R) :

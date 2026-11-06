@@ -26,12 +26,6 @@ private theorem oddPrime_indicator (p : ℕ) :
     change ¬(p.Prime ∧ 2 < p) at hp
     simp [liuBaseDeviation, hp]
 
-theorem multipliable_wu_universal_product :
-    Multipliable (fun p : OddPrimes => 1 - 1 / ((p.val : ℝ) - 1) ^ 2) := by
-  apply (multipliable_subtype_iff_mulIndicator
-    (f := fun q : ℕ => (1 : ℝ) - 1 / ((q : ℝ) - 1) ^ 2) (s := OddPrimes)).mpr
-  convert multipliable_one_add_liuBaseDeviation using 1
-  exact funext oddPrime_indicator
 
 theorem wu_universal_product_eq_liu :
     (∏' p : OddPrimes, (1 - 1 / ((p.val : ℝ) - 1) ^ 2)) = liuUniversalProduct := by

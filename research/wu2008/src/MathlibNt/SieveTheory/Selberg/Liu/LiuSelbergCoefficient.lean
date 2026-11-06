@@ -40,42 +40,7 @@ theorem SelbergWeights.liuSelbergLambdaAdmissible
   · by_contra hcutoff
     exact hd (SW.lambda_support d (Or.inl (lt_of_not_ge hcutoff)))
 
-/-- The source normalization is separate from admissibility because the latter
-is exactly the support-and-size interface needed by the remainder argument. -/
-theorem SelbergWeights.lambda_one_source
-    {N : ℕ} {epsilon : ℝ} (SW : SelbergWeights N epsilon) :
-    SW.lambda 1 = 1 :=
-  SW.lambda_one
 
-/-- Restricting the legacy divisor quadratic sum to Liu's filtered source
-carrier is exact.  Terms outside the cutoff vanish by the legacy support
-condition; they are not silently discarded. -/
-theorem SelbergWeights.divisors_quadraticSum_eq_liuSelbergCoefficientFactor
-    {N : ℕ} {epsilon : ℝ} (SW : SelbergWeights N epsilon) :
-    (selbergQ N epsilon).divisors.sum (fun d1 =>
-      (selbergQ N epsilon).divisors.sum (fun d2 =>
-        SW.lambda d1 * SW.lambda d2 / Nat.totient (Nat.lcm d1 d2))) =
-      liuSelbergCoefficientFactor N epsilon SW.lambda := by
-  classical
-  rw [selbergQ_eq_liuPaperQModulus]
-  unfold liuSelbergCoefficientFactor liuSelbergLambdaSourceCarrier
-  simp_rw [Finset.sum_filter]
-  apply Finset.sum_congr rfl
-  intro d1 hd1
-  by_cases h1 : d1 ≤ paperQSourceCutoff N epsilon
-  · simp only [h1, if_true]
-    apply Finset.sum_congr rfl
-    intro d2 hd2
-    by_cases h2 : d2 ≤ paperQSourceCutoff N epsilon
-    · simp [h2]
-    · have hzero : SW.lambda d2 = 0 := by
-        apply SW.lambda_support d2
-        exact Or.inl (lt_of_not_ge h2)
-      simp [h2, hzero]
-  · have hzero : SW.lambda d1 = 0 := by
-      apply SW.lambda_support d1
-      exact Or.inl (lt_of_not_ge h1)
-    simp [h1, hzero]
 
 /-- The actual sharp input missing from the legacy development: for every
 sufficiently large even source parameter whose cutoff contains `1`, an optimized

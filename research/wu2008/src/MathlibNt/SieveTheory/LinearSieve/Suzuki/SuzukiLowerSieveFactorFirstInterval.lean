@@ -67,29 +67,6 @@ theorem suzukiLayer_one_one_two {s : ℝ} (hs₀ : 0 < s) (hs₃ : s ≤ 3) :
   norm_num [dPowDensity, intervalIntegral.integral_const, div_eq_mul_inv]
   field_simp
 
-/-- Direct specialization of (9.2) for the first even layer. -/
-theorem suzukiLayer_two_one_two {s : ℝ} (hs₂ : 2 ≤ s) (hs₄ : s ≤ 4) :
-    suzukiLayer 1 2 2 s =
-      s⁻¹ * ∫ t in s..(4 : ℝ), (4 - t) / (t - 1) := by
-  rw [suzukiLayer_succ_succ 1 2 s 0]
-  have hlower : recursionLower 2 s 2 = s := by
-    unfold recursionLower sourceEpsilon
-    norm_num
-    rw [max_eq_left hs₂, min_eq_left hs₄]
-  rw [hlower]
-  simp only [dPowDensity, sub_self, Real.rpow_zero, mul_one, Real.rpow_one,
-    Nat.cast_zero, zero_add]
-  norm_num only
-  congr 1
-  apply intervalIntegral.integral_congr
-  intro t ht
-  have ht' : t ∈ Set.Icc s 4 := by
-    simpa [Set.uIcc_of_le hs₄] using ht
-  change suzukiLayer 1 2 1 (t - 1) = (4 - t) / (t - 1)
-  rw [suzukiLayer_one_one_two]
-  · ring
-  · linarith [ht'.1, hs₂]
-  · linarith [ht'.2]
 
 @[simp] theorem suzukiLayer_one_one_two_eq_zero_of_three_le {s : ℝ} (hs : 3 ≤ s) :
     suzukiLayer 1 2 1 s = 0 := by
@@ -138,9 +115,6 @@ theorem suzukiLowerSieveFactorFirstInterval_pos {s : ℝ}
   have hlog : 0 < Real.log (s - 1) := Real.log_pos (by linarith)
   exact div_pos (mul_pos suzukiLowerSieveAmplitude_pos hlog) (by linarith)
 
-theorem suzukiLowerSieveFactorFirstInterval_eleven_fifths_pos :
-    0 < suzukiLowerSieveFactorFirstInterval ((11 : ℝ) / 5) := by
-  apply suzukiLowerSieveFactorFirstInterval_pos <;> norm_num
 
 end
 

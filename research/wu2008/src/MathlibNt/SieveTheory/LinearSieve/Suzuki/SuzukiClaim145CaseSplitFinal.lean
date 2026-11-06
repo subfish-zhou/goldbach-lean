@@ -99,24 +99,6 @@ theorem claim14_5_eventual_of_exact_branch
     (fun hlo hhi => hI N s hlo hhi)
     (fun hodd hlo hhi => hII N s hodd hlo hhi)
 
-/-- Final exact dispatcher on Suzuki's parity domain.  The production split
-selects one of the two distinct proof interfaces (kept separate even at their
-shared boundary), and the selected branch returns the same eventual
-Claim-14.5 bound. -/
-theorem claim14_5_eventual_exact_case_split
-    {Tdisc : ℕ → ℝ → ℝ → ℝ} {S : BoundingSieve}
-    {H : Section13HatLayers} {z : ℝ → ℝ}
-    {β D d Δ σ C1 K ΘK s C145 : ℝ} {N : ℕ}
-    (hdom : s ∈ SuzukiFiniteContinuousLayers.suzukiParityDomainOne β N)
-    (hsσ : s ≤ σ) (hlarge : C1 * K ^ ΘK < Real.log D)
-    (hI : Claim14_5CaseIEventualConsumer
-      Tdisc S H z β d Δ σ K C145)
-    (hII : Claim14_5CaseIIEventualConsumer
-      Tdisc S H z β d Δ σ K C145) :
-    Claim14_5EventualAt Tdisc S H z N d Δ σ K s C145 := by
-  apply claim14_5_eventual_of_exact_branch
-    (claim14_5ExactBranch_iff.mpr
-      (claim14_5_exact_case_split hdom hsσ hlarge)) hI hII
 
 /-!
 ## Remaining bridge to Lemma 14.4

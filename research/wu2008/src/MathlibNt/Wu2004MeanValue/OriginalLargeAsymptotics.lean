@@ -33,15 +33,6 @@ theorem eventually_originalLargeExceptionalBudget_paid (ε : ℝ) (hε : 0 < ε)
     (by norm_num) (by norm_num) hε, eventually_ge_atTop (1 : ℕ)] with N hp hN
   exact (originalLargeExceptionalBudget_le hN).trans hp
 
-theorem eventually_originalLargeTriplesExceptional_paid (a η ε : ℝ) (hε : 0 < ε) :
-    ∀ᶠ N : ℕ in atTop,
-      ((originalLargeTriplesExceptional N a η).card : ℝ) ≤
-        ε * liuSingularSeries N * N / Real.log N ^ 2 := by
-  filter_upwards [eventually_originalLargeExceptionalBudget_paid ε hε] with N hp
-  have hcard : ((originalLargeTriplesExceptional N a η).card : ℝ) ≤
-      ((⌊Real.sqrt N⌋₊ + 1 : ℕ) : ℝ) := by
-    exact_mod_cast originalLargeTriplesExceptional_card_le N a η
-  exact hcard.trans hp
 
 /-- The literal strict large-product count. All parameters are fixed before
 the eventual even integer, and no analytic estimate is an input hypothesis. -/

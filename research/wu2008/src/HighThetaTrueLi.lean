@@ -12,13 +12,6 @@ def liX {i : ℕ} (N : ℕ) (δ s t : ℝ) (W : Fin i → Finset ℕ) : ℝ :=
   ∑ c ∈ omega3CofactorLabels N δ s t W, (convolutionCoeff W c.1 : ℝ)*
     (wuLi (min ((N : ℝ)/omega3CofactorValue c) (wuLocalCutoff N δ c.1 s)) - wuLi c.2.1)
 
-/-- Explicit identity with the same true li used in boxTheta. -/
-theorem liX_true_li {i : ℕ} (N : ℕ) (δ s t : ℝ) (W : Fin i → Finset ℕ) :
-    liX N δ s t W =
-      ∑ c ∈ omega3CofactorLabels N δ s t W, (convolutionCoeff W c.1 : ℝ)*
-        (AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418.logarithmicIntegral
-          (min ((N : ℝ)/omega3CofactorValue c) (wuLocalCutoff N δ c.1 s)) -
-         AnalyticNumberTheory.LargeSieve.Bombieri1965Richert418.logarithmicIntegral c.2.1) := rfl
 
 /-- The original actual support constructs every principal layer and pays its
 true-li error. This is separate from the prime-centred R1 theorem. -/

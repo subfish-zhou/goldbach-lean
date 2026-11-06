@@ -326,61 +326,7 @@ theorem weighted_sum_nonprincipal_by_conductor
       intro q hq
       by_cases hdq : d ∣ q <;> simp [hdq]
 
-/-- The requested all-character nonprincipal maximal ledger.  Its first term is
-then exactly regrouped by the preceding theorem, while the second is the honest
-bad-prime correction; no principal estimate is inserted. -/
-theorem weighted_allCharacter_nonprincipal_prefix_ledger
-    (b : ℤ → ℂ) (M : ℤ) (N Q : ℕ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ ∈ nonprincipalCharacters q, characterPrefixMaxSquare χ b M N) ≤
-      2 * (∑ d ∈ Finset.Icc 2 Q,
-        imprimitiveConductorWeight Q d *
-          ∑ ψ : PrimitiveCharacter d,
-            primitiveCharacterPrefixMaxSquare b M N d ψ) +
-      8 * (N : ℝ) *
-        ∑ q ∈ Finset.Icc 1 Q,
-          ((q : ℝ) / (q.totient : ℝ)) *
-            ∑ _χ ∈ nonprincipalCharacters q,
-              ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-  -- Pay the bad-support correction for each character before summing.
-  have hchar {q : ℕ} (χ : DirichletCharacter ℂ q) :
-      characterPrefixMaxSquare χ b M N ≤
-        2 * primitiveCharacterPrefixMaxSquare b M N χ.conductor
-          (conductorPrimitiveCharacter χ) +
-        8 * (N : ℝ) * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2 := by
-    have hsplit := characterPrefixMaxSquare_le_conductor_add_error χ b M N
-    have hbad := conductorErrorPrefixMaxSquare_le_badSupport χ b M N
-    linarith
-  calc
-    _ ≤ ∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ ∈ nonprincipalCharacters q,
-            (2 * primitiveCharacterPrefixMaxSquare b M N χ.conductor
-              (conductorPrimitiveCharacter χ) +
-            8 * (N : ℝ) * ∑ n ∈ conductorBadSupport q M N, ‖b n‖ ^ 2) := by
-      gcongr with q hq χ hχ
-      exact hchar χ
-    _ = _ := by
-      rw [← weighted_sum_nonprincipal_by_conductor]
-      simp only [mul_add, Finset.sum_add_distrib, Finset.mul_sum]
-      simp only [mul_assoc, mul_left_comm, mul_comm]
 
-/-- Principal/nonprincipal split with the principal maximal term kept literally.
-This theorem is bookkeeping only, not a PNT assertion. -/
-theorem weighted_allCharacter_prefix_eq_principal_add_nonprincipal
-    (b : ℤ → ℂ) (M : ℤ) (N Q : ℕ) :
-    (∑ q ∈ Finset.Icc 1 Q,
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : DirichletCharacter ℂ q, characterPrefixMaxSquare χ b M N) =
-      (∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          characterPrefixMaxSquare (1 : DirichletCharacter ℂ q) b M N) +
-      ∑ q ∈ Finset.Icc 1 Q,
-        ((q : ℝ) / (q.totient : ℝ)) *
-          ∑ χ ∈ nonprincipalCharacters q, characterPrefixMaxSquare χ b M N := by
-  simp_rw [sum_allCharacters_eq_principal_add_nonprincipal, mul_add]
-  exact Finset.sum_add_distrib
 
 end
 

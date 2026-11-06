@@ -29,9 +29,6 @@ theorem amplitude_log_closed {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100) :
 def gLog : ℝ := Cgeo*sourceP/(1-rhoLog)
 def penaltyLog : ℝ := Cgeo*envelopeE/(1-rhoLog)
 
-theorem gLog_pos : 0 < gLog := by
-  apply div_pos (mul_pos Cgeo_pos (by norm_num [sourceP]))
-    (sub_pos.mpr rhoLog_bounds.2)
 
 theorem penaltyLog_pos : 0 < penaltyLog := by
   apply div_pos (mul_pos Cgeo_pos (by norm_num [envelopeE]))

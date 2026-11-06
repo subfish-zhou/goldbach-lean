@@ -181,14 +181,6 @@ def chen1973Lemma6BromwichCharacterIntegrand
     star (χ.1 (x : ZMod d)) *
       chen1973Lemma6BromwichPrimePairIntegrand x d B k m χ t
 
-/-- The finite primitive-character integrand is Bochner integrable. -/
-theorem integrable_chen1973Lemma6BromwichCharacterIntegrand
-    {x d B k m : ℕ} (hx : 1 < x) :
-    Integrable (chen1973Lemma6BromwichCharacterIntegrand x d B k m) := by
-  unfold chen1973Lemma6BromwichCharacterIntegrand
-  apply integrable_finsetSum
-  intro χ hχ
-  exact (integrable_chen1973Lemma6BromwichPrimePairIntegrand χ hx).const_mul _
 
 /-- Exact exchange of the primitive-character sum with the full-line
 Bromwich integral. -/
@@ -220,16 +212,5 @@ def chen1973Lemma6NmBlockBromwich
     |((ArithmeticFunction.moebius d : ℤ) : ℝ)| * (3 : ℝ) ^ d.primeFactors.card / d *
       ‖∫ t : ℝ, chen1973Lemma6BromwichCharacterIntegrand x d B k m t‖
 
-/-- Exact conductor-block lift of the finite Bromwich identity.  This is the
-finite-sum closure needed before any contour deformation toward equation (17),
-and it has no equation-(17) conclusion premise. -/
-theorem chen1973Lemma6NmBlockActual_eq_bromwich
-    {x L level B k m : ℕ} (hx : 1 < x) :
-    chen1973Lemma6NmBlockActual x L level B k m =
-      chen1973Lemma6NmBlockBromwich x L level B k m := by
-  unfold chen1973Lemma6NmBlockActual chen1973Lemma6NmBlockBromwich
-  apply Finset.sum_congr rfl
-  intro d hd
-  rw [chen1973Lemma6CharacterSum_eq_integral_bromwichSum hx]
 
 end AnalyticNumberTheory.LargeSieve

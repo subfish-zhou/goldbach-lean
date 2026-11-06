@@ -88,8 +88,6 @@ theorem cellPayment_le_moving {a b : ℝ} (ha : 1 ≤ a) (hab : a ≤ b) :
   rw [outerDensity_integral ha hab, movingDensity_integral ha hab] at hm
   exact hm
 
-theorem movingCellPayment_nonneg {a b : ℝ} (ha : 1 ≤ a) (hab : a ≤ b) :
-    0 ≤ movingCellPayment a b := (cellPayment_nonneg ha hab).trans (cellPayment_le_moving ha hab)
 
 theorem old_cell_add_movingPayment_le {a b : ℝ} (ha : 1 ≤ a) (hab : a ≤ b) (hb : b ≤ 3) :
     SigmaInnerProfile.cellIntegral a b + movingCellPayment a b ≤ SigmaVariableFull.cellMass a b := by

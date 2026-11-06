@@ -48,9 +48,6 @@ theorem cubicLower_le_actualLower (i : Fin 4) : cubicLower (coupledRow i) ≤ ac
   unfold cubicLower actualLower
   linarith only [ha]
 
-theorem cubicLower_le_original (i : Fin 4) : cubicLower (coupledRow i) ≤
-    coupledFeedback (coupledRow i) NineFeedbackStrength.originalH :=
-  (cubicLower_le_actualLower i).trans (actualLower_le i)
 
 def jRecovery (z : Fin 9 → ℝ) (s S : ℝ) : ℝ :=
   ∑ k : Fin 9,z k*((FirstErrorFullPayment.errorPrimitive (jStart s S+1)

@@ -113,58 +113,5 @@ theorem chen1973Lemma6_eq21_primitiveVerticalEstimate_one_eventually_of_powerLos
       simpa only [Complex.ofReal_inv] using hintegral
     _ ≤ 1 * y ^ σ := mul_le_mul_of_nonneg_right hcoef (Real.rpow_nonneg (by positivity) _)
 
-/-- Source-level equation (21) with a real sublinear log-power loss.
-All integral and geometric payments are internal; the full-height zero-free
-input and the displayed actual strip logarithmic-derivative bound remain. -/
-theorem chen1973Lemma6_equation21_levelZero_eventually_of_strip_powerLoss
-    {M c θ : ℝ} (hM : 0 ≤ M) (hc : 0 < c) (hθ : θ < 1) (r : ℕ) :
-    ∃ x₀ : ℕ, ∀ x ≥ x₀, ∀ L B k m l₂ : ℕ,
-      Chen1973Lemma6Eq21SourceParameters x L B k m l₂ →
-      Chen1973Lemma6Eq21ZeroFreeInput x L c →
-      (∀ d ∈ chen1973Lemma6ConductorBlock x L 0,
-        ∀ χ : PrimitiveCharacter d, ∀ s : ℂ,
-          chen1973Lemma6Eq21Sigma x ≤ s.re ∧ s.re ≤ chen1973Lemma6Alpha x →
-          ‖chen1973PrimitiveLDeriv d s χ / chen1973Lemma6PrimitiveLValue d s χ‖ ≤
-            (M * Real.log (x : ℝ) ^ θ) *
-              (1 + Real.log ((d : ℝ) * (1 + |s.im|))) ^ r) →
-      chen1973Lemma6NmBlockActual x L 0 B k m ≤
-        (x : ℝ) / Real.log x ^ (20 : ℕ) := by
-  obtain ⟨x₁, hfinal⟩ :=
-    chen1973Lemma6_equation21_levelZero_eventually_of_source_analytic_inputs 1 c hc
-  obtain ⟨x₂, hvertical⟩ :=
-    chen1973Lemma6_eq21_primitiveVerticalEstimate_one_eventually_of_powerLoss hM hθ r
-  obtain ⟨x₃, horder⟩ := Filter.eventually_atTop.mp (chen1973Lemma6_eq21_order_eventually r)
-  refine ⟨max x₁ (max x₂ x₃), ?_⟩
-  intro x hx L B k m l₂ P hzero H
-  have hx₂ : x₂ ≤ x := (le_max_left x₂ x₃).trans ((le_max_right _ _).trans hx)
-  have hx₃ : x₃ ≤ x := (le_max_right x₂ x₃).trans ((le_max_right _ _).trans hx)
-  have hlog : 0 < Real.log (x : ℝ) :=
-    Real.log_pos (by exact_mod_cast (show 1 < x by have := P.hx; omega))
-  let Mx := M * Real.log (x : ℝ) ^ θ
-  have hMx : 0 ≤ Mx := mul_nonneg hM (Real.rpow_nonneg hlog.le _)
-  have Hleft : ∀ d ∈ chen1973Lemma6ConductorBlock x L 0,
-      ∀ χ : PrimitiveCharacter d, ∀ t : ℝ,
-        ‖chen1973PrimitiveLDeriv d (chen1973Lemma6Eq21Line x t) χ /
-          chen1973Lemma6PrimitiveLValue d (chen1973Lemma6Eq21Line x t) χ‖ ≤
-          Mx * (1 + Real.log ((d : ℝ) * (1 + |t|))) ^ r := by
-    intro d hd χ t
-    have h := H d hd χ (chen1973Lemma6Eq21Line x t) (by
-      simpa [chen1973Lemma6Eq21Line] using
-        And.intro (le_refl (chen1973Lemma6Eq21Sigma x))
-          (chen1973Lemma6_eq21_sigma_le_alpha P.hx))
-    simpa only [Mx, chen1973Lemma6Eq21Line, Complex.add_im, Complex.ofReal_im,
-      Complex.mul_im, Complex.ofReal_re, Complex.I_im, Complex.I_re,
-      mul_one, mul_zero, add_zero, zero_add] using h
-  apply hfinal x ((le_max_left _ _).trans hx) L B k m l₂ P hzero
-  · intro d hd χ pp hpp
-    have hd1 := chen1973Lemma6_eq21_one_lt_conductor hd
-    have hregion := chen1973Lemma6_eq21_actualShell_subset_primeRegion x B k m hpp
-    have hy := (chen1973Lemma6_eq21_primeRegion_log_y P.hx hregion).1
-    refine ⟨?_, chen1973Lemma6_eq21_alphaTerm_integrable P.hx hd1 χ (zero_lt_one.trans hy), ?_⟩
-    · exact (chen1973Lemma6_eq21_verticalIntegral_bound_of_logDerivative_bound
-        P.hx hd1 χ hy hMx r (Hleft d hd χ)).1
-    · exact chen1973Lemma6_eq21_horizontal_decay_of_strip_logDerivative
-        P.hx hd1 χ hy hMx r (horder x hx₃) (H d hd χ)
-  · exact hvertical x hx₂ L B k m l₂ P Hleft
 
 end AnalyticNumberTheory.LargeSieve

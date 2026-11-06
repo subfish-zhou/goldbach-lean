@@ -67,11 +67,6 @@ theorem rectanglePrefix_eq_box_min (lo hi : ι → ℕ) (a : (ι → ℕ) → �
   · intro hx
     exact ⟨fun i => ⟨(hx i).1, (hx i).2.1⟩, fun i => (hx i).2.2⟩
 
-theorem rectanglePrefix_eq_box (lo hi : ι → ℕ) (a : (ι → ℕ) → ℂ)
-    (t : ι → ℕ) (ht : ∀ i, t i ≤ hi i) :
-    rectanglePrefix lo hi a t = ∑ x ∈ box lo t, a x := by
-  rw [rectanglePrefix_eq_box_min]
-  simp only [min_eq_right (ht _)]
 
 @[simp] theorem box_self (x : ι → ℕ) : box x x = {x} := by
   classical
@@ -170,9 +165,6 @@ theorem variation_nonneg (lo hi : ι → ℕ) (w : (ι → ℕ) → ℂ) :
     0 ≤ variation lo hi w :=
   Finset.sum_nonneg (fun _ _ => norm_nonneg _)
 
-theorem prefixMax_nonneg (lo hi : ι → ℕ) (a : (ι → ℕ) → ℂ) :
-    0 ≤ prefixMax lo hi a :=
-  NNReal.coe_nonneg _
 
 /-- Rectangle-prefix inequality with a constructed maximum, not an assumed bound. -/
 theorem norm_sum_le_variation_mul_prefixMax (lo hi : ι → ℕ)
@@ -246,32 +238,6 @@ theorem mixedDifference_eq_corners (lo hi : ι → ℕ) (w : (ι → ℕ) → �
     _ = cornerSign e * extendWeight lo hi w (corner t e) := by
       simp [extendWeight]
 
-/-- The preceding bound applies to any finite, possibly nonrectangular support.
-The exact support indicator remains inside each unweighted prefix. -/
-theorem norm_sum_masked_le (lo hi : ι → ℕ) (s : Finset (ι → ℕ))
-    (hs : s ⊆ box lo hi) (w a : (ι → ℕ) → ℂ) :
-    ‖∑ x ∈ s, w x * a x‖ ≤
-      variation lo hi w *
-        prefixMax lo hi (fun x => if x ∈ s then a x else 0) := by
-  classical
-  have heq :
-      (∑ x ∈ box lo hi, w x * (if x ∈ s then a x else 0)) =
-        ∑ x ∈ s, w x * a x := by
-    symm
-    calc
-      (∑ x ∈ s, w x * a x) =
-          ∑ x ∈ s, w x * (if x ∈ s then a x else 0) := by
-        apply Finset.sum_congr rfl
-        intro x hx
-        simp [hx]
-      _ = ∑ x ∈ box lo hi, w x * (if x ∈ s then a x else 0) :=
-        Finset.sum_subset hs (by intro x _ hx; simp [hx])
-  simpa only [heq] using
-    norm_sum_le_variation_mul_prefixMax lo hi w (fun x => if x ∈ s then a x else 0)
 
-/-- Five-coordinate specialization for the dispersion consumer. -/
-theorem norm_sum_five_le (lo hi : Fin 5 → ℕ) (w a : (Fin 5 → ℕ) → ℂ) :
-    ‖∑ x ∈ box lo hi, w x * a x‖ ≤ variation lo hi w * prefixMax lo hi a :=
-  norm_sum_le_variation_mul_prefixMax lo hi w a
 
 end LiLiuPrereqFouvry.Rectangle

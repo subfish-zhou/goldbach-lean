@@ -69,15 +69,5 @@ theorem physicalSmall_integral (τ ζ θ : ℝ) (hτ : 0 < τ) (hζ : 0 < ζ) (h
       mul_le_mul_of_nonneg_left hm hc
     _ = _ := by ring
 
-/-- The factor eight is derived from the actual density four and kernel 9/5.
-It is not a definition of a rescaled integral masquerading as the original one. -/
-theorem original_eight_normalization (N : ℕ) :
-    4*SingularSeries.liuSingularSeries N*((9/5 : ℝ)*low (100/1327))*
-      ((N : ℝ)/Real.log (N : ℝ)^2) =
-    8*SingularSeries.liuSingularSeries N*((N : ℝ)/Real.log (N : ℝ)^2)*
-      ((9/10 : ℝ)*(∫ x in (100/1327 : ℝ)..(1/10),
-        Real.log (2-3*x)/(x*(1-x)^2))) := by
-  rw [original_low_eq_single]
-  ring
 
 end OriginalU8.Weighted

@@ -43,12 +43,6 @@ theorem original11_literal : original11 =
     rw [uIcc_of_le parameters.2.1] at hx
     exact outer11_eq ⟨parameters.1.trans hx.1,hx.2⟩
 
-/-- Direction matters: these smaller original upper amounts cannot be substituted
-using only the present larger count upper estimates. -/
-theorem original_pair_le_current : original10+original11 ≤
-    Wu08TerminalAlignment.tenthCurrent+Wu08TerminalAlignment.eleventhCurrent := by
-  rw [actual_tenth_debit,actual_eleventh_debit]
-  linarith only [debits_nonnegative.1,debits_nonnegative.2]
 
 /-- Restoring the original 0.899 coefficient would imply the requested later
 logarithmic threshold. This comparison uses only the already proved universal V. -/

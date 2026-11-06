@@ -15,22 +15,7 @@ namespace Wu2008DoubleSieve
 open Finset
 open scoped Classical
 
-theorem T9_card_eq_ninth_product_profiles (N : ℕ) :
-    (T9 N (ninthProfileW N) (ninthProfileU N)).card =
-      ∑ m ∈ ninthProductSupport N,
-        ((omega3ProfilePrimes N (ninthProfileLower (ninthProfileU N))
-          (ninthProfileUpper N m)).filter (fun c => (N - m * c).Prime)).card :=
-  T9_card_eq_product_profiles N (ninthProfileW N) (ninthProfileU N)
 
-/-- The profile center is its actual prime count divided by phi, not li. -/
-theorem ninth_product_profile_error_eq (N q m : ℕ) :
-    omega3ProfileError N q m (ninthProfileLower (ninthProfileU N))
-      (ninthProfileUpper N m) =
-      (((omega3ProfilePrimes N (ninthProfileLower (ninthProfileU N))
-        (ninthProfileUpper N m)).filter
-          (fun c => Nat.ModEq q (m * c) N)).card : ℝ) -
-        (omega3ProfilePrimes N (ninthProfileLower (ninthProfileU N))
-          (ninthProfileUpper N m)).card / (Nat.totient q : ℝ) := rfl
 
 /-- The prime-count-centered reduced-residue AP branch, with one threshold
 uniform in N and Z. All support/profile hypotheses are proved, not assumed. -/

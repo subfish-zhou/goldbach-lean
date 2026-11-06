@@ -71,25 +71,7 @@ theorem middleRationalGain_pos (i : Fin 4) : 0< middleRationalGain (coupledRow i
   have hs : 0<(lowerSwitch p-upperSwitch p)^2 := sq_pos_of_pos (sub_pos.mpr hab)
   exact div_pos (mul_pos hn hs) (by positivity)
 
-/-- The original four hc margins now have an explicit rational improvement. -/
-theorem original_four_rational_margin (i : Fin 4) :
-    NineFeedbackStrength.publication (i.castAdd 5)+restoredLower (coupledRow i) NineFeedbackStrength.originalH-
-      NineFeedbackStrength.originalH (i.castAdd 5)+
-      NineFeedbackStrength.originalH 0*middleRationalGain (coupledRow i)/5≤
-    NineFeedbackStrength.publication (i.castAdd 5)+coupledFeedback (coupledRow i) NineFeedbackStrength.originalH-
-      NineFeedbackStrength.originalH (i.castAdd 5) := by
-  have hg := div_le_div_of_nonneg_right
-    (mul_le_mul_of_nonneg_left (middleRationalGain_le i) (CoupledIntegralRecovery.originalH_nonneg 0))
-    (by norm_num : (0:ℝ)≤5)
-  have hc := original_four_middle_restored i
-  unfold middleRestoredLower at hc
-  linarith only [hg,hc]
 
-/-- Positivity concerns the actual original H weight, not an arbitrary replacement vector. -/
-theorem original_rational_increment_pos (i : Fin 4) :
-    0<NineFeedbackStrength.originalH 0*middleRationalGain (coupledRow i)/5 := by
-  have hz : 0<NineFeedbackStrength.originalH 0 := by norm_num [NineFeedbackStrength.originalH]
-  exact div_pos (mul_pos hz (middleRationalGain_pos i)) (by norm_num)
 
 end
 end CoupledMiddleGateRecovery

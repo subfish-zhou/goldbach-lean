@@ -114,21 +114,5 @@ theorem fourModulusGain_eq_source_sub_quotient (N : ℕ) (z w V : ℝ) :
   simp only [sum_sub_distrib, s3FourSourceMajorant, s3Upsilon11Source, s3FourSourceTerm]
   ring
 
-/-- The sum of both actual differences has one quartic budget. -/
-theorem fourModulus_original_two_sums_bounds {N : ℕ} {κ w V : ℝ}
-    (hN : 4 ≤ N) (he : Even N) (hκ : 0 < κ) (hz : 2 ≤ (N : ℝ) ^ κ) :
-    0 ≤ ((∑ t ∈ s3DistinctQuadruples N
-        (orderedTriples (primeWindow N ((N : ℝ) ^ κ) w)),
-        (s3FourSourceTerm N t - fourModulusQuotientTerm N t)) +
-      ∑ t ∈ s3Upsilon11Range N ((N : ℝ) ^ κ) w V,
-        (s3FourSourceTerm N t - fourModulusQuotientTerm N t) : ℤ) ∧
-    (((∑ t ∈ s3DistinctQuadruples N
-        (orderedTriples (primeWindow N ((N : ℝ) ^ κ) w)),
-        (s3FourSourceTerm N t - fourModulusQuotientTerm N t)) +
-      ∑ t ∈ s3Upsilon11Range N ((N : ℝ) ^ κ) w V,
-        (s3FourSourceTerm N t - fourModulusQuotientTerm N t) : ℤ) : ℝ) ≤
-      2 / κ ^ 4 * (N : ℝ) ^ (1 - κ) := by
-  rw [← fourModulusGain_eq_two_sums]
-  exact ⟨fourModulusGain_nonneg N _ w V, fourModulusGain_le hN he hκ hz⟩
 
 end Wu2008DoubleSieve

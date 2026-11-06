@@ -52,15 +52,6 @@ theorem original_logs_actual_lower {p : SecondFunctionalParameters}
     ring
   rwa [he] at h
 
-/-- The four published parameter choices all consume the same actual source;
-this is not an assumption of the four published Psi2 decimals. -/
-theorem four_original_rows {δ : ℝ} (hd : 0 < δ) (hh : δ ≤ 1 / 10) (i : Fin 4) :
-    classicalNumerator (coupledRow i) / 5 -
-        2 * coupledCostMass (coupledRow i) / (5 * (1 - 2 * δ)) +
-      coupledFeedback (coupledRow i) (actualNine δ) ≤
-        wuImprovementLimit true δ (upperNode ⟨i.val, by omega⟩) := by
-  have h := original_logs_actual_lower (coupledRow_geometry i) hd hh
-  rwa [coupledRow_node] at h
 
 /-- Strong-input admission is pointwise on the original unbounded phi domain.
 All suprema are eliminated here by their actual definitions, not numerical

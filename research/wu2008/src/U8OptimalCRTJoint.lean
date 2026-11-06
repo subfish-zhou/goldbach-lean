@@ -21,10 +21,6 @@ theorem nuN_div_eq_density (N : ℕ) {m : ℕ} (hm : Squarefree m) :
     (nuN N m : ℝ) / m = density N m := by
   rw [nuN_cast_eq_rootCount, density_eq N hm]
 
-theorem nuN_lcm_eq_density (N : ℕ) {Z : ℝ} {d f : ℕ}
-    (hd : d ∣ (sievePrimes Z).prod id) (hf : f ∣ (sievePrimes Z).prod id) :
-    (nuN N (Nat.lcm d f) : ℝ) / Nat.lcm d f = density N (Nat.lcm d f) :=
-  nuN_div_eq_density N (sieve_lcm_squarefree hd hf)
 
 theorem carrier_dvd {Z R : ℝ} {d : ℕ} (hd : d ∈ carrier Z R) :
     d ∣ (sievePrimes Z).prod id := (Nat.mem_divisors.mp (mem_filter.mp hd).1).1

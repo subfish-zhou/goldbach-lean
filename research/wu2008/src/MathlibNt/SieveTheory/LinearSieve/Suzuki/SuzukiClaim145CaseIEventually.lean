@@ -49,56 +49,6 @@ theorem lemma8_7_qD_of_claim14_6_i_ii_direct_iii
     hH hD hz2 hv2 hw2 hwv hvz hz hv hw
     hτ hβs hsτ hτσ hs hK hlocal hi hii hiiiτ
 
-/-- Eventual Case-I form of (14.18), with no Claim 14.6 premise.  All sieve
-geometry and the dimension-one local Euler-product hypothesis remain explicit
-at the final call site. -/
-theorem lemma8_7_caseI_contraction_for_sufficiently_large_D
-    {S : BoundingSieve} {H : Section13HatLayers}
-    {β s τ σ K d Δ : ℝ} {N : ℕ}
-    (hH : Section13HatContract H β)
-    (hd : 0 ≤ d) (hΔlower : -1 < Δ) (hΔupper : Δ < 1)
-    (hσ : ∀ sign : ErrorSign, β + sign.epsilon ≤ σ)
-    (hcaseI : Claim14_5CaseI β N s σ)
-    (hτ : H.betaHat + (ErrorSign.ofDepth N).epsilon < τ)
-    (hsτ : s ≤ τ) (hτσ : τ ≤ σ)
-    (hK : 2 ≤ K)
-    (hlocal : HasDimensionOneLocalProductBound S K) :
-    ∃ D₀, 1 < D₀ ∧ ∀ D z v w : ℝ, D₀ ≤ D →
-      2 ≤ z → 2 ≤ v → 2 ≤ w → w ≤ v → v ≤ z →
-      z = D ^ (1 / s) → v = D ^ (1 / τ) → w = D ^ (1 / σ) →
-      suzukiLemmaEightSevenPrimeSum S D w v z
-          (qD H (ErrorSign.ofDepth N).opposite D d Δ) <
-        (1 - 1 / σ) ^ (1 - Δ) * errorEnvelope H N D d s +
-          (6 * K ^ 2 * qD H (ErrorSign.ofDepth N).opposite D d Δ τ /
-            Real.log w) * (τ / s) := by
-  have hβs : H.betaHat + (ErrorSign.ofDepth N).epsilon ≤ s := by
-    rw [hH.betaHat_eq, epsilon_ofDepth_eq_mod_two]
-    exact hcaseI.1
-  have hs : 0 < s := by
-    have heps : 0 ≤ (ErrorSign.ofDepth N).epsilon := by
-      cases ErrorSign.ofDepth N <;> simp [ErrorSign.epsilon]
-    rw [hH.betaHat_eq] at hβs
-    linarith [hH.beta_gt_one]
-  obtain ⟨D₁, hD₁, hlarge₁⟩ :=
-    claim14_6_i_ii_for_sufficiently_large_D hH hd hΔlower hσ
-  have hβτ : β + (ErrorSign.ofDepth N).epsilon ≤ τ := by
-    simpa [hH.betaHat_eq] using hτ.le
-  obtain ⟨D₂, hD₂, hlarge₂⟩ :=
-    claim14_6_iii_for_sufficiently_large_D_no_extra_premise
-      hH (ErrorSign.ofDepth N) hd hΔupper hβτ hτσ
-  refine ⟨max D₁ D₂, hD₁.trans_le (le_max_left _ _), ?_⟩
-  intro D z v w hD hz2 hv2 hw2 hwv hvz hz hv hw
-  have hD₁D : D₁ ≤ D := (le_max_left D₁ D₂).trans hD
-  have hD₂D : D₂ ≤ D := (le_max_right D₁ D₂).trans hD
-  obtain ⟨hiβ, hii⟩ := hlarge₁ D hD₁D
-  have hi : Claim14_6_MonotoneLambdaPremise H D d σ := by
-    intro sign ε hε
-    rw [hH.betaHat_eq]
-    exact hiβ sign ε hε
-  have hiiiτ := hlarge₂ D hD₂D
-  exact lemma8_7_qD_of_claim14_6_i_ii_direct_iii
-    hH (hD₁.trans_le hD₁D) hz2 hv2 hw2 hwv hvz hz hv hw
-    hτ hβs hsτ hτσ hs hK hlocal hi hii hiiiτ
 
 
 end SuzukiLemma144KappaOne

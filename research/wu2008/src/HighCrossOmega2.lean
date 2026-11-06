@@ -74,34 +74,6 @@ theorem rosser_test_le_gain {i N : ℕ} {δ ε ρ C s t u : ℝ}
   dsimp [rosserGainTest, switchedUpper]
   linarith
 
-/-- A genuine one-insertion Rosser feedback on each original high rectangle.
-No positive test is postulated. Admissibility is purely the literal interior
-window/cutoff condition; arithmetic lower payment is constructed internally. -/
-theorem original_rosser_feedback {δ ε ρ : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 50*highEta) (hε : 0 < ε) (hρ : 0 < ρ) :
-    ∃ C : ℝ, 0 < C ∧ ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N → ∀ Δ : ℝ,
-      1+log (N : ℝ)^(-4 : ℝ) ≤ Δ → Δ < 1+2*log (N : ℝ)^(-4 : ℝ) →
-      ∀ V : Fin 2 → ℝ, (∀ j, (N : ℝ)^(100/1327 : ℝ) ≤ V j) → OriginalRectangles N V →
-      ∀ s t : ℝ, 2 ≤ s → s ≤ t → t ≤ 10 → ∀ U u : ℝ,
-      ActualInsertion N δ Δ U V → 1 ≤ u → u ≤ 10 →
-      (∀ d ∈ boxConvolutionSupport (convolutionWuWindows N Δ V),
-        ∀ p ∈ primeWindow N (U/Δ) U,
-        p ∈ primeWindow N (wuLocalCutoff N δ d t) (wuLocalCutoff N δ d s) ∧
-          wuLocalCutoff N δ d t ≤ wuLocalCutoff N δ (d*p) u) →
-      let W := convolutionWuWindows N Δ V
-      let P := primeWindow N (U/Δ) U
-      wuBoxPhi N δ W s ≤ rosserUpper N δ s W - max 0 (rosserGainTest N δ ε ρ C s t u W P) := by
-  obtain ⟨T1,hT14,hup⟩ := original_and_inserted_improved_upper hδ hδhi hε hρ
-  obtain ⟨C,hC,T2,_,hlo⟩ := original_and_inserted_lower_source hδ hδhi hε
-  refine ⟨C,hC,max T1 T2,hT14.trans (le_max_left _ _),?_⟩
-  intro N hN he Δ hΔlo hΔhi V hV hrect s t hs hst ht U u hocc hu hu10 hinside
-  have hN1 := (le_max_left T1 T2).trans hN
-  have hN2 := (le_max_right T1 T2).trans hN
-  have hup' := (hup N hN1 he Δ hΔlo hΔhi V hV hrect s t hs hst ht).1
-  have hlo' := (hlo N hN2 he Δ hΔlo hΔhi V hV hrect u hu hu10).2 U hocc
-  rw [convolutionWuWindows_cons] at hlo'
-  have hg := rosser_test_le_gain (ρ := ρ) _ _ hinside hlo'
-  exact hup'.trans (sub_le_sub_left hg _)
 
 end
 end HighCross

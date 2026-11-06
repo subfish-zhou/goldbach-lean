@@ -159,15 +159,6 @@ noncomputable def quadraticSiegelConvolutionDiscrepancy
   quadraticSiegelConvolutionSummatory χ X -
     (X : ℝ) * quadraticHarmonicTruncation χ m
 
-/-- Expansion of the residual as the divisor double sum minus the harmonic
-main term. -/
-theorem quadraticSiegelConvolutionDiscrepancy_eq_divisorDoubleSum_sub
-    (χ : DirichletCharacter ℂ q) (X m : ℕ) :
-    quadraticSiegelConvolutionDiscrepancy χ X m =
-      (∑ n ∈ Icc 1 X, ∑ d ∈ n.divisors, (χ d).re) -
-        (X : ℝ) * quadraticHarmonicTruncation χ m := by
-  rw [quadraticSiegelConvolutionDiscrepancy,
-    quadraticSiegelConvolutionSummatory_eq_divisorDoubleSum]
 
 /-- The first load-bearing inequality in the elementary convolution route.
 The square lower bound and the explicit Pólya--Vinogradov tail force a lower

@@ -53,13 +53,6 @@ theorem original_four_quantitative (i : Fin 4) :
   unfold middleRestoredLower at hc
   linarith only [h,hc]
 
-theorem original_four_strict_middle_gain (i : Fin 4) :
-    restoredLower (coupledRow i) NineFeedbackStrength.originalH<
-      middleRestoredLower (coupledRow i) NineFeedbackStrength.originalH := by
-  have hz : 0<NineFeedbackStrength.originalH 0 := by norm_num [NineFeedbackStrength.originalH]
-  have hg : 0<NineFeedbackStrength.originalH 0*middleGain (coupledRow i)/5 :=
-    div_pos (mul_pos hz (middleGain_pos i)) (by norm_num)
-  exact lt_add_of_pos_right _ hg
 
 /-- The real shared aProfile is retained for independent sigma strengthening. -/
 def actualProfileLower (p : SecondFunctionalParameters) (z : Fin 9 → ℝ) : ℝ :=
@@ -73,11 +66,6 @@ theorem actualProfileLower_le (i : Fin 4) {z : Fin 9 → ℝ} (hz : ∀ k,0≤z 
   unfold actualProfileLower
   linarith only [hd,hc]
 
-theorem actualProfileLower_decomposition (p : SecondFunctionalParameters) (z : Fin 9 → ℝ) :
-    actualProfileLower p z=middleRestoredLower p z+
-      CoupledFiniteAssembly.aCoefficient p*(aProfile (nineProfile z)-OriginalProfileSigmaPayment.aFiniteLower z) := by
-  unfold actualProfileLower middleRestoredLower restoredLower CoupledFullyFinite.lower
-  ring
 
 /-- Quantitative improvement of the actual original hc margin, not a replacement target. -/
 theorem original_hc_margin (i : Fin 4) :
@@ -90,15 +78,6 @@ theorem original_hc_margin (i : Fin 4) :
       NineFeedbackStrength.originalH (i.castAdd 5) := by
   linarith only [original_four_quantitative i]
 
-/-- The actual profile correction and both recovered domains enter hc only once. -/
-theorem original_hc_actual_profile_margin (i : Fin 4) :
-    NineFeedbackStrength.publication (i.castAdd 5)+
-      actualProfileLower (coupledRow i) NineFeedbackStrength.originalH-
-      NineFeedbackStrength.originalH (i.castAdd 5)≤
-    NineFeedbackStrength.publication (i.castAdd 5)+
-      coupledFeedback (coupledRow i) NineFeedbackStrength.originalH-
-      NineFeedbackStrength.originalH (i.castAdd 5) := by
-  linarith only [actualProfileLower_le i CoupledIntegralRecovery.originalH_nonneg]
 
 end
 end CoupledMiddleGateRecovery

@@ -1,0 +1,12 @@
+{
+  "status": "SOURCE_IMPORT_GRAPH_REVIEW_NOT_PROOF_ACCEPTANCE",
+  "manifest_sha256": "d1f2ecbef110c39d5523c23e1f5840060a15f92845def4e371732747238002e7",
+  "modules": 4151,
+  "local_import_graph_mismatches": [],
+  "actual_source_final_closure_modules": 3764,
+  "all_source_hashes_match": true,
+  "observed_unix": 1793349480.197748,
+  "checker_source_sha256": "3c261a6715f59730fcfd0c4432f55e5f02e9ba21745064c9ce0192bad0ea53fb",
+  "counter_sha256": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+  "checker_snapshot": "source-import-review-checker.py.gz"
+}

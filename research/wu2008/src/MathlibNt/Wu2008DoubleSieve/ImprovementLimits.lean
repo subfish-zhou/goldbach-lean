@@ -159,20 +159,6 @@ theorem wuImprovementAt_tendsto (upper : Bool) (k : ℕ) (hk : 1 ≤ k)
   filter_upwards [eventually_ge_atTop T] with n hn
   rw [max_eq_right hn]
 
-/-- The printed threshold monotonicity has the opposite direction:
-the real suprema are nondecreasing once nonemptiness is established. -/
-theorem wuImprovementAt_eventually_monotone (upper : Bool) (k : ℕ) (hk : 1 ≤ k)
-    {δ s : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 1 ≤ s) (hs10 : s ≤ 10) :
-    ∃ T : ℕ, MonotoneOn (wuImprovementAt upper k δ s) (Ici T) := by
-  obtain ⟨T, _, hT, _⟩ := wuImprovement_base_exists upper k hk hδ hδhi hs hs10
-  refine ⟨T, ?_⟩
-  intro m hm n _ hmn
-  have hE := wuEventualImprovements_bddAbove upper k hδ hδhi hs hs10
-  have hsub : wuAdmissibleImprovements upper k δ s n ⊆
-      wuEventualImprovements upper k δ s := fun _ hh => ⟨n, hh⟩
-  apply csSup_le_csSup (hE.mono hsub)
-    ⟨-1, wuAdmissibleImprovements_mono_threshold upper k δ s hm hT⟩
-  exact wuAdmissibleImprovements_mono_threshold upper k δ s hmn
 
 theorem wuImprovementAtInfinity_antitone (upper : Bool) {δ s : ℝ}
     (hδ : 0 < δ) (hδhi : δ < 1 / 2) (hs : 1 ≤ s) (hs10 : s ≤ 10) :

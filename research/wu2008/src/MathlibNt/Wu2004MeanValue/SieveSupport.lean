@@ -131,25 +131,7 @@ theorem omitted_main_sum_eq_zero {α : Type*} [AddCommMonoid α]
   exact False.elim
     (prime_not_dvd_of_mem_sieveModuli hd (hS r hrS).1 (hS r hrS).2 hrd)
 
-/-- The strict separation supplied by the manuscript's cutoff estimates. -/
-theorem omitted_main_sum_eq_zero_of_lt {α : Type*} [AddCommMonoid α]
-    {N Q d : ℕ} {z : ℝ} (hd : d ∈ sieveModuli N z Q)
-    (S : Finset ℕ) (L : ℕ → α)
-    (hS : ∀ r ∈ S, r.Prime ∧ z < (r : ℝ)) :
-    (∑ r ∈ S with r ∣ d, L r) = 0 :=
-  omitted_main_sum_eq_zero hd S L fun r hr => ⟨(hS r hr).1, (hS r hr).2.le⟩
 
-/-- On the actual sieve support the coprimality-gated main sum is the full sum. -/
-theorem coprime_main_sum_eq_sum {α : Type*} [AddCommMonoid α]
-    {N Q d : ℕ} {z : ℝ} (hd : d ∈ sieveModuli N z Q)
-    (S : Finset ℕ) (L : ℕ → α)
-    (hS : ∀ r ∈ S, r.Prime ∧ z ≤ (r : ℝ)) :
-    (∑ r ∈ S with r.Coprime d, L r) = ∑ r ∈ S, L r := by
-  have hfilter : S.filter (fun r => r.Coprime d) = S := by
-    apply filter_eq_self.mpr
-    intro r hr
-    exact prime_coprime_of_mem_sieveModuli hd (hS r hr).1 (hS r hr).2
-  rw [hfilter]
 
 end
 end Wu2004MeanValue

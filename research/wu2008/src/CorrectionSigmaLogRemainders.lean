@@ -69,18 +69,7 @@ def kernelNumeratorUnpaid : ℝ := ∑ k : Fin 9,NineFeedbackStrength.originalH 
 def endpointNumeratorUnpaid : ℝ := ∑ k : Fin 9,NineFeedbackStrength.originalH k*
   (fullPrimitive (upperNode k)-fullPrimitive (upperLeft k)-fullCellPaid (upperLeft k) (upperNode k))
 
-theorem kernelNumeratorUnpaid_nonneg : 0 ≤ kernelNumeratorUnpaid := by
-  apply Finset.sum_nonneg
-  intro k _
-  obtain ⟨ha,hab,hb⟩ := original_cell_bounds k
-  exact mul_nonneg (CoupledIntegralRecovery.originalH_nonneg k) (cellLogUnpaid_nonneg ha hab hb)
 
-theorem endpointNumeratorUnpaid_nonneg : 0 ≤ endpointNumeratorUnpaid := by
-  apply Finset.sum_nonneg
-  intro k _
-  obtain ⟨ha,hab,_⟩ := original_cell_bounds k
-  exact mul_nonneg (CoupledIntegralRecovery.originalH_nonneg k)
-    (sub_nonneg.mpr (fullCellPaid_le ha hab))
 
 theorem numerator_balance : SigmaInnerProfile.numerator NineFeedbackStrength.originalH=
     fullNumerator+endpointNumeratorUnpaid+kernelNumeratorUnpaid := by
@@ -95,16 +84,6 @@ theorem numerator_balance : SigmaInnerProfile.numerator NineFeedbackStrength.ori
 /-- The common-parent max cannot be subtracted without paying its exact numerator cost. -/
 def maxCost : ℝ := CorrectionD0Joint.numerator-fullNumerator
 
-theorem maxCost_nonneg : 0 ≤ maxCost := by
-  have hd := sub_pos.mpr SigmaRemaining.d0Paid_lt_one
-  have h : fullNumerator/(1-SigmaRemaining.d0Paid) ≤ CorrectionD0Joint.base :=
-    (le_max_right _ _).trans (le_max_left _ _)
-  exact sub_nonneg.mpr ((div_le_iff₀ hd).mp h)
 
-theorem common_sigmaUnpaid_balance : CorrectionD0Joint.sigmaUnpaid=
-    endpointNumeratorUnpaid+kernelNumeratorUnpaid-maxCost := by
-  unfold CorrectionD0Joint.sigmaUnpaid maxCost
-  rw [numerator_balance]
-  ring
 
 end CorrectionSigmaLog

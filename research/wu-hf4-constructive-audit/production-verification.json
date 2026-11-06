@@ -1,0 +1,79 @@
+{
+  "status": "PRODUCTION_4151_PRODUCER_RECEIPTS_LITERAL_AXIOMS_FINAL_KERNEL_PASS",
+  "steps": [
+    {
+      "label": "production-producer-check",
+      "command": [
+        "/usr/bin/python3",
+        "/home/azureuser/goldbach-lean/research/wu2008/diagnostics/hf4_constructive/produce.py",
+        "--route",
+        "constructive",
+        "--output-dir",
+        "/home/azureuser/goldbach-lean/research/wu2008/src",
+        "--check"
+      ],
+      "environment": {
+        "LEAN_PATH": null,
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 8.740667525678873,
+      "log_sha256": "4517786421b6e14c364f2988f3f577400011bc37c8c2d1a7cff7ce1ad5527b9b"
+    },
+    {
+      "label": "production-build",
+      "command": [
+        "/usr/bin/python3",
+        "/home/azureuser/goldbach-lean/research/wu2008/build.py",
+        "--all",
+        "--jobs",
+        "1",
+        "--lean-threads",
+        "1",
+        "--limit",
+        "0"
+      ],
+      "environment": {
+        "LEAN_PATH": null,
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 23.120980091392994,
+      "log_sha256": "ae7b0b71948af6991abe018516fb8814882d833655d1d0a392c91145c9f1bcd6"
+    },
+    {
+      "label": "production-literal-axioms",
+      "command": [
+        "/usr/bin/python3",
+        "/home/azureuser/goldbach-lean/research/wu2008/check_classical.py"
+      ],
+      "environment": {
+        "LEAN_PATH": null,
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 19.26373666897416,
+      "log_sha256": "e4cb428ac1a3b193b76ae26c4fb0851b4ac141eb4a2862175b8ccc773ecafe92"
+    },
+    {
+      "label": "production-final-kernel",
+      "command": [
+        "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/leanchecker",
+        "--verbose",
+        "WR2ClassicalCertificate"
+      ],
+      "environment": {
+        "LEAN_PATH": "/home/azureuser/goldbach-lean/research/wu2008/build/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+        "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1"
+      },
+      "exit_code": 0,
+      "seconds": 9.943400710821152,
+      "log_sha256": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7"
+    }
+  ],
+  "manifest_sha256": "1592428d23c312bb567fbc53332cd0f0c6c407b6f53d1162fd4f6e5b24117fa5",
+  "source_proofs": 389,
+  "genuine_original_prefix": 53,
+  "new_compilations": 336,
+  "verified_unchanged": 3762
+}

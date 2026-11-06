@@ -91,8 +91,6 @@ theorem actual_low_H_reciprocal_lower {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 
 def g18 : ℝ := C18*sourceP/(1-rhoCoupled)
 def B18 : ℝ := M18*sourceP/(1-rhoCoupled)+(100/49)*C18*envelopeE/(1-rhoCoupled)
 
-theorem g18_pos : 0 < g18 :=
-  div_pos (mul_pos C18_pos (by norm_num [sourceP])) (sub_pos.mpr rhoCoupled_bounds.2)
 
 theorem B18_pos : 0 < B18 := by
   unfold B18

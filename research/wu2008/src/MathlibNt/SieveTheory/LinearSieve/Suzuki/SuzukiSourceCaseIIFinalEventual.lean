@@ -21,30 +21,6 @@ structure SourceCaseIIEventualClosurePacket
     ⌈(D : ℝ) ^ (1 / s)⌉₊ d s
   bracket_lt_one : bracket (D : ℝ) < 1
 
-/-- One threshold simultaneously supplies source-`σ` geometry, both natural
-ceilings, and the analytic relative-bracket contraction.
-
-The production endpoint theorem can instantiate `bracket` with
-`caseIIConcreteRoundedRelativeBracket N D d Δ (sourceSigma D d) C K`.
-No size premise, perfect-power equality, raw endpoint bound, or abstract
-endpoint-error packet occurs here. -/
-theorem exists_source_caseII_geometry_analytic_bracket_threshold
-    (d : ℝ) (bracket : ℝ → ℝ)
-    (hd : 1 < d)
-    (hAnalytic : ∃ Da : ℝ, 1 < Da ∧ ∀ D : ℝ, Da ≤ D → bracket D < 1) :
-    ∃ D0 : ℝ, 1 < D0 ∧
-      ∀ (S : BoundingSieve) (D : ℕ), D0 ≤ (D : ℝ) →
-      ∀ s : ℝ, 1 < s → s ≤ 3 →
-        SourceCaseIIEventualClosurePacket S D d s bracket := by
-  obtain ⟨Dg, hDg, hgeom⟩ :=
-    exists_sourceSigma_doubleRounded_geometry_threshold d hd
-  obtain ⟨Da, hDa, hana⟩ := hAnalytic
-  let D0 := max Dg Da
-  refine ⟨D0, hDg.trans_le (le_max_left _ _), ?_⟩
-  intro S D hD s hs1 hs3
-  exact {
-    geometry := hgeom S D ((le_max_left Dg Da).trans hD) s hs1 hs3
-    bracket_lt_one := hana (D : ℝ) ((le_max_right Dg Da).trans hD) }
 
 /-- Pure terminal algebra for Claim 14.5 Case II.  Under the intended
 instantiation,

@@ -32,8 +32,6 @@ theorem Qn_le_Qinf (n : ℕ) : FiniteSameMother.Qn n ≤ Qinf := by
   unfold FiniteSameMother.Qn Qinf
   linarith only [h]
 
-theorem Qbest_le_Qbestinf (n : ℕ) : FiniteSameMother.Qbest n ≤ Qbestinf :=
-  max_le_max le_rfl (Qn_le_Qinf n)
 
 /-- The already proved single-slot mother is consumed once, replacing rather
 than adding sixth gains. Ordinary P2 allows complement one and excludes zero. -/

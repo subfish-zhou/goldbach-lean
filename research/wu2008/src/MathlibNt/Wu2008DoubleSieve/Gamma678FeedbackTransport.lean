@@ -68,21 +68,7 @@ theorem source_inner (j : Kind) (H : ℝ → ℝ) {t : ℝ} (ht : t ∈ Icc a b)
   intro u hu
   exact if_pos ⟨ht, hu⟩
 
-theorem source_inner_integrable (j : Kind) {H : ℝ → ℝ} {M t : ℝ}
-    (hm : Measurable H) (hM : 0 ≤ M) (hb : ∀ v, |H v| ≤ M) (ht : t ∈ Icc a b) :
-    IntervalIntegrable (fun u => H (V j t u) * D t u) volume (lo j t) (hi j) := by
-  apply (source_row_integrable j hm hM hb t).intervalIntegrable.congr
-  intro u hu
-  have hu' : u ∈ Icc (lo j t) (hi j) := by
-    simpa only [uIcc_of_le (lo_le_hi j ht)] using uIoc_subset_uIcc hu
-  exact if_pos ⟨ht, hu'⟩
 
-theorem source_outer_integrable (j : Kind) {H : ℝ → ℝ} {M : ℝ}
-    (hm : Measurable H) (hM : 0 ≤ M) (hb : ∀ v, |H v| ≤ M) :
-    IntervalIntegrable (fun t => ∫ u in lo j t..hi j, H (V j t u) * D t u) volume a b := by
-  apply (source_integrable j hm hM hb).integral_prod_left.intervalIntegrable.congr
-  intro t ht
-  exact source_inner j H (by simpa only [uIcc_of_le constants.2.1.le] using uIoc_subset_uIcc ht)
 
 theorem source_product (j : Kind) {H : ℝ → ℝ} {M : ℝ}
     (hm : Measurable H) (hM : 0 ≤ M) (hb : ∀ v, |H v| ≤ M) :

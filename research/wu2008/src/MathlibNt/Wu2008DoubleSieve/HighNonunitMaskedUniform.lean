@@ -71,24 +71,5 @@ theorem uniform (m r : ℕ) (j : Fin (m+1)) (C : Fin r → Fin (m+1) → ℝ)
   intro R hR
   exact hT R ((le_max_left _ _).trans hR)
 
-/-- Literal interface: neither a sampling premise nor a quadrature premise is accepted. -/
-theorem uniform_literal (m r : ℕ) (j : Fin (m+1)) (C : Fin r → Fin (m+1) → ℝ)
-    (hC : ∀ q, ∃ i, 1 ≤ |C q i|) (Phi : ℝ) (hPhi : 2 ≤ Phi)
-    (epsilon : ℝ) (he : 0 < epsilon) :
-    ∃ T : ℝ, 1 < T ∧ ∀ R : ℝ, T ≤ R → ∀ phi : ℝ, phi ∈ Icc 2 Phi →
-      ∀ gamma : Fin r → ℝ,
-      |(∑ f : Fin (m+1) → primeSlabPrimes R, primeSlabWeight R f *
-          (if ∀ q, (∑ i, C q i*gridCoordinates R f i) ≤ gamma q
-            then HighNonunitLegal.G j phi (gridCoordinates R f) else 0)) -
-        (∫ t in continuousCube (m+1),
-          (if ∀ q, (∑ i, C q i*t i) ≤ gamma q then HighNonunitLegal.G j phi t else 0) *
-            continuousDensity t)| < epsilon := by
-  obtain ⟨T,hT,h⟩ := uniform m r j C hC Phi hPhi epsilon he
-  refine ⟨T,hT,fun R hR phi hphi gamma => ?_⟩
-  have hF (t : Fin (m+1) → ℝ) : F j phi C gamma t =
-      (if ∀ q, (∑ i, C q i*t i) ≤ gamma q then HighNonunitLegal.G j phi t else 0) := by
-    unfold F mask
-    split_ifs <;> rfl
-  simpa only [primeSum, integral, hF] using h R hR phi hphi gamma
 
 end Wu2008DoubleSieve.HighNonunitMasked

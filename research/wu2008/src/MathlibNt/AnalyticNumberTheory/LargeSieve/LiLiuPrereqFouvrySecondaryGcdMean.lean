@@ -83,18 +83,5 @@ theorem iv3_secondary_sqrt_gcd_sum_refined
         show (B : ℝ) * ((B : ℝ) * E) = (B : ℝ) ^ 2 * E by ring,
         Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (Nat.cast_nonneg B)]
 
-/-- With a unit progression step modulo the numerator, the extra square-root
-step cost vanishes completely. The general result does not require this case. -/
-theorem iv3_secondary_sqrt_gcd_sum_coprime
-    {d₁ n n₂ n₂' s s' : ℕ} {a h h' : ℤ}
-    (hsec : h' * s = h * s')
-    (hl : iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h' ≠ 0)
-    (hsA : s.Coprime (iv3SecondaryNumerator d₁ n₂ n₂' a h).natAbs) (B : ℕ) :
-    (∑ r ∈ Ioc 0 B, Real.sqrt ((n * r * s * s').gcd
-      (iv3CorrelationNumerator d₁ n n₂ n₂' s s' a h h').natAbs : ℝ)) ≤
-      B * Real.sqrt ((n * s' *
-        (iv3SecondaryNumerator d₁ n₂ n₂' a h).natAbs.divisors.card : ℕ) : ℝ) := by
-  simpa only [hsA.gcd_eq_one, one_mul] using
-    iv3_secondary_sqrt_gcd_sum_refined hsec hl B
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

@@ -20,18 +20,11 @@ theorem weighted_exact : weightedRational = exactGain := by
   rw [weightedRational,ten_exact,eleven_exact]
   norm_num [exactTen,exactEleven,exactGain]
 
-theorem exact_positive_lower : 0 < exactTen ∧ exactTen ≤ I10 ∧
-    0 < exactEleven ∧ exactEleven ≤ I11 := by
-  rw [← ten_exact,← eleven_exact]
-  exact literal_actual_lower
 
 theorem exact_gain_positive : 0 < exactGain := by
   rw [← weighted_exact]
   exact weighted_positive
 
-theorem exact_weighted_lower : exactGain ≤ 8*I10+8*I11 := by
-  rw [← weighted_exact]
-  exact actual_weighted_lower
 
 theorem rational_upper_eq : FourPositiveCompleteCoefficient.rationalUpper = exactUpper := by
   have h := FourPositiveCompleteCoefficient.envelope_identity
@@ -43,10 +36,6 @@ theorem rational_upper_eq : FourPositiveCompleteCoefficient.rationalUpper = exac
 theorem exact_envelope_improvement : exactUpper+exactGain = JCubicExactEnvelope.exactUpper := by
   norm_num [exactUpper,exactGain,JCubicExactEnvelope.exactUpper]
 
-theorem strict_envelope_improvement : exactUpper < JCubicExactEnvelope.exactUpper := by
-  have h := exact_envelope_improvement
-  have hp := exact_gain_positive
-  linarith
 
 theorem actual_exact_upper : TruncatedElevenClassicalCountLower.classicalCoefficient ≤ exactUpper := by
   rw [← rational_upper_eq]

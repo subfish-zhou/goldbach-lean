@@ -74,20 +74,5 @@ theorem interval_card_le_cutoff {N : ℕ} {e : ℝ} {t : ℕ × ℕ}
   exact (show ((interval N e t).card : ℝ) ≤ ⌊X⌋₊ by exact_mod_cast hc).trans
     (Nat.floor_le (div_nonneg (mul_nonneg he (Nat.cast_nonneg N)) hp.le))
 
-/-- Pair counting is paid for the actual optimized signed CRT remainder. -/
-theorem sum_optimal_remainder_bound {N : ℕ} (hNe : Even N) {e R : ℝ}
-    (hN : 1 ≤ N) (he : e ≤ 1) (hR : 1 ≤ R) (Z : ℝ) :
-    |∑ t ∈ pairs N e, quadraticRemainder N e t (TwoDimensional.carrier Z R)
-      (TwoDimensional.optimalWeight N hNe Z R)| ≤
-      8*(N : ℝ)^(3/5 : ℝ)*(R+1)^2*R^4 := by
-  calc
-    _ ≤ ∑ t ∈ pairs N e, |quadraticRemainder N e t (TwoDimensional.carrier Z R)
-      (TwoDimensional.optimalWeight N hNe Z R)| := abs_sum_le_sum_abs _ _
-    _ ≤ ∑ _t ∈ pairs N e, 2*(R+1)^2*R^4 :=
-      sum_le_sum fun t _ => optimal_remainder_bound N hNe e Z R t hR
-    _ = (pairs N e).card * (2*(R+1)^2*R^4) := by simp
-    _ ≤ (4*(N : ℝ)^(3/5 : ℝ)) * (2*(R+1)^2*R^4) :=
-      mul_le_mul_of_nonneg_right (pairs_card_le_three_fifths hN he) (by positivity)
-    _ = _ := by ring
 
 end U8Literal.SmallProduct

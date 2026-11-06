@@ -67,8 +67,6 @@ theorem physicalSmall_family {N : ℕ} (hN : 1 ≤ N) (e : ℝ) {ρ : ℝ}
   rw [physicalSmall_card_split N e, family_partition N e ρ P, Nat.cast_add, Nat.cast_add]
   exact add_le_add (add_le_add hs le_rfl) le_rfl
 
-theorem familyBad_constant (N : ℕ) (e ρ : ℝ) (P : Finset ℕ) :
-    familyBad N e ρ (fun _ => P) = outputBad N e P := rfl
 
 /-- Bound the original grid directly; no identification with the modern alpha carrier. -/
 theorem occupied_card_nat {N : ℕ} {e ρ : ℝ} (hρ : 1 < ρ) :

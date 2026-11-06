@@ -38,11 +38,6 @@ def apNormalizedVaughanCanonicalBilinearShellMean
       Real.sqrt (vaughanCanonicalBilinearPrefixMaxSquare
         b y N u v k l q χ)
 
-lemma apNormalizedVaughanCanonicalBilinearShellMean_nonneg
-    (b : ℕ → ℂ) (y N u v k l Q : ℕ) :
-    0 ≤ apNormalizedVaughanCanonicalBilinearShellMean b y N u v k l Q := by
-  unfold apNormalizedVaughanCanonicalBilinearShellMean
-  positivity
 
 /-- The correct double Cauchy inequality for a direct bilinear shell.  Character
 Cauchy is local to each modulus; modulus Cauchy uses `q⁻¹/²`.  Consequently no
@@ -127,85 +122,8 @@ theorem apNormalizedVaughanCanonicalBilinearShellMean_sq_le
             rfl
   · exact conductorHarmonicFactor_nonneg Q
 
-/-- Existing bilinear tensor prefix large sieve inserted after the direct double
-Cauchy.  The actual energy occurs exactly once. -/
-theorem apNormalizedVaughanCanonicalBilinearShellMean_sq_le_energy
-    (b : ℕ → ℂ) (y N u v k l Q : ℕ)
-    (hQ : 0 < Q)
-    (hcard : ∀ q ∈ Finset.Icc 1 Q,
-      Fintype.card (PrimitiveCharacter q) ≤ q.totient) :
-    apNormalizedVaughanCanonicalBilinearShellMean b y N u v k l Q ^ 2 ≤
-      conductorHarmonicFactor Q *
-        ((((Nat.log2 (vaughanCanonicalTensorLength y k) + 1 : ℕ) : ℝ) ^ 2) *
-        ((2 ^ k : ℕ) : ℝ) *
-        ((vaughanCanonicalTensorLength y k : ℕ) +
-          primitiveBilinearQFactor Q * (Q : ℝ) ^ 2) *
-        vaughanCanonicalShortTensorEnergy vaughanMangoldtCoeff b
-          y N u v k l) := by
-  refine (apNormalizedVaughanCanonicalBilinearShellMean_sq_le
-    b y N u v k l Q hcard).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · exact weighted_primitive_vaughanCanonicalBilinear_prefixMax_unconditional
-      b y N u v k l Q hQ
-  · exact conductorHarmonicFactor_nonneg Q
 
-/-- Fully explicit direct-shell square bound.  In contrast with applying an
-additional rowwise estimate after Cauchy, the `27` tensor energy is multiplied
-only once. -/
-theorem apNormalizedVaughanCanonicalBilinearShellMean_sq_le_energy27
-    (b : ℕ → ℂ) (y N u v k l Q : ℕ) (B : ℝ)
-    (hQ : 0 < Q)
-    (hcard : ∀ q ∈ Finset.Icc 1 Q,
-      Fintype.card (PrimitiveCharacter q) ≤ q.totient)
-    (hB : ∀ n ≤ y, ‖b n‖ ≤ B) :
-    apNormalizedVaughanCanonicalBilinearShellMean b y N u v k l Q ^ 2 ≤
-      conductorHarmonicFactor Q *
-        ((((Nat.log2 (vaughanCanonicalTensorLength y k) + 1 : ℕ) : ℝ) ^ 2) *
-        ((2 ^ k : ℕ) : ℝ) *
-        ((vaughanCanonicalTensorLength y k : ℕ) +
-          primitiveBilinearQFactor Q * (Q : ℝ) ^ 2) *
-        (27 * B ^ 2 * (((2 ^ k : ℕ) : ℝ) *
-          vaughanCanonicalTensorLength y k) * Real.log (y + 1 : ℕ) ^ 5)) := by
-  refine (apNormalizedVaughanCanonicalBilinearShellMean_sq_le
-    b y N u v k l Q hcard).trans ?_
-  apply mul_le_mul_of_nonneg_left
-  · exact weighted_primitive_vaughanCanonicalBilinear_prefixMax_energy27
-      b y N u v k l Q B hQ hB
-  · exact conductorHarmonicFactor_nonneg Q
 
-/-- Scalar physical-scale extraction from the square ledger.  If `X = D*M ≤ y`,
-then the polynomial part of the direct shell is bounded by
-`y + sqrt(c) Q sqrt(D*y)`.  This is the point at which the apparent extra
-`D*M` is removed by taking the square root. -/
-theorem bilinear_direct_shell_physical_scale
-    (D M y Q c : ℝ)
-    (hD : 0 ≤ D) (hM : 0 ≤ M) (hy : 0 ≤ y)
-    (hQ : 0 ≤ Q) (hc : 0 ≤ c) (hDM : D * M ≤ y) :
-    Real.sqrt (D * (M + c * Q ^ 2) * (D * M)) ≤
-      y + Real.sqrt c * Q * Real.sqrt (D * y) := by
-  have hDy : 0 ≤ D * y := mul_nonneg hD hy
-  have hmain : D * (M + c * Q ^ 2) * (D * M) ≤
-      (y + Real.sqrt c * Q * Real.sqrt (D * y)) ^ 2 := by
-    have hcroot : (Real.sqrt c) ^ 2 = c := Real.sq_sqrt hc
-    have hdyroot : (Real.sqrt (D * y)) ^ 2 = D * y := Real.sq_sqrt hDy
-    have hDM0 : 0 ≤ D * M := mul_nonneg hD hM
-    have hsqDM : (D * M) ^ 2 ≤ y ^ 2 := (sq_le_sq₀ hDM0 hy).2 hDM
-    have hmod : c * Q ^ 2 * D * (D * M) ≤ c * Q ^ 2 * D * y := by
-      gcongr
-    have hcross : 0 ≤ 2 * y * (Real.sqrt c * Q * Real.sqrt (D * y)) := by
-      positivity
-    have hrootprod :
-        (Real.sqrt c * Q * Real.sqrt (D * y)) ^ 2 = c * Q ^ 2 * D * y := by
-      rw [mul_pow, mul_pow, hcroot, hdyroot]
-      ring
-    calc
-      _ = (D * M) ^ 2 + c * Q ^ 2 * D * (D * M) := by ring
-      _ ≤ y ^ 2 + c * Q ^ 2 * D * y := add_le_add hsqDM hmod
-      _ ≤ (y + Real.sqrt c * Q * Real.sqrt (D * y)) ^ 2 := by
-        rw [add_pow_two, hrootprod]
-        linarith only [hcross]
-  have htarget : 0 ≤ y + Real.sqrt c * Q * Real.sqrt (D * y) := by positivity
-  exact (Real.sqrt_le_iff).2 ⟨htarget, hmain⟩
 
 /-- Honest final wiring: once the exact canonical shell decomposition and its
 physical bounds have been proved, their finite sum inhabits the existing

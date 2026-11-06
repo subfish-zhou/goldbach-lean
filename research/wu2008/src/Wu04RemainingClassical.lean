@@ -57,18 +57,6 @@ theorem remaining_j (i : Fin 3) :
   all_goals norm_num [SecondFunctionalParameters.row2,SecondFunctionalParameters.row3,
     SecondFunctionalParameters.row4,Wu04MainClassical.a,yl,yu,c1,cubic]
 
-theorem remaining_paid (i : Fin 3) : certificate (row i)≤Wu08OriginalPsiRecovery.classicalNumerator (row i) := by
-  have hj := remaining_j i
-  have g := (ActualNineFeedback.coupledRow_geometry i.succ).1
-  have hS : 2<(row i).S := lt_of_lt_of_le (by norm_num) g.three_le_S
-  have hK : 2<(row i).kappa1 := lt_of_lt_of_le (by norm_num) (ActualNineFeedback.coupledRow_geometry i.succ).2.1
-  have h2 : 2<(row i).kappa2 := g.two_lt_s.trans_le (g.mother.s_le_kappa3.trans g.mother.kappa3_lt_kappa2.le)
-  have lS := lCertificate_paid hS
-  have lK := lCertificate_paid hK
-  have l2 := lCertificate_paid h2
-  have hc := remaining_classical i
-  unfold certificate classicalCore at *
-  linarith only [hj.1,hj.2,lS,lK,l2,hc]
 
 end
 end Wu04RemainingClassical

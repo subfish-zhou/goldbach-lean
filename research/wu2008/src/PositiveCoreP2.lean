@@ -7,9 +7,6 @@ noncomputable section
 /-- Changed actual positive input; this is not a new upper package for fixed Qinf. -/
 def Qpositive : ℝ := FeedbackLimit.Qinf + fifthIncrement/4
 
-theorem Qpositive_strict : FeedbackLimit.Qinf < Qpositive := by
-  unfold Qpositive
-  linarith only [fifthIncrement_pos]
 
 theorem signed_count {δ ε : ℝ} (hδ : 0 < δ) (hd : δ ≤ 1/100) (hε : 0 < ε) :
     ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
@@ -59,27 +56,7 @@ theorem ordinary_P2 (η : ℝ) (hη : 0 < η) :
     ArithmeticFunction.cardFactors (N-p) ≤ 2) (Finset.range (N+1))).card : ℝ) at hm
   nlinarith only [hm]
 
-/-- A fixed positive part of the new gain is actually paid, rather than merely displayed. -/
-theorem paid_above_old_limit :
-    ∃ δ : ℝ, 0 < δ ∧ δ ≤ 1/100 ∧
-      ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-        (FeedbackLimit.Qinf+fifthIncrement/8)*U8CanonicalMother.M N ≤
-          ((Finset.filter (fun p => Nat.Prime p ∧ 0 < N-p ∧
-            ArithmeticFunction.cardFactors (N-p) ≤ 2) (Finset.range (N+1))).card : ℝ) := by
-  have he : 0 < fifthIncrement/8 := div_pos fifthIncrement_pos (by norm_num)
-  obtain ⟨δ,hδ,hd,T,hT,hcount⟩ := ordinary_P2 _ he
-  refine ⟨δ,hδ,hd,T,hT,fun N hN hEven => ?_⟩
-  have h := hcount N hN hEven
-  convert h using 1
-  unfold Qpositive
-  ring
 
-/-- Exact remaining positive comparison, with no assertion that its right-hand side holds. -/
-theorem target_iff_fifth_gap :
-    8*log (5000/4469) < Qpositive ↔
-      4*(8*log (5000/4469)-FeedbackLimit.Qinf) < fifthGain-fifthHGain := by
-  unfold Qpositive fifthIncrement
-  constructor <;> intro h <;> linarith only [h]
 
 end
 end PositiveCoreResume

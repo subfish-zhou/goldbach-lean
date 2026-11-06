@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1/bin/lean",
+    "-j1",
+    "-DwarningAsError=true",
+    "-DautoImplicit=false",
+    "-R",
+    "/tmp/wu-jurkat-cutoff-v1/src",
+    "-o",
+    "/tmp/wu-jurkat-cutoff-v1/lib/MathlibNt/SieveTheory/JurkatRichert1965ChenGammaOneQOne.olean",
+    "/tmp/wu-jurkat-cutoff-v1/src/MathlibNt/SieveTheory/JurkatRichert1965ChenGammaOneQOne.lean"
+  ],
+  "environment": {
+    "LEAN_PATH": "/home/azureuser/goldbach-lean/research/wu2008/build/lib:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Qq/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/aesop/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/proofwidgets/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/importGraph/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/plausible/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/batteries/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/Cli/.lake/build/lib/lean:/home/azureuser/liu-wang-ternary-goldbach-lean/.lake/packages/mathlib/.lake/build/lib/lean:/home/azureuser/goldbach-lean/.lake/packages/LeanArchitect/.lake/build/lib/lean",
+    "LEAN_SYSROOT": "/home/azureuser/.elan/toolchains/leanprover--lean4---v4.33.0-rc1",
+    "TMPDIR": "/tmp/wu-jurkat-cutoff-v1"
+  }
+}

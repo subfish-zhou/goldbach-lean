@@ -189,7 +189,6 @@ theorem recovery_exact : recovery =
     SharpLogRecurrence.upperLog,alpha,beta,lam,truncatedSixthLowerAlpha,
     truncatedSixthLowerBeta,truncatedSixthLowerLambda]
 
-theorem recovery_size : (1/100:ℝ) < recovery := by rw [recovery_exact]; norm_num
 
 /-- This lower bound is for the actual fourLoss, with both multiplicities unchanged. -/
 theorem actual_fourLoss_lower : recovery ≤ AnalyticTotalThreshold.fourLoss := by

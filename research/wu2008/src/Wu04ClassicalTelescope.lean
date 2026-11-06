@@ -17,18 +17,7 @@ def collected : ℝ := rationalPart +
   (1/3-ds-dk)*log (253/200) + (1/3-ds)*log (254/253) -
   ds*log (177/127) - log (10/9)
 
-/-- All original source gates and all collected signs are checked before payment. -/
-theorem first_gates :
-    2 < row1.s ∧ row1.s ≤ row1.S ∧ 2 ≤ row1.S*(1-1/row1.s) ∧
-    2 < row1.kappa3 ∧ row1.kappa3 ≤ row1.kappa1 ∧
-    2 ≤ row1.kappa1*(1-1/row1.kappa3) ∧
-    3 ≤ row1.S ∧ 3 ≤ row1.kappa1 ∧ 2 < row1.kappa2 ∧ row1.kappa2 ≤ 3 :=
-  original_classical_gates 0
 
-theorem collected_signs :
-    0 ≤ 4-ds ∧ 0 ≤ 6-ds-dk ∧ 0 ≤ 17/3-ds-dk ∧ 0 ≤ 23/3-ds-dk ∧
-    1/3-ds-dk ≤ 0 ∧ 1/3-ds ≤ 0 ∧ 0 ≤ ds := by
-  norm_num [ds,dk,d,row1]
 
 private theorem log_ratio {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
     log (a/b) = log a-log b := log_div ha.ne' hb.ne'

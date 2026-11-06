@@ -146,32 +146,6 @@ theorem mother_source_le (p : SecondFunctionalParameters) (_hp : p.MotherAdmissi
     (fun _ hd => (omega3_source_support_le_Q (by omega) hδ hδhi hb hd).1)
     hN he (word_length high) (word_last high)
 
-/-- Actual mother Gamma20/21 consumer: only the nonunit part is enlarged.
-No analytic switched-kernel estimate or full-Gamma payment is asserted. -/
-theorem mother_gamma_le (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
-    (hs : 2 ≤ p.s) {k i N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (hN : 4 ≤ N) (he : Even N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V) (high : Bool) :
-    secondFunctionalMotherGammaSum p N δ (convolutionWuWindows N Δ V)
-        (if high then 21 else 20) ≤
-      actualUnit N δ p (convolutionWuWindows N Δ V) high +
-        actualEnvelope N δ p (convolutionWuWindows N Δ V) high := by
-  rw [← actual_partition]
-  exact add_le_add le_rfl (mother_source_le p hp hs hN he hδ hδhi hb high)
 
-/-- The same source-box consumer for arbitrary nonnegative sigma, unchanged on each label. -/
-theorem mother_sigma_labels_le (p : SecondFunctionalParameters) (_hp : p.MotherAdmissible)
-    (_hs : 2 ≤ p.s) {k i N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (hN : 4 ≤ N) (he : Even N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V) (high : Bool) (σ : ℕ → ℝ) (hσ : ∀ d, 0 ≤ σ d) :
-    (∑ x ∈ FourPrimeNonunit.labels N (convolutionWuWindows N Δ V)
-      (fun d => wuLocalCutoff N δ d p.S) (fun d => wuLocalCutoff N δ d p.kappa1)
-      (fun d => wuLocalCutoff N δ d p.kappa2) (fun d => wuLocalCutoff N δ d p.kappa3)
-      (fun d => wuLocalCutoff N δ d p.s) (word high), σ x.1) ≤
-    ∑ x ∈ actualProfiles N δ p (convolutionWuWindows N Δ V) high,
-      σ x.1 * (actualFibre N δ p x).card :=
-  sigma_labels_le
-    (fun _ hd => (omega3_source_support_le_Q (by omega) hδ hδhi hb hd).1)
-    hN he (word_length high) (word_last high) σ hσ
 
 end Wu2008DoubleSieve.HighNonunit

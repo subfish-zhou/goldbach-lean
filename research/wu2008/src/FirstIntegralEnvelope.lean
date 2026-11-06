@@ -20,10 +20,6 @@ theorem lowerLog_nonneg {x : ℝ} (hx : 1 ≤ x) : 0 ≤ lowerLog x := by
   unfold lowerLog
   positivity
 
-theorem lowerLog_pos {x : ℝ} (hx : 1 < x) : 0 < lowerLog x := by
-  have h : 0 < (x-1)/(x+1) := div_pos (by linarith) (by linarith)
-  unfold lowerLog
-  positivity
 
 /-- Exact derivative of the existing cubic envelope error, not a new order. -/
 theorem log_lower_gap_deriv {x : ℝ} (hx : 1 ≤ x) :

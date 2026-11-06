@@ -36,13 +36,6 @@ theorem four_classical_lower (i : Fin 4) :
   unfold classicalLower classicalNumerator
   linarith only [hj,hj1,hl,hl1,hl2]
 
-/-- Full analytic lower certificate at all four fixed original rows. -/
-theorem four_numerator_lower (i : Fin 4) :
-    classicalLower (parameters i)-2*fullCostPolynomial (parameters i) ≤
-    classicalNumerator (parameters i)-2*coupledCostMass (parameters i) := by
-  have hb := four_classical_lower i
-  have hc := original_cost_polynomial i
-  linarith only [hb,hc]
 
 /-- Actual positive-delta consumer, with no continuity-at-zero assumption. -/
 theorem four_actual_inputs (i : Fin 4) {δ : ℝ} (hd : 0 < δ) (hh : δ ≤ 1/10) :
@@ -109,10 +102,6 @@ theorem first_actual_rational {δ : ℝ} (hd : 0 < δ) (hh : δ ≤ 1/10) :
   have hb := first_classical_rational
   linarith only [h,hc,hb]
 
-/-- Exact residual of THIS certificate, not a counterexample to the actual target. -/
-theorem first_certificate_residual :
-    5*(15826357:ℝ)/1000000000-52808/1000000 = 5264757/200000000 ∧
-    0 < (5264757:ℝ)/200000000 := by norm_num
 
 /-- What remains in the literal target: two genuine, nonnegative analytic slacks. -/
 theorem first_actual_residual_identity :
@@ -120,10 +109,6 @@ theorem first_actual_residual_identity :
     (classicalNumerator row1-214652/1000000) +
     2*(80922/1000000-coupledCostMass row1)-5264757/200000000 := by ring
 
-theorem first_residual_slacks_nonnegative :
-    0 ≤ classicalNumerator row1-214652/1000000 ∧
-    0 ≤ 80922/1000000-coupledCostMass row1 :=
-  ⟨sub_nonneg.mpr first_classical_rational, sub_nonneg.mpr first_cost_rational⟩
 
 #print axioms four_actual_inputs
 #print axioms first_classical_rational

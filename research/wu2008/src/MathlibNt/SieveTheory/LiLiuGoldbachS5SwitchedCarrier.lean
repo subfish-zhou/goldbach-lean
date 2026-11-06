@@ -110,12 +110,6 @@ theorem mem_goldbachB9PlusSiftedAtoms_iff {N : ℕ} {Z : ℝ}
       x ∈ goldbachB9PlusAtoms N ∧ SurvivesSieve N Z (goldbachB9PlusOutput N x) := by
   simp [goldbachB9PlusSiftedAtoms, literalHPoint]
 
-theorem goldbachB9PlusSiftedAtoms_eq_coprime_filter (N : ℕ) (Z : ℝ) :
-    goldbachB9PlusSiftedAtoms N Z =
-      (goldbachB9PlusAtoms N).filter
-        fun x => Nat.Coprime (goldbachB10ProdPrimes N Z) (goldbachB9PlusOutput N x) := by
-  ext x
-  simp [goldbachB9PlusSiftedAtoms, goldbachB10_coprime_prodPrimes_iff_literalHPoint]
 
 noncomputable def goldbachB9PlusPrimeAtoms (N : ℕ) : Finset (Σ _rs : ℕ × ℕ, ℕ) :=
   (goldbachB9PlusAtoms N).filter fun x => (goldbachB9PlusOutput N x).Prime
@@ -165,22 +159,6 @@ theorem goldbachS5Switch_mem_primeAtoms {N : ℕ} {eps : ℝ}
     simpa [hnp, Nat.sub_sub_self hpN] using hp
   exact ⟨Finset.mem_filter.mpr ⟨hmem, hout⟩, by simpa [← heq] using hb.2.2⟩
 
-theorem goldbachS5GoodNonsquareAtoms_outputFiber_card_le {N p : ℕ} {eps : ℝ}
-    (hN : 2 ≤ N) (heps : 0 < eps)
-    (hcut : (N : ℝ) ^ ((2 : ℝ) / 3) ≤ eps * N) :
-    ((goldbachS5GoodNonsquareAtoms N eps).filter fun x => N - x.2 = p).card ≤
-      ((goldbachB9PlusPrimeAtoms N).filter fun x => goldbachB9PlusOutput N x = p).card := by
-  apply Finset.card_le_card_of_injOn goldbachS5Switch
-  · intro x hx
-    obtain ⟨hx, hp⟩ := Finset.mem_filter.mp hx
-    have ha := (Finset.mem_filter.mp (Finset.mem_filter.mp hx).1).1
-    exact Finset.mem_filter.mpr
-      ⟨(goldbachS5Switch_mem_primeAtoms hN heps hcut hx).1,
-        (goldbachS5Switch_output ha).trans hp⟩
-  · intro x hx y hy hxy
-    exact goldbachS5Switch_injOn
-      (Finset.mem_filter.mp (Finset.mem_filter.mp (Finset.mem_filter.mp hx).1).1).1
-      (Finset.mem_filter.mp (Finset.mem_filter.mp (Finset.mem_filter.mp hy).1).1).1 hxy
 
 private theorem S5_card_le_mul_of_fibers {α : Type*} [DecidableEq α]
     (A : Finset α) (T : Finset ℕ) (f : α → ℕ) (k : ℕ)

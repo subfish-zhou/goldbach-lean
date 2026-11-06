@@ -139,17 +139,6 @@ theorem suzukiLemma14_3_natCeil_uniform_exponentialTail
   · intro n
     exact suzukiSourceV_le_pow_div_factorial S n D z
 
-/-- Explicit `tsum` form of the same `N`-uniform conclusion. -/
-theorem suzukiLemma14_3_natCeil_uniform_tsum
-    (S : BoundingSieve) {N D z : ℕ} {s : ℝ}
-    (hD : 1 < D) (hs : 2 ≤ s)
-    (hz : z = ⌈(D : ℝ) ^ (1 / s)⌉₊) :
-    suzukiActualT S N D z ≤
-      ∑' n : ℕ, if ⌊s - 2⌋₊ + 1 ≤ n then
-        (∑ p ∈ suzukiSupportedBelow S z, S.nu p) ^ n /
-          (n.factorial : ℝ) else 0 := by
-  simpa [suzukiExponentialTail] using
-    suzukiLemma14_3_natCeil_uniform_exponentialTail S hD hs hz
 
 
 end MathlibNt.SieveTheory

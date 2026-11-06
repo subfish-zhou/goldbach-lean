@@ -76,20 +76,6 @@ theorem matching_width_identity : FifthReciprocalAffineUpper.upperRational-oldLo
       FourActualCapRecovery.recovery := by unfold packet lowerPacket; ring
   linarith only [hc,hl,he]
 
-theorem whole_log_payment_nonnegative : 0 ≤ logs := by
-  have hu := FifthReciprocalAffineUpper.repaid_payment
-  have hl := GlobalLogRelationPayment.lower_repaid_payment
-  rw [← FifthReciprocalAffineUpper.repaid_log_identity] at hu
-  unfold logs
-  linarith only [hu,hl]
 
-theorem corrected_width_identity : CorrectedCoefficientUpper.upperCoefficient-DisjointSlackJoin.coefficient =
-    logs+shared log+j log+fifth log+fifthRec+sixthLog+sixthRec+four+retained+
-      CorrectedCoefficientUpper.sixthWidth+CorrectedCoefficientUpper.smallWidth := by
-  have h := matching_width_identity
-  have hw := CorrectedCoefficientUpper.width_identity
-  unfold CorrectedCoefficientUpper.oldWidth oldLower at *
-  unfold DisjointSlackJoin.coefficient
-  linarith only [h,hw]
 
 end OldPackageWidth

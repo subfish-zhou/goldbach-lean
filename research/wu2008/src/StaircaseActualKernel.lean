@@ -13,55 +13,6 @@ noncomputable section
 def NodeCertificate (δ : ℝ) : Prop :=
   ∀ r ∈ Wu08Staircase.table, r.2.2 ≤ wuImprovementLimit false δ r.2.1
 
-/-- An explicit entry point exposes every currently unsupplied Table 2 inequality. -/
-theorem nodeCertificate_of_21 {δ : ℝ}
-    (node01 : (211041 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (21/10))
-    (node02 : (191556 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (22/10))
-    (node03 : (173631 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (23/10))
-    (node04 : (157035 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (24/10))
-    (node05 : (141585 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (25/10))
-    (node06 : (127132 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (26/10))
-    (node07 : (113556 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (27/10))
-    (node08 : (100756 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (28/10))
-    (node09 : (88648 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (29/10))
-    (node10 : (77162 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (30/10))
-    (node11 : (66236 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (31/10))
-    (node12 : (55818 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (32/10))
-    (node13 : (46164 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (33/10))
-    (node14 : (37529 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (34/10))
-    (node15 : (30123 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (35/10))
-    (node16 : (23901 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (36/10))
-    (node17 : (18997 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (37/10))
-    (node18 : (15336 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (38/10))
-    (node19 : (12593 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (39/10))
-    (node20 : (10120 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (40/10))
-    (node21 : (8099 / 10000000 : ℝ) ≤ wuImprovementLimit false δ (41/10))
-    : NodeCertificate δ := by
-  intro r hr
-  simp only [Wu08Staircase.table, List.mem_cons, List.not_mem_nil, or_false] at hr
-  rcases hr with h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h | h
-  all_goals subst r; first
-    | exact node01
-    | exact node02
-    | exact node03
-    | exact node04
-    | exact node05
-    | exact node06
-    | exact node07
-    | exact node08
-    | exact node09
-    | exact node10
-    | exact node11
-    | exact node12
-    | exact node13
-    | exact node14
-    | exact node15
-    | exact node16
-    | exact node17
-    | exact node18
-    | exact node19
-    | exact node20
-    | exact node21
 
 /-- The two literal retained domains coincide, including all boundary faces. -/
 theorem domain_eq {t : ℝ} (ht : 0 ≤ t) : StaircaseShrink.domain t =

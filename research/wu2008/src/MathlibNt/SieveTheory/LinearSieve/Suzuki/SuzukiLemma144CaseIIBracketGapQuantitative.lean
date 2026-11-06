@@ -86,27 +86,6 @@ theorem exists_caseIIConcreteRoundedRelativeBracket_gap_threshold
   rw [hT] at hInt hEndpoint
   linarith
 
-/-- Scale-free form of the quantitative gap: one threshold works for every
-choice of the outer constant `C`. -/
-theorem exists_caseIIConcreteRoundedRelativeBracket_gap_threshold_scaleFree
-    (N : ℕ) (K d Δ : ℝ)
-    (hF0 : 0 ≤ finiteSourceLayer 1 2 N 3)
-    (hF1 : 0 ≤ finiteSourceLayer 1 2 (N - 1) 2)
-    (hK : 0 ≤ K)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) :
-    ∃ D0 : ℝ, 1 < D0 ∧ ∀ (D C : ℝ), D0 ≤ D →
-      27 * (1 - Δ) / (32 * sourceSigma D d) ≤
-        1 - caseIIConcreteRoundedRelativeBracket
-          N D d Δ (sourceSigma D d) C K := by
-  obtain ⟨D0, hD0, hgap⟩ :=
-    exists_caseIIConcreteRoundedRelativeBracket_gap_threshold
-      N K 0 d Δ hF0 hF1 hK (by norm_num) hΔ0 hΔ1 hd
-  refine ⟨D0, hD0, ?_⟩
-  intro D C hD
-  rw [caseIIConcreteRoundedRelativeBracket_C_independent
-    N D d Δ (sourceSigma D d) C 0 K]
-  exact hgap D hD
 
 /-- Pure algebraic endpoint absorption.  After `V(D) ≤ V(z)` and Claim 14.6(i)
 provide `E(D,σ) ≤ E(D,s)`, the quantitative gap cancels the source `1/σ`;

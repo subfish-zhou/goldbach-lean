@@ -57,12 +57,6 @@ theorem goldbachB8PlusMainMass_nonneg (N : ℕ) :
   exact liuLogarithmicIntegral_nonneg _ (by positivity)
     (goldbachC8ProductSupport_two_le_quotient hm)
 
-theorem goldbachB8PlusWeight_sum_eq_card_atoms (N : ℕ) :
-    ∑ p ∈ goldbachB8PlusSupport N, goldbachB8PlusWeight N p =
-      ((goldbachB8PlusAtoms N).card : ℝ) := by
-  simpa [goldbachB8PlusSupport, goldbachB8PlusWeight, goldbachB8PlusOutputFiber] using
-    MathlibNt.SieveTheory.sum_card_fibres_filter_image (goldbachB8PlusAtoms N) (goldbachB8PlusOutput N)
-      (fun _ => True)
 
 /-- Reciprocal totient on all moduli; it agrees with `goldbachNu` on squarefree moduli. -/
 noncomputable def goldbachB8PlusNu : ArithmeticFunction ℝ :=

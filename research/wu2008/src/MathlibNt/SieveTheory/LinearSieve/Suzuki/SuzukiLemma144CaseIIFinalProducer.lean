@@ -112,25 +112,6 @@ theorem lemma14_4_caseII_final_finiteDepth_interface
     intro D _hD _hD2 s _hs hsII _hz2
     exact False.elim (hodd hsII.1)
 
-/-- The same packet with the unused finite-depth bound binders, ready to pass
-literally as `hcaseII` to `lemma14_4_full_finiteDepth_final`. -/
-theorem lemma14_4_caseII_final_hcaseII
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {C K d Δ C145 : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hd1 : 1 < d) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d)
-    (hC3 : 3 ≤ C) (hK : 2 ≤ K) (hC145 : 0 < C145)
-    (hlocal : HasDimensionOneLocalProductBound S K) :
-    ∀ depth N Dmin : ℕ,
-      1 ≤ N → N < depth → 2 ≤ Dmin →
-      Lemma144GlobalDepthAt S H C K d Δ N Dmin →
-      ∃ DII : ℕ, Dmin ≤ DII ∧
-        Lemma144UniformNatCeilRestrictedAt S H C K d Δ (N + 1) DII
-          (Lemma144CaseIIFinalSide (N + 1)) := by
-  intro _depth N Dmin hN _hNdepth hDmin hIH
-  exact lemma14_4_caseII_final_finiteDepth_interface S H hH hd1 hΔ0 hΔ1 hd
-    hC3 hK hC145 hlocal N Dmin hN hDmin hIH
 
 
 end MathlibNt.SieveTheory

@@ -64,22 +64,6 @@ theorem gamma16_strengthened_of_prefix {N d ell : ℕ} {δ : ℝ} {p : Gamma16Tu
   exact hqn.trans ⟨d * gamma16Product p,
     (Nat.mul_div_cancel' hdiv).symm.trans (mul_comm _ _)⟩
 
-theorem gamma16_raw_is_bad {N d ell : ℕ} {δ : ℝ} {p : Gamma16Tuple}
-    (hd : 0 < d) (hp : p ∈ gamma16Tuples N δ d)
-    (hell : ell ∈ gamma16RawCarrier N d p) : Omega3BadD N d ell := by
-  have hf : p 0 ∣ d ∧ p 1 ∣ d := by
-    by_contra hn
-    rw [gamma16_raw_carrier_ite hp, if_neg hn] at hell
-    exact notMem_empty _ hell
-  have hdiv := (mem_filter.mp hell).2.2.1
-  have hprime := (mem_gamma16Tuples.mp hp).1 0 |>.1
-  intro hcop
-  have hpcomp : p 0 ∣ (N - ell) / d := by
-    rw [gamma16_complement_div hd hdiv]
-    exact ⟨p 1 * p 2 * p 3 * gamma16Quotient N d p ell, by
-      simp only [gamma16Product]; ring⟩
-  exact hprime.not_dvd_one (by
-    simpa only [hcop.gcd_eq_one] using Nat.dvd_gcd hf.1 hpcomp)
 
 theorem gamma16_switch_profile_mem {i N d ell : ℕ} {δ : ℝ} {W : Fin i → Finset ℕ}
     (hN : 4 ≤ N) (he : Even N) (hd : 0 < d) (hdW : d ∈ boxConvolutionSupport W)

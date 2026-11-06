@@ -46,16 +46,6 @@ theorem tail_proxy_eq_model_term {N m : ℕ} (hN : 1 < (N : ℝ))
   rw [Real.log_div hn0.ne' hm0.ne']
   field_simp
 
-theorem tailPrimeModel_nonneg {N : ℕ} (α : ℝ) (hN : 1 < (N : ℝ)) :
-    0 ≤ tailPrimeModel N α := by
-  unfold tailPrimeModel weightedPrimeReciprocalLogSum
-  apply sum_nonneg
-  intro m hm
-  obtain ⟨hmI, hmp⟩ := mem_filter.mp hm
-  have hms : (m : ℝ) ≤ Real.sqrt N := by
-    simpa only [Real.sqrt_eq_rpow] using (mem_Ioc_rpowFloor_iff.mp hmI).2
-  have hs := tail_log_scale_le_half hN hmp.pos hms
-  exact div_nonneg (one_div_nonneg.mpr (by linarith)) (Nat.cast_nonneg m)
 
 theorem tendsto_tailPrimeModel {α : ℝ} (hα : 0 < α) (hαh : α < 1 / 2) :
     Tendsto (fun N : ℕ => tailPrimeModel N α) atTop (nhds (tailIntegral α)) := by

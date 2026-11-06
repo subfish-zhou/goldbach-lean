@@ -67,18 +67,6 @@ theorem terminal_lower_le : lower 3 3≤firstFeedback NineFeedbackStrength.origi
   simp only [firstFeedback,profileJ,intervalIntegral.integral_same,zero_div,add_zero]
   linarith only [he,hw,hc]
 
-/-- All five original rows, with the last row's forcing exactly zero. -/
-theorem original_rows_lower_le (i : Fin 5) :
-    lower (firstNode i) (firstS i) ≤
-      firstFeedback NineFeedbackStrength.originalH (firstNode i) (firstS i) := by
-  rcases i with ⟨i,hi⟩
-  have hi' : i=0 ∨ i=1 ∨ i=2 ∨ i=3 ∨ i=4 := by omega
-  rcases hi' with rfl | rfl | rfl | rfl | rfl
-  · apply lower_le <;> norm_num [firstNode,firstS,upperNode]
-  · apply lower_le <;> norm_num [firstNode,firstS,upperNode]
-  · apply lower_le <;> norm_num [firstNode,firstS,upperNode]
-  · apply lower_le <;> norm_num [firstNode,firstS,upperNode]
-  · convert terminal_lower_le using 1 <;> norm_num [firstNode,firstS]
 
 end
 end FirstErrorFullPayment

@@ -55,15 +55,7 @@ theorem h_strict {s : ℝ} (hs : 2 ≤ s) (ht : s < 7/2) :
   norm_num only at hx
   linarith
 
-/-- The right endpoint retains nonnegativity, not an asserted strict gain. -/
-theorem h_endpoint_nonneg : 0 ≤ wuImprovementLimit false (1/1000) (7/2) :=
-  wuImprovementLimit_nonneg false (by norm_num) (by norm_num) (by norm_num) (by norm_num)
 
-/-- The full rational endpoint margin. -/
-theorem h_two_strict : (1/500 : ℝ) < wuImprovementLimit false (1/1000) 2 := by
-  have h := h_strict (s := 2) (by norm_num) (by norm_num)
-  norm_num at h ⊢
-  exact h
 
 /-- A strict uniform value bound, with no uniform finite threshold asserted. -/
 theorem h_interval_strict {s : ℝ} (hs : 2 ≤ s) (ht : s ≤ 3) :

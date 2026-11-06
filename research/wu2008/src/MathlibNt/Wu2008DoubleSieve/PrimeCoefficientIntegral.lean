@@ -66,49 +66,6 @@ theorem wuEffectiveCoefficient_uniform_monotone_bound (upper : Bool)
       change wuUpperCoefficient t + |wuImprovementAt true k δ t N0| ≤ 110
       linarith)
 
-theorem wuEffectiveCoefficient_intervalIntegral_bounds
-    {f : ℝ → ℝ} (hf : MonotoneOn f (Icc 1 10))
-    {a b : ℝ} (ha : 1 ≤ a) (hab : a ≤ b) (hb : b ≤ 10) :
-    f a * (∫ t in a..b, 1 / t) ≤ (∫ t in a..b, f t / t) ∧
-      (∫ t in a..b, f t / t) ≤ f b * (∫ t in a..b, 1 / t) := by
-  have hs : uIcc a b ⊆ Icc (1 : ℝ) 10 := by
-    rw [uIcc_of_le hab]
-    exact Icc_subset_Icc ha hb
-  have hi : IntervalIntegrable f volume a b := (hf.mono hs).intervalIntegrable
-  have ht : ContinuousOn (fun t : ℝ => t⁻¹) (uIcc a b) := by
-    apply continuousOn_id.inv₀
-    intro t ht
-    have := (hs ht).1
-    change t ≠ 0
-    linarith
-  have hfi : IntervalIntegrable (fun t => f t / t) volume a b := by
-    simpa only [div_eq_mul_inv] using hi.mul_continuousOn ht
-  have hone : IntervalIntegrable (fun t : ℝ => 1 / t) volume a b := by
-    simpa only [one_div] using ht.intervalIntegrable
-  have hleft : f a * (∫ t in a..b, 1 / t) =
-      ∫ t in a..b, f a / t := by
-    rw [← intervalIntegral.integral_const_mul]
-    congr 1
-    ext t
-    ring
-  have hright : f b * (∫ t in a..b, 1 / t) =
-      ∫ t in a..b, f b / t := by
-    rw [← intervalIntegral.integral_const_mul]
-    congr 1
-    ext t
-    ring
-  rw [hleft, hright]
-  constructor
-  · apply intervalIntegral.integral_mono_on hab
-      (by convert hone.const_mul (f a) using 1; ext t; ring) hfi
-    intro t ht
-    exact div_le_div_of_nonneg_right
-      (hf ⟨ha, hab.trans hb⟩ ⟨ha.trans ht.1, ht.2.trans hb⟩ ht.1) (by linarith [ht.1])
-  · apply intervalIntegral.integral_mono_on hab hfi
-      (by convert hone.const_mul (f b) using 1; ext t; ring)
-    intro t ht
-    exact div_le_div_of_nonneg_right
-      (hf ⟨ha.trans ht.1, ht.2.trans hb⟩ ⟨ha.trans hab, hb⟩ ht.2) (by linarith [ht.1])
 
 noncomputable def wuPrimeCoefficientWeight (f : ℝ → ℝ) (q : ℝ) (p : ℕ) : ℝ :=
   f (log q / log p - 1) / (((p : ℝ) - 2) * (1 - log p / log q))

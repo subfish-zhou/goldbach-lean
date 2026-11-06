@@ -37,10 +37,6 @@ theorem measurableSet_goldbachB9LogGridCell (n : ℕ) (q : Fin n × Fin n) :
     MeasurableSet (goldbachB9LogGridCell n q) :=
   measurableSet_Ioc.prod measurableSet_Ioc
 
-theorem measurableSet_goldbachB9LogGridRegion (n : ℕ) :
-    MeasurableSet (goldbachB9LogGridRegion n) := by
-  classical
-  exact Finset.measurableSet_biUnion _ fun q _ => measurableSet_goldbachB9LogGridCell n q
 
 theorem measurableSet_goldbachB9LogSourceRegion :
     MeasurableSet goldbachB9LogSourceRegion := by
@@ -48,9 +44,6 @@ theorem measurableSet_goldbachB9LogSourceRegion :
     ((measurableSet_lt measurable_const measurable_snd).inter
       (measurableSet_le measurable_snd (by fun_prop)))
 
-theorem measurableSet_goldbachB9LogAmbientBox :
-    MeasurableSet goldbachB9LogAmbientBox :=
-  measurableSet_Icc.prod measurableSet_Icc
 
 theorem isCompact_goldbachB9LogAmbientBox : IsCompact goldbachB9LogAmbientBox :=
   isCompact_Icc.prod isCompact_Icc
@@ -69,28 +62,8 @@ theorem measurableSet_goldbachB9ObliqueStrip (n : ℕ) :
     ((measurableSet_lt (by fun_prop) measurable_snd).inter
       (measurableSet_lt measurable_snd (by fun_prop)))
 
-theorem goldbachB9LogSourceRegion_section (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB9LogSourceRegion =
-      if u ∈ Ioc (4 / 53 : ℝ) (1 / 3) then Ioc (1 / 3) ((1 - u) / 2) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB9LogSourceRegion]
 
-theorem goldbachB9LeftStrip_section (n : ℕ) (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB9LeftStrip n =
-      if u ∈ Ioc (4 / 53 - goldbachB9AlphaGridStep n) (4 / 53) then
-        Icc (1 / 4) (1 / 2) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB9LeftStrip]
 
-theorem goldbachB9BottomStrip_section (n : ℕ) (u : ℝ) :
-    Prod.mk u ⁻¹' goldbachB9BottomStrip n =
-      if u ∈ Icc (4 / 53 : ℝ) (1 / 3) then
-        Ioc (1 / 3 - goldbachB9BetaGridStep n) (1 / 3) else ∅ := by
-  classical
-  ext v
-  simp [goldbachB9BottomStrip]
 
 theorem goldbachB9ObliqueStrip_section (n : ℕ) (u : ℝ) :
     Prod.mk u ⁻¹' goldbachB9ObliqueStrip n =

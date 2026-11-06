@@ -24,10 +24,6 @@ theorem dUnpaid_eq_min : dUnpaid =
   · rw [max_eq_right h,min_eq_right (by linarith)]
   · rw [max_eq_left h,min_eq_left (by linarith)]
 
-theorem original_dUnpaid_balance : CorrectionD0Joint.dUnpaid =
-    (D0FullDensity.dPaid-D0FullDensity.finiteD)+dUnpaid := by
-  unfold CorrectionD0Joint.dUnpaid dUnpaid
-  ring
 
 /-- Exact remaining profile obligation; this definition is NOT a paid estimate. -/
 def profileUnpaid : ℝ := numeratorUnpaid/(1-D0)+

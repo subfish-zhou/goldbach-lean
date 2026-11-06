@@ -1,0 +1,344 @@
+--- a/research/wu2008/src/MathlibNt/SieveTheory/Switching/MainTerm.lean
++++ b/research/wu2008/src/MathlibNt/SieveTheory/Switching/MainTerm.lean
+@@ -690,337 +690,14 @@
+ 
+ /-! ## Uniform lower bound for the truncated singular series
+ 
+-The following are general analytic facts, independent of the particular sieve problem.
+-They concern the finite singular-series products used in
++Reuse the finite singular-series product estimate from
+ `AnalyticNumberTheory/Sieve/SingularSeries.lean`. -/
+ 
+-/-- For a finite set, `∏(1 - x_i) ≥ 1 - Σ x_i` when `0 ≤ x_i ≤ 1`. -/
+-theorem prod_one_sub_ge_one_sub_sum {s : Finset ℕ} {x : ℕ → ℝ}
+-    (hx0 : ∀ i ∈ s, 0 ≤ x i) (hx1 : ∀ i ∈ s, x i ≤ 1) :
+-    1 - ∑ i ∈ s, x i ≤ ∏ i ∈ s, (1 - x i) := by
+-  induction s using Finset.induction_on with
+-  | empty => simp
+-  | insert a s ha ih =>
+-      have hx0s : ∀ i ∈ s, 0 ≤ x i := fun i hi => hx0 i (Finset.mem_insert_of_mem hi)
+-      have hx1s : ∀ i ∈ s, x i ≤ 1 := fun i hi => hx1 i (Finset.mem_insert_of_mem hi)
+-      have hx0a : 0 ≤ x a := hx0 a (by simp)
+-      have hx1a : x a ≤ 1 := hx1 a (by simp)
+-      have hS : 0 ≤ ∑ i ∈ s, x i := Finset.sum_nonneg hx0s
+-      rw [Finset.sum_insert ha]
+-      calc
+-        1 - (x a + ∑ i ∈ s, x i) ≤ (1 - x a) * (1 - ∑ i ∈ s, x i) := by
+-          nlinarith [mul_nonneg hx0a hS]
+-        _ ≤ (1 - x a) * ∏ i ∈ s, (1 - x i) := by
+-          exact mul_le_mul_of_nonneg_left (ih hx0s hx1s) (sub_nonneg.mpr hx1a)
+-        _ = ∏ i ∈ insert a s, (1 - x i) := by
+-          rw [Finset.prod_insert ha]
+-
+-/-- `Σ_{p prime, 2 < p ≤ z} 1/(p-1)² ≤ 1/2`.
+-
+-Primes > 2 are odd, so `p-1 = 2k` is even. The injection `p ↦ (p-1)/2` reduces the sum to
+-`Σ_k 1/(2k)² = (1/4)Σ_k 1/k²`; then use the telescoping estimate
+-`Σ_{k≥1} 1/k² ≤ 1 + Σ_{k≥2} 1/((k−1)k) ≤ 2`. -/
+-theorem sum_sq_recip_primes_ge_three_le_half (z : ℕ) :
+-    (∑ p ∈ (Finset.range (z + 1)).filter (fun p => p.Prime ∧ 2 < p),
+-      1 / ((p - 1 : ℕ) : ℝ) ^ 2) ≤ (1 / 2 : ℝ) := by
+-  let S : Finset ℕ := (Finset.range (z + 1)).filter (fun p => p.Prime ∧ 2 < p)
+-  have hinj : Set.InjOn (fun p : ℕ => (p - 1) / 2) ↑S := by
+-    intro a ha b hb hab
+-    rcases Finset.mem_filter.mp ha with ⟨ha1, ha2⟩
+-    rcases Finset.mem_filter.mp hb with ⟨hb1, hb2⟩
+-    have hodd_a : Odd a := ha2.1.odd_of_ne_two (by omega : a ≠ 2)
+-    have hodd_b : Odd b := hb2.1.odd_of_ne_two (by omega : b ≠ 2)
+-    rcases hodd_a with ⟨ka, hka⟩
+-    rcases hodd_b with ⟨kb, hkb⟩
+-    have ha' : a - 1 = 2 * ka := by omega
+-    have hb' : b - 1 = 2 * kb := by omega
+-    have hka' : (a - 1) / 2 = ka := by
+-      rw [ha']
+-      exact Nat.mul_div_right ka (by norm_num : 0 < 2)
+-    have hkb' : (b - 1) / 2 = kb := by
+-      rw [hb']
+-      exact Nat.mul_div_right kb (by norm_num : 0 < 2)
+-    change (a - 1) / 2 = (b - 1) / 2 at hab
+-    have hk : ka = kb := by rwa [hka', hkb'] at hab
+-    omega
+-  have himg := Finset.sum_image (f := fun k : ℕ => 1 / ((2 * k : ℕ) : ℝ) ^ 2)
+-    (g := fun p : ℕ => (p - 1) / 2) (s := S) hinj
+-  have hcong : (∑ p ∈ S, 1 / ((2 * ((p - 1) / 2) : ℕ) : ℝ) ^ 2) =
+-      ∑ p ∈ S, 1 / ((p - 1 : ℕ) : ℝ) ^ 2 := by
+-    apply Finset.sum_congr rfl
+-    intro p hp
+-    rcases Finset.mem_filter.mp hp with ⟨hp1, hp2⟩
+-    have hodd : Odd p := hp2.1.odd_of_ne_two (by omega : p ≠ 2)
+-    rcases hodd with ⟨k, hk⟩
+-    have hsub : p - 1 = 2 * k := by omega
+-    have hdiv : 2 ∣ p - 1 := ⟨k, by rw [hsub]⟩
+-    have hmul : (p - 1) / 2 * 2 = p - 1 := Nat.div_mul_cancel hdiv
+-    rw [show (2 * ((p - 1) / 2) : ℕ) = p - 1 by rw [mul_comm, hmul]]
+-  have hsubset : S.image (fun p : ℕ => (p - 1) / 2) ⊆ Finset.range (z + 1) := by
+-    intro k hk
+-    rcases Finset.mem_image.mp hk with ⟨p, hp, rfl⟩
+-    rcases Finset.mem_filter.mp hp with ⟨hp1, hp2⟩
+-    rw [Finset.mem_range]
+-    have hple : p ≤ z := by
+-      rcases Finset.mem_range.mp hp1 with h
+-      omega
+-    omega
+-  have hle1 : (∑ p ∈ S, 1 / ((p - 1 : ℕ) : ℝ) ^ 2) ≤
+-      ∑ k ∈ Finset.range (z + 1), 1 / ((2 * k : ℕ) : ℝ) ^ 2 := by
+-    calc
+-      (∑ p ∈ S, 1 / ((p - 1 : ℕ) : ℝ) ^ 2)
+-          = ∑ k ∈ S.image (fun p : ℕ => (p - 1) / 2), 1 / ((2 * k : ℕ) : ℝ) ^ 2 := by
+-            rw [← hcong]
+-            exact himg.symm
+-      _ ≤ ∑ k ∈ Finset.range (z + 1), 1 / ((2 * k : ℕ) : ℝ) ^ 2 := by
+-            exact Finset.sum_le_sum_of_subset_of_nonneg hsubset
+-              (fun k hk hknot => by positivity)
+-  have hfour : (∑ k ∈ Finset.range (z + 1), 1 / ((2 * k : ℕ) : ℝ) ^ 2) =
+-      (1 / 4 : ℝ) * ∑ k ∈ Finset.range (z + 1), 1 / (k : ℝ) ^ 2 := by
+-    rw [Finset.mul_sum]
+-    apply Finset.sum_congr rfl
+-    intro k hk
+-    have h2k : ((2 * k : ℕ) : ℝ) = 2 * (k : ℝ) := by norm_num
+-    rw [h2k]
+-    field_simp
+-    ring
+-  have htel : (∑ i ∈ Finset.range z, 1 / (((i + 1 : ℕ) : ℝ) * ((i + 2 : ℕ) : ℝ))) ≤ 1 := by
+-    have h := Finset.sum_range_sub' (f := fun i : ℕ => 1 / ((i : ℝ) + 1)) (n := z)
+-    -- h : Σ_{i ∈ range z} (1/((i:ℝ)+1) − 1/((i:ℝ)+2)) = 1 − 1/((z:ℝ)+1)
+-    have hrew : (∑ i ∈ Finset.range z,
+-        1 / (((i + 1 : ℕ) : ℝ) * ((i + 2 : ℕ) : ℝ))) =
+-        ∑ i ∈ Finset.range z, (1 / ((i : ℝ) + 1) - 1 / ((i : ℝ) + 2)) := by
+-      apply Finset.sum_congr rfl
+-      intro i hi
+-      have h1 : ((i + 1 : ℕ) : ℝ) = (i : ℝ) + 1 := by norm_num
+-      have h2 : ((i + 2 : ℕ) : ℝ) = (i : ℝ) + 2 := by norm_num
+-      rw [h1, h2]
+-      field_simp
+-      ring
+-    rw [hrew]
+-    have hval : (∑ i ∈ Finset.range z, (1 / ((i : ℝ) + 1) - 1 / ((i : ℝ) + 2))) =
+-        ∑ i ∈ Finset.range z, (1 / ((i : ℝ) + 1) - 1 / (((i + 1 : ℕ) : ℝ) + 1)) := by
+-      apply Finset.sum_congr rfl
+-      intro i hi
+-      norm_num [Nat.cast_add, Nat.cast_one]
+-      ring
+-    rw [hval, h]
+-    have hc : 1 / ((0 : ℝ) + 1) = 1 := by norm_num
+-    have hpos : 0 ≤ 1 / ((z : ℝ) + 1) := by positivity
+-    linarith
+-  -- Reciprocal-square upper bound: Σ_{k=0}^{z} 1/k² ≤ 2.
+-  have hsq : (∑ k ∈ Finset.range (z + 1), 1 / (k : ℝ) ^ 2) ≤ 2 := by
+-    let A : Finset ℕ := (Finset.range (z + 1)).filter (fun k => k ≤ 1)
+-    let B : Finset ℕ := (Finset.range (z + 1)).filter (fun k => 2 ≤ k)
+-    have hpart : A ∪ B = Finset.range (z + 1) := by
+-      ext k
+-      simp only [Finset.mem_union, Finset.mem_filter, Finset.mem_range, A, B]
+-      omega
+-    have hdisj : Disjoint A B := by
+-      rw [Finset.disjoint_filter]
+-      intro k hk1 hk2
+-      omega
+-    have hA : (∑ k ∈ A, 1 / (k : ℝ) ^ 2) ≤ 1 := by
+-      have hsub : A ⊆ ({0, 1} : Finset ℕ) := by
+-        intro k hk
+-        rcases Finset.mem_filter.mp hk with ⟨hk1, hk2⟩
+-        simp only [Finset.mem_insert, Finset.mem_singleton]
+-        omega
+-      calc
+-        (∑ k ∈ A, 1 / (k : ℝ) ^ 2) ≤ ∑ k ∈ ({0, 1} : Finset ℕ), 1 / (k : ℝ) ^ 2 := by
+-          exact Finset.sum_le_sum_of_subset_of_nonneg hsub (fun k hk hknot => by positivity)
+-        _ = 1 := by norm_num
+-    have hB : (∑ k ∈ B, 1 / (k : ℝ) ^ 2) ≤
+-        ∑ i ∈ Finset.range z, 1 / (((i + 1 : ℕ) : ℝ) * ((i + 2 : ℕ) : ℝ)) := by
+-      have hle : (∑ k ∈ B, 1 / (k : ℝ) ^ 2) ≤
+-          ∑ k ∈ B, 1 / (((k - 1 : ℕ) : ℝ) * (k : ℝ)) := by
+-        apply Finset.sum_le_sum
+-        intro k hk
+-        rcases Finset.mem_filter.mp hk with ⟨hk1, hk2⟩
+-        have hpos1 : 0 < ((k - 1 : ℕ) : ℝ) := by
+-          have hkm1 : (1 : ℕ) ≤ k - 1 := by omega
+-          exact_mod_cast (lt_of_lt_of_le (by norm_num : (0 : ℕ) < 1) hkm1)
+-        have hpos2 : 0 < (k : ℝ) := by
+-          have : (1 : ℝ) < k := by exact_mod_cast (by omega : 1 < k)
+-          linarith
+-        have hleprod : ((k - 1 : ℕ) : ℝ) * (k : ℝ) ≤ (k : ℝ) ^ 2 := by
+-          have hsub : (k - 1 : ℕ) ≤ k := Nat.sub_le _ _
+-          nlinarith [show ((k - 1 : ℕ) : ℝ) ≤ k by exact_mod_cast hsub]
+-        exact one_div_le_one_div_of_le (mul_pos hpos1 hpos2) hleprod
+-      have hinj2 : Set.InjOn (fun k : ℕ => k - 2) ↑B := by
+-        intro a ha b hb hab
+-        change a ∈ B at ha
+-        rcases Finset.mem_filter.mp ha with ⟨_, ha2⟩
+-        change b ∈ B at hb
+-        rcases Finset.mem_filter.mp hb with ⟨_, hb2⟩
+-        have ha' : a = (a - 2) + 2 := by omega
+-        have hb' : b = (b - 2) + 2 := by omega
+-        change a - 2 = b - 2 at hab
+-        rw [ha', hb', hab]
+-      have himg2 := Finset.sum_image
+-        (f := fun i : ℕ => 1 / (((i + 1 : ℕ) : ℝ) * ((i + 2 : ℕ) : ℝ)))
+-        (g := fun k : ℕ => k - 2) (s := B) hinj2
+-      have hcong2 : (∑ k ∈ B, 1 / (((k - 1 : ℕ) : ℝ) * (k : ℝ))) =
+-          ∑ i ∈ B.image (fun k : ℕ => k - 2),
+-            1 / (((i + 1 : ℕ) : ℝ) * ((i + 2 : ℕ) : ℝ)) := by
+-        rw [himg2]
+-        apply Finset.sum_congr rfl
+-        intro k hk
+-        have hk2 : 2 ≤ k := (Finset.mem_filter.mp hk).2
+-        have hshift : (k - 2 : ℕ) + 1 = k - 1 := by omega
+-        have hshift2 : (k - 2 : ℕ) + 2 = k := by omega
+-        rw [hshift, hshift2]
+-      have hsub2 : B.image (fun k : ℕ => k - 2) ⊆ Finset.range z := by
+-        intro i hi
+-        rcases Finset.mem_image.mp hi with ⟨k, hk, rfl⟩
+-        rw [Finset.mem_range]
+-        rcases Finset.mem_filter.mp hk with ⟨hk1, hk2⟩
+-        rcases Finset.mem_range.mp hk1 with h
+-        omega
+-      calc
+-        (∑ k ∈ B, 1 / (k : ℝ) ^ 2) ≤ ∑ k ∈ B, 1 / (((k - 1 : ℕ) : ℝ) * (k : ℝ)) := hle
+-        _ = ∑ i ∈ B.image (fun k : ℕ => k - 2),
+-            1 / (((i + 1 : ℕ) : ℝ) * ((i + 2 : ℕ) : ℝ)) := hcong2
+-        _ ≤ ∑ i ∈ Finset.range z, 1 / (((i + 1 : ℕ) : ℝ) * ((i + 2 : ℕ) : ℝ)) := by
+-              exact Finset.sum_le_sum_of_subset_of_nonneg hsub2
+-                (fun i hi hnot => by positivity)
+-    calc
+-      (∑ k ∈ Finset.range (z + 1), 1 / (k : ℝ) ^ 2)
+-          = (∑ k ∈ A, 1 / (k : ℝ) ^ 2) + (∑ k ∈ B, 1 / (k : ℝ) ^ 2) := by
+-            rw [← hpart, Finset.sum_union hdisj]
+-      _ ≤ 1 + (∑ i ∈ Finset.range z, 1 / (((i + 1 : ℕ) : ℝ) * ((i + 2 : ℕ) : ℝ))) := by
+-            exact add_le_add hA hB
+-      _ ≤ 1 + 1 := by
+-            exact add_le_add (le_refl (1 : ℝ)) htel
+-      _ = 2 := by norm_num
+-  calc
+-    (∑ p ∈ S, 1 / ((p - 1 : ℕ) : ℝ) ^ 2)
+-        ≤ (1 / 4 : ℝ) * ∑ k ∈ Finset.range (z + 1), 1 / (k : ℝ) ^ 2 := by
+-          calc
+-            (∑ p ∈ S, 1 / ((p - 1 : ℕ) : ℝ) ^ 2)
+-                ≤ ∑ k ∈ Finset.range (z + 1), 1 / ((2 * k : ℕ) : ℝ) ^ 2 := hle1
+-            _ = (1 / 4 : ℝ) * ∑ k ∈ Finset.range (z + 1), 1 / (k : ℝ) ^ 2 := hfour
+-    _ ≤ (1 / 4 : ℝ) * 2 := by
+-          exact mul_le_mul_of_nonneg_left hsq (by norm_num)
+-    _ = 1 / 2 := by norm_num
+-
+-/-- **Uniform truncated singular-series lower bound**: for all `N` and `z ≥ 2`, `1/2 ≤ 𝔖_trunc(N, z)`.
+-
+-Classical argument at the scale of the twin-prime constant C₂: separate the local factors into `p=2`, `p|N`, and `p∤N`.
+-Then `𝔖_trunc ≥ ∏_{2<p≤z}(1 - 1/(p-1)²)`, and combine
+-`∏(1-x_i) ≥ 1-Σx_i` with `Σ_{p>2}1/(p-1)² ≤ 1/2`. -/
++/-- The uniform lower bound follows from the existing finite telescoping
++product argument for the same truncated singular series. -/
+ theorem singularSeriesTruncated_ge_half {N z : ℕ} (hz : 2 ≤ z) :
+     (1 / 2 : ℝ) ≤ AnalyticNumberTheory.Sieve.singularSeriesTruncated N z := by
+-  let S : Finset ℕ := (Finset.range (z + 1)).filter (fun p => p.Prime ∧ 2 < p)
+-  have hsplit : (Finset.range (z + 1)).filter Nat.Prime = insert 2 S := by
+-    ext p
+-    simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_insert, S]
+-    constructor
+-    · intro hp
+-      rcases hp with ⟨hpz, hpp⟩
+-      by_cases hp2 : p = 2
+-      · exact Or.inl hp2
+-      · exact Or.inr ⟨hpz, hpp, lt_of_le_of_ne hpp.two_le (Ne.symm hp2)⟩
+-    · intro hp
+-      rcases hp with hpeq | hpS
+-      · subst p
+-        exact ⟨by omega, Nat.prime_two⟩
+-      · rcases hpS with ⟨hpz, hpp, hp2⟩
+-        exact ⟨hpz, hpp⟩
+-  have hlf2 : (1 : ℝ) ≤ AnalyticNumberTheory.Sieve.localFactor 2 N := by
+-    unfold AnalyticNumberTheory.Sieve.localFactor
+-    by_cases h2dvd : 2 ∣ N
+-    · simp [h2dvd]
+-    · simp [h2dvd]
+-  have hprod_le : (∏ p ∈ S, (1 - 1 / ((p - 1 : ℕ) : ℝ) ^ 2)) ≤
+-      ∏ p ∈ S, AnalyticNumberTheory.Sieve.localFactor p N := by
+-    apply Finset.prod_le_prod
+-    · intro p hp
+-      rcases Finset.mem_filter.mp hp with ⟨hp1, hp2⟩
+-      have hpm1 : (2 : ℝ) ≤ ((p - 1 : ℕ) : ℝ) := by
+-        have hp3n : (2 : ℕ) ≤ p - 1 := by omega
+-        exact_mod_cast hp3n
+-      have hx2 : (4 : ℝ) ≤ ((p - 1 : ℕ) : ℝ) ^ 2 := by
+-        nlinarith [sq_nonneg (((p - 1 : ℕ) : ℝ) - 2)]
+-      have h14 : 1 / ((p - 1 : ℕ) : ℝ) ^ 2 ≤ 1 / 4 := by
+-        exact one_div_le_one_div_of_le (by norm_num : 0 < (4 : ℝ)) hx2
+-      -- 0 ≤ 1 − 1/(p−1)²
+-      have hpos : 0 ≤ 1 / ((p - 1 : ℕ) : ℝ) ^ 2 := by positivity
+-      linarith
+-    · intro p hp
+-      rcases Finset.mem_filter.mp hp with ⟨hp1, hp2⟩
+-      have hpp : p.Prime := hp2.1
+-      have hp2p : 2 < p := hp2.2
+-      by_cases hpdvd : p ∣ N
+-      · rw [AnalyticNumberTheory.Sieve.localFactor_of_dvd hpp hp2p hpdvd]
+-        have hle1 : 1 - 1 / ((p - 1 : ℕ) : ℝ) ^ 2 ≤ 1 := by
+-          have hpos : 0 ≤ 1 / ((p - 1 : ℕ) : ℝ) ^ 2 := by positivity
+-          linarith
+-        have hle2 : (1 : ℝ) ≤ (p : ℝ) / (p - 1) := by
+-          have hp1 : 0 < (p : ℝ) - 1 := by
+-            have : (2 : ℝ) < p := by exact_mod_cast hp2p
+-            linarith
+-          rw [le_div_iff₀ hp1]
+-          linarith
+-        linarith
+-      · rw [AnalyticNumberTheory.Sieve.localFactor_of_not_dvd hpp hp2p hpdvd]
+-        have hcast : ((p - 1 : ℕ) : ℝ) = (p : ℝ) - 1 := by
+-          simpa using (Nat.cast_sub (R := ℝ) (by omega : 1 ≤ p))
+-        have hp1 : (p : ℝ) - 1 ≠ 0 := by
+-          have : (2 : ℝ) < p := by exact_mod_cast hp2p
+-          linarith
+-        have heq : 1 - 1 / ((p - 1 : ℕ) : ℝ) ^ 2 =
+-            (p : ℝ) * (p - 2) / ((p - 1 : ℕ) : ℝ) ^ 2 := by
+-          rw [hcast]
+-          field_simp [hp1]
+-          ring
+-        rw [heq, hcast]
+-  have h𝔖 : AnalyticNumberTheory.Sieve.singularSeriesTruncated N z =
+-      AnalyticNumberTheory.Sieve.localFactor 2 N *
+-        ∏ p ∈ S, AnalyticNumberTheory.Sieve.localFactor p N := by
+-    unfold AnalyticNumberTheory.Sieve.singularSeriesTruncated
+-    rw [hsplit]
+-    rw [Finset.prod_insert]
+-    · intro h2S
+-      rcases Finset.mem_filter.mp h2S with ⟨h1, h2⟩
+-      omega
+-  have hprod_ge : (1 / 2 : ℝ) ≤ ∏ p ∈ S, (1 - 1 / ((p - 1 : ℕ) : ℝ) ^ 2) := by
+-    have hx0 : ∀ p ∈ S, 0 ≤ 1 / ((p - 1 : ℕ) : ℝ) ^ 2 := by
+-      intro p hp
+-      positivity
+-    have hx1 : ∀ p ∈ S, 1 / ((p - 1 : ℕ) : ℝ) ^ 2 ≤ 1 := by
+-      intro p hp
+-      rcases Finset.mem_filter.mp hp with ⟨hp1, hp2⟩
+-      have hpm1 : (2 : ℝ) ≤ ((p - 1 : ℕ) : ℝ) := by
+-        have hp3n : (2 : ℕ) ≤ p - 1 := by omega
+-        exact_mod_cast hp3n
+-      have hx2 : (4 : ℝ) ≤ ((p - 1 : ℕ) : ℝ) ^ 2 := by
+-        nlinarith [sq_nonneg (((p - 1 : ℕ) : ℝ) - 2)]
+-      have h14 : 1 / ((p - 1 : ℕ) : ℝ) ^ 2 ≤ 1 / 4 := by
+-        exact one_div_le_one_div_of_le (by norm_num : 0 < (4 : ℝ)) hx2
+-      calc
+-        1 / ((p - 1 : ℕ) : ℝ) ^ 2 ≤ 1 / 4 := h14
+-        _ ≤ 1 := by norm_num
+-    calc
+-      (1 / 2 : ℝ) ≤ 1 - ∑ p ∈ S, 1 / ((p - 1 : ℕ) : ℝ) ^ 2 := by
+-        have hle := sum_sq_recip_primes_ge_three_le_half z
+-        have hleS : (∑ p ∈ S, 1 / ((p - 1 : ℕ) : ℝ) ^ 2) ≤ 1 / 2 := by
+-          simpa [S] using hle
+-        linarith
+-      _ ≤ ∏ p ∈ S, (1 - 1 / ((p - 1 : ℕ) : ℝ) ^ 2) := by
+-            exact prod_one_sub_ge_one_sub_sum hx0 hx1
+-  calc
+-    (1 / 2 : ℝ) ≤ ∏ p ∈ S, (1 - 1 / ((p - 1 : ℕ) : ℝ) ^ 2) := hprod_ge
+-    _ ≤ ∏ p ∈ S, AnalyticNumberTheory.Sieve.localFactor p N := hprod_le
+-    _ ≤ AnalyticNumberTheory.Sieve.localFactor 2 N *
+-        ∏ p ∈ S, AnalyticNumberTheory.Sieve.localFactor p N := by
+-          have hnonneg : 0 ≤ ∏ p ∈ S, AnalyticNumberTheory.Sieve.localFactor p N := by
+-            apply Finset.prod_nonneg
+-            intro p hp
+-            rcases Finset.mem_filter.mp hp with ⟨hp1, hp2⟩
+-            exact le_of_lt (AnalyticNumberTheory.Sieve.localFactor_pos hp2.1)
+-          exact le_mul_of_one_le_left hnonneg hlf2
+-    _ = AnalyticNumberTheory.Sieve.singularSeriesTruncated N z := h𝔖.symm
++  exact AnalyticNumberTheory.Sieve.singularSeriesTruncated_ge_half N z hz
+ 
+ /-- Instance of `SingularSeriesTruncatedLowerBound`. -/
+ theorem singularSeriesTruncatedLowerBound_ge_half : SingularSeriesTruncatedLowerBound := by

@@ -43,12 +43,6 @@ theorem finiteSourceLayer_two_mul_eq_sum_evenLayers (m : ℕ) (s : ℝ) :
   change 2 * (a + 1) = 2 * (b + 1) at hab
   omega
 
-/-- The finite lower factor is therefore one minus the exact finite sum of the
-first `m` even continuous layers. -/
-theorem suzukiFiniteLowerFactor_two_mul (m : ℕ) (s : ℝ) :
-    suzukiFiniteLowerFactor (2 * m) s =
-      1 - ∑ k ∈ Finset.range m, suzukiLayer 1 2 (2 * (k + 1)) s := by
-  rw [suzukiFiniteLowerFactor, finiteSourceLayer_two_mul_eq_sum_evenLayers]
 
 /-- On a natural cutoff, Suzuki's `V(z)` product is the discrete Euler product
 used by the exact lower-Rosser identity. -/

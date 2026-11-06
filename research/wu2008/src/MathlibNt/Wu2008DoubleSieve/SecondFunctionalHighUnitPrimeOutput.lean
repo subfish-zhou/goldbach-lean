@@ -55,16 +55,6 @@ theorem labels_le20 {i N : ℕ} {W : Fin i → Finset ℕ}
   rw [← FourPrimeUnit.source_labels]
   exact source_le20 hdpos hR hlow hb
 
-/-- Same-weight consistency with the accepted unfiltered physical majorant. -/
-theorem envelope20_le_old {i : ℕ} (N : ℕ) (W : Fin i → Finset ℕ)
-    (R a2 a3 b : ℕ → ℝ) :
-    envelope20 N W R a2 a3 b ≤
-      ∑ d ∈ boxConvolutionSupport W, (convolutionCoeff W d : ℝ) *
-        ∑ g ∈ HighUnit.primePrefix20 (R d) (a2 d) (a3 d) (b d),
-          ((physical (prefixProduct g) ((N : ℝ)/d) (g (Fin.last 3)).val (R d^b d)).card : ℝ) := by
-  apply sum_le_sum
-  intro d _
-  exact mul_le_mul_of_nonneg_left (filtered_sum_le_old _ _) (Nat.cast_nonneg _)
 
 /-- Complete source-list injection with concrete word geometry supplied internally. -/
 theorem injection21 {N d : ℕ} {R a0 a1 a2 a3 b : ℝ}
@@ -116,16 +106,6 @@ theorem labels_le21 {i N : ℕ} {W : Fin i → Finset ℕ}
   rw [← FourPrimeUnit.source_labels]
   exact source_le21 hdpos hR hlow hb
 
-/-- Same-weight consistency with the accepted unfiltered physical majorant. -/
-theorem envelope21_le_old {i : ℕ} (N : ℕ) (W : Fin i → Finset ℕ)
-    (R a3 b : ℕ → ℝ) :
-    envelope21 N W R a3 b ≤
-      ∑ d ∈ boxConvolutionSupport W, (convolutionCoeff W d : ℝ) *
-        ∑ g ∈ HighUnit.primePrefix21 (R d) (a3 d) (b d),
-          ((physical (prefixProduct g) ((N : ℝ)/d) (g (Fin.last 4)).val (R d^b d)).card : ℝ) := by
-  apply sum_le_sum
-  intro d _
-  exact mul_le_mul_of_nonneg_left (filtered_sum_le_old _ _) (Nat.cast_nonneg _)
 
 /-- Literal five-cutoff finite consumer: source-box geometry and positivity are derived here. -/
 theorem mother_unit_pair_filtered {i k N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}

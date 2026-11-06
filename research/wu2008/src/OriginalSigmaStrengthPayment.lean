@@ -125,10 +125,6 @@ theorem strengthRational_le_profile {z : Fin 9 → ℝ} (hz : ∀ k,0≤z k) :
   exact mul_le_mul_of_nonneg_left
     (strengthCellPaid_le (by linarith [hc.1]) (by linarith [hc.1,hc.2.1])) (hz k)
 
-theorem original_strength_payment :
-    strengthRational NineFeedbackStrength.originalH ≤
-      aProfile (nineProfile NineFeedbackStrength.originalH) :=
-  strengthRational_le_profile CoupledIntegralRecovery.originalH_nonneg
 
 end
 end OriginalSigmaStrength

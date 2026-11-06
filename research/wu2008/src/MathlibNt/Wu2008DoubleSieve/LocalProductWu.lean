@@ -105,52 +105,6 @@ theorem wuLocalCutoff_lower {k N d : ℕ} {δ s : ℝ}
       rpow_mul (by positivity) _ _
     _ ≤ _ := rpow_le_rpow (by positivity) hquot (by positivity)
 
-/-- An explicit uniform decay bound for the omitted divisor correction at
-the actual moving cutoff. Unlike the final epsilon theorem, this states the
-rate, including the rounding loss. Neither squarefreeness nor evenness is
-needed for this finite divisor-product estimate. -/
-theorem wuLocal_divisorTail_bound {i k N d : ℕ} {Δ δ s : ℝ} {V : Fin i → ℝ}
-    (hN : 1 ≤ N) (hδ : 0 < δ) (hδ' : δ < 1 / 2)
-    (hV : ∀ j, (N : ℝ) ^ (δ ^ (k + 1)) ≤ V j)
-    (hsq : ∀ j, (∏ l, if l < j then V l else 1) * V j ^ 2 ≤
-      (N : ℝ) ^ (1 / 2 - δ))
-    (hd : convolutionCoeff (convolutionWuWindows N Δ V) d ≠ 0)
-    (hs : 1 ≤ s) (hs' : s ≤ 10)
-    (hsize : 3 ≤ (N : ℝ) ^ (wuLocalExponent k δ / 10)) :
-    1 - localDivisorTail (d * N) (localClosedCutoff (wuLocalCutoff N δ d s)) ≤
-      4 * log N / (log 2 * (N : ℝ) ^ (wuLocalExponent k δ / 10)) := by
-  obtain ⟨t, ht, htd⟩ := convolutionCoeff_pos_iff.mp (Nat.pos_of_ne_zero hd)
-  have hdmem := mem_image.mpr ⟨t, Fintype.mem_piFinset.mpr ht, htd⟩
-  obtain ⟨hd0, hdN, hquot⟩ := wuLocal_support_bounds hN hδ hδ' hV hsq hdmem
-  have hcut := wuLocalCutoff_lower hN hδ hδ' hs hs' hquot
-  have hy := localClosedCutoff_bounds (wuLocalCutoff N δ d s) (hsize.trans hcut)
-  have hround :
-      (N : ℝ) ^ (wuLocalExponent k δ / 10) / 2 ≤
-        (localClosedCutoff (wuLocalCutoff N δ d s) : ℝ) := by
-    have hy2 : (2 : ℝ) ≤ localClosedCutoff (wuLocalCutoff N δ d s) := by
-      exact_mod_cast hy.1
-    linarith [hy.2.2]
-  have hN0 : (0 : ℝ) < N := by exact_mod_cast hN
-  have hM0 : 0 < d * N := Nat.mul_pos hd0 (by omega)
-  have hlogM : log (d * N : ℕ) ≤ 2 * log N := by
-    have hMN : ((d * N : ℕ) : ℝ) ≤ (N : ℝ) * N := by
-      rw [Nat.cast_mul]
-      exact mul_le_mul_of_nonneg_right (by exact_mod_cast hdN) hN0.le
-    have hl := log_le_log (by exact_mod_cast hM0) hMN
-    rw [log_mul hN0.ne' hN0.ne'] at hl
-    linarith
-  have hlogN : 0 ≤ log (N : ℝ) := log_nonneg (by exact_mod_cast hN)
-  calc
-    _ ≤ log (d * N : ℕ) /
-        (log 2 * (localClosedCutoff (wuLocalCutoff N δ d s) : ℝ)) :=
-      one_sub_localDivisorTail_le_log (d * N) _ hM0 hy.1
-    _ ≤ (2 * log N) /
-        (log 2 * (localClosedCutoff (wuLocalCutoff N δ d s) : ℝ)) :=
-      div_le_div_of_nonneg_right hlogM (by positivity)
-    _ ≤ (2 * log N) / (log 2 * ((N : ℝ) ^ (wuLocalExponent k δ / 10) / 2)) :=
-      div_le_div_of_nonneg_left (by positivity) (by positivity)
-        (mul_le_mul_of_nonneg_left hround (by positivity))
-    _ = _ := by ring
 
 /-- The source support forces a strictly positive main term already for
 `N ≥ 2`. This independently rules out a zero-denominator interpretation of

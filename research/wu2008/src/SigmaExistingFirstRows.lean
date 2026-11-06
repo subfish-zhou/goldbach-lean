@@ -10,11 +10,6 @@ def firstLower (s S : ℝ) : ℝ :=
   firstACoefficient s S*finiteLower NineFeedbackStrength.originalH+
     firstResidual NineFeedbackStrength.originalH s S+eRecovery NineFeedbackStrength.originalH S
 
-theorem firstLower_exact_replacement (s S : ℝ) : firstLower s S=
-    FirstErrorFullPayment.lower s S+firstACoefficient s S*
-      (finiteLower NineFeedbackStrength.originalH-CubicCommonProfile.finiteLower NineFeedbackStrength.originalH) := by
-  unfold firstLower FirstErrorFullPayment.lower
-  ring
 
 theorem firstLower_le {s S : ℝ} (hs : 2 ≤ s) (hS : 3<S) (hS5 : S≤5) (hsS : s≤S)
     (hr : 2≤S-S/s) (hS2 : S-2≤upperNode 0) :

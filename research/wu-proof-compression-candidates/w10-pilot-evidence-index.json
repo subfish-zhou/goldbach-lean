@@ -1,0 +1,54 @@
+{
+  "W10BoundCommand.lean": {
+    "bytes": 211,
+    "sha256": "1966b4c741bcbfafeaa940dd7a6fae40f4e86f89de5bf59fd0ff45fec2a3e9c8"
+  },
+  "W10Log12.lean": {
+    "bytes": 72696,
+    "sha256": "a715e9af572ef4bdd9ca50de687c989e669ef2397ed82160bad8c2929995b0fd"
+  },
+  "before-types.lean": {
+    "bytes": 8486,
+    "sha256": "821a6d81c6b76739bed36c8e8ea70ac09a26e6d7979d1178100c4e3e775472e3"
+  },
+  "after-types.lean": {
+    "bytes": 8485,
+    "sha256": "694bf591cca26d8542369a9097f3a35f85102eb46eb51848194774b7766284dd"
+  },
+  "before-types.json": {
+    "bytes": 36229464,
+    "sha256": "c269f4e262835eebba9a17567200641bd36205fd5141ddc8943d9392935ae5bd"
+  },
+  "after-types.json": {
+    "bytes": 36229464,
+    "sha256": "c269f4e262835eebba9a17567200641bd36205fd5141ddc8943d9392935ae5bd"
+  },
+  "before-types-v2.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "after-types-v2.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "compile-v3.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "compile-v3-result.json": {
+    "bytes": 801,
+    "sha256": "82e1a3789cd822838e961b2c208a7ab1c02b7901376ea6324199a4a76c5e6c92"
+  },
+  "types-v2-results.json": {
+    "bytes": 2633,
+    "sha256": "0484f8fb6dee848f1a90a3d90ac099d4a11cd7e7a1777ebc29468bd612dbf7b2"
+  },
+  "types-comparison.json": {
+    "bytes": 261,
+    "sha256": "dadb753c48597b9e4552b4511b03642568ac8813794e032a7c3a00e0b61c3e19"
+  },
+  "invocation.json": {
+    "bytes": 1526,
+    "sha256": "49127182123fdae9a0e42425e3ad13e07455dd3935fd6ba9a20c5554337150be"
+  }
+}

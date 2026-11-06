@@ -88,16 +88,6 @@ theorem wKSectionCoprime_pair_iff_of_units
   simp only [Nat.coprime_mul_iff_right] at hkD hkq ⊢
   tauto
 
-/-- Conversely, the actual paired sieve itself supplies the phase unit
-condition, even before a residue class has been selected. -/
-theorem wKSectionCoprime_pair_coprime_modulus
-    {K : WExtractedKey} {a : ℤ} {r n₁ s s' k : ℕ}
-    (hk : wKSectionCoprime K a r n₁ s k)
-    (hk' : wKSectionCoprime K a r n₁ s' k) :
-    k.Coprime (n₁ * r * s * s') := by
-  rw [wKSectionCoprime_iff] at hk hk'
-  simp only [Nat.coprime_mul_iff_right] at hk hk' ⊢
-  tauto
 
 /-- Exact sieve reduction with the nonunit-zero extension of the phase.
 Thus nonunit points can be added back before using the analytic theorem. -/

@@ -1,4 +1,4 @@
-import Hf4QuadEndpointBridges
+import Hf4ConstructiveTablePublic
 
 noncomputable section
 namespace Hf4Quad

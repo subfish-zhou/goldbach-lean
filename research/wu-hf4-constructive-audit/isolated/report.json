@@ -1,0 +1,231 @@
+{
+  "status": "FULL_4151_CONTEXTS_696_TYPES_183_RAW_VALUES_19_KERNELS_LITERAL_AXIOMS_PRODUCER_PASS_NOT_ADOPTED",
+  "source_proofs": 389,
+  "reused_original_source_proofs": 53,
+  "new_source_compilations": 336,
+  "run": "/tmp/wu-hf4-installed-v7-resume-v1/run-1793181743956774759",
+  "steps": [
+    {
+      "label": "before-types",
+      "exit_code": 0,
+      "seconds": 10.850421112030745,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "e8a605c9380207aeda6c1111f8a00ddbec212e5663247f7ba93b6deee4c336b7"
+    },
+    {
+      "label": "after-types",
+      "exit_code": 0,
+      "seconds": 5.085555769503117,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "1c115d7e992cf558679e17821c62751a576d66ad684adb696cc1b6d89dcee0ea"
+    },
+    {
+      "label": "before-values",
+      "exit_code": 0,
+      "seconds": 3.8822720870375633,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "b7a67dc5efbc7560dc957de43160aa1b5306daaaa710e2ac90ce509eb34ef317"
+    },
+    {
+      "label": "after-values",
+      "exit_code": 0,
+      "seconds": 4.036018896847963,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "resources_sha256": "14862640523841bbdc914401785466f8cfdca8af92b5bdb2bee824d0602b7453"
+    },
+    {
+      "label": "literal-axioms",
+      "exit_code": 0,
+      "seconds": 6.191032357513905,
+      "log_sha256": "ac14f34a6cbe931691b35bcd6e97c5f745085cbe352782cbf1532abde784cf5d",
+      "resources_sha256": "ffd6605f86fde8e6dce50ae48cceb5c571f9475f1147e360f1c06b75f8f7bf97"
+    },
+    {
+      "label": "kernel-Hf4CheckedDagData",
+      "exit_code": 0,
+      "seconds": 6.1367280930280685,
+      "log_sha256": "5baa3510f35f73ebd2eae60db2587cf6e864c2be9500084ba7cdddc1de69f7f4",
+      "resources_sha256": "03d6d037b0d263bd3f35c43d6886258b3f41579fdfac48a85f9a2e5c4f59379e"
+    },
+    {
+      "label": "kernel-Hf4DirectDagProgram",
+      "exit_code": 0,
+      "seconds": 5.794450882822275,
+      "log_sha256": "35c9e690f5159414c3337d5b30d707451427347968ba3c6d762256e6c7d2b0a4",
+      "resources_sha256": "2e5c3c6751439bb5fd7d75a45fe27dc5f036b412f2bae44abd7483445b5b2219"
+    },
+    {
+      "label": "kernel-Hf4ConstructionRounding",
+      "exit_code": 0,
+      "seconds": 5.736762218177319,
+      "log_sha256": "ac6da2395572412fa4214deb120af48c9063b580a4993f498293d4ebd3e7badf",
+      "resources_sha256": "5ad5e065440d6e35cfb089872a0608bc95a435130133f15bdaa5e39869979ddd"
+    },
+    {
+      "label": "kernel-Hf4ConstructionConditions",
+      "exit_code": 0,
+      "seconds": 5.791864786297083,
+      "log_sha256": "ac33a9b0e1db42614f8e20aacd6e740c98bcdfd9dd82be7407e31880a9eb587e",
+      "resources_sha256": "42996963c73d46a921eeac4a59d565028c84dc4ab53f1a7ad1335aec7a288a58"
+    },
+    {
+      "label": "kernel-Hf4ConstructiveDagData",
+      "exit_code": 0,
+      "seconds": 5.741048876196146,
+      "log_sha256": "63972e95ec8ea49e4a95af978614bda36d10e0bc22049f6815f0820ce431f702",
+      "resources_sha256": "3561e3d218f5eed574df7f38141d05f06ae223c2d85022ce24d8c4ebde343adb"
+    },
+    {
+      "label": "kernel-Hf4ConstructiveTableData",
+      "exit_code": 0,
+      "seconds": 6.037671763449907,
+      "log_sha256": "c5c2967c38753b05962efb3275d74f7af79cdca90714c0be109355533520407d",
+      "resources_sha256": "5d0fda1a4ccdac6b06230ba9a4301cb4908318c5d9a10b82f06f4c22b27a966c"
+    },
+    {
+      "label": "kernel-Hf4ConstructiveTableChecks",
+      "exit_code": 0,
+      "seconds": 152.5965525060892,
+      "log_sha256": "a60b24ed9ed18fca6d1e70571316009224c87f6ba0af0a394482a34c35ec8a99",
+      "resources_sha256": "072c549897cead69534eff5e2a02074d290a1c88e608e2304e22360b85947fe4"
+    },
+    {
+      "label": "kernel-Hf4CheckedDagSoundness",
+      "exit_code": 0,
+      "seconds": 6.841811805963516,
+      "log_sha256": "0ddf8bc2ab9ec51efcc5750e81d1bcfade52a5c1ca170e19e2823b9499ab4251",
+      "resources_sha256": "ece7799f589dbe3e4bdf0a6ef434f1a046212d2d5a6483d6fcc9e3292e9b241f"
+    },
+    {
+      "label": "kernel-Hf4DirectCoordinates",
+      "exit_code": 0,
+      "seconds": 6.788667477667332,
+      "log_sha256": "48e4306a883fe2c17fd81bc3e4583bd2a0446db69889c62c3c4debebfedd631f",
+      "resources_sha256": "b31d8a3ea9d3413377bd8cde717535ae54b7398b1918651ebccce9bb76ca3c92"
+    },
+    {
+      "label": "kernel-Hf4DirectKernel",
+      "exit_code": 0,
+      "seconds": 6.687656704336405,
+      "log_sha256": "34a41f71927d202b7e762488be394d2681aa74616eae71823d28aabb8c3c73a7",
+      "resources_sha256": "b8ef3ed25415b0dd4a8698737611b07b4e28585b5a9760bc1c7395e3ea1fe6c5"
+    },
+    {
+      "label": "kernel-Hf4DirectDag",
+      "exit_code": 0,
+      "seconds": 6.841870374977589,
+      "log_sha256": "3e6b31a9fd583ce40ea9321524f1df96324532fa17540e063ff853c3a9194e6f",
+      "resources_sha256": "2faeb78469de62ad506073346a6d813a374e3c97dd9b0f4d69fb925d980fcb15"
+    },
+    {
+      "label": "kernel-Hf4DirectDagSemantics",
+      "exit_code": 0,
+      "seconds": 19.319128159433603,
+      "log_sha256": "9b850df66c303c2d5b04e74c37068b65e6ca1300086f91decae6b81273489aed",
+      "resources_sha256": "f3f6e7d40bd4afd72ea4813a0b4feb909eca44ecabaa2825f7257972c36e1f42"
+    },
+    {
+      "label": "kernel-Hf4DirectDagSeedSoundness",
+      "exit_code": 0,
+      "seconds": 7.289726760238409,
+      "log_sha256": "024bf6f413e04276285043db8c580b13cd5c52f1f8d32bd8650d0f228900b140",
+      "resources_sha256": "16fd00ff897407c9d991beddb7333aa3e8b9f04c165273cad183fdbb68797893"
+    },
+    {
+      "label": "kernel-Hf4ConstructiveDagSoundness",
+      "exit_code": 0,
+      "seconds": 6.698641311377287,
+      "log_sha256": "1b88b2a74f9dd2a3c9ad0d36bc598998c5c0f02b6c985190f9a868473736e1b5",
+      "resources_sha256": "ca318a081f15215ecf50ad3440f57df61e74874276d92783d35357b8123f863f"
+    },
+    {
+      "label": "kernel-Hf4ConstructiveOriginalSoundness",
+      "exit_code": 0,
+      "seconds": 6.739025570452213,
+      "log_sha256": "175be3455a4dad34dad0a17f177f3e8fe75106392c8c16ca5fb324cae033a780",
+      "resources_sha256": "49bdf8802e439ce7138c5bacbf5918e4be9962ca78bc70049730446476c40644"
+    },
+    {
+      "label": "kernel-Hf4ConstructiveTableSoundness",
+      "exit_code": 0,
+      "seconds": 7.840920478105545,
+      "log_sha256": "029ec7ef09aea0062f14e03194ed612f002f988176e25559047b1c3a51feb7af",
+      "resources_sha256": "5327b6f91377c21b5fa27a083e1d77f289feefd8227ebc7a17875537ae5a87be"
+    },
+    {
+      "label": "kernel-Hf4ConstructiveTablePublic",
+      "exit_code": 0,
+      "seconds": 8.193641662597656,
+      "log_sha256": "e9383cd05d16b1b097e058c9b47a839b36696ade8fc022a83ed51d2a11ebf2a1",
+      "resources_sha256": "3c54dd64939ddb781ae7c9a5ad9906584a7214235e0ee8e22e70b971e8bbcdeb"
+    },
+    {
+      "label": "kernel-Hf4QuadAggregate",
+      "exit_code": 0,
+      "seconds": 7.841362852603197,
+      "log_sha256": "f7791af7ff3f9420f0029f24ad332280495c311f38a446c875510b0eba73aeb1",
+      "resources_sha256": "5f615038d6554ae3896bd6eca74403e593153eec7dd70ddf8f5a4437a3e40a45"
+    },
+    {
+      "label": "kernel-WR2ClassicalCertificate",
+      "exit_code": 0,
+      "seconds": 9.297097474336624,
+      "log_sha256": "26c01c5d5b7f58392ca746543e2635b776d2fae525ad8964930c776460b923e7",
+      "resources_sha256": "f2d0875c9cc422f7080d320b300fe80e50d039ca1b84f49847f0f4fcc78915ab"
+    },
+    {
+      "label": "producer-check",
+      "exit_code": 0,
+      "seconds": 8.54204960539937,
+      "log_sha256": "4517786421b6e14c364f2988f3f577400011bc37c8c2d1a7cff7ce1ad5527b9b",
+      "resources_sha256": "93aaaec67bd5927c0f90a31c0a6c6952fe5aab9b5cc8fedf2778248efeefdefd"
+    }
+  ],
+  "types": 696,
+  "explicitly_retired_old_models": 40,
+  "context_digest": "3ecb0b6577b75cda96084cd25e279c4a97d4c3cd9a1e860eb77399e92b249d1b",
+  "current": null,
+  "values": 183,
+  "kernels": 19,
+  "bindings": {
+    "/home/azureuser/goldbach-lean/research/wu2008/source-manifest.json": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
+    "/home/azureuser/goldbach-lean/scripts/check.py": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+    "/home/azureuser/goldbach-lean/research/wu2008/build.py": "cf5ff7a722e4154504489686ab3dd5b62b9bbd6b967063d15ee2e1c37efd6316",
+    "/home/azureuser/goldbach-lean/research/wu2008/lean-toolchain": "62c2d9c0fc1ec4c67e151c11eff41ca004ef38e179cf9476c230406e6defedef",
+    "/home/azureuser/goldbach-lean/research/wu2008/lakefile.toml": "c332b6f1ff5e0a1ecfedf8d4c247e5d712c5e909af5bef60221148c4ac208917",
+    "/home/azureuser/goldbach-lean/research/wu2008/lake-manifest.json": "d360c103a90b63fd6c53650c2cbe0b11fd10d103f248e88ff8352f02fb2ce0ab",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveOriginalSoundness.lean": "39f9dad7e78264b8c12471d8cc676f36b08075923c2886b9756e9c8b964a6d09",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4CheckedDagSoundness.lean": "b70407469f32c84c1b952cf7027b0ef7df233057afea3aae4886cef466535e51",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveDagSoundness.lean": "b1e42a2d447f7783a38041298fa94ed17f0fb5095bd3d5dd3e78baf2ca21dc95",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectCoordinates.lean": "5648745f7d4abea030b74c1be8ec1aab5cf9842e08ca514c5a819bfa3d435bb5",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructionConditions.lean": "e7252de063ddd52a5e4ed2c6e9fbda3772c30fe518252960bb187d3e00477e96",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructionRounding.lean": "056c58eb7e806232b94e49d25ffc1742b8db2fcd6583ebd0b9a37cda429f4c8c",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagProgram.lean": "2453aa5d85fa0d28579879e80031074781455f4d049f9357cbb119c01292fe25",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableData.lean": "76c8f3a83cef23fd234bdb4fb3e28a69a0255a284d1c434be36fde993ace6f27",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagSemantics.lean": "42eaab543439df699a4db1b4f54096c651fd92177453cf1db8c1c4a49b8a0995",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableChecks.lean": "4bfae798d1e436c0d86e939b31553ac8adeba0f8e10a984a544b1459e26eec6d",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTableSoundness.lean": "603c3aa1418327522bfebf9fed19bfa4aa2d1602d63c43034ac65b07657699ff",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveTablePublic.lean": "fa715b4bcca2c6c7854bb12b4a68d36a8297eb7633faea43c4aea46ef0012cee",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectKernel.lean": "c9615839b1184c70a57c82af09a26f0a471d27627f8e7f8dfaa33e4106cec581",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDag.lean": "e927bbfdbcc305bddb9c2f8e53d2fdad0e82d020da05756caf8b25b75bbfec1f",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4ConstructiveDagData.lean": "ecbe88019a941520360bf8175d428492ce7a57a42c42d9740c3ed8950bcfdd73",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4CheckedDagData.lean": "5eca00cff8ec16117b8240283156761f2afd182155b781f035098457a4a92008",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4DirectDagSeedSoundness.lean": "0f26c8fb4e696c9d9a231e4e0c99d43707349cf9a113565760bdd242d67f3e4f",
+    "/tmp/wu-hf4-installed-v7-candidate-v1/overlay/Hf4QuadAggregate.lean": "09174c493913f5d9d1221cc8a1f0dddd9f25b3f2549f26832d10996b2b7f2d0b",
+    "/tmp/wu-hf4-uniform-interface-v1/comparison.json": "59076fc492f17dea8aa0fb0e6eeb23895478aacb4a64132c22d356c300f8f7b7",
+    "/tmp/wu-hf4-uniform-consumers-v1/run-1793180269278723744/report.json": "eb0a506ba6ad1ca4852f26d80f3d00d4d971f7e17774a5c4967b717666813faa",
+    "/tmp/wu-hf4-portable-producer-v3/test-actual.log": "2ece75d7903dd9f4cff3ea7b77b7e0a34f15d08bb74ccff3c5f88aa0a825fc1d",
+    "/tmp/wu-hf4-portable-producer-v3/produce.py": "d37beed27dba96bfe01843eaa1423b7940c89489b10262dfcee1e23b8c55c5fb",
+    "/tmp/wu-hf4-portable-producer-v3/frozen-inputs.json": "f194909749bf9f7750f6e08ce3755ef046b3b68cc341415277cd94793bdd46c4",
+    "/tmp/wu-hf4-post-v5-integration-v2/retired-declarations.json": "905f6f38250e338e91b4ab8e8d8cc8c736a0b4c856f26ae7f120009fb09ff5e7",
+    "/tmp/wu-hf4-post-v5-integration-v2/reference-audit.json": "816ddf7231f45b588aabe4d1132e925e0ec196dcf3cff76b2c0540b0dd6cc610",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validate.py": "2d0b6b144f33605d0ea38f871b578615ad16ac64f336ae721b88d52b0d8e1cb5",
+    "/tmp/wu-hf4-installed-v7-resume-v1/plan.json": "a3c6a7d76c2ddab52de70e75e6f09769ceb4b213e43f3f249190f8d13a57a04e",
+    "/tmp/wu-public-interface-audit-v2/InterfaceTemplate.lean": "26acc89d938f60a51338ad2b9ef5949531a07e2646171b6e4aedab0cd4b243fa",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-types.lean": "e069f61c1fe567eb2a1ea2ad183b980484a8ae9a723b977785e89902a506ee5f",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-types.lean": "d9e4759a22add7a16ebd4ee64038a3784abefc5491dab9702fecdac17d5eaa1f",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/before-values.lean": "759759f68be160ac9b40058addc8560a89e7a2fe3e2e5c135340e9babcba82f7",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/after-values.lean": "a88b36cb9497284599136eeaa05c8f4787e096be9a354d872c2a1ea8e0d9b8db",
+    "/tmp/wu-hf4-installed-v7-resume-v1/validation-1793186938467236335/WuLiteralAcceptance.lean": "5371c1e8dcdb44391c5e646b89929f9729a7dbadecdff231a53eca2a4cefd72f"
+  }
+}

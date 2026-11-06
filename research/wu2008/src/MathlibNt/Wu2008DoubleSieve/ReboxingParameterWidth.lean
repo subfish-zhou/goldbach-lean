@@ -112,31 +112,5 @@ theorem reboxing_source_parameter_width {i k N : ℕ} {δ Δ t j : ℝ} {V : Fin
       field_simp
       ring
 
-/-- The R2 replacement cutoff has logarithmic-logarithmic width no
-larger than `s2-s1`. The source hypotheses of this scalar fact are
-produced atom by atom by `reboxing_source_parameters`. -/
-theorem reboxing_replacement_log_width {D p a b : ℝ}
-    (hD : 0 < D) (hp : 1 < p) (ha : 1 ≤ a)
-    (hau : a ≤ log D / log p - 1) (hub : log D / log p - 1 ≤ b) :
-    1 ≤ log ((D / p) ^ (1 / a)) / log p ∧
-      log (log ((D / p) ^ (1 / a)) / log p) ≤ b - a := by
-  have hp0 : 0 < p := by linarith
-  have hLp : 0 < log p := log_pos hp
-  have ha0 : 0 < a := by linarith
-  have he : log ((D / p) ^ (1 / a)) / log p =
-      (log D / log p - 1) / a := by
-    rw [log_rpow (div_pos hD hp0), log_div hD.ne' hp0.ne']
-    field_simp
-  rw [he]
-  have hratio : 1 ≤ (log D / log p - 1) / a := (one_le_div ha0).2 hau
-  refine ⟨hratio, ?_⟩
-  have hlog := log_le_sub_one_of_pos (by linarith :
-    0 < (log D / log p - 1) / a)
-  have hdiff : (log D / log p - 1) / a - 1 =
-      ((log D / log p - 1) - a) / a := by field_simp
-  have hdiv : ((log D / log p - 1) - a) / a ≤ (log D / log p - 1) - a :=
-    div_le_self (sub_nonneg.mpr hau) ha
-  rw [hdiff] at hlog
-  linarith
 
 end Wu2008DoubleSieve

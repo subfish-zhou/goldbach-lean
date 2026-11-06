@@ -26,11 +26,7 @@ theorem nodes_actual : ∃ d : ℝ, 0 < d ∧ d ≤ 1/10 ∧
 
 def coefficient : ℝ := continuousCoefficient nodes
 
-theorem old_coefficient_le : continuousCoefficient WuTarget.W17Accepted.enhanced ≤ coefficient :=
-  continuousCoefficient_mono WuTarget.W17Accepted.enhanced_nonneg old_le_nodes
 
-theorem candidate_coefficient_le : CandidateBaseCount.coefficient ≤ coefficient :=
-  continuousCoefficient_mono RationalCandidate.lowerH_nonneg candidate_le_nodes
 
 theorem ordinary_count {ε : ℝ} (hε : 0 < ε) :
     ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →

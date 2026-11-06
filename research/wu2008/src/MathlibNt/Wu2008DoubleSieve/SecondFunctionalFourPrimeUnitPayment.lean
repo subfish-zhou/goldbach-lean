@@ -101,20 +101,6 @@ theorem actual_source_mass {i k N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
   (actual_source_le p hN hδ hδhi hb j).trans
     (actual_envelope_mass hp hs hs3 hN hδ hδhi hb j)
 
-/-- No cancellation by the reciprocal mass, including zero-mass boxes. -/
-theorem actual_zero_mass {i k N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    {p : SecondFunctionalParameters} (hp : p.MotherAdmissible)
-    (hs : 2 < p.s) (hs3 : p.s ≤ 3)
-    (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V)
-    (hM : boxConvolutionReciprocalMass (convolutionWuWindows N Δ V) = 0) (j : Fin 4) :
-    actualSource N δ p (convolutionWuWindows N Δ V) j = 0 ∧
-      actualEnvelope N δ p (convolutionWuWindows N Δ V) j = 0 := by
-  have hE := actual_envelope_mass hp hs hs3 hN hδ hδhi hb j
-  have hS := actual_source_mass hp hs hs3 hN hδ hδhi hb j
-  rw [hM, mul_zero] at hE hS
-  exact ⟨le_antisymm hS (source_nonneg _ _ _ _ _ _ _ _),
-    le_antisymm hE (envelope_nonneg _ _ _ _ _ _ _ _)⟩
 
 /-- Three payment scales; every occurrence uses exactly W's original weights and Theta. -/
 def Paid {i : ℕ} (N : ℕ) (δ K ε : ℝ) (W : Fin i → Finset ℕ) (X : ℝ) : Prop :=

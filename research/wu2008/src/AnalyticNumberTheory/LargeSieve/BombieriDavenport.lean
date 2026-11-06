@@ -81,10 +81,6 @@ lemma zmodCharStd_apply (q : ℕ) [NeZero q] (a : ZMod q) :
   congr 1
   · field_simp [show (q : ℝ) ≠ 0 by exact_mod_cast (NeZero.ne q)]
 
-/-- e_q is a primitive additive character (q != 0). -/
-lemma zmodCharStd_isPrimitive (q : ℕ) [NeZero q] : (zmodCharStd q).IsPrimitive := by
-  dsimp [zmodCharStd]
-  exact AddChar.zmodChar_primitive_of_primitive_root q (zetaRoot_isPrimitiveRoot q (NeZero.ne q))
 
 /-- charReal is periodic modulo integers: e((m + q t)/q) = e(m/q). -/
 lemma charReal_periodic_zmod {q : ℕ} (hq : 0 < q) {m n : ℤ}
@@ -260,10 +256,6 @@ lemma charNormSq_sum {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :
           rfl
       simp [hcard]
 
-/-- chi^{-1} a = star (chi a) for all a (complex characters). -/
-lemma char_inv_eq_star {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (a : ZMod q) :
-    χ⁻¹ a = star (χ a) := by
-  rw [MulChar.star_apply']
 
 /-- **Gauss-sum magnitude**: |tau(chi)|^2 = q for primitive chi mod q.
   Via Parseval (zmodParseval_zmod with z = chi) and mathlib's

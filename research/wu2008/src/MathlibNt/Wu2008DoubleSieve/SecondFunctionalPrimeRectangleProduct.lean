@@ -59,11 +59,6 @@ theorem primeRectangle_discrepancy {n : ℕ} {R : ℝ}
   · intro i
     exact primeOrdered_reciprocal_Icc_uniform_bound hR hs (hA i) (hAB i) (hB i)
 
-/-- Empty density product and empty actual mass both equal one. -/
-theorem primeRectangle_zero_discrepancy (R : ℝ) (A B : Fin 0 → ℝ) :
-    (∏ i, ∫ t in A i..B i, 1 / t) = 1 ∧
-      |primeRectangleMass R A B - ∏ i, ∫ t in A i..B i, 1 / t| = 0 := by
-  simp [primeRectangle_zero]
 
 end Wu2008DoubleSieve
 

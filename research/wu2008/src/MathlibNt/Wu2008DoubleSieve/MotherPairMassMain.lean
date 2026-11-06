@@ -19,15 +19,6 @@ theorem rectLabels_empty_right {i : ℕ} (N : ℕ) (δ A B C : ℝ) (W : Fin i �
   obtain ⟨_,_,_,_,_,_,_,hlo,hhi,_⟩ := mem_filter.mp hx
   exact (not_lt_of_ge hlo) hhi
 
-theorem rect_mass_empty {i : ℕ} (N : ℕ) (δ A B C D : ℝ) (W : Fin i → Finset ℕ)
-    (h : A=B ∨ C=D) :
-    gamma5ClassicalMainMass N δ W (rectLabels N δ W A B C D) = 0 ∧
-      rectIntegral A B C D = 0 := by
-  rcases h with h | h
-  · subst B
-    simp [rectLabels_empty_left, gamma5ClassicalMainMass, rectIntegral]
-  · subst D
-    simp [rectLabels_empty_right, gamma5ClassicalMainMass, rectIntegral]
 
 theorem rect_mem_iff {i k N : ℕ} {δ Δ U A B C D : ℝ} {V : Fin i → ℝ}
     (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)

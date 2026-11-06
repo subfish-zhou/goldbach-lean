@@ -246,19 +246,6 @@ noncomputable def finiteElevenUnscaled (N : ℕ) (z w u v V : ℝ) : ℤ :=
   finiteElevenExpression N z w u v V (sourceSieveCount N)
     (fun d y => sourceSieveCount N d N y)
 
-/-- Signed, term-by-term carrier transport. Its negative coefficients are
-not replaced by positive majorants, and no smallness is asserted. -/
-theorem finiteElevenMixed_eq_unscaled_add_signed_transport
-    (N : ℕ) (z w u v V : ℝ) :
-    finiteElevenMixed N z w u v V =
-      finiteElevenUnscaled N z w u v V +
-        finiteElevenExpression N z w u v V
-          (fun d M y => sieveCount N d M y - sourceSieveCount N d M y)
-          (fun d y => sourceSieveCount N d (d * N) y - sourceSieveCount N d N y) := by
-  rw [finiteElevenExpression_sub]
-  change finiteElevenMixed N z w u v V = finiteElevenUnscaled N z w u v V +
-    (finiteElevenMixed N z w u v V - finiteElevenUnscaled N z w u v V)
-  omega
 
 /-- All restored positive contributions, including both outer slacks.
 This is an actual finite sum, not a premise encoding the desired payment. -/
@@ -271,24 +258,6 @@ noncomputable def finiteAssemblyGains (N : ℕ) (z w u v V : ℝ) : ℝ :=
     (s3VariableSlack N w u : ℝ) +
     lowerWeightOuterSlack N w u + lowerWeightOuterSlack N z v
 
-theorem finiteAssemblyGains_nonneg {N : ℕ} (hN : 0 < N)
-    {z w : ℝ} (hz : 2 ≤ z) (hw : 2 ≤ w) (u v V : ℝ) :
-    0 ≤ finiteAssemblyGains N z w u v V := by
-  have hT : 0 ≤ (∑ t ∈ orderedTriples (primeWindow N w u),
-      s3PositiveTripleTerm N t : ℤ) :=
-    sum_nonneg (fun _ _ => sieveCount_nonneg _ _ _ _)
-  have hR := Int.cast_nonneg (R := ℝ) (s3RetainedTripleMass_nonneg N z w u v)
-  have hA := Int.cast_nonneg (R := ℝ)
-    (s3FourModulusGain_nonneg N (orderedTriples (primeWindow N z w)))
-  have hB := Int.cast_nonneg (R := ℝ)
-    (s3FourModulusGain_nonneg N (s3SecondRange N z w u))
-  have hM := Int.cast_nonneg (R := ℝ) (s3Upsilon11MissingMass_nonneg N z w u V)
-  have hS := Int.cast_nonneg (R := ℝ) (s3VariableSlack_nonneg N w u)
-  have hT' := Int.cast_nonneg (R := ℝ) hT
-  have hwS := lowerWeightOuterSlack_nonneg hN hw u
-  have hzS := lowerWeightOuterSlack_nonneg hN hz v
-  unfold finiteAssemblyGains
-  linarith
 
 theorem finiteElevenMixed_exact_aggregate (N : ℕ) (z w u v V : ℝ)
     (hzw : z ≤ w) (hwu : w ≤ u) (hwv : w ≤ v) (huv : u ≤ v)
@@ -359,34 +328,5 @@ theorem finiteElevenMixed_le_count_signed_paid {N : ℕ} {κ₁ κ₂ : ℝ}
     (show κ₁ ≤ 1 / 2 by linarith)
   nlinarith
 
-/-- A source-carrier consumer with no new mathematical hypothesis on the
-counts: every change of carrier is retained in the signed linear expression.
-Specialize `S = sourceSieveCount N`, `Q d y = sourceSieveCount N d N y`
-for strict unscaled carriers, or both to `sourceSieveCountLE` for the
-literal closed unscaled convention. In neither case is the transport free. -/
-theorem finiteElevenExpression_le_count_signed_paid {N : ℕ} {κ₁ κ₂ : ℝ}
-    (hN : 4 ≤ N) (he : Even N) (hκ₁ : 1 / 18 ≤ κ₁) (hκ : κ₁ ≤ κ₂)
-    (hupper : 3 * κ₁ + κ₂ ≤ 1 / 2) (hparam : 3 * κ₁ - κ₂ ≤ 1 / 6)
-    (hz : 2 ≤ (N : ℝ) ^ κ₁)
-    (S : ℕ → ℕ → ℝ → ℤ) (Q : ℕ → ℝ → ℤ) :
-    let z := (N : ℝ) ^ κ₁
-    let w := (N : ℝ) ^ κ₂
-    let u := (N : ℝ) ^ (1 / 2 - 3 * κ₁)
-    let v := (N : ℝ) ^ (1 / 3 : ℝ)
-    let V := (N : ℝ) ^ (1 / 2 - 2 * κ₁)
-    (finiteElevenExpression N z w u v V S Q : ℝ) +
-        (finiteElevenExpression N z w u v V
-          (fun d M y => sieveCount N d M y - S d M y)
-          (fun d y => sourceSieveCount N d (d * N) y - Q d y) : ℝ) +
-        finiteAssemblyGains N z w u v V -
-        (s3Upsilon11ExcessMass N z w u V : ℝ) ≤
-      4 * ((MathlibNt.Wu2008DoubleSieve.wuPrimeComplements N).card : ℝ) +
-        (16 + 2 * (1 / κ₁) ^ 3 + 2 * (1 / κ₂) ^ 2) * (N : ℝ) ^ (1 - κ₁) := by
-  have h := finiteElevenMixed_le_count_signed_paid hN he hκ₁ hκ hupper hparam hz
-  dsimp only at h ⊢
-  rw [finiteElevenExpression_sub, Int.cast_sub]
-  change _ ≤ _
-  unfold finiteElevenMixed at h
-  linarith
 
 end Wu2008DoubleSieve

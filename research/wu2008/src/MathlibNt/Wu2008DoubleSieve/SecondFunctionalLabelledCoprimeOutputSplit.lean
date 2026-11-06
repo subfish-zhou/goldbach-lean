@@ -40,12 +40,6 @@ noncomputable def noncoprimePart : Family α N where
 theorem coprimePart_coprime {c : α} (hc : c ∈ L.coprimePart.labels) :
     (L.coprimePart.cofactor c).Coprime N := (mem_filter.mp hc).2
 
-theorem mass_coprime_split : L.mass = L.coprimePart.mass + L.noncoprimePart.mass := by
-  unfold mass coprimePart noncoprimePart primes
-  simp only [sum_filter, ← sum_add_distrib]
-  apply sum_congr rfl
-  intro c _
-  by_cases h : (L.cofactor c).Coprime N <;> simp [h]
 
 theorem primeMass_coprime_split :
     L.primeMass = L.coprimePart.primeMass + L.noncoprimePart.primeMass := by
@@ -112,11 +106,6 @@ theorem noncoprimePart_primeMass_le_log (hN : 0 < N) {F : ℝ} (hF : 0 ≤ F)
     _ ≤ F * (Real.log N / Real.log 2) := mul_le_mul_of_nonneg_left hcard hF
     _ = _ := by ring
 
-theorem primeMass_le_coprimePart_add_log (hN : 0 < N) {F : ℝ} (hF : 0 ≤ F)
-    (hlocal : ∀ b ∈ N.primeFactors, L.weightAt b ≤ F) :
-    L.primeMass ≤ L.coprimePart.primeMass + F * Real.log N / Real.log 2 := by
-  rw [L.primeMass_coprime_split]
-  exact add_le_add le_rfl (L.noncoprimePart_primeMass_le_log hN hF hlocal)
 
 end Family
 end Wu2008DoubleSieve.LabelledPhysical

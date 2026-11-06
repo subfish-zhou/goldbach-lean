@@ -80,18 +80,6 @@ theorem gamma5Gain_literal_bounds {δ t u : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 
       div_le_div_of_nonneg_right hh.2 hb.2.2.2.2.le⟩
   · exact ⟨le_rfl, div_nonneg (by norm_num) hb.2.2.2.2.le⟩
 
-theorem gamma5Gain_integral_bounds {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
-    0 ≤ gamma5GainIntegral δ ∧ gamma5GainIntegral δ ≤ gamma5MassC5 := by
-  constructor
-  · rw [gamma5Gain_integral_eq hδ hδhi]
-    exact integral_nonneg (fun v => (gamma5Gain_kernel_bounds hδ hδhi v).1)
-  · apply intervalIntegral.integral_mono_on gamma5Mass_constants.2.1.le
-      (gamma5Gain_outer_integrable hδ hδhi) gamma5Mass_C5_integrable.2
-    intro t ht
-    apply intervalIntegral.integral_mono_on ht.2
-      (gamma5Gain_inner_integrable hδ hδhi ht) (gamma5Mass_C5_integrable.1 t ht)
-    intro u hu
-    exact (gamma5Gain_literal_bounds hδ hδhi ht.1 hu.1 hu.2).2
 
 theorem gamma5Gain_H_pullback_ae {δ : ℝ} (hδ : 0 < δ) (hδhi : δ < 1 / 2) :
     ∀ᵐ v : ℝ × ℝ, ContinuousAt (gamma5GainH δ) (gamma5GainV v.1 v.2) := by

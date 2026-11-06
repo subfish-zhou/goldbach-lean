@@ -63,18 +63,5 @@ theorem truncatedSixthLower_mask_mass_le {N : ℕ} {δ : ℝ}
   exact_mod_cast (show (0 : ℤ) ≤ sieveCount N (t.1 * t.2) N
     ((N : ℝ) ^ truncatedSixthLowerAlpha) from Int.natCast_nonneg _)
 
-theorem truncatedSixthLower_normalized_actual_relative {δ η ε : ℝ}
-    (hδ : 0 < δ) (hη : 0 < η) (hηhi : η ≤ 1) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      truncatedSixthLowerNormalizedMain N δ η (truncatedSixthLowerPairs N δ) -
-        ε * wuSingularSeries N * N / log N ^ (2 : ℕ) ≤
-      (truncatedSixthMass N ((N : ℝ) ^ truncatedSixthLowerAlpha)
-        ((N : ℝ) ^ truncatedSixthLowerBeta) ((N : ℝ) ^ truncatedSixthLowerSigma)
-        ((N : ℝ) ^ truncatedSixthLowerLambda) : ℝ) := by
-  obtain ⟨T, hT, h⟩ := truncatedSixthLower_normalized_masked_relative hδ hη hηhi hε
-  refine ⟨T, hT, ?_⟩
-  intro N hN he
-  exact (h N hN he _ subset_rfl).trans
-    (truncatedSixthLower_mask_mass_le (by omega) hδ _ subset_rfl)
 
 end Wu2008DoubleSieve

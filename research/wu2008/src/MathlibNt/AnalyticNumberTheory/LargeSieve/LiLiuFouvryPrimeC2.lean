@@ -28,21 +28,6 @@ theorem primeSWBeta_le_order_one (n : ℕ) : |primeSWBeta n| ≤ (fouvryTau 1 n 
   · simp [primeSWBeta,hp,fouvryTau_order_one hp.ne_zero]
   · simp [primeSWBeta,hp]
 
-/-- No SW premise: the actual prime-interval producer is consumed here. -/
-theorem primeC2_unconditional (i j A : ℕ) {ε : ℝ} (hε : 0 < ε) :
-    ∀ᶠ x : ℝ in atTop, ∀ z : PrimeC2Interval, ∀ M ν : ℝ,
-      1 ≤ M → 4*M*z.scale = x → ε ≤ ν → ν ≤ 1/10 → z.scale = x^ν →
-      ∀ U : Finset ℕ, (∀ n ∈ U, M ≤ (n : ℝ) ∧ (n : ℝ) ≤ 2*M) →
-      ∀ α c : ℕ → ℝ, (∀ n ∈ U, |α n| ≤ (fouvryTau i n : ℝ)) →
-      SignedWellFactorable j (x^((5-5*ν)/9-ε)) c →
-      ∀ a : ℤ, a ≠ 0 → |(a : ℝ)| ≤ x →
-      |signedError U (primeSWInterval z.lower z.upper)
-        (Ioc 0 ⌊x^((5-5*ν)/9-ε)⌋₊) α primeSWBeta c a| ≤ x/Real.log x^A := by
-  have hSW := primeSW_BetaCoprimeSWFamily PrimeC2Interval.scale
-    PrimeC2Interval.lower PrimeC2Interval.upper PrimeC2Interval.one_le_scale
-    PrimeC2Interval.scale_le_lower PrimeC2Interval.lower_le_upper PrimeC2Interval.upper_le_twice
-  exact direct_wellFactorable_signedError_c2 (i := i) (j := j) (k := 1) A hSW
-    PrimeC2Interval.one_le_scale primeC2Interval_support (fun _ n _ => primeSWBeta_le_order_one n) hε
 
 /-- For primes, divisor deletion is exactly the actual Goldbach coprime mask. -/
 theorem primeSWBeta_clean_nat (N n : ℕ) :

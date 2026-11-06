@@ -69,27 +69,11 @@ theorem continuousRectangle_subset_cube {n : ℕ} (A B : Fin n → ℝ)
   intro t ht i hi
   exact ⟨(hA i).trans (ht i hi).1, (ht i hi).2.trans (hB i)⟩
 
-/-- The positive-cube interface bundles real integrability with exact factorization. -/
-theorem continuousRectangle_exact {n : ℕ} (A B : Fin n → ℝ)
-    (hA : ∀ i, 1 / 10 ≤ A i) (hAB : ∀ i, A i ≤ B i) (hB : ∀ i, B i ≤ 1 / 2) :
-    continuousRectangle A B ⊆ continuousCube n ∧
-      IntegrableOn continuousDensity (continuousRectangle A B) ∧
-      (∫ t in continuousRectangle A B, continuousDensity t) =
-        ∏ i, ∫ x in A i..B i, 1 / x :=
-  ⟨continuousRectangle_subset_cube A B hA hB, continuousRectangle_integrable A B hA,
-    continuousRectangle_factorization A B hAB⟩
 
 theorem continuousRectangle_integral_zero (A B : Fin 0 → ℝ) :
     (∫ t in continuousRectangle A B, continuousDensity t) = 1 := by
   rw [continuousRectangle_factorization A B (fun i => Fin.elim0 i)]
   simp
 
-/-- A closed zero-width coordinate has zero continuous mass, not a deleted prime atom. -/
-theorem continuousRectangle_integral_degenerate {n : ℕ} (j : Fin n)
-    (A B : Fin n → ℝ) (hAB : ∀ i, A i ≤ B i) (hj : A j = B j) :
-    (∫ t in continuousRectangle A B, continuousDensity t) = 0 := by
-  rw [continuousRectangle_factorization A B hAB]
-  apply Finset.prod_eq_zero (Finset.mem_univ j)
-  rw [hj, intervalIntegral.integral_same]
 
 end Wu2008DoubleSieve

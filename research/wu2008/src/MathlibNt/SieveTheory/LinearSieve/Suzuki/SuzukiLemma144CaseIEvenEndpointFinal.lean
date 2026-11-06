@@ -97,38 +97,6 @@ theorem evenEndpoint_pointwiseInductionContract_of_movingIH
   · exact hError
   · simpa [z] using hnatural
 
-/-- Exact endpoint recurrence together with its fully instantiated pointwise IH. -/
-theorem evenEndpoint_recurrence_and_pointwise
-    (S : BoundingSieve) (H : Section13HatLayers)
-    (C K d Δ : ℝ) (M D Dmin : ℕ)
-    (hDmin : 2 ≤ Dmin) (hM : Even M) (hM2 : 2 ≤ M) (hD : 4 ≤ D)
-    (hscale : CarrierQuotientThresholdGeometry
-      (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊) D Dmin
-        (sourceSigma (D : ℝ) d) 2)
-    (hrecursiveSigma : ∀ p ∈ sigmaOneCarrier
-      (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊) D
-        (sourceSigma (D : ℝ) d) 2,
-      recursiveCoordinate D p ≤ sourceSigma ((D ⌈/⌉ p : ℕ) : ℝ) d)
-    (hError : ∀ p ∈ sigmaOneCarrier
-      (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊) D
-        (sourceSigma (D : ℝ) d) 2,
-      errorEnvelope H (M - 1) (D ⌈/⌉ p : ℕ) d (recursiveCoordinate D p) ≤
-        errorEnvelope H (M - 1) (D ⌈/⌉ p : ℕ) d (inheritedCoordinate D p))
-    (hC : 0 ≤ C)
-    (hIH : Lemma144EvenEndpointMovingIH S H C K d Δ (M - 1) Dmin) :
-    suzukiActualT S M D ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊ =
-        ∑ p ∈ suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊,
-          S.nu p * suzukiActualT S (M - 1) (D ⌈/⌉ p) p ∧
-      PointwiseInductionContract
-        (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (2 : ℝ))⌉₊)
-        (suzukiActualT S) (fun p => suzukiVProduct S p)
-        (fun n D' x => errorEnvelope H n (D' : ℝ) d x)
-        2 C K Δ M D (sourceSigma (D : ℝ) d) 2 := by
-  constructor
-  · exact suzukiActualT_caseI_recurrence_strict S hM2
-      (lemma144_caseI_even_endpoint_odd_carrier hM)
-  · exact evenEndpoint_pointwiseInductionContract_of_movingIH S H C K d Δ M D Dmin
-      hDmin hM hM2 hD hscale hrecursiveSigma hError hC hIH
 
 /-- The exact first missing analytic edge.  Existing `Σ₁₁` production requires
 `2-1 ∈ parityDomain 2 (M-1)`, which is false for even `M`; the carrier packet

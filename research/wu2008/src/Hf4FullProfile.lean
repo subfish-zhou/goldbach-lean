@@ -50,8 +50,6 @@ theorem old_terminal_le : Hf4Den.terminal ≤ terminal :=
   add_le_add (mul_le_mul_of_nonneg_left old_profile_le
     (log_nonneg (by norm_num : (1:ℝ)≤2))) le_rfl
 
-theorem continue_terminal_lt : Hf4Continue.terminal < terminal :=
-  Hf4Den.old_terminal_lt.trans_le old_terminal_le
 
 /-- This numerator really uses the frozen complete 23-block primitive endpoint certificate. -/
 def endpointNumerator : ℝ := SigmaActualBlockSeparable.endpointNumerator NineFeedbackStrength.originalH +

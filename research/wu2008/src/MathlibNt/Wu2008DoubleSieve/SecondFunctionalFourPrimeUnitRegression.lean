@@ -68,22 +68,5 @@ theorem old_fibre_subset {i N : ℕ} {δ : ℝ} {W : Fin i → Finset ℕ}
   · convert hupper using 1; norm_num [word, SecondFunctionalParameters.row4, gamma16Encode]
   · simpa only [gamma16_encode_value] using hcap
 
-theorem old_unit_le_envelope {i k N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (hN : 2 ≤ N) (hδ : 0 < δ) (hδhi : δ < 1/2)
-    (hb : wuSourceBox k δ N i Δ V) :
-    secondFunctionalUnitGamma16 N δ (convolutionWuWindows N Δ V) ≤
-      actualEnvelope N δ SecondFunctionalParameters.row4 (convolutionWuWindows N Δ V) 0 := by
-  unfold secondFunctionalUnitGamma16 actualEnvelope envelope
-  calc
-    _ ≤ ∑ x ∈ (gamma16Profiles N δ (convolutionWuWindows N Δ V)).filter
-        (fun x => x.2.2.2.2 = 1),
-        (convolutionCoeff (convolutionWuWindows N Δ V) x.1 : ℝ) *
-          (actualFibre N δ SecondFunctionalParameters.row4 0 x).card := by
-      apply sum_le_sum
-      intro x hx
-      exact mul_le_mul_of_nonneg_left
-        (Nat.cast_le.mpr (card_le_card (old_fibre_subset (mem_filter.mp hx).1))) (Nat.cast_nonneg _)
-    _ ≤ _ := sum_le_sum_of_subset_of_nonneg (old_profiles_subset hN hδ hδhi hb)
-      (fun _ _ _ => mul_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _))
 
 end Wu2008DoubleSieve.FourPrimeUnit

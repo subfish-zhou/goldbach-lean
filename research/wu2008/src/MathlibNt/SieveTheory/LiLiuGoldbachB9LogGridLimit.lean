@@ -160,25 +160,6 @@ theorem goldbachB9SourceIndicator_integral_section (u : ℝ) :
     filter_upwards with v
     exact indicator_of_notMem (fun h => hu h.1) _
 
-theorem intervalIntegrable_goldbachB9MainOuter :
-    IntervalIntegrable
-      (fun u : ℝ => ∫ v in (1 / 3 : ℝ)..((1 - u) / 2), 1 / (u * v * (1 - u - v)))
-      volume (4 / 53) (1 / 3) := by
-  have hF := integrable_goldbachB9SourceIndicator
-  rw [Measure.volume_eq_prod ℝ ℝ] at hF
-  have hi := hF.integral_prod_left
-  have hIndicator : Integrable ((Ioc (4 / 53 : ℝ) (1 / 3)).indicator
-      (fun u => ∫ v in Ioc (1 / 3) ((1 - u) / 2), liuLogIntegrand (u, v))) := by
-    apply hi.congr
-    filter_upwards with u
-    exact goldbachB9SourceIndicator_integral_section u
-  have hOn := (integrable_indicator_iff measurableSet_Ioc).mp hIndicator
-  apply (intervalIntegrable_iff_integrableOn_Ioc_of_le
-    (by norm_num : (4 / 53 : ℝ) ≤ 1 / 3)).mpr
-  apply hOn.congr
-  filter_upwards [ae_restrict_mem measurableSet_Ioc] with u hu
-  rw [intervalIntegral.integral_of_le (by linarith [hu.2] : (1 / 3 : ℝ) ≤ (1 - u) / 2)]
-  simp only [goldbachB9LogIntegrand_eq]
 
 /-- Fubini is applied to an integrable indicator, not to an unspecified integral. -/
 theorem goldbachB9MainIntegral_eq_setIntegral :
@@ -200,11 +181,6 @@ theorem goldbachB9MainIntegral_eq_setIntegral :
     _ = ∫ z, F z := hFubini.symm
     _ = _ := integral_indicator measurableSet_goldbachB9LogSourceRegion
 
-theorem goldbachB9MainIntegral_nonneg : 0 ≤ goldbachB9MainIntegral := by
-  rw [goldbachB9MainIntegral_eq_setIntegral]
-  apply setIntegral_nonneg measurableSet_goldbachB9LogSourceRegion
-  intro x hx
-  exact (goldbachB9LogIntegrand_bounds (goldbachB9LogSourceRegion_subset_ambientBox hx)).1
 
 theorem integrable_goldbachB9LogGridUpperIntegrand (n : ℕ) (hn : 0 < n) :
     Integrable (goldbachB9LogGridUpperIntegrand n) := by
@@ -354,7 +330,6 @@ private theorem volume_b9UnitBox :
   rw [Measure.volume_eq_prod ℝ ℝ, Measure.prod_prod]
   norm_num [Real.volume_Icc]
 
-theorem goldbachB9LogGridErrorConstant_pos : (0 : ℝ) < 10000 := by norm_num
 
 /-- One-sided structural error for every positive mesh size, not an assumed limit. -/
 theorem goldbachB9LogGridUpperSum_sub_mainIntegral_le (n : ℕ) (hn : 0 < n) :
@@ -440,14 +415,6 @@ theorem goldbachB9PairLogKernel_le_mainIntegral_eventually
   intro N hN
   linarith [hfixed N hN]
 
-/-- The terminal statement displays the actual double integral explicitly. -/
-theorem goldbachB9PairLogKernel_le_doubleIntegral_eventually
-    (δ : ℝ) (hδ : 0 < δ) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      goldbachB9PairLogKernel N ≤
-        (∫ u in (4 / 53 : ℝ)..(1 / 3),
-          ∫ v in (1 / 3 : ℝ)..((1 - u) / 2), 1 / (u * v * (1 - u - v))) + δ :=
-  goldbachB9PairLogKernel_le_mainIntegral_eventually δ hδ
 
 end
 

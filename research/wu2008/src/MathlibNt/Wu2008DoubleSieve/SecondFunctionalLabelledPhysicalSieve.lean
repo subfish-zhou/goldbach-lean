@@ -78,10 +78,6 @@ theorem output_test (f : ℕ → ℝ) :
     simp [Ne.symm hn]
   · exact fun hn => (hn hb).elim
 
-theorem total_mass (he : Even N) (Z : ℝ) :
-    (∑ b ∈ (L.sieve he Z).support, (L.sieve he Z).weights b) =
-      (L.sieve he Z).totalMass := by
-  simpa [sieve, mass] using L.output_test (fun _ => 1)
 
 theorem output_le {c : α} (hc : c ∈ L.labels) {p : ℕ} (hp : p ∈ L.primes c) :
     L.cofactor c * p ≤ N := by

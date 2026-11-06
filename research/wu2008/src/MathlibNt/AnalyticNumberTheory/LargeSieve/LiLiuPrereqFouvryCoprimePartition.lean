@@ -59,9 +59,6 @@ theorem bitColor_cross_ne {T a b c d : ℕ}
   intro h
   exact h₂ (h ▸ h₁)
 
-theorem card_bitColor (T : ℕ) :
-    Fintype.card (BitColor T) = 2 * (Nat.log2 T + 1) := by
-  simp [BitColor, Nat.mul_comm]
 
 /-- Enumerate the distinct prime factors increasingly and pad to the requested length. -/
 noncomputable def paddedFactor (ω n pad : ℕ) (i : Fin ω) : ℕ :=

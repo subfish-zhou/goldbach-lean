@@ -102,43 +102,6 @@ theorem fourthRowTripleGated_integral_eq (ten : Bool) (φ : ℝ) :
   unfold fourthRowTripleGatedIntegral fourthRowTripleGatedMiddle
   simp_rw [fourthRowTripleGated_inner_eq, intervalIntegral.integral_div]
 
-theorem fourthRowTripleGated_integrable (ten : Bool) {φ : ℝ} (hφ : 2 ≤ φ) :
-    (∀ t ∈ Icc (1 / 10 : ℝ) (1 / 2), ∀ u ∈ Icc (1 / 10 : ℝ) (1 / 2),
-      IntervalIntegrable (fun v => buchstab ((φ - t - u - v) / u) / (t * u ^ 2 * v))
-        volume (100 / 291) (2 / 5)) ∧
-    (∀ t ∈ Icc (1 / 10 : ℝ) (1 / 2),
-      IntervalIntegrable (fun u => ∫ v in (100 / 291 : ℝ)..(2 / 5),
-        buchstab ((φ - t - u - v) / u) / (t * u ^ 2 * v))
-        volume (fourthRowTripleGatedMiddleStart ten t) (100 / 291)) ∧
-    IntervalIntegrable (fun t => ∫ u in fourthRowTripleGatedMiddleStart ten t..(100 / 291),
-      ∫ v in (100 / 291 : ℝ)..(2 / 5), buchstab ((φ - t - u - v) / u) / (t * u ^ 2 * v))
-        volume (fourthRowTripleGatedStart ten) (fourthRowTripleGatedStop ten) := by
-  have hK : 0 ≤ 1000 * φ + 200 := by linarith
-  have hw := primeOrdered_buchstab_weight hφ (le_refl φ)
-  have hi := fourthRowTripleGated_inner_regular hw (by norm_num) hK
-  have hm := fourthRowTripleGated_middle_regular hw (by norm_num) hK ten
-  refine ⟨?_, ?_, ?_⟩
-  · intro t ht u hu
-    have h := ((primeOrdered_integrable
-      (primeOrdered_continuous_of_lipschitz (hw.third t ht u hu))
-      (by norm_num : (100 / 291 : ℝ) ∈ Icc (1 / 10) (1 / 2))
-      (by norm_num : (2 / 5 : ℝ) ∈ Icc (1 / 10) (1 / 2))).div_const u).div_const t
-    convert h using 1
-    funext v
-    unfold primeOrderedBuchstabWeight
-    ring
-  · intro t ht
-    simp_rw [fourthRowTripleGated_inner_eq]
-    apply (primeOrdered_integrable (primeOrdered_continuous_of_lipschitz (hi.2.2 t ht))
-      ?_ (by norm_num)).div_const t
-    cases ten
-    · norm_num [fourthRowTripleGatedMiddleStart]
-    · exact ht
-  · have he := fourthRowTripleGated_endpoints ten
-    simp_rw [fourthRowTripleGated_inner_eq, intervalIntegral.integral_div]
-    exact primeOrdered_integrable (primeOrdered_continuous_of_lipschitz hm.2)
-      ⟨he.1, by linarith [he.2.1, he.2.2]⟩
-      ⟨he.1.trans he.2.1, by linarith [he.2.2]⟩
 
 theorem fourthRowTripleGated_integral_bounds (ten : Bool) {φ : ℝ} (hφ : 2 ≤ φ) :
     0 ≤ fourthRowTripleGatedIntegral ten φ ∧ fourthRowTripleGatedIntegral ten φ ≤ 640 := by

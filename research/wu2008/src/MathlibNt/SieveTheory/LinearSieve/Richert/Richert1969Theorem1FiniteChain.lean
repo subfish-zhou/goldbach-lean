@@ -177,14 +177,6 @@ theorem stieltjesPrimeIntegral :
     ChenJurkatRichertVaryingQPrimeSumAsymptotic :=
   chenJurkatRichertVaryingQPrimeSumAsymptotic
 
-/-- The downstream Chen proper-prime-power correction.  This is distinct from
-Richert's direct `(A4)` payment for the removed `p^2 ∣ a` carrier in (3.7). -/
-theorem squarefulCorrection_le
-    (N : ℕ) (hN : 2 ^ 110 < N) (hEven : Even N) :
-    jurkatRichertDistinctWeightedCount N -
-        30 * (N : ℝ) ^ (9 / 10 : ℝ) ≤
-      jurkatRichertWeightedCount N :=
-  jurkatRichertDistinctWeightedCount_sub_proper_le N hN hEven
 
 /-- The Chen-facing conclusion from the two quoted lower/upper Theorem A
 coefficient dependencies and the two distribution inputs.  Theorem A remains

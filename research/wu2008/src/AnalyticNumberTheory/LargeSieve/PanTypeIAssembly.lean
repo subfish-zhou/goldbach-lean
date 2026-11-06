@@ -173,15 +173,6 @@ set_option maxHeartbeats 4000000
 
 /-! ## S3: The totient-weight sum -/
 
-/-- **W3**, restated from `PanMainTerm`:
-`Σ_{q≤Q} μ²(q)·3^{ω(q)}/φ(q) ≤ C·log⁶(Q+2)`.
-This is one factor in the S3 weight assembly (`PanMainTerm.lean` §4). -/
-theorem panTypeI_totientWeightSum_polylog :
-    ∃ C : ℝ, 0 < C ∧ ∀ Q : ℕ,
-      (∑ q ∈ Finset.range (Q + 1),
-        ((μ q : ℤ) : ℝ) ^ 2 * (3 : ℝ) ^ q.primeFactors.card / (Nat.totient q : ℝ)) ≤
-        C * (Real.log (Q + 2)) ^ (6 : ℝ) := by
-  simpa [panMainTotientWeightedSum] using panMainTotientWeightedSum_le_polylog
 
 /-! ## S2: Conductor decomposition and the structural density bound -/
 
@@ -203,36 +194,9 @@ lemma dirichletChar_eq_primitiveCharacter_of_coprime {q : ℕ} [NeZero q]
     (χ.primitiveCharacter_apply_of_isCoprime (a := (n : ℤ))
       (Nat.isCoprime_iff_coprime.mpr hcop)).symm
 
-/-- **S2a**: each character `χ mod q` is induced by its unique primitive
-character `χ.primitiveCharacter mod χ.conductor` (uniqueness follows from
-injectivity of `changeLevel`). The pointwise equality holds for `(n,q)=1`;
-on non-coprime arguments, `MulChar` uses the value 0. -/
-theorem panTypeI_char_induced_by_primitive (q : ℕ) [NeZero q] :
-    ∀ χ : DirichletCharacter ℂ q, ∃ q' : ℕ, q' ∣ q ∧
-      ∃ χ' : DirichletCharacter ℂ q', χ'.IsPrimitive ∧
-        ∀ n : ℕ, n.Coprime q → χ (n : ZMod q) = χ' (n : ZMod q') := by
-  intro χ
-  refine ⟨χ.conductor, χ.conductor_dvd_level, χ.primitiveCharacter,
-    χ.primitiveCharacter_isPrimitive, ?_⟩
-  intro n hn
-  exact dirichletChar_eq_primitiveCharacter_of_coprime χ hn
 
 /-! ### Pointwise components of the S2 square-sum decomposition -/
 
-/-- Coprime-part decomposition of `V_χ(m)`: non-coprime terms vanish. -/
-lemma panTypeIV1CharSum_eq_coprimePart {q m u : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) :
-    panTypeIV1CharSum q m u χ =
-      ∑ n ∈ Finset.range (m + 1),
-        (if n.Coprime q then (vaughanFirst n u : ℂ) * χ.primitiveCharacter (n : ZMod χ.conductor)
-         else 0) := by
-  unfold panTypeIV1CharSum
-  apply Finset.sum_congr rfl
-  intro n hn
-  by_cases hc : n.Coprime q
-  · simp [hc, dirichletChar_eq_primitiveCharacter_of_coprime χ hc]
-  · have hnu : ¬ IsUnit (n : ZMod q) := (ZMod.isUnit_iff_coprime n q).not.mpr hc
-    have hz : χ (n : ZMod q) = 0 := MulChar.map_nonunit χ hnu
-    simp [hc, hz]
 
 /-- Non-coprime density term:
 `D_q(m) = Σ_{n ≤ m, (n,q) > 1} |vaughanFirst(n,u)|`. -/
@@ -400,125 +364,9 @@ lemma panTypeI_primitiveFiberSqSum_le {q q' m u : ℕ} (hq : 0 < q) :
     _ ≤ (Nat.totient q : ℝ) * panTypeIPrimitiveSqSum q' m u := by
           exact mul_le_mul_of_nonneg_right (by exact_mod_cast hsize) (panTypeIPrimitiveSqSum_nonneg q' m u)
 
-/-- **S2b**: primitive-character decomposition of the all-character
-square sum, with the coarse coefficient `φ(q)`:
-`t_q(m) ≤ 2·Σ_{q' | q} φ(q)·P_{q'}(m) + 2·φ(q)·D_q(m)²`.
-A coefficient 1 would require injectivity of the primitive-character map
-and conductor-cast handling, including dependent `sum_bij` and `Eq.ndrec`
-transport. This theorem supplies the pointwise square bounds and fiber
-grouping, but not that sharper coefficient. -/
-theorem panTypeI_sqSum_primitiveDecomposition (q m u : ℕ) (hq : 0 < q) :
-    panTypeICharSqSum q m u ≤
-      2 * (∑ q' ∈ q.divisors, (Nat.totient q : ℝ) * panTypeIPrimitiveSqSum q' m u) +
-        2 * (Nat.totient q : ℝ) * (panTypeI_nonCoprimeDensity q m u) ^ 2 := by
-  have : NeZero q := ⟨Nat.ne_of_gt hq⟩
-  have hpoint : ∀ χ : DirichletCharacter ℂ q,
-      ‖panTypeIV1CharSum q m u χ‖ ^ 2 ≤
-        2 * ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2 +
-          2 * (panTypeI_nonCoprimeDensity q m u) ^ 2 := by
-    intro χ
-    exact panTypeIV1CharSum_sq_le_primitive (q := q) (m := m) (u := u) χ
-  have hcard : Fintype.card (DirichletCharacter ℂ q) = Nat.totient q := panTypeI_charCard_eq_totient q hq
-  have h1 : panTypeICharSqSum q m u ≤
-      2 * (∑ χ : DirichletCharacter ℂ q, ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2) +
-        2 * (Nat.totient q : ℝ) * (panTypeI_nonCoprimeDensity q m u) ^ 2 := by
-    unfold panTypeICharSqSum
-    calc
-      (∑ χ : DirichletCharacter ℂ q, ‖panTypeIV1CharSum q m u χ‖ ^ 2)
-          ≤ ∑ χ : DirichletCharacter ℂ q,
-              (2 * ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2 +
-                2 * (panTypeI_nonCoprimeDensity q m u) ^ 2) := by
-              exact Finset.sum_le_sum (fun χ hχ => hpoint χ)
-      _ = 2 * (∑ χ : DirichletCharacter ℂ q, ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2) +
-            2 * (Nat.totient q : ℝ) * (panTypeI_nonCoprimeDensity q m u) ^ 2 := by
-              rw [Finset.sum_add_distrib]
-              rw [← Finset.mul_sum]
-              rw [Finset.sum_const, nsmul_eq_mul]
-              rw [Finset.card_univ]
-              rw [hcard]
-              ring
-  have h2 : (∑ χ : DirichletCharacter ℂ q, ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2) ≤
-      ∑ q' ∈ q.divisors, (Nat.totient q : ℝ) * panTypeIPrimitiveSqSum q' m u := by
-    calc
-      (∑ χ : DirichletCharacter ℂ q, ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2)
-          = ∑ χ : DirichletCharacter ℂ q,
-              ∑ q' ∈ q.divisors, (if χ.conductor = q'
-                  then ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2 else 0) := by
-              apply Finset.sum_congr rfl
-              intro χ hχ
-              have hmem : χ.conductor ∈ q.divisors := by
-                exact Nat.mem_divisors.mpr ⟨χ.conductor_dvd_level, Nat.ne_of_gt hq⟩
-              rw [Finset.sum_ite_eq]
-              simp [hmem]
-      _ = ∑ q' ∈ q.divisors,
-            ∑ χ : DirichletCharacter ℂ q, (if χ.conductor = q'
-                then ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2 else 0) := by
-            rw [Finset.sum_comm]
-      _ = ∑ q' ∈ q.divisors,
-            ∑ χ ∈ (Finset.univ : Finset (DirichletCharacter ℂ q)).filter (fun χ => χ.conductor = q'),
-              ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2 := by
-            apply Finset.sum_congr rfl
-            intro q' hq'
-            rw [← Finset.sum_filter]
-      _ ≤ ∑ q' ∈ q.divisors, (Nat.totient q : ℝ) * panTypeIPrimitiveSqSum q' m u := by
-            apply Finset.sum_le_sum
-            intro q' hq'
-            have hfiber_cast : (∑ χ ∈ (Finset.univ : Finset (DirichletCharacter ℂ q)).filter (fun χ => χ.conductor = q'),
-                  ‖panTypeIV1CharSum χ.conductor m u χ.primitiveCharacter‖ ^ 2) =
-                (∑ χ ∈ (Finset.univ : Finset (DirichletCharacter ℂ q)).filter (fun χ => χ.conductor = q'),
-                  ‖panTypeIV1CharSum q' m u (panTypeI_liftPrimitive q' q χ)‖ ^ 2) := by
-              apply Finset.sum_congr rfl
-              intro χ hχ
-              have hχ' : χ.conductor = q' := (Finset.mem_filter.mp hχ).2
-              cases hχ'
-              simp [panTypeI_liftPrimitive]
-            rw [hfiber_cast]
-            exact panTypeI_primitiveFiberSqSum_le (q := q) (q' := q') (m := m) (u := u) hq
-  apply h1.trans
-  exact add_le_add (mul_le_mul_of_nonneg_left h2 (show (0 : ℝ) ≤ 2 by norm_num)) le_rfl
 
 /-! ### S2c: Structural non-coprime density bound -/
 
-/-- **S2c structural bound**: prime divisors cover the non-coprime terms,
-`D_q(m) ≤ Σ_{p | q} Σ_{n ≤ m, p | n} |vf(n)|`.
-Use `(n,q) > 1 ⟹ ∃ p | q, p | n`, the pointwise bound
-`|vf| ≤ Σ_p 1_{p|n}|vf|`, and exchange sums. -/
-lemma panTypeI_nonCoprimeDensity_le_primePartition (q m u : ℕ) (hq : 0 < q) :
-    panTypeI_nonCoprimeDensity q m u ≤
-      ∑ p ∈ q.primeFactors,
-        ∑ n ∈ Finset.range (m + 1), if p ∣ n then |vaughanFirst n u| else 0 := by
-  unfold panTypeI_nonCoprimeDensity
-  have hpoint : ∀ n : ℕ, ¬ n.Coprime q →
-      (if ¬ n.Coprime q then |vaughanFirst n u| else 0) ≤
-        ∑ p ∈ q.primeFactors, (if p ∣ n then |vaughanFirst n u| else 0) := by
-    intro n hc
-    simp [hc]
-    have hg : n.gcd q ≠ 1 := by simpa [Nat.Coprime] using hc
-    obtain ⟨p, hp, hpd⟩ := Nat.exists_prime_and_dvd hg
-    have hpn : p ∣ n := dvd_trans hpd (Nat.gcd_dvd_left n q)
-    have hpq : p ∣ q := dvd_trans hpd (Nat.gcd_dvd_right n q)
-    have hp' : p ∈ q.primeFactors := (Nat.mem_primeFactors.mpr ⟨hp, hpq, Nat.ne_of_gt hq⟩)
-    calc
-      |vaughanFirst n u| = ∑ p ∈ ({p} : Finset ℕ), (if p ∣ n then |vaughanFirst n u| else 0) := by
-            simp [hpn]
-      _ ≤ ∑ p ∈ q.primeFactors, (if p ∣ n then |vaughanFirst n u| else 0) := by
-            simpa using Finset.single_le_sum (s := q.primeFactors)
-              (f := fun p => if p ∣ n then |vaughanFirst n u| else 0)
-              (fun p hp => by
-                by_cases hpd : p ∣ n <;> simp [hpd, abs_nonneg]) hp'
-  calc
-    (∑ n ∈ Finset.range (m + 1), if ¬ n.Coprime q then |vaughanFirst n u| else 0)
-        ≤ ∑ n ∈ Finset.range (m + 1),
-            ∑ p ∈ q.primeFactors, (if p ∣ n then |vaughanFirst n u| else 0) := by
-            exact Finset.sum_le_sum (fun n hn => by
-              by_cases hc : n.Coprime q
-              · simp [hc]
-                exact Finset.sum_nonneg (fun p hp => by
-                  by_cases hpd : p ∣ n <;> simp [hpd, abs_nonneg])
-              · exact hpoint n hc)
-    _ = ∑ p ∈ q.primeFactors,
-          ∑ n ∈ Finset.range (m + 1), (if p ∣ n then |vaughanFirst n u| else 0) := by
-          rw [Finset.sum_comm]
 /-! ## S3: Propositions recording μ²3^ω weight estimates -/
 
 /-- **S3 estimate family** for weight assembly, with polylogarithmic factors:
@@ -553,24 +401,6 @@ def panTypeI_threeOmegaWeightSums (Q : ℕ) : Prop :=
 
 /-! ## S4: Square-root Cauchy--Schwarz and assembly inputs -/
 
-/-- **S4a, square-root Cauchy--Schwarz algebra**:
-`(Σ_i √(a_i·b_i))² ≤ (card s)·Σ_i a_i·b_i` when `a_i·b_i ≥ 0`.
-Use `sq_sum_le_card_mul_sum_sq` (Chebyshev) and `Real.sq_sqrt`.
-In BD mean-value assembly, take `a_q = w_q·φ(q)/q` and
-`b_q = w_q·q·t_q(m)` to obtain
-`(Σ_q w_q·√(φ(q)·t_q(m)))² ≤ (card)·Σ_q w_q²·φ(q)·t_q(m)`,
-the algebraic content of Cauchy--Schwarz in `q`. -/
-theorem csSqrtSum_le_card_mul_sum {ι : Type*} (s : Finset ι) (a b : ι → ℝ)
-    (h : ∀ i ∈ s, 0 ≤ a i * b i) :
-    (∑ i ∈ s, Real.sqrt (a i * b i)) ^ 2 ≤ (s.card : ℝ) * (∑ i ∈ s, a i * b i) := by
-  calc
-    (∑ i ∈ s, Real.sqrt (a i * b i)) ^ 2
-        ≤ (s.card : ℝ) * (∑ i ∈ s, (Real.sqrt (a i * b i)) ^ 2) := by
-          simpa using (sq_sum_le_card_mul_sum_sq (s := s)
-            (f := fun i => Real.sqrt (a i * b i)))
-    _ = (s.card : ℝ) * (∑ i ∈ s, a i * b i) := by
-          congr 1
-          exact Finset.sum_congr rfl (fun i hi => Real.sq_sqrt (h i hi))
 
 /-- **S4b input proposition**: an all-character weighted BD-shaped estimate,
 `Σ_{1≤q≤Q} μ²(q)3^{ω(q)}·(q/φ(q))·t_q(m)

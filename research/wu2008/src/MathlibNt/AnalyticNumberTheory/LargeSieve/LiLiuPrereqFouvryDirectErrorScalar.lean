@@ -8,26 +8,6 @@ noncomputable section
 open Classical Finset Filter
 namespace MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry
 
-theorem direct_error_scalar {M T x A J Y V P Cα Ccost Ccell δ η ε : ℝ}
-    (hM : 0 ≤ M) (_hT : 0 ≤ T) (hx : 0 < x)
-    (_hA : 0 ≤ A) (hJ : 0 ≤ J) (hY : 0 ≤ Y) (hV : 0 ≤ V) (hP : 0 ≤ P)
-    (hCα : 0 ≤ Cα) (hCcost : 0 ≤ Ccost) (_hCcell : 0 ≤ Ccell)
-    (hMT : x = 4*M*T)
-    (halpha : A ≤ Cα*M*x^δ)
-    (hcost : J*Y*V ≤ Ccost*x^(12*η+δ))
-    (hcell : P ≤ Ccell*T^2*x^(δ-ε/2)) :
-    3072*M*A*J*Y*V*P ≤
-      (192*Cα*Ccost*Ccell)*x^2*x^(12*η+3*δ-ε/2) := by
-  have he : 3072*M*A*J*Y*V*P = 3072*M*A*(J*Y*V)*P := by ring
-  rw [he]
-  calc
-    _ ≤ 3072*M*(Cα*M*x^δ)*(Ccost*x^(12*η+δ))*(Ccell*T^2*x^(δ-ε/2)) := by gcongr
-    _ = (192*Cα*Ccost*Ccell)*(4*M*T)^2 *
-        (x^δ*x^(12*η+δ)*x^(δ-ε/2)) := by ring
-    _ = _ := by
-      rw [← hMT, ← Real.rpow_add hx, ← Real.rpow_add hx]
-      congr 2
-      ring
 
 /-- Uniform power saving implies any requested logarithmic saving. -/
 theorem direct_power_to_log (C : ℝ) (hC : 0 ≤ C) (A : ℕ)

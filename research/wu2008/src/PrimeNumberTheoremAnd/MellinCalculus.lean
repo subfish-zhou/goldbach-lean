@@ -308,10 +308,6 @@ lemma support_MellinConvolution_subsets {f g : ℝ → 𝕂} {A B : Set ℝ} (hf
   · left
     apply hf _ hyA
 
-open Pointwise in
-lemma support_MellinConvolution (f g : ℝ → 𝕂) :
-    (MellinConvolution f g).support ⊆ f.support * g.support :=
-  support_MellinConvolution_subsets subset_rfl subset_rfl
 
 blueprint_comment /--
 The Mellin transform of a convolution is the product of the Mellin transforms.

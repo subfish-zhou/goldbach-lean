@@ -5,12 +5,6 @@ namespace Wu2008DoubleSieve.SecondFunctionalSignedCore
 open Set MeasureTheory MotherPair SecondFunctionalPositive
 open scoped Interval
 
-/-- Join the actual three rectangles before removing the upper triangle. -/
-theorem classical_strip {p : SecondFunctionalParameters} (hp : AnalyticParameters p) :
-    classicalIntegral p .gammaSeven + classicalIntegral p .gammaEight +
-      classicalIntegral p .gammaSix =
-    ∫ t in (1/p.S)..(1/p.kappa1), ∫ u in t..(1/p.kappa3), gamma5MassKernel t u := by
-  linarith only [classical_gammaSixSevenEight_strip hp]
 
 /-- Actual four-rectangle producer; no mass or integrability premise. -/
 theorem classical_eq_triangles {p : SecondFunctionalParameters} (hp : AnalyticParameters p) :

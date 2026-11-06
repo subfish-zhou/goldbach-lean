@@ -268,40 +268,8 @@ theorem upperRosserBoundaryMassAux_succ_eq_zero_of_upper_le
   rw [hempty, MeasureTheory.Measure.restrict_empty,
     MeasureTheory.integral_zero_measure]
 
-/-- Nonzero positive-depth mass forces both geometric support inequalities for
-the first peeled coordinate. -/
-theorem upperRosserBoundaryMassAux_succ_ne_zero_support
-    (k : ℕ) {s a b : ℝ}
-    (h : upperRosserBoundaryMassAux (k + 1) s a b ≠ 0) :
-    a < b ∧ a < s / 3 := by
-  constructor
-  · exact lt_of_not_ge fun hba =>
-      h (upperRosserBoundaryMassAux_succ_eq_zero_of_upper_le k hba)
-  · exact lt_of_not_ge fun hsa =>
-      h (upperRosserBoundaryMassAux_succ_eq_zero_of_div_three_le k hsa)
 
-theorem upperRosserBoundaryMass_succ_eq_zero_of_div_three_le
-    (k : ℕ) {s a : ℝ} (h : s / 3 ≤ a) :
-    upperRosserBoundaryMass (k + 1) s a = 0 :=
-  upperRosserBoundaryMassAux_succ_eq_zero_of_div_three_le k h
 
-/-- The outer boundary integral may be restricted to the exact lower support
-cutoff supplied by the recursive Rosser inequalities. -/
-theorem integral_upperRosserBoundaryMass_eq_integral_support
-    (k : ℕ) {s : ℝ} (hs : 0 ≤ s) :
-    (∫ a in Set.Ioo 0 1, a⁻¹ * a⁻¹ * upperRosserBoundaryMass k s a) =
-      ∫ a in Set.Ioo (s / 3 ^ (k + 1)) 1,
-        a⁻¹ * a⁻¹ * upperRosserBoundaryMass k s a := by
-  apply MeasureTheory.setIntegral_eq_of_subset_of_forall_sdiff_eq_zero
-    measurableSet_Ioo
-  · intro a ha
-    exact ⟨(div_nonneg hs (by positivity)).trans_lt ha.1, ha.2⟩
-  · intro a ha
-    have hale : a ≤ s / 3 ^ (k + 1) := le_of_not_gt fun hlt =>
-      ha.2 ⟨hlt, ha.1.2⟩
-    rw [upperRosserBoundaryMass,
-      upperRosserBoundaryMassAux_eq_zero_of_terminal_le k hs hale]
-    simp
 
 /-- On the fundamental-lemma range, every fixed-depth outer boundary integral is
 supported in a compact interval bounded away from zero.  The lower endpoint
@@ -436,58 +404,9 @@ theorem upperRosserFiniteBoundaryFactor_succ (L : ℕ) (s : ℝ) :
   simp only [upperRosserFiniteBoundaryFactor, Finset.sum_range_succ]
   ring
 
-/-- Every finite truncation of the continuous upper Rosser factor is
-nonnegative. -/
-theorem upperRosserFiniteBoundaryFactor_nonneg (L : ℕ) (s : ℝ) :
-    0 ≤ upperRosserFiniteBoundaryFactor L s := by
-  unfold upperRosserFiniteBoundaryFactor
-  apply add_nonneg zero_le_one
-  apply Finset.sum_nonneg
-  intro k hk
-  apply MeasureTheory.integral_nonneg_of_ae
-  filter_upwards
-    [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with a ha
-  exact mul_nonneg
-    (mul_nonneg (inv_nonneg.mpr ha.1.le) (inv_nonneg.mpr ha.1.le))
-    (upperRosserBoundaryMass_nonneg k ha.1.le)
 
-/-- The finite continuous factors increase with the depth cutoff. -/
-theorem upperRosserFiniteBoundaryFactor_mono_succ (L : ℕ) (s : ℝ) :
-    upperRosserFiniteBoundaryFactor L s ≤
-      upperRosserFiniteBoundaryFactor (L + 1) s := by
-  rw [upperRosserFiniteBoundaryFactor_succ]
-  exact le_add_of_nonneg_right <| by
-    apply MeasureTheory.integral_nonneg_of_ae
-    filter_upwards
-      [MeasureTheory.ae_restrict_mem measurableSet_Ioo] with a ha
-    exact mul_nonneg
-      (mul_nonneg (inv_nonneg.mpr ha.1.le) (inv_nonneg.mpr ha.1.le))
-      (upperRosserBoundaryMass_nonneg L ha.1.le)
 
-/-- A depth contributes nothing to the finite factor once its geometric support
-cutoff lies beyond the normalized sieve level. -/
-theorem upperRosserFiniteBoundaryFactor_succ_eq_self_of_pow_le
-    (L : ℕ) {s : ℝ} (hs : (3 : ℝ) ^ (L + 1) ≤ s) :
-    upperRosserFiniteBoundaryFactor (L + 1) s =
-      upperRosserFiniteBoundaryFactor L s := by
-  rw [upperRosserFiniteBoundaryFactor_succ,
-    integral_upperRosserBoundaryMass_eq_zero_of_pow_le L hs, add_zero]
 
-/-- The first finite Buchstab truncation is `3 / s` on the nonempty range of
-the cubic shell. -/
-theorem upperRosserFiniteBoundaryFactor_one
-    {s : ℝ} (hs : 0 < s) (hs3 : s < 3) :
-    upperRosserFiniteBoundaryFactor 1 s = 3 / s := by
-  calc
-    upperRosserFiniteBoundaryFactor 1 s =
-        upperRosserFiniteBoundaryFactor 0 s +
-          ∫ a in Set.Ioo 0 1,
-            a⁻¹ * a⁻¹ * upperRosserBoundaryMass 0 s a := by
-      simpa using upperRosserFiniteBoundaryFactor_succ 0 s
-    _ = 3 / s := by
-      rw [upperRosserFiniteBoundaryFactor_zero,
-        integral_upperRosserBoundaryMass_zero hs hs3]
-      ring
 
 /-- Combining an even Rosser prefix inequality with the terminal boundary
 inequality gives a constraint from that coordinate towards the *remaining*
@@ -1400,14 +1319,6 @@ theorem summable_upperRosserAlternatingPrefixMajorant_three :
   rw [heq]
   exact hgeom.mul_left 9
 
-/-- The actual constrained reverse-chain volumes are summable at the terminal
-state because they are termwise dominated by the geometric envelope. -/
-theorem summable_upperRosserAlternatingPrefixVolume_three :
-    Summable (fun k : ℕ => upperRosserAlternatingPrefixVolume k 3) :=
-  Summable.of_nonneg_of_le
-    (fun k => upperRosserAlternatingPrefixVolume_nonneg k (by norm_num))
-    (fun k => upperRosserAlternatingPrefixVolume_le_majorant k (by norm_num))
-    summable_upperRosserAlternatingPrefixMajorant_three
 
 /-- Exact tail sum of the scale-free alternating-prefix majorant. -/
 theorem tsum_upperRosserAlternatingPrefixMajorant_three_natAdd (L : ℕ) :
@@ -1449,24 +1360,6 @@ theorem sum_range_upperRosserAlternatingPrefixMajorant_three_natAdd_le
     simp [upperRosserAlternatingPrefixMajorant]
     positivity)
 
-/-- The volume of any finite block of constrained depths beyond `L` is at most
-the explicit geometric tail `45 (4/5)^L`. -/
-theorem sum_range_upperRosserAlternatingPrefixVolume_three_natAdd_le
-    (L n : ℕ) :
-    ∑ j ∈ Finset.range n,
-        upperRosserAlternatingPrefixVolume (L + j) 3 ≤
-      45 * (4 / 5 : ℝ) ^ L := by
-  calc
-    ∑ j ∈ Finset.range n,
-        upperRosserAlternatingPrefixVolume (L + j) 3 ≤
-      ∑ j ∈ Finset.range n,
-        upperRosserAlternatingPrefixMajorant (L + j) 3 := by
-          apply Finset.sum_le_sum
-          intro j hj
-          exact upperRosserAlternatingPrefixVolume_le_majorant
-            (L + j) (by norm_num)
-    _ ≤ 45 * (4 / 5 : ℝ) ^ L :=
-      sum_range_upperRosserAlternatingPrefixMajorant_three_natAdd_le L n
 
 /-- The aggregate alternating-prefix majorant has a uniform tail cutoff. -/
 theorem exists_sum_range_upperRosserAlternatingPrefixMajorant_three_natAdd_lt
@@ -1492,26 +1385,6 @@ theorem exists_sum_range_upperRosserAlternatingPrefixMajorant_three_natAdd_lt
     (sum_range_upperRosserAlternatingPrefixMajorant_three_natAdd_le L n).trans_lt
       (hL L le_rfl)
 
-/-- Consequently, one depth cutoff makes every finite tail of the constrained
-reverse-chain volumes smaller than a prescribed positive error. -/
-theorem exists_sum_range_upperRosserAlternatingPrefixVolume_three_natAdd_lt
-    {ρ : ℝ} (hρ : 0 < ρ) :
-    ∃ L : ℕ, ∀ n : ℕ,
-      ∑ j ∈ Finset.range n,
-          upperRosserAlternatingPrefixVolume (L + j) 3 < ρ := by
-  obtain ⟨L, hL⟩ :=
-    exists_sum_range_upperRosserAlternatingPrefixMajorant_three_natAdd_lt hρ
-  refine ⟨L, fun n => ?_⟩
-  calc
-    ∑ j ∈ Finset.range n,
-        upperRosserAlternatingPrefixVolume (L + j) 3 ≤
-      ∑ j ∈ Finset.range n,
-        upperRosserAlternatingPrefixMajorant (L + j) 3 := by
-          apply Finset.sum_le_sum
-          intro j hj
-          exact upperRosserAlternatingPrefixVolume_le_majorant
-            (L + j) (by norm_num)
-    _ < ρ := hL n
 
 
 end MathlibNt.SieveTheory.LinearSieve

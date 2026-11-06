@@ -42,27 +42,5 @@ theorem fourthRowJoinedGated_full_integral_upper (k : ℕ) (hk : 1 ≤ k) {δ ε
   rw [fourthRowJoinedGated_split] at hmN
   nlinarith only [hmN, hgN]
 
-/-- A common threshold retains both full gains and all six literal envelopes. -/
-theorem fourthRowJoinedGated_seed_upper (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ), wuSourceBox k δ N i Δ V →
-        5 * wuBoxPhi N δ (convolutionWuWindows N Δ V) (5 / 2) ≤
-          fourthRowJoinedGatedRHS N δ (convolutionWuWindows N Δ V) +
-            (gamma5MassC5 + gamma6BaseC6 - 147 / 6630625 - gamma6GainIntegral δ +
-              2 / (1 - 2 * δ) * (fourthRowGamma9I + gamma16FourthIntegralEnvelope +
-                fourthRowTripleNoGateEnvelope true + fourthRowTripleNoGateEnvelope false +
-                fourthRowTripleGatedEnvelope true + fourthRowTripleGatedEnvelope false) + ε) *
-                boxTheta N ((N : ℝ) ^ (1 / 2 - δ)) (convolutionWuWindows N Δ V) := by
-  have hε2 : 0 < ε / 2 := by positivity
-  have hδhalf : δ < 1 / 2 := by linarith
-  obtain ⟨Tm, hTm4, hm⟩ := fourthRowJoinedGamma6_seed_upper k hk hδ hδhi hε2
-  obtain ⟨Tg, _, hg⟩ := fourthRowTripleGated_joint_upper k hδ hδhalf hε2
-  refine ⟨max Tm Tg, hTm4.trans (le_max_left _ _), ?_⟩
-  intro N hN he i Δ V hb
-  have hmN := hm N ((le_max_left Tm Tg).trans hN) he i Δ V hb
-  have hgN := hg N ((le_max_right Tm Tg).trans hN) he i Δ V hb
-  rw [fourthRowJoinedGated_split] at hmN
-  nlinarith only [hmN, hgN]
 
 end Wu2008DoubleSieve

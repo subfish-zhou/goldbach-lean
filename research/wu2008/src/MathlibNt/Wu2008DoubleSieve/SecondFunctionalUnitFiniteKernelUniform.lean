@@ -91,9 +91,6 @@ theorem physical_fin5 (epsilon : ℝ) (he : 0 < epsilon) :
   obtain ⟨T,hT,h⟩ := physical_uniform 4 epsilon he
   exact ⟨T,hT,fun R hR S phi b => (h R hR S phi b).2⟩
 
-theorem L1_empty (m : ℕ) (R phi b : ℝ) :
-    L1 R (∅ : Finset (Fin (m+1) → primeSlabPrimes R)) phi b = 0 := by
-  simp [L1]
 
 /-- The cap-order branch is empty in the original physical fibre, not a deleted source. -/
 theorem physical_empty_order {m : ℕ} {R : ℝ} (hR : 1 < R)
@@ -104,45 +101,6 @@ theorem physical_empty_order {m : ℕ} {R : ℝ} (hR : 1 < R)
   exact fibre_empty (rpow_nonneg (by linarith) _)
     (rpow_le_rpow_of_exponent_le hR.le ((min_le_right _ _).trans hb))
 
-/-- Membership keeps the strict prime lower bound and both original closed upper bounds. -/
-theorem physical_membership {m : ℕ} {R : ℝ} (hR : 1 < R)
-    (f : Fin (m+1) → primeSlabPrimes R) (phi b : ℝ) (p : ℕ) :
-    p ∈ physical (prefixProduct f) (R^phi) (f (Fin.last m)).val (R^b) ↔
-      p.Prime ∧ ((f (Fin.last m)).val : ℝ) < (p : ℝ) ∧
-      (p : ℝ) ≤ R^b ∧ prefixProduct f * (p : ℝ) ≤ R^phi := by
-  simp only [physical, mem_filter, mem_primesIcc (rpow_nonneg (by linarith : 0 ≤ R) b)]
-  constructor
-  · rintro ⟨⟨hp,_,hb⟩,hl,hx⟩
-    exact ⟨hp,hl,hb,hx⟩
-  · rintro ⟨hp,hl,hb,hx⟩
-    exact ⟨⟨hp,Nat.cast_nonneg _,hb⟩,hl,hx⟩
 
-theorem physical_sum_empty (m : ℕ) (R phi b : ℝ) :
-    log R / R^phi *
-      (∑ f ∈ (∅ : Finset (Fin (m+1) → primeSlabPrimes R)),
-        ((physical (prefixProduct f) (R^phi) (f (Fin.last m)).val (R^b)).card : ℝ)) -
-      ∑ f ∈ (∅ : Finset (Fin (m+1) → primeSlabPrimes R)),
-        primeSlabWeight R f * F (phi - ∑ i, coordinate f i)
-          (coordinate f (Fin.last m)) b = 0 := by simp
 
-/-- An exact zero branch, derived without deleting any physical prime or any prefix. -/
-theorem degenerate_sum {m : ℕ} {R : ℝ} (hR : 1 < R)
-    (S : Finset (Fin (m+1) → primeSlabPrimes R)) (phi b : ℝ)
-    (hb : ∀ f ∈ S, b ≤ coordinate f (Fin.last m)) :
-    L1 R S phi b = 0 ∧
-      (∑ f ∈ S, ((physical (prefixProduct f) (R^phi) (f (Fin.last m)).val (R^b)).card : ℝ)) = 0 ∧
-      (∑ f ∈ S, primeSlabWeight R f * F (phi - ∑ i, coordinate f i)
-        (coordinate f (Fin.last m)) b) = 0 := by
-  refine ⟨?_, ?_, ?_⟩
-  · apply sum_eq_zero
-    intro f hf
-    rw [weight_empty_order hR (hb f hf), F_empty_order (hb f hf)]
-    simp
-  · apply sum_eq_zero
-    intro f hf
-    rw [physical_empty_order hR f phi b (hb f hf)]
-    simp
-  · apply sum_eq_zero
-    intro f hf
-    rw [F_empty_order (hb f hf), mul_zero]
 end SecondFunctionalUnitFiniteKernel

@@ -154,17 +154,6 @@ def CaseIEndpointSourceScalarFactors (d Δ : ℝ) : Prop :=
       sourceSigma D d ^ 2 * Real.log (Real.log D) *
           (Real.log D) ^ Δ / Real.log D ≤ 1)
 
-/-- Once the direct `Σ₀` packet has been normalised with coefficient
-`C145 / C`, the accepted scalar gap theorem absorbs that coefficient. -/
-theorem eventually_caseISigmaZeroCoefficient_le_sameC_gap
-    {C C145 d Δ : ℝ} (hC : 0 < C) (hC145 : 0 ≤ C145)
-    (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1) (hd : 7 / (1 - Δ) < d) :
-    ∀ᶠ D : ℝ in atTop,
-      ∃ q : Lemma144StrictFactor,
-        q.ρ = (1 + sigma12ContractionMultiplier (sourceSigma D d) Δ) / 2 ∧
-        caseISourceOrderCoefficient (C145 / C) D d ≤ 1 - q.ρ := by
-  exact eventually_caseISourceOrderCoefficient_le_sameC_gap
-    (div_nonneg hC145 hC.le) hΔ0 hΔ1 hd
 
 
 end MathlibNt.SieveTheory

@@ -43,14 +43,6 @@ theorem fifthH_actual_improved_lower {ε : ℝ} (hε : 0 < ε) :
   refine ⟨T, hT, fun N hN he => ?_⟩
   simpa only [truncatedSixthMassScale, mul_div_assoc, mul_assoc] using (h N hN he).1
 
-/-- The same unrounded gain survives the independently paid actual closed endpoint. -/
-theorem fifthH_actual_closed_improved_lower {ε : ℝ} (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      (fifthPairFlin + fifthHGain - ε) * wuSingularSeries N * N / log N ^ (2 : ℕ) ≤
-        (fifthHClosedCount N : ℝ) := by
-  obtain ⟨T, hT, h⟩ := fifthH_actual_improved_both hε
-  refine ⟨T, hT, fun N hN he => ?_⟩
-  simpa only [truncatedSixthMassScale, mul_div_assoc, mul_assoc] using (h N hN he).2
 
 /-- Every strictly smaller gain is paid in full, not just a preselected half-gain. -/
 theorem fifthH_actual_paid_both {g : ℝ} (hg : g < fifthHGain) :
@@ -69,17 +61,6 @@ theorem fifthH_actual_paid_both {g : ℝ} (hg : g < fifthHGain) :
 /-- One fixed strictly improved coefficient; the full gain family above remains available. -/
 noncomputable def fifthHImprovedCoefficient : ℝ := fifthPairFlin + fifthHGain / 2
 
-theorem fifthH_improved_coefficient_strict : fifthPairFlin < fifthHImprovedCoefficient := by
-  unfold fifthHImprovedCoefficient
-  exact lt_add_of_pos_right _ (half_pos fifthHGain_pos)
 
-/-- A hypothesis-free actual counting improvement, after paying a positive delta/error budget. -/
-theorem fifthH_actual_fixed_improved_both :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      fifthHImprovedCoefficient * wuSingularSeries N * N / log N ^ (2 : ℕ) ≤
-        (fifthPairCount N : ℝ) ∧
-      fifthHImprovedCoefficient * wuSingularSeries N * N / log N ^ (2 : ℕ) ≤
-        (fifthHClosedCount N : ℝ) :=
-  fifthH_actual_paid_both (half_lt_self fifthHGain_pos)
 
 end Wu2008DoubleSieve

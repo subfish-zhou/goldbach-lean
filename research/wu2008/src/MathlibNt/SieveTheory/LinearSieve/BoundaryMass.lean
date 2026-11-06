@@ -34,31 +34,6 @@ theorem upperRosserBoundaryMassAux_zero (s a b : ℝ) :
       if 0 ≤ s ∧ s < 3 * a then 1 else 0 :=
   rfl
 
-/-- The depth-zero residual mass is continuous in its level away from its two
-affine boundary values. -/
-theorem continuousAt_upperRosserBoundaryMassAux_zero_level
-    {s a b : ℝ} (hs0 : s ≠ 0) (hs3 : s ≠ 3 * a) :
-    ContinuousAt (fun t => upperRosserBoundaryMassAux 0 t a b) s := by
-  by_cases h : 0 ≤ s ∧ s < 3 * a
-  · have hspos : 0 < s := lt_of_le_of_ne h.1 (Ne.symm hs0)
-    apply (show (fun t => upperRosserBoundaryMassAux 0 t a b) =ᶠ[nhds s]
-      (fun _ => (1 : ℝ)) by
-        filter_upwards [lt_mem_nhds hspos, eventually_lt_nhds h.2] with t ht0 ht3
-        simp [upperRosserBoundaryMassAux_zero, ht0.le, ht3]).continuousAt
-  · by_cases hsneg : s < 0
-    · apply (show (fun t => upperRosserBoundaryMassAux 0 t a b) =ᶠ[nhds s]
-        (fun _ => (0 : ℝ)) by
-          filter_upwards [eventually_lt_nhds hsneg] with t ht
-          simp [upperRosserBoundaryMassAux_zero, not_le.mpr ht]).continuousAt
-    · have hsnonneg : 0 ≤ s := le_of_not_gt hsneg
-      have h3le : 3 * a ≤ s := by
-        by_contra hnot
-        exact h ⟨hsnonneg, lt_of_not_ge hnot⟩
-      have h3lt : 3 * a < s := lt_of_le_of_ne h3le (Ne.symm hs3)
-      apply (show (fun t => upperRosserBoundaryMassAux 0 t a b) =ᶠ[nhds s]
-        (fun _ => (0 : ℝ)) by
-          filter_upwards [lt_mem_nhds h3lt] with t ht
-          simp [upperRosserBoundaryMassAux_zero, not_lt.mpr ht.le]).continuousAt
 
 /-- The depth-zero residual mass is jointly continuous in its level and lower
 cutoff away from the two affine jump hypersurfaces.  The inherited upper cutoff
@@ -125,48 +100,7 @@ theorem continuousAt_upperRosserBoundaryMassAux_zero_affine_level_lower
         (b := b) hzero hterminal) hmap
   simpa [Function.comp_def] using hcomp
 
-/-- On a cell in the peeled coordinate, the depth-zero residual is bounded by
-its left-endpoint value except on the unique cell meeting the affine boundary
-`x = s - x₀ - 3a`.  The other depth-zero jump is downward in this orientation
-and therefore costs nothing in an upper majorant. -/
-theorem upperRosserBoundaryMassAux_zero_residual_le_left_add_boundary
-    {s x₀ a l r x : ℝ} (hlx : l ≤ x) (hxr : x ≤ r) :
-    upperRosserBoundaryMassAux 0 (s - x₀ - x) a x ≤
-      upperRosserBoundaryMassAux 0 (s - x₀ - l) a l +
-        if s - x₀ - 3 * a ∈ Set.Icc l r then 1 else 0 := by
-  rw [upperRosserBoundaryMassAux_zero, upperRosserBoundaryMassAux_zero]
-  by_cases hx : 0 ≤ s - x₀ - x ∧ s - x₀ - x < 3 * a
-  · rw [if_pos hx]
-    by_cases hboundary : s - x₀ - 3 * a ∈ Set.Icc l r
-    · rw [if_pos hboundary]
-      split_ifs <;> norm_num
-    · rw [if_neg hboundary]
-      have hlower : 0 ≤ s - x₀ - l := by linarith [hx.1]
-      have hupper : s - x₀ - l < 3 * a := by
-        by_contra hnot
-        apply hboundary
-        constructor
-        · linarith
-        · linarith [hx.2]
-      rw [if_pos ⟨hlower, hupper⟩]
-      norm_num
-  · rw [if_neg hx]
-    positivity
 
-/-- A nonzero depth-zero residual below a peeled Rosser pair retains the
-depth-two lower support for the outer coordinate.  This remains valid for the
-continuous majorant, independently of whether the pair comes from an exact
-boundary chain. -/
-theorem upperRosserBoundaryMassAux_zero_ne_zero_outer_lower
-    {s a x₀ x₁ : ℝ} (hs : 3 / 2 ≤ s) (hx₀ : x₀ ≤ s / 3)
-    (hx₁ : x₁ < x₀)
-    (h : upperRosserBoundaryMassAux 0 (s - x₀ - x₁) a x₁ ≠ 0) :
-    1 / 6 < a := by
-  rw [upperRosserBoundaryMassAux_zero] at h
-  split at h
-  · rename_i hres
-    nlinarith [hres.2]
-  · simp at h
 
 theorem upperRosserBoundaryMassAux_succ (k : ℕ) (s a b : ℝ) :
     upperRosserBoundaryMassAux (k + 1) s a b =
@@ -324,33 +258,6 @@ theorem inv_mul_upperRosserBoundaryMassAux_zero_eq_indicator
   · rw [if_pos h, Set.indicator_of_mem (hmem.mpr h), mul_one]
   · rw [if_neg h, Set.indicator_of_notMem (mt hmem.mp h), mul_zero]
 
-/-- The depth-zero inner integrand is integrable whenever the fixed lower
-endpoint is positive. -/
-theorem integrableOn_inv_mul_upperRosserBoundaryMassAux_zero
-    {s a x₀ : ℝ} (ha : 0 < a) :
-    MeasureTheory.IntegrableOn
-      (fun x₁ => x₁⁻¹ *
-        upperRosserBoundaryMassAux 0 (s - x₀ - x₁) a x₁)
-      (Set.Ioo a x₀) := by
-  by_cases hax₀ : a < x₀
-  · have hinvInterval : IntervalIntegrable (fun x : ℝ => x⁻¹)
-        MeasureTheory.volume a x₀ := by
-      apply intervalIntegral.intervalIntegrable_inv (f := fun x : ℝ => x)
-      · intro x hx
-        rw [Set.uIcc_of_le hax₀.le] at hx
-        exact ne_of_gt (ha.trans_le hx.1)
-      · exact continuous_id.continuousOn
-    have hinv : MeasureTheory.IntegrableOn (fun x : ℝ => x⁻¹)
-        (Set.Ioo a x₀) :=
-      (intervalIntegrable_iff_integrableOn_Ioo_of_le hax₀.le).mp hinvInterval
-    apply (hinv.indicator
-      (show MeasurableSet (Set.Ioc (s - x₀ - 3 * a) (s - x₀)) from
-        measurableSet_Ioc)).congr_fun ?_ measurableSet_Ioo
-    intro x₁ _
-    exact (inv_mul_upperRosserBoundaryMassAux_zero_eq_indicator
-      s a x₀ x₁).symm
-  · rw [Set.Ioo_eq_empty hax₀]
-    exact MeasureTheory.integrableOn_empty
 
 /-- Without any ordering assumptions, the depth-zero inner integral is the
 reciprocal integral over its exact moving shell. -/
@@ -434,29 +341,6 @@ noncomputable def upperRosserBoundaryLogKernel (s a x₀ : ℝ) : ℝ :=
   if max a (s - x₀ - 3 * a) < x₀ then
     Real.log (x₀ / max a (s - x₀ - 3 * a)) else 0
 
-/-- On the ordered region `a < x₀`, the depth-two logarithmic kernel has only
-the two affine break loci `2x₀ = s - 3a` and `x₀ = s - 4a`. -/
-theorem upperRosserBoundaryLogKernel_eq_piecewise
-    {s a x₀ : ℝ} (hax₀ : a < x₀) :
-    upperRosserBoundaryLogKernel s a x₀ =
-      if (s - 3 * a) / 2 < x₀ then
-        if s - 4 * a ≤ x₀ then Real.log (x₀ / a)
-        else Real.log (x₀ / (s - x₀ - 3 * a))
-      else 0 := by
-  rw [upperRosserBoundaryLogKernel]
-  by_cases hswitch : s - x₀ - 3 * a ≤ a
-  · rw [max_eq_left hswitch]
-    have hactive : (s - 3 * a) / 2 < x₀ := by linarith
-    have hbranch : s - 4 * a ≤ x₀ := by linarith
-    simp [hax₀, hactive, hbranch]
-  · have hswitch' : a ≤ s - x₀ - 3 * a := le_of_not_ge hswitch
-    rw [max_eq_right hswitch']
-    by_cases hactive : s - x₀ - 3 * a < x₀
-    · have hthreshold : (s - 3 * a) / 2 < x₀ := by linarith
-      have hbranch : ¬s - 4 * a ≤ x₀ := by linarith
-      simp [hactive, hthreshold, hbranch]
-    · have hthreshold : ¬(s - 3 * a) / 2 < x₀ := by linarith
-      simp [hactive, hthreshold]
 
 /-- On the positive ordered region, the apparent piecewise kernel is simply the
 positive part of one continuous logarithmic ratio.  Thus its internal affine
@@ -864,39 +748,6 @@ theorem integral_inv_mul_upperRosserBoundaryLogKernel_le_length
        Real.volume_Ioo, ENNReal.toReal_ofReal (sub_nonneg.mpr huv)]
       rfl
 
-/-- The cells meeting the moving outer face `x₀ = s / 3` contribute only
-`O(h)`, uniformly in `s`.  This is the remaining boundary-strip estimate in the
-depth-two Darboux comparison. -/
-theorem integral_inv_mul_upperRosserBoundaryLogKernel_moving_strip_le
-    {s a h : ℝ} (ha : 1 / 6 ≤ a) (hh : 0 ≤ h) :
-    (∫ x₀ in Set.Ioo (max a (s / 3 - h)) (min 1 (s / 3 + h)),
-       x₀⁻¹ * upperRosserBoundaryLogKernel s a x₀) ≤
-      12 * h * Real.log 6 := by
-  by_cases huv : max a (s / 3 - h) ≤ min 1 (s / 3 + h)
-  · have hlength :
-       min 1 (s / 3 + h) - max a (s / 3 - h) ≤ 2 * h := by
-      linarith [min_le_right (1 : ℝ) (s / 3 + h),
-       le_max_right a (s / 3 - h)]
-    have hbound :=
-      integral_inv_mul_upperRosserBoundaryLogKernel_le_length
-       (s := s) ha (le_max_left _ _) huv (min_le_left _ _)
-    have hcoefficient : 0 ≤ 6 * Real.log 6 :=
-      mul_nonneg (by norm_num) (Real.log_nonneg (by norm_num))
-    calc
-      (∫ x₀ in Set.Ioo (max a (s / 3 - h)) (min 1 (s / 3 + h)),
-         x₀⁻¹ * upperRosserBoundaryLogKernel s a x₀) ≤
-         (min 1 (s / 3 + h) - max a (s / 3 - h)) *
-           (6 * Real.log 6) := hbound
-      _ ≤ (2 * h) * (6 * Real.log 6) :=
-       mul_le_mul_of_nonneg_right hlength hcoefficient
-      _ = 12 * h * Real.log 6 := by ring
-  · have hempty :
-       Set.Ioo (max a (s / 3 - h)) (min 1 (s / 3 + h)) = ∅ :=
-      Set.Ioo_eq_empty (not_lt_of_ge (not_le.mp huv).le)
-    rw [hempty, MeasureTheory.Measure.restrict_empty,
-      MeasureTheory.integral_zero_measure]
-    exact mul_nonneg
-      (mul_nonneg (by norm_num) hh) (Real.log_nonneg (by norm_num))
 
 /-- The first positive-depth continuous boundary mass is uniformly Lipschitz in
 the sieve parameter on the screened outer range.  The `36` term controls the

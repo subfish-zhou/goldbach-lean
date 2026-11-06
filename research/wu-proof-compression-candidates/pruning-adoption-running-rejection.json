@@ -1,0 +1,6 @@
+{
+  "status": "RUNNING_BUILD_ADOPTION_REJECTED_BEFORE_STAGING_OR_MUTATION",
+  "actual_exception": "Pruning build is not terminal and fully passed; adoption not prepared",
+  "new_transactions_created": 0,
+  "production_installation_executed": false
+}

@@ -41,14 +41,14 @@
       "legacy_endpoint": "1+1.894",
       "current": {
         "modules": 3764,
-        "code_lines": 525529,
-        "physical_lines": 621451,
-        "utf8_bytes": 30215769
+        "code_lines": 469022,
+        "physical_lines": 548778,
+        "utf8_bytes": 25626311
       },
-      "manifest_sha256": "2079027dc274619f04f255a0dcaecc0410ea914a2af56994d1a979f916892455",
-      "measurement": "../wu-structural-compression-audit/measurement.json",
-      "validation": "../wu-structural-compression-audit/validation.json",
-      "accepted_at_utc": "2026-10-28T09:30:02.855720+00:00",
+      "manifest_sha256": "c7950a5796a848c7c0fc0f58f68c41746a570d137f54ab298c64a31d14f71e39",
+      "measurement": "../wu-unused-proof-audit/measurement.json",
+      "validation": "../wu-unused-proof-audit/validation.json",
+      "accepted_at_utc": "2026-10-28T21:18:52.003634+00:00",
       "measurement_date_utc": "2026-10-28"
     }
   },
@@ -73,9 +73,9 @@
     },
     "accepted_current_wu": {
       "modules": 4151,
-      "code_lines": 566283,
-      "physical_lines": 667929,
-      "utf8_bytes": 34424418
+      "code_lines": 509776,
+      "physical_lines": 595256,
+      "utf8_bytes": 29834960
     }
   },
   "working_tree_changes_vs_head": {
@@ -1092,5 +1092,5 @@
       "utf8_bytes": -8961
     }
   },
-  "mixed_snapshot_note": "Historical main and original Wu rows retain their original dates. Only the 1+1.8938 and whole_trees.accepted_current_wu rows reflect the 2026-10-28 structural acceptance; Chen/Li–Liu measurements are not refreshed."
+  "mixed_snapshot_note": "Historical main and original Wu rows retain their original dates. Only the 1+1.8938 and whole_trees.accepted_current_wu rows reflect the latest installed unused-proof pruning acceptance; Chen/Li–Liu measurements are unchanged."
 }

@@ -84,15 +84,5 @@ theorem selected_empty (m : ℕ) (R : ℝ) (C : Fin 0 → Fin (m+1) → ℝ)
     (gamma : Fin 0 → ℝ) (strict : Fin 0 → Bool) : selected R C gamma strict = Finset.univ := by
   simp [selected, mask]
 
-/-- No extra mask, all prime labels, arbitrary b, and both original strict kernel gates. -/
-theorem physical_empty (m : ℕ) (epsilon : ℝ) (he : 0 < epsilon) :
-    ∃ T : ℝ, 1 < T ∧ ∀ R : ℝ, T ≤ R → ∀ (phi b : ℝ),
-      |Real.log R / R^phi *
-        (∑ f : Fin (m+1) → primeSlabPrimes R,
-          ((physical (prefixProduct f) (R^phi) (f (Fin.last m)).val (R^b)).card : ℝ)) -
-        (∫ t in continuousCube (m+1), U phi b t * continuousDensity t)| < epsilon := by
-  obtain ⟨T,hT,h⟩ := physical_uniform m 0 Fin.elim0 (fun q => Fin.elim0 q) epsilon he
-  refine ⟨T,hT,fun R hR phi b => ?_⟩
-  simpa only [selected_empty, G_empty] using h R hR phi b Fin.elim0 Fin.elim0
 
 end SecondFunctionalUnitMasked

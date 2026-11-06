@@ -60,10 +60,6 @@ theorem gridContinuousMass_closed {n k : ℕ} (a : GridIndex n k) :
     gridContinuousMass a = ∫ t in continuousRectangle (gridLower a) (gridUpper a), continuousDensity t :=
   setIntegral_congr_set (gridCell_ae_closed a)
 
-theorem gridCell_integrable {n k : ℕ} (a : GridIndex n k) :
-    IntegrableOn continuousDensity (gridCell a) :=
-  (continuousDensity_integrable n).mono_set
-    (fun _ ht => gridClosed_subset_cube a (gridCell_subset_closed a ht))
 
 theorem gridCoordinates_mem {n : ℕ} {R : ℝ} (hR : 1 < R) (p : Fin n → primeSlabPrimes R) :
     gridCoordinates R p ∈ continuousCube n := by

@@ -105,23 +105,5 @@ theorem omega3Layer_actual_geometry {i k N : ℕ} {δ Δ s t : ℝ}
   have hg := omega3_cofactor_actual_profile_geometry hN hδ hδhi hb hs hst ht hlabel.1
   simpa only [hlabel.2, omega3LayerLower, omega3LayerUpper] using hg
 
-/-- A test may retain d as well as e and both endpoints. No endpoint is
-recovered from e alone, and the chosen layers remain independent of the test. -/
-theorem omega3Layer_profile_sum {i : ℕ} (N : ℕ) (δ s : ℝ)
-    (W : Fin i → Finset ℕ) (L : Finset Omega3CofactorIndex) (B : ℕ)
-    (hB : ∀ e, (omega3LayerFibre L e).card ≤ B) (F : ℕ → ℕ → ℝ → ℝ → ℝ) :
-    (∑ c ∈ L, (convolutionCoeff W c.1 : ℝ) *
-      F c.1 (omega3CofactorValue c) c.2.1
-        (min ((N : ℝ) / omega3CofactorValue c) (wuLocalCutoff N δ c.1 s))) =
-      ∑ j ∈ range B, ∑ e ∈ omega3LayerSupport L j,
-        omega3LayerCoefficient W L j e *
-          F (omega3LayerLabel L j e).1 e (omega3LayerLower L j e)
-            (omega3LayerUpper N δ s L j e) := by
-  rw [omega3Layer_weighted_sum W L B hB]
-  apply sum_congr rfl
-  intro j _
-  apply sum_congr rfl
-  intro e he
-  simp only [(omega3LayerLabel_mem he).2, omega3LayerLower, omega3LayerUpper]
 
 end Wu2008DoubleSieve

@@ -56,33 +56,5 @@ private theorem B9MainMassTransport_li_upper (η : ℝ) (hη : 0 < η) :
         η * ((N : ℝ) / m) / Real.log ((N : ℝ) / m) := by linarith
     _ = _ := by ring
 
-/-- Relative full-prefix Li bound summed on the actual pair support.
-The prime-sum integral limit and low-first-prime improved coefficient are separate. -/
-theorem goldbachB9PlusMainMass_le_pair_kernel (η : ℝ) (hη : 0 < η) :
-    ∃ N₀ : ℕ, 4 ≤ N₀ ∧ ∀ N : ℕ, N₀ ≤ N →
-      goldbachB9PlusMainMass N ≤
-        (1 + η) * ((N : ℝ) / Real.log (N : ℝ)) * goldbachB9PairLogKernel N := by
-  obtain ⟨N₀, hN₀, hh⟩ := B9MainMassTransport_li_upper η hη
-  refine ⟨N₀, hN₀, ?_⟩
-  intro N hN
-  have hN4 : 4 ≤ N := hN₀.trans hN
-  have hNp : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
-  have hln : 0 < Real.log (N : ℝ) := Real.log_pos (by exact_mod_cast (show 1 < N by omega))
-  rw [goldbachB9PlusMainMass_eq_pair_sum, goldbachB9PairLogKernel, Finset.mul_sum]
-  apply Finset.sum_le_sum
-  intro rs hrs
-  have hm : goldbachC10Prod rs ∈ goldbachC10ProductSupport N
-      ((N : ℝ)^(4 / 53 : ℝ)) ((N : ℝ)^(1 / 3 : ℝ)) := Finset.mem_image.mpr ⟨rs, hrs, rfl⟩
-  have hmp : (0 : ℝ) < goldbachC10Prod rs := by exact_mod_cast goldbachC10ProductSupport_pos hm
-  have hx2 := (hh N hN _ hm).1
-  have hl : 0 < Real.log ((N : ℝ) / goldbachC10Prod rs) := Real.log_pos (by linarith)
-  have hid : 1 - Real.log (goldbachC10Prod rs : ℝ) / Real.log (N : ℝ) =
-      Real.log ((N : ℝ) / goldbachC10Prod rs) / Real.log (N : ℝ) := by
-    rw [Real.log_div hNp.ne' hmp.ne']
-    field_simp
-  calc
-    _ ≤ (1 + η) * ((N : ℝ) / goldbachC10Prod rs) /
-        Real.log ((N : ℝ) / goldbachC10Prod rs) := (hh N hN _ hm).2
-    _ = _ := by rw [hid]; field_simp [hln.ne', hmp.ne', hl.ne']
 
 end MathlibNt.SieveTheory.LiLiuOnePlusOneNine.GoldbachBig

@@ -117,11 +117,6 @@ theorem feedback_log_measurable (p : SecondFunctionalParameters) (j : Term) :
   exact (hF.mul ((hU.mul (hP.sub hL)).div (hL.mul (hP.sub hU))).log).ite
     (measurableSet_Icc.inter (measurableSet_lt hL hU)) measurable_const
 
-theorem feedback_kernel_measurable {p : SecondFunctionalParameters} (h : AnalyticParameters p)
-    (j : Term) : Measurable (feedbackKernel p j) := by
-  have he : feedbackKernel p j = feedbackLogKernel p j := funext (feedback_kernel_log h j)
-  rw [he]
-  exact feedback_log_measurable p j
 
 theorem feedback_log_nonnegative {p : SecondFunctionalParameters} (h : AnalyticParameters p)
     (j : Term) (v : ℝ) : 0 ≤ feedbackLogKernel p j v := by

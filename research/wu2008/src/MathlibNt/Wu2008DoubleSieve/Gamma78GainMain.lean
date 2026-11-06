@@ -6,9 +6,6 @@ namespace Wu2008DoubleSieve
 open Finset Real Filter MeasureTheory
 open scoped Classical Topology Interval
 
-theorem gamma78Gain_denominator_pos {tri : Bool} {t u : ℝ}
-    (hv : (t,u) ∈ gamma78GainRegion tri) : 0 < t*u*(1-t-u) :=
-  (gamma5Gain_triangle_bounds (gamma78Gain_region_bounds hv).1).2.2.2.2
 
 /-- The full actual source count, with selected-prime cutoff and an internally
 constructed full-domain family, on every original source box. -/
@@ -120,31 +117,7 @@ theorem gamma78Gain_G8_literal (δ : ℝ) :
   norm_num [gamma78GainIntegral,gamma78GainLiteral,gamma78GainStart,gamma78GainUpper,
     gamma78GainV,gamma5MassA,gamma5ClassicalS,gamma6BaseB,gamma5ClassicalB]
 
-theorem gamma78Gain_gamma7_full_count_upper (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1/10) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ i : ℕ, ∀ Δ : ℝ, ∀ V : Fin i → ℝ, wuSourceBox k δ N i Δ V →
-      gamma78GainCount N (convolutionWuWindows N Δ V)
-        (gamma78GainLabels true N δ (convolutionWuWindows N Δ V)) ≤
-      ((∫ t in (25/103 : ℝ)..(25/89), ∫ u in t..(25/89), 1/(t*u*(1-t-u))) -
-        (∫ t in (25/103 : ℝ)..(25/89), ∫ u in t..(25/89),
-          wuImprovementLimit true δ ((1-t-u)/t)/(t*u*(1-t-u))) + ε) *
-        boxTheta N ((N : ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  rw [← gamma78Gain_C7_literal,← gamma78Gain_G7_literal]
-  exact gamma78Gain_full_count_upper true k hk hδ hδhi hε
 
-theorem gamma78Gain_gamma8_full_count_upper (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1/10) (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ i : ℕ, ∀ Δ : ℝ, ∀ V : Fin i → ℝ, wuSourceBox k δ N i Δ V →
-      gamma78GainCount N (convolutionWuWindows N Δ V)
-        (gamma78GainLabels false N δ (convolutionWuWindows N Δ V)) ≤
-      ((∫ t in (25/103 : ℝ)..(25/89), ∫ u in (25/89 : ℝ)..(100/291), 1/(t*u*(1-t-u))) -
-        (∫ t in (25/103 : ℝ)..(25/89), ∫ u in (25/89 : ℝ)..(100/291),
-          wuImprovementLimit true δ ((1-t-u)/t)/(t*u*(1-t-u))) + ε) *
-        boxTheta N ((N : ℝ)^(1/2-δ)) (convolutionWuWindows N Δ V) := by
-  rw [← gamma78Gain_C8_literal,← gamma78Gain_G8_literal]
-  exact gamma78Gain_full_count_upper false k hk hδ hδhi hε
 
 /-- The two full source counts share one total epsilon and one threshold. -/
 theorem gamma78Gain_joint_full_count_upper (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}

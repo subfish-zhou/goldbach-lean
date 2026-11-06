@@ -53,16 +53,6 @@ theorem B_normalization {ε : ℝ} (hε : 0 < ε) :
   exact (mul_le_mul_of_nonneg_right (by linarith only [hF,hH])
     (truncatedSixthClosure_scale_nonneg hN4)).trans hN
 
-/-- Explicit arbitrary-threshold form for a high-lane consumer. -/
-theorem B_normalization_cofinal {ε : ℝ} (hε : 0 < ε) :
-    ∃ d0 : ℝ, 0 < d0 ∧ d0 ≤ 1/100 ∧ ∀ δ : ℝ, 0 < δ → δ < d0 →
-      ∀ m : ℕ, ∃ n : ℕ, m ≤ n ∧ ∀ᶠ N : ℕ in atTop,
-        (truncatedSixthLowerF6lin+FeedbackLimit.Cinf-ε)*truncatedSixthMassScale N ≤ B N n δ := by
-  obtain ⟨d0,hd0,hdhi,h⟩ := B_normalization hε
-  refine ⟨d0,hd0,hdhi,?_⟩
-  intro δ hδ hδ0 m
-  obtain ⟨n,hn,hm⟩ := ((h δ hδ hδ0).and (eventually_ge_atTop m)).exists
-  exact ⟨n,hm,hn⟩
 
 end
 end LowComplement

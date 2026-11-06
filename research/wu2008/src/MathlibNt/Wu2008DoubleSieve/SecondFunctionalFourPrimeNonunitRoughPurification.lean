@@ -29,14 +29,6 @@ theorem roughFamily_data {i : ℕ} (N : ℕ) (δ Δ : ℝ) (V : Fin i → ℝ)
     (roughFamily N δ Δ V p j).primes = (sourceFamily N δ Δ V p j).primes :=
   ⟨rfl,rfl,rfl,rfl,rfl⟩
 
-theorem roughFamily_original_profile {i N : ℕ} {δ Δ : ℝ} {V : Fin i → ℝ}
-    (p : SecondFunctionalParameters) (j : Fin 4) {x : Gamma16Profile}
-    (hx : x ∈ (roughFamily N δ Δ V p j).labels) :
-    x ∈ actualProfiles N δ p (convolutionWuWindows N Δ V) j ∧
-      profileRough x ∧ 2 ≤ x.2.2.2.2 ∧
-      Sifted (x.1*x.2.2.2.1*x.2.2.1*N) x.2.2.2.2 x.2.1 := by
-  have hs := (mem_roughFamily_labels p j x).mp hx
-  exact ⟨(mem_filter.mp hs.1).1,hs.2,sourceFamily_mask N δ Δ V p j hs.1⟩
 
 /-- Reuse the original arbitrary-test dictionary, including deleted empty fibres. -/
 theorem roughFamily_test_dictionary {i : ℕ} (N : ℕ) (δ Δ : ℝ) (V : Fin i → ℝ)
@@ -62,19 +54,6 @@ theorem roughFamily_mass_dictionary {i : ℕ} (N : ℕ) (δ Δ : ℝ) (V : Fin i
     roughFamily_test_dictionary N δ Δ V p j
       (fun x _ => (convolutionCoeff (convolutionWuWindows N Δ V) x.1 : ℝ))
 
-theorem roughFamily_primeMass_dictionary {i : ℕ} (N : ℕ) (δ Δ : ℝ) (V : Fin i → ℝ)
-    (p : SecondFunctionalParameters) (j : Fin 4) :
-    (roughFamily N δ Δ V p j).primeMass =
-      ∑ x ∈ (actualProfiles N δ p (convolutionWuWindows N Δ V) j).filter profileRough,
-        (convolutionCoeff (convolutionWuWindows N Δ V) x.1 : ℝ) *
-          (actualFibre N δ p j x).card := by
-  have h := roughFamily_test_dictionary N δ Δ V p j
-    (fun x q => if (N-gamma16Cofactor x*q).Prime then
-      (convolutionCoeff (convolutionWuWindows N Δ V) x.1 : ℝ) else 0)
-  simp only [← sum_filter, sum_const, nsmul_eq_mul] at h
-  simpa only [LabelledPhysical.Family.primeMass, roughFamily,
-    LabelledPhysical.Family.restrictLabels, sourceFamily, actualFamily, physicalFamily,
-    actualRawFibre, actualFibre, fibre_eq_raw_filter, mul_comm] using h
 
 /-- This is solely a proof adapter, never a replacement of the four-prime family. -/
 def squareProfile (x : Gamma16Profile) : HighNonunit.Profile :=

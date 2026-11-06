@@ -42,26 +42,6 @@ theorem directPrimitiveMean_summand_eq_q_mul
         ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ) := by
   rw [div_eq_mul_inv, mul_assoc]
 
-/-- Strict one-level scale counterexample: as soon as the primitive amplitude
-mass is positive and `q>1`, replacing `1/φ(q)` by `q/φ(q)` strictly enlarges
-that level.  Thus `q/φ(q)` cannot be called the direct AP-normalized L¹ mean;
-it is the square-large-sieve weight. -/
-theorem directPrimitiveMean_summand_strictly_inflates
-    (a : ℤ → ℂ) (N q : ℕ) (hq : 1 < q)
-    (hA : 0 < ∑ χ : PrimitiveCharacter q,
-      primitivePrefixAmplitude a N q χ) :
-    ((q.totient : ℝ)⁻¹) *
-        ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ <
-      ((q : ℝ) / (q.totient : ℝ)) *
-        ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ := by
-  rw [directPrimitiveMean_summand_eq_q_mul a N q (by omega)]
-  have hφ : (0 : ℝ) < q.totient := by
-    exact_mod_cast Nat.totient_pos.mpr (by omega : 0 < q)
-  have hbase : 0 < ((q.totient : ℝ)⁻¹) *
-      ∑ χ : PrimitiveCharacter q, primitivePrefixAmplitude a N q χ :=
-    mul_pos (inv_pos.mpr hφ) hA
-  simpa only [one_mul] using
-    mul_lt_mul_of_pos_right (show (1 : ℝ) < q by exact_mod_cast hq) hbase
 
 /-- Rowwise AP-normalized L¹ majorant.  For Vaughan's first lane, `S` is a
 `d`-shell; for the middle lane it is a `(d,e)` shell. -/
@@ -190,39 +170,8 @@ theorem apNormalized_variableLength_square_le_budget
     _ ≤ variableLengthPrimitivePrefixBudget S c L Q :=
       weighted_primitive_variableLength_prefix_maximal S c L Q hQ
 
-/-- Combined corrected-weight Cauchy + variable-length LS producer. -/
-theorem apNormalizedVariableLengthRowMean_sq_le_budget
-    {ι : Type*} [DecidableEq ι] (S : Finset ι) (c : ι → ℤ → ℂ)
-    (L : ι → ℕ) (Q : ℕ) (hQ : 0 < Q)
-    (hcard : ∀ q ∈ Finset.Icc 1 Q,
-      Fintype.card (PrimitiveCharacter q) ≤ q.totient) :
-    apNormalizedVariableLengthRowMean S c L Q ^ 2 ≤
-      ((Finset.Icc 1 Q).card : ℝ) * (S.card : ℝ) *
-        variableLengthPrimitivePrefixBudget S c L Q := by
-  refine (apNormalizedVariableLengthRowMean_sq_le S c L Q hcard).trans ?_
-  gcongr
-  exact apNormalized_variableLength_square_le_budget S c L Q hQ
 
-/-- The middle `μ*Λ` lane retains the literal Λ square energy; it is not
-silently replaced by a row count. -/
-theorem vaughanTypeIMiddleShortEnergy_explicitLambda
-    (DS ES : Finset ℕ) :
-    vaughanTypeIMiddleShortEnergy DS ES ≤
-      (DS.card : ℝ) * ∑ e ∈ ES,
-        ‖(ArithmeticFunction.vonMangoldt e : ℂ)‖ ^ 2 :=
-  vaughanTypeIMiddleShortEnergy_le_mangoldt DS ES
 
-/-- Scalar shell optimization.  If a corrected-weight shell has a square bound
-`P²`, then it has the physical unsquared bound `P`; choosing
-`P = logPay * (N + Q² sqrt N)` is the exact producer shape. -/
-theorem corrected_typeI_shell_physical_of_square
-    (shellMean logPay N Q : ℝ)
-    (hmean : 0 ≤ shellMean) (hlog : 0 ≤ logPay) (hN : 0 ≤ N) (_hQ : 0 ≤ Q)
-    (hsq : shellMean ^ 2 ≤
-      (logPay * (N + Q ^ 2 * Real.sqrt N)) ^ 2) :
-    shellMean ≤ logPay * (N + Q ^ 2 * Real.sqrt N) := by
-  have htarget : 0 ≤ logPay * (N + Q ^ 2 * Real.sqrt N) := by positivity
-  exact (sq_le_sq₀ hmean htarget).mp hsq
 
 end
 

@@ -113,24 +113,6 @@ theorem caseI1423_sigma11_sigma12_endpoints_add
           A12 * caseI1423RemainderUnit B D σ := add_le_add h11 h12
     _ = (A11 + A12) * caseI1423RemainderUnit B D σ := by ring
 
-/-- Eventual endpoint combination with all source quantifiers in their required
-order.  In particular `A11,A12` are independent of `D`. -/
-theorem caseI1423_endpointSourceBounds_combined
-    (hsrc : CaseI1423EndpointSourceBounds)
-    (S : BoundingSieve) (H : Section13HatLayers)
-    (N : ℕ) (C K d Δ s : ℝ) :
-    ∃ A : ℝ, 0 ≤ A ∧ ∀ᶠ D : ℕ in atTop,
-      let σ := sourceSigma (D : ℝ) d
-      let z := ⌈(D : ℝ) ^ (1 / s)⌉₊
-      let B := sigma12InheritedBudget S H N D z C K d Δ s
-      caseI1423Sigma11Endpoint S N D z K s σ +
-          caseI1423Sigma12Endpoint S H N D z C K d Δ s σ ≤
-        A * caseI1423RemainderUnit B (D : ℝ) σ := by
-  obtain ⟨A11, A12, hA11, hA12, hD⟩ := hsrc S H N C K d Δ s
-  refine ⟨A11 + A12, add_nonneg hA11 hA12, ?_⟩
-  filter_upwards [hD] with D h
-  dsimp only at h ⊢
-  exact caseI1423_sigma11_sigma12_endpoints_add h.1 h.2
 
 
 end MathlibNt.SieveTheory

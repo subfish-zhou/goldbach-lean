@@ -68,13 +68,7 @@ theorem unrounded_coefficient_identity : unroundedCoefficient =
       Phase18.g18 + (2*BaseHGain.originalGain+fifthHGain/4) := by
   rw [unroundedCoefficient,Phase20.unrounded_coefficient_identity]
 
-theorem unrounded_strict_improvement : Phase20.unroundedCoefficient < unroundedCoefficient := by
-  unfold unroundedCoefficient
-  linarith only [BaseHGain.originalGain_pos, fifthHGain_pos]
 
-theorem lower_strict_improvement : Phase25.lowerCoefficient < lowerCoefficient := by
-  unfold lowerCoefficient
-  linarith only [BaseHGain.originalGain_pos, fifthHGain_pos]
 
 /-- Common threshold for the source and the literal unrestricted ordinary-P2 count.
 No old ordinary-count lower bound is invoked anywhere in this new count chain. -/
@@ -107,9 +101,6 @@ theorem payment_gap_identity :
   unfold unroundedCoefficient lowerCoefficient Phase25.paymentEta
   ring
 
-theorem payment_gap_pos : 0 < unroundedCoefficient-lowerCoefficient := by
-  rw [payment_gap_identity]
-  exact Phase25.paymentEta_pos
 
 theorem payment_identity : unroundedCoefficient-Phase25.paymentEta = lowerCoefficient := by
   unfold unroundedCoefficient lowerCoefficient Phase25.paymentEta

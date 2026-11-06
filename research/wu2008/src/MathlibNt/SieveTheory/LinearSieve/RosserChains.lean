@@ -346,18 +346,6 @@ theorem mem_lowerRosserBoundaryChains_iff
     rw [hsort]
     exact hchain
 
-/-- The zero-based pair-depth slice consists of chains of length `2*k+1`.
-It corresponds to Suzuki's full-chain source index `2*k+2` and Iwaniec's
-lower depth `k+1`. -/
-theorem mem_lowerRosserBoundaryChains_fixedPairDepth0_iff
-    {D q : ℕ} {P : Finset ℕ} (hqs : q ∉ P) (hqprime : q.Prime)
-    (hqmin : ∀ p ∈ P, q ≤ p) {l : List ℕ} (k : ℕ) :
-    l ∈ (lowerRosserBoundaryChains D q P).filter
-          (fun l => l.length = 2 * k + 1) ↔
-      l.Nodup ∧ l.SortedGT ∧ l.toFinset ⊆ P ∧
-        LowerRosserBoundaryChain D q l ∧ l.length = 2 * k + 1 := by
-  rw [Finset.mem_filter, mem_lowerRosserBoundaryChains_iff hqs hqprime hqmin]
-  tauto
 
 /-- Lower boundary chains at Suzuki's full-chain source index `n`.  The terminal
 least prime is external to the stored list, hence `l.length + 1 = n`. -/
@@ -365,16 +353,6 @@ noncomputable def lowerRosserBoundaryChainsAtSourceIndex
     (D q : ℕ) (P : Finset ℕ) (n : ℕ) : Finset (List ℕ) :=
   (lowerRosserBoundaryChains D q P).filter (fun l => l.length + 1 = n)
 
-/-- Exact source-index membership characterization. -/
-theorem mem_lowerRosserBoundaryChainsAtSourceIndex_iff
-    {D q n : ℕ} {P : Finset ℕ} (hqs : q ∉ P) (hqprime : q.Prime)
-    (hqmin : ∀ p ∈ P, q ≤ p) {l : List ℕ} :
-    l ∈ lowerRosserBoundaryChainsAtSourceIndex D q P n ↔
-      l.Nodup ∧ l.SortedGT ∧ l.toFinset ⊆ P ∧
-        LowerRosserBoundaryChain D q l ∧ l.length + 1 = n := by
-  rw [lowerRosserBoundaryChainsAtSourceIndex, Finset.mem_filter,
-    mem_lowerRosserBoundaryChains_iff hqs hqprime hqmin]
-  tauto
 
 /-- Every inhabited lower source-index slice has even Suzuki index. -/
 theorem even_sourceIndex_of_mem_lowerRosserBoundaryChainsAtSourceIndex
@@ -896,27 +874,12 @@ private theorem sortedGT_pair_iff {x₀ x₁ : ℝ} :
     · simp at hij
     · simp at hij
 
-/-- The first nonempty upper Rosser region is the explicit two-coordinate shell
-used by the first Buchstab correction. -/
-theorem upperRosserLogRegion_pair_iff {s a x₀ x₁ : ℝ} :
-    UpperRosserLogRegion s a [x₀, x₁] ↔
-      x₁ < x₀ ∧ 3 * x₀ ≤ s ∧ x₀ + x₁ ≤ s ∧ s < x₀ + x₁ + 3 * a := by
-  rw [upperRosserLogRegion_cons_cons_iff, upperRosserLogRegion_nil_iff,
-    sortedGT_pair_iff]
-  constructor
-  · rintro ⟨h10, hhead, hsum, hterminal⟩
-    exact ⟨h10, hhead, by linarith, by linarith⟩
-  · rintro ⟨h10, hhead, hsum, hterminal⟩
-    exact ⟨h10, hhead, by linarith, by linarith⟩
 
 /-- The upper Rosser region with every selected coordinate strictly between the
 terminal coordinate `a` and an inherited upper cutoff `b`. -/
 def UpperRosserLogRegionBelow (s a b : ℝ) (x : List ℝ) : Prop :=
   UpperRosserLogRegion s a x ∧ ∀ y ∈ x, a < y ∧ y < b
 
-theorem upperRosserLogRegionBelow_nil_iff {s a b : ℝ} :
-    UpperRosserLogRegionBelow s a b [] ↔ 0 ≤ s ∧ s < 3 * a := by
-  simp [UpperRosserLogRegionBelow, upperRosserLogRegion_nil_iff]
 
 /-- Exact bounded form of pair removal.  The second peeled coordinate becomes
 the strict upper cutoff for every coordinate in the residual region. -/
@@ -958,30 +921,6 @@ theorem upperRosserLogRegionBelow_cons_cons_iff
         · exact ⟨(hbounds y hy).1,
             (hbounds y hy).2.trans (h10.trans h0b)⟩
 
-/-- Induction-ready decomposition of every positive even-depth bounded Rosser
-region into its first ordered pair and a depth-two-shorter residual region. -/
-theorem upperRosserLogRegionBelow_of_length_succ_iff
-    {s a b : ℝ} {x : List ℝ} {k : ℕ} (hlen : x.length = 2 * (k + 1)) :
-    UpperRosserLogRegionBelow s a b x ↔
-      ∃ x₀ x₁ xs, x = x₀ :: x₁ :: xs ∧ xs.length = 2 * k ∧
-        a < x₁ ∧ x₁ < x₀ ∧ x₀ < b ∧ 3 * x₀ ≤ s ∧
-          UpperRosserLogRegionBelow (s - x₀ - x₁) a x₁ xs := by
-  constructor
-  · intro hregion
-    cases x with
-    | nil => simp at hlen
-    | cons x₀ tail =>
-        cases tail with
-        | nil =>
-            simp only [List.length_cons, List.length_nil] at hlen
-            omega
-        | cons x₁ xs =>
-            refine ⟨x₀, x₁, xs, rfl, ?_, ?_⟩
-            · simp only [List.length_cons] at hlen
-              omega
-            · exact upperRosserLogRegionBelow_cons_cons_iff.mp hregion
-  · rintro ⟨x₀, x₁, xs, rfl, _, hregion⟩
-    exact upperRosserLogRegionBelow_cons_cons_iff.mpr hregion
 
 
 end MathlibNt.SieveTheory.LinearSieve

@@ -188,43 +188,6 @@ theorem exists_lowerRosserDensity_continuousLowerFactor_of_suzuki_literal_allDep
         (D : ℝ) d s * (Real.log (D : ℝ)) ^ (-Δ))
   exact (mul_le_mul_of_nonneg_left hbracket hV).trans hfinite
 
-/-- Suzuki Lemma 14.7 on the Chen/Jurkat--Richert interval `4 ≤ s ≤ 6`.
-The conclusion has the standard dimension-one lower factor, with precisely the
-same constants, adaptive depth, and error term as the all-depth finite theorem. -/
-theorem exists_lowerRosserDensity_dimensionOneLowerFactor_of_suzuki_literal_allDepth
-    (S : BoundingSieve) (H : Section13HatLayers)
-    {d Δ Θ : ℝ}
-    (hH : Section13HatSourceContract H)
-    (hsrc : SuzukiClaim145SourceParameters d Δ Θ) :
-    ∃ C1min : ℝ, 0 < C1min ∧
-      ∀ C1 : ℝ, C1min ≤ C1 →
-        ∃ C145 Clow C : ℝ,
-          0 < C145 ∧ 0 ≤ Clow ∧ 3 ≤ C ∧
-          ∀ K : ℝ, 2 ≤ K → HasDimensionOneLocalProductBound S K →
-            ∀ D : ℕ, 2 ≤ D →
-              ∀ s : ℝ, 4 ≤ s → s ≤ 6 →
-                s ≤ sourceSigma (D : ℝ) d →
-                2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ →
-                let z := ⌈(D : ℝ) ^ (1 / s)⌉₊
-                let N := 2 * ((suzukiSupportedBelow S z).card + 1)
-                suzukiVProduct S (z : ℝ) *
-                    (SwitchingPrinciple.dimensionOneLowerLinearSieveFactor s -
-                      C * Real.exp (Real.sqrt K) *
-                        errorEnvelope H N (D : ℝ) d s *
-                          (Real.log (D : ℝ)) ^ (-Δ)) ≤
-                  lowerRosserSetDensitySum S.nu D (suzukiSupportedBelow S z) := by
-  obtain ⟨C1min, hC1min, hbound⟩ :=
-    exists_lowerRosserDensity_continuousLowerFactor_of_suzuki_literal_allDepth
-      S H hH hsrc
-  refine ⟨C1min, hC1min, ?_⟩
-  intro C1 hC1
-  obtain ⟨C145, Clow, C, hC145, hClow, hC, hall⟩ := hbound C1 hC1
-  refine ⟨C145, Clow, C, hC145, hClow, hC, ?_⟩
-  intro K hK hlocal D hD s hs4 hs6 hsSigma hz2
-  have h := hall K hK hlocal D hD s (by linarith) hsSigma hz2
-  rw [suzukiContinuousLowerFactor_eq_dimensionOne_of_sourceContract
-    hH hs4 hs6] at h
-  exact h
 
 
 end MathlibNt.SieveTheory

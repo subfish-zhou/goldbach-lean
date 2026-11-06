@@ -41,20 +41,4 @@ theorem C6_psi_integral_upper {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100
   change C6 N ≤ (4*c*primeIntegral δ)*truncatedSixthMassScale N+ε*truncatedSixthMassScale N
   nlinarith only [hc,hdiff]
 
-/-- The same actual count upper bound in paper-source notation, retaining
-rather than discarding the fixed-delta penalty. -/
-theorem C6_source_integral_upper {δ ε : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/100)
-    (hε : 0 < ε) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      C6 N ≤ (4*(1-firstFunctionalGainPsiOne s S+
-        (2*δ/(1-2*δ))*omega3XIntegralEnvelope s S)*
-        (∫ t in left..right, 1/(t*(1/2-δ-t))))*truncatedSixthMassScale N+
-          ε*truncatedSixthMassScale N := by
-  obtain ⟨T,hT4,hT⟩ := C6_psi_integral_upper hδ hδhi hε
-  refine ⟨T,hT4,?_⟩
-  intro N hN he
-  have h := hT N hN he
-  rw [psi_source_penalty hδhi] at h
-  convert h using 1
-  ring
 end Wu2008DoubleSieve.HighSix

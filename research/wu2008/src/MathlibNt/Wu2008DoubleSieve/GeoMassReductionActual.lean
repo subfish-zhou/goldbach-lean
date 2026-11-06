@@ -103,13 +103,5 @@ theorem M_two_rows_exact (p : SecondFunctionalParameters) (hp : p.MotherAdmissib
   rw [lowerMass_three p hp hs, lowerMass_five p hp hs]
   ring
 
-/-- Actual weighted integrability accompanies both identities. -/
-theorem two_rows_integrable (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
-    (hs : 2 ≤ p.s) :
-    IntegrableOn (geometricWeight 1) (LowerTripleContinuous.D (1/p.S) (1/p.kappa1)
-      (1/p.kappa2) (1/p.kappa3) (1/p.s) 3) ∧
-    IntegrableOn (geometricWeight 1) (LowerTripleContinuous.D (1/p.S) (1/p.kappa1)
-      (1/p.kappa2) (1/p.kappa3) (1/p.s) 5) :=
-  ⟨(mother_mass_integrable p hp hs).1 3, (mother_mass_integrable p hp hs).1 5⟩
 
 end Wu2008DoubleSieve.SecondFunctionalGeometricMass

@@ -223,31 +223,6 @@ theorem vaughanFullSecondSum (n v : ℕ) :
   · by_cases hnv : n ≤ v <;>
       simp [Finset.sum_filter, Nat.mem_divisors, hn0, hnv]
 
-/-- **Vaughan's identity, classical three-term form**: for `n > v`,
-`Λ n = vaughanFirst n u − vaughanMiddle n u v + vaughanThird n u v`.
-This is the Type I/II form used in Bombieri--Vinogradov and weighted
-Pan arguments. By `vaughanFullSecondSum`, the middle and second
-terms cancel because
-`Σ_{d|n} Σ_{e|n/d,e≤v} μ(d)Λ(e) = 0` when `n > v`. -/
-theorem vaughanIdentity_threeTerm (n u v : ℕ) (hnv : v < n) :
-    Λ n = vaughanFirst n u - vaughanMiddle n u v + vaughanThird n u v := by
-  have hsplit : (∑ d ∈ n.divisors, ∑ e ∈ (n / d).divisors.filter (fun e => e ≤ v),
-        ((μ d : ℤ) : ℝ) * Λ e) =
-      (∑ d ∈ n.divisors.filter (fun d => u < d),
-          ∑ e ∈ (n / d).divisors.filter (fun e => e ≤ v), ((μ d : ℤ) : ℝ) * Λ e) +
-        (∑ d ∈ n.divisors.filter (fun d => d ≤ u),
-          ∑ e ∈ (n / d).divisors.filter (fun e => e ≤ v), ((μ d : ℤ) : ℝ) * Λ e) := by
-    rw [← Finset.sum_filter_add_sum_filter_not (s := n.divisors) (p := fun d => u < d)]
-    simp only [not_lt]
-  have hsecond : vaughanSecond n u v = -vaughanMiddle n u v := by
-    unfold vaughanSecond vaughanMiddle
-    have hfull : (∑ d ∈ n.divisors, ∑ e ∈ (n / d).divisors.filter (fun e => e ≤ v),
-        ((μ d : ℤ) : ℝ) * Λ e) = 0 := by
-      rw [vaughanFullSecondSum]
-      rw [if_neg (not_le_of_gt hnv)]
-    linarith
-  rw [vaughanIdentity, hsecond]
-  abel
 
 end
 

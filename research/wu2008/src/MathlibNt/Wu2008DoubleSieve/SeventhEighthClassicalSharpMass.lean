@@ -45,19 +45,5 @@ theorem seventh_eighth_classicalMass_le_J_add_epsilon {ε : ℝ} (hε : 0 < ε) 
       _ = _ := by ring
   exact ⟨htransfer _ _ _ hp7 hq7 hc7, htransfer _ _ _ hp8 hq8 hc8⟩
 
-/-- A single threshold simultaneously serves all four original endpoints. -/
-theorem seventh_eighth_classical_sharp_bounds {ε : ℝ} (hε : 0 < ε) :
-    ∃ T : ℕ, 512 ≤ T ∧ ∀ N : ℕ, T ≤ N →
-      classicalPairSum N (seventhPairs N) ≤ J7 + ε ∧
-      classicalPairSum N (eighthPairs N) ≤ J8 + ε ∧
-      classicalMass N (seventhPairs N) ≤ (J7 + ε) * N / log N ∧
-      classicalMass N (eighthPairs N) ≤ (J8 + ε) * N / log N := by
-  obtain ⟨Tp, hTp512, hTp⟩ := seventh_eighth_pairSum_le_J_add_epsilon hε
-  obtain ⟨Tm, _, hTm⟩ := seventh_eighth_classicalMass_le_J_add_epsilon hε
-  refine ⟨max Tp Tm, hTp512.trans (le_max_left _ _), ?_⟩
-  intro N hN
-  obtain ⟨hp7, hp8⟩ := hTp N ((le_max_left _ _).trans hN)
-  obtain ⟨hm7, hm8⟩ := hTm N ((le_max_right _ _).trans hN)
-  exact ⟨hp7, hp8, hm7, hm8⟩
 
 end Wu2008DoubleSieve.SeventhEighth

@@ -45,13 +45,6 @@ theorem shared_payment : sharedPaid lowerLog V ≤ shared log ∧
   unfold sharedPaid
   constructor <;> nlinarith only [l0,h0,l1,h1,l2,h2,l3,h3,l4,h4,l5,h5,l6,h6,l7,h7]
 
-theorem shared_bounds : (23087/1000000:ℝ) < shared log ∧
-    shared log < 24464/1000000 := by
-  have hl : (23087/1000000:ℝ) < sharedPaid lowerLog V := by
-    norm_num [sharedPaid,lowerLog,upperLog,V]
-  have hu : sharedPaid V lowerLog < (24464/1000000:ℝ) := by
-    norm_num [sharedPaid,lowerLog,upperLog,V]
-  exact ⟨hl.trans_le shared_payment.1,shared_payment.2.trans_lt hu⟩
 
 def jPaid (L H : ℝ → ℝ) : ℝ :=
   (179579971243232777247933012889723905048710064906043141994045803257386930964287989150417920794476637280712007/43017824535733324069161959611446598064430140623688666430097655351517060915657750515605921807214144732088000)+
@@ -93,13 +86,6 @@ theorem j_payment : jPaid lowerLog V ≤ j log ∧
   unfold jPaid
   constructor <;> nlinarith only [l0,h0,l1,h1,l2,h2,l3,h3,l4,h4,l5,h5,l6,h6]
 
-theorem j_bounds : (7297/1000000:ℝ) < j log ∧
-    j log < 7591/1000000 := by
-  have hl : (7297/1000000:ℝ) < jPaid lowerLog V := by
-    norm_num [jPaid,lowerLog,upperLog,V]
-  have hu : jPaid V lowerLog < (7591/1000000:ℝ) := by
-    norm_num [jPaid,lowerLog,upperLog,V]
-  exact ⟨hl.trans_le j_payment.1,j_payment.2.trans_lt hu⟩
 
 def fifthPaid (L H : ℝ → ℝ) : ℝ :=
   (-65216423715278935221942009918380973061309825/18795369635993700794366782815755472336441848412)+
@@ -125,12 +111,5 @@ theorem fifth_payment : fifthPaid lowerLog V ≤ fifth log ∧
   unfold fifthPaid
   constructor <;> nlinarith only [l0,h0,ls0,hs0]
 
-theorem fifth_bounds : (11624/1000000:ℝ) < fifth log ∧
-    fifth log < 11732/1000000 := by
-  have hl : (11624/1000000:ℝ) < fifthPaid lowerLog V := by
-    norm_num [fifthPaid,lowerLog,upperLog,V]
-  have hu : fifthPaid V lowerLog < (11732/1000000:ℝ) := by
-    norm_num [fifthPaid,lowerLog,upperLog,V]
-  exact ⟨hl.trans_le fifth_payment.1,fifth_payment.2.trans_lt hu⟩
 
 end WidthIntervals

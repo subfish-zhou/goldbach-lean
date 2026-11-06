@@ -1,0 +1,27 @@
+{
+  "status": "LOCAL_MODULE_AND_CHANGED_TYPES_PASS_NOT_INSTALLED",
+  "module": "MathlibNt.SieveTheory.JurkatRichert1965ChenGammaOneQOne",
+  "in_final_theorem_closure": true,
+  "source_manifest_sha256": "c7950a5796a848c7c0fc0f58f68c41746a570d137f54ab298c64a31d14f71e39",
+  "before_sha256": "f6c8cd3143b3b72af08df59df1bb658f7efcaa5ee3fc821f5df950a763ec9d4b",
+  "after_sha256": "4214b96f2f8b80da3a7c37f786c47c36a8e86249e11a84048dfaf1d5cf7b4fde",
+  "candidate_savings": {
+    "effective_lines": 21,
+    "physical_lines": 18,
+    "bytes": 492
+  },
+  "compile": {
+    "exit_code": 0,
+    "seconds": 61.004864901304245
+  },
+  "types": {
+    "types_exact": true,
+    "declarations": 3,
+    "before_sha256": "1aad45145e7089c2dc6d663a3757ff0e40977790fa297c7e38d6f72f5e91e7f9",
+    "after_sha256": "1aad45145e7089c2dc6d663a3757ff0e40977790fa297c7e38d6f72f5e91e7f9",
+    "status": "LOCAL_MODULE_ONLY_NOT_INSTALLED"
+  },
+  "affected_modules_including_source": 1119,
+  "downstream_compiled": false,
+  "accepted_sources_modified": false
+}

@@ -167,40 +167,5 @@ theorem wPoissonFrequency_eq_peeled {q r n₁ n₂ k P : ℕ}
   · rw [productCRTResidue_fourier_peel hn₁ hk hP hL hkq hkP hc]
     simp only [mul_assoc]
 
-/-- Exact propagation to the existing retained finite W remainder. The
-factorization depends only on the modulus pair, and signed coefficients
-are untouched. No coprimality between the original two moduli is required. -/
-theorem truncatedWNonzeroMode_eq_peeled
-    (M : ℝ) (H k P : ℕ → ℕ → ℕ) (N Q : Finset ℕ)
-    (β c : ℕ → ℝ) (a : ℤ)
-    (hN : ∀ n ∈ N, 0 < n)
-    (hfac : ∀ q ∈ reducedModuli Q a, ∀ r ∈ reducedModuli Q a,
-      0 < k q r ∧ 0 < P q r ∧ q.lcm r = k q r * P q r ∧
-        k q r ∣ q ∧ (k q r).Coprime (P q r)) :
-    truncatedWNonzeroMode M H N Q β c a =
-      ∑ q ∈ reducedModuli Q a, ∑ r ∈ reducedModuli Q a,
-        ∑ n₁ ∈ N, ∑ n₂ ∈ N,
-          if WCompatible q r n₁ n₂ then
-            (c q * c r * β n₁ * β n₂) *
-              (∑ h ∈ Finset.Icc (-(H q r : ℤ)) (H q r),
-                wPeeledPoissonFrequency M a q r n₁ n₂ (k q r) (P q r) h).re
-          else 0 := by
-  classical
-  unfold truncatedWNonzeroMode
-  apply Finset.sum_congr rfl
-  intro q hq
-  apply Finset.sum_congr rfl
-  intro r hr
-  obtain ⟨hk, hP, hL, hkq, hkP⟩ := hfac q hq r hr
-  apply Finset.sum_congr rfl
-  intro n₁ hn₁
-  apply Finset.sum_congr rfl
-  intro n₂ _
-  split_ifs with hc
-  · congr 2
-    apply Finset.sum_congr rfl
-    intro h _
-    exact wPoissonFrequency_eq_peeled (hN n₁ hn₁) hk hP hL hkq hkP hc M a h
-  · rfl
 
 end MathlibNt.AnalyticNumberTheory.LargeSieve.LiLiuPrereqFouvry

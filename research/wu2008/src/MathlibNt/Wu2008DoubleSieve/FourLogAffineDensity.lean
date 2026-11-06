@@ -57,11 +57,6 @@ theorem reciprocal_le_affine {y : ℝ} (hy : alpha ≤ y) (hyb : y ≤ beta) :
   rw [affine_eq hy]
   exact reciprocal_log_affine fixed_geometry.2.1 hy hyb
 
-theorem affine_le_old {y : ℝ} (hy : alpha ≤ y) : affine y ≤ 1/alpha := by
-  rw [affine_eq hy, log_div (fixed_geometry.2.1.trans_le hy).ne' fixed_geometry.2.1.ne']
-  have h := div_nonneg (sub_nonneg.mpr (log_le_log fixed_geometry.2.1 hy))
-    (fixed_geometry.2.1.trans_le fixed_geometry.2.2.1).le
-  linarith
 
 /-- The original squared y denominator is retained before its extra reciprocal is bounded. -/
 theorem regular_le_affine {x y z t : ℝ} (hx : alpha ≤ x) (hy : alpha ≤ y)

@@ -179,16 +179,5 @@ def Chen1973Equation17ContourMajorization
   chen1973Lemma6NmBlockActual x L level B k m ≤
     chen1973Lemma6Equation17RHS x L level B k m H
 
-/-- Compatibility consumer for a supplied contour majorization.  The
-premise-free publication theorem is proved in the equation-(17) assembly
-module. -/
-theorem chen1973Lemma6_equation17_of_contourMajorization
-    {x L level B k m H : ℕ}
-    (h17 : Chen1973Equation17ContourMajorization x L level B k m H) :
-    chen1973Lemma6NmBlockActual x L level B k m ≤
-      2 * x * (Real.log x) ^ 2 *
-          chen1973Lemma6Eq17FirstIntegral x L level B k m H +
-        2 * (x : ℝ) ^ ((1 : ℝ) / 2) *
-          chen1973Lemma6Eq17SecondIntegral x L level B k m H := h17
 
 end AnalyticNumberTheory.LargeSieve

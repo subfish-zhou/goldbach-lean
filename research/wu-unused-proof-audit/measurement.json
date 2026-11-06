@@ -1,0 +1,46 @@
+{
+  "status": "ACTUAL_INSTALLED_MANIFEST_BOUND_SOURCE_MEASUREMENT",
+  "manifest_sha256": "c7950a5796a848c7c0fc0f58f68c41746a570d137f54ab298c64a31d14f71e39",
+  "counter_sha256": "bf381c6676357d490c00e972c0d6fd125ed83e247b35fd1e1f78decf09b65015",
+  "metric": "scripts/check.py count_code_lines; strings retained; whole imported local modules; external Lake dependencies excluded",
+  "before": {
+    "whole_tree": {
+      "modules": 4151,
+      "code_lines": 540985,
+      "physical_lines": 629373,
+      "utf8_bytes": 31664664
+    },
+    "theorem_closure": {
+      "modules": 3764,
+      "code_lines": 500231,
+      "physical_lines": 582895,
+      "utf8_bytes": 27456015
+    }
+  },
+  "after": {
+    "whole_tree": {
+      "modules": 4151,
+      "code_lines": 509776,
+      "physical_lines": 595256,
+      "utf8_bytes": 29834960
+    },
+    "theorem_closure": {
+      "modules": 3764,
+      "code_lines": 469022,
+      "physical_lines": 548778,
+      "utf8_bytes": 25626311
+    }
+  },
+  "savings": {
+    "whole_tree": {
+      "code_lines": 31209,
+      "physical_lines": 34117,
+      "utf8_bytes": 1829704
+    },
+    "theorem_closure": {
+      "code_lines": 31209,
+      "physical_lines": 34117,
+      "utf8_bytes": 1829704
+    }
+  }
+}

@@ -282,13 +282,6 @@ noncomputable def chenSelbergLevel (N : ℕ) (ε : ℝ) : ℝ :=
 noncomputable def chenSieveRatio (_N : ℕ) (ε : ℝ) : ℝ :=
   (1/2 - ε) / (1/10 : ℝ)
 
-/-- For sufficiently small positive `ε`, the sieve ratio is close to 5. -/
-theorem chenSieveRatio_approx (ε : ℝ) (hε : 0 < ε) (hε' : ε < 1/100) :
-    4.9 < chenSieveRatio 0 ε ∧ chenSieveRatio 0 ε < 5 := by
-  unfold chenSieveRatio
-  constructor
-  · field_simp; nlinarith
-  · field_simp; nlinarith
 
 /-! ## 6. Mathematical scope -/
 

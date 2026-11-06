@@ -72,27 +72,6 @@ theorem CharacterLocalDiskData.exists_holomorphicLog
       EqOn (fun z ↦ exp (h z)) d.g (ball c R) :=
   exists_holomorphicLog_on_ball d.g c hR d.g_analytic.differentiableOn d.g_ne_zero
 
-/-- For the logarithm just constructed, its derivative is literally the
-character-specific finite-disk remainder `g'/g` at every point of the disk. -/
-theorem CharacterLocalDiskData.exists_holomorphicLog_deriv_eq_logDeriv
-    {q : ℕ} [NeZero q] {χ : DirichletCharacter ℂ q} {c : ℂ} {R : ℝ}
-    (d : CharacterLocalDiskData χ c R) (hR : 0 < R) :
-    ∃ h : ℂ → ℂ,
-      DifferentiableOn ℂ h (ball c R) ∧
-      EqOn (fun z ↦ exp (h z)) d.g (ball c R) ∧
-      ∀ z ∈ ball c R, deriv h z = logDeriv d.g z := by
-  obtain ⟨h, hh, hexp⟩ := d.exists_holomorphicLog hR
-  refine ⟨h, hh, hexp, ?_⟩
-  intro z hz
-  have hhd : DifferentiableAt ℂ h z :=
-    (hh z hz).differentiableAt (isOpen_ball.mem_nhds hz)
-  have hevent : (fun w ↦ exp (h w)) =ᶠ[𝓝 z] d.g :=
-    hexp.eventuallyEq_of_mem (isOpen_ball.mem_nhds hz)
-  have hderiv : deriv h z * d.g z = deriv d.g z := by
-    rw [← hexp hz, ← hevent.deriv_eq]
-    simpa only [mul_comm] using hhd.hasDerivAt.cexp.deriv.symm
-  rw [logDeriv_apply]
-  exact (eq_div_iff (d.g_ne_zero z hz)).2 hderiv
 
 end
 end TatuzawaZeroContribution

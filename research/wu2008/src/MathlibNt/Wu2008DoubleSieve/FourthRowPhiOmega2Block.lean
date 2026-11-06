@@ -14,53 +14,8 @@ namespace FourthRowPhiOmega2
 open Set Real MeasureTheory
 open scoped Interval
 
-/-- The first literal logarithm-plus-final-gain identity. -/
-theorem J_five_halves_eq_log (δ : ℝ) :
-    J δ (5 / 2) (103 / 25) =
-      ∫ u in (1 - 1 / (5 / 2 : ℝ))..(1 - 1 / (103 / 25 : ℝ)),
-        (log ((103 / 25 : ℝ) * u - 1) +
-          wuImprovementLimit false δ ((103 / 25 : ℝ) * u)) / (u * (1 - u)) := by
-  exact J_eq_log (by norm_num) (by norm_num) (by norm_num) (by norm_num)
 
-/-- The second literal logarithm-plus-final-gain identity. -/
-theorem J_291_eq_log (δ : ℝ) :
-    J δ (291 / 100) (103 / 25) =
-      ∫ u in (1 - 1 / (291 / 100 : ℝ))..(1 - 1 / (103 / 25 : ℝ)),
-        (log ((103 / 25 : ℝ) * u - 1) +
-          wuImprovementLimit false δ ((103 / 25 : ℝ) * u)) / (u * (1 - u)) := by
-  exact J_eq_log (by norm_num) (by norm_num) (by norm_num) (by norm_num)
 
-/-- Both the literal coefficient and logarithmic integrands are integrable
-on each of the two actual intervals. No regularity of the gain is assumed. -/
-theorem actual_integrability {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1 / 10) :
-    (∀ x ∈ ({(5 / 2 : ℝ), 291 / 100} : Set ℝ),
-      IntervalIntegrable (fun u =>
-        (wuLowerCoefficient ((103 / 25 : ℝ) * u) +
-          wuImprovementLimit false δ ((103 / 25 : ℝ) * u)) / (u * (1 - u)))
-        volume (1 - 1 / x) (1 - 1 / (103 / 25 : ℝ))) ∧
-    (∀ x ∈ ({(5 / 2 : ℝ), 291 / 100} : Set ℝ),
-      IntervalIntegrable (fun u =>
-        (log ((103 / 25 : ℝ) * u - 1) +
-          wuImprovementLimit false δ ((103 / 25 : ℝ) * u)) / (u * (1 - u)))
-        volume (1 - 1 / x) (1 - 1 / (103 / 25 : ℝ))) := by
-  have hδhalf : δ < 1 / 2 := by linarith
-  constructor
-  · intro x hx
-    rcases hx with (rfl | rfl)
-    · exact limit_intervalIntegrable hδ hδhalf (by norm_num) (by norm_num)
-        (by norm_num) (by norm_num)
-    · exact limit_intervalIntegrable hδ hδhalf (by norm_num) (by norm_num)
-        (by norm_num) (by norm_num)
-  · intro x hx
-    have hs : 2 ≤ x := by rcases hx with (rfl | rfl) <;> norm_num
-    have hst : x ≤ (103 / 25 : ℝ) := by rcases hx with (rfl | rfl) <;> norm_num
-    have hratio : 2 ≤ (103 / 25 : ℝ) - (103 / 25 : ℝ) / x := by
-      rcases hx with (rfl | rfl) <;> norm_num
-    simpa only [add_div] using
-      (firstFunctionalGain_log_intervalIntegrable hs hst (by norm_num)
-        (by norm_num) hratio).add
-        (firstFunctionalGain_limit_intervalIntegrable hδ hδhalf hs hst
-          (by norm_num) (by norm_num))
 
 /-- The first actual Omega2 lower-bound instance. -/
 theorem omega2_five_halves_actual_limit_lower (k : ℕ) (hk : 1 ≤ k) {δ ε : ℝ}

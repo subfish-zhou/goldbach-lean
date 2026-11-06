@@ -20,9 +20,5 @@ theorem kernel_continuous (p : SecondFunctionalParameters) (hp : p.MotherAdmissi
       ((high_K20_continuous ha hb).add (high_K21_continuous (ha.trans haa) hb))).add
       (continuous_finsetSum _ (fun j _ => hf j)))
 
-/-- The advertised closed half-line includes the endpoint phi = 2. -/
-theorem kernel_continuousOn_Ici (p : SecondFunctionalParameters) (hp : p.MotherAdmissible)
-    (hs : 2 ≤ p.s) : ContinuousOn (SecondFunctionalCoupled.kernel p) (Ici 2) :=
-  (kernel_continuous p hp hs).continuousOn
 
 end Wu2008DoubleSieve.SecondFunctionalJointTail

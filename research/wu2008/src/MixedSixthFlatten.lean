@@ -69,11 +69,6 @@ theorem high_reciprocal_tendsto (δ : ℝ) (n : ℕ) :
     ⟨truncatedSixthLower_parameters.1.trans_le (high_geometry hi).1,
       (show (0:ℝ) < 1/4 by norm_num).trans_le (high_geometry hi).2.1⟩)
 
-/-- The entire actual packing mass has its full finite-rectangle limit. -/
-theorem joint_reciprocal_tendsto (δ : ℝ) (n : ℕ) :
-    Tendsto (fun N => reciprocal N n (lowCells δ n)+reciprocal N n (highCells δ n))
-      atTop (𝓝 (reciprocalLimit n (lowCells δ n)+reciprocalLimit n (highCells δ n))) :=
-  (low_reciprocal_tendsto δ n).add (high_reciprocal_tendsto δ n)
 
 /-- Literal evaluation on the constructed joint packing. -/
 def main (N n : ℕ) (δ η : ℝ) : ℝ :=

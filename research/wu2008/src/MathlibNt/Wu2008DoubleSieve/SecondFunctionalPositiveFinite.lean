@@ -34,11 +34,6 @@ theorem parameters_bounds (iRow : Fin 4) :
     by change 1 ≤ row4.s ∧ row4.s ≤ 5/2; norm_num [row4],
     fun i => Fin.elim0 i⟩
 
-/-- All four original H values inherit the fourth-row margin; this makes
-no claim about positivity of the first or second signed core. -/
-theorem H_rows_strict (iRow : Fin 4) :
-    (1/300 : ℝ) < wuImprovementLimit true (1/1000) (parameters iRow).s :=
-  H_strict (parameters_bounds iRow).1 (parameters_bounds iRow).2
 
 /-- Consume exactly the strict gap `H - 1/300`; no factor of two is lost. -/
 theorem improvement_mem_succ (k : ℕ) {s : ℝ} (hs : 1 ≤ s) (hsHi : s ≤ 5/2) :
@@ -76,25 +71,5 @@ theorem finite_source (k : ℕ) (hk : 1 ≤ k) (s : ℝ)
   exact hM N ((le_max_right _ _).trans hN)
     ((le_max_left _ _).trans hN) he i Δ V hbox
 
-/-- The original four rows share a finite maximum of their fixed-depth
-thresholds. This is not uniformity over all real sieve parameters. -/
-theorem four_rows_common_threshold (k : ℕ) (hk : 1 ≤ k) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      ∀ (iRow : Fin 4) (i : ℕ) (Δ : ℝ) (V : Fin i → ℝ),
-        wuSourceBox k (1/1000) N i Δ V →
-        wuBoxPhi N (1/1000) (convolutionWuWindows N Δ V) (parameters iRow).s ≤
-          (wuUpperCoefficient (parameters iRow).s - 1/300) *
-            boxTheta N ((N : ℝ) ^ (1/2 - (1/1000 : ℝ)))
-              (convolutionWuWindows N Δ V) := by
-  classical
-  have hrows := fun iRow : Fin 4 =>
-    finite_source k hk (parameters iRow).s
-      (parameters_bounds iRow).1 (parameters_bounds iRow).2
-  choose rowT hrow4 hrow using hrows
-  refine ⟨max 4 (Finset.univ.sup rowT), le_max_left _ _, ?_⟩
-  intro N hN he iRow i Δ V hbox
-  have hrowN : rowT iRow ≤ N :=
-    (Finset.le_sup (Finset.mem_univ iRow)).trans ((le_max_right _ _).trans hN)
-  exact hrow iRow N hrowN he i Δ V hbox
 
 end Wu2008DoubleSieve.SecondFunctionalPositiveFinite

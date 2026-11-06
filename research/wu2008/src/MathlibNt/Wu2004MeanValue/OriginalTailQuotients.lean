@@ -40,11 +40,6 @@ theorem mem_originalTailPrimes {N p : ℕ} {η : ℝ} :
       p ≤ N ∧ p.Prime ∧ (p : ℝ) ≤ (1 - η) * N := by
   simp [originalTailPrimes]
 
-theorem mem_originalTailA {N a : ℕ} {η : ℝ} :
-    a ∈ originalTailA N η ↔
-      ∃ p, p ≤ N ∧ p.Prime ∧ (p : ℝ) ≤ (1 - η) * N ∧ N - p = a := by
-  simp only [originalTailA, mem_image, mem_originalTailPrimes]
-  aesop
 
 theorem mem_originalTailQuotients {N r m : ℕ} {η : ℝ} :
     m ∈ originalTailQuotients N r η ↔

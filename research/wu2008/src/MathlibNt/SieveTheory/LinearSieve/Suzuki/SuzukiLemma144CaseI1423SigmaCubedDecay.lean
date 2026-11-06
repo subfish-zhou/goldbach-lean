@@ -265,24 +265,7 @@ theorem tendsto_caseI1423_sourceScalar
     (tendsto_rpow_neg_atTop hδ |>.comp Real.tendsto_log_atTop)
     hlower hupper
 
-/-- Boundedness form required by the `Σ₁₁` endpoint source contract. -/
-theorem caseI1423Sigma11SourceScalar_of_range
-    (K d Δ : ℝ) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) :
-    CaseI1423Sigma11SourceScalar K d Δ := by
-  refine ⟨1, zero_le_one, ?_⟩
-  exact (tendsto_caseI1423_sourceScalar K d Δ hΔ0 hΔ1 hd).eventually
-    (eventually_le_nhds (show (0 : ℝ) < 1 by norm_num))
 
-/-- The `Σ₁₂` source contract has the same literal scalar and follows from the
-same decay theorem. -/
-theorem caseI1423Sigma12SourceScalar_of_range
-    (K d Δ : ℝ) (hΔ0 : 0 < Δ) (hΔ1 : Δ < 1)
-    (hd : 7 / (1 - Δ) < d) :
-    CaseI1423Sigma12SourceScalar K d Δ := by
-  refine ⟨1, zero_le_one, ?_⟩
-  exact (tendsto_caseI1423_sourceScalar K d Δ hΔ0 hΔ1 hd).eventually
-    (eventually_le_nhds (show (0 : ℝ) < 1 by norm_num))
 
 
 end MathlibNt.SieveTheory

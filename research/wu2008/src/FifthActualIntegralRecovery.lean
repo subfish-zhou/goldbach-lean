@@ -63,17 +63,6 @@ theorem actual_triangle : fifthPairFlin =
   rw [uIcc_of_le hy.1] at hx
   simpa [truncatedSixthLowerC] using (ClassicalPositiveBounds.fifth_regular_eq hx.1 hx.2 hy.2).symm
 
-theorem log_full_triangle : logIntegral =
-    4*∫ y in a..b, ∫ x in a..y, log ((1/2-x-y)/a-1)/(x*y*(1/2-x-y)) := by
-  unfold logIntegral
-  congr 1
-  apply intervalIntegral.integral_congr
-  intro y hy
-  rw [uIcc_of_le truncatedSixthLower_parameters.2.1.le] at hy
-  apply intervalIntegral.integral_congr
-  intro x hx
-  rw [uIcc_of_le hy.1] at hx
-  simpa [truncatedSixthLowerS,truncatedSixthLowerC] using log_literal hx.1 hx.2 hy.2
 
 /-- The initial identity is only invoked where the original parameter is at most four. -/
 theorem initial_exact {x y : ℝ} (hx : a ≤ x) (hxy : x ≤ y) (hy : y ≤ b)
@@ -375,13 +364,7 @@ theorem recovery_lower : integralGain ≤ recovery := by
   dsimp [primitive] at hi
   linarith only [hi]
 
-theorem actual_fifth_loss_lower : 1/200 < AnalyticTotalThreshold.fifthLoss :=
-  gain_rational.2.trans_le (recovery_lower.trans fifth_loss_localization.1)
 
-theorem strict_parent_gain : JointSixthFourDiagnostic.coefficient+1/800 < coefficient := by
-  have h := gain_rational.2.trans_le recovery_lower
-  unfold coefficient
-  linarith only [h]
 
 /-- The unestimated recurrence tail is smaller than one third of a proved log recovery. -/
 theorem recurrence_smaller_than_recovery : 3*recurrenceCap < integralGain := by
@@ -395,13 +378,6 @@ theorem recovered_fraction : (3/4)*AnalyticTotalThreshold.fifthLoss < recovery :
   have hc := recurrence_smaller_than_recovery
   linarith only [h,hR,hc]
 
-/-- Quantified localization: not merely the sign of a new lower certificate. -/
-theorem fifth_loss_magnitude : 1/200 < recovery ∧ recovery ≤ AnalyticTotalThreshold.fifthLoss ∧
-    AnalyticTotalThreshold.fifthLoss < recovery+1/500 ∧
-    (3/4)*AnalyticTotalThreshold.fifthLoss < recovery := by
-  have h := fifth_loss_localization
-  refine ⟨gain_rational.2.trans_le recovery_lower,h.1,?_,recovered_fraction⟩
-  linarith only [h.2,recurrenceCap_exact.2]
 
 end
 end Wu2008DoubleSieve.FifthActualIntegralRecovery

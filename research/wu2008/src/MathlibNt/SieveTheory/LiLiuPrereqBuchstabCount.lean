@@ -87,12 +87,6 @@ theorem minFac_mul_of_rough {p m : ℕ} (hp : p.Prime)
   · exact Nat.minFac_le_of_dvd hp.two_le (dvd_mul_right p m)
   · exact_mod_cast (rough_iff_minFac hne).mp (rough_mul_prime hp hm)
 
-theorem rough_div_minFac (n : ℕ) :
-    Rough (n.minFac : ℝ) (n / n.minFac) := by
-  intro p hp hpd
-  have hpn : p ∣ n :=
-    dvd_trans hpd (Nat.div_dvd_of_dvd (Nat.minFac_dvd n))
-  exact_mod_cast Nat.minFac_le_of_dvd hp.two_le hpn
 
 theorem rough_of_dvd {z : ℝ} {m n : ℕ} (hmn : m ∣ n) (hn : Rough z n) :
     Rough z m :=

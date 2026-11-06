@@ -1,0 +1,68 @@
+{
+  "status": "LOCAL_NINE_MODULE_SOURCE_COMPILE_PASS_NOT_DOWNSTREAM_OR_KERNEL_ACCEPTANCE",
+  "pilot_directory": "/tmp/wu-w08-max-pilot-v1",
+  "pilot_report_sha256": "8f305cb583cfcb8fef6bed8ccce80fa68bdfa965c066510f14081498b2f2703d",
+  "modules": [
+    {
+      "module": "W08KernelMatrix",
+      "exit_code": 0,
+      "seconds": 4.327696278691292,
+      "source_sha256": "4109804b8f83f121942b917ffc431d25cf07b6a2e0d9941905b64f48607aac52"
+    },
+    {
+      "module": "W08Envelope",
+      "exit_code": 0,
+      "seconds": 3.825387332588434,
+      "source_sha256": "d88743ef53cea192eec0a90a2528c962e4dfa4558d8ec66f111c99908196dc49"
+    },
+    {
+      "module": "W08Entries0",
+      "exit_code": 0,
+      "seconds": 10.091405119746923,
+      "source_sha256": "5e0a29ea6063c8c0f966e00db18e6f5911dd8bab315c5ad3049fec52eb081dcc"
+    },
+    {
+      "module": "W08EntriesRest",
+      "exit_code": 0,
+      "seconds": 45.714161805808544,
+      "source_sha256": "747730d6087b5f91d2c72d6689490cf2d8027fb25f349d25f8c14d0bb6593364"
+    },
+    {
+      "module": "W08FrozenConsumer",
+      "exit_code": 0,
+      "seconds": 5.77687394618988,
+      "source_sha256": "365b60af400508f6ad780c78e133f1113f924bd0b201b9d81b25cf857b00a76a"
+    },
+    {
+      "module": "W17JointSplit",
+      "exit_code": 0,
+      "seconds": 6.728966001421213,
+      "source_sha256": "91d2b9c9ca8f270ab48b2f125340c48a9c5fa5d3a91809ed669ae699a95552ba"
+    },
+    {
+      "module": "W08Audit",
+      "exit_code": 0,
+      "seconds": 5.428402401506901,
+      "source_sha256": "3b339715387a52b2e52e7a431388ff03a269da7ba226356793d0840031dc46f3"
+    },
+    {
+      "module": "W08Root",
+      "exit_code": 0,
+      "seconds": 5.426076207309961,
+      "source_sha256": "8f50da362fd4673dc27d3a6348962eb843368f6012ff8bf3163d41dfef067c0a"
+    },
+    {
+      "module": "W17ParentFullTypes",
+      "exit_code": 0,
+      "seconds": 6.329146821051836,
+      "source_sha256": "0c2e375d74c6fe0ea1bcb149945da10d3afd831ab1111efe650fa52c8422cd95"
+    }
+  ],
+  "merged_into_incomplete_source_batch": true,
+  "merge_review_sha256": "9a7a767dc414e662bb3df8af92b7420cd4e945a70c0290e08f58c60e3b394dab",
+  "completed_receipts_preserved": 2178,
+  "newly_affected_region_modules": 309,
+  "completed_modules_in_that_region_before_merge": 0,
+  "canonical_sources_modified": false,
+  "acceptance_pending": true
+}

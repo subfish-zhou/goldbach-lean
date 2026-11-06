@@ -91,49 +91,5 @@ theorem truncatedSixthMass_wedge_actual {δ η ε : ℝ}
     (truncatedSixthLower_mask_mass_le (by omega) hδ _ hw)
   simpa only [truncatedSixthMassScale, mul_div_assoc, mul_assoc] using hcount
 
-theorem truncatedSixthMass_wedge_rectangle_sharp {δ η ε a b c d s : ℝ}
-    (hδ : 0 < δ) (hδhi : δ < 1 / 100) (hη : 0 < η) (hηhi : η ≤ 1) (hε : 0 < ε)
-    (hab : a ≤ b) (hcd : c ≤ d)
-    (ha : truncatedSixthLowerAlpha ≤ a) (hc : truncatedSixthLowerBeta ≤ c)
-    (hbd : truncatedSixthLowerAdmissibleRegion δ b d)
-    (hs2 : 2 ≤ s) (hs5 : s ≤ 5) (hs : s ≤ truncatedSixthLowerS δ b d) :
-    ∃ T : ℕ, 4 ≤ T ∧ ∀ N : ℕ, T ≤ N → Even N →
-      truncatedSixthLowerNormalizedMain N δ η (truncatedSixthLowerWedgePairs N δ) +
-        (max 0 (wuLowerCoefficient s + wuImprovementLimit false δ s - η) *
-          truncatedSixthMassRectangleCoefficient δ a b c d - ε) *
-            truncatedSixthMassScale N ≤
-        (truncatedSixthMass N ((N : ℝ) ^ truncatedSixthLowerAlpha)
-          ((N : ℝ) ^ truncatedSixthLowerBeta) ((N : ℝ) ^ truncatedSixthLowerSigma)
-          ((N : ℝ) ^ truncatedSixthLowerLambda) : ℝ) := by
-  let L := wuLowerCoefficient s + wuImprovementLimit false δ s - η
-  by_cases hL : L ≤ 0
-  · obtain ⟨T, hT, h⟩ := truncatedSixthMass_wedge_actual hδ hη hηhi hε
-    refine ⟨T, hT, ?_⟩
-    intro N hN he
-    have heq : max 0 (wuLowerCoefficient s + wuImprovementLimit false δ s - η) = 0 :=
-      max_eq_left hL
-    simpa only [heq, zero_mul, zero_sub, neg_mul, ← sub_eq_add_neg] using h N hN he
-  · have hL0 : 0 < L := lt_of_not_ge hL
-    obtain ⟨T1, hT1, hcount⟩ := truncatedSixthMass_wedge_rectangle_packing hδ hδhi hη hηhi
-      (half_pos hε) hab hcd ha hc hbd hs2 hs5 hs
-    obtain ⟨T2, hmass⟩ := eventually_atTop.mp (truncatedSixthMass_packing_theta_sharp
-      hab hcd ha hc hbd (show 0 < ε / (2 * L) by positivity))
-    refine ⟨max T1 T2, hT1.trans (le_max_left _ _), ?_⟩
-    intro N hN he
-    have hN4 : 4 ≤ N := hT1.trans ((le_max_left _ _).trans hN)
-    have hb := hmass N ((le_max_right _ _).trans hN)
-    have hm := mul_le_mul_of_nonneg_left hb hL0.le
-    have hpay : L * ((truncatedSixthMassRectangleCoefficient δ a b c d - ε / (2 * L)) *
-        truncatedSixthMassScale N) =
-        (L * truncatedSixthMassRectangleCoefficient δ a b c d - ε / 2) *
-          truncatedSixthMassScale N := by field_simp
-    rw [hpay] at hm
-    have hact := hcount N ((le_max_left _ _).trans hN) he
-    change _ + L * truncatedSixthMassPackingTheta N δ a b c d -
-      ε / 2 * truncatedSixthMassScale N ≤ _ at hact
-    rw [max_eq_right hL0.le]
-    change _ + (L * truncatedSixthMassRectangleCoefficient δ a b c d - ε) *
-      truncatedSixthMassScale N ≤ _
-    nlinarith
 
 end Wu2008DoubleSieve

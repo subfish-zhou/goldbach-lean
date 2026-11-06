@@ -144,8 +144,6 @@ theorem uniform_payment {δ d : ℝ} (hδ : 0 < δ) (hδd : δ ≤ d) (hdhi : d 
     (moving_integrable hδ hδhi) (uniform_le_moving hδ.le hδd))
     (by norm_num : (0 : ℝ) ≤ 4)).trans (full_moving_payment hδ hδhi)
 
-theorem gamma6_payment {δ : ℝ} (hδ : 0 < δ) (hδhi : δ ≤ 1/1000) :
-    Gamma6 ≤ truncatedSixthLowerHadmdelta δ := uniform_payment hδ hδhi le_rfl
 
 /-- The original kept-count producer, retaining all small-delta quantifiers. -/
 theorem uniform_actual_lower {ε d : ℝ} (hε : 0 < ε) (hd : 0 < d) (hdhi : d ≤ 1/1000) :

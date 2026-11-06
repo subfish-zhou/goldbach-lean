@@ -24,25 +24,6 @@ open DirichletLGlobalConductorLogDerivativeBound
 
 variable {q : ℕ} [NeZero q]
 
-/-- Genuine vertical fundamental theorem for a nonprincipal Dirichlet
-`L`-function.  The derivative here is the real derivative of the actual
-vertical restriction, so the statement contains no assumed path identity. -/
-theorem integral_verticalDeriv_LFunction_eq_sub
-    (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (t : ℝ)
-    (hderivContinuous : Continuous
-      (deriv (fun v : ℝ => χ.LFunction (1 + v * I)))) :
-    (∫ u in (0 : ℝ)..t, deriv (fun v : ℝ => χ.LFunction (1 + v * I)) u) =
-      χ.LFunction (1 + t * I) - χ.LFunction 1 := by
-  let f : ℝ → ℂ := fun u => χ.LFunction (1 + u * I)
-  have hdiff : ∀ u : ℝ, DifferentiableAt ℝ f u := by
-    intro u
-    exact (χ.differentiable_LFunction hχ (1 + u * I)).restrictScalars ℝ |>.comp u
-      (differentiableAt_const (c := (1 : ℂ)).add
-        ((differentiableAt_id.ofReal_comp).mul_const I))
-  have hcont : Continuous (deriv f) := by simpa only [f] using hderivContinuous
-  simpa only [f, ofReal_zero, zero_mul, add_zero] using
-    (intervalIntegral.integral_deriv_eq_sub' (a := (0 : ℝ)) (b := t) f rfl
-      (fun u _ => hdiff u) hcont.continuousOn)
 
 /-- Integrating the conductor-height derivative estimate along a horizontal
 segment gives a logarithmic, rather than polynomial-in-the-conductor, budget. -/

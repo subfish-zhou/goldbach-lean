@@ -94,26 +94,5 @@ theorem classical_gammaSixSevenEight_triangles {p : SecondFunctionalParameters}
   unfold fourthRowClassicalTriangle
   linarith only [he]
 
-/-- Four two-dimensional classical costs reduce to three J and three L integrals. -/
-theorem classical_four_integrals_log {p : SecondFunctionalParameters}
-    (h : AnalyticParameters p) :
-    classicalIntegral p .gammaFive + classicalIntegral p .gammaSix +
-      classicalIntegral p .gammaSeven + classicalIntegral p .gammaEight =
-      fourthRowClassicalJ p.kappa2 p.S + fourthRowClassicalJ p.kappa3 p.S -
-        fourthRowClassicalJ p.kappa3 p.kappa1 - 2*fourthRowClassicalL p.S +
-        fourthRowClassicalL p.kappa2 + fourthRowClassicalL p.kappa1 := by
-  have he : 2 < p.kappa3 := h.two_lt_s.trans_le h.mother.s_le_kappa3
-  have hc : 2 < p.kappa2 := he.trans h.mother.kappa3_lt_kappa2
-  have hcb := h.mother.kappa2_lt_kappa1.le
-  have heb := h.mother.kappa3_lt_kappa2.le.trans hcb
-  rw [show classicalIntegral p .gammaFive + classicalIntegral p .gammaSix +
-      classicalIntegral p .gammaSeven + classicalIntegral p .gammaEight =
-      classicalIntegral p .gammaFive + (classicalIntegral p .gammaSix +
-        classicalIntegral p .gammaSeven + classicalIntegral p .gammaEight) by ring,
-    classical_gammaFive_triangle h, classical_gammaSixSevenEight_triangles h,
-    fourthRowClassical_triangle_eq_log (hcb.trans h.mother.kappa1_le_S) hc,
-    fourthRowClassical_triangle_eq_log (heb.trans h.mother.kappa1_le_S) he,
-    fourthRowClassical_triangle_eq_log heb he]
-  ring
 
 end Wu2008DoubleSieve.MotherPair

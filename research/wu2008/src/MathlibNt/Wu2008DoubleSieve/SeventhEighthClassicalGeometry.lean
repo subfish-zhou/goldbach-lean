@@ -52,21 +52,6 @@ theorem eighth_pair_log_domain {N : ℕ} (hN : 1 < N) {a b : ℕ}
   obtain ⟨hlo, hv, hab', hs'⟩ := classical_pair_log_geometry hN ha hb hab hza hvb hs
   exact ⟨hlo, by linarith, hv, by linarith⟩
 
-/-- The original physical carrier supplies the exact triangle. -/
-theorem physicalT7_log_domain {N a b r : ℕ} (hN : 1 < N)
-    (hp : (⟨(a, b), r⟩ : NinthLabel) ∈ physicalT7 N) :
-    sigma ≤ ninthMainCoordinate N a ∧ ninthMainCoordinate N a < 1 / 3 ∧
-      ninthMainCoordinate N a < ninthMainCoordinate N b ∧
-      ninthMainCoordinate N b < (1 - ninthMainCoordinate N a) / 2 := by
-  obtain ⟨hm, hu, _⟩ := mem_physicalT7.mp hp
-  exact seventh_pair_log_domain hN (mem_filter.mpr ⟨hm, hu⟩)
 
-theorem physicalT8_log_domain {N a b r : ℕ} (hN : 1 < N)
-    (hp : (⟨(a, b), r⟩ : NinthLabel) ∈ physicalT8 N) :
-    alpha ≤ ninthMainCoordinate N a ∧ ninthMainCoordinate N a < 1 / 3 ∧
-      (1 / 3 : ℝ) ≤ ninthMainCoordinate N b ∧
-      ninthMainCoordinate N b < (1 - ninthMainCoordinate N a) / 2 := by
-  obtain ⟨hm, hv, _⟩ := mem_physicalT8.mp hp
-  exact eighth_pair_log_domain hN (mem_filter.mpr ⟨hm, hv⟩)
 
 end Wu2008DoubleSieve.SeventhEighth

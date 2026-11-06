@@ -1,0 +1,18 @@
+{
+  "status": "ROOT_SOURCE_REPRODUCTION_REVIEW_PASS_NOT_ANALYTIC_OR_PROJECT_ACCEPTANCE",
+  "independent_tests": 9,
+  "frozen_inputs_verified": 19,
+  "original_header_source_hashes_verified": 14,
+  "headers_unchanged": 40,
+  "public_proof_qualifications_changed": 240,
+  "other_generated_Lean_files_unchanged": 16,
+  "source_counter_standalone_ROOT_functions_not_called": true,
+  "relative_stage_API_reviewed": true,
+  "precision_denominator": 100000000000000,
+  "fields": 74200,
+  "required_remaining": [
+    "Fresh analytic TableSoundness/Public compilation in compatible completedV7 context",
+    "Paired40publictypes and completeproject/generator/kernel gates",
+    "Root acceptance/adoption and production verification/actualcounts"
+  ]
+}

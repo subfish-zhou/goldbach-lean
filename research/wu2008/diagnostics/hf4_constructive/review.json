@@ -1,0 +1,21 @@
+{
+  "status": "PORTABLE_SOURCE_REPRODUCTION_PROOF_NAME_FIX_NOT_ACCEPTANCE",
+  "producer_sha256": "34af18a316841014c09559e347b8848633d13923d1c3640536a69a2134d1eb8f",
+  "frozen_input_manifest_sha256": "98b4c6b7e57164bb18b343b7d978c183ac57c20e37b807991ff21eac1ac74060",
+  "frozen_inputs": 19,
+  "python_tests": 9,
+  "both_routes_golden_modules_each": 17,
+  "canonical_fields_sha256": "e797b939f8cbb0a48f5c2b0e75853807de778b560a3a5d1fc75d3ef1eda0071f",
+  "changed_generated_Lean_vs_v1": {
+    "checkpoint": [],
+    "constructive": [
+      "Hf4ConstructiveTablePublic.lean"
+    ]
+  },
+  "new_constructive_Public_sha256": "fa715b4bcca2c6c7854bb12b4a68d36a8297eb7633faea43c4aea46ef0012cee",
+  "formal_header_and_numeric_changes": 0,
+  "old_v1_Public_uncompiled_qualification_bug_acknowledged": true,
+  "all17_constructive_no_stale_InverseDag": true,
+  "relocated_read_fence_and_negative_tests_pass": true,
+  "Lean_executed": false
+}

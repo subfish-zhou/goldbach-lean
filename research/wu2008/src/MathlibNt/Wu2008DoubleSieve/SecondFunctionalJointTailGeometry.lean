@@ -72,23 +72,7 @@ theorem unit21_support {a3 b phi : ℝ} {t : Fin 5 → ℝ}
   simp only [sum_five] at h5 h6
   constructor <;> linarith
 
-/-- Above the support, vanishing is pointwise, not a Buchstab approximation. -/
-theorem J20_zero_of_gt {a2 a3 b phi : ℝ} (hphi : a3 + 4 * b < phi) :
-    HighUnit.J20 a2 a3 b phi = 0 := by
-  have he (t : Fin 4 → ℝ) : HighUnit.section20 a2 a3 b phi t = 0 := by
-    apply if_neg
-    intro ht
-    exact (not_le_of_gt hphi) (unit20_support ht).2
-  simp only [HighUnit.J20, he, integral_zero]
 
-/-- The six-coordinate unit section is also exactly zero beyond its support. -/
-theorem J21_zero_of_gt {a3 b phi : ℝ} (hphi : 6 * b < phi) :
-    HighUnit.J21 a3 b phi = 0 := by
-  have he (t : Fin 5 → ℝ) : HighUnit.section21 a3 b phi t = 0 := by
-    apply if_neg
-    intro ht
-    exact (not_le_of_gt hphi) (unit21_support ht).2
-  simp only [HighUnit.J21, he, integral_zero]
 
 /-- The endpoint section is null as well; no finite prime atoms are removed. -/
 theorem J20_zero_of_ge {a2 a3 b phi : ℝ} (ha : 1 / 10 ≤ a2) (hb : b ≤ 1 / 2)

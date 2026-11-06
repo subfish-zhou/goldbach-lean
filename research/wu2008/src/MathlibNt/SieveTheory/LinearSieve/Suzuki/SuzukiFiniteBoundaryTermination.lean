@@ -62,31 +62,7 @@ theorem lowerRosserEvenBoundaryLayerMass_eq_zero_of_support_card_lt
     lowerRosserEvenBoundaryLayerMass S k D z = 0 := by
   exact lowerRosserBoundaryLayerMass_eq_zero_of_card_lt S _ D z hcard
 
-/-- The concrete cutoff `card + 1` already contains every nonzero even layer. -/
-theorem suzukiActualT_twice_support_card_succ_eq_all_even_boundary_layers
-    (S : BoundingSieve) (D z : ℕ) :
-    suzukiActualT S (2 * ((suzukiSupportedBelow S z).card + 1)) D z =
-      ∑ k ∈ Finset.range ((suzukiSupportedBelow S z).card + 1),
-        lowerRosserEvenBoundaryLayerMass S k D z := by
-  exact suzukiActualT_even_eq_sum_lowerRosserEvenBoundaryLayerMass
-    S ((suzukiSupportedBelow S z).card + 1) D z
 
-/-- Increasing the even truncation beyond `card + 1` adds only zero layers. -/
-theorem suzukiActualT_even_stable_of_support_card_lt
-    (S : BoundingSieve) (D z m : ℕ)
-    (hm : (suzukiSupportedBelow S z).card < m) :
-    suzukiActualT S (2 * m) D z =
-      suzukiActualT S (2 * ((suzukiSupportedBelow S z).card + 1)) D z := by
-  rw [suzukiActualT_even_eq_sum_lowerRosserEvenBoundaryLayerMass,
-    suzukiActualT_even_eq_sum_lowerRosserEvenBoundaryLayerMass]
-  symm
-  apply Finset.sum_subset (Finset.range_mono (by omega))
-  intro k hkm hk
-  have hkLower : (suzukiSupportedBelow S z).card + 1 ≤ k := by
-    simp only [Finset.mem_range] at hkm hk
-    omega
-  rw [lowerRosserEvenBoundaryLayerMass_eq_zero_of_support_card_lt]
-  omega
 
 
 end MathlibNt.SieveTheory

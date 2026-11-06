@@ -94,15 +94,6 @@ theorem localDivisorTail_pos (M y : ℕ) : 0 < localDivisorTail M y := by
   rw [inverse_correction p (mem_filter.mp hp).2.1]
   exact inv_pos.mpr (liuCorrectionFactor_pos (mem_filter.mp hp).2.1)
 
-theorem localDivisorTail_le_one (M y : ℕ) : localDivisorTail M y ≤ 1 := by
-  unfold localDivisorTail
-  apply prod_le_one
-  · intro p hp
-    rw [inverse_correction p (mem_filter.mp hp).2.1]
-    exact (inv_pos.mpr (liuCorrectionFactor_pos (mem_filter.mp hp).2.1)).le
-  · intro p hp
-    have hp' : (2 : ℝ) < p := by exact_mod_cast (mem_filter.mp hp).2.1
-    exact sub_le_self _ (div_nonneg zero_le_one (by linarith))
 
 /-- Quantitative loss from all omitted divisor corrections, not a hypothesis
 of uniform normalization. No squarefreeness assumption is needed. -/

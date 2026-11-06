@@ -138,7 +138,6 @@ theorem old_f (t : ℝ) : f old t = Phase16.f0 t := by rw [f,Phase16.f0,old_poly
 theorem old_Gamma : Gamma old = Phase16.Gamma := by
   rw [fixed_integral_closed,Phase16.fixed_integral_closed]
   simp_rw [old_f]
-theorem old_C : C old = Phase16.C16 := by rw [C,Phase16.C16,old_Gamma]
 
 theorem coupled_poly_strict {v : ℝ} (hv : 0 ≤ v) : poly old v < poly coupled v := by
   have hp : 0 ≤ (214103488/31755831705 : ℝ)*v := mul_nonneg (by norm_num) hv

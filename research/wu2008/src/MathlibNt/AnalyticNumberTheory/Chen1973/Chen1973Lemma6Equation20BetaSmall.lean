@@ -182,35 +182,6 @@ theorem eq20small_source_coefficient_bound
   eq20small_actual_coefficient_bound x L level B k H _ _ P.hlog_one P.hB
     (chen1973Lemma6Eq20SourceQ_ge_two P) (eq20small_source_Q_eq_twice_D P) P.hcell.2.1
 
-/-- The actual corrected beta integral with the exact source ceiling and
-conductor scales. The caller supplies only the literal complementary cell. -/
-theorem eq20small_source_integral_bound
-    {x L B lastD level k m : ℕ}
-    (P : Chen1973Lemma6Eq20ComplementarySourceParameters x L B lastD level k)
-    (ε : ℝ) :
-    let H := chen1973Lemma6Equation20H x level k ε
-    let Q := chen1973Lemma6Eq20SourceQ L level
-    2*(x : ℝ)^((1:ℝ)/2)*chen1973Lemma6Eq20CorrectedSecondIntegral x L level B k m H ≤
-      (6000000*Real.pi*(1+chen1973Lemma6Eq19SharpConstant)) *
-        (x : ℝ)^((1:ℝ)/2) * Real.log x ^ ((11:ℝ)/10) *
-          chen1973Lemma6Eq19I x L level * Real.sqrt ((Q : ℝ)^2+H) *
-            Real.sqrt (1+Real.log H) * (1+Real.log Q) := by
-  dsimp only
-  have hb := chen1973Lemma6_eq20_beta_contribution_budget x L level B k m
-    (chen1973Lemma6Equation20H x level k ε) _ _ P.hx P.hB
-    (chen1973Lemma6Eq20SourceD_pos P) (chen1973Lemma6Eq20SourceQ_ge_two P)
-    (chen1973Lemma6_eq20_conductorBlock_subset_source_Ioc P)
-  apply hb.trans
-  calc
-    _ ≤ 6*Real.pi*(x : ℝ)^((1:ℝ)/2)*Real.log x ^ ((11:ℝ)/10) *
-        (1000000*(1+chen1973Lemma6Eq19SharpConstant)*chen1973Lemma6Eq19I x L level *
-          Real.sqrt ((chen1973Lemma6Eq20SourceQ L level : ℝ)^2+
-            chen1973Lemma6Equation20H x level k ε) *
-          Real.sqrt (1+Real.log (chen1973Lemma6Equation20H x level k ε)) *
-          (1+Real.log (chen1973Lemma6Eq20SourceQ L level))) :=
-      mul_le_mul_of_nonneg_left (eq20small_source_coefficient_bound P _)
-        (by positivity)
-    _ = _ := by ring
 
 /-- Literal exponential-source conductor scale. -/
 def eq20small_Q0 (x level : ℕ) : ℝ :=
@@ -581,21 +552,5 @@ theorem eq20small_actual_beta_paid (ε : ℝ) (hε : 0 < ε) (hε1 : ε < 1/10) 
     (chen1973Lemma6_eq20_conductorBlock_subset_source_Ioc P)).trans
       (hX₀ x hx L B lastD level k P hcut)
 
-/-- Requested existential-constant formulation. The displayed `hQ` is merely
-source geometry and is already implied by `P.hcell`; it is not an analytic
-payment premise. In fact the stronger theorem above permits the choice `C=1`. -/
-theorem chen1973Lemma6_eq20_beta_source_uniform_log20
-    (ε : ℝ) (hε : 0 < ε) (hε1 : ε < 1/10) :
-    ∃ C : ℝ, 0 < C ∧ ∃ X₀ : ℝ, ∀ x : ℕ, X₀ ≤ (x : ℝ) →
-      ∀ L B lastD level k m : ℕ,
-      ∀ _P : Chen1973Lemma6Eq20ComplementarySourceParameters x L B lastD level k,
-      (lastD : ℝ) ≤ (x : ℝ)^((1:ℝ)/2-ε) →
-      chen1973Lemma6Eq20SourceQ L level ≤ 2*lastD →
-      2*(x : ℝ)^((1:ℝ)/2)*chen1973Lemma6Eq20CorrectedSecondIntegral x L level B k m
-        (chen1973Lemma6Equation20H x level k ε) ≤ C*(x : ℝ)/Real.log x ^ (20:ℕ) := by
-  obtain ⟨X₀, hX₀⟩ := eq20small_actual_beta_paid ε hε hε1
-  refine ⟨1, by norm_num, X₀, ?_⟩
-  intro x hx L B lastD level k m P hcut _hQ
-  simpa only [one_mul] using hX₀ x hx L B lastD level k m P hcut
 
 end AnalyticNumberTheory.LargeSieve

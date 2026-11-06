@@ -30,16 +30,6 @@ theorem harcos_trace_eq_frobenius_sum (x : F) :
   simpa only [Nat.card_eq_fintype_card, ZMod.card] using
     FiniteField.algebraMap_trace_eq_sum_pow (ZMod p) F x
 
-omit [DecidableEq F] in
-theorem harcos_trace_eq_frobenius_sum_of_card (n : ℕ)
-    (hcard : Fintype.card F = p ^ n) (x : F) :
-    algebraMap (ZMod p) F (Algebra.trace (ZMod p) F x) =
-      ∑ i ∈ range n, x ^ (p ^ i) := by
-  have hd : Module.finrank (ZMod p) F = n := by
-    apply Nat.pow_right_injective (Fact.out : p.Prime).one_lt
-    have h := Module.card_eq_pow_finrank (K := ZMod p) (V := F)
-    simpa only [ZMod.card, hcard] using h.symm
-  rw [harcos_trace_eq_frobenius_sum, hd]
 
 theorem harcosTraceKloosterman_zero (a b : ZMod p) :
     harcosTraceKloosterman p F a b 0 = Fintype.card Fˣ := by
@@ -143,14 +133,6 @@ def harcosExtensionKloosterman (a b m : ZMod p) (n : ℕ) : ℂ := by
   letI := Classical.decEq (GaloisField p n)
   exact harcosTraceKloosterman p (GaloisField p n) a b m
 
-theorem harcosExtensionKloosterman_one (a b m : ZMod p) :
-    harcosExtensionKloosterman p a b m 1 =
-      completeKloosterman p (m * a) ((m * b).val : ℤ) := by
-  let := Fintype.ofFinite (GaloisField p 1)
-  let := Classical.decEq (GaloisField p 1)
-  exact (harcosTraceKloosterman_algEquiv p (GaloisField p 1)
-    (ZMod p) (GaloisField.equivZmodP p) a b m).trans
-      (harcosTraceKloosterman_primeField p a b m)
 
 theorem harcosExtensionKloosterman_nonzero_sum_bound
     (hp2 : p ≠ 2) (a b : ZMod p) (ha : a ≠ 0) (hb : b ≠ 0)

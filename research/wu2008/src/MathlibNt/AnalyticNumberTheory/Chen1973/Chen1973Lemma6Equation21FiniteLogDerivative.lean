@@ -69,21 +69,6 @@ theorem norm_primitive_logDeriv_le_sqrt_budget
   apply Real.log_le_log (by positivity)
   gcongr
 
-/-- W4 at the actual Chen source parameters and the actual primitive quotient.
-The nonvanishing hypothesis is explicitly finite and has no shared input record. -/
-theorem chen1973Lemma6_eq21_logDeriv_on_finiteRectangle_of_zeroFree
-    {x q : ℕ} (hq : 1 < q) (χ : PrimitiveCharacter q)
-    (hu64 : 64 ≤ Real.log (x : ℝ))
-    (hzero : ∀ z : ℂ, 1 - 2 / Real.sqrt (Real.log (x : ℝ)) ≤ z.re → z.re ≤ 2 →
-      |z.im| ≤ (Real.log (x : ℝ)) ^ 2 + 1 →
-      chen1973Lemma6PrimitiveLValue q z χ ≠ 0)
-    (s : ℂ) (hslo : chen1973Lemma6Eq21Sigma x ≤ s.re)
-    (hshi : s.re ≤ chen1973Lemma6Alpha x)
-    (ht : |s.im| ≤ (Real.log (x : ℝ)) ^ 2) :
-    ‖chen1973PrimitiveLDeriv q s χ / chen1973Lemma6PrimitiveLValue q s χ‖ ≤
-      20 * Real.sqrt (Real.log (x : ℝ)) *
-        Real.log (16 * q * (1 + (Real.log (x : ℝ)) ^ 2) * Real.sqrt (Real.log (x : ℝ))) :=
-  norm_primitive_logDeriv_le_sqrt_budget hq χ hu64 hzero s hslo hshi ht
 
 /-- Uniform conductor payment; this is a scalar consequence, not a new
 analytic hypothesis. -/

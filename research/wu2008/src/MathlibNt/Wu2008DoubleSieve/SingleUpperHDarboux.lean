@@ -95,24 +95,5 @@ theorem reciprocal_bounds {δ t : ℝ} (hδhi : δ ≤ 1/100)
     norm_num
     linarith
 
-/-- Genuine effective weighted Darboux bound; the source coefficient is
-literal A-H and the reciprocal weight is the original t(c-t) kernel. -/
-theorem effective_partition {δ : ℝ} {x : ℕ → ℝ} {n : ℕ} {h : ℝ}
-    (hδ : 0 < δ) (hδhi : δ ≤ 1/100) (hx : Monotone x)
-    (ha : truncatedSixthLowerAlpha/2 ≤ x 0) (hb : x n ≤ (1/2-δ)/2)
-    (hmesh : ∀ i < n, x (i+1)-x i ≤ h) :
-    (∑ i ∈ range n, effective δ (argument δ (x i)) *
-      ∫ t in x i..x (i+1), (t*((1/2-δ)-t))⁻¹) -
-      (∫ t in x 0..x n, effectiveKernel δ t) ≤
-      200*h*(effective δ (argument δ (x 0))-effective δ (argument δ (x n))) := by
-  have hs : Icc (x 0) (x n) ⊆ Icc (truncatedSixthLowerAlpha/2) ((1/2-δ)/2) :=
-    Icc_subset_Icc ha hb
-  have hc := reciprocal_continuous hδhi ha (hx (Nat.zero_le n)) hb
-  rw [uIcc_of_le (hx (Nat.zero_le n))] at hc
-  simpa only [effectiveKernel,div_eq_mul_inv] using
-    antitone_weighted_partition hx ((effective_argument_antitone hδ hδhi).mono hs) hc
-      (fun t ht => (reciprocal_bounds hδhi (hs ht).1 (hs ht).2).1)
-      (fun t ht => (reciprocal_bounds hδhi (hs ht).1 (hs ht).2).2)
-      (by norm_num : (0 : ℝ) ≤ 200) hmesh
 
 end Wu2008DoubleSieve.SingleUpperHDarboux

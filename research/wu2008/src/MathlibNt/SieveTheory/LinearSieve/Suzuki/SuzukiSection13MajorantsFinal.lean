@@ -22,12 +22,6 @@ def MovingClaim146iiiConclusion
         (1 - 1 / sourceSigma D d) ^ (1 - Δ) *
           lambda H sign D d 0 s
 
-/-- Semantic audit: both sign-indexed bridges use literally the same `Qhat`.
-There is no plus/minus choice of scalar solution at this interface. -/
-theorem bridge_Qhat_sign_independent
-    {H : Section13HatLayers} (hH : Section13HatSourceContract H) :
-    (section13_bridgeAtThree hH ErrorSign.plus).Qhat =
-      (section13_bridgeAtThree hH ErrorSign.minus).Qhat := rfl
 
 /-- Consequently one honest Lemma-10.28 majorant supplies both sign-indexed
 arguments expected by the moving Claim-14.6 theorem. -/
