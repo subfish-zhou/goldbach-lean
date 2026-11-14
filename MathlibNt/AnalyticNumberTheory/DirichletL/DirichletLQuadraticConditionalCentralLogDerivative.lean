@@ -39,28 +39,13 @@ private theorem central_band_parameter_bounds
   have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
   have hq1 : (1 : ℝ) ≤ q := by
     exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
-  have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-    exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-      unfold dirichletLNonquadraticConductorLogCutoff
-      exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-        unfold dirichletLNonquadraticConductorLogHeightBlock
-        omega)))
   let H₀ : ℝ := dirichletLQuadraticConditionalCentralH q T
   let τ : ℝ := dirichletLQuadraticConditionalCentralHeight c η q T
   let H : ℝ := dirichletLQuadraticConditionalFixedH q τ T
   let w : ℝ := dirichletLQuadraticConditionalCrossZeroWidth A c η q T
-  have hH₀ : 1 ≤ H₀ := by
-    dsimp only [H₀, dirichletLQuadraticConditionalCentralH]
-    linarith [Real.log_nonneg hcut]
-  have hτ : 0 < τ := by
-    dsimp only [τ, dirichletLQuadraticConditionalCentralHeight]
-    exact lt_min hT (by positivity)
-  have hH₀H : H₀ ≤ H := by
-    dsimp only [H₀, H, dirichletLQuadraticConditionalCentralH,
-      dirichletLQuadraticConditionalFixedH]
-    have hlogarg : 0 ≤ Real.log (2 * T + 2) := Real.log_nonneg (by linarith)
-    have hinv : 0 < 1 / (2 * τ) := by positivity
-    linarith
+  have hH₀ : 1 ≤ H₀ := one_le_dirichletLQuadraticConditionalCentralH q T
+  have hτ : 0 < τ := dirichletLQuadraticConditionalCentralHeight_pos hc hT
+  have hH₀H : H₀ ≤ H := dirichletLQuadraticConditionalCentralH_le_fixedH q hτ.le hT.le
   have hH : 1 ≤ H := hH₀.trans hH₀H
   have hHpos : 0 < H := lt_of_lt_of_le zero_lt_one hH
   have hp : 0 < (q : ℝ) ^ (-2 * η) := Real.rpow_pos_of_pos hq _

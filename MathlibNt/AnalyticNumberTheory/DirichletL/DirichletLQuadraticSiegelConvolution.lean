@@ -1,5 +1,6 @@
 module
 
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
 public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLQuadraticPolyaVinogradovExplicit
 
 /-!

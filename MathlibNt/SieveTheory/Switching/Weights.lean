@@ -625,6 +625,8 @@ theorem singularSeries_eq_trunc_mul_tail (N : ℕ) (_hN2 : 2 ≤ N)
         ((Finset.Ico (correctedChenZ N) (N + 1)).filter Nat.Prime).prod
           (fun p => SingularSeries.localFactor p N) := by
   unfold SingularSeries.singularSeries SingularSeries.singularSeriesTruncated
+  unfold AnalyticNumberTheory.Sieve.singularSeriesTruncated
+  simp only [Nat.primesLE_eq_filter_range]
   rw [Nat.sub_add_cancel hz1]
   have hsplit : Finset.range (N + 1) =
       Finset.range (correctedChenZ N) ∪ Finset.Ico (correctedChenZ N) (N + 1) := by
@@ -642,6 +644,7 @@ theorem singularSeries_eq_trunc_mul_tail (N : ℕ) (_hN2 : 2 ≤ N)
     simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Ico] at hp1 hp2
     omega
   rw [hfilter, Finset.prod_union hdisj]
+  rfl
 
 end Internal
 

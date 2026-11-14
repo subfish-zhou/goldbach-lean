@@ -182,10 +182,13 @@ theorem suzukiLayerNumerator_eq_sourceRecursion_of_two_le
     β s hn
 
 
-private theorem one_step
+/-- The dimension-one recursion bounds a subinterval when its predecessor
+starts anywhere in the closed domain. The closed left endpoint is used in
+the even-endpoint specialization of the sieve. -/
+theorem suzukiLayer_one_step_closed_predecessor
     {β s τ σ : ℝ} {n : ℕ} (hβ : 1 < β) (hn : 2 ≤ n)
     (hsdom : s ∈ KappaOneModel.parityDomain β n)
-    (hτdom : τ - 1 ∈ KappaOneModel.parityDomain β (n - 1))
+    (hτclosed : τ - 1 ∈ KappaOneModel.closedDomain β (n - 1))
     (hsτ : s ≤ τ) (hτσ : τ ≤ σ) :
     (1 / s) * (∫ t in τ..σ, suzukiLayer 1 β (n - 1) (t - 1)) ≤
       suzukiLayer 1 β n s := by
@@ -196,19 +199,14 @@ private theorem one_step
   have hspos : 0 < s := KappaOneModel.closedDomain_pos hβ
     (KappaOneModel.parityDomain_subset_closedDomain β (k + 2) hsdom)
   have hpred : k + 2 - 1 = k + 1 := by omega
-  rw [hpred] at hτdom
+  rw [hpred] at hτclosed
   have hthreshold : β + KappaOneModel.eps (k + 2) ≤ τ := by
-    unfold KappaOneModel.parityDomain at hτdom
-    by_cases hp : (k + 2) % 2 = 1
-    · have hprev : (k + 1) % 2 = 0 := by omega
-      simp [hprev] at hτdom
-      simp [KappaOneModel.eps, hp]
-      linarith
-    · have hp0 : (k + 2) % 2 = 0 := by omega
-      have hprev : (k + 1) % 2 = 1 := by omega
-      simp [hprev] at hτdom
-      simp [KappaOneModel.eps, hp0]
-      linarith
+    unfold KappaOneModel.closedDomain at hτclosed
+    simp only [Set.mem_Ici] at hτclosed
+    have he := KappaOneModel.eps_succ_succ_add k
+    have heR : (KappaOneModel.eps (k + 2) : ℝ) +
+        KappaOneModel.eps (k + 1) = 1 := by exact_mod_cast he
+    linarith
   have hab : a ≤ b := by
     dsimp [a, b]
     exact (KappaOneModel.lower_mem β s (k + 2)).2
@@ -294,7 +292,8 @@ private theorem one_step
         _ = suzukiLayerNumerator 1 β (k + 2) s := by
           symm
           simpa [a, b, f] using
-            suzukiLayerNumerator_eq_sourceRecursion_of_two_le β s (by omega : 2 ≤ k + 2)
+            SuzukiFiniteContinuousLayers.suzukiLayerNumerator_eq_sourceRecursion_of_two_le
+              β s (by omega : 2 ≤ k + 2)
     have hscale := mul_le_mul_of_nonneg_left hraw (by positivity : 0 ≤ 1 / s)
     rw [← rpow_mul_suzukiLayer 1 β (k + 2) hspos] at hscale
     simpa [f, one_div, hspos.ne'] using hscale
@@ -371,9 +370,10 @@ theorem Sigma11FiniteLayerMajorization
       have hnmem := Finset.mem_Icc.mp hn'.1
       have hnpar : n % 2 = N % 2 := hn'.2
       have hpredpar : (n - 1) % 2 = (N - 1) % 2 := by omega
-      apply one_step hβ hnmem.1
+      apply suzukiLayer_one_step_closed_predecessor hβ hnmem.1
       · simpa [KappaOneModel.parityDomain, hnpar] using hsdom
-      · simpa [KappaOneModel.parityDomain, hpredpar] using hτdom
+      · apply KappaOneModel.parityDomain_subset_closedDomain
+        simpa [KappaOneModel.parityDomain, hpredpar] using hτdom
       · exact hsτ
       · exact hτσ
     _ ≤ finiteSourceLayer 1 β N s := by

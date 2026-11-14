@@ -44,35 +44,29 @@ For p > 2:
 
 The factor at p = 2 is handled separately (it is 2 for even N). -/
 noncomputable def localFactor (p N : ℕ) : ℝ :=
-  if p = 2 then
-    if 2 ∣ N then 2 else 1
-  else
-    if p ∣ N then
-      (p : ℝ) / (p - 1)
-    else
-      (p : ℝ) * (p - 2) / ((p - 1) ^ 2)
+  AnalyticNumberTheory.Sieve.localFactor p N
 
 /-- The factor at p = 2 is 2 for even N. -/
 theorem localFactor_two {N : ℕ} (hN : Even N) : localFactor 2 N = 2 := by
-  simp [localFactor, even_iff_two_dvd.mp hN]
+  simp [localFactor, AnalyticNumberTheory.Sieve.localFactor, even_iff_two_dvd.mp hN]
 
 
 /-- For a prime p > 2 with p | N, the factor is p/(p-1). -/
 theorem localFactor_of_dvd {p N : ℕ} (_hp : p.Prime) (hp2 : 2 < p) (hpdvd : p ∣ N) :
     localFactor p N = (p : ℝ) / (p - 1) := by
-  simp [localFactor, ne_of_gt hp2, hpdvd]
+  simp [localFactor, AnalyticNumberTheory.Sieve.localFactor, ne_of_gt hp2, hpdvd]
 
 /-- For a prime p > 2 with p ∤ N, the factor is p(p-2)/(p-1)². -/
 theorem localFactor_of_not_dvd {p N : ℕ} (_hp : p.Prime) (hp2 : 2 < p) (hpn : ¬ p ∣ N) :
     localFactor p N = (p : ℝ) * (p - 2) / ((p - 1) ^ 2) := by
-  simp [localFactor, ne_of_gt hp2, hpn]
+  simp [localFactor, AnalyticNumberTheory.Sieve.localFactor, ne_of_gt hp2, hpn]
 
 /-! ## 2. Positivity of local factors -/
 
 /-- All local factors at primes are positive. -/
 theorem localFactor_pos {p N : ℕ} (hp : p.Prime) : 0 < localFactor p N := by
   by_cases h2 : p = 2
-  · simp [localFactor, h2]; split_ifs <;> linarith
+  · simp [localFactor, AnalyticNumberTheory.Sieve.localFactor, h2]; split_ifs <;> linarith
   · have hp2 : 2 < p := by
       rcases hp.eq_two_or_odd' with h | h
       · omega
@@ -101,16 +95,13 @@ For fixed positive N, the limit as z → ∞ is the corresponding sieve-normaliz
 infinite product. This is distinct from the finite proxy `singularSeries N`,
 which uses z = N; no convergence theorem is asserted by this definition. -/
 noncomputable def singularSeriesTruncated (N z : ℕ) : ℝ :=
-  ((range (z + 1)).filter Nat.Prime).prod (fun p => localFactor p N)
+  AnalyticNumberTheory.Sieve.singularSeriesTruncated N z
 
 /-- The truncated singular series is positive, since all its factors are positive. -/
 theorem singularSeriesTruncated_pos (N z : ℕ) (_hz : 1 ≤ z) :
     0 < singularSeriesTruncated N z := by
-  unfold singularSeriesTruncated
-  apply Finset.prod_pos
-  intro p hp
-  have hp_prime : p.Prime := by simp_all
-  exact localFactor_pos hp_prime
+  change 0 < ∏ p ∈ z.primesLE, localFactor p N
+  exact Finset.prod_pos fun _ hp => localFactor_pos (Nat.prime_of_mem_primesLE hp)
 
 /-! ## 4. The finite singular-series proxy -/
 

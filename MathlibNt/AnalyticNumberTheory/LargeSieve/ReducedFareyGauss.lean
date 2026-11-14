@@ -88,6 +88,52 @@ theorem sum_reducedResidues_eq_invChar_mul_gaussSum {q : ℕ} [NeZero q]
   rw [← primitive_gaussSum_mulShift_eq_sum_reducedResidues χ n]
   exact gaussSum_mulShift_of_isPrimitive (primitiveGaussAddChar q) χ.2 (n : ZMod q)
 
+/-- Invert a primitive Gauss expansion over a finite set of integers. The inverse
+character yields the coefficient `χ(n)` in the recovered sum. -/
+theorem primitive_gauss_inversion_sum {q : ℕ} [NeZero q]
+    (χ : PrimitiveCharacter q) (b : ℤ → ℂ) (U : Finset ℤ) :
+    gaussSum χ.1⁻¹ (primitiveGaussAddChar q) * (∑ n ∈ U, b n * χ.1 (n : ZMod q)) =
+      ∑ a ∈ reducedResidues q, χ.1⁻¹ (a : ZMod q) *
+        ∑ n ∈ U, (charReal ((n : ℝ) * (a : ℝ) / (q : ℝ)) : ℂ) * b n := by
+  let χi : PrimitiveCharacter q :=
+    ⟨χ.1⁻¹, by change χ.1⁻¹.conductor = q; rw [DirichletCharacter.conductor_inv]; exact χ.2⟩
+  calc
+    gaussSum χ.1⁻¹ (primitiveGaussAddChar q) *
+        (∑ n ∈ U, b n * χ.1 (n : ZMod q))
+        = ∑ n ∈ U,
+            b n * (χi.1⁻¹ (n : ZMod q) *
+              gaussSum χi.1 (primitiveGaussAddChar q)) := by
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro n hn
+            simp [χi]
+            ring
+    _ = ∑ n ∈ U, b n *
+          (∑ a ∈ reducedResidues q,
+            χi.1 (a : ZMod q) *
+              charReal ((n : ℝ) * (a : ℝ) / (q : ℝ))) := by
+            apply Finset.sum_congr rfl
+            intro n hn
+            rw [sum_reducedResidues_eq_invChar_mul_gaussSum χi n]
+    _ = ∑ n ∈ U,
+          ∑ a ∈ reducedResidues q,
+            b n * (χi.1 (a : ZMod q) *
+              charReal ((n : ℝ) * (a : ℝ) / (q : ℝ))) := by
+            apply Finset.sum_congr rfl
+            intro n hn
+            rw [Finset.mul_sum]
+    _ = ∑ a ∈ reducedResidues q, χ.1⁻¹ (a : ZMod q) *
+          (∑ n ∈ U,
+            (charReal ((n : ℝ) * (a : ℝ) / (q : ℝ)) : ℂ) * b n) := by
+            rw [Finset.sum_comm]
+            apply Finset.sum_congr rfl
+            intro a ha
+            rw [Finset.mul_sum]
+            apply Finset.sum_congr rfl
+            intro n hn
+            simp [χi]
+            ring
+
 /-- Exact finite cross-modulus index for reduced Farey/Gauss frequencies.
 The first coordinate is the modulus and the second the canonical residue. -/
 def reducedFareyIndices (Q : ℕ) : Finset (ℕ × ℕ) :=

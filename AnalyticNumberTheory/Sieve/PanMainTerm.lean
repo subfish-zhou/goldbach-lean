@@ -1,7 +1,7 @@
 module
 
 public import AnalyticNumberTheory.Sieve.PanMeanValueBody
-public import AnalyticNumberTheory.Mertens.PartialSummation
+public import AnalyticNumberTheory.Mertens.SecondTheorem
 public import AnalyticNumberTheory.Sieve.GoldbachDensity
 
 /-! # AnalyticNumberTheory.Sieve.PanMainTerm

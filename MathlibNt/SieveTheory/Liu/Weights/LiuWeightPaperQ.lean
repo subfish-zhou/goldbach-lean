@@ -961,8 +961,8 @@ theorem paperQStyleFullDivisorWeightSum_le_primeProduct_inv_cube
         exact one_le_pow₀ ((one_le_inv₀ hbase).2 hbase_le)
     _ = (MertensTheorem.primeProduct N)⁻¹ ^ 3 := by
       dsimp [allPrimes]
-      unfold MertensTheorem.primeProduct
       rw [Finset.prod_pow, Finset.prod_inv_distrib]
+      rfl
 
 /-- A fixed positive choice of lower-bound constant for the Mertens product. -/
 noncomputable def paperQStyleMertensLowerConstant : ℝ :=

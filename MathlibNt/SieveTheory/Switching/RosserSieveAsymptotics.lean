@@ -429,6 +429,8 @@ private theorem singularSeriesTruncated_one_step_lower (N m : ℕ) (hm : 3 ≤ m
         SingularSeries.singularSeriesTruncated N (m - 1) ≤
       SingularSeries.singularSeriesTruncated N m := by
   unfold SingularSeries.singularSeriesTruncated
+  unfold AnalyticNumberTheory.Sieve.singularSeriesTruncated
+  simp only [Nat.primesLE_eq_filter_range]
   rw [Nat.sub_add_cancel (by omega : 1 ≤ m)]
   simp only [Finset.prod_filter, Finset.prod_range_succ]
   have hprod : 0 ≤ ∏ x ∈ Finset.range m,

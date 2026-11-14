@@ -318,11 +318,7 @@ theorem differentiableOn_orderedValueFunction
 lemma orderedValueSeries_eq_LFunction
     (χ : DirichletCharacter ℂ q) (hχ : χ ≠ 1) (s : ℂ) (hs : 1 < s.re) :
     orderedValueSeries χ hχ s (by linarith) = χ.LFunction s := by
-  have habs : LSeries.abscissaOfAbsConv (fun n : ℕ => χ n) < s.re := by
-    refine (LSeries.abscissaOfAbsConv_le_of_le_const ?_).trans_lt ?_
-    · exact ⟨1, fun n _ => χ.norm_le_one n⟩
-    · exact_mod_cast hs
-  have hsum := (LSeriesSummable_of_abscissaOfAbsConv_lt_re habs).LSeriesHasSum
+  have hsum := (DirichletCharacter.LSeriesSummable_of_one_lt_re χ hs).LSeriesHasSum
   have hterm (n : ℕ) : LSeries.term (fun k : ℕ => χ k) s n = cpowWeight s n * χ n := by
     rcases n with _ | n
     · rw [LSeries.term_zero, character_nat_zero_of_ne_one χ hχ]

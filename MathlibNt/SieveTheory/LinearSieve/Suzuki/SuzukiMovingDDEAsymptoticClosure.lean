@@ -22,13 +22,11 @@ lemma moving_perturbationSlope_le_log
   have hz0 : 0 ≤ z := div_nonneg (Real.rpow_nonneg ht.le _) hlog.le
   have hb : 0 < 1 + z := by linarith
   have hzlog : z / (1 + z) ≤ Real.log (1 + z) := by
-    have hi := Real.log_le_sub_one_of_pos (inv_pos.mpr hb)
-    rw [Real.log_inv] at hi
     have heq : z / (1 + z) = 1 - (1 + z)⁻¹ := by
       field_simp [hb.ne']
       ring
     rw [heq]
-    linarith
+    exact Real.one_sub_inv_le_log_of_pos hb
   have htpow : t * t ^ (d - 1) = t ^ d := by
     calc
       t * t ^ (d - 1) = t ^ (1 : ℝ) * t ^ (d - 1) := by rw [Real.rpow_one]

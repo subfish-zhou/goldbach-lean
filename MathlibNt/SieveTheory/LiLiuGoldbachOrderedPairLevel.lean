@@ -2,6 +2,7 @@ module
 
 public import MathlibNt.SieveTheory.LiLiuGoldbachS3Carrier
 public import MathlibNt.SieveTheory.LiuPanPrimitiveLedgerAssembly
+import MathlibNt.Analysis.RealLogPowerThreshold
 
 @[expose] public section
 
@@ -13,24 +14,14 @@ private theorem OrderedPairLevel_eventually_real_bound (B : ℝ) :
     ∀ᶠ N : ℕ in atTop, 4 ≤ N ∧
       2 * (N : ℝ) ^ (821 / 1749 : ℝ) ≤
         (N : ℝ) ^ (1 / 2 : ℝ) / Real.log (N : ℝ) ^ B := by
-  have hlog := LiuWeight.eventually_pan_log_rpow_le_rpow B (107 / 6996) (by norm_num)
-  have hconst : ∀ᶠ N : ℕ in atTop, (2 : ℝ) ≤ (N : ℝ) ^ (107 / 6996 : ℝ) :=
-    ((tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 107 / 6996)).comp
-      tendsto_natCast_atTop_atTop).eventually (eventually_ge_atTop 2)
-  filter_upwards [eventually_ge_atTop (4 : ℕ), hlog, hconst] with N hN hl hc
+  have hgap := tendsto_natCast_atTop_atTop.eventually
+    (MathlibNt.Analysis.eventually_const_mul_log_rpow_le_rpow 2 B
+      (a := 107 / 3498) (by norm_num))
+  filter_upwards [eventually_ge_atTop (4 : ℕ), hgap] with N hN hgap
   refine ⟨hN, ?_⟩
   have hN0 : (0 : ℝ) < N := by exact_mod_cast (show 0 < N by omega)
   have hlog0 : 0 < Real.log (N : ℝ) :=
     Real.log_pos (by exact_mod_cast (show 1 < N by omega))
-  have hgap : 2 * Real.log (N : ℝ) ^ B ≤ (N : ℝ) ^ (107 / 3498 : ℝ) := by
-    calc
-      2 * Real.log (N : ℝ) ^ B ≤
-          (N : ℝ) ^ (107 / 6996 : ℝ) * (N : ℝ) ^ (107 / 6996 : ℝ) := by
-        gcongr
-      _ = (N : ℝ) ^ (107 / 3498 : ℝ) := by
-        rw [← Real.rpow_add hN0]
-        congr 1
-        norm_num
   apply (le_div_iff₀ (Real.rpow_pos_of_pos hlog0 B)).2
   calc
     2 * (N : ℝ) ^ (821 / 1749 : ℝ) * Real.log (N : ℝ) ^ B =

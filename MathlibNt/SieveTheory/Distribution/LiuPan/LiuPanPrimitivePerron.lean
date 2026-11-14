@@ -1322,8 +1322,8 @@ theorem liuPanPerronPoissonUpperRectangle_residue
 
 /-- Pairing the contour integrand on the real axis recovers exactly the sum of
 the cosine and `t`-sine Poisson components. -/
-theorem liuPanPerronPoissonContourIntegrand_add_neg
-    {σ : ℝ} (hσ : 0 < σ) (a t : ℝ) :
+private theorem poissonContourIntegrand_add_neg_of_ne_zero
+    {σ : ℝ} (hσ : σ ≠ 0) (a t : ℝ) :
     liuPanPerronPoissonContourIntegrand σ a (t : ℂ) +
         liuPanPerronPoissonContourIntegrand σ a (-t : ℂ) =
       ((2 * (σ * Real.cos (a * t) + t * Real.sin (a * t)) /
@@ -1350,12 +1350,22 @@ theorem liuPanPerronPoissonContourIntegrand_add_neg
   norm_cast
   rw [Real.cos_neg, Real.sin_neg]
   simp only [div_eq_mul_inv,
-    liuPanPerronLine_inv_eq σ t hσ.ne',
-    liuPanPerronLine_inv_eq σ (-t) hσ.ne', neg_sq]
+    liuPanPerronLine_inv_eq σ t hσ,
+    liuPanPerronLine_inv_eq σ (-t) hσ, neg_sq]
   push_cast
   ring_nf
   rw [Complex.I_sq]
   norm_num
+
+/-- Pairing the contour integrand on the real axis recovers exactly the sum of
+the cosine and `t`-sine Poisson components. -/
+theorem liuPanPerronPoissonContourIntegrand_add_neg
+    {σ : ℝ} (hσ : 0 < σ) (a t : ℝ) :
+    liuPanPerronPoissonContourIntegrand σ a (t : ℂ) +
+        liuPanPerronPoissonContourIntegrand σ a (-t : ℂ) =
+      ((2 * (σ * Real.cos (a * t) + t * Real.sin (a * t)) /
+          (σ ^ 2 + t ^ 2) : ℝ) : ℂ) := by
+  exact poissonContourIntegrand_add_neg_of_ne_zero hσ.ne' a t
 
 /-- Unnormalizing the residue theorem gives the exact boundary integral
 required before estimating the three non-real sides of the square. -/
@@ -1680,6 +1690,34 @@ theorem tendsto_liuPanPerronPoissonRealIntegral_atTop
   rw [← hboundary']
   ring
 
+private theorem poissonRealIntegral_eq_paired_of_ne_zero
+    {σ : ℝ} (hσ : σ ≠ 0) (a R : ℝ) :
+    HIntegral (liuPanPerronPoissonContourIntegrand σ a) (-R) R 0 =
+      ∫ t in 0..R,
+        ((2 * (σ * Real.cos (a * t) + t * Real.sin (a * t)) /
+          (σ ^ 2 + t ^ 2) : ℝ) : ℂ) := by
+  let f : ℝ → ℂ := fun t => liuPanPerronPoissonContourIntegrand σ a (t : ℂ)
+  have hf : Continuous f := by
+    dsimp only [f]
+    unfold liuPanPerronPoissonContourIntegrand
+    apply Continuous.div
+    · fun_prop
+    · fun_prop
+    · intro t hzero
+      exact hσ (by simpa using congrArg Complex.re hzero)
+  have hneg : Continuous (fun t => f (-t)) := hf.comp continuous_neg
+  unfold HIntegral
+  simp only [Complex.ofReal_zero, zero_mul, add_zero]
+  change (∫ t in -R..R, f t) = _
+  rw [← intervalIntegral.integral_add_adjacent_intervals (hf.intervalIntegrable (-R) 0)
+    (hf.intervalIntegrable 0 R),
+    ← show (∫ t in 0..R, f (-t)) = ∫ t in -R..0, f t by
+      rw [intervalIntegral.integral_comp_neg, neg_zero],
+    add_comm, ← intervalIntegral.integral_add (hf.intervalIntegrable 0 R)
+      (hneg.intervalIntegrable 0 R)]
+  refine intervalIntegral.integral_congr fun t _ => ?_
+  simpa only [f, Complex.ofReal_neg] using poissonContourIntegrand_add_neg_of_ne_zero hσ a t
+
 /-- Pairing the negative and positive halves of the real edge gives the
 finite cosine-plus-sine Poisson integral exactly. -/
 theorem liuPanPerronPoissonRealIntegral_eq_paired
@@ -1688,51 +1726,7 @@ theorem liuPanPerronPoissonRealIntegral_eq_paired
       ∫ t in 0..R,
         ((2 * (σ * Real.cos (a * t) + t * Real.sin (a * t)) /
           (σ ^ 2 + t ^ 2) : ℝ) : ℂ) := by
-  let f : ℝ → ℂ :=
-    fun t => liuPanPerronPoissonContourIntegrand σ a (t : ℂ)
-  have hf : Continuous f := by
-    dsimp only [f]
-    unfold liuPanPerronPoissonContourIntegrand
-    apply Continuous.div
-    · fun_prop
-    · fun_prop
-    · intro t
-      rw [show (σ : ℂ) + Complex.I * (t : ℂ) =
-          liuPanPerronLine σ t by
-        unfold liuPanPerronLine
-        ring]
-      exact liuPanPerronLine_ne_zero hσ t
-  have hfneg : IntervalIntegrable f MeasureTheory.volume (-R) 0 :=
-    hf.intervalIntegrable (-R) 0
-  have hfpos : IntervalIntegrable f MeasureTheory.volume 0 R :=
-    hf.intervalIntegrable 0 R
-  have href : IntervalIntegrable (fun t => f (-t))
-      MeasureTheory.volume 0 R := by
-    have hc : Continuous (fun t => f (-t)) := by fun_prop
-    exact hc.intervalIntegrable 0 R
-  have hpair :
-      (∫ t in -R..R, f t) = ∫ t in 0..R, (f t + f (-t)) := by
-    calc
-      (∫ t in -R..R, f t) =
-          (∫ t in -R..0, f t) + ∫ t in 0..R, f t :=
-        (intervalIntegral.integral_add_adjacent_intervals
-          hfneg hfpos).symm
-      _ = (∫ t in 0..R, f (-t)) + ∫ t in 0..R, f t := by
-        rw [intervalIntegral.integral_comp_neg]
-        norm_num
-      _ = ∫ t in 0..R, (f (-t) + f t) :=
-        (intervalIntegral.integral_add href hfpos).symm
-      _ = ∫ t in 0..R, (f t + f (-t)) := by
-        apply intervalIntegral.integral_congr
-        intro t _ht
-        exact add_comm _ _
-  unfold HIntegral
-  simp only [Complex.ofReal_zero, zero_mul, add_zero]
-  change (∫ t in -R..R, f t) = _
-  rw [hpair]
-  apply intervalIntegral.integral_congr
-  intro t _ht
-  simpa [f] using liuPanPerronPoissonContourIntegrand_add_neg hσ a t
+  exact poissonRealIntegral_eq_paired_of_ne_zero hσ.ne' a R
 
 private theorem liuPanPerronPoissonUpperRectangle_neg_sigma_boundary
     {σ a R : ℝ} (hσ : 0 < σ) (hR : 0 ≤ R) :
@@ -1844,79 +1838,8 @@ private theorem liuPanPerronPoissonRealIntegral_neg_sigma_eq_paired
       ∫ t in 0..R,
         ((2 * (-σ * Real.cos (a * t) + t * Real.sin (a * t)) /
           (σ ^ 2 + t ^ 2) : ℝ) : ℂ) := by
-  let f : ℝ → ℂ :=
-    fun t => liuPanPerronPoissonContourIntegrand (-σ) a (t : ℂ)
-  have hf : Continuous f := by
-    dsimp only [f]
-    unfold liuPanPerronPoissonContourIntegrand
-    apply Continuous.div
-    · fun_prop
-    · fun_prop
-    · intro t hzero
-      have hre := congrArg Complex.re hzero
-      simp at hre
-      linarith
-  have hfneg : IntervalIntegrable f MeasureTheory.volume (-R) 0 :=
-    hf.intervalIntegrable (-R) 0
-  have hfpos : IntervalIntegrable f MeasureTheory.volume 0 R :=
-    hf.intervalIntegrable 0 R
-  have href : IntervalIntegrable (fun t => f (-t))
-      MeasureTheory.volume 0 R := by
-    have hc : Continuous (fun t => f (-t)) := by fun_prop
-    exact hc.intervalIntegrable 0 R
-  have hpair :
-      (∫ t in -R..R, f t) = ∫ t in 0..R, (f t + f (-t)) := by
-    calc
-      (∫ t in -R..R, f t) =
-          (∫ t in -R..0, f t) + ∫ t in 0..R, f t :=
-        (intervalIntegral.integral_add_adjacent_intervals
-          hfneg hfpos).symm
-      _ = (∫ t in 0..R, f (-t)) + ∫ t in 0..R, f t := by
-        rw [intervalIntegral.integral_comp_neg]
-        norm_num
-      _ = ∫ t in 0..R, (f (-t) + f t) :=
-        (intervalIntegral.integral_add href hfpos).symm
-      _ = ∫ t in 0..R, (f t + f (-t)) := by
-        apply intervalIntegral.integral_congr
-        intro t _ht
-        exact add_comm _ _
-  unfold HIntegral
-  simp only [Complex.ofReal_zero, zero_mul, add_zero]
-  change (∫ t in -R..R, f t) = _
-  rw [hpair]
-  apply intervalIntegral.integral_congr
-  intro t _ht
-  dsimp only [f]
-  unfold liuPanPerronPoissonContourIntegrand
-  rw [show (((-σ : ℝ) : ℂ) + Complex.I * (t : ℂ)) =
-      liuPanPerronLine (-σ) t by
-    unfold liuPanPerronLine
-    ring]
-  push_cast
-  rw [show -(σ : ℂ) + Complex.I * -(t : ℂ) =
-      liuPanPerronLine (-σ) (-t) by
-    unfold liuPanPerronLine
-    push_cast
-    ring]
-  rw [show ((a : ℂ) * Complex.I) * (t : ℂ) =
-      ((a * t : ℝ) : ℂ) * Complex.I by
-    push_cast
-    ring]
-  rw [show ((a : ℂ) * Complex.I) * (-t : ℂ) =
-      ((-(a * t) : ℝ) : ℂ) * Complex.I by
-    push_cast
-    ring]
-  rw [Complex.exp_mul_I, Complex.exp_mul_I]
-  norm_cast
-  rw [Real.cos_neg, Real.sin_neg]
-  simp only [div_eq_mul_inv,
-    liuPanPerronLine_inv_eq (-σ) t (neg_ne_zero.mpr hσ.ne'),
-    liuPanPerronLine_inv_eq (-σ) (-t) (neg_ne_zero.mpr hσ.ne'),
-    neg_sq]
-  push_cast
-  ring_nf
-  rw [Complex.I_sq]
-  norm_num
+  simpa only [neg_sq] using
+    poissonRealIntegral_eq_paired_of_ne_zero (neg_ne_zero.mpr hσ.ne') a R
 
 private theorem tendsto_liuPanPerronPoissonPairedIntegral_pos_atTop
     {σ a : ℝ} (hσ : 0 < σ) (ha : 0 < a) :

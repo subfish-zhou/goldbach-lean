@@ -67,45 +67,8 @@ theorem primitive_interval_gauss_inversion {q : ℕ} [NeZero q]
         (∑ n ∈ Finset.Icc (M + 1) (M + N), b n * χ.1 (n : ZMod q)) =
       ∑ a ∈ reducedResidues q, χ.1⁻¹ (a : ZMod q) *
         (∑ n ∈ Finset.Icc (M + 1) (M + N),
-          (charReal ((n : ℝ) * (a : ℝ) / (q : ℝ)) : ℂ) * b n) := by
-  let χi : PrimitiveCharacter q :=
-    ⟨χ.1⁻¹, by change χ.1⁻¹.conductor = q; rw [DirichletCharacter.conductor_inv]; exact χ.2⟩
-  calc
-    gaussSum χ.1⁻¹ (primitiveGaussAddChar q) *
-        (∑ n ∈ Finset.Icc (M + 1) (M + N), b n * χ.1 (n : ZMod q))
-        = ∑ n ∈ Finset.Icc (M + 1) (M + N),
-            b n * (χi.1⁻¹ (n : ZMod q) *
-              gaussSum χi.1 (primitiveGaussAddChar q)) := by
-            rw [Finset.mul_sum]
-            apply Finset.sum_congr rfl
-            intro n hn
-            simp [χi]
-            ring
-    _ = ∑ n ∈ Finset.Icc (M + 1) (M + N), b n *
-          (∑ a ∈ reducedResidues q,
-            χi.1 (a : ZMod q) *
-              charReal ((n : ℝ) * (a : ℝ) / (q : ℝ))) := by
-            apply Finset.sum_congr rfl
-            intro n hn
-            rw [sum_reducedResidues_eq_invChar_mul_gaussSum χi n]
-    _ = ∑ n ∈ Finset.Icc (M + 1) (M + N),
-          ∑ a ∈ reducedResidues q,
-            b n * (χi.1 (a : ZMod q) *
-              charReal ((n : ℝ) * (a : ℝ) / (q : ℝ))) := by
-            apply Finset.sum_congr rfl
-            intro n hn
-            rw [Finset.mul_sum]
-    _ = ∑ a ∈ reducedResidues q, χ.1⁻¹ (a : ZMod q) *
-          (∑ n ∈ Finset.Icc (M + 1) (M + N),
-            (charReal ((n : ℝ) * (a : ℝ) / (q : ℝ)) : ℂ) * b n) := by
-            rw [Finset.sum_comm]
-            apply Finset.sum_congr rfl
-            intro a ha
-            rw [Finset.mul_sum]
-            apply Finset.sum_congr rfl
-            intro n hn
-            simp [χi]
-            ring
+          (charReal ((n : ℝ) * (a : ℝ) / (q : ℝ)) : ℂ) * b n) :=
+  primitive_gauss_inversion_sum χ b (Finset.Icc (M + 1) (M + N))
 
 /-- Inversion is an involution on primitive characters. -/
 noncomputable def primitiveCharacterInvEquiv (q : ℕ) :

@@ -202,15 +202,8 @@ noncomputable def lowerSuzukiUnnormalizedLayer
 /-- Successive ceiling divisions by positive divisors equal division by their product. -/
 theorem ceilDiv_ceilDiv_eq {D a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
     (D ⌈/⌉ a) ⌈/⌉ b = D ⌈/⌉ (a * b) := by
-  apply Nat.le_antisymm
-  · apply (ceilDiv_le_iff_le_mul hb).2
-    apply (ceilDiv_le_iff_le_mul ha).2
-    rw [← mul_assoc]
-    exact (ceilDiv_le_iff_le_mul (Nat.mul_pos ha hb)).1 le_rfl
-  · apply (ceilDiv_le_iff_le_mul (Nat.mul_pos ha hb)).2
-    rw [mul_assoc]
-    exact (ceilDiv_le_iff_le_mul ha).1
-      ((ceilDiv_le_iff_le_mul hb).1 le_rfl)
+  exact (gc_mul_ceilDiv (Nat.mul_pos ha hb)).l_unique
+    ((gc_mul_ceilDiv ha).compose (gc_mul_ceilDiv hb)) (fun n => by simp [mul_assoc]) |>.symm
 
 private theorem lowerRosserEvenBoundaryLayerMass_succ_pair
     (S : BoundingSieve) (k D z : ℕ) :
@@ -367,9 +360,7 @@ theorem lowerRosserEvenBoundaryLayerMass_eq_unnormalizedLayer
             · apply Finset.ext
               intro p₁
               simp only [Finset.mem_filter, suzukiSupportedBelow]
-              have hcut : p₁ ^ 3 < D ⌈/⌉ p₀ ↔ p₀ * p₁ ^ 3 < D := by
-                rw [← not_le, ceilDiv_le_iff_le_mul hp₀pos]
-                omega
+              have hcut := (gc_mul_ceilDiv hp₀pos).lt_iff_lt (a := D) (b := p₁ ^ 3)
               constructor
               · rintro ⟨⟨hp₁S, hp₁p₀⟩, hceil⟩
                 exact ⟨⟨hp₁S, hp₁p₀.trans hp₀z⟩, hp₁p₀, hcut.mp hceil⟩

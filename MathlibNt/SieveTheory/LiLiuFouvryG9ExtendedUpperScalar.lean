@@ -1,6 +1,7 @@
 module
 
-public import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensity
+public import MathlibNt.SieveTheory.LiLiuPrereqWFEdgeDensityScalar
+public import MathlibNt.SieveTheory.LiLiuPrereqWFCoordinateShift
 
 @[expose] public section
 

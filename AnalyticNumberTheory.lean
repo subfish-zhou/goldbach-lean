@@ -2,6 +2,7 @@ module
 
 public import MathlibNt.AnalyticNumberTheory.LargeSieve.LcmWeightBounds
 public import AnalyticNumberTheory.Mertens.Theorems
+public import AnalyticNumberTheory.Mertens.PartialSummation
 public import AnalyticNumberTheory.Sieve.Distribution
 public import AnalyticNumberTheory.Sieve.SelbergUpperBound
 public import AnalyticNumberTheory.Sieve.SingularSeries

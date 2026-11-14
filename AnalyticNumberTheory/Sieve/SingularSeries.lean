@@ -1,6 +1,6 @@
 module
 
-public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.NumberTheory.PrimeCounting
 public import Mathlib.Data.Nat.Totient
 public import Mathlib.Data.Nat.Factorization.Basic
 public import Mathlib.Data.Nat.PrimeFin
@@ -77,7 +77,7 @@ The classical infinite product is obtained by a convergence argument
 as `z → ∞`, with the normalization of these local factors;
 that limiting identification is not part of this definition. -/
 noncomputable def singularSeriesTruncated (N z : ℕ) : ℝ :=
-  ((range (z + 1)).filter Nat.Prime).prod (fun p => localFactor p N)
+  ∏ p ∈ z.primesLE, localFactor p N
 
 
 /-! ## 4. Finite singular-series proxy -/

@@ -73,68 +73,26 @@ private theorem upperRosserAdmissibleSet_insert_min_of_odd
     (hqmin : ∀ p ∈ s, q ≤ p) (hs : UpperRosserAdmissibleSet D s)
     (hodd : ¬Even s.card) :
     UpperRosserAdmissibleSet D (insert q s) := by
-  intro p hp hcard
-  obtain hp_eq | hp_s := Finset.mem_insert.mp hp
-  · subst p
-    have hfilter : (insert q s).filter (fun r ↦ q ≤ r) = insert q s :=
-      Finset.filter_eq_self.mpr fun r hr ↦ by
-        obtain rfl | hr_s := Finset.mem_insert.mp hr
-        · exact le_rfl
-        · exact hqmin r hr_s
-    have hinsEven : Even (insert q s).card := by
-      rw [Finset.card_insert_of_notMem hqs, Nat.even_add_one]
-      exact hodd
-    rw [hfilter] at hcard
-    exact (hcard hinsEven).elim
-  · have hpq : ¬p ≤ q := by
-      rw [not_le]
-      exact lt_of_le_of_ne (hqmin p hp_s) (Ne.symm fun h ↦ hqs (h ▸ hp_s))
-    have hfilter : (insert q s).filter (fun r ↦ p ≤ r) =
-        s.filter (fun r ↦ p ≤ r) := by
-      simp [Finset.filter_insert, hpq]
-    rw [hfilter] at hcard ⊢
-    exact hs p hp_s hcard
+  apply (rosser_tests_insert_min_iff (test := (fun n => ¬Even n)) hqs hqmin).2
+  refine ⟨hs, fun h => ?_⟩
+  exact (h (Nat.even_add_one.mpr hodd)).elim
+
 
 private theorem upperRosserAdmissibleSet_of_insert_min
     {D q : ℕ} {s : Finset ℕ} (hqs : q ∉ s)
     (hqmin : ∀ p ∈ s, q ≤ p)
     (hs : UpperRosserAdmissibleSet D (insert q s)) :
-    UpperRosserAdmissibleSet D s := by
-  intro p hp hcard
-  have hpq : ¬p ≤ q := by
-    rw [not_le]
-    exact lt_of_le_of_ne (hqmin p hp) (Ne.symm fun h ↦ hqs (h ▸ hp))
-  have hfilter : (insert q s).filter (fun r ↦ p ≤ r) =
-      s.filter (fun r ↦ p ≤ r) := by
-    simp [Finset.filter_insert, hpq]
-  rw [← hfilter] at hcard ⊢
-  exact hs p (Finset.mem_insert_of_mem hp) hcard
+    UpperRosserAdmissibleSet D s :=
+  ((rosser_tests_insert_min_iff (test := (fun n => ¬Even n)) hqs hqmin).1 hs).1
+
 
 private theorem prod_insert_min_lt_of_upperRosserAdmissibleSet_odd
     {D q : ℕ} {s : Finset ℕ} (hqs : q ∉ s) (hqprime : q.Prime)
     (hqD : q < D) (hqmin : ∀ p ∈ s, q ≤ p)
     (hs : UpperRosserAdmissibleSet D s) (hodd : ¬Even s.card) :
-    (insert q s).prod id < D := by
-  by_cases hs0 : s = ∅
-  · subst s
-    simpa using hqD
-  · have hsne : s.Nonempty := Finset.nonempty_iff_ne_empty.mpr hs0
-    let p := s.min' hsne
-    have hp : p ∈ s := Finset.min'_mem s hsne
-    have hpmin : ∀ r ∈ s, p ≤ r := fun r hr ↦ Finset.min'_le s r hr
-    have hfilter : s.filter (fun r ↦ p ≤ r) = s :=
-      Finset.filter_eq_self.mpr hpmin
-    have htest := hs p hp (by simpa [hfilter] using hodd)
-    rw [hfilter] at htest
-    have hqp2 : q ≤ p ^ 2 := by
-      calc
-        q ≤ p := hqmin p hp
-        _ ≤ p * p := Nat.le_mul_of_pos_right p
-          (lt_of_lt_of_le hqprime.pos (hqmin p hp))
-        _ = p ^ 2 := by ring
-    rw [Finset.prod_insert hqs]
-    exact lt_of_le_of_lt (by
-      simpa [mul_comm] using Nat.mul_le_mul_right (s.prod id) hqp2) htest
+    (insert q s).prod id < D :=
+  rosser_prod_insert_min_lt (test := fun n => ¬Even n) hqs hqprime.pos hqD hqmin hs hodd
+
 
 /-- For an active even set, adjoining a new least prime remains active exactly
 until the cubic Rosser cutoff `q ^ 3 * ∏ s < D` is crossed. -/
@@ -144,44 +102,10 @@ theorem upperRosser_insert_min_active_iff_cube_lt
     (hs : s.prod id < D ∧ UpperRosserAdmissibleSet D s) :
     (insert q s).prod id < D ∧
         UpperRosserAdmissibleSet D (insert q s) ↔
-      s.prod id * q ^ 3 < D := by
-  have hfilterq :
-      (insert q s).filter (fun r ↦ q ≤ r) = insert q s :=
-    Finset.filter_eq_self.mpr fun r hr ↦ by
-      obtain rfl | hr_s := Finset.mem_insert.mp hr
-      · exact le_rfl
-      · exact hqmin r hr_s
-  have hodd : ¬Even (insert q s).card := by
-    rw [Finset.card_insert_of_notMem hqs, Nat.even_add_one]
-    exact not_not_intro heven
-  constructor
-  · intro hins
-    have htest := hins.2 q (Finset.mem_insert_self q s) (by
-      simpa [hfilterq] using hodd)
-    rw [hfilterq, Finset.prod_insert hqs] at htest
-    simpa only [id_eq, pow_succ, mul_assoc, mul_comm, mul_left_comm] using htest
-  · intro hcube
-    constructor
-    · rw [Finset.prod_insert hqs]
-      have hqle : q ≤ q ^ 3 := by
-        exact Nat.le_pow (by norm_num)
-      exact lt_of_le_of_lt
-        (by simpa [mul_comm] using Nat.mul_le_mul_left (s.prod id) hqle)
-        (by simpa [mul_comm] using hcube)
-    · intro p hp hcard
-      obtain rfl | hp_s := Finset.mem_insert.mp hp
-      · rw [hfilterq, Finset.prod_insert hqs]
-        simpa [pow_succ, mul_assoc, mul_comm, mul_left_comm] using hcube
-      · have hpq : ¬p ≤ q := by
-          rw [not_le]
-          exact lt_of_le_of_ne (hqmin p hp_s)
-            (Ne.symm fun h ↦ hqs (h ▸ hp_s))
-        have hfilter :
-            (insert q s).filter (fun r ↦ p ≤ r) =
-              s.filter (fun r ↦ p ≤ r) := by
-          simp [Finset.filter_insert, hpq]
-        rw [hfilter] at hcard ⊢
-        exact hs.2 p hp_s hcard
+      s.prod id * q ^ 3 < D :=
+  rosser_insert_min_active_iff (test := fun n => ¬Even n) hqs hqprime.pos hqmin hs.2
+    (fun h => (Nat.even_add_one.mp h) heven)
+
 
 /-- The abstract even Rosser boundary is exactly the cubic shell
 `D ≤ q ^ 3 * ∏ s` once `q` is the new least prime. -/
@@ -192,20 +116,15 @@ theorem upperRosserBoundarySet_iff_cube_le
       Even s.card ∧
         s.prod id < D ∧ UpperRosserAdmissibleSet D s ∧
         D ≤ s.prod id * q ^ 3 := by
-  constructor
-  · rintro ⟨heven, hsD, hsAdmissible, hins⟩
-    refine ⟨heven, hsD, hsAdmissible, ?_⟩
-    rw [← not_lt]
-    exact fun hcube ↦ hins
-      ((upperRosser_insert_min_active_iff_cube_lt hqs hqprime hqmin heven
-        ⟨hsD, hsAdmissible⟩).mpr hcube)
-  · rintro ⟨heven, hsD, hsAdmissible, hcube⟩
-    refine ⟨heven, hsD, hsAdmissible, ?_⟩
-    intro hins
-    have hlt :=
-      (upperRosser_insert_min_active_iff_cube_lt hqs hqprime hqmin heven
-        ⟨hsD, hsAdmissible⟩).mp hins
-    omega
+  change _ ∧ _ ∧ _ ∧ ¬_ ↔ _
+  constructor <;> rintro ⟨hparity, hprod, hadm, h⟩
+  · exact ⟨hparity, hprod, hadm,
+      not_lt.mp (fun hc => h ((upperRosser_insert_min_active_iff_cube_lt
+        hqs hqprime hqmin hparity ⟨hprod, hadm⟩).2 hc))⟩
+  · exact ⟨hparity, hprod, hadm,
+      fun hins => (not_lt.mpr h) ((upperRosser_insert_min_active_iff_cube_lt
+        hqs hqprime hqmin hparity ⟨hprod, hadm⟩).1 hins)⟩
+
 
 /-- A boundary subset is equivalently its canonical decreasing Rosser chain.
 The statement retains all alternating-prefix inequalities, rather than
@@ -319,73 +238,15 @@ theorem mem_upperRosserBoundaryChains_fixedDepth_succ_iff
           xs ∈ (upperRosserBoundaryChains (D ⌈/⌉ (p₀ * p₁)) q
             (P.filter (fun p => p < p₁))).filter
               (fun xs => xs.length = 2 * k) := by
-  constructor
-  · intro hl
-    have hmem := (mem_upperRosserBoundaryChains_iff hqs hqprime hqmin).1
-      (Finset.mem_filter.mp hl).1
-    have hlen := (Finset.mem_filter.mp hl).2
-    cases l with
-    | nil => simp at hlen
-    | cons p₀ tail =>
-        cases tail with
-        | nil =>
-            simp only [List.length_cons, List.length_nil] at hlen
-            omega
-        | cons p₁ xs =>
-            have hp₀P : p₀ ∈ P := hmem.2.2.1 (by simp)
-            have hp₁P : p₁ ∈ P := hmem.2.2.1 (by simp)
-            have hrec := (upperRosserBoundaryChain_cons_cons_iff
-              (hprime p₀ hp₀P).pos (hprime p₁ hp₁P).pos).1 hmem.2.2.2
-            refine ⟨p₀, hp₀P, p₁, hp₁P, hrec.1, hrec.2.2.1, xs, rfl, ?_⟩
-            apply Finset.mem_filter.mpr
-            refine ⟨(mem_upperRosserBoundaryChains_iff ?_ hqprime ?_).2 ?_, ?_⟩
-            · intro hq
-              exact hqs (Finset.mem_filter.mp hq).1
-            · intro p hp
-              exact hqmin p (Finset.mem_filter.mp hp).1
-            · refine ⟨hmem.1.of_cons.of_cons, hrec.2.2.2.1, ?_, hrec.2.2.2⟩
-              intro p hp
-              exact Finset.mem_filter.mpr
-                ⟨hmem.2.2.1 (by simp [hp]), hrec.2.1 p (by simpa using hp)⟩
-            · simp only [List.length_cons] at hlen
-              omega
-  · rintro ⟨p₀, hp₀P, p₁, hp₁P, h10, hhead, xs, rfl, hxs⟩
-    have hxsMem := (mem_upperRosserBoundaryChains_iff
-      (by
-        intro hq
-        exact hqs (Finset.mem_filter.mp hq).1)
-      hqprime
-      (fun p hp => hqmin p (Finset.mem_filter.mp hp).1)).1
-        (Finset.mem_filter.mp hxs).1
-    have hxslt : ∀ p ∈ xs, p < p₁ := by
-      intro p hp
-      exact (Finset.mem_filter.mp (hxsMem.2.2.1 (by simpa using hp))).2
-    have hchain : UpperRosserBoundaryChain D q (p₀ :: p₁ :: xs) :=
-      (upperRosserBoundaryChain_cons_cons_iff
-        (hprime p₀ hp₀P).pos (hprime p₁ hp₁P).pos).2
-          ⟨h10, hxslt, hhead, hxsMem.2.2.2⟩
-    apply Finset.mem_filter.mpr
-    refine ⟨(mem_upperRosserBoundaryChains_iff hqs hqprime hqmin).2 ?_, ?_⟩
-    · refine ⟨?_, hchain.1, ?_, hchain⟩
-      · simp only [List.nodup_cons]
-        constructor
-        · intro hp₀
-          simp only [List.mem_cons] at hp₀
-          rcases hp₀ with rfl | hp₀
-          · exact (Nat.ne_of_gt h10) rfl
-          · exact (Nat.ne_of_gt ((hxslt p₀ hp₀).trans h10)) rfl
-        · constructor
-          · exact fun hp₁ => (Nat.ne_of_gt (hxslt p₁ hp₁)) rfl
-          · exact hxsMem.1
-      · intro p hp
-        simp only [List.mem_toFinset, List.mem_cons] at hp
-        rcases hp with rfl | rfl | hp
-        · exact hp₀P
-        · exact hp₁P
-        · exact (Finset.mem_filter.mp (hxsMem.2.2.1 (by simpa using hp))).1
-    · have hlen := (Finset.mem_filter.mp hxs).2
-      simp only [List.length_cons]
-      omega
+  have hmem {E : ℕ} {A : Finset ℕ} {xs : List ℕ} (hA : A ⊆ P) :
+      xs ∈ upperRosserBoundaryChains E q A ↔
+        xs.toFinset ⊆ A ∧ UpperRosserBoundaryChain E q xs := by
+    rw [mem_upperRosserBoundaryChains_iff (fun h => hqs (hA h)) hqprime (fun p hp => hqmin p (hA hp))]
+    exact ⟨fun h => h.2.2, fun h => ⟨h.2.1.nodup, h.2.1, h.1, h.2⟩⟩
+  simpa only [Nat.add_zero] using
+    rosser_boundary_chains_pair_depth_succ_iff (D := D)
+      (chain := fun E => UpperRosserBoundaryChain E q) (headTest := fun p₀ _ => p₀ ^ 3 < D)
+      hprime hmem (fun hp₀ hp₁ => upperRosserBoundaryChain_cons_cons_iff hp₀.pos hp₁.pos) k 0
 
 /-- Exact finite Buchstab recursion for the selected density mass.  A positive
 depth peels the two largest selected primes and leaves the same boundary mass at
@@ -399,53 +260,9 @@ theorem upperRosserBoundaryChainsFixedDepthDensity_succ
         nu p₀ * nu p₁ *
           upperRosserBoundaryChainsFixedDepthDensity nu
             (D ⌈/⌉ (p₀ * p₁)) q (P.filter (fun p => p < p₁)) k := by
-  classical
-  let A := (upperRosserBoundaryChains D q P).filter
-    (fun l => l.length = 2 * (k + 1))
-  let B : Finset (Σ _p₀ : ℕ, Σ _p₁ : ℕ, List ℕ) :=
-    P.sigma fun p₀ =>
-      (P.filter (fun p₁ => p₁ < p₀ ∧ p₀ ^ 3 < D)).sigma fun p₁ =>
-        (upperRosserBoundaryChains (D ⌈/⌉ (p₀ * p₁)) q
-          (P.filter (fun p => p < p₁))).filter
-            (fun xs => xs.length = 2 * k)
-  let encode : List ℕ → (Σ _p₀ : ℕ, Σ _p₁ : ℕ, List ℕ) := fun l =>
-    match l with
-    | p₀ :: p₁ :: xs => ⟨p₀, ⟨p₁, xs⟩⟩
-    | _ => ⟨0, ⟨0, []⟩⟩
-  let decode : (Σ _p₀ : ℕ, Σ _p₁ : ℕ, List ℕ) → List ℕ := fun b =>
-    b.1 :: b.2.1 :: b.2.2
-  have hsum :
-      ∑ l ∈ A, (l.map nu).prod =
-        ∑ b ∈ B, nu b.1 * nu b.2.1 * (b.2.2.map nu).prod := by
-    apply Finset.sum_bij' (fun l _ => encode l) (fun b _ => decode b)
-    · intro l hl
-      have hdecomp := (mem_upperRosserBoundaryChains_fixedDepth_succ_iff
-        hqs hqprime hprime hqmin k).1 (by simpa [A] using hl)
-      rcases hdecomp with ⟨p₀, hp₀, p₁, hp₁, h10, hhead, xs, rfl, hxs⟩
-      simpa [encode, B, h10, hhead, hp₀, hp₁] using hxs
-    · rintro ⟨p₀, p₁, xs⟩ hb
-      simp only [B, Finset.mem_sigma, Finset.mem_filter] at hb
-      exact (mem_upperRosserBoundaryChains_fixedDepth_succ_iff
-        hqs hqprime hprime hqmin k).2
-          ⟨p₀, hb.1, p₁, hb.2.1.1, hb.2.1.2.1, hb.2.1.2.2,
-            xs, rfl, Finset.mem_filter.mpr hb.2.2⟩
-    · intro l hl
-      have hdecomp := (mem_upperRosserBoundaryChains_fixedDepth_succ_iff
-        hqs hqprime hprime hqmin k).1 (by simpa [A] using hl)
-      rcases hdecomp with ⟨p₀, hp₀, p₁, hp₁, h10, hhead, xs, rfl, hxs⟩
-      rfl
-    · rintro ⟨p₀, p₁, xs⟩ hb
-      rfl
-    · intro l hl
-      have hdecomp := (mem_upperRosserBoundaryChains_fixedDepth_succ_iff
-        hqs hqprime hprime hqmin k).1 (by simpa [A] using hl)
-      rcases hdecomp with ⟨p₀, hp₀, p₁, hp₁, h10, hhead, xs, rfl, hxs⟩
-      simp [encode, mul_assoc]
-  rw [upperRosserBoundaryChainsFixedDepthDensity]
-  change ∑ l ∈ A, (l.map nu).prod = _
-  rw [hsum]
-  simp only [B, Finset.sum_sigma]
-  simp_rw [upperRosserBoundaryChainsFixedDepthDensity, Finset.mul_sum]
+  simpa only [upperRosserBoundaryChainsFixedDepthDensity] using
+    rosser_boundary_chains_pair_sum nu
+      (mem_upperRosserBoundaryChains_fixedDepth_succ_iff hqs hqprime hprime hqmin k)
 
 /-- Exact finite Buchstab--Rosser recursion on the relative Euler-product scale.
 The transition keeps the quotient between the residual and ambient Euler

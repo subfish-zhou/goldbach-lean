@@ -146,7 +146,7 @@ theorem LFunction_ne_zero_on_nonquadratic_conductorLogRectangle
 theorem logDerivative_holomorphicOn_nonquadratic_conductorLogRectangle
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) {T : ℝ}
     (hχsq : χ ^ 2 ≠ 1) (hT : 3 ≤ T) :
-    HolomorphicOn (fun s => deriv χ.LFunction s / χ.LFunction s)
+    DifferentiableOn ℂ (fun s => deriv χ.LFunction s / χ.LFunction s)
       (dirichletLNonquadraticConductorLogRectangle q T) := by
   have hχ : χ ≠ 1 := by
     intro hχ

@@ -85,6 +85,24 @@ theorem sorted_prefix_prod_eq_filter_ge (s : Finset ℕ) (i : ℕ)
   simp only [List.map_id_fun, id_eq]
   rw [← List.take_concat_get hi, List.prod_concat]
 
+private theorem rosser_tests_iff_sorted_prefix_cube_lt {D : ℕ} {s : Finset ℕ}
+    (test : ℕ → Prop) :
+    (∀ p ∈ s, test ((s.filter (fun q => p ≤ q)).card) →
+      (s.filter (fun q => p ≤ q)).prod id * p ^ 2 < D) ↔
+    ∀ i (hi : i < (s.sort (· ≥ ·)).length), test (i + 1) →
+      ((s.sort (· ≥ ·)).take i).prod * (s.sort (· ≥ ·))[i] ^ 3 < D := by
+  constructor
+  · intro hs i hi hindex
+    have hp := (Finset.mem_sort (· ≥ ·)).mp (List.getElem_mem hi)
+    have htest := hs _ hp (by rwa [sorted_prefix_card_eq_filter_ge s i hi])
+    rw [sorted_prefix_prod_eq_filter_ge s i hi] at htest
+    simpa only [pow_succ, mul_assoc, mul_comm, mul_left_comm] using htest
+  · intro hs p hp hcard
+    obtain ⟨i, hi, rfl⟩ := List.mem_iff_getElem.mp ((Finset.mem_sort (· ≥ ·)).mpr hp)
+    rw [sorted_prefix_card_eq_filter_ge s i hi] at hcard
+    rw [sorted_prefix_prod_eq_filter_ge s i hi]
+    simpa only [pow_succ, mul_assoc, mul_comm, mul_left_comm] using hs i hi hcard
+
 /-- The upper Rosser admissibility test in canonical chain coordinates.  In the
 decreasing enumeration `p₀ > p₁ > ...`, precisely the even zero-based indices
 are tested, and their inequalities are
@@ -95,35 +113,8 @@ theorem upperRosserAdmissibleSet_iff_sorted_prefix_cube_lt
       ∀ i (hi : i < (s.sort (· ≥ ·)).length), Even i →
         ((s.sort (· ≥ ·)).take i).prod *
           (s.sort (· ≥ ·))[i] ^ 3 < D := by
-  constructor
-  · intro hs i hi heven
-    let p := (s.sort (· ≥ ·))[i]
-    have hp : p ∈ s :=
-      (Finset.mem_sort (· ≥ ·)).mp (List.getElem_mem hi)
-    have hcard : (s.filter (fun q => p ≤ q)).card = i + 1 :=
-      sorted_prefix_card_eq_filter_ge s i hi
-    have hodd : ¬Even (s.filter (fun q => p ≤ q)).card := by
-      rw [hcard]
-      intro h
-      exact (Nat.even_add_one.mp h) heven
-    have htest := hs p hp hodd
-    rw [sorted_prefix_prod_eq_filter_ge s i hi] at htest
-    simpa [p, pow_succ, mul_assoc, mul_comm, mul_left_comm] using htest
-  · intro hs p hp hodd
-    have hpl : p ∈ s.sort (· ≥ ·) := (Finset.mem_sort (· ≥ ·)).mpr hp
-    obtain ⟨i, hi, hip⟩ := List.mem_iff_getElem.mp hpl
-    have hcard : (s.filter (fun q => p ≤ q)).card = i + 1 := by
-      rw [← hip]
-      exact sorted_prefix_card_eq_filter_ge s i hi
-    have heven : Even i := by
-      by_contra hiOdd
-      apply hodd
-      rw [hcard, Nat.even_add_one]
-      exact hiOdd
-    have htest := hs i hi heven
-    subst p
-    rw [sorted_prefix_prod_eq_filter_ge s i hi]
-    simpa [pow_succ, mul_assoc, mul_comm, mul_left_comm] using htest
+  simpa only [UpperRosserAdmissibleSet, Nat.even_add_one, not_not] using
+    (rosser_tests_iff_sorted_prefix_cube_lt (D := D) (s := s) (fun n => ¬Even n))
 
 /-- The lower Rosser admissibility test in canonical chain coordinates. In the
 strictly decreasing enumeration, precisely the odd zero-based indices are
@@ -134,32 +125,8 @@ theorem lowerRosserAdmissibleSet_iff_sorted_prefix_cube_lt
       ∀ i (hi : i < (s.sort (· ≥ ·)).length), ¬Even i →
         ((s.sort (· ≥ ·)).take i).prod *
           (s.sort (· ≥ ·))[i] ^ 3 < D := by
-  constructor
-  · intro hs i hi hodd
-    let p := (s.sort (· ≥ ·))[i]
-    have hp : p ∈ s :=
-      (Finset.mem_sort (· ≥ ·)).mp (List.getElem_mem hi)
-    have hcard : (s.filter (fun q => p ≤ q)).card = i + 1 :=
-      sorted_prefix_card_eq_filter_ge s i hi
-    have heven : Even (s.filter (fun q => p ≤ q)).card := by
-      rw [hcard, Nat.even_add_one]
-      exact hodd
-    have htest := hs p hp heven
-    rw [sorted_prefix_prod_eq_filter_ge s i hi] at htest
-    simpa [p, pow_succ, mul_assoc, mul_comm, mul_left_comm] using htest
-  · intro hs p hp heven
-    have hpl : p ∈ s.sort (· ≥ ·) := (Finset.mem_sort (· ≥ ·)).mpr hp
-    obtain ⟨i, hi, hip⟩ := List.mem_iff_getElem.mp hpl
-    have hcard : (s.filter (fun q => p ≤ q)).card = i + 1 := by
-      rw [← hip]
-      exact sorted_prefix_card_eq_filter_ge s i hi
-    have hodd : ¬Even i := by
-      rw [hcard, Nat.even_add_one] at heven
-      exact heven
-    have htest := hs i hi hodd
-    subst p
-    rw [sorted_prefix_prod_eq_filter_ge s i hi]
-    simpa [pow_succ, mul_assoc, mul_comm, mul_left_comm] using htest
+  simpa only [LowerRosserAdmissibleSet, Nat.even_add_one] using
+    (rosser_tests_iff_sorted_prefix_cube_lt (D := D) (s := s) Even)
 
 /-- The ordered odd-chain region underlying one lower Rosser boundary term. -/
 def LowerRosserBoundaryChain (D q : ℕ) (l : List ℕ) : Prop :=
@@ -206,11 +173,32 @@ def UpperRosserBoundaryChain (D q : ℕ) (l : List ℕ) : Prop :=
       (l.take i.val).prod * (l.get i) ^ 3 < D) ∧
     D ≤ l.prod * q ^ 3
 
-private theorem lt_ceilDiv_iff_mul_lt_nat
-    {D c n : ℕ} (hc : 0 < c) :
-    n < D ⌈/⌉ c ↔ c * n < D := by
-  rw [← not_le, ceilDiv_le_iff_le_mul hc]
-  omega
+private def rosserBoundaryChain (test : ℕ → Prop) (D q : ℕ) (l : List ℕ) : Prop :=
+  l.SortedGT ∧ test l.length ∧ l.prod < D ∧
+    (∀ i : Fin l.length, test i.val →
+      (l.take i.val).prod * (l.get i) ^ 3 < D) ∧
+    D ≤ l.prod * q ^ 3
+
+private theorem rosserBoundaryChain_cons_cons
+    {D q p₀ p₁ : ℕ} {xs : List ℕ} (hc : 0 < p₀ * p₁)
+    (test : ℕ → Prop) (hshift : ∀ i, test (i + 2) ↔ test i) :
+    rosserBoundaryChain test D q (p₀ :: p₁ :: xs) ↔
+      p₁ < p₀ ∧ (∀ p ∈ xs, p < p₁) ∧
+        (test 0 → p₀ ^ 3 < D) ∧ (test 1 → p₀ * p₁ ^ 3 < D) ∧
+        rosserBoundaryChain test (D ⌈/⌉ (p₀ * p₁)) q xs := by
+  have hsorted : (p₀ :: p₁ :: xs).SortedGT ↔
+      p₁ < p₀ ∧ (∀ p ∈ xs, p < p₁) ∧ xs.SortedGT := by
+    simp only [List.sortedGT_cons, List.mem_cons, forall_eq_or_imp]
+    exact ⟨fun ⟨⟨hlt, _⟩, htail⟩ => ⟨hlt, htail⟩,
+      fun ⟨hlt, htail, hs⟩ => ⟨⟨hlt, fun p hp => (htail p hp).trans hlt⟩, htail, hs⟩⟩
+  have hlt : ∀ n, n < D ⌈/⌉ (p₀ * p₁) ↔ p₀ * p₁ * n < D :=
+    fun _ => (gc_mul_ceilDiv hc).lt_iff_lt
+  unfold rosserBoundaryChain
+  simp only [hsorted, List.length_cons, show ∀ n : ℕ, n + 1 + 1 = n + 2 from fun _ => rfl,
+    hshift, Fin.forall_fin_succ, Fin.val_zero, Fin.val_succ, List.get_cons_zero,
+    List.get_cons_succ', List.take_zero, List.take_succ_cons, List.prod_nil, List.prod_cons,
+    one_mul, hlt, ceilDiv_le_iff_le_mul hc, mul_assoc]
+  tauto
 
 /-- A singleton lower Rosser boundary chain has no internal cubic test; only
 level activity and the terminal boundary remain. -/
@@ -235,57 +223,9 @@ theorem lowerRosserBoundaryChain_cons_cons_iff
     LowerRosserBoundaryChain D q (p₀ :: p₁ :: xs) ↔
       p₁ < p₀ ∧ (∀ p ∈ xs, p < p₁) ∧ p₀ * p₁ ^ 3 < D ∧
         LowerRosserBoundaryChain (D ⌈/⌉ (p₀ * p₁)) q xs := by
-  have hc : 0 < p₀ * p₁ := Nat.mul_pos hp₀ hp₁
-  constructor
-  · rintro ⟨hsorted, hodd, hprod, hprefix, hterminal⟩
-    have hpw := List.sortedGT_iff_pairwise.mp hsorted
-    simp only [List.pairwise_cons] at hpw
-    refine ⟨hpw.1 p₁ (by simp), hpw.2.1, ?_, ?_⟩
-    · have h := hprefix ⟨1, by simp⟩ (by norm_num)
-      simpa using h
-    · refine ⟨List.sortedGT_iff_pairwise.mpr hpw.2.2, ?_, ?_, ?_, ?_⟩
-      · simpa [Nat.even_add] using hodd
-      · apply (lt_ceilDiv_iff_mul_lt_nat hc).2
-        simpa [mul_assoc] using hprod
-      · intro i hiOdd
-        let j : Fin (p₀ :: p₁ :: xs).length :=
-          ⟨i.val + 2, by simp⟩
-        have hjOdd : ¬Even j.val := by
-          simpa [j, Nat.even_add] using hiOdd
-        have h := hprefix j hjOdd
-        apply (lt_ceilDiv_iff_mul_lt_nat hc).2
-        simpa [j, mul_assoc] using h
-      · apply (ceilDiv_le_iff_le_mul hc).2
-        simpa [mul_assoc] using hterminal
-  · rintro ⟨h10, hxs1, hhead, hsorted, hodd, hprod, hprefix, hterminal⟩
-    refine ⟨?_, ?_, ?_, ?_, ?_⟩
-    · rw [List.sortedGT_iff_pairwise, List.pairwise_cons, List.pairwise_cons,
-        ← List.sortedGT_iff_pairwise]
-      constructor
-      · intro p hp
-        simp only [List.mem_cons] at hp
-        rcases hp with rfl | hp
-        · exact h10
-        · exact (hxs1 p hp).trans h10
-      · exact ⟨hxs1, hsorted⟩
-    · simpa [Nat.even_add] using hodd
-    · have h := (lt_ceilDiv_iff_mul_lt_nat hc).1 hprod
-      simpa [mul_assoc] using h
-    · intro i hiOdd
-      rcases i with ⟨i, hi⟩
-      cases i with
-      | zero => simp at hiOdd
-      | succ i =>
-          cases i with
-          | zero => simpa using hhead
-          | succ i =>
-              let j : Fin xs.length := ⟨i, by simp at hi; omega⟩
-              have hjOdd : ¬Even j.val := by
-                simpa [j, Nat.even_add] using hiOdd
-              have h := (lt_ceilDiv_iff_mul_lt_nat hc).1 (hprefix j hjOdd)
-              simpa [j, mul_assoc] using h
-    · have h := (ceilDiv_le_iff_le_mul hc).1 hterminal
-      simpa [mul_assoc] using h
+  simpa [rosserBoundaryChain, LowerRosserBoundaryChain] using
+    (rosserBoundaryChain_cons_cons (Nat.mul_pos hp₀ hp₁) (fun i => ¬Even i)
+      (fun i => not_congr (by simp [Nat.even_add] : Even (i + 2) ↔ Even i)))
 
 /-- Canonical decreasing-list representatives of all lower boundary subsets of
 `P`; every represented list has odd length. -/
@@ -412,6 +352,50 @@ theorem lowerRosserBoundaryChainsFixedPairDepth0Density_zero
     simpa using hpr
 
 
+/-- A boundary chain whose length is at least two can be split at its two
+largest entries. The residual carrier keeps only primes below the second entry. -/
+theorem rosser_boundary_chains_pair_depth_succ_iff
+    {D : ℕ} {P : Finset ℕ} (hprime : ∀ p ∈ P, p.Prime)
+    {carrier : ℕ → Finset ℕ → Finset (List ℕ)}
+    {chain : ℕ → List ℕ → Prop} {headTest : ℕ → ℕ → Prop}
+    (hmem : ∀ {E : ℕ} {A : Finset ℕ} {l : List ℕ}, A ⊆ P →
+      (l ∈ carrier E A ↔ l.toFinset ⊆ A ∧ chain E l))
+    (hstep : ∀ {p₀ p₁ : ℕ} {xs : List ℕ}, p₀.Prime → p₁.Prime →
+      (chain D (p₀ :: p₁ :: xs) ↔ p₁ < p₀ ∧ (∀ p ∈ xs, p < p₁) ∧
+        headTest p₀ p₁ ∧ chain (D ⌈/⌉ (p₀ * p₁)) xs))
+    {l : List ℕ} (k offset : ℕ) :
+    l ∈ (carrier D P).filter (fun l => l.length = 2 * (k + 1) + offset) ↔
+      ∃ p₀ ∈ P, ∃ p₁ ∈ P, p₁ < p₀ ∧ headTest p₀ p₁ ∧
+        ∃ xs, l = p₀ :: p₁ :: xs ∧
+          xs ∈ (carrier (D ⌈/⌉ (p₀ * p₁)) (P.filter (fun p => p < p₁))).filter
+            (fun xs => xs.length = 2 * k + offset) := by
+  simp only [Finset.mem_filter, hmem (show P ⊆ P from fun _ h => h), hmem (Finset.filter_subset _ _)]
+  constructor
+  · rintro ⟨⟨hsub, hchain⟩, hlen⟩
+    match l with
+    | [] | [_] => simp only [List.length_nil, List.length_cons] at hlen; omega
+    | p₀ :: p₁ :: xs =>
+      have hp₀ : p₀ ∈ P := hsub (by simp)
+      have hp₁ : p₁ ∈ P := hsub (by simp)
+      obtain ⟨hlt, htail, hhead, hrec⟩ := (hstep (hprime p₀ hp₀) (hprime p₁ hp₁)).mp hchain
+      refine ⟨p₀, hp₀, p₁, hp₁, hlt, hhead, xs, rfl, ⟨?_, hrec⟩, ?_⟩
+      · intro p hp
+        exact Finset.mem_filter.mpr ⟨hsub (by simp [hp]), htail p (by simpa using hp)⟩
+      · simp only [List.length_cons] at hlen
+        omega
+  · rintro ⟨p₀, hp₀, p₁, hp₁, hlt, hhead, xs, rfl, ⟨hsub, hrec⟩, hlen⟩
+    refine ⟨⟨?_, (hstep (hprime p₀ hp₀) (hprime p₁ hp₁)).mpr
+      ⟨hlt, fun p hp => (Finset.mem_filter.mp (hsub (by simpa using hp))).2, hhead, hrec⟩⟩, ?_⟩
+    · intro p hp
+      simp only [List.mem_toFinset, List.mem_cons] at hp
+      rcases hp with rfl | rfl | hp
+      · exact hp₀
+      · exact hp₁
+      · exact (Finset.mem_filter.mp (hsub (by simpa using hp))).1
+    · simp only [List.length_cons]
+      omega
+
+
 /-- Exact carrier recursion for positive pair-depth lower Rosser boundary
 chains.  Peeling the two largest selected primes shifts source index by two. -/
 theorem mem_lowerRosserBoundaryChains_fixedPairDepth0_succ_iff
@@ -425,73 +409,48 @@ theorem mem_lowerRosserBoundaryChains_fixedPairDepth0_succ_iff
           xs ∈ (lowerRosserBoundaryChains (D ⌈/⌉ (p₀ * p₁)) q
             (P.filter (fun p => p < p₁))).filter
               (fun xs => xs.length = 2 * k + 1) := by
-  constructor
-  · intro hl
-    have hmem := (mem_lowerRosserBoundaryChains_iff hqs hqprime hqmin).1
-      (Finset.mem_filter.mp hl).1
-    have hlen := (Finset.mem_filter.mp hl).2
-    cases l with
-    | nil => simp at hlen
-    | cons p₀ tail =>
-        cases tail with
-        | nil =>
-            simp only [List.length_cons, List.length_nil] at hlen
-            omega
-        | cons p₁ xs =>
-            have hp₀P : p₀ ∈ P := hmem.2.2.1 (by simp)
-            have hp₁P : p₁ ∈ P := hmem.2.2.1 (by simp)
-            have hrec := (lowerRosserBoundaryChain_cons_cons_iff
-              (hprime p₀ hp₀P).pos (hprime p₁ hp₁P).pos).1 hmem.2.2.2
-            refine ⟨p₀, hp₀P, p₁, hp₁P, hrec.1, hrec.2.2.1, xs, rfl, ?_⟩
-            apply Finset.mem_filter.mpr
-            refine ⟨(mem_lowerRosserBoundaryChains_iff ?_ hqprime ?_).2 ?_, ?_⟩
-            · intro hq
-              exact hqs (Finset.mem_filter.mp hq).1
-            · intro p hp
-              exact hqmin p (Finset.mem_filter.mp hp).1
-            · refine ⟨hmem.1.of_cons.of_cons, hrec.2.2.2.1, ?_, hrec.2.2.2⟩
-              intro p hp
-              exact Finset.mem_filter.mpr
-                ⟨hmem.2.2.1 (by simp [hp]), hrec.2.1 p (by simpa using hp)⟩
-            · simp only [List.length_cons] at hlen
-              omega
-  · rintro ⟨p₀, hp₀P, p₁, hp₁P, h10, hhead, xs, rfl, hxs⟩
-    have hxsMem := (mem_lowerRosserBoundaryChains_iff
-      (by
-        intro hq
-        exact hqs (Finset.mem_filter.mp hq).1)
-      hqprime
-      (fun p hp => hqmin p (Finset.mem_filter.mp hp).1)).1
-        (Finset.mem_filter.mp hxs).1
-    have hxslt : ∀ p ∈ xs, p < p₁ := by
-      intro p hp
-      exact (Finset.mem_filter.mp (hxsMem.2.2.1 (by simpa using hp))).2
-    have hchain : LowerRosserBoundaryChain D q (p₀ :: p₁ :: xs) :=
-      (lowerRosserBoundaryChain_cons_cons_iff
-        (hprime p₀ hp₀P).pos (hprime p₁ hp₁P).pos).2
-          ⟨h10, hxslt, hhead, hxsMem.2.2.2⟩
-    apply Finset.mem_filter.mpr
-    refine ⟨(mem_lowerRosserBoundaryChains_iff hqs hqprime hqmin).2 ?_, ?_⟩
-    · refine ⟨?_, hchain.1, ?_, hchain⟩
-      · simp only [List.nodup_cons]
-        constructor
-        · intro hp₀
-          simp only [List.mem_cons] at hp₀
-          rcases hp₀ with rfl | hp₀
-          · exact (Nat.ne_of_gt h10) rfl
-          · exact (Nat.ne_of_gt ((hxslt p₀ hp₀).trans h10)) rfl
-        · constructor
-          · exact fun hp₁ => (Nat.ne_of_gt (hxslt p₁ hp₁)) rfl
-          · exact hxsMem.1
-      · intro p hp
-        simp only [List.mem_toFinset, List.mem_cons] at hp
-        rcases hp with rfl | rfl | hp
-        · exact hp₀P
-        · exact hp₁P
-        · exact (Finset.mem_filter.mp (hxsMem.2.2.1 (by simpa using hp))).1
-    · have hlen := (Finset.mem_filter.mp hxs).2
-      simp only [List.length_cons]
-      omega
+  have hmem {E : ℕ} {A : Finset ℕ} {xs : List ℕ} (hA : A ⊆ P) :
+      xs ∈ lowerRosserBoundaryChains E q A ↔
+        xs.toFinset ⊆ A ∧ LowerRosserBoundaryChain E q xs := by
+    rw [mem_lowerRosserBoundaryChains_iff (fun h => hqs (hA h)) hqprime (fun p hp => hqmin p (hA hp))]
+    exact ⟨fun h => h.2.2, fun h => ⟨h.2.1.nodup, h.2.1, h.1, h.2⟩⟩
+  exact
+    rosser_boundary_chains_pair_depth_succ_iff (D := D)
+      (chain := fun E => LowerRosserBoundaryChain E q) (headTest := fun p₀ p₁ => p₀ * p₁ ^ 3 < D)
+      hprime hmem (fun hp₀ hp₁ => lowerRosserBoundaryChain_cons_cons_iff hp₀.pos hp₁.pos) k 1
+
+/-- Sum the product weights by their first two entries and residual chain. -/
+theorem rosser_boundary_chains_pair_sum
+    (nu : ℕ → ℝ) {P : Finset ℕ} {A : Finset (List ℕ)}
+    {tail : ℕ → ℕ → Finset (List ℕ)} {headTest : ℕ → ℕ → Prop}
+    [DecidableRel headTest]
+    (hsplit : ∀ {l : List ℕ}, l ∈ A ↔
+      ∃ p₀ ∈ P, ∃ p₁ ∈ P, p₁ < p₀ ∧ headTest p₀ p₁ ∧
+        ∃ xs, l = p₀ :: p₁ :: xs ∧ xs ∈ tail p₀ p₁) :
+    ∑ l ∈ A, (l.map nu).prod =
+      ∑ p₀ ∈ P, ∑ p₁ ∈ P.filter (fun p₁ => p₁ < p₀ ∧ headTest p₀ p₁),
+        nu p₀ * nu p₁ * ∑ xs ∈ tail p₀ p₁, (xs.map nu).prod := by
+  classical
+  let B := P.sigma fun p₀ =>
+    (P.filter (fun p₁ => p₁ < p₀ ∧ headTest p₀ p₁)).sigma (tail p₀)
+  have hsum : ∑ b ∈ B, nu b.1 * nu b.2.1 * (b.2.2.map nu).prod =
+      ∑ l ∈ A, (l.map nu).prod := by
+    apply Finset.sum_nbij (fun b => b.1 :: b.2.1 :: b.2.2)
+    · rintro ⟨p₀, p₁, xs⟩ hb
+      simp only [B, Finset.mem_sigma, Finset.mem_filter] at hb
+      exact hsplit.mpr ⟨p₀, hb.1, p₁, hb.2.1.1, hb.2.1.2.1, hb.2.1.2.2, xs, rfl, hb.2.2⟩
+    · rintro ⟨p₀, p₁, xs⟩ _ ⟨r₀, r₁, ys⟩ _ heq
+      obtain ⟨rfl, heq⟩ := List.cons.inj heq
+      obtain ⟨rfl, rfl⟩ := List.cons.inj heq
+      rfl
+    · intro l hl
+      obtain ⟨p₀, hp₀, p₁, hp₁, hlt, hhead, xs, rfl, hxs⟩ := hsplit.mp hl
+      exact ⟨⟨p₀, p₁, xs⟩, by simpa [B, hp₀, hp₁, hlt, hhead] using hxs, rfl⟩
+    · rintro ⟨p₀, p₁, xs⟩ _
+      simp [mul_assoc]
+  rw [← hsum]
+  simp only [B, Finset.sum_sigma, Finset.mul_sum]
+
 
 /-- Exact two-prime successor recurrence for lower fixed-pair-depth density. -/
 theorem lowerRosserBoundaryChainsFixedPairDepth0Density_succ
@@ -504,53 +463,9 @@ theorem lowerRosserBoundaryChainsFixedPairDepth0Density_succ
           nu p₀ * nu p₁ *
             lowerRosserBoundaryChainsFixedPairDepth0Density nu
               (D ⌈/⌉ (p₀ * p₁)) q (P.filter (fun p => p < p₁)) k := by
-  classical
-  let A := (lowerRosserBoundaryChains D q P).filter
-    (fun l => l.length = 2 * (k + 1) + 1)
-  let B : Finset (Σ _p₀ : ℕ, Σ _p₁ : ℕ, List ℕ) :=
-    P.sigma fun p₀ =>
-      (P.filter (fun p₁ => p₁ < p₀ ∧ p₀ * p₁ ^ 3 < D)).sigma fun p₁ =>
-        (lowerRosserBoundaryChains (D ⌈/⌉ (p₀ * p₁)) q
-          (P.filter (fun p => p < p₁))).filter
-            (fun xs => xs.length = 2 * k + 1)
-  let encode : List ℕ → (Σ _p₀ : ℕ, Σ _p₁ : ℕ, List ℕ) := fun l =>
-    match l with
-    | p₀ :: p₁ :: xs => ⟨p₀, ⟨p₁, xs⟩⟩
-    | _ => ⟨0, ⟨0, []⟩⟩
-  let decode : (Σ _p₀ : ℕ, Σ _p₁ : ℕ, List ℕ) → List ℕ := fun b =>
-    b.1 :: b.2.1 :: b.2.2
-  have hsum :
-      ∑ l ∈ A, (l.map nu).prod =
-        ∑ b ∈ B, nu b.1 * nu b.2.1 * (b.2.2.map nu).prod := by
-    apply Finset.sum_bij' (fun l _ => encode l) (fun b _ => decode b)
-    · intro l hl
-      have hdecomp := (mem_lowerRosserBoundaryChains_fixedPairDepth0_succ_iff
-        hqs hqprime hprime hqmin k).1 (by simpa [A] using hl)
-      rcases hdecomp with ⟨p₀, hp₀, p₁, hp₁, h10, hhead, xs, rfl, hxs⟩
-      simpa [encode, B, h10, hhead, hp₀, hp₁] using hxs
-    · rintro ⟨p₀, p₁, xs⟩ hb
-      simp only [B, Finset.mem_sigma, Finset.mem_filter] at hb
-      exact (mem_lowerRosserBoundaryChains_fixedPairDepth0_succ_iff
-        hqs hqprime hprime hqmin k).2
-          ⟨p₀, hb.1, p₁, hb.2.1.1, hb.2.1.2.1, hb.2.1.2.2,
-            xs, rfl, Finset.mem_filter.mpr hb.2.2⟩
-    · intro l hl
-      have hdecomp := (mem_lowerRosserBoundaryChains_fixedPairDepth0_succ_iff
-        hqs hqprime hprime hqmin k).1 (by simpa [A] using hl)
-      rcases hdecomp with ⟨p₀, hp₀, p₁, hp₁, h10, hhead, xs, rfl, hxs⟩
-      rfl
-    · rintro ⟨p₀, p₁, xs⟩ hb
-      rfl
-    · intro l hl
-      have hdecomp := (mem_lowerRosserBoundaryChains_fixedPairDepth0_succ_iff
-        hqs hqprime hprime hqmin k).1 (by simpa [A] using hl)
-      rcases hdecomp with ⟨p₀, hp₀, p₁, hp₁, h10, hhead, xs, rfl, hxs⟩
-      simp [encode, mul_assoc]
-  rw [lowerRosserBoundaryChainsFixedPairDepth0Density]
-  change ∑ l ∈ A, (l.map nu).prod = _
-  rw [hsum]
-  simp only [B, Finset.sum_sigma]
-  simp_rw [lowerRosserBoundaryChainsFixedPairDepth0Density, Finset.mul_sum]
+  simpa only [lowerRosserBoundaryChainsFixedPairDepth0Density] using
+    rosser_boundary_chains_pair_sum nu
+      (mem_lowerRosserBoundaryChains_fixedPairDepth0_succ_iff hqs hqprime hprime hqmin k)
 
 /-- Removing the first two entries of a positive upper Rosser boundary chain
 gives an exact residual chain at the ceiling-divided level. -/
@@ -559,56 +474,8 @@ theorem upperRosserBoundaryChain_cons_cons_iff
     UpperRosserBoundaryChain D q (p₀ :: p₁ :: xs) ↔
       p₁ < p₀ ∧ (∀ p ∈ xs, p < p₁) ∧ p₀ ^ 3 < D ∧
         UpperRosserBoundaryChain (D ⌈/⌉ (p₀ * p₁)) q xs := by
-  have hc : 0 < p₀ * p₁ := Nat.mul_pos hp₀ hp₁
-  constructor
-  · rintro ⟨hsorted, heven, hprod, hprefix, hterminal⟩
-    have hpw := List.sortedGT_iff_pairwise.mp hsorted
-    simp only [List.pairwise_cons] at hpw
-    refine ⟨hpw.1 p₁ (by simp), hpw.2.1, ?_, ?_⟩
-    · have h := hprefix ⟨0, by simp⟩ (by simp)
-      simpa using h
-    · refine ⟨List.sortedGT_iff_pairwise.mpr hpw.2.2, ?_, ?_, ?_, ?_⟩
-      · simpa [Nat.even_add] using heven
-      · apply (lt_ceilDiv_iff_mul_lt_nat hc).2
-        simpa [mul_assoc] using hprod
-      · intro i hiEven
-        let j : Fin (p₀ :: p₁ :: xs).length :=
-          ⟨i.val + 2, by simp⟩
-        have hjEven : Even j.val := hiEven.add (by norm_num)
-        have h := hprefix j hjEven
-        apply (lt_ceilDiv_iff_mul_lt_nat hc).2
-        simpa [j, mul_assoc] using h
-      · apply (ceilDiv_le_iff_le_mul hc).2
-        simpa [mul_assoc] using hterminal
-  · rintro ⟨h10, hxs1, hhead, hsorted, heven, hprod, hprefix, hterminal⟩
-    refine ⟨?_, ?_, ?_, ?_, ?_⟩
-    · rw [List.sortedGT_iff_pairwise, List.pairwise_cons, List.pairwise_cons,
-        ← List.sortedGT_iff_pairwise]
-      constructor
-      · intro p hp
-        simp only [List.mem_cons] at hp
-        rcases hp with rfl | hp
-        · exact h10
-        · exact (hxs1 p hp).trans h10
-      · exact ⟨hxs1, hsorted⟩
-    · simpa [Nat.even_add] using heven
-    · have h := (lt_ceilDiv_iff_mul_lt_nat hc).1 hprod
-      simpa [mul_assoc] using h
-    · intro i hiEven
-      rcases i with ⟨i, hi⟩
-      cases i with
-      | zero => simpa using hhead
-      | succ i =>
-          cases i with
-          | zero => simp at hiEven
-          | succ i =>
-              let j : Fin xs.length := ⟨i, by simp at hi; omega⟩
-              have hjEven : Even j.val := by
-                simpa [j, Nat.even_add] using hiEven
-              have h := (lt_ceilDiv_iff_mul_lt_nat hc).1 (hprefix j hjEven)
-              simpa [j, mul_assoc] using h
-    · have h := (ceilDiv_le_iff_le_mul hc).1 hterminal
-      simpa [mul_assoc] using h
-
+  simpa [rosserBoundaryChain, UpperRosserBoundaryChain] using
+    (rosserBoundaryChain_cons_cons (Nat.mul_pos hp₀ hp₁) Even
+      (by intro i; simp [Nat.even_add]))
 
 end MathlibNt.SieveTheory.LinearSieve

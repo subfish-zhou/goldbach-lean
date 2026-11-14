@@ -21,31 +21,6 @@ open DirichletLGlobalConductorLogValueBound
 open DirichletLGlobalConductorLogDerivativeBound
 open DirichletLWeakStripDifferenceBound
 
-/-- The quantitative strip width lies in both ranges needed by the derivative bound. -/
-private lemma nonquadraticConductorLogWidth_bounds {m : ℕ}
-    (hlogm : 0 < Real.log (m : ℝ)) :
-    let L : ℝ := 1 + Real.log m
-    let x : ℝ := 1 / (4398046511104 * L ^ 9)
-    0 < x ∧ x ≤ 1 / 2 ∧ x ≤ 1 / Real.log m := by
-  let L : ℝ := 1 + Real.log m
-  have hL : 1 < L := by dsimp only [L]; linarith only [hlogm]
-  have hL0 : 0 < L := lt_trans zero_lt_one hL
-  have hLpow : 1 ≤ L ^ 9 := one_le_pow₀ hL.le
-  have hden : L ≤ 4398046511104 * L ^ 9 := by
-    calc
-      L = L ^ 1 := by ring
-      _ ≤ L ^ 9 := pow_le_pow_right₀ hL.le (by norm_num)
-      _ ≤ 4398046511104 * L ^ 9 :=
-        le_mul_of_one_le_left (pow_nonneg hL0.le 9) (by norm_num)
-  refine ⟨by positivity, ?_, ?_⟩
-  · apply one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2)
-    change 2 ≤ 4398046511104 * L ^ 9
-    linarith only [hLpow]
-  · apply one_div_le_one_div_of_le hlogm
-    change Real.log (m : ℝ) ≤ 4398046511104 * L ^ 9
-    have hlogL : Real.log (m : ℝ) ≤ L := by dsimp only [L]; linarith
-    exact hlogL.trans hden
-
 /-- Quantitative nonquadratic lower bound in the sharp conductor-log strip. -/
 theorem norm_LFunction_lower_of_nonquadratic_conductorLog
     {q : ℕ} [NeZero q] (χ : DirichletCharacter ℂ q) (hχsq : χ ^ 2 ≠ 1)
@@ -64,109 +39,19 @@ theorem norm_LFunction_lower_of_nonquadratic_conductorLog
     intro h
     apply hχsq
     rw [h, one_pow]
-  have hm : 2 ≤ m := by
-    simpa only [m] using two_le_conductorHeightCutoff χ hχ t
   have hlogm : 0 < Real.log (m : ℝ) := by
     simpa only [m] using log_conductorHeightCutoff_pos χ hχ t
   have hL : 1 < L := by dsimp only [L]; linarith
   have hL0 : 0 < L := lt_trans zero_lt_one hL
-  have hwidth := nonquadraticConductorLogWidth_bounds hlogm
+  have hwidth := nonquadraticConductorLogWidth_bounds (A := 4398046511104) (by norm_num) hlogm
   have hx : 0 < x := hwidth.1
   have hxhalf : x ≤ 1 / 2 := hwidth.2.1
   have hxlog : x ≤ 1 / Real.log m := hwidth.2.2
-  have hσ : 1 < 1 + x := by linarith
-  have hσtwo : 1 + x ≤ 2 := by linarith
-  have hχsqvalue :
-      ‖(χ ^ 2).LFunction (1 + x + I * (2 * t))‖ ≤ 64 * L := by
-    let m₂ := dirichletLConductorHeightCutoff q (2 * t)
-    have hm₂ : 2 ≤ m₂ := by
-      simpa only [m₂] using two_le_conductorHeightCutoff (χ ^ 2) hχsq (2 * t)
-    have hlogm₂ : 0 < Real.log (m₂ : ℝ) := Real.log_pos (by exact_mod_cast hm₂)
-    have hm₂m : m₂ ≤ m ^ 2 := by
-      simpa only [m₂, m] using
-        dirichletLConductorHeightCutoff_two_mul_le_sq χ hχ t
-    have hlogle : Real.log (m₂ : ℝ) ≤ 2 * Real.log (m : ℝ) := by
-      calc
-        Real.log (m₂ : ℝ) ≤ Real.log ((m : ℕ) ^ 2 : ℕ) :=
-          Real.log_le_log (by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_two hm₂))
-            (by exact_mod_cast hm₂m)
-        _ = 2 * Real.log (m : ℝ) := by
-          push_cast
-          rw [Real.log_pow]
-          norm_num
-    have hnear₂ : 1 - 1 / Real.log m₂ ≤ 1 + x := by
-      have : 0 < 1 / Real.log m₂ := one_div_pos.mpr hlogm₂
-      linarith
-    have hv :=
-      norm_LFunction_le_thirtytwo_mul_one_add_log_conductorHeightCutoff
-        (χ ^ 2) hχsq (σ := 1 + x) (t := 2 * t)
-        (by linarith) hσtwo (by simpa only [m₂] using hnear₂)
-    calc
-      ‖(χ ^ 2).LFunction (1 + x + I * (2 * t))‖
-          ≤ 32 * (1 + Real.log m₂) := by
-            convert hv using 1; push_cast; ring
-      _ ≤ 64 * L := by
-        dsimp only [L]
-        nlinarith
-  have htriv : ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ≤ 2 / x := by
-    rw [DirichletCharacter.LFunctionTrivChar]
-    calc
-      ‖(1 : DirichletCharacter ℂ q).LFunction (1 + x)‖ ≤ 1 + 1 / x := by
-        convert norm_dirichletLFunction_le
-          (1 : DirichletCharacter ℂ q) (1 + x) 0 hσ using 1 <;> norm_num
-      _ ≤ 2 / x := by
-        rw [le_div_iff₀ hx]
-        field_simp [ne_of_gt hx]
-        linarith
-  have hprod : 1 ≤
-      ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ^ 3 *
-        ‖χ.LFunction (1 + x + I * t)‖ ^ 4 *
-        ‖(χ ^ 2).LFunction (1 + x + I * (2 * t))‖ := by
-    have hp := χ.norm_LFunction_product_ge_one hx t
-    convert (show 1 ≤
-        ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ^ 3 *
-          ‖χ.LFunction (1 + x + I * t)‖ ^ 4 *
-          ‖(χ ^ 2).LFunction (1 + x + 2 * I * t)‖ by
-        simpa only [norm_mul, norm_pow] using hp) using 1; ring
-  have hmajor : 1 ≤
-      (2 / x) ^ 3 * ‖χ.LFunction (1 + x + I * t)‖ ^ 4 * (64 * L) := by
-    calc
-      1 ≤ ‖DirichletCharacter.LFunctionTrivChar q (1 + x)‖ ^ 3 *
-          ‖χ.LFunction (1 + x + I * t)‖ ^ 4 *
-          ‖(χ ^ 2).LFunction (1 + x + I * (2 * t))‖ := hprod
-      _ ≤ (2 / x) ^ 3 * ‖χ.LFunction (1 + x + I * t)‖ ^ 4 * (64 * L) := by
-        gcongr
-  have hlower : x ^ 3 ≤ 512 * L * ‖χ.LFunction (1 + x + I * t)‖ ^ 4 := by
-    have hs := mul_le_mul_of_nonneg_left hmajor (pow_nonneg hx.le 3)
-    calc
-      x ^ 3 = x ^ 3 * 1 := by ring
-      _ ≤ x ^ 3 * ((2 / x) ^ 3 *
-          ‖χ.LFunction (1 + x + I * t)‖ ^ 4 * (64 * L)) := hs
-      _ = 512 * L * ‖χ.LFunction (1 + x + I * t)‖ ^ 4 := by
-        field_simp [ne_of_gt hx]
-        ring
+  have hlower := nonquadratic_conductorLog_product_lower χ hχsq t hx hxhalf
   have hβleft : 1 - x ≤ β := by simpa only [x, L, m] using hβ.1
-  have hβlower : 1 / 2 ≤ β := by linarith
   have hβright : β < 1 + x := by linarith [hβ.2]
-  have hdiff :
-      ‖χ.LFunction (((1 + x : ℝ) : ℂ) + t * I) -
-          χ.LFunction ((β : ℂ) + t * I)‖ ≤
-        (64 * L ^ 2) * (1 + x - β) := by
-    rw [← integral_deriv_LFunction_eq_sub χ hχ β (1 + x) t]
-    convert intervalIntegral.norm_integral_le_of_norm_le_const ?_ using 1
-    · congr
-      rw [_root_.abs_of_nonneg (sub_nonneg.mpr hβright.le)]
-    · intro σ hσpath
-      rw [uIoc_of_le hβright.le, mem_Ioc] at hσpath
-      have hnear : 1 - 1 / Real.log m ≤ σ := by
-        have : 1 - 1 / Real.log m ≤ 1 - x := by linarith
-        exact this.trans (hβleft.trans hσpath.1.le)
-      have hd :=
-        norm_deriv_LFunction_le_sixtyfour_mul_one_add_log_sq_conductorHeightCutoff
-          χ hχ (σ := σ) (t := t)
-          (hβlower.trans hσpath.1.le) (hσpath.2.trans hσtwo)
-          (by simpa only [m] using hnear)
-      convert hd using 1; ring
+  have hdiff := norm_LFunction_horizontal_conductorLog_le χ hχ (t := t)
+    hxhalf hxlog hβleft hβright
   have hdiff' :
       ‖χ.LFunction (1 + x + I * t) - χ.LFunction (β + I * t)‖ ≤
         128 * L ^ 2 * x := by

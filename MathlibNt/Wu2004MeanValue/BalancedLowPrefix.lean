@@ -56,15 +56,8 @@ theorem balanced_low_primePrefix_nat_div_max (b s eta : ℝ)
   have hpay : (eta⁻¹ : ℝ) ^ b ≤ Real.log (T : ℝ) := by
     have := (div_le_iff₀ heta).mp hL
     nlinarith
-  have hconductor : Real.log (N : ℝ) ^ b ≤ Real.log (T : ℝ) ^ (b + 1) := by
-    calc
-      _ ≤ (eta⁻¹ * Real.log (T : ℝ)) ^ b :=
-        Real.rpow_le_rpow hLN.le hlogs' hb
-      _ = (eta⁻¹ : ℝ) ^ b * Real.log (T : ℝ) ^ b :=
-        Real.mul_rpow (by positivity) hLT.le
-      _ ≤ Real.log (T : ℝ) * Real.log (T : ℝ) ^ b :=
-        mul_le_mul_of_nonneg_right hpay (by positivity)
-      _ = _ := by rw [Real.rpow_add hLT, Real.rpow_one]; ring
+  have hconductor := PanQuotientBounds.log_rpow_le_quotient_log_rpow_succ
+    hLN.le hLT (inv_nonneg.mpr heta.le) hb hlogs' hpay
   have hyT : y ≤ T := by
     have hdiv : (N / a : ℕ) ≤ (N : ℝ) / a := by
       apply (le_div_iff₀ ha0).mpr
@@ -81,22 +74,11 @@ theorem balanced_low_primePrefix_nat_div_max (b s eta : ℝ)
     calc
       _ ≤ 2 * ((N : ℝ) / a) := by linarith
       _ = _ := by ring
-  have hsaving : eta ^ s * Real.log (N : ℝ) ^ s ≤ Real.log (T : ℝ) ^ s := by
-    rw [← Real.mul_rpow heta.le hLN.le]
-    exact Real.rpow_le_rpow (by positivity) hlogs hs.le
   refine hS.trans ?_
-  apply (le_div_iff₀ ha0).mpr
-  apply (le_div_iff₀ (Real.rpow_pos_of_pos hLN s)).mpr
-  rw [div_mul_eq_mul_div, div_mul_eq_mul_div]
-  apply (div_le_iff₀ (Real.rpow_pos_of_pos hLT s)).mpr
-  have hscale := mul_le_mul_of_nonneg_left hsaving
-    (show 0 ≤ 2 * J * (N : ℝ) by positivity)
-  have hsize := mul_le_mul_of_nonneg_left hTupper
-    (show 0 ≤ J * (eta ^ s * Real.log (N : ℝ) ^ s) by positivity)
-  rw [show 2 * J / eta ^ s * (N : ℝ) * Real.log (T : ℝ) ^ s =
-    (2 * J * N * Real.log (T : ℝ) ^ s) / eta ^ s by ring]
-  apply (le_div_iff₀ (Real.rpow_pos_of_pos heta s)).mpr
-  nlinarith
+  convert PanQuotientBounds.div_log_rpow_le_of_quotient (by omega : 0 < a)
+    hJ.le (inv_pos.mpr heta) hs.le hLN hLT hlogs' hTupper using 1
+  rw [Real.inv_rpow heta.le]
+  ring
 
 end
 end Wu2004MeanValue

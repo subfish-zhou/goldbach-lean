@@ -23,6 +23,30 @@ def CarrierQuotientThresholdGeometry
     (support : Finset ℕ) (D Dmin : ℕ) (σ τ : ℝ) : Prop :=
   ∀ p ∈ sigmaOneCarrier support D σ τ, Dmin * p ≤ D
 
+/-- A square cutoff bounds the quotient threshold on every carrier with `2 ≤ τ`. -/
+theorem carrierQuotientThresholdGeometry_of_square_le
+    {support : Finset ℕ} {D Dmin : ℕ} {σ τ : ℝ}
+    (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) (hτ : 2 ≤ τ) :
+    CarrierQuotientThresholdGeometry support D Dmin σ τ := by
+  intro p hp
+  have hroot := (Finset.mem_filter.mp hp).2.2
+  have hD1 : (1 : ℝ) ≤ D := by
+    exact_mod_cast (show 1 ≤ D by nlinarith)
+  have hpRoot : (p : ℝ) < Real.sqrt D := by
+    rw [Real.sqrt_eq_rpow]
+    refine hroot.trans_le (Real.rpow_le_rpow_of_exponent_le hD1 ?_)
+    exact one_div_le_one_div_of_le (by norm_num) hτ
+  have hpSquare : p ^ 2 ≤ D := by
+    exact_mod_cast ((Real.lt_sqrt (Nat.cast_nonneg p)).mp hpRoot).le
+  calc
+    Dmin * p ≤ max Dmin p * max Dmin p :=
+      Nat.mul_le_mul (le_max_left _ _) (le_max_right _ _)
+    _ = (max Dmin p) ^ 2 := (pow_two _).symm
+    _ ≤ D := by
+      rcases le_total Dmin p with h | h
+      · simpa only [max_eq_right h] using hpSquare
+      · simpa only [max_eq_left h] using hD
+
 /-- A quotient-scale lower bound simultaneously verifies the induction
 threshold and that the natural recursive cutoff is at least two. -/
 theorem ceilDiv_ge_threshold_of_scale
@@ -31,11 +55,7 @@ theorem ceilDiv_ge_threshold_of_scale
   have hfloor : Dmin ≤ D / p := by
     rw [Nat.le_div_iff_mul_le hp]
     simpa [Nat.mul_comm] using hscale
-  have hdivceil : D / p ≤ D ⌈/⌉ p := by
-    rw [Nat.ceilDiv_eq_add_pred_div]
-    apply Nat.div_le_div_right
-    omega
-  exact hfloor.trans hdivceil
+  exact hfloor.trans (floorDiv_le_ceilDiv (a := p) (b := D))
 
 /-- The recursive logarithmic coordinate really parametrizes the natural
 endpoint `p` by a real power.  Thus it is admissible for the global IH rather

@@ -36,8 +36,7 @@ theorem mem_active_conductorCell {x q : ℕ} {B : ℝ}
   have hqu' : (q : ℝ) ≤ upperConductor x B := (Nat.le_floor_iff hD0).mp hqu
   have hxpos : 0 < x := source_pos_of_log hx
   have hxone : (1 : ℝ) ≤ x := by exact_mod_cast hxpos
-  have hsqrt : Real.sqrt (x : ℝ) ≤ x := by
-    exact (Real.sqrt_le_iff).2 ⟨Nat.cast_nonneg x, by nlinarith only [hxone]⟩
+  have hsqrt : Real.sqrt (x : ℝ) ≤ x := Real.sqrt_le_self_iff.mpr (Or.inr hxone)
   have hqx : (q : ℝ) ≤ x :=
     hqu'.trans ((upperConductor_le_sqrt hx hB).trans hsqrt)
   have hlast : (q : ℝ) ≤ 2 ^ (Nat.log 2 x + 1) * lowConductor x B := by

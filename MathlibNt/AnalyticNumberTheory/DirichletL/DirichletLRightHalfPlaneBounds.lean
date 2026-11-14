@@ -64,12 +64,10 @@ theorem norm_dirichletLSeries_le {q : ℕ} (χ : DirichletCharacter ℂ q)
   have hre : (σ + Complex.I * t : ℂ).re = σ := by simp
   have hterm (n : ℕ) :
       ‖LSeries.term (fun n : ℕ => χ n) (σ + Complex.I * t) n‖ ≤ (n : ℝ) ^ (-σ) := by
-    by_cases hn : n = 0
-    · simp [LSeries.term, hn, Real.zero_rpow (by linarith : -σ ≠ 0)]
-    · rw [LSeries.term, ite_eq_right hn, norm_div,
-        norm_natCast_cpow_of_re_ne_zero n (by rw [hre]; linarith), hre,
-        Real.rpow_neg (Nat.cast_nonneg n)]
-      simpa only [one_div] using
+    rw [LSeries.norm_term_eq, hre, Real.rpow_neg (Nat.cast_nonneg n)]
+    split_ifs with hn
+    · exact inv_nonneg.mpr (Real.rpow_nonneg (Nat.cast_nonneg n) σ)
+    · simpa only [one_div] using
         div_le_div_of_nonneg_right (χ.norm_le_one n)
           (Real.rpow_nonneg (Nat.cast_nonneg n) σ)
   calc

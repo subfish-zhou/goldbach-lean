@@ -1,6 +1,7 @@
 module
 
-public import AnalyticNumberTheory.Mertens.PartialSummation
+public import AnalyticNumberTheory.Mertens.SecondTheorem
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 
 /-!
 # Finite logarithmic bridge for Mertens' product theorem
@@ -38,7 +39,7 @@ theorem logarithmicCorrection_eq_sum_range (x : ℕ) :
     logarithmicCorrection x =
       ∑ p ∈ Finset.range (x + 1), logarithmicCorrectionTerm p := by
   unfold logarithmicCorrection primesUpTo logarithmicCorrectionTerm
-  rw [Finset.sum_filter]
+  rw [Nat.primesLE_eq_filter_range, Finset.sum_filter]
 
 /-- The same reciprocal-square majorant controls convergence and every shifted tail. -/
 private theorem summable_two_div_nat_sq : Summable (fun p : ℕ => 2 / (p : ℝ) ^ 2) := by

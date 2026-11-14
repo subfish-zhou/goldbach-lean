@@ -1,7 +1,7 @@
 module
 
-public import Mathlib.Analysis.SpecialFunctions.Log.Basic
-public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.NumberTheory.PrimeCounting
 public import Mathlib.Tactic
 
 /-!
@@ -21,17 +21,15 @@ open Finset Real
 
 /-- The finite set of prime natural numbers at most `x`. -/
 def primesUpTo (x : ℕ) : Finset ℕ :=
-  (range (x + 1)).filter Nat.Prime
+  x.primesLE
 
 @[simp]
 theorem mem_primesUpTo {p x : ℕ} : p ∈ primesUpTo x ↔ p.Prime ∧ p ≤ x := by
-  simp [primesUpTo, and_comm]
+  simpa only [primesUpTo, and_comm] using (Nat.mem_primesLE (p := p) (n := x))
 
 /-- The sets of primes up to `x` are nested as `x` increases. -/
 theorem primesUpTo_mono {x y : ℕ} (hxy : x ≤ y) : primesUpTo x ⊆ primesUpTo y := by
-  intro p hp
-  rw [mem_primesUpTo] at hp ⊢
-  exact ⟨hp.1, hp.2.trans hxy⟩
+  exact Nat.primesLE_mono hxy
 
 theorem primesUpTo_eq_empty_of_le_one {x : ℕ} (hx : x ≤ 1) : primesUpTo x = ∅ := by
   ext p
@@ -87,25 +85,13 @@ theorem log_primeProduct (x : ℕ) :
 `2 t²`. -/
 theorem abs_log_one_sub_add_le {t : ℝ} (ht0 : 0 < t) (htle : t ≤ 1 / 2) :
     |log (1 - t) + t| ≤ 2 * t ^ 2 := by
-  have hpos : 0 < 1 - t := by linarith
-  have hne : 1 - t ≠ 0 := ne_of_gt hpos
-  have hub : log (1 - t) ≤ -t := by
-    have h := Real.log_le_sub_one_of_pos hpos
-    linarith
-  have hlb : -t - 2 * t ^ 2 ≤ log (1 - t) := by
-    have hrec2 : 1 / (1 - t) ≤ 1 + 2 * t := by
-      rw [div_le_iff₀ hpos]
-      nlinarith
-    have hmul : t / (1 - t) ≤ t * (1 + 2 * t) := by
-      simpa [div_eq_mul_inv] using
-        mul_le_mul_of_nonneg_left hrec2 (le_of_lt ht0)
-    calc
-      -t - 2 * t ^ 2 = -(t * (1 + 2 * t)) := by ring
-      _ ≤ -(t / (1 - t)) := neg_le_neg hmul
-      _ = 1 - (1 - t)⁻¹ := by field_simp [hne]; ring
-      _ ≤ log (1 - t) := Real.one_sub_inv_le_log_of_pos hpos
-  rw [abs_le]
-  constructor <;> nlinarith
+  have ht : |t| < 1 := by rw [abs_of_pos ht0]; linarith
+  have h := Real.abs_log_sub_add_sum_range_le ht 1
+  rw [abs_of_pos ht0] at h
+  have hlinear : |log (1 - t) + t| ≤ t ^ 2 / (1 - t) := by
+    simpa [Finset.sum_range_one, add_comm] using h
+  refine hlinear.trans ((div_le_iff₀ (by linarith : 0 < 1 - t)).mpr ?_)
+  nlinarith [mul_nonneg (sq_nonneg t) (show 0 ≤ 1 - 2 * t by linarith)]
 
 /-- The local logarithmic correction for a prime Euler factor. -/
 theorem abs_log_primeFactor_add_le {p : ℕ} (hp : p.Prime) :

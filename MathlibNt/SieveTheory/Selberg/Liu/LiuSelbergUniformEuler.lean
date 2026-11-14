@@ -937,12 +937,13 @@ noncomputable def liuSelbergAbsoluteLogMoment (N : ℕ) : ℝ :=
 noncomputable def liuSelbergAbsoluteMass (N : ℕ) : ℝ :=
   ∑' d : ℕ, |liuSelbergCorrection N d|
 
-theorem tsum_liuSelbergAbsKernelConvolution_mul_log
+private theorem liuSelbergAbsKernelConvolution_log_moment
     {N : ℕ} (hN : 0 < N) :
-    (∑' n : ℕ, liuSelbergAbsKernelConvolution N n * Real.log n) =
-      liuUniversalAbsLogMoment * liuPrimeDivisorProduct N +
-        (∑' n : ℕ, |liuSelbergCorrection 2 n|) *
-          (∑' n : ℕ, liuSquarefreeDivisorKernel N n * Real.log n) := by
+    Summable (fun n : ℕ => liuSelbergAbsKernelConvolution N n * Real.log n) ∧
+      (∑' n : ℕ, liuSelbergAbsKernelConvolution N n * Real.log n) =
+        liuUniversalAbsLogMoment * liuPrimeDivisorProduct N +
+          (∑' n : ℕ, |liuSelbergCorrection 2 n|) *
+            (∑' n : ℕ, liuSquarefreeDivisorKernel N n * Real.log n) := by
   have hf : Summable fun n : ℕ =>
       ‖liuSelbergCorrectionAbsFunction 2 n‖ := by
     simpa [liuSelbergCorrectionAbsFunction_apply] using
@@ -964,7 +965,14 @@ theorem tsum_liuSelbergAbsKernelConvolution_mul_log
     tsum_liuSquarefreeDivisorKernel hN] using
       (tsum_arithmeticFunction_convolution_mul_log
         (liuSelbergCorrectionAbsFunction 2)
-        (liuSquarefreeDivisorKernelFunction N) hf hfl hg hgl).2
+        (liuSquarefreeDivisorKernelFunction N) hf hfl hg hgl)
+theorem tsum_liuSelbergAbsKernelConvolution_mul_log
+    {N : ℕ} (hN : 0 < N) :
+    (∑' n : ℕ, liuSelbergAbsKernelConvolution N n * Real.log n) =
+      liuUniversalAbsLogMoment * liuPrimeDivisorProduct N +
+        (∑' n : ℕ, |liuSelbergCorrection 2 n|) *
+          (∑' n : ℕ, liuSquarefreeDivisorKernel N n * Real.log n) :=
+  (liuSelbergAbsKernelConvolution_log_moment hN).2
 
 theorem liuSelbergAbsoluteLogMoment_le_uniform
     {N : ℕ} (hNeven : Even N) (hN : 0 < N) :
@@ -972,27 +980,7 @@ theorem liuSelbergAbsoluteLogMoment_le_uniform
       liuPrimeDivisorProduct N *
         (liuUniversalAbsLogMoment +
           liuUniversalAbsEuler * liuPrimeDivisorLogSum N) := by
-  have hconvSummable : Summable (fun n : ℕ =>
-      liuSelbergAbsKernelConvolution N n * Real.log n) := by
-    have hf : Summable fun n : ℕ =>
-        ‖liuSelbergCorrectionAbsFunction 2 n‖ := by
-      simpa [liuSelbergCorrectionAbsFunction_apply] using
-        (summable_abs_liuSelbergCorrection (N := 2) (by norm_num) (by norm_num)).norm
-    have hfl : Summable fun n : ℕ =>
-        ‖liuSelbergCorrectionAbsFunction 2 n * Real.log n‖ := by
-      simpa [liuSelbergCorrectionAbsFunction_apply] using
-        summable_liuUniversalAbsLogMoment.norm
-    have hg : Summable fun n : ℕ =>
-        ‖liuSquarefreeDivisorKernelFunction N n‖ := by
-      simpa [liuSquarefreeDivisorKernelFunction_apply] using
-        (summable_liuSquarefreeDivisorKernel hN).norm
-    have hgl : Summable fun n : ℕ =>
-        ‖liuSquarefreeDivisorKernelFunction N n * Real.log n‖ := by
-      simpa [liuSquarefreeDivisorKernelFunction_apply] using
-        (summable_liuSquarefreeDivisorKernel_mul_log hN).norm
-    exact (tsum_arithmeticFunction_convolution_mul_log
-      (liuSelbergCorrectionAbsFunction 2)
-      (liuSquarefreeDivisorKernelFunction N) hf hfl hg hgl).1
+  have hconvSummable := (liuSelbergAbsKernelConvolution_log_moment hN).1
   unfold liuSelbergAbsoluteLogMoment
   calc
     (∑' n : ℕ, |liuSelbergCorrection N n| * Real.log n) ≤

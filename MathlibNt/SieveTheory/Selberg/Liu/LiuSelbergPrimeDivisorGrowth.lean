@@ -325,7 +325,7 @@ theorem exists_liuPrimeDivisorLogSum_le_log_log_sq :
         _ ≤ Real.log y * MertensTheorem.primeReciprocalSum y := by
           rw [← Finset.mul_sum]
           apply mul_le_mul_of_nonneg_left _ hlogypos.le
-          unfold MertensTheorem.primeReciprocalSum
+          change _ ≤ ∑ p ∈ (range (y + 1)).filter Nat.Prime, 1 / (p : ℝ)
           have hs : N.primeFactors.filter (· ≤ y) ⊆
               (range (y + 1)).filter Nat.Prime := by
             intro p hp

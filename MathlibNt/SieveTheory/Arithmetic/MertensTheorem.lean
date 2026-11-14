@@ -6,7 +6,7 @@ public import Mathlib.NumberTheory.PrimeCounting
 public import Mathlib.Analysis.Calculus.Deriv.Polynomial
 public import Mathlib.Topology.ContinuousMap.Weierstrass
 public import Mathlib.Tactic.IntervalCases
-public import AnalyticNumberTheory
+public import AnalyticNumberTheory.Mertens.Theorems
 public import MathlibNt.SieveTheory.Arithmetic.SingularSeries
 
 /-!
@@ -44,14 +44,14 @@ References:
 
 namespace MathlibNt.SieveTheory.MertensTheorem
 
-open Filter Real Finset
+open Asymptotics Filter Real Finset
 open scoped Topology
 
 /-! ## 1. Mertens' second theorem -/
 
 /-- The sum of prime reciprocals: Σ_{p ≤ x} 1/p. -/
 noncomputable def primeReciprocalSum (x : ℕ) : ℝ :=
-  ((range (x + 1)).filter Nat.Prime).sum (fun p => 1 / (p : ℝ))
+  AnalyticNumberTheory.Mertens.primeReciprocalSum x
 
 /-- The Chen-local reciprocal sum is definitionally the reusable ANT object. -/
 theorem primeReciprocalSum_eq_analyticNumberTheory (x : ℕ) :
@@ -106,9 +106,9 @@ private noncomputable def primeReciprocalCoeff (p : ℕ) : ℝ :=
 
 private theorem sum_primeReciprocalCoeff_Icc (n : ℕ) :
     ∑ p ∈ Finset.Icc 0 n, primeReciprocalCoeff p = primeReciprocalSum n := by
-  unfold primeReciprocalCoeff primeReciprocalSum
-  rw [← Nat.range_succ_eq_Icc_zero n]
-  rw [← Finset.sum_filter]
+  unfold primeReciprocalCoeff
+  change _ = ∑ p ∈ n.primesLE, 1 / (p : ℝ)
+  rw [Nat.primesLE_eq_filter_Icc_zero, Finset.sum_filter]
 
 /-- Derivative of a test function pulled back to logarithmic scale. -/
 noncomputable def logScaleDeriv (f' : ℝ → ℝ) (N : ℕ) (t : ℝ) : ℝ :=
@@ -192,41 +192,28 @@ theorem weightedPrimeReciprocalLogSum_eq_sub_sub_integral
   split_ifs <;> ring
 
 /-- A floored positive real power tends to infinity. -/
-private theorem tendsto_rpowFloor_atTop {a : ℝ} (ha : 0 < a) :
+theorem tendsto_rpowFloor_atTop {a : ℝ} (ha : 0 < a) :
     Tendsto (fun N : ℕ => rpowFloor N a) atTop atTop := by
   exact tendsto_nat_floor_atTop.comp
     ((tendsto_rpow_atTop ha).comp tendsto_natCast_atTop_atTop)
 
-private theorem eventually_two_le_rpowFloor {a : ℝ} (ha : 0 < a) :
+theorem eventually_two_le_rpowFloor {a : ℝ} (ha : 0 < a) :
     ∀ᶠ N : ℕ in atTop, 2 ≤ rpowFloor N a :=
   (tendsto_rpowFloor_atTop ha).eventually (eventually_ge_atTop 2)
 
 /-- Flooring changes a positive real power by a relative error tending to zero. -/
-private theorem tendsto_rpowFloor_div_rpow {a : ℝ} (ha : 0 < a) :
+theorem tendsto_rpowFloor_div_rpow {a : ℝ} (ha : 0 < a) :
     Tendsto (fun N : ℕ => (rpowFloor N a : ℝ) / ((N : ℝ) ^ a))
       atTop (nhds 1) := by
-  have hpow : Tendsto (fun N : ℕ => (N : ℝ) ^ a) atTop atTop :=
-    (tendsto_rpow_atTop ha).comp tendsto_natCast_atTop_atTop
-  have hlower : Tendsto (fun N : ℕ => 1 - 1 / ((N : ℝ) ^ a))
-      atTop (nhds 1) := by
-    simpa using (hpow.const_div_atTop 1).const_sub 1
-  refine tendsto_of_tendsto_of_tendsto_of_le_of_le'
-    hlower tendsto_const_nhds ?_ ?_
-  · filter_upwards [hpow.eventually (eventually_gt_atTop 0)] with N hpos
-    have hfloorlt : ((N : ℝ) ^ a) < (rpowFloor N a : ℝ) + 1 := by
-      exact_mod_cast Nat.lt_floor_add_one ((N : ℝ) ^ a)
-    rw [sub_le_iff_le_add, ← add_div, le_div_iff₀ hpos]
-    simpa only [one_mul] using le_of_lt hfloorlt
-  · filter_upwards [hpow.eventually (eventually_gt_atTop 0)] with N hpos
-    rw [div_le_one hpos]
-    exact Nat.floor_le (le_of_lt hpos)
+  exact tendsto_nat_floor_div_atTop.comp
+    ((tendsto_rpow_atTop ha).comp tendsto_natCast_atTop_atTop)
 
-private theorem tendsto_log_rpowFloor_atTop {a : ℝ} (ha : 0 < a) :
+theorem tendsto_log_rpowFloor_atTop {a : ℝ} (ha : 0 < a) :
     Tendsto (fun N : ℕ => log (rpowFloor N a : ℝ)) atTop atTop := by
   exact Real.tendsto_log_atTop.comp
     (tendsto_natCast_atTop_atTop.comp (tendsto_rpowFloor_atTop ha))
 
-private theorem tendsto_log_rpowFloor_sub_log_rpow {a : ℝ} (ha : 0 < a) :
+theorem tendsto_log_rpowFloor_sub_log_rpow {a : ℝ} (ha : 0 < a) :
     Tendsto (fun N : ℕ =>
       log (rpowFloor N a : ℝ) - log ((N : ℝ) ^ a))
       atTop (nhds 0) := by
@@ -240,7 +227,7 @@ private theorem tendsto_log_rpowFloor_sub_log_rpow {a : ℝ} (ha : 0 < a) :
 
 /-- The log--log asymptotic with the exact identity
 `log (N ^ a) = a * log N`. -/
-private theorem tendsto_log_log_rpowFloor_sub {a : ℝ} (ha : 0 < a) :
+theorem tendsto_log_log_rpowFloor_sub {a : ℝ} (ha : 0 < a) :
     Tendsto (fun N : ℕ =>
       log (log (rpowFloor N a : ℝ)) -
         (log a + log (log (N : ℝ)))) atTop (nhds 0) := by
@@ -832,7 +819,8 @@ theorem tendsto_weightedPrimeReciprocalLogSum
 
 /-! ## 2. Mertens' product formula -/
 
-/-- The prime product: Π_{p ≤ x} (1 - 1/p). -/
+/-- The prime product: Π_{p ≤ x} (1 - 1/p). Unfolding this compatibility
+definition exposes the filtered range used by existing sieve proofs. -/
 noncomputable def primeProduct (x : ℕ) : ℝ :=
   ((range (x + 1)).filter Nat.Prime).prod (fun p => 1 - 1 / (p : ℝ))
 
@@ -856,173 +844,31 @@ theorem mertens_product_formula :
   refine ⟨C, fun x hx => ?_⟩
   simpa only [primeProduct_eq_analyticNumberTheory] using hbound x hx
 
-/-- General local logarithmic correction: for 0 < t ≤ 1/2,
-|log(1 - t) + t| ≤ 2t².
-
-The inequality `log x ≤ x - 1` gives log(1-t) ≤ -t.
-The inequality `log(1/(1-t)) ≤ t/(1-t)`, equivalently
-`log(1-t) ≥ -t/(1-t)`, together with t ≤ 1/2 gives the lower bound. -/
-private lemma log_one_sub_bound {t : ℝ} (ht0 : 0 < t) (htle : t ≤ 1 / 2) :
-    |log (1 - t) + t| ≤ 2 * t ^ 2 := by
-  exact AnalyticNumberTheory.Mertens.abs_log_one_sub_add_le ht0 htle
-
-/-- Local logarithmic correction for each prime p ≥ 2:
-|log(1 - 1/p) + 1/p| ≤ 2/p². -/
-private lemma log_one_sub_prime_bound {p : ℕ} (hp : p.Prime) :
-    |log (1 - 1 / (p : ℝ)) + 1 / (p : ℝ)| ≤ 2 / (p : ℝ) ^ 2 := by
-  exact AnalyticNumberTheory.Mertens.abs_log_primeFactor_add_le hp
-
-/-- **Order form of Mertens' product formula**: primeProduct x = Θ(1/log x);
-there are positive constants c₁, c₂ such that
-c₁/log x ≤ Π_{p ≤ x}(1 - 1/p) ≤ c₂/log x.
-
-This weaker version of `mertens_product_formula`, which has the exact constant
-e^{-γ}, follows directly from Mertens' second theorem via
--log Π = Σ 1/p + O(1). It does not require the Euler-Mascheroni constant identity.
-Proof outline:
-  1. log Π = Σ log(1 - 1/p), and |log(1 - 1/p) + 1/p| ≤ 2/p².
-  2. Thus -log Π = Σ 1/p + E(x), with
-     |E(x)| ≤ Σ 2/p² ≤ 2·Σ_{n≥1} 1/n² < ∞.
-  3. Mertens' second theorem gives Σ 1/p = log log x + B₁ + O(1/log x).
-  4. Hence Π = exp(-B₁ - δ - E)/log x, where |δ| and |E| are bounded,
-     so Π = Θ(1/log x). -/
+/-- Two-sided uniform bounds of order `1 / log x` for the Mertens product. -/
 theorem primeProduct_asymptotic_order :
     ∃ c₁ c₂ : ℝ, 0 < c₁ ∧ ∀ x : ℕ, 2 ≤ x →
       c₁ / log x ≤ primeProduct x ∧ primeProduct x ≤ c₂ / log x := by
-  obtain ⟨B₁, C₁, hM⟩ := mertens_second_theorem
-  have hlog2 : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-  have hC1 : 0 ≤ C₁ := by
-    have hb := hM 2 (by norm_num)
-    have hnonneg : 0 ≤ C₁ / log 2 := le_trans (abs_nonneg _) hb
-    simpa using (le_div_iff₀ hlog2).mp hnonneg
-  -- Convergence of Σ_{n ≥ 1} 1/n² bounds the prime subsum of 2/p².
-  have hsum2 : Summable (fun n : ℕ => 1 / (n : ℝ) ^ 2) :=
-    (Real.summable_one_div_nat_pow (p := 2)).2 (by norm_num : (1 : ℕ) < 2)
-  have hbound : ∃ T : ℝ, 0 ≤ T ∧
-      ∀ s : Finset ℕ, s.sum (fun p => 2 / (p : ℝ) ^ 2) ≤ T := by
-    refine ⟨2 * ∑' n : ℕ, (1 / (n : ℝ) ^ 2 : ℝ), ?_, ?_⟩
-    · exact mul_nonneg (by norm_num) (tsum_nonneg (fun n => by positivity))
-    · intro s
-      calc
-        s.sum (fun p => 2 / (p : ℝ) ^ 2) = 2 * s.sum (fun p => 1 / (p : ℝ) ^ 2) := by
-          rw [Finset.mul_sum]
-          congr 1
-          ext p
-          ring
-        _ ≤ 2 * (∑' n : ℕ, (1 / (n : ℝ) ^ 2 : ℝ)) := by
-          exact mul_le_mul_of_nonneg_left
-            (Summable.sum_le_tsum s (fun n _hn => by positivity) hsum2) (by norm_num)
-  obtain ⟨T, hT0, hbound⟩ := hbound
-  -- Local logarithmic correction at each prime.
-  have hlocal : ∀ p : ℕ, p.Prime →
-      |log (1 - 1 / (p : ℝ)) + 1 / (p : ℝ)| ≤ 2 / (p : ℝ) ^ 2 :=
-    by
-    intro p hp
-    exact log_one_sub_prime_bound hp
-  refine ⟨exp (-B₁ - T - C₁ / log 2), exp (-B₁ + T + C₁ / log 2), ?_, ?_⟩
-  · exact Real.exp_pos _
-  · intro x hx
-    have hx1 : (1 : ℝ) < x := by exact_mod_cast (by omega : 1 < x)
-    have hlogxpos : 0 < log x := Real.log_pos hx1
-    have hprod_pos : 0 < primeProduct x := by
-      unfold primeProduct
-      exact Finset.prod_pos (fun p hp => by
-        have hp' : p.Prime := (mem_filter.mp hp).2
-        have hp1 : 1 < (p : ℝ) := by exact_mod_cast hp'.one_lt
-        exact sub_pos.mpr ((div_lt_one₀ (lt_trans zero_lt_one hp1)).mpr hp1))
-    -- log Π = Σ log(1 - 1/p)
-    have hlogprod : log (primeProduct x) =
-        ((range (x + 1)).filter Nat.Prime).sum (fun p => log (1 - 1 / (p : ℝ))) := by
-      unfold primeProduct
-      rw [Real.log_prod]
-      intro p hp
-      have hp' : p.Prime := (mem_filter.mp hp).2
-      have hp1 : 1 < (p : ℝ) := by exact_mod_cast hp'.one_lt
-      exact ne_of_gt (sub_pos.mpr
-        ((div_lt_one₀ (lt_trans zero_lt_one hp1)).mpr hp1))
-    -- E(x) := Σ_{p ≤ x} (-log(1-1/p) - 1/p), |E(x)| ≤ T
-    let E : ℝ := ((range (x + 1)).filter Nat.Prime).sum
-      (fun p => -log (1 - 1 / (p : ℝ)) - 1 / (p : ℝ))
-    have hneglog : -log (primeProduct x) = primeReciprocalSum x + E := by
-      unfold E primeReciprocalSum
-      rw [hlogprod]
-      rw [← Finset.sum_neg_distrib]
-      rw [← Finset.sum_add_distrib]
-      apply Finset.sum_congr rfl
-      intro p hp
-      ring
-    have hEabs : |E| ≤ T := by
-      unfold E
-      calc
-        |((range (x + 1)).filter Nat.Prime).sum
-            (fun p => -log (1 - 1 / (p : ℝ)) - 1 / (p : ℝ))|
-            ≤ ((range (x + 1)).filter Nat.Prime).sum
-              (fun p => |(-log (1 - 1 / (p : ℝ)) - 1 / (p : ℝ))|) :=
-              Finset.abs_sum_le_sum_abs _ _
-        _ ≤ ((range (x + 1)).filter Nat.Prime).sum (fun p => 2 / (p : ℝ) ^ 2) := by
-            apply Finset.sum_le_sum
-            intro p hp
-            have hp' : p.Prime := (mem_filter.mp hp).2
-            have h := hlocal p hp'
-            rw [← abs_neg] at h
-            rwa [show (-(log (1 - 1 / (p : ℝ)) + 1 / (p : ℝ))) =
-                -log (1 - 1 / (p : ℝ)) - 1 / (p : ℝ) by ring] at h
-        _ ≤ T := hbound _
-    -- δ := S(x) - (log log x + B₁), |δ| ≤ C₁/log x
-    let δ : ℝ := primeReciprocalSum x - (log (log x) + B₁)
-    have hδ_le : |δ| ≤ C₁ / log x := by
-      simpa [δ] using (hM x hx)
-    have hδ_le2 : |δ| ≤ C₁ / log 2 := by
-      have hlelog : log 2 ≤ log x :=
-        (Real.log_le_log_iff (by norm_num : (0 : ℝ) < 2)
-          (by exact_mod_cast (by omega : 0 < x))).2 (by exact_mod_cast hx)
-      exact le_trans hδ_le (div_le_div_of_nonneg_left hC1 hlog2 hlelog)
-    -- Π = exp(-B₁ - δ - E) / log x
-    have hlogP : log (primeProduct x) = -(log (log x) + B₁ + δ + E) := by
-      have h1 : -log (primeProduct x) = log (log x) + B₁ + δ + E := by
-        rw [hneglog]
-        unfold δ
-        ring
-      linarith only [h1]
-    have hP' : primeProduct x = exp (-B₁ - δ - E) / log x := by
-      rw [← Real.exp_log hprod_pos]
-      have hsplit : -(log (log x) + B₁ + δ + E) = -log (log x) + (-B₁ - δ - E) := by ring
-      rw [hlogP, hsplit, Real.exp_add, Real.exp_neg, Real.exp_log (by positivity : 0 < log x)]
-      rw [div_eq_mul_inv]
-      ring
-    -- Bounds: exp(-B₁ - T - C₁/log2) ≤ exp(-B₁-δ-E) ≤ exp(-B₁ + T + C₁/log2).
-    have hlower : -B₁ - T - C₁ / log 2 ≤ -B₁ - δ - E := by
-      have hδ : δ ≤ |δ| := le_abs_self _
-      have hE : E ≤ |E| := le_abs_self _
-      linarith only [hδ, hE, hδ_le2, hEabs]
-    have hupper : -B₁ - δ - E ≤ -B₁ + T + C₁ / log 2 := by
-      have hδ' : -δ ≤ |δ| := neg_le_abs δ
-      have hE' : -E ≤ |E| := neg_le_abs E
-      linarith only [hδ', hE', hδ_le2, hEabs]
-    have hP_low : exp (-B₁ - T - C₁ / log 2) ≤ exp (-B₁ - δ - E) :=
-      Real.exp_le_exp.mpr hlower
-    have hP_up : exp (-B₁ - δ - E) ≤ exp (-B₁ + T + C₁ / log 2) :=
-      Real.exp_le_exp.mpr hupper
-    rw [hP']
-    constructor
-    · exact div_le_div_of_nonneg_right hP_low (le_of_lt hlogxpos)
-    · exact div_le_div_of_nonneg_right hP_up (le_of_lt hlogxpos)
-
-/-! ## 3. Application: bounded prime-reciprocal sums (Lemma 1) -/
-
-/-- `primeReciprocalSum` is monotone: x ≤ y ⟹ Σ_{p ≤ x} 1/p ≤ Σ_{p ≤ y} 1/p. -/
-private lemma primeReciprocalSum_mono : Monotone primeReciprocalSum :=
-  primeReciprocalSum_mono_early
-
-/-- S(u) = 0 for u ≤ 1, since no prime is at most 1. -/
-private lemma primeReciprocalSum_zero_of_le_one {u : ℕ} (hu : u ≤ 1) :
-    primeReciprocalSum u = 0 := by
-  unfold primeReciprocalSum
-  interval_cases u
-  · rw [Finset.sum_filter]
-    norm_num [Finset.sum_range_succ]
-  · rw [Finset.sum_filter]
-    norm_num [Finset.sum_range_succ, Nat.not_prime_one]
+  let B := AnalyticNumberTheory.Mertens.mertensSecondConstant +
+    AnalyticNumberTheory.Mertens.logarithmicCorrectionLimit
+  have hinv : Tendsto (fun n : ℕ => 1 / log (n : ℝ)) atTop (nhds 0) :=
+    (Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).const_div_atTop 1
+  obtain ⟨K, hK⟩ := isBigO_one_nat_atTop_iff.mp <|
+    AnalyticNumberTheory.Mertens.log_primeProduct_mertens_isBigO.trans
+      (hinv.isBigO_one (F := ℝ))
+  refine ⟨exp (-K - B), exp (K - B), exp_pos _, ?_⟩
+  intro n hn
+  have hlog : 0 < log (n : ℝ) := log_pos (by exact_mod_cast Nat.one_lt_two.trans_le hn)
+  have hP : 0 < primeProduct n := AnalyticNumberTheory.Mertens.primeProduct_pos n
+  have hb : |log (primeProduct n * log n) + B| ≤ K := by
+    rw [Real.log_mul hP.ne' hlog.ne']
+    exact hK n
+  have hlo := (abs_le.mp hb).1
+  have hhi := (abs_le.mp hb).2
+  refine ⟨(div_le_iff₀ hlog).mpr ?_, (le_div_iff₀ hlog).mpr ?_⟩
+  · rw [← Real.exp_log (mul_pos hP hlog)]
+    exact exp_le_exp.mpr (by linarith)
+  · rw [← Real.exp_log (mul_pos hP hlog)]
+    exact exp_le_exp.mpr (by linarith)
 
 /-- **Mertens product lower bound**: there is `cpp > 0` such that, for every `m ≥ 3`,
   `cpp / log m ≤ primeProduct m`.
@@ -1055,215 +901,20 @@ theorem prime_reciprocal_sum_bounded (α β : ℝ) (hα : 0 < α) (_hβ : α < �
       |((range (x + 1)).filter (fun p => Nat.Prime p ∧
         ((x : ℝ) ^ α < (p : ℝ) ∧ (p : ℝ) ≤ (x : ℝ) ^ β))).sum
         (fun p => 1 / (p : ℝ))| ≤ C := by
-  obtain ⟨_B₁, C₁, hM⟩ := mertens_second_theorem
-  -- C₁ ≥ 0 follows from the bound at x = 2.
-  have hC1 : 0 ≤ C₁ := by
-    have hlog2 : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-    have hb := hM 2 (by norm_num)
-    have hnonneg : 0 ≤ C₁ / log 2 := le_trans (abs_nonneg _) hb
-    simpa using (le_div_iff₀ hlog2).mp hnonneg
-  -- x₀ bounds x when x^α < 2; K is the maximum of log(2/α) and 0.
-  let x₀ : ℕ := ⌊(2 : ℝ) ^ (1 / α)⌋₊
-  let K : ℝ := max (log (2 / α)) 0
-  refine ⟨max (primeReciprocalSum x₀) (K + 2 * C₁ / log 2), ?_⟩
-  intro x hx
-  let T : Finset ℕ := (range (x + 1)).filter (fun p => Nat.Prime p ∧
-    ((x : ℝ) ^ α < (p : ℝ) ∧ (p : ℝ) ≤ (x : ℝ) ^ β))
-  let U : Finset ℕ := (range (x + 1)).filter (fun p => Nat.Prime p ∧
-    (x : ℝ) ^ α < (p : ℝ))
-  let u : ℕ := ⌊(x : ℝ) ^ α⌋₊
-  have hxα0 : 0 ≤ (x : ℝ) ^ α :=
-    Real.rpow_nonneg (by exact_mod_cast (by omega : 0 ≤ x)) α
-  -- T ⊆ U: drop the condition p ≤ x^β while retaining the common cutoff p ≤ x.
-  have hTsub : T ⊆ U := by
+  have hlim := tendsto_weightedPrimeReciprocalLogSum_const (c := 1) hα _hβ
+  obtain ⟨C, hC⟩ := isBigO_one_nat_atTop_iff.mp (hlim.isBigO_one (F := ℝ))
+  refine ⟨C, fun x _ => ?_⟩
+  let T := (range (x + 1)).filter fun p : ℕ => Nat.Prime p ∧
+    ((x : ℝ) ^ α < (p : ℝ) ∧ (p : ℝ) ≤ (x : ℝ) ^ β)
+  have hsub : T ⊆ (Ioc (rpowFloor x α) (rpowFloor x β)).filter Nat.Prime := by
     intro p hp
-    simp only [T, U, mem_filter] at hp ⊢
-    exact ⟨hp.1, hp.2.1, hp.2.2.1⟩
-  have hTnonneg : 0 ≤ T.sum (fun p => 1 / (p : ℝ)) := by
-    exact Finset.sum_nonneg (fun p _ => div_nonneg zero_le_one (by positivity))
-  -- Main estimate: the sum over U is at most max (S x₀) (K + 2C₁/log 2).
-  have hUbound : U.sum (fun p => 1 / (p : ℝ)) ≤
-      max (primeReciprocalSum x₀) (K + 2 * C₁ / log 2) := by
-    by_cases hux : u ≤ x
-    · -- U = {primes p ≤ x} \ {primes p ≤ u}, so U.sum = S x - S u.
-      have hUeq : U.sum (fun p => 1 / (p : ℝ)) =
-          primeReciprocalSum x - primeReciprocalSum u := by
-        have hsub2 : (range (u + 1)).filter Nat.Prime ⊆
-            (range (x + 1)).filter Nat.Prime := by
-          intro p hp
-          simp only [mem_filter, mem_range] at hp ⊢
-          exact ⟨by omega, hp.2⟩
-        have hUsdiff : U = (range (x + 1)).filter Nat.Prime \
-            (range (u + 1)).filter Nat.Prime := by
-          ext p
-          simp only [U, mem_filter, Finset.mem_sdiff, mem_range]
-          constructor
-          · rintro ⟨hpx, hpP, hxp⟩
-            refine ⟨⟨hpx, hpP⟩, ?_⟩
-            intro hpu
-            have hu_lt_p' : ⌊(x : ℝ) ^ α⌋₊ < p := (Nat.floor_lt hxα0).mpr hxp
-            have hu_lt_p : u < p := by
-              simpa [u] using hu_lt_p'
-            omega
-          · rintro ⟨⟨hpx, hpP⟩, hnot⟩
-            refine ⟨hpx, hpP, ?_⟩
-            have hup : u < p := by
-              by_contra h
-              have hp_le_u : p ≤ u := le_of_not_gt h
-              have hp_lt_u1 : p < u + 1 := by omega
-              exact hnot ⟨hp_lt_u1, hpP⟩
-            have hup' : ⌊(x : ℝ) ^ α⌋₊ < p := by simpa [u] using hup
-            exact (Nat.floor_lt hxα0).mp hup'
-        rw [hUsdiff]
-        exact eq_sub_of_add_eq (Finset.sum_sdiff (s₁ := (range (u + 1)).filter Nat.Prime)
-          (s₂ := (range (x + 1)).filter Nat.Prime) hsub2)
-      by_cases hu2 : 2 ≤ u
-      · -- Main case: subtract the two Mertens bounds.
-        have hlogxpos : 0 < log x := Real.log_pos (by exact_mod_cast (by omega : 1 < x))
-        have hlogupos : 0 < log u := Real.log_pos (by exact_mod_cast (by omega : 1 < u))
-        have hlog2pos : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-        have hMx := hM x hx
-        have hMu := hM u hu2
-        have hLx : primeReciprocalSum x - (log (log x) + _B₁) ≤ C₁ / log x :=
-          (abs_le.mp hMx).2
-        have hLu : (log (log u) + _B₁) - primeReciprocalSum u ≤ C₁ / log u := by
-          have h := (abs_le.mp hMu).1
-          linarith only [h]
-        -- log x / log u ≤ 2 / α
-        have hlogratio : log x / log u ≤ 2 / α := by
-          have hα0 : α ≠ 0 := ne_of_gt hα
-          by_cases hbig : (2 * log 2 / α) ≤ log x
-          · -- log u ≥ α·log x - log 2 ≥ (α/2)·log x
-            have hcross : 2 * log 2 ≤ α * log x := by
-              simpa only [mul_comm] using (div_le_iff₀ hα).mp hbig
-            have hden : 0 < α * log x - log 2 := by
-              linarith only [hcross, hlog2pos]
-            have hxα2 : (2 : ℝ) ≤ (x : ℝ) ^ α := by
-              have hu_le : (u : ℝ) ≤ (x : ℝ) ^ α := Nat.floor_le hxα0
-              have hu2' : (2 : ℝ) ≤ (u : ℝ) := by exact_mod_cast hu2
-              exact hu2'.trans hu_le
-            have hfl : (x : ℝ) ^ α / 2 ≤ u := by
-              have hlt := Nat.lt_floor_add_one (a := (x : ℝ) ^ α)
-              linarith only [hlt, (show (2 : ℝ) ≤ (u : ℝ) by exact_mod_cast hu2)]
-            have hlogu_ge : α * log x - log 2 ≤ log u := by
-              have hpos1 : 0 < (x : ℝ) ^ α / 2 := by positivity
-              have hpos2 : 0 < (u : ℝ) := by exact_mod_cast (by omega : 0 < u)
-              calc
-                α * log x - log 2 = log ((x : ℝ) ^ α / 2) := by
-                  rw [Real.log_div (by positivity : (x : ℝ) ^ α ≠ 0)
-                    (by norm_num : (2 : ℝ) ≠ 0)]
-                  rw [Real.log_rpow (by exact_mod_cast (by omega : 0 < x))]
-              _ ≤ log u := (Real.log_le_log_iff hpos1 hpos2).2 hfl
-            have hfrac : log x / (α * log x - log 2) ≤ 2 / α := by
-              apply (div_le_div_iff₀ hden hα).mpr
-              nlinarith only [hcross]
-            calc
-              log x / log u ≤ log x / (α * log x - log 2) :=
-                div_le_div_of_nonneg_left (le_of_lt hlogxpos) hden hlogu_ge
-              _ ≤ 2 / α := hfrac
-          · -- log x < 2·log 2/α: log x/log u ≤ log x/log 2 ≤ 2/α
-            have hlt : log x < 2 * log 2 / α := lt_of_not_ge hbig
-            have hle1 : log x / log u ≤ log x / log 2 := by
-              have hlog2_le_logu : log 2 ≤ log u :=
-                (Real.log_le_log_iff (by norm_num : (0 : ℝ) < 2)
-                  (by exact_mod_cast (by omega : 0 < u))).2 (by exact_mod_cast hu2)
-              exact div_le_div_of_nonneg_left (le_of_lt hlogxpos) hlog2pos hlog2_le_logu
-            have hcross2 : α * log x < 2 * log 2 := by
-              simpa only [mul_comm] using (lt_div_iff₀ hα).mp hlt
-            have hle2 : log x / log 2 ≤ 2 / α := by
-              apply (div_le_div_iff₀ hlog2pos hα).mpr
-              simpa only [mul_comm] using hcross2.le
-            exact hle1.trans hle2
-        -- log(log x) - log(log u) = log(log x / log u) ≤ log(2/α)
-        have hLdiff : log (log x) - log (log u) ≤ log (2 / α) := by
-          have hdivpos : 0 < log x / log u := div_pos hlogxpos hlogupos
-          have h2a : 0 < 2 / α := div_pos (by norm_num) hα
-          calc
-            log (log x) - log (log u) = log (log x / log u) := by
-              rw [← Real.log_div (ne_of_gt hlogxpos) (ne_of_gt hlogupos)]
-          _ ≤ log (2 / α) := (Real.log_le_log_iff hdivpos h2a).2 hlogratio
-        -- Combine the difference estimates.
-        have hdiff : primeReciprocalSum x - primeReciprocalSum u ≤
-            (log (log x) - log (log u)) + C₁ / log x + C₁ / log u := by
-          linarith only [hLx, hLu]
-        have hlelog : log 2 ≤ log x :=
-          (Real.log_le_log_iff (by norm_num : (0 : ℝ) < 2)
-            (by exact_mod_cast (by omega : 0 < x))).2 (by exact_mod_cast hx)
-        have hlelogu : log 2 ≤ log u :=
-          (Real.log_le_log_iff (by norm_num : (0 : ℝ) < 2)
-            (by exact_mod_cast (by omega : 0 < u))).2 (by exact_mod_cast hu2)
-        have hc1x : C₁ / log x ≤ C₁ / log 2 :=
-          div_le_div_of_nonneg_left hC1 hlog2pos hlelog
-        have hc1u : C₁ / log u ≤ C₁ / log 2 :=
-          div_le_div_of_nonneg_left hC1 hlog2pos hlelogu
-        have hK1 : log (2 / α) ≤ K := by
-          unfold K
-          exact le_max_left _ _
-        have h2div : 2 * C₁ / log 2 = C₁ / log 2 + C₁ / log 2 := by
-          ring
-        have hfinal : primeReciprocalSum x - primeReciprocalSum u ≤ K + 2 * C₁ / log 2 := by
-          calc
-            primeReciprocalSum x - primeReciprocalSum u
-                ≤ (log (log x) - log (log u)) + C₁ / log x + C₁ / log u := hdiff
-            _ ≤ log (2 / α) + C₁ / log 2 + C₁ / log 2 := by
-                exact add_le_add (add_le_add hLdiff hc1x) hc1u
-            _ ≤ K + 2 * C₁ / log 2 := by
-                rw [h2div]
-                linarith only [hK1]
-        rw [hUeq]
-        exact hfinal.trans (le_max_right _ _)
-      · -- u ≤ 1: x is bounded, and S x ≤ S x₀.
-        have hu1 : u ≤ 1 := by omega
-        have hUzero : primeReciprocalSum u = 0 := primeReciprocalSum_zero_of_le_one hu1
-        have hxlt : (x : ℝ) < (2 : ℝ) ^ (1 / α) := by
-          have hu2' : u < 2 := by omega
-          have hxαlt2 : (x : ℝ) ^ α < 2 := by
-            simpa [u] using (Nat.floor_lt hxα0).mp hu2'
-          have hxpos : 0 < (x : ℝ) := by exact_mod_cast (by omega : 0 < x)
-          have hpow := Real.rpow_lt_rpow hxα0 hxαlt2 (by positivity : 0 < 1 / α)
-          have hα0 : α ≠ 0 := ne_of_gt hα
-          have hmul : ((x : ℝ) ^ α) ^ (1 / α) = (x : ℝ) := by
-            rw [← Real.rpow_mul (le_of_lt hxpos)]
-            have hαmul : α * (1 / α) = 1 := by
-              field_simp [hα0]
-            rw [hαmul, Real.rpow_one]
-          rwa [hmul] at hpow
-        have hxle0 : x ≤ x₀ := by
-          have hxle : (x : ℝ) ≤ (2 : ℝ) ^ (1 / α) := le_of_lt hxlt
-          exact (Nat.le_floor_iff (by positivity : 0 ≤ (2 : ℝ) ^ (1 / α))).2 hxle
-        have hSx : primeReciprocalSum x ≤ primeReciprocalSum x₀ :=
-          primeReciprocalSum_mono hxle0
-        have hS0 : primeReciprocalSum x₀ ≤
-            max (primeReciprocalSum x₀) (K + 2 * C₁ / log 2) :=
-          le_max_left _ _
-        rw [hUeq, hUzero, sub_zero]
-        exact hSx.trans hS0
-    · -- u > x: U is empty.
-      have hxltu : x < u := lt_of_not_ge hux
-      have hUempty : U.sum (fun p => 1 / (p : ℝ)) = 0 := by
-        apply Finset.sum_eq_zero
-        intro p hp
-        simp only [U, mem_filter, mem_range] at hp
-        obtain ⟨hpx, _hp, hxp⟩ := hp
-        have hp_lt_u : p < u := by omega
-        have hu_lt_p' : ⌊(x : ℝ) ^ α⌋₊ < p := (Nat.floor_lt hxα0).mpr hxp
-        have hu_lt_p : u < p := by
-          simpa [u] using hu_lt_p'
-        omega
-      have hCnonneg : 0 ≤ max (primeReciprocalSum x₀) (K + 2 * C₁ / log 2) := by
-        have hSx0 : 0 ≤ primeReciprocalSum x₀ := by
-          unfold primeReciprocalSum
-          exact Finset.sum_nonneg (fun p _ => div_nonneg zero_le_one (by positivity))
-        exact le_max_of_le_left hSx0
-      rw [hUempty]
-      exact hCnonneg
-  -- Combine: |T.sum| = T.sum ≤ U.sum ≤ C.
-  calc
-    |T.sum (fun p => 1 / (p : ℝ))| = T.sum (fun p => 1 / (p : ℝ)) := abs_of_nonneg hTnonneg
-    _ ≤ U.sum (fun p => 1 / (p : ℝ)) :=
-      Finset.sum_le_sum_of_subset_of_nonneg hTsub
-        (fun p _hp _hnot => div_nonneg zero_le_one (by positivity))
-    _ ≤ max (primeReciprocalSum x₀) (K + 2 * C₁ / log 2) := hUbound
+    have h := (mem_filter.mp hp).2
+    exact mem_filter.mpr ⟨(mem_Ioc_rpowFloor_iff).mpr h.2, h.1⟩
+  change |∑ p ∈ T, 1 / (p : ℝ)| ≤ C
+  rw [abs_of_nonneg (sum_nonneg fun p _ => by positivity)]
+  refine (sum_le_sum_of_subset_of_nonneg hsub (fun p _ _ => by positivity)).trans ?_
+  change weightedPrimeReciprocalLogSum (fun _ => 1) x α β ≤ C
+  exact (le_abs_self _).trans (by simpa only [Real.norm_eq_abs] using hC x)
 
 /-! ## 4. Application: an asymptotic formula for the sieve product V(z) -/
 
@@ -1295,7 +946,10 @@ theorem sieveProduct_identity (N z : ℕ) (hz : 2 ≤ z) (hN : Even N) :
   have hrangeP : (range (z - 1 + 1)).filter Nat.Prime = (range z).filter Nat.Prime := by
     rw [Nat.sub_add_cancel hz1]
   unfold goldbachSieveProduct primeProduct SingularSeries.singularSeriesTruncated
-  rw [hrangeP]
+    AnalyticNumberTheory.Sieve.singularSeriesTruncated
+  simp only [Nat.primesLE_eq_filter_range, hrangeP]
+  change _ = ((range z).filter Nat.Prime).prod (fun p => 1 - 1 / (p : ℝ)) *
+    ((range z).filter Nat.Prime).prod (fun p => SingularSeries.localFactor p N)
   -- Goal: ∏_{p<z,p∤N}(1-1/(p-1)) = ∏_{p<z}(1-1/p) · ∏_{p<z} localFactor p N.
   rw [← Finset.prod_mul_distrib]
   -- Split according to p | N or p ∤ N.
@@ -1322,7 +976,7 @@ theorem sieveProduct_identity (N z : ℕ) (hz : 2 ≤ z) (hN : Even N) :
     have hpne2 : p ≠ 2 := by
       intro hp2
       exact hpnd (by simpa [hp2] using h2dvd)
-    unfold SingularSeries.localFactor
+    unfold SingularSeries.localFactor AnalyticNumberTheory.Sieve.localFactor
     rw [ite_eq_right hpne2, ite_eq_right hpnd]
     have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp'.ne_zero
     have hpm1 : (p : ℝ) - 1 ≠ 0 := by
@@ -1337,7 +991,7 @@ theorem sieveProduct_identity (N z : ℕ) (hz : 2 ≤ z) (hN : Even N) :
     intro p hp
     have hp' : p.Prime := (mem_filter.mp hp).2.1
     have hpd : p ∣ N := (mem_filter.mp hp).2.2
-    unfold SingularSeries.localFactor
+    unfold SingularSeries.localFactor AnalyticNumberTheory.Sieve.localFactor
     by_cases hp2 : p = 2
     · subst hp2
       rw [ite_eq_left rfl, ite_eq_left h2dvd]
@@ -1379,97 +1033,42 @@ theorem prime_inv_pminus1_bound :
     ∃ C : ℝ, 0 ≤ C ∧ ∀ y : ℕ, 3 ≤ y →
       ((range (y + 1)).filter Nat.Prime).sum
         (fun p => 1 / ((p : ℝ) - 1)) ≤ log (log y) + C := by
-  obtain ⟨B₁, C₁, hM⟩ := mertens_second_theorem
+  obtain ⟨C, hC, hM⟩ := AnalyticNumberTheory.Mertens.mertensSecond_nat
   obtain ⟨K, hK0, hK⟩ := prime_inv_sq_bound
-  have hlog2 : 0 < log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
-  have hC1 : 0 ≤ C₁ := by
-    have hb := hM 2 (by norm_num)
-    have hnonneg : 0 ≤ C₁ / log 2 := le_trans (abs_nonneg _) hb
-    simpa using (le_div_iff₀ hlog2).mp hnonneg
-  refine ⟨max (B₁ + C₁ / log 2 + 4 * K) 0, le_max_right _ _, ?_⟩
-  intro y hy
-  have hlogy : 0 < log y := Real.log_pos (by exact_mod_cast (by omega : 1 < y))
-  -- Σ 1/p ≤ log(log y) + B₁ + C₁/log 2
-  have hS : primeReciprocalSum y ≤ log (log y) + B₁ + C₁ / log 2 := by
-    have hMz := hM y (by omega : 2 ≤ y)
-    have h1 : primeReciprocalSum y ≤ log (log y) + B₁ + C₁ / log y := by
-      have h := (abs_le.mp hMz).2
-      linarith
-    have h2 : C₁ / log y ≤ C₁ / log 2 := by
-      have hlelog : log 2 ≤ log y :=
-        (Real.log_le_log_iff (by norm_num : (0 : ℝ) < 2)
-          (by exact_mod_cast (by omega : 0 < y))).2 (by exact_mod_cast (by omega : 2 ≤ y))
-      exact div_le_div_of_nonneg_left hC1 hlog2 hlelog
-    nlinarith
-  -- Σ 1/(p-1) ≤ Σ(1/p + 1/(p-1)²) ≤ S + 4K
-  have hsum : ((range (y + 1)).filter Nat.Prime).sum
-      (fun p => 1 / ((p : ℝ) - 1)) ≤ primeReciprocalSum y + 4 * K := by
+  let B := AnalyticNumberTheory.Mertens.mertensSecondConstant
+  let D := B + C / log 2 + 2 * K
+  refine ⟨max D 0, le_max_right _ _, fun y hy => ?_⟩
+  have hy2 : 2 ≤ y := by omega
+  have hyR : (2 : ℝ) ≤ y := by exact_mod_cast hy2
+  have hlog := Real.log_le_log (by norm_num : (0 : ℝ) < 2) hyR
+  have hCdiv := div_le_div_of_nonneg_left hC.le (Real.log_pos one_lt_two) hlog
+  have hMupper := (abs_le.mp (hM y hy2)).2
+  have hsum : (∑ p ∈ (range (y + 1)).filter Nat.Prime, 1 / ((p : ℝ) - 1)) ≤
+      primeReciprocalSum y + 2 * K := by
     calc
-      ((range (y + 1)).filter Nat.Prime).sum (fun p => 1 / ((p : ℝ) - 1))
-          ≤ ((range (y + 1)).filter Nat.Prime).sum
-              (fun p => 1 / (p : ℝ) + 1 / ((p : ℝ) - 1) ^ 2) := by
-            apply Finset.sum_le_sum
-            intro p hp
-            have hp' : p.Prime := (mem_filter.mp hp).2
-            have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hp'.ne_zero
-            have hpm1 : (p : ℝ) - 1 ≠ 0 := by
-              have : (2 : ℝ) ≤ p := by exact_mod_cast hp'.two_le
-              have : 0 < (p : ℝ) - 1 := by linarith
-              exact ne_of_gt this
-            have hpos1 : 0 < (p : ℝ) - 1 := by
-              have : (2 : ℝ) ≤ p := by exact_mod_cast hp'.two_le
-              linarith
-            have hpos2 : 0 < (p : ℝ) := by exact_mod_cast hp'.pos
-            have hstep : 1 / ((p : ℝ) - 1) - 1 / ((p : ℝ) - 1) ^ 2 =
-                ((p : ℝ) - 2) / ((p : ℝ) - 1) ^ 2 := by
-              field_simp [hpm1]
-              ring
-            have hle' : ((p : ℝ) - 2) / ((p : ℝ) - 1) ^ 2 ≤ 1 / (p : ℝ) := by
-              rw [div_le_div_iff₀ (sq_pos_of_pos hpos1) hpos2]
-              nlinarith
-            have hsub : 1 / ((p : ℝ) - 1) - 1 / ((p : ℝ) - 1) ^ 2 ≤ 1 / (p : ℝ) := by
-              rwa [hstep]
-            nlinarith
-      _ = ((range (y + 1)).filter Nat.Prime).sum (fun p => 1 / (p : ℝ)) +
-          ((range (y + 1)).filter Nat.Prime).sum
-            (fun p => 1 / ((p : ℝ) - 1) ^ 2) := by
-            rw [Finset.sum_add_distrib]
-      _ ≤ primeReciprocalSum y + 4 * K := by
-          have h1 : ((range (y + 1)).filter Nat.Prime).sum (fun p => 1 / (p : ℝ)) ≤
-              primeReciprocalSum y := by
-            unfold primeReciprocalSum
-            exact Finset.sum_le_sum_of_subset_of_nonneg
-              (by intro p hp; simp only [mem_filter, mem_range] at hp ⊢; exact ⟨by omega, hp.2⟩)
-              (fun p _hp _hnot => by positivity)
-          have h2 : ((range (y + 1)).filter Nat.Prime).sum
-              (fun p => 1 / ((p : ℝ) - 1) ^ 2) ≤ 4 * K := by
-            calc
-              ((range (y + 1)).filter Nat.Prime).sum (fun p => 1 / ((p : ℝ) - 1) ^ 2)
-                  ≤ ((range (y + 1)).filter Nat.Prime).sum (fun p => 4 / (p : ℝ) ^ 2) := by
-                    apply Finset.sum_le_sum
-                    intro p hp
-                    have hp' : p.Prime := (mem_filter.mp hp).2
-                    have hpos1 : 0 < (p : ℝ) - 1 := by
-                      have : (2 : ℝ) ≤ p := by exact_mod_cast hp'.two_le
-                      linarith
-                    have hpos2 : 0 < (p : ℝ) := by exact_mod_cast hp'.pos
-                    rw [div_le_div_iff₀ (sq_pos_of_pos hpos1) (sq_pos_of_pos hpos2)]
-                    have hp2' : (2 : ℝ) ≤ p := by exact_mod_cast hp'.two_le
-                    nlinarith
-              _ = 4 * ((range (y + 1)).filter Nat.Prime).sum (fun p => 1 / (p : ℝ) ^ 2) := by
-                    rw [Finset.mul_sum]
-                    congr 1
-                    ext p
-                    ring
-              _ ≤ 4 * K := mul_le_mul_of_nonneg_left (hK y) (by norm_num)
-          nlinarith
-  -- Combine the bounds.
-  have hle : ((range (y + 1)).filter Nat.Prime).sum
-      (fun p => 1 / ((p : ℝ) - 1)) ≤ log (log y) + (B₁ + C₁ / log 2 + 4 * K) := by
-    nlinarith [hS, hsum]
-  have hmax : B₁ + C₁ / log 2 + 4 * K ≤ max (B₁ + C₁ / log 2 + 4 * K) 0 :=
-    le_max_left _ _
-  linarith
+      _ ≤ ∑ p ∈ (range (y + 1)).filter Nat.Prime,
+          (1 / (p : ℝ) + 2 * (1 / (p : ℝ) ^ 2)) := by
+        apply sum_le_sum
+        intro p hp
+        have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast (mem_filter.mp hp).2.two_le
+        have hp0 : 0 < (p : ℝ) := by linarith
+        have hpm : 0 < (p : ℝ) - 1 := by linarith
+        have hden : (p : ℝ) ^ 2 / 2 ≤ p * ((p : ℝ) - 1) := by
+          nlinarith [mul_nonneg hp0.le (show (0 : ℝ) ≤ p - 2 by linarith)]
+        calc
+          _ = 1 / (p : ℝ) + 1 / (p * ((p : ℝ) - 1)) := by
+            field_simp
+            ring
+          _ ≤ 1 / (p : ℝ) + 1 / ((p : ℝ) ^ 2 / 2) := by
+            gcongr
+          _ = _ := by ring
+      _ ≤ primeReciprocalSum y + 2 * K := by
+        rw [sum_add_distrib, ← mul_sum]
+        exact add_le_add le_rfl (mul_le_mul_of_nonneg_left (hK y) (by norm_num))
+  change _ ≤ log (log y) + max D 0
+  change primeReciprocalSum y - (log (log y) + B) ≤ C / log y at hMupper
+  dsimp [D]
+  linarith only [hCdiv, hMupper, hsum, le_max_left D 0]
 
 /-- **Sieve-product asymptotic formula**:
 V(z, N) ≈ 𝔖(N, z-1) · e^(-γ) / log(z-1).
@@ -1556,7 +1155,7 @@ private lemma log_goldbach_inverse_factor_le {p : ℕ} (hp : p.Prime) (hp2 : 2 <
       have hp3r : (3 : ℝ) ≤ p := by exact_mod_cast hp3
       linarith
     linarith
-  have hlocal := log_one_sub_bound ht htle
+  have hlocal := AnalyticNumberTheory.Mertens.abs_log_one_sub_add_le ht htle
   have hlog :
       log (1 - 1 / ((p : ℝ) - 1))⁻¹ ≤
         1 / ((p : ℝ) - 1) + 2 * (1 / ((p : ℝ) - 1)) ^ 2 := by
@@ -1582,25 +1181,20 @@ theorem exists_log_goldbach_inverse_interval_bound :
         (∀ p ∈ s, p.Prime ∧ k < p ∧ p ≤ n) →
         log (∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹) ≤
           log (log n / log k) + (2 * C + 24) / log k := by
-  obtain ⟨B, C, hM⟩ := mertens_second_theorem
-  have hlog2 : 0 < log 2 := Real.log_pos (by norm_num)
-  have hC : 0 ≤ C := by
-    have h := hM 2 (by norm_num)
-    have : 0 ≤ C / log 2 := le_trans (abs_nonneg _) h
-    simpa using (le_div_iff₀ hlog2).mp this
-  refine ⟨C, hC, ?_⟩
+  obtain ⟨C, hC, hM⟩ := AnalyticNumberTheory.Mertens.mertensSecond_nat
+  refine ⟨C, hC.le, ?_⟩
   intro k n hk hkn s hs
-  have hk1 : (1 : ℝ) < k := by exact_mod_cast (by omega : 1 < k)
-  have hlogk : 0 < log k := Real.log_pos hk1
-  have hn2 : 2 ≤ n := le_trans hk hkn
-  have hn1 : (1 : ℝ) < n := by exact_mod_cast (by omega : 1 < n)
-  have hlogn : 0 < log n := Real.log_pos hn1
+  have hkR : (1 : ℝ) < k := by exact_mod_cast Nat.one_lt_two.trans_le hk
+  have hk0 : (0 : ℝ) < k := zero_lt_one.trans hkR
+  have hknR : (k : ℝ) ≤ n := by exact_mod_cast hkn
+  have hlogk := Real.log_pos hkR
+  have hlogkn := Real.log_le_log hk0 hknR
+  have hlogn := hlogk.trans_le hlogkn
   let T := (Finset.Ioo k (n + 1)).filter Nat.Prime
   have hsub : s ⊆ T := by
     intro p hp
     rcases hs p hp with ⟨hpp, hkp, hpn⟩
-    simp only [T, Finset.mem_filter, Finset.mem_Ioo]
-    exact ⟨⟨hkp, by omega⟩, hpp⟩
+    exact mem_filter.mpr ⟨mem_Ioo.mpr ⟨hkp, Nat.lt_succ_of_le hpn⟩, hpp⟩
   have hlogprod :
       log (∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹) =
         ∑ p ∈ s, log (1 - 1 / ((p : ℝ) - 1))⁻¹ := by
@@ -1615,65 +1209,25 @@ theorem exists_log_goldbach_inverse_interval_bound :
     intro p hp
     exact log_goldbach_inverse_factor_le (hs p hp).1
       (lt_of_le_of_lt hk (hs p hp).2.1)
-  have hrecip :
-      (∑ p ∈ s, 1 / (p : ℝ)) ≤
-        primeReciprocalSum n - primeReciprocalSum k := by
-    have hT :
-        (∑ p ∈ T, 1 / (p : ℝ)) =
-          primeReciprocalSum n - primeReciprocalSum k := by
-      let Pn := (Finset.range (n + 1)).filter Nat.Prime
-      let Pk := (Finset.range (k + 1)).filter Nat.Prime
-      have hPk : Pk ⊆ Pn := by
-        intro p hp
-        simp only [Pk, Pn, Finset.mem_filter, Finset.mem_range] at hp ⊢
-        exact ⟨by omega, hp.2⟩
-      have hTdiff : T = Pn \ Pk := by
-        ext p
-        simp only [T, Pn, Pk, Finset.mem_filter, Finset.mem_Ioo,
-          Finset.mem_sdiff, Finset.mem_range]
-        constructor
-        · rintro ⟨⟨hkp, hpn⟩, hp⟩
-          exact ⟨⟨hpn, hp⟩, by
-            intro hpk
-            omega⟩
-        · rintro ⟨⟨hpn, hp⟩, hnot⟩
-          refine ⟨⟨?_, hpn⟩, hp⟩
-          by_contra hkp
-          apply hnot
-          exact ⟨Nat.lt_succ_iff.mpr (le_of_not_gt hkp), hp⟩
-      rw [hTdiff, Finset.sum_sdiff_eq_sub hPk]
-      rfl
-    calc
-      (∑ p ∈ s, 1 / (p : ℝ)) ≤ ∑ p ∈ T, 1 / (p : ℝ) :=
-        Finset.sum_le_sum_of_subset_of_nonneg hsub
-          (fun p _ _ => div_nonneg zero_le_one (by positivity))
-      _ = primeReciprocalSum n - primeReciprocalSum k := hT
-  have hMrecip :
-      primeReciprocalSum n - primeReciprocalSum k ≤
-        log (log n / log k) + 2 * C / log k := by
-    have hMn := hM n hn2
-    have hMk := hM k hk
-    have hupper :
-        primeReciprocalSum n ≤ log (log n) + B + C / log n := by
-      linarith [(abs_le.mp hMn).2]
-    have hlower :
-        log (log k) + B - C / log k ≤ primeReciprocalSum k := by
-      linarith [(abs_le.mp hMk).1]
-    have hCdiv : C / log n ≤ C / log k := by
-      apply div_le_div_of_nonneg_left hC hlogk
-      exact Real.log_le_log (by positivity) (by exact_mod_cast hkn)
-    have hlogs :
-        log (log n) - log (log k) = log (log n / log k) := by
-      rw [← Real.log_div hlogn.ne' hlogk.ne']
-    calc
-      primeReciprocalSum n - primeReciprocalSum k ≤
-          (log (log n) - log (log k)) + C / log n + C / log k := by
-        linarith
-      _ ≤ log (log n / log k) + 2 * C / log k := by
-        rw [hlogs]
-        have htwo : 2 * C / log k = C / log k + C / log k := by ring
-        rw [htwo]
-        linarith
+  have hT : T = n.primesLE \ k.primesLE := by
+    apply Finset.ext
+    intro p
+    simp only [T, Finset.mem_sdiff, Nat.mem_primesLE, mem_filter, mem_Ioo, Nat.lt_succ_iff]
+    by_cases hp : p.Prime <;> simp [hp, not_le, and_comm]
+  have hrecip : (∑ p ∈ s, 1 / (p : ℝ)) ≤
+      primeReciprocalSum n - primeReciprocalSum k := by
+    have hsum := Finset.sum_le_sum_of_subset_of_nonneg (f := fun p : ℕ => 1 / (p : ℝ))
+      hsub (fun p _ _ => by positivity)
+    rwa [hT, Finset.sum_sdiff_eq_sub (Nat.primesLE_mono hkn)] at hsum
+  have hMrecip : primeReciprocalSum n - primeReciprocalSum k ≤
+      log (log n / log k) + 2 * C / log k := by
+    have hupper := (abs_le.mp (hM n (hk.trans hkn))).2
+    have hlower := (abs_le.mp (hM k hk)).1
+    have hCdiv := div_le_div_of_nonneg_left hC.le hlogk hlogkn
+    rw [Real.log_div hlogn.ne' hlogk.ne', mul_div_assoc, two_mul]
+    change primeReciprocalSum n - _ ≤ _ at hupper
+    change _ ≤ primeReciprocalSum k - _ at hlower
+    linarith only [hupper, hlower, hCdiv]
   have hsq :
       (∑ p ∈ s, 1 / (p : ℝ) ^ 2) ≤ 2 / (k : ℝ) := by
     calc
@@ -1688,11 +1242,8 @@ theorem exists_log_goldbach_inverse_interval_bound :
         apply div_le_div_of_nonneg_left (by norm_num)
         positivity
         linarith
-  have hloginv : 1 / (k : ℝ) ≤ 1 / log k := by
-    apply one_div_le_one_div_of_le hlogk
-    have := Real.log_le_sub_one_of_pos (by exact_mod_cast (Nat.zero_lt_of_lt hk) :
-      0 < (k : ℝ))
-    linarith
+  have h24 : (24 : ℝ) / k ≤ 24 / log k :=
+    div_le_div_of_nonneg_left (by norm_num) hlogk (Real.log_le_self hk0.le)
   calc
     log (∏ p ∈ s, (1 - 1 / ((p : ℝ) - 1))⁻¹) =
         ∑ p ∈ s, log (1 - 1 / ((p : ℝ) - 1))⁻¹ := hlogprod
@@ -1709,19 +1260,8 @@ theorem exists_log_goldbach_inverse_interval_bound :
         12 * (2 / (k : ℝ)) :=
       add_le_add (hrecip) (mul_le_mul_of_nonneg_left hsq (by norm_num))
     _ ≤ log (log n / log k) + (2 * C + 24) / log k := by
-      have h24 : 24 / (k : ℝ) ≤ 24 / log k := by
-        calc
-          24 / (k : ℝ) = 24 * (1 / (k : ℝ)) := by ring
-          _ ≤ 24 * (1 / log k) :=
-            mul_le_mul_of_nonneg_left hloginv (by norm_num)
-          _ = 24 / log k := by ring
-      have htwentyfour : 12 * (2 / (k : ℝ)) = 24 / (k : ℝ) := by ring
-      calc
-        (primeReciprocalSum n - primeReciprocalSum k) + 12 * (2 / (k : ℝ)) ≤
-            log (log n / log k) + 2 * C / log k + 24 / log k := by
-              rw [htwentyfour]
-              linarith
-        _ = log (log n / log k) + (2 * C + 24) / log k := by ring
+      rw [add_div, show (12 : ℝ) * (2 / k) = 24 / k by ring]
+      linarith only [hMrecip, h24]
 
 /-- The inverse Goldbach local factors on an arbitrary real interval satisfy the
 standard dimension-one product bound. -/

@@ -1,5 +1,6 @@
 module
 
+public import Mathlib.NumberTheory.SelbergSieve
 public import Mathlib.Data.Nat.GCD.Basic
 public import Mathlib.Data.Int.GCD
 public import Mathlib.Analysis.SpecialFunctions.Exp

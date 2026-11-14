@@ -1,5 +1,6 @@
 module
 
+public import Mathlib.NumberTheory.Harmonic.Bounds
 public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalValueSeries
 public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
 public import Mathlib.NumberTheory.DirichletCharacter.Bounds

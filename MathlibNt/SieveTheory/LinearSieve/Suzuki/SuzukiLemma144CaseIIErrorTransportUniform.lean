@@ -42,36 +42,8 @@ theorem caseII_cubic_carrier_quotient_scale
     (hDmin : 2 ≤ Dmin) (hD : Dmin ^ 2 ≤ D) :
     CarrierQuotientThresholdGeometry
       (suzukiSupportedBelow S ⌈(D : ℝ) ^ (1 / (3 : ℝ))⌉₊)
-      D Dmin (sourceSigma (D : ℝ) d) 3 := by
-  intro p hp
-  have hp' := hp
-  simp only [sigmaOneCarrier, Finset.mem_filter] at hp'
-  have hpPrime : p.Prime := by
-    exact Nat.prime_of_mem_primeFactors (Finset.mem_filter.mp hp'.1).1
-  have hD1 : (1 : ℝ) ≤ (D : ℝ) := by
-    exact_mod_cast (show 1 ≤ D by nlinarith)
-  have hrootOrder : (D : ℝ) ^ (1 / (3 : ℝ)) ≤
-      (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    rpow_one_div_mono_of_le hD1 (by norm_num) (by norm_num)
-  have hpRoot : (p : ℝ) < (D : ℝ) ^ (1 / (2 : ℝ)) :=
-    hp'.2.2.trans_le hrootOrder
-  have hsquareR : (p : ℝ) ^ (2 : ℕ) < (D : ℝ) := by
-    have hiff := Real.lt_rpow_inv_iff_of_pos
-      (x := (p : ℝ)) (y := (D : ℝ)) (z := (2 : ℝ))
-      (by positivity) (by positivity) (by norm_num)
-    norm_num [one_div] at hiff hpRoot ⊢
-    exact hiff.mp hpRoot
-  have hsquare : p ^ 2 < D := by exact_mod_cast hsquareR
-  by_cases hminp : Dmin ≤ p
-  · calc
-      Dmin * p ≤ p * p := Nat.mul_le_mul_right p hminp
-      _ = p ^ 2 := by ring
-      _ ≤ D := Nat.le_of_lt hsquare
-  · have hpmin : p < Dmin := Nat.lt_of_not_ge hminp
-    calc
-      Dmin * p ≤ Dmin * Dmin := Nat.mul_le_mul_left Dmin (Nat.le_of_lt hpmin)
-      _ = Dmin ^ 2 := by ring
-      _ ≤ D := hD
+      D Dmin (sourceSigma (D : ℝ) d) 3 :=
+  carrierQuotientThresholdGeometry_of_square_le hDmin hD (by norm_num)
 
 /-- Uniform Case-II transport with the cutoff selected before the varying
 bounding sieve.  The only local input is the parity-domain packet already

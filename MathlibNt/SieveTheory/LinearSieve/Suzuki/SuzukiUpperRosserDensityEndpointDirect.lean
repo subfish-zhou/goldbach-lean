@@ -69,28 +69,32 @@ theorem real_level_to_natCeil_geometry
     omega
   exact ⟨hD2, hΔD, hrootlt, hzceil⟩
 
-/-- Direct all-depth closure of the production upper Rosser density endpoint.
-The constants in the all-depth estimate are selected before `S`; the adaptive
-odd depth is chosen only inside the natural-ceiling consumer.  The production
-exact finite Rosser/Suzuki bridge is consumed unconditionally, with no residual
-bridge or ordered-tail premise. -/
-theorem dimensionOneUpperRosserDensityFundamentalLemma_of_suzuki_allDepth
+/-- Uniform upper Rosser density bound on any fixed window `[3/2,u]`. -/
+theorem suzukiUpperRosserDensity_uniform_of_le
     (H : Section13HatLayers) {d δ Θ : ℝ}
     (hH : Section13HatSourceContract H)
-    (hsrc : SuzukiClaim145SourceParameters d δ Θ) :
-    DimensionOneUpperRosserDensityFundamentalLemma := by
-  obtain ⟨C1min, hC1min, hall⟩ :=
-    exists_upperRosserDensity_at_natCeil_of_suzuki_allDepth H hH hsrc
-  obtain ⟨C145, Clow, C, hC145, hClow, hC, hnat⟩ := hall C1min le_rfl
-  intro K ρ hK hρ
+    (hsrc : SuzukiClaim145SourceParameters d δ Θ) (u : ℝ) :
+    ∀ K ρ : ℝ, 1 < K → 0 < ρ →
+      ∃ z₀ : ℝ, ∀ (S : BoundingSieve) (z Δ s : ℝ),
+        z₀ ≤ z → 2 ≤ z → 0 < Δ →
+        HasDimensionOneLocalProductBound S K →
+        (∀ p ∈ S.prodPrimes.primeFactors, (p : ℝ) ≤ z) →
+        s = Real.log Δ / Real.log z → 3 / 2 ≤ s → s ≤ u →
+        S.mainSum (LinearSieve.upperRosserWeight S.prodPrimes (Nat.floor Δ + 1)) ≤
+          (suzukiContinuousUpperFactor s + ρ) *
+            AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S := by
+  obtain ⟨C1min, _, hall⟩ :=
+    exists_lemma14_4_movingRange_rounded_allDepth_uniform_in_S_of_source H hH hsrc
+  obtain ⟨C145, Clow, C, _, _, hC, hdepth⟩ := hall C1min le_rfl
+  intro K ρ _hK hρ
   let K' : ℝ := max 2 K
   have hK' : 2 ≤ K' := le_max_left _ _
   have hKK' : K ≤ K' := le_max_right _ _
   have hC0 : 0 ≤ C := by linarith
   obtain ⟨Dσ, hDσ1, hDσ⟩ :=
-    exists_sourceSigma_fixed_lower_threshold d 4 hsrc.d_pos.le
-  have herrEv := eventually_all_odd_depth_suzuki_error_upper_window
-    H hH.toSection13HatContract (C := C) (K := K') (d := d) (Δ := δ) (ρ := ρ)
+    exists_sourceSigma_fixed_lower_threshold d u hsrc.d_pos.le
+  have herrEv := eventually_all_odd_depth_suzuki_error_of_le
+    H hH.toSection13HatContract (C := C) (K := K') (d := d) (Δ := δ) (ρ := ρ) u
       hC0 hsrc.d_pos.le hsrc.hDelta_pos hρ
   obtain ⟨DE, hDE⟩ := eventually_atTop.1 herrEv
   let z₀ : ℝ := max 2 (max Dσ DE)
@@ -104,7 +108,6 @@ theorem dimensionOneUpperRosserDensityFundamentalLemma_of_suzuki_allDepth
   have hgeom := real_level_to_natCeil_geometry hz2 hΔ hs hslo
   dsimp only at hgeom
   have hD2 : 2 ≤ D := by simpa [D] using hgeom.1
-  have hΔD : Δ < (D : ℝ) := by simpa [D] using hgeom.2.1
   have hzroot : z < (D : ℝ) ^ (1 / s) := by simpa [D] using hgeom.2.2.1
   have hzceil : 2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊ := by simpa [D] using hgeom.2.2.2
   have hzD : z < (D : ℝ) := by
@@ -112,7 +115,7 @@ theorem dimensionOneUpperRosserDensityFundamentalLemma_of_suzuki_allDepth
       Real.rpow_le_self_of_one_le (by exact_mod_cast (show 1 ≤ D by omega))
         ((div_le_one (by linarith : 0 < s)).2 (by linarith))
     exact hzroot.trans_le hrootD
-  have hσ : 4 ≤ sourceSigma (D : ℝ) d := hDσ _ (hzσ.trans hzD.le)
+  have hσ : u ≤ sourceSigma (D : ℝ) d := hDσ _ (hzσ.trans hzD.le)
   have hsσ : s ≤ sourceSigma (D : ℝ) d := hshi.trans hσ
   have hcutCeil : ∀ p ∈ S.prodPrimes.primeFactors,
       p < ⌈(D : ℝ) ^ (1 / s)⌉₊ := by
@@ -120,13 +123,11 @@ theorem dimensionOneUpperRosserDensityFundamentalLemma_of_suzuki_allDepth
     exact Nat.lt_ceil.mpr ((hcut p hp).trans_lt hzroot)
   have hlocal' : HasDimensionOneLocalProductBound S K' :=
     HasDimensionOneLocalProductBound.mono hlocal hKK'
-  have hmain := hnat S K' hK' hlocal' D hD2 s hslo hshi hsσ hzceil hcutCeil
+  have hmain := upperRosserDensity_at_natCeil_of_allDepth_of_le_sourceSigma
+    H hH S (hdepth S K' hK' hlocal') D s hD2 hslo hsσ hzceil hcutCeil
   let N : ℕ := 2 * S.prodPrimes.primeFactors.card + 1
   have hNodd : Odd N := ⟨S.prodPrimes.primeFactors.card, by rfl⟩
   have herr := hDE (D : ℝ) (hzE.trans hzD.le) N hNodd s hslo hshi
-  have hfactor :=
-    suzukiContinuousUpperFactor_eq_jurkatRichertUpperLinearSieveFactor_of_sourceContract
-      H hH hslo hshi
   have hV0 : 0 ≤ AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S := by
     unfold AnalyticNumberTheory.Sieve.sieveProductPrimeFactors
     apply Finset.prod_nonneg
@@ -135,10 +136,22 @@ theorem dimensionOneUpperRosserDensityFundamentalLemma_of_suzuki_allDepth
       (Nat.mem_primeFactors_of_ne_zero S.prodPrimes_ne_zero).mp hp |>.2
     exact sub_nonneg.mpr
       (S.nu_lt_one_of_prime p (Nat.prime_of_mem_primeFactors hp) hpDvd).le
-  dsimp only [D] at hmain ⊢
-  dsimp only [N] at herr
-  rw [hfactor] at hmain
-  nlinarith
+  exact (hmain.trans (mul_le_mul_of_nonneg_left
+    (add_le_add_right herr.2.le _) hV0)).trans_eq (mul_comm _ _)
+
+/-- Uniform upper Rosser density on the interval where the Suzuki and
+Jurkat–Richert factors agree. -/
+theorem dimensionOneUpperRosserDensityFundamentalLemma_of_suzuki_allDepth
+    (H : Section13HatLayers) {d δ Θ : ℝ}
+    (hH : Section13HatSourceContract H)
+    (hsrc : SuzukiClaim145SourceParameters d δ Θ) :
+    DimensionOneUpperRosserDensityFundamentalLemma := by
+  intro K ρ hK hρ
+  obtain ⟨z₀, hbound⟩ := suzukiUpperRosserDensity_uniform_of_le H hH hsrc 4 K ρ hK hρ
+  refine ⟨z₀, fun S z Δ s hz₀ hz2 hΔ hlocal hcut hs hslo hshi => ?_⟩
+  have hmain := hbound S z Δ s hz₀ hz2 hΔ hlocal hcut hs hslo hshi
+  simpa only [suzukiContinuousUpperFactor_eq_jurkatRichertUpperLinearSieveFactor_of_sourceContract
+    H hH hslo hshi] using hmain
 
 
 end

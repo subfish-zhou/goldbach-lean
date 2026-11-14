@@ -68,5 +68,38 @@ theorem eventually_quotient_parameters (b : ℝ) (M : ℕ) :
   · linarith
   · linarith
 
+/-- Enlarge the logarithmic conductor exponent after passing to a quotient. -/
+theorem log_rpow_le_quotient_log_rpow_succ {L l K b : ℝ}
+    (hL : 0 ≤ L) (hl : 0 < l) (hK : 0 ≤ K) (hb : 0 ≤ b)
+    (hlogs : L ≤ K * l) (hpay : K ^ b ≤ l) :
+    L ^ b ≤ l ^ (b + 1) := by
+  calc
+    _ ≤ (K * l) ^ b := Real.rpow_le_rpow hL hlogs hb
+    _ = K ^ b * l ^ b := Real.mul_rpow hK hl.le
+    _ ≤ l * l ^ b := mul_le_mul_of_nonneg_right hpay (by positivity)
+    _ = _ := by rw [Real.rpow_add hl, Real.rpow_one, mul_comm]
+
+/-- Transfer a logarithmic saving from a quotient using bounds for its size and logarithm. -/
+theorem div_log_rpow_le_of_quotient {N y a : ℕ} {J K s Z : ℝ}
+    (ha : 0 < a) (hJ : 0 ≤ J) (hK : 0 < K) (hs : 0 ≤ s)
+    (hN : 0 < Real.log (N : ℝ)) (hy : 0 < Real.log (y : ℝ))
+    (hlogs : Real.log (N : ℝ) ≤ K * Real.log (y : ℝ))
+    (hsize : (y : ℝ) * a ≤ Z) :
+    J * (y : ℝ) / Real.log (y : ℝ) ^ s ≤
+      (J * K ^ s * Z / Real.log (N : ℝ) ^ s) / (a : ℝ) := by
+  have ha' : (0 : ℝ) < a := by exact_mod_cast ha
+  have hZ : 0 ≤ Z := (by positivity : 0 ≤ (y : ℝ) * a).trans hsize
+  have hpower : Real.log (N : ℝ) ^ s / K ^ s ≤ Real.log (y : ℝ) ^ s := by
+    apply (div_le_iff₀ (Real.rpow_pos_of_pos hK s)).2
+    rw [mul_comm, ← Real.mul_rpow hK.le hy.le]
+    exact Real.rpow_le_rpow hN.le hlogs hs
+  apply (le_div_iff₀ ha').2
+  rw [div_mul_eq_mul_div, mul_assoc J]
+  calc
+    _ ≤ (J * Z) / (Real.log (N : ℝ) ^ s / K ^ s) :=
+      div_le_div₀ (mul_nonneg hJ hZ) (mul_le_mul_of_nonneg_left hsize hJ)
+        (by positivity) hpower
+    _ = _ := by rw [div_div_eq_mul_div, mul_right_comm]
+
 end
 end AnalyticNumberTheory.LargeSieve.PanQuotientBounds

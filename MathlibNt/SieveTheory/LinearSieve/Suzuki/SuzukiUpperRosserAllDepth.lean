@@ -2,6 +2,7 @@ module
 
 public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144LiteralAllDepthUniformInS
 public import MathlibNt.SieveTheory.UpperRosserSuzukiExactBridge
+import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiDensityBoundingSieveBridge
 
 @[expose] public section
 
@@ -17,30 +18,26 @@ noncomputable section
 
 /-- On the compact upper-sieve window the odd Suzuki error envelope has a
 bound independent of the (possibly carrier-adaptive) depth. -/
-theorem errorEnvelope_odd_le_sixteen_on_upper_window
+theorem errorEnvelope_odd_le_two_rpow_of_le
     (H : Section13HatLayers) (hH : Section13HatContract H 2)
     {N : ℕ} (hN : Odd N) {D d s : ℝ}
-    (hd : 0 ≤ d) (hD : 1 < D) (hlog : 4 ^ d ≤ Real.log D)
-    (hslo : 3 / 2 ≤ s) (hshi : s ≤ 4) :
-    errorEnvelope H N D d s ≤ 16 := by
+    (hd : 0 ≤ d) (hD : 1 < D) {u : ℝ} (hlog : u ^ d ≤ Real.log D)
+    (hslo : 3 / 2 ≤ s) (hshi : s ≤ u) :
+    errorEnvelope H N D d s ≤ (2 : ℝ) ^ u := by
   have hs0 : 0 ≤ s := by linarith
   have hs1 : 1 ≤ s := by linarith
-  have hsd : s ^ d ≤ (4 : ℝ) ^ d :=
-    Real.rpow_le_rpow hs0 (by linarith) hd
+  have hsd : s ^ d ≤ u ^ d :=
+    Real.rpow_le_rpow hs0 hshi hd
   have hlogpos : 0 < Real.log D := Real.log_pos hD
   have hratio : s ^ d / Real.log D ≤ 1 :=
     (div_le_one hlogpos).2 (hsd.trans hlog)
   have hbase0 : 0 ≤ 1 + s ^ d / Real.log D := by positivity
-  have hperturb : (1 + s ^ d / Real.log D) ^ s ≤ 16 := by
+  have hperturb : (1 + s ^ d / Real.log D) ^ s ≤ (2 : ℝ) ^ u := by
     calc
       (1 + s ^ d / Real.log D) ^ s ≤ (2 : ℝ) ^ s :=
         Real.rpow_le_rpow hbase0 (by linarith) hs0
-      _ ≤ (2 : ℝ) ^ (4 : ℝ) :=
+      _ ≤ (2 : ℝ) ^ u :=
         Real.rpow_le_rpow_of_exponent_le (by norm_num) hshi
-      _ = 16 := by norm_num
-  have hweighted_nonneg : 0 ≤ weightedHat H .plus s := by
-    unfold weightedHat
-    exact mul_nonneg (sq_nonneg s) (hH.positive .plus s (by linarith)).le
   have hweighted : weightedHat H .plus s ≤ 1 := by
     by_cases hs3 : s ≤ 3
     · rw [hH.initial_plus s (by linarith) (by norm_num; linarith)]
@@ -62,35 +59,36 @@ theorem errorEnvelope_odd_le_sixteen_on_upper_window
   calc
     (1 + s ^ d / Real.log D) ^ s * s * H.Tplus s =
         (1 + s ^ d / Real.log D) ^ s * (s * H.Tplus s) := by ring
-    _ ≤ 16 * 1 := mul_le_mul hperturb hsT (mul_nonneg hs0 hT) (by norm_num)
-    _ = 16 := by norm_num
+    _ ≤ (2 : ℝ) ^ u := by
+      simpa only [mul_one] using
+        mul_le_mul hperturb hsT (mul_nonneg hs0 hT) (Real.rpow_nonneg (by norm_num) u)
 
-/-- Uniform scalar absorption on `[3/2,4]`, simultaneously for every odd
+/-- Uniform scalar absorption on `[3/2,u]`, simultaneously for every odd
 adaptive depth.  The depth enters the literal error only through its parity. -/
-theorem eventually_all_odd_depth_suzuki_error_upper_window
+theorem eventually_all_odd_depth_suzuki_error_of_le
     (H : Section13HatLayers) (hH : Section13HatContract H 2)
-    {C K d Δ ρ : ℝ} (hC : 0 ≤ C) (hd : 0 ≤ d) (hΔ : 0 < Δ)
+    {C K d Δ ρ : ℝ} (u : ℝ) (hC : 0 ≤ C) (hd : 0 ≤ d) (hΔ : 0 < Δ)
     (hρ : 0 < ρ) :
     ∀ᶠ D : ℝ in atTop, ∀ N : ℕ, Odd N → ∀ s : ℝ,
-      3 / 2 ≤ s → s ≤ 4 →
+      3 / 2 ≤ s → s ≤ u →
       0 ≤ C * Real.exp (Real.sqrt K) * errorEnvelope H N D d s *
           (Real.log D) ^ (-Δ) ∧
       C * Real.exp (Real.sqrt K) * errorEnvelope H N D d s *
           (Real.log D) ^ (-Δ) < ρ := by
   have hdecay : Tendsto (fun D : ℝ => (Real.log D) ^ (-Δ)) atTop (𝓝 0) :=
     (tendsto_rpow_neg_atTop hΔ).comp Real.tendsto_log_atTop
-  let A : ℝ := C * Real.exp (Real.sqrt K) * 16
+  let A : ℝ := C * Real.exp (Real.sqrt K) * (2 : ℝ) ^ u
   have hA : 0 ≤ A := by dsimp [A]; positivity
   have hsmall : ∀ᶠ D : ℝ in atTop, A * (Real.log D) ^ (-Δ) < ρ := by
     have hmul : Tendsto (fun D : ℝ => A * (Real.log D) ^ (-Δ)) atTop (𝓝 0) := by
       simpa only [mul_zero] using
         ((tendsto_const_nhds : Tendsto (fun _ : ℝ => A) atTop (𝓝 A)).mul hdecay)
     exact (tendsto_order.1 hmul).2 ρ hρ
-  have hlargeLog : ∀ᶠ D : ℝ in atTop, (4 : ℝ) ^ d ≤ Real.log D :=
-    Real.tendsto_log_atTop.eventually (eventually_ge_atTop ((4 : ℝ) ^ d))
+  have hlargeLog : ∀ᶠ D : ℝ in atTop, u ^ d ≤ Real.log D :=
+    Real.tendsto_log_atTop.eventually (eventually_ge_atTop (u ^ d))
   filter_upwards [hsmall, hlargeLog, eventually_gt_atTop (1 : ℝ)] with D hsmallD hlogD hD
   intro N hN s hslo hshi
-  have hE := errorEnvelope_odd_le_sixteen_on_upper_window H hH hN hd hD hlogD hslo hshi
+  have hE := errorEnvelope_odd_le_two_rpow_of_le H hH hN hd hD hlogD hslo hshi
   have hE0 : 0 ≤ errorEnvelope H N D d s :=
     errorEnvelope_nonneg H N hD (by linarith)
       (hH.positive (ErrorSign.ofDepth N) s (by linarith)).le
@@ -106,6 +104,29 @@ theorem eventually_all_odd_depth_suzuki_error_upper_window
             exact mul_le_mul_of_nonneg_left hE
               (mul_nonneg hC (Real.exp_pos _).le)
       _ < ρ := hsmallD
+
+/-- The odd Suzuki error envelope is at most sixteen through `s = 4`. -/
+theorem errorEnvelope_odd_le_sixteen_on_upper_window
+    (H : Section13HatLayers) (hH : Section13HatContract H 2)
+    {N : ℕ} (hN : Odd N) {D d s : ℝ}
+    (hd : 0 ≤ d) (hD : 1 < D) (hlog : 4 ^ d ≤ Real.log D)
+    (hslo : 3 / 2 ≤ s) (hshi : s ≤ 4) :
+    errorEnvelope H N D d s ≤ 16 := by
+  simpa only [show (2 : ℝ) ^ (4 : ℝ) = 16 by norm_num] using
+    errorEnvelope_odd_le_two_rpow_of_le H hH hN hd hD hlog hslo hshi
+
+/-- Uniform scalar absorption on the standard upper-sieve window. -/
+theorem eventually_all_odd_depth_suzuki_error_upper_window
+    (H : Section13HatLayers) (hH : Section13HatContract H 2)
+    {C K d Δ ρ : ℝ} (hC : 0 ≤ C) (hd : 0 ≤ d) (hΔ : 0 < Δ)
+    (hρ : 0 < ρ) :
+    ∀ᶠ D : ℝ in atTop, ∀ N : ℕ, Odd N → ∀ s : ℝ,
+      3 / 2 ≤ s → s ≤ 4 →
+      0 ≤ C * Real.exp (Real.sqrt K) * errorEnvelope H N D d s *
+          (Real.log D) ^ (-Δ) ∧
+      C * Real.exp (Real.sqrt K) * errorEnvelope H N D d s *
+          (Real.log D) ^ (-Δ) < ρ :=
+  eventually_all_odd_depth_suzuki_error_of_le H hH 4 hC hd hΔ hρ
 
 /-- Odd finite source layers are exactly the initial segment used by Suzuki's
 continuous upper source factor. -/
@@ -145,16 +166,15 @@ theorem finiteSourceLayer_odd_le_suzukiContinuousUpperFactor_sub_one
   linarith [hsum.sum_le_tsum (Finset.range (m + 1))
     (fun k hk => suzukiLayer_one_two_odd_nonneg hs k)]
 
-/-- Complete direct consumer at a natural Suzuki coordinate.  The exact finite
-upper-Rosser/Suzuki bridge is invoked internally; no bridge premise or uniform
-ordered-layer tail is assumed. -/
-theorem upperRosserDensity_at_natCeil_of_allDepth
+/-- At the natural Suzuki coordinate, the finite upper-Rosser sum is bounded
+by the continuous upper factor and the all-depth error up to `sourceSigma`. -/
+theorem upperRosserDensity_at_natCeil_of_allDepth_of_le_sourceSigma
     (H : Section13HatLayers) (hH : Section13HatSourceContract H)
     (S : BoundingSieve)
     {C K d Δ : ℝ} (hall : ∀ N : ℕ, 1 ≤ N →
       Lemma144MovingDomainNatCeilAt S H C K d Δ N 2)
     (D : ℕ) (s : ℝ)
-    (hD : 2 ≤ D) (hslo : 3 / 2 ≤ s) (_hshi : s ≤ 4)
+    (hD : 2 ≤ D) (hslo : 3 / 2 ≤ s)
     (hsSigma : s ≤ sourceSigma (D : ℝ) d)
     (hz2 : 2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊)
     (hcut : ∀ p ∈ S.prodPrimes.primeFactors,
@@ -179,15 +199,8 @@ theorem upperRosserDensity_at_natCeil_of_allDepth
     H hH m (by linarith : 1 < s)
   have hVeq : suzukiVProduct S (z : ℝ) =
       AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S := by
-    unfold suzukiVProduct
-      AnalyticNumberTheory.Sieve.sieveProductPrimeFactors
-    congr 1
-    ext p
-    simp only [Finset.mem_filter]
-    constructor
-    · exact fun hp => hp.1
-    · intro hp
-      exact ⟨hp, by simpa [z] using hcut p hp⟩
+    exact suzukiVProduct_eq_sieveProductPrimeFactors_of_all_lt S
+      (fun p hp => by exact_mod_cast hcut p hp)
   have hzD : z ≤ D := by
     apply Nat.ceil_le.mpr
     have hbase : (1 : ℝ) ≤ D := by exact_mod_cast (show 1 ≤ D by omega)
@@ -229,6 +242,28 @@ theorem upperRosserDensity_at_natCeil_of_allDepth
           have hf := hfinite
           dsimp [m] at hf
           nlinarith
+
+/-- The natural-ceiling upper Rosser bound specialized to the upper window. -/
+theorem upperRosserDensity_at_natCeil_of_allDepth
+    (H : Section13HatLayers) (hH : Section13HatSourceContract H)
+    (S : BoundingSieve)
+    {C K d Δ : ℝ} (hall : ∀ N : ℕ, 1 ≤ N →
+      Lemma144MovingDomainNatCeilAt S H C K d Δ N 2)
+    (D : ℕ) (s : ℝ)
+    (hD : 2 ≤ D) (hslo : 3 / 2 ≤ s) (_hshi : s ≤ 4)
+    (hsSigma : s ≤ sourceSigma (D : ℝ) d)
+    (hz2 : 2 ≤ ⌈(D : ℝ) ^ (1 / s)⌉₊)
+    (hcut : ∀ p ∈ S.prodPrimes.primeFactors,
+      p < ⌈(D : ℝ) ^ (1 / s)⌉₊) :
+    S.mainSum (LinearSieve.upperRosserWeight S.prodPrimes D) ≤
+      AnalyticNumberTheory.Sieve.sieveProductPrimeFactors S *
+        (suzukiContinuousUpperFactor s +
+          C * Real.exp (Real.sqrt K) *
+            errorEnvelope H
+              (2 * S.prodPrimes.primeFactors.card + 1)
+              (D : ℝ) d s * (Real.log (D : ℝ)) ^ (-Δ)) :=
+  upperRosserDensity_at_natCeil_of_allDepth_of_le_sourceSigma
+    H hH S hall D s hD hslo hsSigma hz2 hcut
 
 /-- Production wrapper: the all-depth Suzuki producer feeds the direct odd-depth
 consumer with constants selected before the bounding sieve.  The exact bridge

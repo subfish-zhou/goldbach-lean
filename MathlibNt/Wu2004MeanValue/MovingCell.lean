@@ -88,9 +88,6 @@ theorem chosen_source_moving_cell_log_saving :
   intro x hx j m A₁ A₂ k f v hv hAx hRD hApower hAlow hf
   have hxlog : 4 ≤ Real.log (x : ℝ) := hX₂ x ((le_max_right X₁ X₂).trans hx)
   have hxlog1 : 1 ≤ Real.log (x : ℝ) := by linarith
-  have hxpos := source_pos_of_log hxlog1
-  have hxone : (1 : ℝ) ≤ x := by exact_mod_cast hxpos
-  have hx0 : (0 : ℝ) < x := by linarith
   have hlogpos : 0 < Real.log (x : ℝ) := by linarith
   have hR := conductorRadius_ge_one j hxlog1 hB
   have hH := shortCutoff_le_x hxlog1 hB (by linarith : 0 ≤ conductorRadius x B j) hRD
@@ -133,54 +130,7 @@ theorem chosen_source_moving_cell_log_saving :
       (by simpa [liuPanPerronLine] using hσ))
   have hmain := (moving_cell_le_integral_means f v hf hv m A₁ A₂ k hxlog hAx hR hH).trans
     (add_le_add (add_le_add hshortInt hlongInt) le_rfl)
-  have hsqrt : liuPanPerronHalfStep x ^ (1 / 2 : ℝ) ≤ 2 * Real.sqrt x := by
-    rw [← Real.sqrt_eq_rpow]
-    have hsq := Real.sq_sqrt (halfStep_pos x).le
-    have hxq := Real.sq_sqrt hx0.le
-    have hp := Real.sqrt_nonneg (liuPanPerronHalfStep x)
-    have hxp := Real.sqrt_nonneg (x : ℝ)
-    unfold liuPanPerronHalfStep at hsq hp ⊢
-    nlinarith
-  have hlogT := log_source_height_le hxlog1
-  have hlognonneg : 0 ≤ Real.log (1 + panSourceHeight x) :=
-    Real.log_nonneg (by have : 0 < panSourceHeight x := Real.exp_pos _; linarith)
-  have hshort :
-      6 * liuPanPerronHalfStep x ^ (1 / 2 : ℝ) *
-          (C₁ * Real.sqrt x * Real.log x ^ (1 - B)) * Real.log (1 + panSourceHeight x) ≤
-        36 * C₁ * (x : ℝ) * Real.log x ^ (4 - B) := by
-    calc
-      _ ≤ 6 * (2 * Real.sqrt x) * (C₁ * Real.sqrt x * Real.log x ^ (1 - B)) *
-          (3 * (Real.log x) ^ 2) := by gcongr
-      _ = 36 * C₁ * (x : ℝ) * Real.log x ^ (3 - B) := by
-        rw [show (3 - B : ℝ) = (1 - B) + 2 by ring, Real.rpow_add hlogpos,
-          Real.rpow_two]
-        calc
-          _ = 36 * C₁ * (Real.sqrt (x : ℝ)) ^ 2 *
-              (Real.log x ^ (1 - B) * (Real.log x) ^ 2) := by ring
-          _ = _ := by rw [Real.sq_sqrt hx0.le]
-      _ ≤ _ := by
-        gcongr
-        norm_num
-  have hlong :
-      6 * liuPanPerronHalfStep x ^ panSourceSigma x *
-          (C₂ * (Real.log x) ^ 2 / Real.log x ^ B) * Real.log (1 + panSourceHeight x) ≤
-        (36 * Real.exp 2 * C₂) * (x : ℝ) * Real.log x ^ (4 - B) := by
-    calc
-      _ ≤ 6 * (2 * Real.exp 2 * (x : ℝ)) *
-          (C₂ * (Real.log x) ^ 2 / Real.log x ^ B) * (3 * (Real.log x) ^ 2) := by
-        gcongr
-        exact halfStep_source_power_le_linear hxlog hxpos le_rfl
-      _ = _ := by
-        rw [Real.rpow_sub hlogpos, Real.rpow_ofNat]
-        ring
-  have hRx : conductorRadius x B j ≤ (x : ℝ) := by
-    refine (hRD.trans (upperConductor_le_sqrt hxlog1 hB)).trans ?_
-    nlinarith [Real.sq_sqrt hx0.le, Real.sqrt_nonneg (x : ℝ)]
-  have herr : 2 * conductorRadius x B j * (388 / (x : ℝ) ^ 2) ≤ 776 / (x : ℝ) := by
-    calc
-      _ ≤ 2 * (x : ℝ) * (388 / (x : ℝ) ^ 2) := by gcongr
-      _ = _ := by field_simp; norm_num
-  refine hmain.trans (add_le_add (add_le_add hshort hlong) herr |>.trans ?_)
-  exact le_of_eq (by ring)
+  exact hmain.trans (add_le_add (source_cell_log_saving_of_means hxlog hC₁.le hC₂.le)
+    (source_cell_truncation_error_le hxlog1 hB hRD))
 
 end Wu2004MeanValue

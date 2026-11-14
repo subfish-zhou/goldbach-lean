@@ -1,6 +1,6 @@
 module
 
-public import AnalyticNumberTheory.Mertens.PartialSummation
+public import AnalyticNumberTheory.Mertens.SecondTheorem
 public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 /-!

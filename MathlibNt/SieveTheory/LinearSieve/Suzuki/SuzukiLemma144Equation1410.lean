@@ -42,13 +42,10 @@ noncomputable def recursiveCoordinate (D p : ℕ) : ℝ :=
 
 lemma ceilDiv_mul_bounds {D p : ℕ} (hp : 0 < p) :
     D ≤ (D ⌈/⌉ p) * p ∧ (D ⌈/⌉ p) * p ≤ D + p - 1 := by
-  rw [Nat.ceilDiv_eq_add_pred_div]
   constructor
-  · have hmod := Nat.mod_lt (D + p - 1) hp
-    have hdecomp := Nat.div_add_mod (D + p - 1) p
-    have hcomm : p * ((D + p - 1) / p) = ((D + p - 1) / p) * p := Nat.mul_comm _ _
-    omega
-  · exact Nat.div_mul_le_self _ _
+  · simpa only [smul_eq_mul, mul_comm] using (le_smul_ceilDiv (b := D) hp)
+  · rw [Nat.ceilDiv_eq_add_pred_div]
+    exact Nat.div_mul_le_self _ _
 
 lemma inheritedCoordinate_eq_log_div (D p : ℕ) (hD : 0 < D) (hp : 2 ≤ p) :
     inheritedCoordinate D p = Real.log ((D : ℝ) / p) / Real.log p := by
@@ -80,7 +77,7 @@ theorem coordinate_bounds {D p : ℕ} (hp : 2 ≤ p) (hDp : 2 * p ≤ D) :
   have hqpos : (0 : ℝ) < ((D ⌈/⌉ p : ℕ) : ℝ) :=
     hDdivpos.trans_le hlowerR
   have hloglower : Real.log ((D : ℝ) / p) ≤ Real.log ((D ⌈/⌉ p : ℕ) : ℝ) :=
-    Real.strictMonoOn_log.monotoneOn hDdivpos hqpos hlowerR
+    Real.log_le_log hDdivpos hlowerR
   have hupperProdR : (((D ⌈/⌉ p : ℕ) : ℝ) * p) ≤ (3 / 2 : ℝ) * D := by
     have hraw : (((D ⌈/⌉ p : ℕ) : ℝ) * p) ≤ (D : ℝ) + p := by
       have : (D ⌈/⌉ p) * p ≤ D + p := hupperNat.trans (Nat.sub_le _ _)
@@ -91,12 +88,11 @@ theorem coordinate_bounds {D p : ℕ} (hp : 2 ≤ p) (hDp : 2 * p ≤ D) :
     calc
       (((D ⌈/⌉ p : ℕ) : ℝ)) ≤ ((3 / 2 : ℝ) * D) / p :=
         (le_div_iff₀ hpR).2 hupperProdR
-      _ = (3 / 2 : ℝ) * ((D : ℝ) / p) := by ring
+      _ = (3 / 2 : ℝ) * ((D : ℝ) / p) := mul_div_assoc _ _ _
   have hthreepos : (0 : ℝ) < 3 / 2 := by norm_num
-  have hrhspos : 0 < (3 / 2 : ℝ) * ((D : ℝ) / p) := mul_pos hthreepos hDdivpos
   have hlogupper : Real.log ((D ⌈/⌉ p : ℕ) : ℝ) ≤
       Real.log ((3 / 2 : ℝ) * ((D : ℝ) / p)) :=
-    Real.strictMonoOn_log.monotoneOn hqpos hrhspos hupperR
+    Real.log_le_log hqpos hupperR
   rw [inheritedCoordinate_eq_log_div D p hD0 hp]
   constructor
   · exact (div_le_div_iff_of_pos_right hlogp).2 hloglower
@@ -106,7 +102,7 @@ theorem coordinate_bounds {D p : ℕ} (hp : 2 ≤ p) (hDp : 2 * p ≤ D) :
           (Real.log (3 / 2 : ℝ) + Real.log ((D : ℝ) / p)) / Real.log p :=
         (div_le_div_iff_of_pos_right hlogp).2 hlogupper
       _ = Real.log ((D : ℝ) / p) / Real.log p +
-          Real.log (3 / 2 : ℝ) / Real.log p := by ring
+          Real.log (3 / 2 : ℝ) / Real.log p := by rw [add_div, add_comm]
 
 
 /-- Proposition 9.3 has exactly the useful direction: since ceiling division
@@ -138,12 +134,11 @@ theorem ceilDiv_log_rpow_neg_le_div_log_rpow_neg
   have hceilLower : (D : ℝ) / (p : ℝ) ≤ ((D ⌈/⌉ p : ℕ) : ℝ) := by
     rw [div_le_iff₀ hpR]
     exact_mod_cast (ceilDiv_mul_bounds (D := D) (p := p) hp0).1
-  have hceilpos : (0 : ℝ) < ((D ⌈/⌉ p : ℕ) : ℝ) := hdivpos.trans_le hceilLower
   have hlogdiv : 0 < Real.log ((D : ℝ) / (p : ℝ)) :=
     Real.log_pos (lt_of_lt_of_le (by norm_num) hdiv2)
   have hlogceil : Real.log ((D : ℝ) / (p : ℝ)) ≤
       Real.log ((D ⌈/⌉ p : ℕ) : ℝ) :=
-    Real.strictMonoOn_log.monotoneOn hdivpos hceilpos hceilLower
+    Real.log_le_log hdivpos hceilLower
   exact Real.rpow_le_rpow_of_nonpos hlogdiv hlogceil (neg_nonpos.mpr hΔ)
 
 /-- For a fixed nonnegative source coordinate, the explicit error envelope is
@@ -158,16 +153,13 @@ theorem errorEnvelope_antitone_cutoff
   have hlogX : 0 < Real.log X := Real.log_pos hX
   have hlogY : 0 < Real.log Y := Real.log_pos hY
   have hlogXY : Real.log X ≤ Real.log Y :=
-    Real.strictMonoOn_log.monotoneOn (zero_lt_one.trans hX)
-      (zero_lt_one.trans hY) hXY
+    Real.log_le_log (zero_lt_one.trans hX) hXY
   have hsd : 0 ≤ s ^ d := Real.rpow_nonneg hs _
   have hquot : s ^ d / Real.log Y ≤ s ^ d / Real.log X :=
     div_le_div_of_nonneg_left hsd hlogX hlogXY
-  have hbase : 1 + s ^ d / Real.log Y ≤ 1 + s ^ d / Real.log X := by
-    linarith
-  have hbaseY : 0 ≤ 1 + s ^ d / Real.log Y := by
-    have : 0 ≤ s ^ d / Real.log Y := div_nonneg hsd hlogY.le
-    linarith
+  have hbase := add_le_add_right hquot 1
+  have hbaseY : 0 ≤ 1 + s ^ d / Real.log Y :=
+    add_nonneg zero_le_one (div_nonneg hsd hlogY.le)
   have hpow := Real.rpow_le_rpow hbaseY hbase hs
   have hspow : 0 ≤ s ^ (H.kappaHat - 1 + 1) := Real.rpow_nonneg hs _
   unfold errorEnvelope

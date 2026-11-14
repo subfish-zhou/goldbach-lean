@@ -223,70 +223,101 @@ theorem Internal.sum_divisors_eq_sum_primeFactors_powerset {n : ℕ}
     List.toFinset_coe, Nat.toFinset_factors, Finset.prod_val] using
     (Nat.sum_divisors_filter_squarefree (f := f) hn.ne_zero)
 
+/-- Inserting a new least element preserves all tests on the old elements and
+adds just the cubic test at the inserted element, when its index is tested. -/
+theorem rosser_tests_insert_min_iff {D q : ℕ} {s : Finset ℕ} {test : ℕ → Prop}
+    (hqs : q ∉ s) (hqmin : ∀ p ∈ s, q ≤ p) :
+    (∀ p ∈ insert q s, test (((insert q s).filter (fun r => p ≤ r)).card) →
+      ((insert q s).filter (fun r => p ≤ r)).prod id * p ^ 2 < D) ↔
+    (∀ p ∈ s, test ((s.filter (fun r => p ≤ r)).card) →
+      (s.filter (fun r => p ≤ r)).prod id * p ^ 2 < D) ∧
+    (test (s.card + 1) → s.prod id * q ^ 3 < D) := by
+  have hself : (insert q s).filter (fun r => q ≤ r) = insert q s :=
+    Finset.filter_eq_self.mpr fun r hr => by
+      rcases Finset.mem_insert.mp hr with rfl | hr
+      · exact le_rfl
+      · exact hqmin r hr
+  have htail {p : ℕ} (hp : p ∈ s) :
+      (insert q s).filter (fun r => p ≤ r) = s.filter (fun r => p ≤ r) := by
+    have hpq : q < p := lt_of_le_of_ne (hqmin p hp) (fun h => hqs (h.symm ▸ hp))
+    simp [Finset.filter_insert, not_le.mpr hpq]
+  have hprod : (insert q s).prod id * q ^ 2 = s.prod id * q ^ 3 := by
+    rw [Finset.prod_insert hqs]
+    simp only [id_eq]
+    ring
+  constructor
+  · intro h
+    refine ⟨fun p hp => ?_, fun hcard => ?_⟩
+    · simpa only [htail hp] using h p (Finset.mem_insert_of_mem hp)
+    · have hq := h q (Finset.mem_insert_self q s)
+      rw [hself, Finset.card_insert_of_notMem hqs, hprod] at hq
+      exact hq hcard
+  · rintro ⟨hs, hq⟩ p hp
+    rcases Finset.mem_insert.mp hp with rfl | hp
+    · simpa only [hself, Finset.card_insert_of_notMem hqs, hprod] using hq
+    · simpa only [htail hp] using hs p hp
+
+/-- The least old prime bounds the enlarged product when the old tail length is tested. -/
+theorem rosser_prod_insert_min_lt {D q : ℕ} {s : Finset ℕ} {test : ℕ → Prop}
+    (hqs : q ∉ s) (hq : 0 < q) (hqD : q < D) (hqmin : ∀ p ∈ s, q ≤ p)
+    (hs : ∀ p ∈ s, test ((s.filter (fun r => p ≤ r)).card) →
+      (s.filter (fun r => p ≤ r)).prod id * p ^ 2 < D)
+    (htest : test s.card) :
+    (insert q s).prod id < D := by
+  by_cases hn : s.Nonempty
+  · let p := s.min' hn
+    have hp := Finset.min'_mem s hn
+    have hself : s.filter (fun r => p ≤ r) = s :=
+      Finset.filter_eq_self.mpr fun r hr => Finset.min'_le s r hr
+    have hbound := hs p hp (by simpa only [hself] using htest)
+    rw [hself] at hbound
+    have hqp : q ≤ p ^ 2 := (hqmin p hp).trans
+      (le_self_pow₀ (hq.trans_le (hqmin p hp)) (by decide))
+    rw [Finset.prod_insert hqs, id_eq, mul_comm q]
+    exact (Nat.mul_le_mul_left _ hqp).trans_lt hbound
+  · rw [Finset.not_nonempty_iff_eq_empty.mp hn]
+    simpa using hqD
+
+/-- In the parity that tests the new prime, activity is equivalent to its cubic bound. -/
+theorem rosser_insert_min_active_iff {D q : ℕ} {s : Finset ℕ} {test : ℕ → Prop}
+    (hqs : q ∉ s) (hq : 0 < q) (hqmin : ∀ p ∈ s, q ≤ p)
+    (hs : ∀ p ∈ s, test ((s.filter (fun r => p ≤ r)).card) →
+      (s.filter (fun r => p ≤ r)).prod id * p ^ 2 < D)
+    (hcard : test (s.card + 1)) :
+    ((insert q s).prod id < D ∧
+      ∀ p ∈ insert q s, test (((insert q s).filter (fun r => p ≤ r)).card) →
+        ((insert q s).filter (fun r => p ≤ r)).prod id * p ^ 2 < D) ↔
+    s.prod id * q ^ 3 < D := by
+  rw [rosser_tests_insert_min_iff hqs hqmin, and_iff_right hs]
+  refine ⟨fun h => h.2 hcard, fun hc => ⟨?_, fun _ => hc⟩⟩
+  rw [Finset.prod_insert hqs, id_eq, mul_comm q]
+  exact (Nat.mul_le_mul_left _ (le_self_pow₀ hq (by decide))).trans_lt hc
+
 private theorem lowerRosserAdmissibleSet_insert_min_of_even
     {D q : ℕ} {s : Finset ℕ} (hqs : q ∉ s)
     (hqmin : ∀ p ∈ s, q ≤ p) (hs : LowerRosserAdmissibleSet D s)
     (heven : Even s.card) :
     LowerRosserAdmissibleSet D (insert q s) := by
-  intro p hp hcard
-  obtain hp_eq | hp_s := Finset.mem_insert.mp hp
-  · subst p
-    have hfilter : (insert q s).filter (fun r ↦ q ≤ r) = insert q s :=
-      Finset.filter_eq_self.mpr fun r hr ↦ by
-        obtain rfl | hr_s := Finset.mem_insert.mp hr
-        · exact le_rfl
-        · exact hqmin r hr_s
-    rw [hfilter, Finset.card_insert_of_notMem hqs, Nat.even_add_one] at hcard
-    exact (hcard heven).elim
-  · have hpq : ¬p ≤ q := by
-      rw [not_le]
-      exact lt_of_le_of_ne (hqmin p hp_s) (Ne.symm fun h ↦ hqs (h ▸ hp_s))
-    have hfilter : (insert q s).filter (fun r ↦ p ≤ r) =
-        s.filter (fun r ↦ p ≤ r) := by
-      simp [Finset.filter_insert, hpq]
-    rw [hfilter] at hcard ⊢
-    exact hs p hp_s hcard
+  apply (rosser_tests_insert_min_iff (test := Even) hqs hqmin).2
+  refine ⟨hs, fun h => ?_⟩
+  exact ((Nat.even_add_one.mp h) heven).elim
+
 
 private theorem lowerRosserAdmissibleSet_of_insert_min
     {D q : ℕ} {s : Finset ℕ} (hqs : q ∉ s)
     (hqmin : ∀ p ∈ s, q ≤ p)
     (hs : LowerRosserAdmissibleSet D (insert q s)) :
-    LowerRosserAdmissibleSet D s := by
-  intro p hp hcard
-  have hpq : ¬p ≤ q := by
-    rw [not_le]
-    exact lt_of_le_of_ne (hqmin p hp) (Ne.symm fun h ↦ hqs (h ▸ hp))
-  have hfilter : (insert q s).filter (fun r ↦ p ≤ r) =
-      s.filter (fun r ↦ p ≤ r) := by
-    simp [Finset.filter_insert, hpq]
-  rw [← hfilter] at hcard ⊢
-  exact hs p (Finset.mem_insert_of_mem hp) hcard
+    LowerRosserAdmissibleSet D s :=
+  ((rosser_tests_insert_min_iff (test := Even) hqs hqmin).1 hs).1
+
 
 private theorem prod_insert_min_lt_of_lowerRosserAdmissibleSet_even
     {D q : ℕ} {s : Finset ℕ} (hqs : q ∉ s) (hqprime : q.Prime)
     (hqD : q < D) (hqmin : ∀ p ∈ s, q ≤ p)
     (hs : LowerRosserAdmissibleSet D s) (heven : Even s.card) :
-    (insert q s).prod id < D := by
-  by_cases hs0 : s = ∅
-  · subst s
-    simpa using hqD
-  · have hsne : s.Nonempty := Finset.nonempty_iff_ne_empty.mpr hs0
-    let p := s.min' hsne
-    have hp : p ∈ s := Finset.min'_mem s hsne
-    have hpmin : ∀ r ∈ s, p ≤ r := fun r hr ↦ Finset.min'_le s r hr
-    have hfilter : s.filter (fun r ↦ p ≤ r) = s :=
-      Finset.filter_eq_self.mpr hpmin
-    have htest := hs p hp (by simpa [hfilter] using heven)
-    rw [hfilter] at htest
-    have hqp2 : q ≤ p ^ 2 := by
-      calc
-        q ≤ p := hqmin p hp
-        _ ≤ p * p := Nat.le_mul_of_pos_right p
-          (lt_of_lt_of_le hqprime.pos (hqmin p hp))
-        _ = p ^ 2 := by ring
-    rw [Finset.prod_insert hqs]
-    exact lt_of_le_of_lt (by
-      simpa [mul_comm] using Nat.mul_le_mul_right (s.prod id) hqp2) htest
+    (insert q s).prod id < D :=
+  rosser_prod_insert_min_lt hqs hqprime.pos hqD hqmin hs heven
+
 
 private theorem lowerRosserSetWeight_pair_nonpos
     {D q : ℕ} {s : Finset ℕ} (hqs : q ∉ s) (hqprime : q.Prime)
@@ -389,44 +420,10 @@ theorem lowerRosser_insert_min_active_iff_cube_lt
     (hs : s.prod id < D ∧ LowerRosserAdmissibleSet D s) :
     (insert q s).prod id < D ∧
         LowerRosserAdmissibleSet D (insert q s) ↔
-      s.prod id * q ^ 3 < D := by
-  have hfilterq :
-      (insert q s).filter (fun r ↦ q ≤ r) = insert q s :=
-    Finset.filter_eq_self.mpr fun r hr ↦ by
-      obtain rfl | hr_s := Finset.mem_insert.mp hr
-      · exact le_rfl
-      · exact hqmin r hr_s
-  have hinsEven : Even (insert q s).card := by
-    rw [Finset.card_insert_of_notMem hqs, Nat.even_add_one]
-    exact hodd
-  constructor
-  · intro hins
-    have htest := hins.2 q (Finset.mem_insert_self q s) (by
-      simpa [hfilterq] using hinsEven)
-    rw [hfilterq, Finset.prod_insert hqs] at htest
-    simpa only [id_eq, pow_succ, mul_assoc, mul_comm, mul_left_comm] using htest
-  · intro hcube
-    constructor
-    · rw [Finset.prod_insert hqs]
-      have hqle : q ≤ q ^ 3 := by
-        exact Nat.le_pow (by norm_num)
-      exact lt_of_le_of_lt
-        (by simpa [mul_comm] using Nat.mul_le_mul_left (s.prod id) hqle)
-        (by simpa [mul_comm] using hcube)
-    · intro p hp hcard
-      obtain rfl | hp_s := Finset.mem_insert.mp hp
-      · rw [hfilterq, Finset.prod_insert hqs]
-        simpa [pow_succ, mul_assoc, mul_comm, mul_left_comm] using hcube
-      · have hpq : ¬p ≤ q := by
-          rw [not_le]
-          exact lt_of_le_of_ne (hqmin p hp_s)
-            (Ne.symm fun h ↦ hqs (h ▸ hp_s))
-        have hfilter :
-            (insert q s).filter (fun r ↦ p ≤ r) =
-              s.filter (fun r ↦ p ≤ r) := by
-          simp [Finset.filter_insert, hpq]
-        rw [hfilter] at hcard ⊢
-        exact hs.2 p hp_s hcard
+      s.prod id * q ^ 3 < D :=
+  rosser_insert_min_active_iff hqs hqprime.pos hqmin hs.2
+    (Nat.even_add_one.mpr hodd)
+
 
 /-- The odd lower-Rosser boundary exposed when a new least prime is inserted. -/
 def LowerRosserBoundarySet (D q : ℕ) (s : Finset ℕ) : Prop :=
@@ -444,20 +441,15 @@ theorem lowerRosserBoundarySet_iff_cube_le
       ¬Even s.card ∧
         s.prod id < D ∧ LowerRosserAdmissibleSet D s ∧
         D ≤ s.prod id * q ^ 3 := by
-  constructor
-  · rintro ⟨hodd, hsD, hsAdmissible, hins⟩
-    refine ⟨hodd, hsD, hsAdmissible, ?_⟩
-    rw [← not_lt]
-    exact fun hcube ↦ hins
-      ((lowerRosser_insert_min_active_iff_cube_lt hqs hqprime hqmin hodd
-        ⟨hsD, hsAdmissible⟩).mpr hcube)
-  · rintro ⟨hodd, hsD, hsAdmissible, hcube⟩
-    refine ⟨hodd, hsD, hsAdmissible, ?_⟩
-    intro hins
-    have hlt :=
-      (lowerRosser_insert_min_active_iff_cube_lt hqs hqprime hqmin hodd
-        ⟨hsD, hsAdmissible⟩).mp hins
-    omega
+  change _ ∧ _ ∧ _ ∧ ¬_ ↔ _
+  constructor <;> rintro ⟨hparity, hprod, hadm, h⟩
+  · exact ⟨hparity, hprod, hadm,
+      not_lt.mp (fun hc => h ((lowerRosser_insert_min_active_iff_cube_lt
+        hqs hqprime hqmin hparity ⟨hprod, hadm⟩).2 hc))⟩
+  · exact ⟨hparity, hprod, hadm,
+      fun hins => (not_lt.mpr h) ((lowerRosser_insert_min_active_iff_cube_lt
+        hqs hqprime hqmin hparity ⟨hprod, hadm⟩).1 hins)⟩
+
 
 /-- Exact lower-Rosser one-prime pairing on an active odd tail.  The ordinary
 Euler factor survives away from the cubic shell, while crossing the shell

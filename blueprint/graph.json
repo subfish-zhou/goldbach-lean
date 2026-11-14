@@ -344,31 +344,11 @@
     ],
     [
       "bp:foundation-pnt",
-      "bp:chen-square-remainder"
-    ],
-    [
-      "bp:foundation-pnt",
-      "bp:chen-switched-weight-payment"
-    ],
-    [
-      "bp:foundation-pnt",
-      "bp:chen-weighted-bv"
+      "bp:foundation-bv"
     ],
     [
       "bp:foundation-pnt",
       "bp:foundation-fouvry-rectangle"
-    ],
-    [
-      "bp:foundation-pnt",
-      "bp:foundation-local-product"
-    ],
-    [
-      "bp:foundation-pnt",
-      "bp:foundation-mertens"
-    ],
-    [
-      "bp:foundation-pnt",
-      "bp:foundation-selberg-denominator"
     ],
     [
       "bp:foundation-selberg-denominator",
@@ -692,27 +672,11 @@
         ],
         [
           "bp:foundation-pnt",
-          "bp:chen-switched-weight-payment"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:chen-weighted-bv"
+          "bp:foundation-bv"
         ],
         [
           "bp:foundation-pnt",
           "bp:foundation-fouvry-rectangle"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-local-product"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-mertens"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-selberg-denominator"
         ]
       ]
     },
@@ -742,7 +706,6 @@
         "bp:foundation-liupan-canonical",
         "bp:foundation-local-product",
         "bp:foundation-mertens",
-        "bp:foundation-pnt",
         "bp:foundation-selberg-denominator",
         "bp:foundation-selberg-remainder",
         "bp:foundation-suzuki-lower",
@@ -879,30 +842,6 @@
           "bp:chen-upper-asymptotic"
         ],
         [
-          "bp:foundation-pnt",
-          "bp:chen-square-remainder"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:chen-switched-weight-payment"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:chen-weighted-bv"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-local-product"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-mertens"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-selberg-denominator"
-        ],
-        [
           "bp:foundation-selberg-denominator",
           "bp:chen-square-main-term"
         ],
@@ -945,7 +884,6 @@
         "bp:foundation-local-product",
         "bp:foundation-mertens",
         "bp:foundation-pan-bounded",
-        "bp:foundation-pnt",
         "bp:foundation-suzuki-lower",
         "bp:foundation-suzuki-upper",
         "bp:liliu-author-consume",
@@ -1110,18 +1048,6 @@
         [
           "bp:foundation-pan-bounded",
           "bp:liliu-g10-integral"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-fouvry-rectangle"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-local-product"
-        ],
-        [
-          "bp:foundation-pnt",
-          "bp:foundation-mertens"
         ],
         [
           "bp:foundation-suzuki-lower",

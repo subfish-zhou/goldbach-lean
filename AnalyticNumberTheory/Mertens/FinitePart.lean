@@ -4,6 +4,7 @@ public import AnalyticNumberTheory.Mertens.AbelianRemainder
 public import AnalyticNumberTheory.Mertens.LogChange
 public import AnalyticNumberTheory.Mertens.ConstantIdentity
 public import AnalyticNumberTheory.Mertens.GammaKernel
+public import Mathlib.MeasureTheory.Function.Floor
 
 /-!
 # The prime Dirichlet finite part

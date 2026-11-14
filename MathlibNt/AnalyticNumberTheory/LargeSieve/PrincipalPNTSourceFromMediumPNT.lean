@@ -1,6 +1,7 @@
 module
 
 public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimeAPSourceClosure
+public import AnalyticNumberTheory.PrimeDistribution.PrimeNumberTheorem
 
 @[expose] public section
 
@@ -305,7 +306,7 @@ theorem principalLambdaPrefixMaxError_one_eventually_le (A : ℝ) (hA : 0 < A) :
       ∀ᶠ N : ℕ in Filter.atTop,
         principalLambdaPrefixMaxError N 1 ≤
           K * (N : ℝ) / Real.log N ^ A := by
-  obtain ⟨c, hc, hmedium⟩ := MediumPNT
+  obtain ⟨c, hc, hmedium⟩ := AnalyticNumberTheory.PrimeDistribution.chebyshevPsi_medium_error
   rw [Asymptotics.isBigO_iff'] at hmedium
   obtain ⟨M, hM, hmedium⟩ := hmedium
   let d : ℝ := c * (1 / 2 : ℝ) ^ (1 / 10 : ℝ)

@@ -1,5 +1,6 @@
 module
 
+public import AnalyticNumberTheory.Sieve.PanMainTerm
 public import MathlibNt.SieveTheory.Distribution.LiuPan.LiuPanPrimePowerCorrection
 
 /-!

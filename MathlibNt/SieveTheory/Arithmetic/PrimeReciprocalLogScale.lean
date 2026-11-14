@@ -34,97 +34,41 @@ noncomputable def primeReciprocalLogInterval (N : ℕ) (a b : ℝ) : ℝ :=
 /-- A positive real power, restricted to natural inputs and then floored,
 tends to infinity. -/
 theorem tendsto_rpowFloor_atTop {a : ℝ} (ha : 0 < a) :
-    Tendsto (fun N : ℕ => rpowFloor N a) atTop atTop := by
-  exact tendsto_nat_floor_atTop.comp
-    ((tendsto_rpow_atTop ha).comp tendsto_natCast_atTop_atTop)
+    Tendsto (fun N : ℕ => rpowFloor N a) atTop atTop :=
+  MertensTheorem.tendsto_rpowFloor_atTop ha
 
 /-- In particular, the floored power is eventually in the range where the
 uniform Mertens estimate applies. -/
 theorem eventually_two_le_rpowFloor {a : ℝ} (ha : 0 < a) :
     ∀ᶠ N : ℕ in atTop, 2 ≤ rpowFloor N a :=
-  (tendsto_rpowFloor_atTop ha).eventually (eventually_ge_atTop 2)
+  MertensTheorem.eventually_two_le_rpowFloor ha
 
 /-- Flooring a positive real power changes it by a relative error tending to
 zero. -/
 theorem tendsto_rpowFloor_div_rpow {a : ℝ} (ha : 0 < a) :
     Tendsto (fun N : ℕ => (rpowFloor N a : ℝ) / ((N : ℝ) ^ a))
-      atTop (nhds 1) := by
-  have hpow : Tendsto (fun N : ℕ => (N : ℝ) ^ a) atTop atTop :=
-    (tendsto_rpow_atTop ha).comp tendsto_natCast_atTop_atTop
-  have hlower : Tendsto (fun N : ℕ => 1 - 1 / ((N : ℝ) ^ a))
-      atTop (nhds 1) := by
-    simpa using (hpow.const_div_atTop 1).const_sub 1
-  refine tendsto_of_tendsto_of_tendsto_of_le_of_le'
-    hlower tendsto_const_nhds ?_ ?_
-  · filter_upwards [hpow.eventually (eventually_gt_atTop 0)] with N hpos
-    have hfloorlt : ((N : ℝ) ^ a) < (rpowFloor N a : ℝ) + 1 := by
-      exact_mod_cast Nat.lt_floor_add_one ((N : ℝ) ^ a)
-    rw [sub_le_iff_le_add, ← add_div, le_div_iff₀ hpos]
-    simpa only [one_mul] using le_of_lt hfloorlt
-  · filter_upwards [hpow.eventually (eventually_gt_atTop 0)] with N hpos
-    rw [div_le_one hpos]
-    exact Nat.floor_le (le_of_lt hpos)
+      atTop (nhds 1) :=
+  MertensTheorem.tendsto_rpowFloor_div_rpow ha
 
 /-- The logarithm of a floored positive power tends to infinity. -/
 theorem tendsto_log_rpowFloor_atTop {a : ℝ} (ha : 0 < a) :
-    Tendsto (fun N : ℕ => Real.log (rpowFloor N a : ℝ)) atTop atTop := by
-  exact Real.tendsto_log_atTop.comp
-    (tendsto_natCast_atTop_atTop.comp (tendsto_rpowFloor_atTop ha))
+    Tendsto (fun N : ℕ => Real.log (rpowFloor N a : ℝ)) atTop atTop :=
+  MertensTheorem.tendsto_log_rpowFloor_atTop ha
 
 /-- The first logarithm is unchanged asymptotically by flooring. -/
 theorem tendsto_log_rpowFloor_sub_log_rpow {a : ℝ} (ha : 0 < a) :
     Tendsto (fun N : ℕ =>
       Real.log (rpowFloor N a : ℝ) - Real.log ((N : ℝ) ^ a))
-      atTop (nhds 0) := by
-  have hpow : Tendsto (fun N : ℕ => (N : ℝ) ^ a) atTop atTop :=
-    (tendsto_rpow_atTop ha).comp tendsto_natCast_atTop_atTop
-  have h := (tendsto_rpowFloor_div_rpow ha).log one_ne_zero
-  simpa only [Real.log_one] using h.congr' (by
-    filter_upwards [eventually_two_le_rpowFloor ha,
-      hpow.eventually (eventually_gt_atTop 0)] with N hfloor hpowPos
-    rw [Real.log_div (by positivity) (ne_of_gt hpowPos)])
+      atTop (nhds 0) :=
+  MertensTheorem.tendsto_log_rpowFloor_sub_log_rpow ha
 
 /-- Supporting log--log asymptotic, including the exact `log (N ^ a) = a log N`
 algebra: `log log floor(N^a) = log a + log log N + o(1)`. -/
 theorem tendsto_log_log_rpowFloor_sub {a : ℝ} (ha : 0 < a) :
     Tendsto (fun N : ℕ =>
       Real.log (Real.log (rpowFloor N a : ℝ)) -
-        (Real.log a + Real.log (Real.log (N : ℝ)))) atTop (nhds 0) := by
-  have hpow : Tendsto (fun N : ℕ => (N : ℝ) ^ a) atTop atTop :=
-    (tendsto_rpow_atTop ha).comp tendsto_natCast_atTop_atTop
-  have hlogpow : Tendsto (fun N : ℕ => Real.log ((N : ℝ) ^ a))
-      atTop atTop :=
-    Real.tendsto_log_atTop.comp hpow
-  have hsmallRatio : Tendsto (fun N : ℕ =>
-      (Real.log (rpowFloor N a : ℝ) - Real.log ((N : ℝ) ^ a)) /
-        Real.log ((N : ℝ) ^ a)) atTop (nhds 0) :=
-    (tendsto_log_rpowFloor_sub_log_rpow ha).div_atTop hlogpow
-  have hden : ∀ᶠ N : ℕ in atTop, Real.log ((N : ℝ) ^ a) ≠ 0 := by
-    filter_upwards [hlogpow.eventually (eventually_gt_atTop 0)] with N hN
-    exact ne_of_gt hN
-  have hlogRatio : Tendsto (fun N : ℕ =>
-      Real.log (rpowFloor N a : ℝ) / Real.log ((N : ℝ) ^ a))
-      atTop (nhds 1) := by
-    simpa only [zero_add] using (hsmallRatio.add_const 1).congr' (by
-      filter_upwards [hden] with N hN
-      field_simp [hN]
-      ring)
-  have hloglogRatio := hlogRatio.log one_ne_zero
-  simpa only [Real.log_one] using hloglogRatio.congr' (by
-    filter_upwards [eventually_two_le_rpowFloor ha,
-      hlogpow.eventually (eventually_gt_atTop 0),
-      eventually_gt_atTop (1 : ℕ)] with N hfloor hlogpowPos hN
-    have hNpos : (0 : ℝ) < N := by
-      exact_mod_cast Nat.zero_lt_of_lt hN
-    have hlogNpos : 0 < Real.log (N : ℝ) :=
-      Real.log_pos (by exact_mod_cast hN)
-    have hlogfloorPos : 0 < Real.log (rpowFloor N a : ℝ) :=
-      Real.log_pos (by
-        exact_mod_cast lt_of_lt_of_le Nat.one_lt_two hfloor)
-    rw [Real.log_div (ne_of_gt hlogfloorPos) (ne_of_gt hlogpowPos)]
-    congr 1
-    rw [Real.log_rpow hNpos,
-      Real.log_mul (ne_of_gt ha) (ne_of_gt hlogNpos)])
+        (Real.log a + Real.log (Real.log (N : ℝ)))) atTop (nhds 0) :=
+  MertensTheorem.tendsto_log_log_rpowFloor_sub ha
 
 /-- The real-cutoff interval sum is exactly the difference of the two Mertens
 prefixes.  Thus the lower endpoint is strict and the upper endpoint is
@@ -166,65 +110,22 @@ theorem primeReciprocalLogInterval_eq_sub (N : ℕ) {a b : ℝ}
   · intro p hp
     rfl
 
-/-- The uniform Mertens error tends to zero along a floored positive power. -/
-private theorem tendsto_mertens_error_rpowFloor {a B C : ℝ} (ha : 0 < a)
-    (hM : ∀ x : ℕ, 2 ≤ x →
-      |MertensTheorem.primeReciprocalSum x -
-          (Real.log (Real.log x) + B)| ≤ C / Real.log x) :
-    Tendsto (fun N : ℕ =>
-      MertensTheorem.primeReciprocalSum (rpowFloor N a) -
-        (Real.log (Real.log (rpowFloor N a)) + B)) atTop (nhds 0) := by
-  rw [tendsto_zero_iff_norm_tendsto_zero]
-  have hupper : Tendsto
-      (fun N : ℕ => C / Real.log (rpowFloor N a : ℝ))
-      atTop (nhds 0) :=
-    (tendsto_log_rpowFloor_atTop ha).const_div_atTop C
-  refine tendsto_of_tendsto_of_tendsto_of_le_of_le'
-    tendsto_const_nhds hupper
-    (Filter.Eventually.of_forall fun N => norm_nonneg _) ?_
-  filter_upwards [eventually_two_le_rpowFloor ha] with N hN
-  simpa only [Real.norm_eq_abs] using hM (rpowFloor N a) hN
-
-/-- Mertens' prefix at `floor (N^a)`, with its common `log log N` term
-removed, tends to `log a + B`. -/
-private theorem tendsto_mertens_prefix_normalized {a B C : ℝ} (ha : 0 < a)
-    (hM : ∀ x : ℕ, 2 ≤ x →
-      |MertensTheorem.primeReciprocalSum x -
-          (Real.log (Real.log x) + B)| ≤ C / Real.log x) :
-    Tendsto (fun N : ℕ =>
-      MertensTheorem.primeReciprocalSum (rpowFloor N a) -
-        (Real.log a + Real.log (Real.log (N : ℝ)) + B))
-      atTop (nhds 0) := by
-  have h := (tendsto_mertens_error_rpowFloor ha hM).add
-    (tendsto_log_log_rpowFloor_sub ha)
-  convert h using 1
-  · funext N
-    ring
-  · ring_nf
-
 /-- For fixed `0 < a < b`, the reciprocal sum over the real interval
 `N^a < p ≤ N^b` tends to `log (b / a)`. -/
 theorem tendsto_primeReciprocalLogInterval {a b : ℝ}
     (ha : 0 < a) (hab : a < b) :
     Tendsto (fun N : ℕ => primeReciprocalLogInterval N a b)
       atTop (nhds (Real.log (b / a))) := by
-  obtain ⟨B, C, hM⟩ := MertensTheorem.mertens_second_theorem
-  have hb : 0 < b := lt_trans ha hab
-  have haLimit := tendsto_mertens_prefix_normalized ha hM
-  have hbLimit := tendsto_mertens_prefix_normalized hb hM
-  have hdiff : Tendsto (fun N : ℕ =>
-      MertensTheorem.primeReciprocalSum (rpowFloor N b) -
-        MertensTheorem.primeReciprocalSum (rpowFloor N a))
-      atTop (nhds (Real.log b - Real.log a)) := by
-    have h := (hbLimit.sub haLimit).add_const (Real.log b - Real.log a)
-    convert h using 1
-    · funext N
-      ring
-    · ring_nf
-  rw [Real.log_div (ne_of_gt hb) (ne_of_gt ha)]
-  apply hdiff.congr'
-  filter_upwards [eventually_ge_atTop (1 : ℕ)] with N hN
-  exact (primeReciprocalLogInterval_eq_sub N hN (le_of_lt hab)).symm
+  have h := MertensTheorem.tendsto_weightedPrimeReciprocalLogSum_const (c := 1) ha hab
+  simp only [one_mul] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℕ)] with N hN
+  have hweighted := MertensTheorem.weightedPrimeReciprocalLogSum_eq_sub_sub_integral
+    ha hab.le (f := fun _ => 1) (f' := fun _ => 0)
+    (fun x => hasDerivAt_const x 1) continuous_const hN
+  simpa only [rpowFloor, MertensTheorem.rpowFloor, MertensTheorem.logScaleDeriv, zero_div, zero_mul, MeasureTheory.integral_zero,
+    sub_zero, one_mul, primeReciprocalLogInterval_eq_sub N (by omega : 1 ≤ N) hab.le]
+    using hweighted
 
 
 end MathlibNt.SieveTheory.PrimeReciprocalLogScale

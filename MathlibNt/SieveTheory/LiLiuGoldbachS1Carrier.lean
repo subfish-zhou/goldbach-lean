@@ -1,5 +1,7 @@
 module
 
+public import AnalyticNumberTheory.Sieve.Distribution
+public import AnalyticNumberTheory.Sieve.GoldbachDensity
 public import MathlibNt.SieveTheory.LinearSieve.UpperRosserDensity
 public import MathlibNt.SieveTheory.LiLiuGoldbachBasicToSieve
 public import MathlibNt.SieveTheory.BombieriVinogradov

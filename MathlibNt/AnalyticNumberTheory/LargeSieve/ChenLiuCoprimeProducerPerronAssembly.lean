@@ -272,6 +272,18 @@ theorem source_cell_bound_of_means {x y : ℕ} {R M₁ M₂ : ℝ}
   exact (source_cell_le_integral_means f hf m A₁ A₂ k hx hy hyx hAy hR hH).trans
     (add_le_add (add_le_add hshort hlong) le_rfl)
 
+/-- The conductor-cell truncation errors sum to at most `776 / x`. -/
+theorem source_cell_truncation_error_le {x j : ℕ} {B : ℝ}
+    (hxlog : 1 ≤ Real.log x) (hB : 0 ≤ B)
+    (hRD : conductorRadius x B j ≤ upperConductor x B) :
+    2 * conductorRadius x B j * (388 / (x : ℝ) ^ 2) ≤ 776 / (x : ℝ) := by
+  have hx : (1 : ℝ) ≤ x := by exact_mod_cast source_pos_of_log hxlog
+  have hRx := (hRD.trans (upperConductor_le_sqrt hxlog hB)).trans
+    (Real.sqrt_le_self_iff.mpr (Or.inr hx))
+  calc
+    _ ≤ 2 * (x : ℝ) * (388 / (x : ℝ) ^ 2) := by gcongr
+    _ = _ := by field_simp; norm_num
+
 /-- The genuine source-cell bound with both polynomial means discharged.
 The constants precede all source functions, parameters, and spectral heights. -/
 theorem chosen_source_cell_uniform :
@@ -302,8 +314,6 @@ theorem chosen_source_cell_uniform :
   have hxlog : 4 ≤ Real.log (x : ℝ) := hX₂ x ((le_max_right X₁ X₂).trans hx)
   have hxlog1 : 1 ≤ Real.log (x : ℝ) := by linarith
   have hy : 1 ≤ y := source_pos_of_log hylog
-  have hxpos : (0 : ℝ) < x := by exact_mod_cast source_pos_of_log hxlog1
-  have hxone : (1 : ℝ) ≤ x := by exact_mod_cast source_pos_of_log hxlog1
   have hR := conductorRadius_ge_one j hxlog1 hB
   have hH := shortCutoff_le_x hxlog1 hB (by linarith : 0 ≤ conductorRadius x B j) hRD
   have hmain := source_cell_bound_of_means f hf m A₁ A₂ k hxlog hy hyx hAy hR hH
@@ -311,14 +321,7 @@ theorem chosen_source_cell_uniform :
     (show 0 ≤ C₂ * (Real.log x) ^ 2 / Real.log y ^ B by positivity)
     (fun s hs' => hX₁ x hx1 j m A₁ A₂ k f s hRD hApower hf hs')
     (fun s hs' => hl B x y j m A₁ A₂ k f s hB hylog hyx hAlow hf hs')
-  refine hmain.trans (add_le_add le_rfl ?_)
-  have hRx : conductorRadius x B j ≤ (x : ℝ) := by
-    refine (hRD.trans (upperConductor_le_sqrt hxlog1 hB)).trans ?_
-    nlinarith [Real.sq_sqrt hxpos.le, Real.sqrt_nonneg (x : ℝ)]
-  calc
-    2 * conductorRadius x B j * (388 / (x : ℝ) ^ 2) ≤
-        2 * (x : ℝ) * (388 / (x : ℝ) ^ 2) := by gcongr
-    _ = _ := by field_simp; norm_num
+  exact hmain.trans (add_le_add le_rfl (source_cell_truncation_error_le hxlog1 hB hRD))
 
 theorem log_source_height_le {x : ℕ} (hx : 1 ≤ Real.log x) :
     Real.log (1 + panSourceHeight x) ≤ 3 * (Real.log x) ^ 2 := by
@@ -361,43 +364,23 @@ theorem halfStep_source_power_le_linear {x y : ℕ}
       linarith
     _ = _ := by ring
 
-/-- At the full source endpoint, each real conductor/source cell has an
-arbitrary logarithmic saving. This is an unconditional analytic producer,
-not the weighted aggregate over induced conductors. -/
-theorem chosen_source_cell_log_saving :
-    ∃ C : ℝ, 0 < C ∧ ∀ B ε : ℝ, 0 ≤ B → 0 < ε →
-      ∃ X₀ : ℕ, ∀ x : ℕ, X₀ ≤ x →
-      ∀ (j m A₁ A₂ k : ℕ) (f : ℕ → ℂ),
-      A₂ ≤ x → conductorRadius x B j ≤ upperConductor x B →
-      (A₂ : ℝ) ≤ (x : ℝ) ^ (1 - ε) → Real.log x ^ (2 * B) ≤ A₁ →
-      (∀ n, ‖f n‖ ≤ 1) →
-      sourceCell f m x A₁ A₂ k (conductorRadius x B j) ≤
-        C * (x : ℝ) * Real.log x ^ (4 - B) + 776 / (x : ℝ) := by
-  obtain ⟨C₁, C₂, hC₁, hC₂, hcell⟩ := chosen_source_cell_uniform
-  refine ⟨36 * C₁ + 36 * Real.exp 2 * C₂, by positivity, ?_⟩
-  intro B ε hB hε
-  obtain ⟨X₁, hX₁⟩ := hcell B ε hB hε
-  obtain ⟨X₂, hX₂⟩ := eventually_atTop.mp
-    ((Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
-      (eventually_ge_atTop (4 : ℝ)))
-  refine ⟨max X₁ X₂, ?_⟩
-  intro x hx j m A₁ A₂ k f hAx hRD hApower hAlow hf
-  have hxlog : 4 ≤ Real.log (x : ℝ) := hX₂ x ((le_max_right X₁ X₂).trans hx)
+/-- At the common source endpoint, the two vertical means give one logarithmic saving. -/
+theorem source_cell_log_saving_of_means {x : ℕ} {B C₁ C₂ : ℝ}
+    (hxlog : 4 ≤ Real.log x) (hC₁ : 0 ≤ C₁) (hC₂ : 0 ≤ C₂) :
+    6 * liuPanPerronHalfStep x ^ (1 / 2 : ℝ) *
+        (C₁ * Real.sqrt x * Real.log x ^ (1 - B)) * Real.log (1 + panSourceHeight x) +
+      6 * liuPanPerronHalfStep x ^ panSourceSigma x *
+        (C₂ * (Real.log x) ^ 2 / Real.log x ^ B) * Real.log (1 + panSourceHeight x) ≤
+      (36 * C₁ + 36 * Real.exp 2 * C₂) * (x : ℝ) * Real.log x ^ (4 - B) := by
   have hxlog1 : 1 ≤ Real.log (x : ℝ) := by linarith
   have hxpos := source_pos_of_log hxlog1
   have hxone : (1 : ℝ) ≤ x := by exact_mod_cast hxpos
   have hx0 : (0 : ℝ) < x := by linarith
   have hlogpos : 0 < Real.log (x : ℝ) := by linarith
-  have hmain := hX₁ x ((le_max_left X₁ X₂).trans hx) x j m A₁ A₂ k f
-    hxlog1 le_rfl hAx hRD hApower hAlow hf
   have hsqrt : liuPanPerronHalfStep x ^ (1 / 2 : ℝ) ≤ 2 * Real.sqrt x := by
-    rw [← Real.sqrt_eq_rpow]
-    have hsq := Real.sq_sqrt (halfStep_pos x).le
-    have hxq := Real.sq_sqrt hx0.le
-    have hp := Real.sqrt_nonneg (liuPanPerronHalfStep x)
-    have hxp := Real.sqrt_nonneg (x : ℝ)
-    unfold liuPanPerronHalfStep at hsq hp ⊢
-    nlinarith
+    rw [← Real.sqrt_eq_rpow, show (2 : ℝ) = Real.sqrt 4 by norm_num,
+      ← Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 4)]
+    exact Real.sqrt_le_sqrt (by unfold liuPanPerronHalfStep; linarith)
   have hlogT := log_source_height_le hxlog1
   have hlognonneg : 0 ≤ Real.log (1 + panSourceHeight x) :=
     Real.log_nonneg (by have : 0 < panSourceHeight x := Real.exp_pos _; linarith)
@@ -430,7 +413,33 @@ theorem chosen_source_cell_log_saving :
       _ = _ := by
         rw [Real.rpow_sub hlogpos, Real.rpow_ofNat]
         ring
-  refine hmain.trans (add_le_add (add_le_add hshort hlong) le_rfl |>.trans ?_)
-  exact le_of_eq (by ring)
+  exact (add_le_add hshort hlong).trans_eq (by ring)
+
+/-- At the full source endpoint, each real conductor/source cell has an
+arbitrary logarithmic saving. This is an unconditional analytic producer,
+not the weighted aggregate over induced conductors. -/
+theorem chosen_source_cell_log_saving :
+    ∃ C : ℝ, 0 < C ∧ ∀ B ε : ℝ, 0 ≤ B → 0 < ε →
+      ∃ X₀ : ℕ, ∀ x : ℕ, X₀ ≤ x →
+      ∀ (j m A₁ A₂ k : ℕ) (f : ℕ → ℂ),
+      A₂ ≤ x → conductorRadius x B j ≤ upperConductor x B →
+      (A₂ : ℝ) ≤ (x : ℝ) ^ (1 - ε) → Real.log x ^ (2 * B) ≤ A₁ →
+      (∀ n, ‖f n‖ ≤ 1) →
+      sourceCell f m x A₁ A₂ k (conductorRadius x B j) ≤
+        C * (x : ℝ) * Real.log x ^ (4 - B) + 776 / (x : ℝ) := by
+  obtain ⟨C₁, C₂, hC₁, hC₂, hcell⟩ := chosen_source_cell_uniform
+  refine ⟨36 * C₁ + 36 * Real.exp 2 * C₂, by positivity, ?_⟩
+  intro B ε hB hε
+  obtain ⟨X₁, hX₁⟩ := hcell B ε hB hε
+  obtain ⟨X₂, hX₂⟩ := eventually_atTop.mp
+    ((Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop).eventually
+      (eventually_ge_atTop (4 : ℝ)))
+  refine ⟨max X₁ X₂, ?_⟩
+  intro x hx j m A₁ A₂ k f hAx hRD hApower hAlow hf
+  have hxlog : 4 ≤ Real.log (x : ℝ) := hX₂ x ((le_max_right X₁ X₂).trans hx)
+  have hxlog1 : 1 ≤ Real.log (x : ℝ) := by linarith
+  have hmain := hX₁ x ((le_max_left X₁ X₂).trans hx) x j m A₁ A₂ k f
+    hxlog1 le_rfl hAx hRD hApower hAlow hf
+  exact hmain.trans (add_le_add (source_cell_log_saving_of_means hxlog hC₁.le hC₂.le) le_rfl)
 
 end AnalyticNumberTheory.LargeSieve.ChenLiuCoprimeProducer

@@ -40,6 +40,49 @@ noncomputable def dirichletLQuadraticConditionalCrossZeroWidth
     (dirichletLQuadraticConditionalFixedH q
       (dirichletLQuadraticConditionalCentralHeight c η q T) T) ^ 12
 
+/-- The conductor contribution to the central scale is nonnegative. -/
+theorem one_le_dirichletLQuadraticConditionalCentralH
+    (q : ℕ) [NeZero q] (T : ℝ) :
+    1 ≤ dirichletLQuadraticConditionalCentralH q T := by
+  have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
+    exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
+      unfold dirichletLNonquadraticConductorLogCutoff dirichletLNonquadraticConductorLogHeightBlock
+      exact Nat.mul_pos (NeZero.pos q) (Nat.succ_pos _))
+  exact le_add_of_nonneg_right (Real.log_nonneg hcut)
+
+/-- The central half-height is positive whenever both input bounds are positive. -/
+theorem dirichletLQuadraticConditionalCentralHeight_pos
+    {q : ℕ} [NeZero q] {c η T : ℝ} (hc : 0 < c) (hT : 0 < T) :
+    0 < dirichletLQuadraticConditionalCentralHeight c η q T := by
+  have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
+  have hH := zero_lt_one.trans_le (one_le_dirichletLQuadraticConditionalCentralH q T)
+  unfold dirichletLQuadraticConditionalCentralHeight
+  exact lt_min hT (by positivity)
+
+/-- The annular majorant includes the central scale. -/
+theorem dirichletLQuadraticConditionalCentralH_le_fixedH
+    (q : ℕ) {τ T : ℝ} (hτ : 0 ≤ τ) (hT : 0 ≤ T) :
+    dirichletLQuadraticConditionalCentralH q T ≤ dirichletLQuadraticConditionalFixedH q τ T := by
+  have hlog : 0 ≤ Real.log (2 * T + 2) := Real.log_nonneg (by linarith)
+  have hinv : 0 ≤ 1 / (2 * τ) := by positivity
+  unfold dirichletLQuadraticConditionalCentralH dirichletLQuadraticConditionalFixedH
+  linarith
+
+/-- The width of the rectangle is bounded by the initial numerator constant. -/
+theorem dirichletLQuadraticConditionalCrossZeroWidth_le
+    {q : ℕ} [NeZero q] {A c η T : ℝ}
+    (hA : 0 ≤ A) (hc : 0 < c) (hη : 0 ≤ η) (hT : 0 < T) :
+    dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ A := by
+  have hq : (1 : ℝ) ≤ q := by exact_mod_cast (NeZero.pos q)
+  have hτ := dirichletLQuadraticConditionalCentralHeight_pos (q := q) (η := η) hc hT
+  have hH := (one_le_dirichletLQuadraticConditionalCentralH q T).trans
+    (dirichletLQuadraticConditionalCentralH_le_fixedH q hτ.le hT.le)
+  have hp : (q : ℝ) ^ (-2 * η) ≤ 1 := by
+    simpa only [Real.rpow_zero] using
+      Real.rpow_le_rpow_of_exponent_le hq (by linarith : -2 * η ≤ 0)
+  unfold dirichletLQuadraticConditionalCrossZeroWidth
+  exact (div_le_self (by positivity) (one_le_pow₀ hH)).trans (mul_le_of_le_one_right hA hp)
+
 /-- One fixed rectangle crossing `t = 0`. -/
 def dirichletLQuadraticConditionalCrossZeroRectangle
     (A c η : ℝ) (q : ℕ) (T : ℝ) : Set ℂ :=
@@ -59,28 +102,17 @@ private theorem central_parameters
   dsimp only
   have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
   have hq1 : (1 : ℝ) ≤ q := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
-  have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-    exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-      unfold dirichletLNonquadraticConductorLogCutoff
-      exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-        unfold dirichletLNonquadraticConductorLogHeightBlock
-        omega)))
-  have hH₀ : 1 ≤ 1 + Real.log (dirichletLNonquadraticConductorLogCutoff q T) := by
-    linarith [Real.log_nonneg hcut]
+  have hH₀ := one_le_dirichletLQuadraticConditionalCentralH q T
   have hr : 0 < (q : ℝ) ^ (-η) := Real.rpow_pos_of_pos hq _
   have hp : 0 < (q : ℝ) ^ (-2 * η) := Real.rpow_pos_of_pos hq _
   have hpr : (q : ℝ) ^ (-2 * η) ≤ (q : ℝ) ^ (-η) :=
     Real.rpow_le_rpow_of_exponent_le hq1 (by linarith)
   let τ : ℝ := min T (c * (q : ℝ) ^ (-η) /
     (256 * (1 + Real.log (dirichletLNonquadraticConductorLogCutoff q T)) ^ 2))
-  have hτ : 0 < τ := lt_min hT (by positivity)
+  have hτ : 0 < τ := dirichletLQuadraticConditionalCentralHeight_pos hc hT
   have hτT : τ ≤ T := min_le_left _ _
-  have hlogarg : 0 ≤ Real.log (2 * T + 2) := Real.log_nonneg (by linarith)
   let H : ℝ := dirichletLQuadraticConditionalFixedH q τ T
-  have hH₀H : 1 + Real.log (dirichletLNonquadraticConductorLogCutoff q T) ≤ H := by
-    dsimp only [H, dirichletLQuadraticConditionalFixedH]
-    have hinv : 0 < 1 / (2 * τ) := by positivity
-    linarith
+  have hH₀H := dirichletLQuadraticConditionalCentralH_le_fixedH q hτ.le hT.le
   have hH : 1 ≤ H := hH₀.trans hH₀H
   have hHpos : 0 < H := lt_of_lt_of_le zero_lt_one hH
   let w : ℝ := A * (q : ℝ) ^ (-2 * η) / H ^ 12
@@ -123,7 +155,7 @@ private theorem central_parameters
       _ ≤ H ^ 12 := by
         have hHpow : H ≤ H ^ 12 := by
           simpa only [pow_one] using (pow_le_pow_right₀ hH (by norm_num : 1 ≤ 12))
-        simpa only [one_mul] using hH₀H.trans hHpow
+        simpa only [one_mul, dirichletLQuadraticConditionalCentralH] using hH₀H.trans hHpow
       _ = 1 * H ^ 12 := by ring
   simpa only [dirichletLQuadraticConditionalCentralH,
     dirichletLQuadraticConditionalCentralHeight,

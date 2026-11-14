@@ -1,5 +1,6 @@
 module
 
+public import Mathlib.Analysis.Complex.RealDeriv
 public import MathlibNt.AnalyticNumberTheory.DirichletL.DirichletLConditionalDerivativeAnalyticContinuation
 public import Mathlib.NumberTheory.DirichletCharacter.Bounds
 
@@ -29,11 +30,16 @@ theorem integral_deriv_LFunction_eq_sub
   have diff : ∀ σ : ℝ, DifferentiableAt ℂ χ.LFunction (σ + t * I) := by
     intro σ
     exact χ.differentiable_LFunction hχ (σ + t * I)
+  have hline (σ : ℝ) :
+      HasDerivAt (fun x : ℝ => χ.LFunction (x + t * I))
+        (deriv χ.LFunction (σ + t * I)) σ := by
+    have htranslate : HasDerivAt (fun z : ℂ => z + t * I) 1 (σ : ℂ) :=
+      (hasDerivAt_id (σ : ℂ)).add_const _
+    have hcomp := (diff σ).hasDerivAt.comp (σ : ℂ) htranslate
+    simpa only [Function.comp_apply, mul_one] using hcomp.comp_ofReal
   apply intervalIntegral.integral_deriv_eq_sub'
-  · exact deriv_fun_re diff
-  · intro σ _
-    exact (diff σ).restrictScalars ℝ |>.comp σ
-      (DifferentiableAt.add_const (c := t * I) (differentiableAt_ofReal σ))
+  · exact funext fun σ => (hline σ).deriv
+  · exact fun σ _ => (hline σ).differentiableAt
   · have hderiv : Continuous (deriv χ.LFunction) :=
       ((χ.differentiable_LFunction hχ).differentiableOn.analyticOnNhd isOpen_univ).deriv.continuous
     exact hderiv.continuousOn.comp

@@ -4,6 +4,7 @@ public import MathlibNt.AnalyticNumberTheory.Vaughan.ProductionVaughanTypeIIAspe
 public import MathlibNt.AnalyticNumberTheory.LargeSieve.PrimitiveWeightedFamilyMassBound
 public import Mathlib.Analysis.SpecialFunctions.Log.Base
 public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
 # All-aspect scalar payment for actual Vaughan Type-II cells

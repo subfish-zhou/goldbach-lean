@@ -326,18 +326,7 @@ theorem norm_logDerivative_le_on_quadraticConditionalWholeBand
           (A * (q : ℝ) ^ (-2 * η)) := by
   let τ := dirichletLQuadraticConditionalCentralHeight c η q T
   have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
-  have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-    exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-      unfold dirichletLNonquadraticConductorLogCutoff
-      exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-        unfold dirichletLNonquadraticConductorLogHeightBlock
-        omega)))
-  have hH₀ : 0 < dirichletLQuadraticConditionalCentralH q T := by
-    dsimp only [dirichletLQuadraticConditionalCentralH]
-    linarith [Real.log_nonneg hcut]
-  have hτ : 0 < τ := by
-    dsimp only [τ, dirichletLQuadraticConditionalCentralHeight]
-    exact lt_min hT (by positivity)
+  have hτ : 0 < τ := dirichletLQuadraticConditionalCentralHeight_pos hc hT
   have hτT : τ ≤ T := by
     dsimp only [τ, dirichletLQuadraticConditionalCentralHeight]
     exact min_le_left _ _

@@ -82,10 +82,17 @@ $\pi(x)=\#\{p\le x:p\text{ is prime}\}$.
 The prime-distribution facade supplies a quantitative prime number theorem (PNT):
 \inputleannode{bp:foundation-pnt}
 For some $c>0$, its error is $O(x\exp(-c(\log x)^{1/10}))$.
-The effective $\vartheta$ estimate keeps the prime-power correction explicitly;
-Abel summation then supplies prime reciprocal sums and the Mertens estimates.
-The separate prime-counting facade also supplies $\pi(n)\sim n/\log n$ and
+The separate prime-counting facade supplies $\pi(n)\sim n/\log n$ and
 an upper bound valid for every integer $n\ge2$.
+
+The Mertens estimates start from the elementary Chebyshev bound $\psi(x)=O(x)$.
+The von Mangoldt convolution gives
+$\sum_{n\le x}\log n=\sum_{d\le x}\Lambda(d)\lfloor x/d\rfloor$.
+Controlling the floor error and the higher prime powers yields
+$\sum_{p\le x}(\log p)/p=\log x+O(1)$.
+Abel summation with weight $1/\log t$ gives the reciprocal-prime sum with
+error $O(1/\log x)$. The effective $\vartheta$ estimate gives an equivalent
+integral formula for the same Meissel--Mertens constant.
 
 The constant in the product formula is identified, not left unspecified:
 \inputleannode{bp:foundation-mertens}

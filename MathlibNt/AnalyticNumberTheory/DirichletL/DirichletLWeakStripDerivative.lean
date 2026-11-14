@@ -1,6 +1,5 @@
 module
 
-public import PrimeNumberTheoremAnd.ZetaBounds
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 public import Mathlib.Algebra.BigOperators.Module
 

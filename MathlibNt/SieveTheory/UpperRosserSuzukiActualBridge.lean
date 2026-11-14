@@ -22,11 +22,6 @@ noncomputable def upperSuzukiUnnormalizedLayer
       upperRosserBoundaryChainsFixedDepthDensity S.nu D q
         ((suzukiSupportedBelow S z).filter (fun p => q < p)) k
 
-private theorem upper_ceilDiv_ceilDiv_eq
-    {D a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
-    (D ⌈/⌉ a) ⌈/⌉ b = D ⌈/⌉ (a * b) := by
-  exact MathlibNt.SieveTheory.ceilDiv_ceilDiv_eq ha hb
-
 private theorem upperSuzukiUnnormalizedLayer_succ
     (S : BoundingSieve) (D z k : ℕ) :
     upperSuzukiUnnormalizedLayer S D z (k + 1) =
@@ -248,7 +243,7 @@ theorem suzukiSourceV_odd_eq_upperSuzukiUnnormalizedLayer
           nlinarith [hp₁prime.two_le]
         exact hp₁prime.one_lt.trans_le (hp₁p₀.le.trans hle)
       rw [ih ((D ⌈/⌉ p₀) ⌈/⌉ p₁) p₁ hDres,
-        upper_ceilDiv_ceilDiv_eq hp₀pos hp₁prime.pos]
+        ceilDiv_ceilDiv_eq hp₀pos hp₁prime.pos]
 
 /-- The actual odd Suzuki parity aggregate is the finite sum of the first `m`
 production upper-boundary pair layers. -/

@@ -4,6 +4,7 @@ public import Mathlib.Analysis.Normed.Group.Tannery
 public import AnalyticNumberTheory.Mertens.Product
 public import Mathlib.Analysis.SpecialFunctions.Gamma.Deriv
 public import Mathlib.NumberTheory.Harmonic.GammaDeriv
+public import Mathlib.NumberTheory.SumPrimeReciprocals
 
 /-!
 # Abelian ingredients for Mertens' product theorem

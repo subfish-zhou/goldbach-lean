@@ -189,24 +189,30 @@ theorem primePrefix_siegelWalfisz_real_conductor (b : ℝ) (D : ℕ) :
   apply Nat.le_floor
   exact hqb.trans (log_rpow_le_pow_natCeil hL b)
 
+/-- Siegel–Walfisz for all prefixes below the cutoff, with real logarithmic exponents. -/
+theorem primePrefix_siegelWalfisz_real_exponents (b A : ℝ) :
+    ∃ K : ℝ, 0 < K ∧ ∃ N₀ : ℕ, ∀ N ≥ N₀,
+      ∀ q : ℕ, 2 ≤ q → (q : ℝ) ≤ Real.log (N : ℝ) ^ b →
+        ∀ χ : PrimitiveCharacter q, χ.1 ≠ 1 → ∀ y ≤ N,
+          ‖primePrefix χ.1 y‖ ≤ K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
+  obtain ⟨K, hK, hSW⟩ := primePrefix_siegelWalfisz ⌈b⌉₊ ⌈A⌉₊
+  refine ⟨K, hK, eventually_atTop.mp ?_⟩
+  filter_upwards [hSW, eventually_one_le_log_natCast, eventually_ge_atTop (2 : ℕ)] with N hS hL hN
+  intro q hq hqb χ hχ y hy
+  have hq' : q ∈ Icc 2 (logConductorThreshold N ⌈b⌉₊) :=
+    mem_Icc.mpr ⟨hq, Nat.le_floor (hqb.trans (log_rpow_le_pow_natCeil hL b))⟩
+  refine (hS hN q hq' χ hχ y hy).trans ?_
+  exact div_le_div_of_nonneg_left (by positivity)
+    (Real.rpow_pos_of_pos (zero_lt_one.trans_le hL) A) (log_rpow_le_pow_natCeil hL A)
+
 /-- Endpoint-only version with real saving exponent, in the paper's notation. -/
 theorem primePrefix_siegelWalfisz_endpoint (b A : ℝ) :
     ∃ K : ℝ, 0 < K ∧ ∃ N₀ : ℕ, ∀ N ≥ N₀,
       ∀ q : ℕ, 2 ≤ q → (q : ℝ) ≤ Real.log (N : ℝ) ^ b →
         ∀ χ : PrimitiveCharacter q, χ.1 ≠ 1 →
           ‖primePrefix χ.1 N‖ ≤ K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-  obtain ⟨K, hK, hSW⟩ := primePrefix_siegelWalfisz_real_conductor b ⌈A⌉₊
-  have hbound : ∀ᶠ N : ℕ in atTop,
-      ∀ q : ℕ, 2 ≤ q → (q : ℝ) ≤ Real.log (N : ℝ) ^ b →
-        ∀ χ : PrimitiveCharacter q, χ.1 ≠ 1 →
-          ‖primePrefix χ.1 N‖ ≤ K * (N : ℝ) / Real.log (N : ℝ) ^ A := by
-    filter_upwards [hSW, eventually_one_le_log_natCast] with N hS hL
-    intro q hq hqb χ hχ
-    refine (hS q hq hqb χ hχ).trans ?_
-    apply div_le_div_of_nonneg_left (by positivity)
-      (Real.rpow_pos_of_pos (lt_of_lt_of_le zero_lt_one hL) A)
-    exact log_rpow_le_pow_natCeil hL A
-  exact ⟨K, hK, eventually_atTop.mp hbound⟩
+  obtain ⟨K, hK, N₀, hSW⟩ := primePrefix_siegelWalfisz_real_exponents b A
+  exact ⟨K, hK, N₀, fun N hN q hq hqb χ hχ => hSW N hN q hq hqb χ hχ N le_rfl⟩
 
 end
 end AnalyticNumberTheory.LargeSieve.PanLow

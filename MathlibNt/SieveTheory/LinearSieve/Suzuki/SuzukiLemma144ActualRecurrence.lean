@@ -136,23 +136,10 @@ theorem suzukiSourceV_succ_eq_unrestricted
       simp only [suzukiSourceOuterCarrier, Finset.mem_filter]
       exact ⟨⟨hpSupport'.1, hpz⟩,
         hLower, hUpper⟩
-    have hpowD : p ^ (n + 3) < D := by
-      have := Nat.lt_of_not_ge hLowerFails
-      convert this using 1
-    have hDceil : D ≤ p * (D ⌈/⌉ p) :=
-      (ceilDiv_le_iff_le_mul hp0).1 le_rfl
     have hpowCeil : p ^ (n + 2) ≤ D ⌈/⌉ p := by
-      by_contra h
-      have hlt : D ⌈/⌉ p < p ^ (n + 2) := Nat.lt_of_not_ge h
-      have hmul : p * (D ⌈/⌉ p) < p * p ^ (n + 2) :=
-        (Nat.mul_lt_mul_left hp0).2 hlt
-      have hpowsucc : p * p ^ (n + 2) = p ^ (n + 3) := by
-        calc
-          p * p ^ (n + 2) = p ^ (n + 2) * p := Nat.mul_comm _ _
-          _ = p ^ ((n + 2) + 1) := (pow_succ _ _).symm
-          _ = p ^ (n + 3) := by congr 1
-      rw [hpowsucc] at hmul
-      omega
+      by_contra! h
+      apply hLowerFails
+      simpa only [← pow_succ'] using (ceilDiv_le_iff_le_mul hp0).mp h.le
     rw [suzukiSourceV_eq_zero_of_pow_le_allDepth S n (D ⌈/⌉ p) p hpowCeil, mul_zero]
 
 

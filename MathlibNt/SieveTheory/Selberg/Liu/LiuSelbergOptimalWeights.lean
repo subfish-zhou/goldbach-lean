@@ -1,5 +1,6 @@
 module
 
+public import MathlibNt.SieveTheory.Selberg.TruncatedOptimalWeights
 public import MathlibNt.SieveTheory.Selberg.Liu.LiuSelbergMainTerm
 /-!
 # Exact finite Selberg optimization for Liu's source modulus

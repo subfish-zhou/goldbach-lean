@@ -25,13 +25,11 @@ private lemma shifted_slope_le_log
     div_nonneg (Real.rpow_nonneg htp.le _) hlog.le
   have hb : 0 < 1 + u := by linarith
   have hulog : u / (1 + u) ≤ Real.log (1 + u) := by
-    have hi := Real.log_le_sub_one_of_pos (inv_pos.mpr hb)
-    rw [Real.log_inv] at hi
     have heq : u / (1 + u) = 1 - (1 + u)⁻¹ := by
       field_simp [hb.ne']
       ring
     rw [heq]
-    linarith
+    exact Real.one_sub_inv_le_log_of_pos hb
   have hpow : (t + 1) * (t + 1) ^ (d - 1) = (t + 1) ^ d := by
     calc
       (t + 1) * (t + 1) ^ (d - 1) =
@@ -142,38 +140,7 @@ private lemma both_slopes_le_ratio_coefficient
     perturbationSlope D d ε t ≤
       2 * (d + 1) * max 1 (Real.log (1 + t ^ d / Real.log D)) := by
   rcases hε with rfl | rfl
-  · have hs : perturbationSlope D d 0 t ≤
-        (d + 1) * Real.log (1 + t ^ d / Real.log D) := by
-      -- The unshifted logarithmic derivative is the standard `z/(1+z)` estimate.
-      let z : ℝ := t ^ d / Real.log D
-      have hz0 : 0 ≤ z := div_nonneg (Real.rpow_nonneg ht.le _) hlog.le
-      have hb : 0 < 1 + z := by linarith
-      have hzlog : z / (1 + z) ≤ Real.log (1 + z) := by
-        have hi := Real.log_le_sub_one_of_pos (inv_pos.mpr hb)
-        rw [Real.log_inv] at hi
-        have heq : z / (1 + z) = 1 - (1 + z)⁻¹ := by
-          field_simp [hb.ne']
-          ring
-        rw [heq]
-        linarith
-      have htpow : t * t ^ (d - 1) = t ^ d := by
-        calc
-          t * t ^ (d - 1) = t ^ (1 : ℝ) * t ^ (d - 1) := by rw [Real.rpow_one]
-          _ = t ^ ((1 : ℝ) + (d - 1)) := (Real.rpow_add ht _ _).symm
-          _ = t ^ d := by ring_nf
-      have hterm : t * (d * t ^ (d - 1) / Real.log D) /
-          (1 + t ^ d / Real.log D) = d * (z / (1 + z)) := by
-        dsimp [z]
-        rw [show t * (d * t ^ (d - 1) / Real.log D) =
-          d * (t * t ^ (d - 1)) / Real.log D by ring, htpow]
-        ring
-      rw [perturbationSlope]
-      simp only [add_zero]
-      rw [hterm]
-      calc
-        Real.log (1 + z) + d * (z / (1 + z)) ≤
-            Real.log (1 + z) + d * Real.log (1 + z) := by gcongr
-        _ = (d + 1) * Real.log (1 + z) := by ring
+  · have hs := moving_perturbationSlope_le_log hlog hd.le ht
     have hlogmax : Real.log (1 + t ^ d / Real.log D) ≤
         max 1 (Real.log (1 + t ^ d / Real.log D)) := le_max_right _ _
     have hd1 : 0 ≤ d + 1 := by linarith

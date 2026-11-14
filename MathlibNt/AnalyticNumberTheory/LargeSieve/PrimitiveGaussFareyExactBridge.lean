@@ -47,46 +47,8 @@ theorem primitiveIntervalAmplitude_gauss_exact {q : ℕ} [NeZero q]
     (b : ℤ → ℂ) (M : ℤ) (N : ℕ) (χ : PrimitiveCharacter q) :
     gaussSum χ.1⁻¹ (primitiveGaussAddChar q) *
         primitiveIntervalAmplitude b M N χ =
-      primitiveReducedGaussAmplitude b M N χ := by
-  let χi : PrimitiveCharacter q :=
-    ⟨χ.1⁻¹, by
-      change χ.1⁻¹.conductor = q
-      rw [DirichletCharacter.conductor_inv]
-      exact χ.2⟩
-  calc
-    gaussSum χ.1⁻¹ (primitiveGaussAddChar q) *
-        primitiveIntervalAmplitude b M N χ =
-      ∑ n ∈ Finset.Icc (M + 1) (M + N),
-        b n * (χi.1⁻¹ (n : ZMod q) *
-          gaussSum χi.1 (primitiveGaussAddChar q)) := by
-            rw [primitiveIntervalAmplitude, Finset.mul_sum]
-            apply Finset.sum_congr rfl
-            intro n hn
-            simp [χi]
-            ring
-    _ = ∑ n ∈ Finset.Icc (M + 1) (M + N), b n *
-          (∑ a ∈ reducedResidues q,
-            χi.1 (a : ZMod q) *
-              charReal ((n : ℝ) * (a : ℝ) / (q : ℝ))) := by
-            apply Finset.sum_congr rfl
-            intro n hn
-            rw [sum_reducedResidues_eq_invChar_mul_gaussSum χi n]
-    _ = ∑ n ∈ Finset.Icc (M + 1) (M + N),
-          ∑ a ∈ reducedResidues q,
-            b n * (χi.1 (a : ZMod q) *
-              charReal ((n : ℝ) * (a : ℝ) / (q : ℝ))) := by
-            apply Finset.sum_congr rfl
-            intro n hn
-            rw [Finset.mul_sum]
-    _ = primitiveReducedGaussAmplitude b M N χ := by
-            rw [primitiveReducedGaussAmplitude, Finset.sum_comm]
-            apply Finset.sum_congr rfl
-            intro a ha
-            rw [reducedAdditiveAmplitude, Finset.mul_sum]
-            apply Finset.sum_congr rfl
-            intro n hn
-            simp [χi]
-            ring
+      primitiveReducedGaussAmplitude b M N χ :=
+  primitive_gauss_inversion_sum χ b (Finset.Icc (M + 1) (M + N))
 
 /-- Exact square-ledger identity retaining the Gauss factors and the
 `1 / φ(q)` weight.  This is the strongest unconditional bridge supplied by the

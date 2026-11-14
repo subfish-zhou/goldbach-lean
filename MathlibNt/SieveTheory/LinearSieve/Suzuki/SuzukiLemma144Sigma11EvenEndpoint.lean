@@ -2,6 +2,7 @@ module
 
 public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144Sigma11Internal
 public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma144CaseIEvenEndpointFinal
+public import MathlibNt.SieveTheory.LinearSieve.Suzuki.SuzukiLemma87FiniteSourceRecursion
 
 @[expose] public section
 
@@ -202,138 +203,6 @@ theorem sigma11_finiteSourceLayer_lemma8_7_even_endpoint
   norm_num at h87 ⊢
   simpa only [mul_one] using h87
 
-private theorem one_step_closed_predecessor
-    {β s τ σ : ℝ} {n : ℕ} (hβ : 1 < β) (hn : 2 ≤ n)
-    (hsdom : s ∈ KappaOneModel.parityDomain β n)
-    (hτclosed : τ - 1 ∈ KappaOneModel.closedDomain β (n - 1))
-    (hsτ : s ≤ τ) (hτσ : τ ≤ σ) :
-    (1 / s) * (∫ t in τ..σ, suzukiLayer 1 β (n - 1) (t - 1)) ≤
-      suzukiLayer 1 β n s := by
-  obtain ⟨k, rfl⟩ : ∃ k, n = k + 2 := ⟨n - 2, by omega⟩
-  let f : ℝ → ℝ := fun t => suzukiLayer 1 β (k + 1) (t - 1)
-  let a : ℝ := recursionLower β s (k + 2)
-  let b : ℝ := β + (k + 2 : ℕ)
-  have hspos : 0 < s := KappaOneModel.closedDomain_pos hβ
-    (KappaOneModel.parityDomain_subset_closedDomain β (k + 2) hsdom)
-  have hpred : k + 2 - 1 = k + 1 := by omega
-  rw [hpred] at hτclosed
-  have hthreshold : β + KappaOneModel.eps (k + 2) ≤ τ := by
-    unfold KappaOneModel.closedDomain at hτclosed
-    simp only [Set.mem_Ici] at hτclosed
-    have he := KappaOneModel.eps_succ_succ_add k
-    have heR : (KappaOneModel.eps (k + 2) : ℝ) +
-        KappaOneModel.eps (k + 1) = 1 := by exact_mod_cast he
-    linarith
-  have hab : a ≤ b := by
-    dsimp [a, b]
-    exact (KappaOneModel.lower_mem β s (k + 2)).2
-  have hthra : β + KappaOneModel.eps (k + 2) ≤ a := by
-    dsimp [a]
-    exact (KappaOneModel.lower_mem β s (k + 2)).1
-  have haτ : a ≤ τ := by
-    dsimp [a]
-    calc
-      recursionLower β s (k + 2) ≤ max s (β + KappaOneModel.eps (k + 2)) :=
-        min_le_left _ _
-      _ ≤ τ := max_le hsτ hthreshold
-  have hmodelcont : ContinuousOn
-      (fun t : ℝ => KappaOneModel.layer β (k + 1) (t - 1))
-      (Set.Icc a (max b σ)) := by
-    apply (KappaOneModel.regular hβ (k + 1)).continuous.comp
-      (continuous_id.sub continuous_const).continuousOn
-    intro t ht
-    exact KappaOneModel.shifted_mem_previous (hthra.trans ht.1)
-  have hfcont : ContinuousOn f (Set.Icc a (max b σ)) := by
-    apply hmodelcont.congr
-    intro t ht
-    exact (KappaOneModel.layer_eq_suzukiLayer β (k + 1) (t - 1)).symm
-  have hfnonneg : ∀ t ∈ Set.Icc a (max b σ), 0 ≤ f t := by
-    intro t ht
-    rw [show f t = KappaOneModel.layer β (k + 1) (t - 1) by
-      exact (KappaOneModel.layer_eq_suzukiLayer β (k + 1) (t - 1)).symm]
-    exact (KappaOneModel.regular hβ (k + 1)).nonneg _
-      (KappaOneModel.shifted_mem_previous (hthra.trans ht.1))
-  have hfullint : IntervalIntegrable f MeasureTheory.volume a b := by
-    apply ContinuousOn.intervalIntegrable
-    rw [Set.uIcc_of_le hab]
-    exact hfcont.mono (Set.Icc_subset_Icc_right (le_max_left _ _))
-  have hrhs_nonneg : 0 ≤ suzukiLayer 1 β (k + 2) s := by
-    rw [← KappaOneModel.layer_eq_suzukiLayer]
-    exact KappaOneModel.nonneg_on_parityDomain hβ (k + 2) s hsdom
-  by_cases hτb : τ ≤ b
-  · have hmain : (∫ t in τ..σ, f t) ≤ ∫ t in a..b, f t := by
-      by_cases hσb : σ ≤ b
-      · apply intervalIntegral.integral_mono_interval haτ hτσ hσb
-        · filter_upwards [self_mem_ae_restrict measurableSet_Ioc] with t ht
-          apply hfnonneg t
-          exact ⟨ht.1.le, ht.2.trans (le_max_left _ _)⟩
-        · exact hfullint
-      · have hbσ : b ≤ σ := le_of_not_ge hσb
-        have hτb_int : IntervalIntegrable f MeasureTheory.volume τ b := by
-          apply ContinuousOn.intervalIntegrable
-          rw [Set.uIcc_of_le hτb]
-          exact hfcont.mono (by
-            intro t ht
-            exact ⟨haτ.trans ht.1, ht.2.trans (le_max_left _ _)⟩)
-        have hbσ_int : IntervalIntegrable f MeasureTheory.volume b σ := by
-          apply ContinuousOn.intervalIntegrable
-          rw [Set.uIcc_of_le hbσ]
-          exact hfcont.mono (by
-            intro t ht
-            exact ⟨hab.trans ht.1, ht.2.trans (le_max_right _ _)⟩)
-        have hsuffix : (∫ t in b..σ, f t) = 0 := by
-          calc
-            (∫ t in b..σ, f t) = ∫ _t in b..σ, (0 : ℝ) := by
-              apply intervalIntegral.integral_congr
-              rw [Set.uIcc_of_le hbσ]
-              intro t ht
-              dsimp [f, b]
-              apply suzukiLayer_eq_zero_of_le
-              have hcast : ((k + 2 : ℕ) : ℝ) = ((k + 1 : ℕ) : ℝ) + 1 := by
-                push_cast
-                ring
-              dsimp [b] at ht
-              rw [hcast] at ht
-              linarith [ht.1]
-            _ = 0 := intervalIntegral.integral_zero
-        rw [← intervalIntegral.integral_add_adjacent_intervals hτb_int hbσ_int,
-          hsuffix, add_zero]
-        apply intervalIntegral.integral_mono_interval haτ hτb le_rfl
-        · filter_upwards [self_mem_ae_restrict measurableSet_Ioc] with t ht
-          apply hfnonneg t
-          exact ⟨ht.1.le, ht.2.trans (le_max_left _ _)⟩
-        · exact hfullint
-    have hraw : (∫ t in τ..σ, f t) ≤ suzukiLayerNumerator 1 β (k + 2) s := by
-      calc
-        (∫ t in τ..σ, f t) ≤ ∫ t in a..b, f t := hmain
-        _ = suzukiLayerNumerator 1 β (k + 2) s := by
-          symm
-          simpa [a, b, f] using
-            SuzukiFiniteContinuousLayers.suzukiLayerNumerator_eq_sourceRecursion_of_two_le
-              β s (by omega : 2 ≤ k + 2)
-    have hscale := mul_le_mul_of_nonneg_left hraw (by positivity : 0 ≤ 1 / s)
-    rw [← rpow_mul_suzukiLayer 1 β (k + 2) hspos] at hscale
-    simpa [f, one_div, hspos.ne'] using hscale
-  · have hbτ : b ≤ τ := le_of_not_ge hτb
-    have hzero : (∫ t in τ..σ, f t) = 0 := by
-      calc
-        (∫ t in τ..σ, f t) = ∫ _t in τ..σ, (0 : ℝ) := by
-          apply intervalIntegral.integral_congr
-          rw [Set.uIcc_of_le hτσ]
-          intro t ht
-          dsimp [f, b] at hbτ ⊢
-          apply suzukiLayer_eq_zero_of_le
-          have hcast : ((k + 2 : ℕ) : ℝ) = ((k + 1 : ℕ) : ℝ) + 1 := by
-            push_cast
-            ring
-          rw [hcast] at hbτ
-          linarith [ht.1]
-        _ = 0 := intervalIntegral.integral_zero
-    rw [hpred]
-    rw [show (∫ t in τ..σ, suzukiLayer 1 β (k + 1) (t - 1)) = 0 by
-      simpa [f] using hzero, mul_zero]
-    exact hrhs_nonneg
-
 /-- The finite `(9.2)` majorization remains valid when the odd predecessor is
 used at its closed left endpoint. -/
 theorem Sigma11FiniteLayerMajorization_even_endpoint
@@ -389,7 +258,7 @@ theorem Sigma11FiniteLayerMajorization_even_endpoint
       have hnmem := Finset.mem_Icc.mp hn'.1
       have hnpar : n % 2 = M % 2 := hn'.2
       have hpredpar : (n - 1) % 2 = (M - 1) % 2 := by omega
-      apply one_step_closed_predecessor (by norm_num) hnmem.1
+      apply suzukiLayer_one_step_closed_predecessor (by norm_num) hnmem.1
       · simpa [KappaOneModel.parityDomain, hnpar] using hsdom
       · unfold KappaOneModel.closedDomain KappaOneModel.eps at hclosed ⊢
         simp only [hpredpar, hpred, Nat.cast_one, Set.mem_Ici]

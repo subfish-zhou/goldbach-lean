@@ -50,7 +50,7 @@ theorem dirichletCharacter_eq_primitive_mul_coprimeIndicator {q : ℕ} [NeZero q
 theorem dirichletCharacter_norm_le_one (q : ℕ)
     (χ : DirichletCharacter ℂ q) (a : ZMod q) :
     ‖χ a‖ ≤ 1 := by
-  exact AnalyticNumberTheory.LargeSieve.dirichletChar_norm_le_one q χ a
+  exact χ.norm_le_one a
 
 
 namespace LiuWeight

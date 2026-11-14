@@ -57,9 +57,8 @@ theorem liuLocalFactor_of_not_dvd {p N : ℕ} (hp2 : 2 < p) (hpn : ¬p ∣ N) :
 /-- Away from `2`, Liu's local factor is the legacy local factor. -/
 theorem liuLocalFactor_eq_localFactor {p N : ℕ} (hp2 : 2 < p) :
     liuLocalFactor p N = localFactor p N := by
-  by_cases hpdvd : p ∣ N
-  · simp [liuLocalFactor, localFactor, hpdvd, ne_of_gt hp2]
-  · simp [liuLocalFactor, localFactor, hpdvd, ne_of_gt hp2]
+  by_cases hpdvd : p ∣ N <;>
+    simp [liuLocalFactor, localFactor, AnalyticNumberTheory.Sieve.localFactor, hpdvd, ne_of_gt hp2]
 
 /-- Liu's source-normalized finite truncation: only odd primes `p ≤ z`. -/
 noncomputable def liuSingularSeriesTruncated (N z : ℕ) : ℝ :=
@@ -81,7 +80,9 @@ theorem singularSeriesTruncated_eq_two_mul_liuSingularSeriesTruncated
     (N z : ℕ) (hN : Even N) (hz : 2 ≤ z) :
     singularSeriesTruncated N z = 2 * liuSingularSeriesTruncated N z := by
   classical
-  unfold singularSeriesTruncated liuSingularSeriesTruncated
+  change (∏ p ∈ z.primesLE, localFactor p N) = 2 * liuSingularSeriesTruncated N z
+  rw [Nat.primesLE_eq_filter_range]
+  unfold liuSingularSeriesTruncated
   let P := (range (z + 1)).filter Nat.Prime
   have h2P : 2 ∈ P := by
     simp [P, hz, Nat.prime_two]

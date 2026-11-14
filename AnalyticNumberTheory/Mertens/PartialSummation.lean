@@ -1,6 +1,6 @@
 module
 
-public import AnalyticNumberTheory.Mertens.Basic
+public import AnalyticNumberTheory.Mertens.SecondTheorem
 public import AnalyticNumberTheory.PrimeDistribution.ChebyshevTheta
 public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 public import Mathlib.MeasureTheory.Integral.Asymptotics
@@ -8,8 +8,9 @@ public import Mathlib.MeasureTheory.Integral.Asymptotics
 /-!
 # Abel summation for prime reciprocal sums
 
-This finite identity is the bridge from effective Chebyshev-theta estimates to
-Mertens' second theorem.  It deliberately contains no asymptotic claim.
+The Chebyshev-theta formula gives a second representation of the same
+Meissel–Mertens constant. This module retains that formula and its error
+decomposition for callers that use the quantitative prime number theorem.
 -/
 
 @[expose] public section
@@ -17,7 +18,7 @@ Mertens' second theorem.  It deliberately contains no asymptotic claim.
 namespace AnalyticNumberTheory.Mertens
 
 open Asymptotics Filter Finset MeasureTheory Real
-open scoped Chebyshev
+open scoped Chebyshev Topology
 
 /-- The theta-error contribution to the positive-kernel Abel formula. -/
 noncomputable def thetaErrorKernel (t : ℝ) : ℝ :=
@@ -29,23 +30,6 @@ theorem thetaErrorKernel_eq (t : ℝ) :
         t * (log t + 1) / (t * log t) ^ 2 := by
   unfold thetaErrorKernel
   ring
-
-/-- A reusable improper-integral tail estimate for the kernel that occurs in
-the Mertens error term. -/
-theorem norm_integral_Ioi_le_div_log {f : ℝ → ℝ} {x C : ℝ} (hx : 1 < x)
-    (hbound : ∀ t ∈ Set.Ioi x, ‖f t‖ ≤ C * (t⁻¹ / (log t) ^ 2)) :
-    ‖∫ t in Set.Ioi x, f t‖ ≤ C / log x := by
-  have hk : IntegrableOn (fun t : ℝ => t⁻¹ / (log t) ^ 2) (Set.Ioi x) volume :=
-    integrableOn_inv_div_log_sq_Ioi hx
-  have hCk : IntegrableOn (fun t : ℝ => C * (t⁻¹ / (log t) ^ 2)) (Set.Ioi x) volume :=
-    hk.const_mul C
-  calc
-    ‖∫ t in Set.Ioi x, f t‖ ≤ ∫ t in Set.Ioi x, C * (t⁻¹ / (log t) ^ 2) := by
-      apply MeasureTheory.norm_integral_le_of_norm_le hCk
-      filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
-      exact hbound t ht
-    _ = C * ∫ t in Set.Ioi x, t⁻¹ / (log t) ^ 2 := by rw [integral_const_mul]
-    _ = C / log x := by rw [integral_inv_div_log_sq_Ioi hx]; ring
 
 /-- The Chebyshev theta function is locally integrable away from zero. -/
 theorem locallyIntegrableOn_theta :
@@ -139,7 +123,7 @@ theorem integrableOn_thetaErrorKernel :
 
 /-- The constant in the Mertens reciprocal-prime asymptotic, expressed through
 the theta-error kernel. -/
-noncomputable def mertensSecondConstant : ℝ :=
+noncomputable def mertensSecondThetaConstant : ℝ :=
   -log (log 2) + 1 / log 2 + ∫ t in Set.Ioi (2 : ℝ), thetaErrorKernel t
 
 /-- The finite error integral differs from its limiting value by the negative
@@ -247,7 +231,7 @@ theorem primeReciprocalSum_eq_theta_abel {x : ℝ} (hx : 2 ≤ x) :
           deriv (fun u : ℝ => (u * log u)⁻¹) t * Chebyshev.theta t := by
   let a : ℕ → ℝ := Set.indicator (Set.ofPred Nat.Prime) fun n ↦ log n
   unfold primeReciprocalSum primesUpTo
-  rw [Nat.range_succ_eq_Icc_zero, sum_filter]
+  rw [Nat.primesLE_eq_filter_Icc_zero, sum_filter]
   trans ∑ n ∈ Icc 0 ⌊x⌋₊, (n * log n)⁻¹ * a n
   · refine sum_congr rfl fun n hn ↦ ?_
     split_ifs with hp
@@ -337,8 +321,8 @@ theorem theta_abel_main_term {x : ℝ} (hx : 2 ≤ x) :
   ring
 
 /-- Exact real-variable decomposition underlying Mertens' second theorem. -/
-theorem mertensSecond_error_decomposition {x : ℝ} (hx : 2 ≤ x) :
-    primeReciprocalSum ⌊x⌋₊ - (log (log x) + mertensSecondConstant) =
+private theorem mertensSecond_theta_error_decomposition {x : ℝ} (hx : 2 ≤ x) :
+    primeReciprocalSum ⌊x⌋₊ - (log (log x) + mertensSecondThetaConstant) =
       (Chebyshev.theta x - x) / (x * log x) -
         ∫ t in Set.Ioi x, thetaErrorKernel t := by
   have habel := primeReciprocalSum_eq_theta_div_mul_log_add_integral hx
@@ -347,14 +331,14 @@ theorem mertensSecond_error_decomposition {x : ℝ} (hx : 2 ≤ x) :
   have htail := thetaErrorKernel_interval_sub_total_eq_neg_tail hx
   have hend : Chebyshev.theta x / (x * log x) - x / (x * log x) =
       (Chebyshev.theta x - x) / (x * log x) := by ring
-  unfold mertensSecondConstant
+  unfold mertensSecondThetaConstant
   linarith
 
 /-- Mertens' second theorem with an explicit `O(1 / log x)` error, on the
 real-variable bridge used by downstream arithmetic applications. -/
-theorem mertensSecond_eventually :
+private theorem mertensSecond_theta_eventually :
     ∃ C > 0, ∀ᶠ x : ℝ in atTop,
-      |primeReciprocalSum ⌊x⌋₊ - (log (log x) + mertensSecondConstant)| ≤
+      |primeReciprocalSum ⌊x⌋₊ - (log (log x) + mertensSecondThetaConstant)| ≤
         C / log x := by
   obtain ⟨C₁, hC₁, hendpoint⟩ := Asymptotics.isBigO_iff'.mp
     AnalyticNumberTheory.PrimeDistribution.chebyshevTheta_endpoint_error
@@ -367,7 +351,7 @@ theorem mertensSecond_eventually :
   have hx0 : 0 < x := lt_of_lt_of_le (exp_pos 1) hxexp
   have hlog1 : 1 ≤ log x := (Real.le_log_iff_exp_le hx0).mpr hxexp
   have hlog0 : 0 < log x := lt_of_lt_of_le zero_lt_one hlog1
-  rw [mertensSecond_error_decomposition hx2]
+  rw [mertensSecond_theta_error_decomposition hx2]
   calc
     |(Chebyshev.theta x - x) / (x * log x) -
         ∫ t in Set.Ioi x, thetaErrorKernel t| ≤
@@ -396,40 +380,32 @@ theorem mertensSecond_eventually :
           add_le_add hfirst le_rfl
         _ = (C₁ + C₂) / log x := by ring
 
-/-- Natural-number Big-O interface for Mertens' second theorem. -/
-theorem mertensSecond_isBigO :
-    (fun n : ℕ => primeReciprocalSum n -
-      (log (log (n : ℝ)) + mertensSecondConstant)) =O[atTop]
-      fun n => 1 / log (n : ℝ) := by
-  obtain ⟨D, _hD, hD_bound⟩ := mertensSecond_eventually
-  have hreal :
-      (fun x : ℝ => primeReciprocalSum ⌊x⌋₊ -
-        (log (log x) + mertensSecondConstant)) =O[atTop]
-        fun x : ℝ => 1 / log x := by
-    apply Asymptotics.IsBigO.of_bound D
-    filter_upwards [hD_bound, eventually_gt_atTop (1 : ℝ)] with x hx hx1
-    have hlog : 0 < log x := Real.log_pos hx1
-    simpa [Real.norm_eq_abs, abs_of_pos (one_div_pos.mpr hlog),
-      div_eq_mul_inv, abs_of_pos hlog] using hx
-  simpa [Nat.floor_natCast] using hreal.natCast_atTop
+private theorem tendsto_mertensConstant_of_bound {B : ℝ}
+    (h : ∃ C > 0, ∀ᶠ x : ℝ in atTop,
+      |primeReciprocalSum ⌊x⌋₊ - (log (log x) + B)| ≤ C / log x) :
+    Tendsto (fun x : ℝ => primeReciprocalSum ⌊x⌋₊ - log (log x)) atTop (𝓝 B) := by
+  obtain ⟨C, _, hC⟩ := h
+  apply tendsto_iff_norm_sub_tendsto_zero.mpr
+  have hzero : Tendsto (fun x : ℝ => C / log x) atTop (𝓝 0) := by
+    simpa only [div_eq_mul_inv, mul_zero, Pi.inv_apply] using
+      Real.tendsto_log_atTop.inv_tendsto_atTop.const_mul C
+  refine squeeze_zero' (Eventually.of_forall fun _ => norm_nonneg _) ?_ hzero
+  filter_upwards [hC] with x hx
+  rw [Real.norm_eq_abs, sub_sub]
+  exact hx
 
-/-- Natural-number form of Mertens' second theorem, with the finite initial
-range absorbed into the uniform constant. -/
-theorem mertensSecond_nat :
-    ∃ C > 0, ∀ n : ℕ, 2 ≤ n →
-      |primeReciprocalSum n - (log (log n) + mertensSecondConstant)| ≤
-        C / log n := by
-  obtain ⟨C, hC, hbound⟩ :=
-    Asymptotics.bound_of_isBigO_nat_atTop mertensSecond_isBigO
-  refine ⟨C, hC, fun n hn => ?_⟩
-  have hn1 : (1 : ℝ) < n := by
-    exact_mod_cast (show 1 < n by omega)
-  have hlog : 0 < log (n : ℝ) := Real.log_pos hn1
-  have hne : 1 / log (n : ℝ) ≠ 0 :=
-    one_div_ne_zero (ne_of_gt hlog)
-  simpa [Nat.floor_natCast, Real.norm_eq_abs,
-    abs_of_pos (one_div_pos.mpr hlog), abs_of_pos hlog, div_eq_mul_inv]
-    using hbound hne
+/-- The elementary and Chebyshev-theta formulas give the same constant. -/
+theorem mertensSecondConstant_eq_theta :
+    mertensSecondConstant = mertensSecondThetaConstant :=
+  tendsto_nhds_unique (tendsto_mertensConstant_of_bound mertensSecond_eventually)
+    (tendsto_mertensConstant_of_bound mertensSecond_theta_eventually)
 
+/-- Exact real-variable decomposition underlying the Chebyshev-theta formula. -/
+theorem mertensSecond_error_decomposition {x : ℝ} (hx : 2 ≤ x) :
+    primeReciprocalSum ⌊x⌋₊ - (log (log x) + mertensSecondConstant) =
+      (Chebyshev.theta x - x) / (x * log x) -
+        ∫ t in Set.Ioi x, thetaErrorKernel t := by
+  rw [mertensSecondConstant_eq_theta]
+  exact mertensSecond_theta_error_decomposition hx
 
 end AnalyticNumberTheory.Mertens

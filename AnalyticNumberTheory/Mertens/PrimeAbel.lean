@@ -52,15 +52,7 @@ theorem primeReciprocalLSeries_eq_primeDirichletSum (s : ℂ) :
 theorem sum_Icc_primeReciprocalCoeff (n : ℕ) :
     (∑ k ∈ Icc 1 n, primeReciprocalCoeff k) = primeReciprocalSum n := by
   unfold primeReciprocalCoeff primeReciprocalSum primesUpTo
-  rw [← sum_filter]
-  congr 1
-  ext k
-  simp only [mem_filter, mem_Icc, mem_range]
-  constructor
-  · rintro ⟨⟨_, hkn⟩, hkprime⟩
-    exact ⟨Nat.lt_succ_of_le hkn, hkprime⟩
-  · rintro ⟨hkn, hkprime⟩
-    exact ⟨⟨hkprime.one_lt.le, Nat.le_of_lt_succ hkn⟩, hkprime⟩
+  rw [← sum_filter, Nat.primesLE_eq_filter_Icc_one]
 
 
 /-- The reciprocal-prime sum is bounded by the corresponding harmonic sum. -/

@@ -44,19 +44,7 @@ theorem norm_logDerivative_le_on_quadraticConditionalPerronHorizontal
   let x : ℝ := A * p / H ^ 12
   have hT0 : 0 < T := by linarith
   have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
-  have hcentralH : 0 < dirichletLQuadraticConditionalCentralH q T := by
-    dsimp only [dirichletLQuadraticConditionalCentralH]
-    have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-      exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-        unfold dirichletLNonquadraticConductorLogCutoff
-        exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-          unfold dirichletLNonquadraticConductorLogHeightBlock
-          omega)))
-    linarith [Real.log_nonneg hcut]
-  have hτ : 0 < τ := by
-    dsimp only [τ, dirichletLQuadraticConditionalCentralHeight]
-    exact lt_min hT0 (div_pos (mul_pos hc (Real.rpow_pos_of_pos hq _))
-      (mul_pos (by norm_num) (sq_pos_of_pos hcentralH)))
+  have hτ : 0 < τ := dirichletLQuadraticConditionalCentralHeight_pos hc hT0
   have hτT : τ ≤ T := by
     dsimp only [τ, dirichletLQuadraticConditionalCentralHeight]
     exact min_le_left _ _
@@ -204,49 +192,15 @@ theorem exists_dirichletLTwistedSmoothedQuadraticConditionalContourNormBounds
   have hX0 : 0 < X := lt_of_lt_of_le zero_lt_one hX
   have hT0 : 0 < T := by linarith
   have hq : (0 : ℝ) < q := by exact_mod_cast NeZero.pos q
-  have hcut : (1 : ℝ) ≤ dirichletLNonquadraticConductorLogCutoff q T := by
-    exact_mod_cast (show 1 ≤ dirichletLNonquadraticConductorLogCutoff q T by
-      unfold dirichletLNonquadraticConductorLogCutoff
-      exact Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (NeZero.ne q) (by
-        unfold dirichletLNonquadraticConductorLogHeightBlock
-        omega)))
-  have hcentralH : 0 < dirichletLQuadraticConditionalCentralH q T := by
-    dsimp only [dirichletLQuadraticConditionalCentralH]
-    linarith [Real.log_nonneg hcut]
-  have htau : 0 < dirichletLQuadraticConditionalCentralHeight c η q T := by
-    dsimp only [dirichletLQuadraticConditionalCentralHeight]
-    exact lt_min hT0 (div_pos (mul_pos hc (Real.rpow_pos_of_pos hq _))
-      (mul_pos (by norm_num) (sq_pos_of_pos hcentralH)))
-  have hH1 : 1 ≤ dirichletLQuadraticConditionalFixedH q
-      (dirichletLQuadraticConditionalCentralHeight c η q T) T := by
-    dsimp only [dirichletLQuadraticConditionalFixedH]
-    have hlog : 0 ≤ Real.log (dirichletLNonquadraticConductorLogCutoff q T) :=
-      Real.log_nonneg hcut
-    have hlogT : 0 ≤ Real.log (2 * T + 2) := Real.log_nonneg (by linarith)
-    have hinv : 0 < 1 / (2 * dirichletLQuadraticConditionalCentralHeight c η q T) := by
-      positivity
-    linarith
-  have hH : 0 < dirichletLQuadraticConditionalFixedH q
-      (dirichletLQuadraticConditionalCentralHeight c η q T) T :=
-    lt_of_lt_of_le zero_lt_one hH1
   have hQ : 0 ≤ Q := by dsimp only [Q]; positivity
+  have hτ := dirichletLQuadraticConditionalCentralHeight_pos (q := q) (η := η) hc hT0
+  have hH := zero_lt_one.trans_le ((one_le_dirichletLQuadraticConditionalCentralH q T).trans
+    (dirichletLQuadraticConditionalCentralH_le_fixedH q hτ.le hT0.le))
   have hw : 0 < dirichletLQuadraticConditionalCrossZeroWidth A c η q T := by
     dsimp only [dirichletLQuadraticConditionalCrossZeroWidth]
     positivity
-  have hp1 : (q : ℝ) ^ (-2 * η) ≤ 1 := by
-    have hq1 : (1 : ℝ) ≤ q := by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (NeZero.ne q)
-    simpa using Real.rpow_le_rpow_of_exponent_le hq1 (by linarith : -2 * η ≤ 0)
-  have hpow : 1 ≤ dirichletLQuadraticConditionalFixedH q
-      (dirichletLQuadraticConditionalCentralHeight c η q T) T ^ 12 := one_le_pow₀ hH1
-  have hw2 : dirichletLQuadraticConditionalCrossZeroWidth A c η q T ≤ 1 / 2 := by
-    dsimp only [dirichletLQuadraticConditionalCrossZeroWidth]
-    calc
-      A * (q : ℝ) ^ (-2 * η) /
-          dirichletLQuadraticConditionalFixedH q
-              (dirichletLQuadraticConditionalCentralHeight c η q T) T ^ 12 ≤ A := by
-        exact (div_le_self (by positivity) hpow).trans
-          (mul_le_of_le_one_right hA.le hp1)
-      _ ≤ 1 / 2 := hAhalf
+  have hw2 := (dirichletLQuadraticConditionalCrossZeroWidth_le
+    (q := q) hA.le hc hη.le hT0).trans hAhalf
   have ha : (1 / 2 : ℝ) ≤ a := by
     dsimp only [a, dirichletLTwistedSmoothedQuadraticConditionalLeft]
     linarith
