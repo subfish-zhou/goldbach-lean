@@ -244,6 +244,66 @@ class LibraryCoverageTests(unittest.TestCase):
         self.scan("untranslated CJK text")
 
 
+class ReleaseSurfaceTests(unittest.TestCase):
+    """The published front end and Blueprint exposition are release content."""
+
+    def setUp(self):
+        lakefile = (check.ROOT / "lakefile.toml").read_text(encoding="utf-8")
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        for name in ("Goldbach", "MathlibNt", "AnalyticNumberTheory"):
+            (self.root / (name + ".lean")).write_text("-- entrypoint fixture\n")
+        (self.root / "lakefile.toml").write_text(lakefile, encoding="utf-8")
+        for name in ("website", "blueprint/src/chapters", "blueprint/src/__pycache__"):
+            (self.root / name).mkdir(parents=True)
+        (self.root / "website/index.html").write_text("<html>homepage</html>\n")
+        (self.root / "blueprint/src/chapters/overview.tex").write_text("chapter fixture\n")
+        (self.root / "blueprint/src/__pycache__/sources.cpython-312.pyc").write_bytes(b"\x00\x01")
+        root_patch = patch.object(check, "ROOT", self.root)
+        root_patch.start()
+        self.addCleanup(root_patch.stop)
+
+    def release_files(self):
+        return {str(p.relative_to(self.root)) for p in check.release_files()}
+
+    def test_website_and_blueprint_chapters_are_release_content(self):
+        files = self.release_files()
+        self.assertIn("website/index.html", files)
+        self.assertIn("blueprint/src/chapters/overview.tex", files)
+
+    def test_compiled_bytecode_is_not_release_content(self):
+        self.assertNotIn("blueprint/src/__pycache__/sources.cpython-312.pyc", self.release_files())
+
+    def scan_issues(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            with self.assertRaises(RuntimeError):
+                check.static_checks()
+        return json.loads(output.getvalue())["issues"]
+
+    def test_private_text_in_the_website_is_rejected(self):
+        (self.root / "website/index.html").write_text("/" + "home/worker/private\n")
+        self.assertTrue(any("private machine path: website/index.html" in issue
+                            for issue in self.scan_issues()), self.scan_issues())
+
+    def test_untranslated_text_in_a_blueprint_chapter_is_rejected(self):
+        (self.root / "blueprint/src/chapters/overview.tex").write_text("\u4e2d\u6587\n")
+        self.assertTrue(any("untranslated CJK text: blueprint/src/chapters/overview.tex" in issue
+                            for issue in self.scan_issues()), self.scan_issues())
+
+
+class RealReleaseSurfaceTests(unittest.TestCase):
+    def test_every_published_front_end_file_is_scanned(self):
+        files = {str(p.relative_to(check.ROOT)) for p in check.release_files()}
+        for required in ("website/index.html", "website/report/index.html",
+                         "website/structure/panel.html", "website/structure/explorer.js",
+                         "website/structure/explorer.css", "website/home.css",
+                         "website/dependency-panels.js", "website/dependency-panels.css",
+                         "blueprint/src/chapters/overview.tex", "blueprint/src/reader.css"):
+            self.assertIn(required, files)
+
+
 class CommandTests(unittest.TestCase):
     @staticmethod
     def lean_result(command, **kwargs):

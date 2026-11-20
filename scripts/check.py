@@ -13,6 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_DIRS = ("Goldbach", "MathlibNt", "AnalyticNumberTheory", "PrimeNumberTheoremAnd")
+BLUEPRINT_SOURCE_SUFFIXES = {".tex", ".cfg", ".py", ".css", ".jinja2s"}
 ONE_TWO_EXPECTED = {
     "Goldbach.chen_theorem",
     "Goldbach.representation_lower_bound",
@@ -109,14 +110,15 @@ def source_files() -> list[Path]:
 def release_files() -> list[Path]:
     # A linked worktree's .git file is Git metadata, not a publication artifact.
     files = [p for p in ROOT.iterdir() if p.is_file() and p.name != ".git"]
-    for name in (*SOURCE_DIRS, "docs", "scripts", ".github"):
+    for name in (*SOURCE_DIRS, "docs", "scripts", ".github", "website"):
         directory = ROOT / name
         if directory.exists():
             files.extend(p for p in directory.rglob("*")
                          if p.is_file() and "__pycache__" not in p.parts)
     files.extend(p for p in (ROOT / "docbuild").glob("*") if p.is_file())
-    files.extend(p for p in (ROOT / "blueprint/src").glob("*")
-                 if p.is_file() and p.suffix in {".tex", ".cfg", ".py"})
+    files.extend(p for p in (ROOT / "blueprint/src").rglob("*")
+                 if p.is_file() and "__pycache__" not in p.parts
+                 and p.suffix in BLUEPRINT_SOURCE_SUFFIXES)
     requirements = ROOT / "blueprint/requirements.txt"
     if requirements.exists():
         files.append(requirements)
